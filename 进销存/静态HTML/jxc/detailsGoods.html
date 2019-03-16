@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>商品详情</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<!-- VENDOR CSS -->
+		<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="assets/vendor/linearicons/style.css">
+		<link rel="stylesheet" href="assets/vendor/chartist/css/chartist-custom.css">
+		<!-- MAIN CSS -->
+		<link rel="stylesheet" href="assets/css/main.css">
+		<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+		<link rel="stylesheet" href="assets/css/demo.css">
+		<!-- GOOGLE FONTS -->
+		<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+
+		<link rel="stylesheet" href="css/typeDonghua.css" />
+		<script type="text/javascript" src="js/typeDonghua.js"></script>
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+		<script src="js/bootstrap.js"></script>
+		<script type="text/javascript" src="js/wangEditor.min.js"></script>
+		<script type="text/javascript" src="js/jquery.color.js"></script>
+
+		<style>
+			.option-rongqi {
+				position: relative;
+				z-index: 999;
+			}
+		</style>
+
+	</head>
+
+	<body>
+
+		<div class="container-fluid">
+
+			<div class="panel">
+				<div class="panel-heading">
+					<h3 class="panel-title">新增商品</h3>
+				</div>
+				<div class="panel-body">
+
+					<div class="input-group">
+						<span class="input-group-btn">
+							<button class="btn btn-primary" type="button">货品名称：</button>
+						</span>
+						<input class="form-control" type="text">
+					</div>
+					<br>
+					
+					<div class="row visible-lg-block visible-md-block" style="margin: 0 3vh;">
+						<div class="option-div option-top-div">
+							<div class="col-lg-1 col-md-1 text-right option-rongqi">
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型:</span>
+							</div>
+							<div class="col-lg-11 col-md-11 option-rongqi">
+								<span class="visible-lg-inline-block visible-md-inline-block visible-md-inline-block text-center activePosition option-span active1"></span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span activeColor" typeid="">上衣</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">裤子</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
+							</div>
+						</div>
+
+						<div class="option-div">
+							<div class="col-lg-1 col-md-1 text-right option-rongqi">
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">尺码:</span>
+							</div>
+							<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #DC4E41;">不限</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">S</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">M</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">L</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">XL</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">XL</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">XXL</span>
+							</div>
+						</div>
+
+						<div class="option-div">
+							<div class="col-lg-1 col-md-1 text-right option-rongqi">
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">颜色:</span>
+							</div>
+							<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #DC4E41;">不限</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">浅粉色</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">卡其色</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">藏青色</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">藕色</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">杏色</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">绿棕色</span>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-user"></i></span>
+						<input class="form-control" placeholder="Username" type="text">
+					</div>
+					<br>
+					<div class="input-group">
+						<input class="form-control" placeholder="Username" type="text">
+						<span class="input-group-addon"><i class="fa fa-user"></i></span>
+					</div>
+					<br>
+					<div class="input-group">
+						<span class="input-group-addon">$</span>
+						<input class="form-control" type="text">
+						<span class="input-group-addon">.00</span>
+					</div>
+				</div>
+			</div>
+
+			<!--富文本编辑器-->
+			<div id="editor">
+
+			</div>
+
+		</div>
+
+	</body>
+
+</html>
+
+<script type="text/javascript">
+	var E = window.wangEditor;
+	var editor = new E('#editor');
+	editor.create();
+
+	$(function() {
+
+		//类型点击事件
+		$(".option-span").click(function() {
+			//动画
+			activeSpanStyle(this);
+
+		});
+
+		//详细类型点击事件
+		$(".option-span-z").click(function() {
+			optionAddStyle(this);
+
+		});
+
+		$(".option-span-all").click(function() {
+			optionAllStyle(this);
+		});
+
+	});
+</script>
