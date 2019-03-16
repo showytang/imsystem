@@ -5,18 +5,10 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<meta charset="utf-8" />
 		<title>调拨</title>
-		<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
-		<link rel="stylesheet" href="assets/vendor/linearicons/style.css">
-		<link rel="stylesheet" href="assets/css/main.css">
-		<link rel="stylesheet" href="assets/css/myStyle.css" />
-		<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
-		<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
-		<link rel="stylesheet" type="text/css" media="all" href="assets/css/daterangepicker.css" />
-		<script type="text/javascript" src="assets/vendor/jquery/jquery.min.js" ></script>
-		<script type="text/javascript" src="assets/vendor/bootstrap/js/moment.js"></script>
-      	<script type="text/javascript" src="assets/vendor/bootstrap/js/daterangepicker.js"></script>
-		<script type="text/javascript" src="assets/vendor/bootstrap/js/Mydate.js"></script>
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" />
+		<script type="text/javascript" src="js/jquery-2.1.4.min.js" ></script>
+		<script type="text/javascript" src="js/bootstrap.min.js" ></script>
 		<script type="text/javascript" src="js/page.js" ></script>
 		<style type="text/css">
 			.selected>div{
@@ -82,24 +74,14 @@
 		<div id="wrapper" style="padding-top: 10px;" class="container-fluid">
 			<h3 class="page-title">调拨</h3>
 			<div class="selected row">
-				<div class="col-xs-12 boss" style="margin-bottom: 0px;">
-	                <div class="input-group tj col-md-12 row" style="box-shadow: none;width: 100%;margin-bottom: 0px;">
-	                    <div class="col-md-6 col-sm-10 col-xs-12">
-							<span class="col-md-3 col-xs-3">选择区间</span>
-							<input class="col-md-9 col-xs-9"  type="text" id="config-demo">
-						</div>
-	                    <div class="col-md-3 col-sm-3 col-xs-12">
-							<span class="col-md-4 col-xs-3">出货店铺</span>
-							<select class="col-md-6 col-xs-9">
-								<option>a</option>
-							</select>
-						</div>
-	                    <div class="col-md-3 col-sm-3 col-xs-12">
-							<span class="col-md-4 col-xs-3">进货店铺</span>
-							<select class="col-md-6 col-xs-9">
-								<option>b</option>
-							</select>
-						</div>
+				<div class="col-md-5 col-sm-12 col-xs-11 display">
+	                <div class="input-group">
+	                    <span class="input-group-addon">Time</span>
+	                    <div class="form-control" style="display: flex;padding: 0px;font-size: 12px;">
+	                    	<input class="datetimepicker" readonly="readonly"style="border: none;border-right: 1px solid #ddd;border-radius: 0px;background: white;width: 50%;height: 100%;" placeholder="开始时间" />
+							<input class="datetimepicker" readonly="readonly"style="border: none;background: white;width: 50%;height: 100%;" placeholder="结束时间" />
+	                    </div>
+						<span class="input-group-addon remove"><span class="glyphicon glyphicon-remove"></span></span>
 	                </div>
 				</div>
 			</div>
@@ -126,9 +108,9 @@
 							<td>4496.00</td>
 							<td>
 								<div style="display: flex;" >
-									<span style="margin: auto;color: rgb(2, 143, 208);" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span>
+									<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span>
 									&nbsp;&nbsp;
-									<span style="margin: auto;color: rgb(2, 143, 208);" title="发货" class="glyphicon glyphicon-check"></span>
+									<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
 								</div>
 							</td>
 						</tr>
@@ -141,24 +123,9 @@
 							<td>4496.00</td>
 							<td>
 								<div style="display: flex;" >
-									<span style="margin: auto;color: rgb(2, 143, 208);" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span>
+									<span style="margin: auto;" title="修改"  data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span>
 									&nbsp;&nbsp;
-									<span style="margin: auto;color: rgb(2, 143, 208);" title="发货" class="glyphicon glyphicon-check"></span>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>1231231231231</td>
-							<td>12</td>
-							<td>2001-1-1</td>
-							<td>44496.00</td>
-							<td>40000.00</td>
-							<td>4496.00</td>
-							<td>
-								<div style="display: flex;" >
-									<span style="margin: auto;color: rgb(2, 143, 208);" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span>
-									&nbsp;&nbsp;
-									<span style="margin: auto;color: rgb(2, 143, 208);" title="发货" class="glyphicon glyphicon-check"></span>
+									<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
 								</div>
 							</td>
 						</tr>
@@ -191,13 +158,21 @@
 					<li class="pagebtn" id="pageDian" style="border: none;background: white;font-size: 20px;">...</li>
 					<li class="pagebtn pageCurrent pageDi">14</li>
 					<li class="pagebtn pageCurrent">15</li>
-					<li class="pagebtn pageNext"><span class="glyphicon glyphicon-menu-right"></span><v/li>
+					<li class="pagebtn pageNext"><span class="glyphicon glyphicon-menu-right"></span></li>
 				</ul>
 			</div>
 		</div>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker.js" ></script>
 		<script type="text/javascript">
+		    $('.datetimepicker').datetimepicker({
+			    format: 'yyyy-mm-dd hh:ii',
+			    autoclose: 1
+			});
 			$(function(){
-				myDate();
+				$(".remove").click(function(){
+					$(".datetimepicker").val("");
+				});
+				
 				$(".order").click(function(){
 					if($(this).find("span").attr("class").indexOf("glyphicon-triangle-bottom") != -1){
 						$(this).find("span").removeClass("glyphicon-triangle-bottom");
