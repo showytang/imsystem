@@ -3,9 +3,18 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>订单详细信息</title>
-		<link rel="stylesheet" href="css/bootstrap.min.css" />
-		<script type="text/javascript" src="js/jquery-2.1.4.min.js" ></script>
-		<script type="text/javascript" src="js/bootstrap.min.js" ></script>
+	<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="assets/css/main.css">
+		<link rel="stylesheet" href="assets/css/myStyle.css" />
+		<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+		<link rel="stylesheet" type="text/css" media="all" href="assets/css/daterangepicker.css" />
+		<script type="text/javascript" src="assets/vendor/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="assets/vendor/bootstrap/js/moment.js"></script>
+		<script type="text/javascript" src="assets/vendor/bootstrap/js/daterangepicker.js"></script>
+		<script type="text/javascript" src="assets/vendor/bootstrap/js/Mydate.js"></script>
+		<script type="text/javascript" src="js/page.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<style type="text/css">
 			.shappingImg{
 				width: 35px;
@@ -23,10 +32,35 @@
 				white-space:nowrap;
 				text-align: center;
 			}
+			.table>thead>tr>th {
+				border-color: rgb(2, 143, 208);
+			}
+			
+			.table>tbody>tr>td {
+				border-color: rgb(2, 143, 208);
+			}
+			.glyphicon {
+				color: rgb(2, 143, 208);
+			}
+			body::-webkit-scrollbar {
+				width: 5px;
+				height: 2px;
+				background: white;
+				border-radius: 10px;
+			}
+			
+			body::-webkit-scrollbar-thumb {
+				display: block;
+				width: 6px;
+				margin: 0 auto;
+				border-radius: 10px;
+				background: rgb(2, 143, 208);
+			}
+			
 		</style>
 	</head>
 	<body>
-		<div class="container-fluid">
+		<div class="container-fluid" style="background-color: white;">
 			<table class="table">
 				<thead>
 					<tr>

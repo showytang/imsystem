@@ -1,32 +1,68 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title>订单详细信息</title>
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
-		<script type="text/javascript" src="js/jquery-2.1.4.min.js" ></script>
-		<script type="text/javascript" src="js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
-		
+
 		<style type="text/css">
-			.shappingImg{
+			.shappingImg {
 				width: 35px;
 				height: 35px;
 			}
-			.table>tbody>tr>td{
-				line-height: 35px;	
-  				white-space:nowrap;
-  				text-align: center;
-			}
-			.container-fluid{
-				overflow-x:auto ;
-			}
-			.table>thead>tr>th{
-				white-space:nowrap;
+			
+			.table>tbody>tr>td {
+				line-height: 35px;
+				white-space: nowrap;
 				text-align: center;
+			}
+			
+			.container-fluid {
+				overflow-x: auto;
+			}
+			
+			.table>thead>tr>th {
+				white-space: nowrap;
+				text-align: center;
+			}
+			
+			input {
+				border: none;
+				outline: none;
+				text-align: center;
+			}
+			
+			.table>thead>tr>th {
+				border-color: rgb(2, 143, 208);
+			}
+			
+			.table>tbody>tr>td {
+				border-color: rgb(2, 143, 208);
+			}
+			.glyphicon {
+				color: rgb(2, 143, 208);
+			}
+			body::-webkit-scrollbar {
+				width: 5px;
+				height: 2px;
+				background: white;
+				border-radius: 10px;
+			}
+			
+			body::-webkit-scrollbar-thumb {
+				display: block;
+				width: 6px;
+				margin: 0 auto;
+				border-radius: 10px;
+				background: rgb(2, 143, 208);
 			}
 		</style>
 	</head>
+
 	<body>
 		<div class="container-fluid">
 			<table class="table">
@@ -38,6 +74,7 @@
 						<th>价格</th>
 						<th>数量</th>
 						<th>总计</th>
+						<th>操作</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -46,20 +83,23 @@
 						<td>vovi21x</td>
 						<td>耀光,8G*128G</td>
 						<td>2100.0</td>
-						<td>1</td>
+						<td><input value="1"></td>
 						<td>2100.0</td>
+						<td><span class="glyphicon glyphicon-remove"></span></td>
 					</tr>
 					<tr>
 						<td><img class="shappingImg" src="assets/img/apple-icon.png"></td>
 						<td>矿泉水</td>
 						<td>纯净水</td>
 						<td>3.0</td>
-						<td>1</td>
+						<td><input value="1"></td>
 						<td>3.0</td>
+						<td><span class="glyphicon glyphicon-remove"></span></td>
 					</tr>
 				</tbody>
 			</table>
-			
+
 		</div>
 	</body>
+
 </html>
