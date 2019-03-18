@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta charset="utf-8" />
+		<title>调拨</title>
+		<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="assets/css/main.css">
+		<link rel="stylesheet" href="assets/css/myStyle.css" />
+		<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+		<link rel="stylesheet" type="text/css" media="all" href="assets/css/daterangepicker.css" />
+		<script type="text/javascript" src="assets/vendor/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="assets/vendor/bootstrap/js/moment.js"></script>
+		<script type="text/javascript" src="assets/vendor/bootstrap/js/daterangepicker.js"></script>
+		<script type="text/javascript" src="assets/vendor/bootstrap/js/Mydate.js"></script>
+		<script type="text/javascript" src="js/page.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<style type="text/css">
+			.selected>div {
+				padding-top: 1vw;
+				padding-bottom: 1vw;
+			}
+			
+			.content {
+				overflow-x: auto;
+				padding-top: 15px;
+			}
+			
+			.datetimepicker {
+				margin: 0px;
+			}
+			
+			.pagebtn {
+				height: 28px;
+				width: 25px;
+				border: 1px solid #C0C0C0;
+				list-style: none;
+				text-align: center;
+				background: #DDDDDD;
+				line-height: 28px;
+				cursor: pointer;
+			}
+			
+			#page>ul {
+				display: flex;
+				justify-content: space-around;
+				padding: 0px;
+				font-size: 12px;
+			}
+			
+			#page {
+				width: 300px;
+				margin: 20px auto;
+			}
+			
+			.currentPage {
+				background: rgb(2, 143, 208);
+				color: white;
+				border: none;
+			}
+			
+			.table>tbody>tr {
+				cursor: pointer;
+			}
+			
+			.table>tbody>tr>td {
+				white-space: nowrap;
+				padding: 8px 20px;
+			}
+			
+			.table>thead>tr>th {
+				white-space: nowrap;
+				padding: 8px 20px;
+			}
+			
+			.boss,
+			.tj {
+				margin-bottom: 0px;
+			}
+			
+			.glyphicon {
+				color: rgb(2, 143, 208);
+			}
+			
+			.page-title {
+				font-weight: bold;
+				color: rgb(2, 143, 208);
+				letter-spacing: 5px;
+			}
+			
+			.tj span{
+				
+				background: rgb(2, 143, 208);
+				border-color: rgb(2, 143, 208);
+				color: white;
+			}
+			.displayBlock{
+				display: none;
+			}
+			@media  (max-width: 767px ) {
+				.display{
+					display: none;
+				}
+				.displayBlock{
+					display: block;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="wrapper" style="padding-top: 10px;" class="container-fluid">
+			<h3 class="page-title">调拨</h3>
+			<div class="selected row">
+				<div class="col-md-6 col-sm-4 col-xs-10 boss">
+					<div class="input-group tj">
+						<span class="input-group-addon">时间</span>
+						<input class="form-control" type="text" id="config-demo">
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-4 col-xs-5 boss display">
+					<div class="input-group tj">
+						<span class="input-group-addon">出货店</span>
+						<select class="form-control">
+							<option>a</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-4 col-xs-5 boss display">
+					<div class="input-group tj">
+						<span class="input-group-addon">进货店</span>
+						<select class="form-control">
+							<option>b</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-xs-1 displayBlock">
+					<span class="glyphicon glyphicon-th-list"></span>
+				</div>
+			</div>
+			<div class="content text-center">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th style="text-align: center;">编号</th>
+							<th style="text-align: center;width: 20px;">数量</th>
+							<th style="text-align: center;">时间</th>
+							<th style="text-align: center;">出货门店</th>
+							<th style="text-align: center;">进货门店</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1231231231231</td>
+							<td>12</td>
+							<td>2001-1-1</td>
+							<td>44496.00</td>
+							<td>40000.00</td>
+
+						</tr>
+						<tr>
+							<td>1231231231231</td>
+							<td>12</td>
+							<td>2001-1-1</td>
+							<td>44496.00</td>
+							<td>4496.00</td>
+
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!--商品详情模态框-->
+			<div class="modal fade bs-example-modal-lg" id="modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+				<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="myModalLabel">订单详情</h4>
+						</div>
+						<div class="modal-body">
+							<iframe width="100%" style="border: none;overflow-x: auto;" src="orderDetailDesc.html"></iframe>
+						</div>
+						<div class="modal-footer">
+							<span style="font-size: 12px;">点击数量可修改</span>
+							<button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+							<button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="page">
+				<ul>
+					<li class="pagebtn pagePrev"><span class="glyphicon glyphicon-menu-left"></span></li>
+					<li class="pagebtn currentPage pageCurrent pageq">1</li>
+					<li class="pagebtn pageCurrent pageq">2</li>
+					<li class="pagebtn pageCurrent pageq">3</li>
+					<li class="pagebtn" id="pageDian" style="border: none;background: #DDDDDD;font-size: 20px;">...</li>
+					<li class="pagebtn pageCurrent pageDi">14</li>
+					<li class="pagebtn pageCurrent">15</li>
+					<li class="pagebtn pageNext"><span class="glyphicon glyphicon-menu-right"></span></li>
+				</ul>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				myDate();
+				$(".order").click(function() {
+					if($(this).find("span").attr("class").indexOf("glyphicon-triangle-bottom") != -1) {
+						$(this).find("span").removeClass("glyphicon-triangle-bottom");
+						$(this).find("span").addClass("glyphicon-triangle-top");
+					} else {
+						$(this).find("span").addClass("glyphicon-triangle-bottom");
+						$(this).find("span").removeClass("glyphicon-triangle-top");
+					}
+				});
+				$("tbody>tr").click(function() {
+					$("#modal").modal("show");
+				});
+				$(".displayBlock").click(function(){
+					if($(".selected>div:eq("+0+")").attr("class").indexOf("display") != -1){
+						$(".selected>div").addClass("display");
+						$(".selected>div:eq("+0+")").removeClass("display");
+					}
+					else{
+						$(".selected>div").removeClass("display");
+						$(".selected>div:eq("+0+")").addClass("display");
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>
