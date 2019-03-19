@@ -3,6 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title>商品详情</title>
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
 		<!-- VENDOR CSS -->
@@ -19,138 +20,127 @@
 		<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
 
 		<link rel="stylesheet" href="css/typeDonghua.css" />
-		<script type="text/javascript" src="js/typeDonghua.js"></script>
-		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-		<script src="js/bootstrap.js"></script>
-		<script type="text/javascript" src="js/wangEditor.min.js"></script>
-		<script type="text/javascript" src="js/jquery.color.js"></script>
+
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
 
 		<style>
-			.option-rongqi {
-				position: relative;
-				z-index: 999;
+			.list-group-item-hover:hover {
+				background-color: #C4E3F3;
+			}
+			
+			.inp {
+				border: none;
+				border-bottom: 1px solid #CCCCCC;
+				display: none;
+			}
+			
+			body {
+				-webkit-user-select: none;
 			}
 		</style>
 
+		<script type="text/javascript" src="js/jquery-1.8.2.js"></script>
+		<script type="text/javascript" src="js/bootstrap.js"></script>
+		<script>
+			$(function() {
+
+				$(".upNow").click(function() {
+
+					$(".upqian").hide(200);
+					$(".upAfert").show(200);
+					$(".text-span").hide();
+					$(".inp").show();
+
+				});
+
+				$(".upAfert").click(function() {
+
+					$(".upqian").show(200);
+					$(".upAfert").hide(200);
+					$(".text-span").show();
+					$(".inp").hide();
+
+				});
+
+			});
+		</script>
 	</head>
 
 	<body>
 
-		<div class="container-fluid">
+		<div class="container">
 
 			<div class="panel">
 				<div class="panel-heading">
-					<h3 class="panel-title">新增商品</h3>
+					<h3 style="padding-right: 20px;background-color:#00AAFF ;color: #FFFFFF;height: 6vh;line-height: 6vh;letter-spacing:2px;text-indent: 20px;border-radius: 5px;" class="panel-title">
+						<span>商品详情</span>
+						<span class="AllUp upqian" style="float: right;cursor: pointer;">更多</span>
+						<span class="upNow upqian" style="float: right;cursor: pointer;">编辑</span>
+						
+						<span class="upAfert upOk" style="float: right;cursor: pointer;display: none;">完成</span>
+						<span class="upAfert upNo" style="float: right;cursor: pointer;display: none;">取消</span>
+					</h3>
 				</div>
 				<div class="panel-body">
 
-					<div class="input-group">
-						<span class="input-group-btn">
-							<button class="btn btn-primary" type="button">货品名称：</button>
-						</span>
-						<input class="form-control" type="text">
-					</div>
-					<br>
-					
-					<div class="row visible-lg-block visible-md-block" style="margin: 0 3vh;">
-						<div class="option-div option-top-div">
-							<div class="col-lg-1 col-md-1 text-right option-rongqi">
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型:</span>
-							</div>
-							<div class="col-lg-11 col-md-11 option-rongqi">
-								<span class="visible-lg-inline-block visible-md-inline-block visible-md-inline-block text-center activePosition option-span active1"></span>
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span activeColor" typeid="">上衣</span>
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">裤子</span>
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔</span>
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
-							</div>
-						</div>
+					<div class="row">
 
-						<div class="option-div">
-							<div class="col-lg-1 col-md-1 text-right option-rongqi">
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">尺码:</span>
-							</div>
-							<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #DC4E41;">不限</span>
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">S</span>
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">M</span>
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">L</span>
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">XL</span>
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">XL</span>
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">XXL</span>
-							</div>
-						</div>
+						<ul class="list-group">
 
-						<div class="option-div">
-							<div class="col-lg-1 col-md-1 text-right option-rongqi">
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">颜色:</span>
-							</div>
-							<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #DC4E41;">不限</span>
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">浅粉色</span>
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">卡其色</span>
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">藏青色</span>
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">藕色</span>
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">杏色</span>
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">绿棕色</span>
-							</div>
+							<li class="list-group-item list-group-item-heading">
+								<div class="row">
+									<div class="col-xs-6 col-md-3">
+										<a href="#" class="thumbnail">
+											<img src="assets/img/login-bg.jpg" alt="...">
+										</a>
+									</div>
+							</li>
+
+							<li class="list-group-item list-group-item-heading list-group-item-hover">
+								<big>商品名称：</big><span>超级保暖的夏天衣服</span>
+							</li>
+							<li class="list-group-item list-group-item-heading list-group-item-hover">
+								<big>商品类型：</big><span>黑色,M,魔幻樱花</span>
+							</li>
+							<li class="list-group-item list-group-item-heading list-group-item-hover">
+								<big>进货价：￥</big><span class="text-span">666</span>
+								<input class="inp" value="666" />
+
+							</li>
+							<li class="list-group-item list-group-item-heading list-group-item-hover">
+								<big>批发价：￥</big><span class="text-span">777</span>
+								<input class="inp" value="777" />
+
+							</li>
+							<li class="list-group-item list-group-item-heading list-group-item-hover">
+								<big>零售价：￥</big><span class="text-span">888</span>
+								<input class="inp" value="888" />
+
+							</li>
+							<li class="list-group-item list-group-item-heading list-group-item-hover">
+								<big>神仙价：￥</big><span class="text-span">99999</span>
+								<input class="inp" value="99999" />
+
+							</li>
+
+						</ul>
+
 						</div>
 
 					</div>
 
-					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-user"></i></span>
-						<input class="form-control" placeholder="Username" type="text">
-					</div>
-					<br>
-					<div class="input-group">
-						<input class="form-control" placeholder="Username" type="text">
-						<span class="input-group-addon"><i class="fa fa-user"></i></span>
-					</div>
-					<br>
-					<div class="input-group">
-						<span class="input-group-addon">$</span>
-						<input class="form-control" type="text">
-						<span class="input-group-addon">.00</span>
-					</div>
 				</div>
+
+				<div class="panel">
+
+					<div class="panel-body">
+						富文本区域
+					</div>
+
+				</div>
+
 			</div>
-
-			<!--富文本编辑器-->
-			<div id="editor">
-
-			</div>
-
-		</div>
 
 	</body>
 
 </html>
-
-<script type="text/javascript">
-	var E = window.wangEditor;
-	var editor = new E('#editor');
-	editor.create();
-
-	$(function() {
-
-		//类型点击事件
-		$(".option-span").click(function() {
-			//动画
-			activeSpanStyle(this);
-
-		});
-
-		//详细类型点击事件
-		$(".option-span-z").click(function() {
-			optionAddStyle(this);
-
-		});
-
-		$(".option-span-all").click(function() {
-			optionAllStyle(this);
-		});
-
-	});
-</script>

@@ -7,7 +7,7 @@ function optionAllStyle(obj) {
 
 	$(obj).addClass("active1");
 	$(obj).animate({
-		backgroundColor: "#DC4E41",
+		backgroundColor: "#00AAFF",
 		color: "#ffffff"
 	}, 300);
 
@@ -38,7 +38,7 @@ function optionAddStyle(obj) {
 
 		$(obj).addClass("active1");
 		$(obj).animate({
-			backgroundColor: "#DC4E41",
+			backgroundColor: "#00AAFF",
 			color: "#ffffff"
 		}, 300);
 	}
@@ -53,7 +53,7 @@ function optionAddStyle(obj) {
 
 		$(obj).parent().find(".option-span-all").addClass("active1");
 		$(obj).parent().find(".option-span-all").animate({
-			backgroundColor: "#DC4E41",
+			backgroundColor: "#00AAFF",
 			color: "#ffffff"
 		}, 300);
 
