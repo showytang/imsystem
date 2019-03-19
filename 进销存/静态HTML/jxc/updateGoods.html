@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>商品新增</title>
-		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<title>商品修改</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
 		<!-- VENDOR CSS -->
 		<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
@@ -39,7 +38,9 @@
 				border-left: 1px solid #CCCCCC;
 				outline: none;
 			}
-			
+			.active1{
+				background-color: rgb(0, 170, 255); color: rgb(255, 255, 255);
+			}
 			.img-div {
 				width: 20vh;
 				height: 20vh;
@@ -74,7 +75,7 @@
 						<div class="img-div text-center">
 							<span class="glyphicon glyphicon-plus" style="font-size: 50px;"></span>
 							<div style="position: absolute;top:0;">
-								<img width="100%" height="100%" />
+								<img src="assets/img/login-bg.jpg" width="100%" height="100%" />
 							</div>
 						</div>
 
@@ -113,8 +114,8 @@
 								<!--<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #DC4E41;">不限</span>-->
 								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="s">S</span>
 								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="m">M</span>
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="l">L</span>
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="xl">XL</span>
+								<span class="active1 visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="l">L</span>
+								<span class="active1 visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="xl">XL</span>
 								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="xl">XL</span>
 								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="xxl">XXL</span>
 							</div>
@@ -126,11 +127,11 @@
 							</div>
 							<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">
 								<!--<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #DC4E41;">不限</span>-->
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="f">浅粉色</span>
+								<span class="active1 visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="f">浅粉色</span>
 								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="k">卡其色</span>
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="z">藏青色</span>
+								<span class="active1 visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="z">藏青色</span>
 								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="o">藕色</span>
-								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="s">杏色</span>
+								<span class="active1 visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="s">杏色</span>
 								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="l">绿棕色</span>
 							</div>
 						</div>
@@ -176,7 +177,7 @@
 	editor.create();
 
 	$(function() {
-
+		checkedDl();
 		//类型点击事件
 		$(".option-span").click(function() {
 			//动画

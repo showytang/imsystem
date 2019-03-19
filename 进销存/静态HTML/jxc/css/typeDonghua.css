@@ -30,16 +30,24 @@
 	position: relative;
 }
 
+.option-div {
+	padding: 1vh 0;
+	line-height: 2vh;
+	border-bottom: 1px #CCCCCC solid;
+	
+}
+
 .activePosition {
-	background-color: #00AAFF;;
+	background-color: #00AAFF;
+	;
 	position: absolute;
 	z-index: -1;
 }
 
 .option-rongqi {
-	background: #ded4d41f;
+	background-color: inherit;
 	height: 4vh;
-	border-bottom: 1px #CCCCCC solid;
+
 }
 
 .activeColor {
