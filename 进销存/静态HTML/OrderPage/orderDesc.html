@@ -4,10 +4,18 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<meta charset="utf-8" />
 		<title>退单页面</title>
-		<link rel="stylesheet" href="css/bootstrap.min.css" />
-		<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" />
-		<script type="text/javascript" src="js/jquery-2.1.4.min.js" ></script>
-		<script type="text/javascript" src="js/bootstrap.min.js" ></script>
+		<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="assets/css/main.css">
+		<link rel="stylesheet" href="assets/css/myStyle.css" />
+		<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+		<link rel="stylesheet" type="text/css" media="all" href="assets/css/daterangepicker.css" />
+		<script type="text/javascript" src="assets/vendor/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="assets/vendor/bootstrap/js/moment.js"></script>
+		<script type="text/javascript" src="assets/vendor/bootstrap/js/daterangepicker.js"></script>
+		<script type="text/javascript" src="assets/vendor/bootstrap/js/Mydate.js"></script>
+		<script type="text/javascript" src="js/page.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<style type="text/css">
 			.selected>div{
 				padding-top:1vw ;
@@ -41,7 +49,7 @@
 				margin: 20px auto ;
 			}
 			.currentPage{
-				background: red;
+				background: rgb(2, 143, 208);
 				color: white;
 				border: none;
 			}
@@ -66,6 +74,21 @@
 			.display{
 				display: block;
 			}
+			.tj span{
+				
+				background: rgb(2, 143, 208);
+				border-color: rgb(2, 143, 208);
+				color: white;
+			}
+			.boss,
+			.tj {
+				margin-bottom: 0px;
+			}
+			.page-title {
+				font-weight: bold;
+				color: rgb(2, 143, 208);
+				letter-spacing: 5px;
+			}
 			@media (max-width: 767px) { 
 			
 				.xsoptions{
@@ -86,17 +109,18 @@
 	</head>
 	<body>
 		<div id="wrapper" style="padding-top: 10px;" class="container-fluid">
-			<div class="selected row">
-				<div class="col-md-3 col-sm-6 col-xs-11">
+			<h3 class="page-title">退货</h3>
+			<div class="selected row boss">
+				<div class="col-md-4 col-sm-6 col-xs-11 tj">
 					<div class="input-group">
 						<span class="input-group-addon" >No</span>
 						<input class="form-control" placeholder="订单编号" />
 					</div>
 				</div>
-				<div class="col-md-4 col-sm-6 col-xs-11 display">
+				<div class="col-md-3 col-sm-6 col-xs-11 display tj">
 					<div class="input-group">
 						<span class="input-group-addon">每页数</span>
-						<select class="form-control" style="border-right: none;">
+						<select class="form-control" style="border-right: none;height: 100%;">
 							<option>10</option>
 							<option>20</option>
 							<option>50</option>
@@ -108,14 +132,10 @@
 						</span>
 					</div>
 				</div>
-				<div id="time" class="col-md-5 col-sm-12 col-xs-11 display">
+				<div class="col-md-5 col-sm-12 col-xs-11 display tj">
 	                <div class="input-group">
 	                    <span class="input-group-addon">Time</span>
-	                    <div class="form-control" style="display: flex;padding: 0px;font-size: 12px;">
-	                    	<input class="datetimepicker" readonly="readonly"style="border: none;border-right: 1px solid #ddd;border-radius: 0px;background: white;width: 50%;height: 100%;" placeholder="开始时间" />
-							<input class="datetimepicker" readonly="readonly"style="border: none;background: white;width: 50%;height: 100%;" placeholder="结束时间" />
-	                    </div>
-						<span class="input-group-addon remove"><span class="glyphicon glyphicon-remove"></span></span>
+	                    <input class="form-control"  id="config-demo" style="border: none;border-right: 1px solid #ddd;border-radius: 0px;" placeholder="开始时间" />
 	                </div>
 				</div>
 				<div class="col-xs-1 xsoptions">
@@ -174,10 +194,7 @@
 			        <h4 class="modal-title" id="myModalLabel">退货理由</h4>
 			      </div>
 			      <div class="modal-body">
-			      	<span>
-			      		aksdhfs1噗U098203210s909asjdfkljasdlkfj克拉斯杜绝浪费阿婆敌法上看到了放假卡萨帝减肥；拉萨记得不；发送12312312312312319701
-			      		1902380912849810925708无爱哦范德萨克里夫海龙大厦佛啊是的会计分录卡上的
-			      	</span>
+			      		<iframe width="100%" style="border: none;overflow-x: auto;" src="orderDescDetails.htmll"></iframe>
 			      </div>
 			      <div class="modal-footer"> 
 			        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -191,7 +208,7 @@
 					<li class="pagebtn currentPage pageCurrent pageq">1</li>
 					<li class="pagebtn pageCurrent pageq">2</li>
 					<li class="pagebtn pageCurrent pageq">3</li>
-					<li class="pagebtn" id="pageDian" style="border: none;background: white;font-size: 20px;">...</li>
+					<li class="pagebtn" id="pageDian" style="border: none;background: #DDDDDD;font-size: 20px;">...</li>
 					<li class="pagebtn pageCurrent pageDi">14</li>
 					<li class="pagebtn pageCurrent">15</li>
 					<li class="pagebtn pageNext"><span class="glyphicon glyphicon-menu-right"></span></li>
@@ -200,11 +217,8 @@
 		</div>
 		<script type="text/javascript" src="js/bootstrap-datetimepicker.js" ></script>
 		<script type="text/javascript">
-		    $('.datetimepicker').datetimepicker({
-			    format: 'yyyy-mm-dd hh:ii',
-			    autoclose: 1
-			});
 			$(function(){
+				myDate();
 				$(".xsoptions").click(function(){
 					if($("#options").css("display")=="none"){
 						$("#options").slideDown();

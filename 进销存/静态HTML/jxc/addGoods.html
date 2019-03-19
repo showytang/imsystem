@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>商品新增</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<!-- VENDOR CSS -->
+		<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="assets/vendor/linearicons/style.css">
+		<link rel="stylesheet" href="assets/vendor/chartist/css/chartist-custom.css">
+		<!-- MAIN CSS -->
+		<link rel="stylesheet" href="assets/css/main.css">
+		<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+		<link rel="stylesheet" href="assets/css/demo.css">
+		<!-- GOOGLE FONTS -->
+		<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+
+		<link rel="stylesheet" href="css/typeDonghua.css" />
+
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+		<script src="js/bootstrap.js"></script>
+		<script type="text/javascript" src="js/wangEditor.min.js"></script>
+		<script type="text/javascript" src="js/jquery.color.js"></script>
+
+		<style>
+			.option-rongqi {
+				position: relative;
+				z-index: 999;
+			}
+			
+			td input {
+				width: 100%;
+				font-size: 20px;
+				border: none;
+				border-left: 1px solid #CCCCCC;
+				outline: none;
+			}
+			
+			.img-div {
+				width: 20vh;
+				height: 20vh;
+				margin-left: 3vh;
+				line-height: 23vh;
+				position: relative;
+			}
+			
+			.fileHide {
+				height: 20vh;
+				width: 20vh;
+				opacity: 0;
+				position: absolute;
+				z-index: 999;
+			}
+		</style>
+
+	</head>
+
+	<body>
+
+		<div class="container-fluid">
+
+			<div class="panel">
+				<div class="panel-heading">
+					<h3 class="panel-title">新增商品</h3>
+				</div>
+				<div class="panel-body">
+
+					<div class="row">
+						<input type="file" class="fileHide" />
+						<div class="img-div text-center">
+							<span class="glyphicon glyphicon-plus" style="font-size: 50px;"></span>
+							<div style="position: absolute;top:0;">
+								<img width="100%" height="100%" />
+							</div>
+						</div>
+
+					</div>
+
+					<br>
+
+					<div class="input-group">
+						<span class="input-group-btn">
+							<button class="btn btn-primary" type="button">货品名称：</button>
+						</span>
+						<input class="form-control" type="text">
+					</div>
+					<br>
+
+					<div class="row visible-lg-block visible-md-block" style="margin: 0 3vh;">
+						<div class="option-div option-top-div row">
+							<div class="col-lg-1 col-md-1 text-right option-rongqi">
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span>
+							</div>
+							<div class="col-lg-11 col-md-11 option-rongqi">
+								<span class="visible-lg-inline-block visible-md-inline-block visible-md-inline-block text-center activePosition option-span active1"></span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span activeColor" typeid="">上衣</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">裤子</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
+							</div>
+						</div>
+
+						<div class="option-div option-type row">
+							<div class="col-lg-1 col-md-1 text-right option-rongqi">
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">尺码</span>
+							</div>
+							<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">
+								<!--<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #DC4E41;">不限</span>-->
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="s">S</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="m">M</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="l">L</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="xl">XL</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="xl">XL</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="xxl">XXL</span>
+							</div>
+						</div>
+
+						<div class="option-div option-type row">
+							<div class="col-lg-1 col-md-1 text-right option-rongqi">
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">颜色</span>
+							</div>
+							<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">
+								<!--<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #DC4E41;">不限</span>-->
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="f">浅粉色</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="k">卡其色</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="z">藏青色</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="o">藕色</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="s">杏色</span>
+								<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="l">绿棕色</span>
+							</div>
+						</div>
+
+					</div>
+					<br>
+					<br>
+					<div class="panel">
+						<div class="panel-body">
+
+						</div>
+					</div>
+					<br>
+
+				</div>
+			</div>
+
+			<!--富文本编辑器-->
+			<div id="editor">
+
+			</div>
+
+		</div>
+
+	</body>
+
+</html>
+
+<script type="text/javascript">
+	var E = window.wangEditor;
+	var editor = new E('#editor');
+	//	editor.customConfig.uploadImgShowBase64 = true;
+	//  editor.customConfig.uploadImgServer = '/upload';
+
+	editor.customConfig.customUploadImg = function(files, insert) {
+		// files 是 input 中选中的文件列表
+		// insert 是获取图片 url 后，插入到编辑器的方法
+
+		// 上传代码返回结果之后，将图片插入到编辑器中
+		insert(imgUrl)
+	}
+
+	editor.create();
+
+	$(function() {
+
+		//类型点击事件
+		$(".option-span").click(function() {
+			//动画
+			activeSpanStyle(this);
+
+		});
+
+		//详细类型点击事件
+		$(".option-span-z").click(function() {
+			optionAddStyle(this);
+			checkedDl();
+
+		});
+
+	});
+
+	//this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''
+
+	//输入判定
+	function countChange(Obj) {
+
+		//判定是否数字
+		$(Obj).val($(Obj).val().replace(/[^\d]/g, ''));
+
+		let nowCount = $(Obj).val();
+
+		if(nowCount < 1) {
+			$(Obj).val("1");
+		}
+
+	}
+
+	//价格小数2位输入
+	function priceChange(Obj) {
+
+		//判定是否数字
+		$(Obj).val($(Obj).val().match(/\d+(\.\d{0,2})?/) ? $(Obj).val().match(/\d+(\.\d{0,2})?/)[0] : '');
+
+		let nowCount = $(Obj).val();
+
+	}
+
+	function checkedDl() {
+		var isCheckedDl = 0;
+		var isCheckedDlArray = [];
+		var allIndex = 1;
+		$(".option-type").each(function(i, e) {
+
+			var isChecked = $(this).find(".active1");
+			if(isChecked.length != 0) {
+				var checkedTag = [];
+				$.each(isChecked, function() {
+					checkedTag.push({
+						id: $(this).attr("sizeid"),
+						name: $(this).text()
+					});
+				});
+
+				allIndex *= isChecked.length;
+				isCheckedDlArray[isCheckedDl] = {
+					num: allIndex / isChecked.length,
+					index: isCheckedDl,
+					checkedInput: isChecked.length,
+					tag: checkedTag,
+					thName: $(this).find(".option-span-title").html()
+				};
+				isCheckedDl++;
+			}
+		});
+		var tagObject = {
+			allIndex: allIndex,
+			isCheckedDlArray: isCheckedDlArray
+		}
+		eachCreate(tagObject);
+	}
+
+	function eachCreate(tagObject) {
+		$("table").remove();
+		var table = $("<table class='table' >");
+
+		$(".panel-body").append(table);
+
+		var index = 1;
+		var tbody = $("<tbody>");
+		table.append(tbody);
+		var ttile = $("<thead>");
+		table.append(ttile);
+		var thead = $("<tr>");
+		ttile.append(thead);
+		var thNum = $("<th class='text-center'>库存</th>");
+		ttile.append(thNum);
+		var thPrice = $("<th class='text-center'>单价</th>");
+		ttile.append(thPrice);
+		var thNum2 = $("<th class='text-center'>库存预警</th>");
+		ttile.append(thNum2);
+		table.append(thead);
+		for(var i = tagObject.isCheckedDlArray.length - 1; i >= 0; i--) {
+			var th = $("<th class='text-center'>").html(tagObject.isCheckedDlArray[i].thName);
+			ttile.prepend(th);
+			var indexRow = 1;
+			for(var x = 0; x < tagObject.isCheckedDlArray[i].num; x++) {
+				for(var j = 0; j < tagObject.isCheckedDlArray[i].tag.length; j++) {
+					var td = $("<td class='text-center' style='vertical-align: inherit;' v='" + tagObject.isCheckedDlArray[i].tag[j].id + "'>").html(tagObject.isCheckedDlArray[i].tag[j].name);
+					if(i == tagObject.isCheckedDlArray.length - 1) {
+						var td1 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' type='hidden' value='" + tagObject.isCheckedDlArray[i].tag[j].id + "'><input oninput='countChange(this)' class='text-center' value='50' type=text name='num' v=''></td>");
+						var td2 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' oninput='priceChange(this)' type=text name='price'></td>");
+						var td3 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' value='20' oninput='countChange(this)' type=text name='thNum2'></td>");
+						var tr = $("<tr class='" + index + "'>");
+						index++;
+						tr.append(td);
+						tr.append(td1).append(td2).append(td3);
+						tbody.append(tr);
+					} else {
+						var rowspan = tagObject.allIndex / tagObject.isCheckedDlArray[i + 1].num;
+						td.attr("rowspan", tagObject.allIndex / tagObject.isCheckedDlArray[i + 1].num);
+						//								td.attr("sl",rowspan);
+						$("." + indexRow).prepend(td);
+						var x1 = tagObject.allIndex / (tagObject.isCheckedDlArray[i].tag.length * tagObject.isCheckedDlArray[i].num);
+						indexRow += x1;
+						appendId(td);
+					}
+				}
+			}
+		}
+	}
+
+	function appendId(t) {
+		var index = t.attr("rowspan") - 1;
+		var bb = t.parent().find("[type=hidden]").val();
+		t.parent().find("[type=hidden]").val(t.attr("v") + "," + bb);
+		var tr = t.parent();
+		for(var i = 0; i < index; i++) {
+			tr = tr.next();
+			var v = tr.find("[type=hidden]").val();
+			tr.find("[type=hidden]").val(t.attr("v") + "," + v);
+		}
+	}
+
+	//详细类型多选
+	function optionAddStyle(obj) {
+
+		if($(obj).hasClass("active1")) {
+
+			$(obj).removeClass("active1");
+			$(obj).animate({
+				backgroundColor: "",
+				color: "#000000"
+			}, 300);
+
+		} else {
+
+			$(obj).addClass("active1");
+			$(obj).animate({
+				backgroundColor: "#00AAFF;",
+				color: "#ffffff"
+			}, 300);
+		}
+
+	}
+
+	//类型滑动
+	function activeSpanStyle(obj) {
+
+		//禁用点击事件，在动画未完成之前再次点击选项会异常
+		$(obj).parent().find("span").css("pointer-events", "none");
+
+		let activeSpan = $(obj).parent().find(".active1");
+
+		//获取上一个span的下标
+		let parindex = $(obj).parent().find(".activeColor").index();
+		//获取当前span的下标
+		let nowindex = $(obj).index();
+		//获取上一个span的X轴坐标
+		let parX = $(obj).parent().find(".activeColor").position().left;
+		//获取当前span的X轴坐标
+		let nowX = $(obj).position().left;
+
+		$(obj).parent().find("span").removeClass("activeColor");
+
+		if(nowindex < parindex) {
+			//添加动画
+			$(activeSpan).animate({
+				marginLeft: "+=" + (nowX - parX) + "px"
+			}, 500);
+
+		} else if(nowindex > parindex) {
+			//添加动画
+			$(activeSpan).animate({
+				marginLeft: "+=" + (nowX - parX) + "px"
+			}, 500);
+		}
+
+		//当前span的宽度
+		var nowWidth = $(obj).width();
+
+		setTimeout(function() {
+			$(obj).addClass("activeColor");
+			//背景滑块和当前选项宽度同步
+			$(activeSpan).css("width", nowWidth);
+			//恢复点击事件
+			$(obj).parent().find("span").css("pointer-events", "");
+		}, 500);
+	}
+</script>
