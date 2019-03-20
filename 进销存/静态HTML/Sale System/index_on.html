@@ -22,10 +22,21 @@
 		<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
 		<style>
 			iframe{
+				margin: 0px;
+				padding: 0px;
 				width: 100%;
-				min-height: 650px;
+				min-height: 675px;
 				height: auto;
 			}
+			.lm{
+				height: 98% !important;
+			}
+			.lm .sidebar-scroll{
+				height: 100% !important;
+				overflow-y: scroll !important;
+			}
+			.lm .sidebar-scroll::-webkit-scrollbar { width:3px; height:2px; background:#ccc; border-radius:10px;/*外层轨道*/}
+        	.lm .sidebar-scroll::-webkit-scrollbar-thumb{width:2px; border-radius: 10px; background:#0089dc;/*内层轨道*/}
 		</style>
 	</head>
 	<body>
@@ -89,11 +100,72 @@
 				</div>
 			</nav>
 			<div id="sidebar-nav" class="sidebar">
-				<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 95%;"><div class="sidebar-scroll" style="overflow: hidden; width: auto; height: 95%;">
-					<nav>
+				<div class="slimScrollDiv lm" style="position: relative; overflow: hidden; width: auto; height: 95%;"><div class="sidebar-scroll" style="overflow: hidden; width: auto; height: 95%;">
+					<nav class="leftMenu">
 						<ul class="nav">
 							<li><a href="yhb/index.html" target="right" class="active"><i class="lnr lnr-home"></i> <span>首页</span></a></li>
 							<li><a href="yhb/goodsPaim.html" target="right" class=""><i class="lnr lnr-code"></i> <span>商品销量排名</span></a></li>
+							<li>
+								<a href="#tj" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>统计</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+								<div id="tj" class="collapse ">
+									<ul class="nav">
+										<li><a target="right"  href="yhb/BaoBiao1.html" class="">报表一</a></li>
+										<li><a target="right"  href="yhb/BaoBiao2.html" class="">报表二</a></li>
+										<li><a target="right"  href="yhb/BaoBiao3.html" class="">报表仨</a></li>
+										<li><a target="right"  href="yhb/goodsPaim.html" class="">统计1</a></li>
+										<li><a target="right"  href="yhb/jinhuo.html" class="">统计2</a></li>
+										<li><a target="right"  href="yhb/kucun.html" class="">统计3</a></li>
+										<li><a target="right"  href="yhb/mingxi.html" class="">统计4</a></li>
+										<li><a target="right"  href="yhb/qiankuan.html" class="">统计5</a></li>
+										<li><a target="right"  href="yhb/shouzhang.html" class="">统计6</a></li>
+										<li><a target="right"  href="yhb/XiaoShou.html" class="">统计7</a></li>
+									</ul>
+								</div>
+							</li>
+							<li>
+								<a href="#jc" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>基础数据</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+								<div id="jc" class="collapse ">
+									<ul class="nav">
+										<li><a target="right"  href="xl/guigeshili.html" class="">基础数据1</a></li>
+										<li><a target="right"  href="xl/guigezhi.html" class="">基础数据</a></li>
+										<li><a target="right"  href="xl/kehujibie.html" class="">基础数据</a></li>
+										<li><a target="right"  href="xl/kehuleixing.html" class="">基础数据</a></li>
+										<li><a target="right"  href="xl/spdanwei.html" class="">基础数据</a></li>
+										<li><a target="right"  href="xl/spguige.html" class="">基础数据</a></li>
+										<li><a target="right"  href="xl/spleixing.html" class="">基础数据</a></li>
+										<li><a target="right"  href="xl/zhifuleixing.html" class="">基础数据</a></li>
+									</ul>
+								</div>
+							</li>
+							<li>
+								<a href="#orders" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>订单管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+								<div id="orders" class="collapse ">
+									<ul class="nav">
+										<li><a target="right"  href="wjh/allot.html" class="">订单1</a></li>
+										<li><a target="right"  href="wjh/index.html" class="">订单</a></li>
+										<li><a target="right"  href="wjh/indexDatail.html" class="">订单</a></li>
+										<li><a target="right"  href="wjh/insertOrder.html" class="">订单</a></li>
+										<li><a target="right"  href="wjh/insertOrderOut.html" class="">订单</a></li>
+										<li><a target="right"  href="wjh/orderDesc.html" class="">订单</a></li>
+										<li><a target="right"  href="wjh/orderOver.html" class="">订单</a></li>
+										<li><a target="right"  href="wjh/orderOverDetails.html" class="">订单</a></li>
+										<li><a target="right"  href="wjh/yetOrder.html" class="">订单</a></li>
+										<li><a target="right"  href="wjh/yetOrderDetails.html" class="">订单</a></li>
+									</ul>
+								</div>
+							</li>
+							<li>
+								<a href="#goods" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>商品管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+								<div id="goods" class="collapse ">
+									<ul class="nav">
+										<li><a target="right"  href="dws/addGoods.html" class="">添加商品</a></li>
+										<li><a target="right"  href="dws/detailsGoods.html" class="">商品修改</a></li>
+										<li><a target="right"  href="dws/Goods.html" class="">商品查询</a></li>
+										<li><a target="right"  href="dws/orderOptionGoods.html" class="">选中商品</a></li>
+										<li><a target="right"  href="dws/updateGoods.html" class="">添加</a></li>
+									</ul>
+								</div>
+							</li>
 							<li><a href="charts.html" class=""><i class="lnr lnr-chart-bars"></i> <span>Charts</span></a></li>
 							<li><a href="panels.html" class=""><i class="lnr lnr-cog"></i> <span>Panels</span></a></li>
 							<li><a href="notifications.html" class=""><i class="lnr lnr-alarm"></i> <span>Notifications</span></a></li>
