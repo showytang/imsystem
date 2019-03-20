@@ -1,0 +1,69 @@
+final String table = "stockrecord";
+final String column_id                    ="id";
+final String column_aftersdid                  ="aftersdid";
+final String column_beforesdid                  ="beforesdid";
+final String column_column1 = "column1";
+final String column_column2 = "column2";
+final String column_column3 = "column3";
+final String column_column4 = "column4";
+final String column_column5 = "column5";
+
+class StockRecord {
+ String id                        ;
+String aftersdid                 ;
+String beforesdid                ;
+
+
+  String column1;
+  String column2;
+  String column3;
+  String column4;
+  String column5;
+  StockRecord();
+
+  StockRecord.construct1(this.id            ,
+this.aftersdid     ,
+this.beforesdid);
+  Map<String, dynamic> toMap() {
+    var map = <String, dynamic>{
+column_id                         : id                         , 
+column_aftersdid                  : aftersdid                  , 
+column_beforesdid                 : beforesdid                 , 
+			
+      column_column1: column1,
+      column_column2: column2,
+      column_column3: column3,
+      column_column4: column4,
+      column_column5: column5
+    };
+    if (id != null) {
+      map[column_id] = id;
+    }
+    return map;
+  }
+  StockRecord.fromMap(Map<String, dynamic> map) {
+id                             =map[column_id                           ];
+aftersdid                      =map[column_aftersdid                    ];
+beforesdid                     =map[column_beforesdid                   ];
+
+		
+    column1 = map[column_column1];
+    column2 = map[column_column2];
+    column3 = map[column_column3];
+    column4 = map[column_column4];
+    column5 = map[column_column5];
+  }
+}
+createTable(Database db) async{
+  await db.execute('create table $table('
+   '$column_id                          Text PRIMARY KEY,'
+'$column_aftersdid                   Text,'
+'$column_beforesdid                  Text,'
+      '$column_column1        Text,'
+      '$column_column2        Text,'
+      '$column_column3        Text,'
+      '$column_column4        Text,'
+      '$column_column5        Text'
+      ')');
+}
+
