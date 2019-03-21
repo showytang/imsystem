@@ -113,14 +113,14 @@
 				top: 18px;
 				right: 10px;
 			}
-			.goods:nth-child(1) .good{
+			.gs:nth-child(1) .good{
 				border: 2px solid #FFE060;
 				color: #FFE060;
 			}
-			.goods:nth-of-type(2) .good{
+			.gs:nth-of-type(2) .good{
 				border: 2px solid #DFE0E1;
 			}
-			.goods:nth-of-type(3) .good{
+			.gs:nth-of-type(3) .good{
 				border: 1px solid #E59101;
 				color: #E59101;
 			}
@@ -132,9 +132,9 @@
 				line-height: 120px;
 				color: rgb(2, 143, 208);
 			}
-			.goods:nth-child(1) .good label{
+			.gs:nth-child(1) .good label{
 				color: #FFE060;
 			}
-			.goods:nth-child(3) .good label{
+			.gs:nth-child(3) .good label{
 				color: #E59101;
 			}
