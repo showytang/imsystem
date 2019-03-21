@@ -1,3 +1,8 @@
+
+$(function(){
+	$(".activePosition").css("width",$(".activePosition").next().width());
+})
+
 function optionAllStyle(obj) {
 	$(obj).parent().find(".option-span-z").removeClass("active1");
 	$(obj).parent().find(".option-span-z").animate({
