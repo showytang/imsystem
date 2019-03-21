@@ -184,37 +184,37 @@
 				//添加动画
 				$(".addgwc").click(function() {
 
-//					addGwcDonghua(this);
+					//					addGwcDonghua(this);
 
 				});
 
 			});
 
-//			function addGwcDonghua(Obj) {
-//
-//				var addImg = $(Obj).parents(".thumbnail").find("img"); //找到该商品的图片
-//
-//				var cloneImg = addImg.clone(); //对该图片进行克隆
-//				cloneImg.css({ //克隆的样式
-//
-//					"position": "absolute", //绝对定位
-//					"left": addImg.offset().left, //该图片的left位置
-//					"top": addImg.offset().top, //该图片的top位置
-//					"z-index": "200", //层级，越大越在上
-//					"opacity": "0.5" //透明度  半透明
-//				});
-//
-//				//克隆到body上的购物车位置
-//				cloneImg.appendTo($("body")).animate({
-//					"width": "50px", //克隆后的宽
-//					"height": "50px", //克隆后的宽
-//					"left": $(".panel").offset().left, //克隆后的left位置  购物车
-//					"top": $(".panel").offset().top - 120, //克隆后的left位置  购物车
-//				}, 1000, function() { //克隆后
-//					$(this).remove(); //清空购物车  不清除图片会叠加
-//				});
-//
-//			}
+			//			function addGwcDonghua(Obj) {
+			//
+			//				var addImg = $(Obj).parents(".thumbnail").find("img"); //找到该商品的图片
+			//
+			//				var cloneImg = addImg.clone(); //对该图片进行克隆
+			//				cloneImg.css({ //克隆的样式
+			//
+			//					"position": "absolute", //绝对定位
+			//					"left": addImg.offset().left, //该图片的left位置
+			//					"top": addImg.offset().top, //该图片的top位置
+			//					"z-index": "200", //层级，越大越在上
+			//					"opacity": "0.5" //透明度  半透明
+			//				});
+			//
+			//				//克隆到body上的购物车位置
+			//				cloneImg.appendTo($("body")).animate({
+			//					"width": "50px", //克隆后的宽
+			//					"height": "50px", //克隆后的宽
+			//					"left": $(".panel").offset().left, //克隆后的left位置  购物车
+			//					"top": $(".panel").offset().top - 120, //克隆后的left位置  购物车
+			//				}, 1000, function() { //克隆后
+			//					$(this).remove(); //清空购物车  不清除图片会叠加
+			//				});
+			//
+			//			}
 
 			/*
 			 商品添加
@@ -348,277 +348,228 @@
 
 						</div>
 
-<<<<<<< HEAD
-						<!--主体-->
-						<div id="body" style="margin: 1vh 3vh 0 3vh; min-height: 60vh;background-color: #eae2e21f;">
 
-							<hr />
+								<!--主体-->
+								<div id="body" style="margin: 1vh 3vh 0 3vh; min-height: 60vh;background-color: #eae2e21f;">
 
-							<div class="row">
+									<hr />
 
-								<div class="col-sm-6 col-md-3">
-									<div class="thumbnail">
-										<img style="max-height: 20vh;min-height: 20vh;" src="../assets/img/login-bg.jpg" alt="...">
-										<div class="caption text-center">
-											<h4>这是上衣啊</h4>
-											<p style="color: #777070;">
-												<span>红色,L</span> <span>￥：1800</span>
-											</p>
-											<p style="color: #777070;">
-												<span>库存:</span> <span>100</span>
-											</p>
-											<p style="color: #777070;">
-												<div >
-													<label class="add btn btn-default btn-xs" style="margin-right: 5px;">+</label>
-													<input type="text" value="1" maxlength="3" oninput="countChange(this)" class="text-center sum">
-													<label style="margin-left: 5px;" class="subtract btn btn-default btn-xs">-</label>
-												</div>
-											</p>
-											<p>
-												<a href="#" class="btn btn-primary addgwc" role="button">加入</a>
-											</p>
-										</div>
-=======
-			<!--主体-->
-			<div id="body" style="margin: 1vh 3vh 0 3vh; min-height: 60vh;background-color: #eae2e21f;">
+									<div class="row">
 
-				<hr />
-
-				<div class="row">
-
-					<div class="col-sm-6 col-md-3	">
-						<div class="thumbnail">
-							<img style="max-height: 20vh;min-height: 20vh;" src="../assets/img/login-bg.jpg" alt="...">
-							<div class="caption text-center">
-								<h4>这是上衣啊</h4>
-								<p style="color: #777070;">
-									<span>红色,L</span> <span>￥：1800</span>
-								</p>
-								<p style="color: #777070;">
-									<span>库存:</span> <span>100</span>
-								</p>
-								<p style="color: #777070;">
-									<div class="input-group">
-										<label class="add btn btn-default btn-xs" style="margin-right: 5px;">+</label>
-										<input type="text" value="1" maxlength="3" oninput="countChange(this)" class="text-center sum">
-										<label style="margin-left: 5px;" class="subtract btn btn-default btn-xs">-</label>
->>>>>>> acb90ab870fc5db85bf728eb25ab7e1d13bf9631
-									</div>
-								</div>
-
-							</div>
-
-<<<<<<< HEAD
-							<div id="page" style="margin-bottom: 45px;">
-								<ul>
-									<li class="pagebtn pagePrev"><span class="glyphicon glyphicon-menu-left"></span></li>
-									<li class="pagebtn currentPage pageCurrent pageq">1</li>
-									<li class="pagebtn pageCurrent pageq">2</li>
-									<li class="pagebtn pageCurrent pageq">3</li>
-									<li class="pagebtn" id="pageDian" style="border: none;background: white;font-size: 20px;">...</li>
-									<li class="pagebtn pageCurrent pageDi">14</li>
-									<li class="pagebtn pageCurrent">15</li>
-									<li class="pagebtn pageCurrent">16</li>
-									<li class="pagebtn pageNext"><span class="glyphicon glyphicon-menu-right"></span></li>
-								</ul>
-							</div>
-=======
-				<div id="page" style="margin-bottom: 45px;" >
-					<ul>
-						<li class="pagebtn pagePrev"><span class="glyphicon glyphicon-menu-left"></span></li>
-						<li class="pagebtn currentPage pageCurrent pageq">1</li>
-						<li class="pagebtn pageCurrent pageq">2</li>
-						<li class="pagebtn pageCurrent pageq">3</li>
-						<li class="pagebtn" id="pageDian" style="border: none;background: white;font-size: 20px;">...</li>
-						<li class="pagebtn pageCurrent pageDi">14</li>
-						<li class="pagebtn pageCurrent">15</li>
-						<li class="pagebtn pageCurrent">16</li>
-						<li class="pagebtn pageNext"><span class="glyphicon glyphicon-menu-right"></span></li>
-					</ul>
-				</div>
->>>>>>> acb90ab870fc5db85bf728eb25ab7e1d13bf9631
-
-						</div>
-
-<<<<<<< HEAD
-						<div class="row shoppingCart">
-							<!-- RECENT PURCHASES -->
-							<div class="panel">
-
-								<div class="option-body hideDiv">
-
-									<div class="panel-body">
-
-										<!--hideDiv-->
-										<div class="col-sm-6 col-md-3" >
+										<div class="col-sm-6 col-md-3	">
 											<div class="thumbnail">
-												<span class="glyphicon glyphicon-remove shoppingDel" title="删除"></span>
 												<img style="max-height: 20vh;min-height: 20vh;" src="../assets/img/login-bg.jpg" alt="...">
 												<div class="caption text-center">
 													<h4>这是上衣啊</h4>
 													<p style="color: #777070;">
-														<span>￥：1800</span>
+														<span>红色,L</span> <span>￥：1800</span>
 													</p>
 													<p style="color: #777070;">
-														<span>红色,L</span>
+														<span>库存:</span> <span>100</span>
 													</p>
 													<p style="color: #777070;">
-														<div>
+														<div class="input-group">
 															<label class="add btn btn-default btn-xs" style="margin-right: 5px;">+</label>
 															<input type="text" value="1" maxlength="3" oninput="countChange(this)" class="text-center sum">
 															<label style="margin-left: 5px;" class="subtract btn btn-default btn-xs">-</label>
 														</div>
-													</p>
 												</div>
-=======
-			<div class="row shoppingCart">
-				<!-- RECENT PURCHASES -->
-				<div class="panel">
-
-					<div class="option-body hideDiv">
-
-						<div class="panel-body">
-
-							<!--hideDiv-->
-							<div class="col-sm-6 col-md-3" >
-								<div class="thumbnail">
-									<span class="glyphicon glyphicon-remove shoppingDel" title="删除"></span>
-									<img style="max-height: 20vh;min-height: 20vh;" src="../assets/img/login-bg.jpg" alt="...">
-									<div class="caption text-center">
-										<h4>这是上衣啊</h4>
-										<p style="color: #777070;">
-											<span>￥：1800</span>
-										</p>
-										<p style="color: #777070;">
-											<span>红色,L</span>
-										</p>
-										<p style="color: #777070;">
-											<div class="input-group">
-												<label class="add btn btn-default btn-xs" style="margin-right: 5px;">+</label>
-												<input type="text" value="1" maxlength="3" oninput="countChange(this)" class="text-center sum">
-												<label style="margin-left: 5px;" class="subtract btn btn-default btn-xs">-</label>
-											</div>
-										</p>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-sm-6 col-md-3" >
-								<div class="thumbnail">
-									<span class="glyphicon glyphicon-remove shoppingDel" title="删除"></span>
-									<img style="max-height: 20vh;min-height: 20vh;" src="../assets/img/login-bg.jpg" alt="...">
-									<div class="caption text-center">
-										<h4>这是上衣啊</h4>
-										<p style="color: #777070;">
-											<span>￥：1800</span>
-										</p>
-										<p style="color: #777070;">
-											<span>红色,L</span>
-										</p>
-										<p style="color: #777070;">
-											<div class="input-group">
-												<label class="add btn btn-default btn-xs" style="margin-right: 5px;">+</label>
-												<input type="text" value="1" maxlength="3" oninput="countChange(this)" class="text-center sum">
-												<label style="margin-left: 5px;" class="subtract btn btn-default btn-xs">-</label>
-											</div>
-										</p>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-sm-6 col-md-3" >
-								<div class="thumbnail">
-									<span class="glyphicon glyphicon-remove shoppingDel" title="删除"></span>
-									<img style="max-height: 20vh;min-height: 20vh;" src="../assets/img/login-bg.jpg" alt="...">
-									<div class="caption text-center">
-										<h4>这是上衣啊</h4>
-										<p style="color: #777070;">
-											<span>￥：1800</span>
-										</p>
-										<p style="color: #777070;">
-											<span>红色,L</span>
-										</p>
-										<p style="color: #777070;">
-											<div class="input-group">
-												<label class="add btn btn-default btn-xs" style="margin-right: 5px;">+</label>
-												<input type="text" value="1" maxlength="3" oninput="countChange(this)" class="text-center sum">
-												<label style="margin-left: 5px;" class="subtract btn btn-default btn-xs">-</label>
-											</div>
-										</p>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-sm-6 col-md-3" >
-								<div class="thumbnail">
-									<span class="glyphicon glyphicon-remove shoppingDel" title="删除"></span>
-									<img style="max-height: 20vh;min-height: 20vh;" src="../assets/img/login-bg.jpg" alt="...">
-									<div class="caption text-center">
-										<h4>这是上衣啊</h4>
-										<p style="color: #777070;">
-											<span>￥：1800</span>
-										</p>
-										<p style="color: #777070;">
-											<span>红色,L</span>
-										</p>
-										<p style="color: #777070;">
-											<div class="input-group">
-												<label class="add btn btn-default btn-xs" style="margin-right: 5px;">+</label>
-												<input type="text" value="1" maxlength="3" oninput="countChange(this)" class="text-center sum">
-												<label style="margin-left: 5px;" class="subtract btn btn-default btn-xs">-</label>
-											</div>
-										</p>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-sm-6 col-md-3" >
-								<div class="thumbnail">
-									<span class="glyphicon glyphicon-remove shoppingDel" title="删除"></span>
-									<img style="max-height: 20vh;min-height: 20vh;" src="../assets/img/login-bg.jpg" alt="...">
-									<div class="caption text-center">
-										<h4>这是上衣啊</h4>
-										<p style="color: #777070;">
-											<span>￥：1800</span>
-										</p>
-										<p style="color: #777070;">
-											<span>红色,L</span>
-										</p>
-										<p style="color: #777070;">
-											<div class="input-group">
-												<label class="add btn btn-default btn-xs" style="margin-right: 5px;">+</label>
-												<input type="text" value="1" maxlength="3" oninput="countChange(this)" class="text-center sum">
-												<label style="margin-left: 5px;" class="subtract btn btn-default btn-xs">-</label>
->>>>>>> acb90ab870fc5db85bf728eb25ab7e1d13bf9631
 											</div>
 										</div>
-										
-										
+
+									</div>
+
+									<div id="page" style="margin-bottom: 45px;">
+										<ul>
+											<li class="pagebtn pagePrev"><span class="glyphicon glyphicon-menu-left"></span></li>
+											<li class="pagebtn currentPage pageCurrent pageq">1</li>
+											<li class="pagebtn pageCurrent pageq">2</li>
+											<li class="pagebtn pageCurrent pageq">3</li>
+											<li class="pagebtn" id="pageDian" style="border: none;background: white;font-size: 20px;">...</li>
+											<li class="pagebtn pageCurrent pageDi">14</li>
+											<li class="pagebtn pageCurrent">15</li>
+											<li class="pagebtn pageCurrent">16</li>
+											<li class="pagebtn pageNext"><span class="glyphicon glyphicon-menu-right"></span></li>
+										</ul>
 									</div>
 
 								</div>
 
-								<div class="row titleDiv">
-									<div class="col-lg-6">
-										<h3 class="panel-title">
+								<div class="row shoppingCart">
+									<!-- RECENT PURCHASES -->
+									<div class="panel">
+
+										<div class="option-body hideDiv">
+
+											<div class="panel-body">
+
+												<!--hideDiv-->
+												<div class="col-sm-6 col-md-3">
+													<div class="thumbnail">
+														<span class="glyphicon glyphicon-remove shoppingDel" title="删除"></span>
+														<img style="max-height: 20vh;min-height: 20vh;" src="../assets/img/login-bg.jpg" alt="...">
+														<div class="caption text-center">
+															<h4>这是上衣啊</h4>
+															<p style="color: #777070;">
+																<span>￥：1800</span>
+															</p>
+															<p style="color: #777070;">
+																<span>红色,L</span>
+															</p>
+															<p style="color: #777070;">
+																<div>
+																	<label class="add btn btn-default btn-xs" style="margin-right: 5px;">+</label>
+																	<input type="text" value="1" maxlength="3" oninput="countChange(this)" class="text-center sum">
+																	<label style="margin-left: 5px;" class="subtract btn btn-default btn-xs">-</label>
+																</div>
+															</p>
+														</div>
+														<div class="row shoppingCart">
+															<!-- RECENT PURCHASES -->
+															<div class="panel">
+
+																<div class="option-body hideDiv">
+
+																	<div class="panel-body">
+
+																		<!--hideDiv-->
+																		<div class="col-sm-6 col-md-3">
+																			<div class="thumbnail">
+																				<span class="glyphicon glyphicon-remove shoppingDel" title="删除"></span>
+																				<img style="max-height: 20vh;min-height: 20vh;" src="../assets/img/login-bg.jpg" alt="...">
+																				<div class="caption text-center">
+																					<h4>这是上衣啊</h4>
+																					<p style="color: #777070;">
+																						<span>￥：1800</span>
+																					</p>
+																					<p style="color: #777070;">
+																						<span>红色,L</span>
+																					</p>
+																					<p style="color: #777070;">
+																						<div class="input-group">
+																							<label class="add btn btn-default btn-xs" style="margin-right: 5px;">+</label>
+																							<input type="text" value="1" maxlength="3" oninput="countChange(this)" class="text-center sum">
+																							<label style="margin-left: 5px;" class="subtract btn btn-default btn-xs">-</label>
+																						</div>
+																					</p>
+																				</div>
+																			</div>
+																		</div>
+
+																		<div class="col-sm-6 col-md-3">
+																			<div class="thumbnail">
+																				<span class="glyphicon glyphicon-remove shoppingDel" title="删除"></span>
+																				<img style="max-height: 20vh;min-height: 20vh;" src="../assets/img/login-bg.jpg" alt="...">
+																				<div class="caption text-center">
+																					<h4>这是上衣啊</h4>
+																					<p style="color: #777070;">
+																						<span>￥：1800</span>
+																					</p>
+																					<p style="color: #777070;">
+																						<span>红色,L</span>
+																					</p>
+																					<p style="color: #777070;">
+																						<div class="input-group">
+																							<label class="add btn btn-default btn-xs" style="margin-right: 5px;">+</label>
+																							<input type="text" value="1" maxlength="3" oninput="countChange(this)" class="text-center sum">
+																							<label style="margin-left: 5px;" class="subtract btn btn-default btn-xs">-</label>
+																						</div>
+																					</p>
+																				</div>
+																			</div>
+																		</div>
+
+																		<div class="col-sm-6 col-md-3">
+																			<div class="thumbnail">
+																				<span class="glyphicon glyphicon-remove shoppingDel" title="删除"></span>
+																				<img style="max-height: 20vh;min-height: 20vh;" src="../assets/img/login-bg.jpg" alt="...">
+																				<div class="caption text-center">
+																					<h4>这是上衣啊</h4>
+																					<p style="color: #777070;">
+																						<span>￥：1800</span>
+																					</p>
+																					<p style="color: #777070;">
+																						<span>红色,L</span>
+																					</p>
+																					<p style="color: #777070;">
+																						<div class="input-group">
+																							<label class="add btn btn-default btn-xs" style="margin-right: 5px;">+</label>
+																							<input type="text" value="1" maxlength="3" oninput="countChange(this)" class="text-center sum">
+																							<label style="margin-left: 5px;" class="subtract btn btn-default btn-xs">-</label>
+																						</div>
+																					</p>
+																				</div>
+																			</div>
+																		</div>
+
+																		<div class="col-sm-6 col-md-3">
+																			<div class="thumbnail">
+																				<span class="glyphicon glyphicon-remove shoppingDel" title="删除"></span>
+																				<img style="max-height: 20vh;min-height: 20vh;" src="../assets/img/login-bg.jpg" alt="...">
+																				<div class="caption text-center">
+																					<h4>这是上衣啊</h4>
+																					<p style="color: #777070;">
+																						<span>￥：1800</span>
+																					</p>
+																					<p style="color: #777070;">
+																						<span>红色,L</span>
+																					</p>
+																					<p style="color: #777070;">
+																						<div class="input-group">
+																							<label class="add btn btn-default btn-xs" style="margin-right: 5px;">+</label>
+																							<input type="text" value="1" maxlength="3" oninput="countChange(this)" class="text-center sum">
+																							<label style="margin-left: 5px;" class="subtract btn btn-default btn-xs">-</label>
+																						</div>
+																					</p>
+																				</div>
+																			</div>
+																		</div>
+
+																		<div class="col-sm-6 col-md-3">
+																			<div class="thumbnail">
+																				<span class="glyphicon glyphicon-remove shoppingDel" title="删除"></span>
+																				<img style="max-height: 20vh;min-height: 20vh;" src="../assets/img/login-bg.jpg" alt="...">
+																				<div class="caption text-center">
+																					<h4>这是上衣啊</h4>
+																					<p style="color: #777070;">
+																						<span>￥：1800</span>
+																					</p>
+																					<p style="color: #777070;">
+																						<span>红色,L</span>
+																					</p>
+																					<p style="color: #777070;">
+																						<div class="input-group">
+																							<label class="add btn btn-default btn-xs" style="margin-right: 5px;">+</label>
+																							<input type="text" value="1" maxlength="3" oninput="countChange(this)" class="text-center sum">
+																							<label style="margin-left: 5px;" class="subtract btn btn-default btn-xs">-</label>
+																						</div>
+																				</div>
+
+																			</div>
+
+																		</div>
+
+																		<div class="row titleDiv">
+																			<div class="col-lg-6">
+																				<h3 class="panel-title">
 								<font class="btn" style="vertical-align: inherit;margin-right: 50px;"><font style="vertical-align: inherit;">已选购中的商品</font></font>
 								<font style="vertical-align: inherit;margin-right: 50px;"><font style="vertical-align: inherit;">总件数:</font><span id="shoppingCount">20</span></font>
 								<font style="vertical-align: inherit;margin-right: 50px;"><font style="vertical-align: inherit;">总价:￥</font><span>2000</span></font>
 							</h3>
-									</div>
-									<div class="text-right col-lg-6">
-										<span class="btn" style="margin-right: 3vw;">确认订单</span>
-										<i class="glyphicon glyphicon-chevron-up ppp"></i>
-									</div>
-								</div>
+																			</div>
+																			<div class="text-right col-lg-6">
+																				<span class="btn" style="margin-right: 3vw;">确认订单</span>
+																				<i class="glyphicon glyphicon-chevron-up ppp"></i>
+																			</div>
+																		</div>
 
-							</div>
-							<!-- END RECENT PURCHASES -->
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+																	</div>
+																	<!-- END RECENT PURCHASES -->
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
 	</body>
 
 </html>
