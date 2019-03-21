@@ -8,3 +8,5 @@
 	border-left: 3px solid rgb(2, 143, 208);
 	padding-left: 10px;
 }
+body::-webkit-scrollbar { width:3px; height:2px; background:#ccc; border-radius:10px;/*外层轨道*/}
+body::-webkit-scrollbar-thumb{width:2px; border-radius: 10px; background:#0089dc;/*内层轨道*/}
