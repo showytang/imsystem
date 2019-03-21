@@ -62,19 +62,21 @@
 			}
 			*/
 			
-			.panel-body::-webkit-scrollbar-thumb {
-				width: 2px;
-				border-radius: 10px;
-				background: #0089dc;
-				/*内层轨道*/
-			}
-			
 			.panel-body::-webkit-scrollbar {
-				width: 3px;
+				width: 10px;
 				height: 2px;
-				background: #ccc;
+				background: #fff;
 				border-radius: 10px;
 				/*外层轨道*/
+			}
+			
+			.panel-body::-webkit-scrollbar-thumb {
+				display: block;
+				width: 6px;
+				margin: 0 auto;
+				border-radius: 10px;
+				background: #CCCCCC;
+				/*内层轨道*/
 			}
 			
 			.hideDiv {
@@ -182,37 +184,37 @@
 				//添加动画
 				$(".addgwc").click(function() {
 
-//					addGwcDonghua(this);
+					//					addGwcDonghua(this);
 
 				});
 
 			});
 
-//			function addGwcDonghua(Obj) {
-//
-//				var addImg = $(Obj).parents(".thumbnail").find("img"); //找到该商品的图片
-//
-//				var cloneImg = addImg.clone(); //对该图片进行克隆
-//				cloneImg.css({ //克隆的样式
-//
-//					"position": "absolute", //绝对定位
-//					"left": addImg.offset().left, //该图片的left位置
-//					"top": addImg.offset().top, //该图片的top位置
-//					"z-index": "200", //层级，越大越在上
-//					"opacity": "0.5" //透明度  半透明
-//				});
-//
-//				//克隆到body上的购物车位置
-//				cloneImg.appendTo($("body")).animate({
-//					"width": "50px", //克隆后的宽
-//					"height": "50px", //克隆后的宽
-//					"left": $(".panel").offset().left, //克隆后的left位置  购物车
-//					"top": $(".panel").offset().top - 120, //克隆后的left位置  购物车
-//				}, 1000, function() { //克隆后
-//					$(this).remove(); //清空购物车  不清除图片会叠加
-//				});
-//
-//			}
+			//			function addGwcDonghua(Obj) {
+			//
+			//				var addImg = $(Obj).parents(".thumbnail").find("img"); //找到该商品的图片
+			//
+			//				var cloneImg = addImg.clone(); //对该图片进行克隆
+			//				cloneImg.css({ //克隆的样式
+			//
+			//					"position": "absolute", //绝对定位
+			//					"left": addImg.offset().left, //该图片的left位置
+			//					"top": addImg.offset().top, //该图片的top位置
+			//					"z-index": "200", //层级，越大越在上
+			//					"opacity": "0.5" //透明度  半透明
+			//				});
+			//
+			//				//克隆到body上的购物车位置
+			//				cloneImg.appendTo($("body")).animate({
+			//					"width": "50px", //克隆后的宽
+			//					"height": "50px", //克隆后的宽
+			//					"left": $(".panel").offset().left, //克隆后的left位置  购物车
+			//					"top": $(".panel").offset().top - 120, //克隆后的left位置  购物车
+			//				}, 1000, function() { //克隆后
+			//					$(this).remove(); //清空购物车  不清除图片会叠加
+			//				});
+			//
+			//			}
 
 			/*
 			 商品添加
@@ -397,15 +399,13 @@
 						</div>
 
 						<div class="row shoppingCart">
-							<!-- RECENT PURCHASES -->
 							<div class="panel">
 
 								<div class="option-body hideDiv">
 
 									<div class="panel-body">
 
-										<!--hideDiv-->
-										<div class="col-sm-6 col-md-3" >
+										<div class="col-sm-6 col-md-3">
 											<div class="thumbnail">
 												<span class="glyphicon glyphicon-remove shoppingDel" title="删除"></span>
 												<img style="max-height: 20vh;min-height: 20vh;" src="../assets/img/login-bg.jpg" alt="...">
@@ -427,8 +427,7 @@
 												</div>
 											</div>
 										</div>
-										
-										
+
 									</div>
 
 								</div>
@@ -448,7 +447,6 @@
 								</div>
 
 							</div>
-							<!-- END RECENT PURCHASES -->
 						</div>
 					</div>
 				</div>
