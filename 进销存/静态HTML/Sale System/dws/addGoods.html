@@ -88,6 +88,140 @@
 
 							<div class="input-group">
 								<span class="input-group-btn">
+							<button class="btn btn-primary" type="button">货品编号：</button>
+						</span>
+								<input class="form-control" type="text">
+							</div>
+							<br>
+
+							<div class="input-group">
+								<span class="input-group-btn">
+							<button class="btn btn-primary" type="button">条形码：</button>
+						</span>
+								<input class="form-control" type="text">
+								<span class="input-group-btn">
+							<button class="btn btn-primary" type="button">扫一扫</button>
+						</span>
+							</div>
+							<br>
+
+							<div class="row">
+								<div class="col-lg-4">
+									<div class="input-group">
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">主单位<span class="caret"></span></button>
+											<ul class="dropdown-menu">
+												<li>
+													<a href="#">包</a>
+												</li>
+												<li>
+													<a href="#">箱</a>
+												</li>
+												<li>
+													<a href="#">车</a>
+												</li>
+												<li>
+													<a href="#">坨</a>
+												</li>
+												<li>
+													<a href="#">件</a>
+												</li>
+												<li>
+													<a href="#">个</a>
+												</li>
+												<li>
+													<a href="#">只</a>
+												</li>
+												<li>
+													<a href="#">双</a>
+												</li>
+											</ul>
+										</div>
+										<!-- /btn-group -->
+										<input type="text" class="form-control" aria-label="...">
+									</div>
+									<!-- /input-group -->
+								</div>
+								<div class="col-lg-4">
+									<div class="input-group">
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">副单位<span class="caret"></span></button>
+											<ul class="dropdown-menu">
+												<li>
+													<a href="#">包</a>
+												</li>
+												<li>
+													<a href="#">箱</a>
+												</li>
+												<li>
+													<a href="#">车</a>
+												</li>
+												<li>
+													<a href="#">坨</a>
+												</li>
+												<li>
+													<a href="#">件</a>
+												</li>
+												<li>
+													<a href="#">个</a>
+												</li>
+												<li>
+													<a href="#">只</a>
+												</li>
+												<li>
+													<a href="#">双</a>
+												</li>
+											</ul>
+										</div>
+										<!-- /btn-group -->
+										<input type="text" class="form-control" aria-label="...">
+									</div>
+									<!-- /input-group -->
+								</div>
+								<div class="col-lg-4">
+									<div class="input-group">
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">单位值 <span class="caret"></span></button>
+											<ul class="dropdown-menu">
+												<li>
+													<a href="#">包</a>
+												</li>
+												<li>
+													<a href="#">箱</a>
+												</li>
+												<li>
+													<a href="#">车</a>
+												</li>
+												<li>
+													<a href="#">坨</a>
+												</li>
+												<li>
+													<a href="#">件</a>
+												</li>
+												<li>
+													<a href="#">个</a>
+												</li>
+												<li>
+													<a href="#">只</a>
+												</li>
+												<li>
+													<a href="#">双</a>
+												</li>
+											</ul>
+										</div>
+										<!-- /btn-group -->
+										<input type="text" class="form-control" aria-label="...">
+									</div>
+									<!-- /input-group -->
+								</div>
+								
+							</div>
+							<!-- /.row -->
+
+							<br />
+
+							<div class="input-group">
+								<span class="input-group-btn">
 							<button class="btn btn-primary" type="button">库存：</button>
 						</span>
 								<input class="form-control" type="text">
@@ -202,7 +336,9 @@
 
 						</div>
 					</div>
-
+					
+					<button id="btn1">导出</button>
+					
 					<!--富文本编辑器-->
 					<div id="editor">
 
@@ -232,6 +368,13 @@
 	}
 
 	editor.create();
+	
+	
+	document.getElementById('btn1').addEventListener('click', function () {
+        // 读取 html
+        alert(editor.txt.html())
+    }, false)
+	
 
 	$(function() {
 		$(".activePosition").css("width", $(".activePosition").next().width());
@@ -255,12 +398,11 @@
 
 			if($(this).hasClass("active1")) {
 
-
-					$(this).removeClass("active1");
-					$(this).animate({
-						backgroundColor: "",
-						color: "#000000"
-					}, 300);
+				$(this).removeClass("active1");
+				$(this).animate({
+					backgroundColor: "",
+					color: "#000000"
+				}, 300);
 
 			} else {
 
@@ -270,14 +412,13 @@
 					color: "#ffffff"
 				}, 300);
 			}
-			
-			if($(".option-type").find(".active1").length != 0){
-				
+
+			if($(".option-type").find(".active1").length != 0) {
+
 				checkedDl();
-			}else{
+			} else {
 				$("table").remove();
 			}
-
 
 		});
 
@@ -294,7 +435,7 @@
 		let nowCount = $(Obj).val();
 
 		if(nowCount < 1) {
-			$(Obj).val("1");
+			$(Obj).val("");
 		}
 
 	}
@@ -362,6 +503,8 @@
 		ttile.append(thPrice);
 		var thNum2 = $("<th class='text-center'>库存预警</th>");
 		ttile.append(thNum2);
+		var thimg = $("<th class='text-center'>图片</th>");
+		ttile.append(thimg);
 		table.append(thead);
 		for(var i = tagObject.isCheckedDlArray.length - 1; i >= 0; i--) {
 			var th = $("<th class='text-center'>").html(tagObject.isCheckedDlArray[i].thName);
@@ -374,10 +517,11 @@
 						var td1 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' type='hidden' value='" + tagObject.isCheckedDlArray[i].tag[j].id + "'><input oninput='countChange(this)' class='text-center' value='50' type=text name='num' v=''></td>");
 						var td2 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' oninput='priceChange(this)' type=text name='price'></td>");
 						var td3 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' value='20' oninput='countChange(this)' type=text name='thNum2'></td>");
+						var tdimg = $("<td class='text-center' style='vertical-align: inherit;'><img src='../assets/img/apple-icon.png'></td>");
 						var tr = $("<tr class='" + index + "'>");
 						index++;
 						tr.append(td);
-						tr.append(td1).append(td2).append(td3);
+						tr.append(td1).append(td2).append(td3).append(tdimg);
 						tbody.append(tr);
 					} else {
 						var rowspan = tagObject.allIndex / tagObject.isCheckedDlArray[i + 1].num;

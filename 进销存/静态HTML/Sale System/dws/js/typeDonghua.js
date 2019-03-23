@@ -47,15 +47,13 @@ function optionAddStyle(obj) {
 		}, 300);
 	}
 
-	
-
 }
 
 //类型滑动
 function activeSpanStyle(obj) {
 
 	//禁用点击事件，在动画未完成之前再次点击选项会异常
-	$(obj).parent().find("span").css("pointer-events", "none");
+	$(obj).parents().find("span").css("pointer-events", "none");
 
 	let activeSpan = $(".option-top-div").find(".active1");
 
@@ -71,22 +69,21 @@ function activeSpanStyle(obj) {
 
 	$(".option-top-div").find("span").removeClass("activeColor");
 
+	//当前span的宽度
+	var nowWidth = $(obj).width();
+
 	//分开写直角转向
 	//添加动画
 	$(activeSpan).animate({
 		marginLeft: "+=" + (nowX - parX) + "px",
 		marginTop: "+=" + (nowY - parY) + "px"
 
-	}, 500);
-
-	//当前span的宽度
-	var nowWidth = $(obj).width();
-
-	setTimeout(function() {
+	}, 500, function() {
 		$(obj).addClass("activeColor");
 		//背景滑块和当前选项宽度同步
 		$(activeSpan).css("width", nowWidth);
 		//恢复点击事件
-		$(obj).parent().find("span").css("pointer-events", "");
-	}, 500);
+		$(obj).parents().find("span").css("pointer-events", "");
+	});
+
 }
