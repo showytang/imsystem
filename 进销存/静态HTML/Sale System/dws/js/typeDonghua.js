@@ -1,6 +1,5 @@
-
-$(function(){
-	$(".activePosition").css("width",$(".activePosition").next().width());
+$(function() {
+	$(".activePosition").css("width", $(".activePosition").next().width());
 })
 
 function optionAllStyle(obj) {
@@ -48,21 +47,7 @@ function optionAddStyle(obj) {
 		}, 300);
 	}
 
-	if($(obj).parent().find(".active1").length == $(obj).parent().find(".option-span-z").length) {
-
-		$(obj).parent().find(".option-span-z").removeClass("active1");
-		$(obj).parent().find(".option-span-z").animate({
-			backgroundColor: "",
-			color: "#000000"
-		}, 300);
-
-		$(obj).parent().find(".option-span-all").addClass("active1");
-		$(obj).parent().find(".option-span-all").animate({
-			backgroundColor: "#00AAFF",
-			color: "#ffffff"
-		}, 300);
-
-	}
+	
 
 }
 
@@ -72,31 +57,27 @@ function activeSpanStyle(obj) {
 	//禁用点击事件，在动画未完成之前再次点击选项会异常
 	$(obj).parent().find("span").css("pointer-events", "none");
 
-	let activeSpan = $(obj).parent().find(".active1");
+	let activeSpan = $(".option-top-div").find(".active1");
 
-	//获取上一个span的下标
-	let parindex = $(obj).parent().find(".activeColor").index();
-	//获取当前span的下标
-	let nowindex = $(obj).index();
 	//获取上一个span的X轴坐标
-	let parX = $(obj).parent().find(".activeColor").position().left;
+	let parX = $(obj).parents().find(".activeColor").offset().left;
 	//获取当前span的X轴坐标
-	let nowX = $(obj).position().left;
+	let nowX = $(obj).offset().left;
 
-	$(obj).parent().find("span").removeClass("activeColor");
+	//获取上一个span的Y轴坐标
+	let parY = $(obj).parents().find(".activeColor").offset().top;
+	//获取当前span的Y轴坐标
+	let nowY = $(obj).offset().top;
 
-	if(nowindex < parindex) {
-		//添加动画
-		$(activeSpan).animate({
-			marginLeft: "+=" + (nowX - parX) + "px"
-		}, 500);
+	$(".option-top-div").find("span").removeClass("activeColor");
 
-	} else if(nowindex > parindex) {
-		//添加动画
-		$(activeSpan).animate({
-			marginLeft: "+=" + (nowX - parX) + "px"
-		}, 500);
-	}
+	//分开写直角转向
+	//添加动画
+	$(activeSpan).animate({
+		marginLeft: "+=" + (nowX - parX) + "px",
+		marginTop: "+=" + (nowY - parY) + "px"
+
+	}, 500);
 
 	//当前span的宽度
 	var nowWidth = $(obj).width();

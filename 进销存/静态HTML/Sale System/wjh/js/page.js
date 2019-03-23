@@ -2,16 +2,16 @@
 /*
  页面要求
  * 
- * css{
- * 	
- * 
- * 	.pagebtn{
+  css:
+  	
+ 
+ 	.pagebtn{
 				height: 28px;
 				width: 25px;
 				border: 1px solid #C0C0C0;
+				border-radius: 3px;
 				list-style: none;
 				text-align: center;
-				background: #DDDDDD;
 				line-height: 28px;
 				cursor: pointer;
 			}
@@ -26,14 +26,14 @@
 				margin: 20px auto ;
 			}
 			.currentPage{
-				background: red;
+				background: #1094ce;
 				color: white;
 				border: none;
 			}
- * 
- * 
- * }
- * 
+  
+  
+  
+ 
  * 
  * <div id="page">
 		<ul>
