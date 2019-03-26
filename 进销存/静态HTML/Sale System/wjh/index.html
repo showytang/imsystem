@@ -127,296 +127,233 @@
 	<body>
 		<div class="main">
 			<div class="main-content">
-				<div class="container-fluid">
-					<div class="panel panel-headline">
-						<div class="panel-heading">
-							<h3 class="panel-title">发货账单</h3>
-							<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
+				<div class="container-fluid" style="background: white;">
+					<div class="panel-heading">
+						<h3 class="panel-title">报表 - 1</h3>
+						<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
+					</div>
+					<div class="selected row boss">
+						<div class="col-md-4 col-sm-6 col-xs-11 tj">
+							<div class="input-group">
+								<span class="input-group-addon">No</span>
+								<input class="form-control" placeholder="订单编号" />
+							</div>
 						</div>
-						<div class="container-fluid">
-							<div class="selected row boss">
-								<div class="col-md-4 col-sm-6 col-xs-11 tj">
-									<div class="input-group">
-										<span class="input-group-addon">No</span>
-										<input class="form-control" placeholder="订单编号" />
-									</div>
-								</div>
-								<div class="col-md-3 col-sm-6 col-xs-11 display tj">
-									<div class="input-group">
-										<span class="input-group-addon">每页数</span>
-										<select class="form-control" style="border-right: none;height: 100%;">
-											<option>10</option>
-											<option>20</option>
-											<option>50</option>
-											<option>100</option>
-										</select>
-										<span class="input-group-addon">时间</span>
-										<span class="input-group-addon order">
-											<span class="glyphicon glyphicon-triangle-bottom"></span>
-										</span>
-									</div>
-								</div>
-								<div class="col-md-5 col-sm-12 col-xs-11 display tj">
-									<div class="input-group">
-										<span class="input-group-addon">Time</span>
-										<input class="form-control" id="config-demo" style="border: none;border-right: 1px solid #ddd;border-radius: 0px;" placeholder="开始时间" />
-									</div>
-								</div>
-								<div class="col-xs-1 xsoptions">
-									<span class="glyphicon glyphicon-triangle-bottom"></span>
-								</div>
+						<div class="col-md-3 col-sm-6 col-xs-11 display tj">
+							<div class="input-group">
+								<span class="input-group-addon">每页数</span>
+								<select class="form-control" style="border-right: none;height: 100%;">
+									<option>10</option>
+									<option>20</option>
+									<option>50</option>
+									<option>100</option>
+								</select>
+								<span class="input-group-addon">时间</span>
+								<span class="input-group-addon order">
+							<span class="glyphicon glyphicon-triangle-bottom"></span>
+								</span>
 							</div>
-							<div id="options">
-								<ul class="list-group well">
-									<li class="list-group-item" data="0">订单查询</li>
-									<li class="list-group-item" data="1">排序And条数</li>
-									<li class="list-group-item" data="2">时间查询</li>
-								</ul>
-							</div>
-							<div class="content text-center">
-								<table class="table table-hover">
-									<thead>
-										<tr>
-											<th style="text-align: center;">订单编号</th>
-											<th style="text-align: center;width: 20px;">数量</th>
-											<th style="text-align: center;">时间</th>
-											<th style="text-align: center;">应付金额</th>
-											<th style="text-align: center;">实付金额</th>
-											<th style="text-align: center;">优惠金额</th>
-											<th style="text-align: center;">操作</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>1231231231231</td>
-											<td>12</td>
-											<td>2001-1-1</td>
-											<td>44496.00</td>
-											<td>40000.00</td>
-											<td>4496.00</td>
-											<td>
-												<div style="display: flex;">
-													<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-													<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>1231231231231</td>
-											<td>12</td>
-											<td>2001-1-1</td>
-											<td>44496.00</td>
-											<td>40000.00</td>
-											<td>4496.00</td>
-											<td>
-												<div style="display: flex;">
-													<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-													<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>1231231231231</td>
-											<td>12</td>
-											<td>2001-1-1</td>
-											<td>44496.00</td>
-											<td>40000.00</td>
-											<td>4496.00</td>
-											<td>
-												<div style="display: flex;">
-													<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-													<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>1231231231231</td>
-											<td>12</td>
-											<td>2001-1-1</td>
-											<td>44496.00</td>
-											<td>40000.00</td>
-											<td>4496.00</td>
-											<td>
-												<div style="display: flex;">
-													<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-													<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>1231231231231</td>
-											<td>12</td>
-											<td>2001-1-1</td>
-											<td>44496.00</td>
-											<td>40000.00</td>
-											<td>4496.00</td>
-											<td>
-												<div style="display: flex;">
-													<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-													<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>1231231231231</td>
-											<td>12</td>
-											<td>2001-1-1</td>
-											<td>44496.00</td>
-											<td>40000.00</td>
-											<td>4496.00</td>
-											<td>
-												<div style="display: flex;">
-													<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-													<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>1231231231231</td>
-											<td>12</td>
-											<td>2001-1-1</td>
-											<td>44496.00</td>
-											<td>40000.00</td>
-											<td>4496.00</td>
-											<td>
-												<div style="display: flex;">
-													<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-													<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>1231231231231</td>
-											<td>12</td>
-											<td>2001-1-1</td>
-											<td>44496.00</td>
-											<td>40000.00</td>
-											<td>4496.00</td>
-											<td>
-												<div style="display: flex;">
-													<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-													<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>1231231231231</td>
-											<td>12</td>
-											<td>2001-1-1</td>
-											<td>44496.00</td>
-											<td>40000.00</td>
-											<td>4496.00</td>
-											<td>
-												<div style="display: flex;">
-													<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-													<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>1231231231231</td>
-											<td>12</td>
-											<td>2001-1-1</td>
-											<td>44496.00</td>
-											<td>40000.00</td>
-											<td>4496.00</td>
-											<td>
-												<div style="display: flex;">
-													<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-													<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>1231231231231</td>
-											<td>12</td>
-											<td>2001-1-1</td>
-											<td>44496.00</td>
-											<td>40000.00</td>
-											<td>4496.00</td>
-											<td>
-												<div style="display: flex;">
-													<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-													<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>1231231231231</td>
-											<td>12</td>
-											<td>2001-1-1</td>
-											<td>44496.00</td>
-											<td>40000.00</td>
-											<td>4496.00</td>
-											<td>
-												<div style="display: flex;">
-													<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-													<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>1231231231231</td>
-											<td>12</td>
-											<td>2001-1-1</td>
-											<td>44496.00</td>
-											<td>40000.00</td>
-											<td>4496.00</td>
-											<td>
-												<div style="display: flex;">
-													<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-													<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>1231231231231</td>
-											<td>12</td>
-											<td>2001-1-1</td>
-											<td>44496.00</td>
-											<td>40000.00</td>
-											<td>4496.00</td>
-											<td>
-												<div style="display: flex;">
-													<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-													<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>1231231231231</td>
-											<td>12</td>
-											<td>2001-1-1</td>
-											<td>44496.00</td>
-											<td>40000.00</td>
-											<td>4496.00</td>
-											<td>
-												<div style="display: flex;">
-													<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-													<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>1231231231231</td>
-											<td>12</td>
-											<td>2001-1-1</td>
-											<td>44496.00</td>
-											<td>40000.00</td>
-											<td>4496.00</td>
-											<td>
-												<div style="display: flex;">
-													<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-													<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-												</div>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-
 						</div>
-						<!--商品详情模态框-->
+						<div class="col-md-5 col-sm-12 col-xs-11 display tj">
+							<div class="input-group">
+								<span class="input-group-addon">Time</span>
+								<input class="form-control" id="config-demo" style="border: none;border-right: 1px solid #ddd;border-radius: 0px;" placeholder="开始时间" />
+							</div>
+						</div>
+						<div class="col-xs-1 xsoptions">
+							<span class="glyphicon glyphicon-triangle-bottom"></span>
+						</div>
+					</div>
+					<div id="options">
+						<ul class="list-group well">
+							<li class="list-group-item" data="0">订单查询</li>
+							<li class="list-group-item" data="1">排序And条数</li>
+							<li class="list-group-item" data="2">时间查询</li>
+						</ul>
+					</div>
+					<div class="content text-center">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th style="text-align: center;">订单编号</th>
+									<th style="text-align: center;width: 20px;">数量</th>
+									<th style="text-align: center;">时间</th>
+									<th style="text-align: center;">应付金额</th>
+									<th style="text-align: center;">实付金额</th>
+									<th style="text-align: center;">优惠金额</th>
+									<th style="text-align: center;">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1231231231231</td>
+									<td>12</td>
+									<td>2001-1-1</td>
+									<td>44496.00</td>
+									<td>40000.00</td>
+									<td>4496.00</td>
+									<td>
+										<div style="display: flex;">
+											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
+											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>1231231231231</td>
+									<td>12</td>
+									<td>2001-1-1</td>
+									<td>44496.00</td>
+									<td>40000.00</td>
+									<td>4496.00</td>
+									<td>
+										<div style="display: flex;">
+											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
+											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>1231231231231</td>
+									<td>12</td>
+									<td>2001-1-1</td>
+									<td>44496.00</td>
+									<td>40000.00</td>
+									<td>4496.00</td>
+									<td>
+										<div style="display: flex;">
+											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
+											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>1231231231231</td>
+									<td>12</td>
+									<td>2001-1-1</td>
+									<td>44496.00</td>
+									<td>40000.00</td>
+									<td>4496.00</td>
+									<td>
+										<div style="display: flex;">
+											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
+											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>1231231231231</td>
+									<td>12</td>
+									<td>2001-1-1</td>
+									<td>44496.00</td>
+									<td>40000.00</td>
+									<td>4496.00</td>
+									<td>
+										<div style="display: flex;">
+											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
+											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>1231231231231</td>
+									<td>12</td>
+									<td>2001-1-1</td>
+									<td>44496.00</td>
+									<td>40000.00</td>
+									<td>4496.00</td>
+									<td>
+										<div style="display: flex;">
+											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
+											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>1231231231231</td>
+									<td>12</td>
+									<td>2001-1-1</td>
+									<td>44496.00</td>
+									<td>40000.00</td>
+									<td>4496.00</td>
+									<td>
+										<div style="display: flex;">
+											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
+											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>1231231231231</td>
+									<td>12</td>
+									<td>2001-1-1</td>
+									<td>44496.00</td>
+									<td>40000.00</td>
+									<td>4496.00</td>
+									<td>
+										<div style="display: flex;">
+											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
+											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>1231231231231</td>
+									<td>12</td>
+									<td>2001-1-1</td>
+									<td>44496.00</td>
+									<td>40000.00</td>
+									<td>4496.00</td>
+									<td>
+										<div style="display: flex;">
+											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
+											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>1231231231231</td>
+									<td>12</td>
+									<td>2001-1-1</td>
+									<td>44496.00</td>
+									<td>40000.00</td>
+									<td>4496.00</td>
+									<td>
+										<div style="display: flex;">
+											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
+											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>1231231231231</td>
+									<td>12</td>
+									<td>2001-1-1</td>
+									<td>44496.00</td>
+									<td>40000.00</td>
+									<td>4496.00</td>
+									<td>
+										<div style="display: flex;">
+											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
+											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>1231231231231</td>
+									<td>12</td>
+									<td>2001-1-1</td>
+									<td>44496.00</td>
+									<td>40000.00</td>
+									<td>4496.00</td>
+									<td><div style="display: flex;">
+											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
+											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
+										</div></td>
+								</tr>
+							</tbody>
+						</table>
+						</div>
 						<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
 							<div class="modal-dialog modal-lg" role="document">
 								<div class="modal-content">
@@ -444,9 +381,15 @@
 								<li class="pagebtn" id="pageDian" style="border: none;background: #DDDDDD;font-size: 20px;">...</li>
 								<li class="pagebtn pageCurrent pageDi">14</li>
 								<li class="pagebtn pageCurrent">15</li>
+								<li class="pagebtn pageCurrent">16</li>
 								<li class="pagebtn pageNext"><span class="glyphicon glyphicon-menu-right"></span></li>
 							</ul>
 						</div>
+						</div>
+						</div>
+						</div>
+						</div>
+						
 					</div>
 				</div>
 			</div>
