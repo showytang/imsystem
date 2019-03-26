@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>客户报价</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<!-- VENDOR CSS -->
+	<link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../assets/vendor/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="../assets/vendor/linearicons/style.css">
+	<link rel="stylesheet" href="../assets/vendor/chartist/css/chartist-custom.css">
+	<!-- MAIN CSS -->
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+	<link rel="stylesheet" href="../assets/css/demo.css">
+	<!-- ICONS -->
+	<link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon.png">
+	
+	<style type="text/css">
+		*{
+			-webkit-user-select: none;
+		}
+		.row{
+			margin: 0px;
+		}
+		.col-md-12{
+			padding: 0px;
+		}
+		/*头部*/
+		#topDiv{
+			margin-bottom: 10px;
+		}
+		#topDiv button{
+			border: none;
+			background: white;
+			outline: none;
+		}
+		#typeDiv{
+			margin-bottom: 5px;
+			text-align: center;
+		}
+		#typeName{
+			display: inline-block;
+			margin: 0px 5%;
+			text-align: center;
+			color: dodgerblue;
+		}
+		#sh{
+			color: dodgerblue;
+		}
+		.list-unstyled{
+			float: left;
+			position: absolute;
+			top: 27px;
+			left: 40%;
+			width: 20%;
+			padding: 0 1%;
+			background-color: white;
+			border: solid 1px dodgerblue;
+			border-top: none;
+			border-radius: 0px 0px 3px 3px;
+		}
+		ul.activity-list > li:not(:last-child) {
+    		border-bottom: 1px solid dodgerblue;
+		}
+		ul.activity-list > li{
+			color: dodgerblue;
+			text-align: center;
+			padding: 5px 0px;
+		}
+		#right{
+			display: flex;
+			justify-content: space-around;
+		}
+		#right button i{
+			font-size: 16px;
+			color: dodgerblue;
+		}
+		/*搜索框样式*/
+		#searchDiv{
+			display: flex;
+			flex-direction: row;
+			padding: 5px
+		}
+		#searchNameDiv{
+			width: 40%;
+		}
+		#searchGoodsDiv{
+			width: 60%;
+		}
+		#customerName,#goodsName{
+			width: 90%;
+			margin-right: 10px;
+			border: none;
+			border-bottom: 1px solid dodgerblue;
+			border-radius: 5px;
+			color: dodgerblue;
+			padding-left: 10px;
+			outline: none;
+		}
+		#customersDiv{
+			width: 37%;
+			float: left;
+			position: absolute;
+			top: 193px;
+			left: 2%;
+			border: 1px solid grey;
+		}
+		#goodsDiv{
+			width: 54%;
+			float: right;
+			position: absolute;
+			top: 193px;
+			right: 6%;
+			border: 1px solid grey;
+		}
+		.panel .panel-body{
+			padding-left: 10px;
+		}
+		.panel{
+			margin-bottom: 0px;
+		}
+		#customersDiv ul li{
+			list-style: none;
+		}
+		#customersDiv ul{
+			margin: 0px;
+			padding: 0px;
+		}
+		#customersDiv li{
+			margin: 5px 0px;
+			padding: 6px 0px;
+		}
+		#customersDiv li:not(:last-child){
+			border-bottom: 1px solid grey;
+		}
+		#goodsDiv ul li{
+			list-style: none;
+		}
+		#goodsDiv ul{
+			margin: 0px;
+			padding: 0px;
+		}
+		#goodsDiv li{
+			margin: 5px 0px;
+			padding: 6px 0px;
+		}
+		#goodsDiv li:not(:last-child){
+			border-bottom: 1px solid grey;
+		}
+		/*列表样式*/
+		.table{
+			margin-top: 10px;
+		}
+		.table>tbody>tr>td.info{
+			background-color: #ffffff08;
+		}
+		.goodsImg{
+			width: 10%;
+		}
+		.goodsImg img{
+			width: 100%;
+			height: 12%;
+		}
+		.info{
+			display: flex;
+			flex-direction: column;
+			font-size: 13px;
+			padding-left: 16px;
+		}
+		.customerName,.goodsName{
+			display: inline-block;
+			margin-left: 15px;
+		}
+		.customerName{
+			font-size: 16px;
+			color: dodgerblue;
+			margin: 2% 0px;
+			margin-left: 15px;
+		}
+		.priceInfo{
+			width: 30%;
+			color: dodgerblue;
+			text-align: right;
+			font-size: 16px;
+		}
+		.price_unit{
+			display: inline-block;
+			margin-top: 8%;
+			margin-right: 5%;
+		}
+		/*分页*/
+		.pagebtn{
+			height: 28px;
+			width: 25px;
+			border: 1px solid #C0C0C0;
+			border-radius: 3px;
+			list-style: none;
+			text-align: center;
+			line-height: 28px;
+			cursor: pointer;
+		}
+		#page>ul{
+			display: flex;
+			justify-content: space-around;
+			padding: 0px;
+			font-size: 12px;
+		}
+		#page{
+			width: 300px;
+			margin: 20px auto ;
+		}
+		.currentPage{
+			background: #1094ce;
+			color: white;
+			border: none;
+		}
+		/*操作框*/
+		#opreat{
+			/*display: none;*/
+			padding: 5px 15px 10px 15px;
+			background-color: white;
+			border: solid 1px black;
+			border-radius: 5px;
+			float: left;
+			position: absolute;
+			top: 37%;
+			right: 40%;
+			color: dodgerblue;
+		}
+		#opreat input{
+			outline: none;
+			background-color: white;
+			border: none;
+			border-bottom: solid 1px lightgray;
+			color: gray;
+		}
+		#buttonDiv{
+			margin-top: 5px;
+			text-align: right;
+		}
+		#buttonDiv button{
+			margin: 5px;
+			outline: none;
+			background-color: white;
+			border: none;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="main">
+		<div class="main-content">
+			<div class="container-fluid">
+				<div class="panel panel-headline">
+					<div class="panel-heading">
+						<h3 class="panel-title">报表——1</h3>
+						<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
+					</div>
+					<div class="row" id="topDiv">
+						<div class="col-xs-10" id="typeDiv">
+							<span id="typeName_span">
+								<label id="typeName">客户报价</label>
+								<button type="button" class="show_hiden"><i id="sh" class="lnr lnr-chevron-down"></i></button>
+							</span>
+							<ul id="type" class="list-unstyled activity-list" style="display: none;">
+								<li id="customers"><button type="button">客户</button></li>
+								<li id="suppliers"><button type="button">供应商</button></li>
+								<li id="quotes"><button type="button">客户报价</button></li>
+							</ul>
+						</div>
+						<div class="col-xs-2" id="right">
+							<button type="button"><i class="lnr lnr-plus-circle"></i></button>
+						</div>
+					</div>
+					<div class="list">
+									<div id="searchDiv">
+										<div id="searchNameDiv">
+											<input type="text" name="" id="customerName" value="" placeholder="客户名称"/>
+											<i class="icon-submenu lnr lnr-chevron-right" id="show_hide_customer"></i>
+											<div id="customersDiv" class="" style="display: none;">
+												<div id="panel-scrolling-demo" class="panel">
+														<div class="panel-body">
+															<ul>
+																<li>1111</li>
+																<li>2222</li>
+																<li>3333</li>
+																<li>4444</li>
+																<li>555555</li>
+																<li>66666</li>
+																<li>777777</li>
+																<li>8888888</li>
+																<li>99999999</li>
+																<li>0000000000</li>
+															</ul>
+														</div>
+													
+												</div>
+											</div>
+										</div>
+										<div id="searchGoodsDiv">
+											<input type="text" name="" id="goodsName" value="" placeholder="商品名称"/>
+											<i class="icon-submenu lnr lnr-chevron-right" id="show_hide_goods"></i>
+											<div id="goodsDiv" class="" style="display: none;">
+												<div id="panel-scrolling-demo" class="panel">
+														<div class="panel-body">
+															<ul>
+																<li>1111</li>
+																<li>2222</li>
+																<li>3333</li>
+																<li>4444</li>
+																<li>555555</li>
+																<li>66666</li>
+																<li>777777</li>
+																<li>8888888</li>
+																<li>99999999</li>
+																<li>0000000000</li>
+															</ul>
+														</div>
+													
+												</div>
+											</div>
+										</div>
+									</div>
+									<table class="table table-striped">
+										<tbody>
+											<tr vul="1">
+												<td class="goodsImg">
+													<img src="../assets/img/login-bg.jpg"/>
+												</td>
+												<td class="info">
+													<span class="customerName">赤练</span>
+													<span class="goodsName">烈焰赤练鞭</span>
+												</td>
+												<td class="priceInfo">
+													<span class="price_unit">
+														￥
+														<span class="price">200000</span>
+														|
+														<span class="unit">条</span>
+													</span>
+												</td>
+											</tr>
+											<tr vul="2">
+												<td class="goodsImg">
+													<img src="../assets/img/login-bg.jpg"/>
+												</td>
+												<td class="info">
+													<span class="customerName">赤练</span>
+													<span class="goodsName">烈焰赤练鞭</span>
+												</td>
+												<td class="priceInfo">
+													<span class="price_unit">
+														￥
+														<span class="price">200000</span>
+														|
+														<span class="unit">条</span>
+													</span>
+												</td>
+											</tr>
+											<tr vul="3">
+												<td class="goodsImg">
+													<img src="../assets/img/login-bg.jpg"/>
+												</td>
+												<td class="info">
+													<span class="customerName">赤练</span>
+													<span class="goodsName">烈焰赤练鞭</span>
+												</td>
+												<td class="priceInfo">
+													<span class="price_unit">
+														￥
+														<span class="price">200000</span>
+														|
+														<span class="unit">条</span>
+													</span>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+					<div class="panel-footer">
+						<div id="page">
+							<ul>
+								<li class="pagebtn pagePrev"><span class="glyphicon glyphicon-menu-left"></span></li>
+								<li class="pagebtn currentPage pageCurrent pageq">1</li>
+								<li class="pagebtn pageCurrent pageq">2</li>
+								<li class="pagebtn pageCurrent pageq">3</li>
+								<li class="pagebtn" id="pageDian" style="border: none;background: white;font-size: 20px;">...</li>
+								<li class="pagebtn pageCurrent pageDi">14</li>
+								<li class="pagebtn pageCurrent">15</li>
+								<li class="pagebtn pageNext"><span class="glyphicon glyphicon-menu-right"></span></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--操作框-->
+	<div id="opreat" class="hide" vul="">
+		<h4>设置客户报价</h4>
+		<form action="" method="post">
+			<p>单&nbsp;&nbsp;&nbsp;位：<input type="text" value="条" disabled="disabled"/></p>
+			<p>零售价：<input type="text" value="0" disabled="disabled"/>元</p>
+			<p>批发价：<input type="text" value="0" disabled="disabled"/>元</p>
+			<p>大客户：<input type="text" value="20000" id="quotePrice" style="color: black;"/>元</p>
+			<div id="buttonDiv">
+				<button type="button" id="cancle">取消</button>
+				<button id="save">保存</button>
+			</div>
+		</form>
+	</div>
+	
+	<!-- Javascript -->
+	<script src="../assets/vendor/jquery/jquery.js"></script>
+	<script src="../assets/vendor/jquery/jquery.min.js"></script>
+	<script src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="../assets/scripts/klorofil-common.js"></script>
+	<script>
+	function pageJia(index){
+		$(".pageCurrent:eq("+index+")").removeClass("currentPage");
+		$(".pageCurrent:eq("+(index+1)+")").addClass("currentPage");
+	}
+	function pageJian(index){
+		$(".pageCurrent:eq("+index+")").removeClass("currentPage");
+		$(".pageCurrent:eq("+(index-1)+")").addClass("currentPage");
+	}
+	$(function() {
+		$("#show_hide_customer").click(function(){
+			var sh=$("#customersDiv").attr("class");
+			if(sh==""){
+				$("#customersDiv").attr("class","showCustormers");
+				$(this).attr("class","icon-submenu lnr lnr-chevron-down");
+				$("#customersDiv").slideDown();
+			}else if(sh=="showCustormers"){
+				$("#customersDiv").attr("class","");
+				$(this).attr("class","icon-submenu lnr lnr-chevron-right");
+				$("#customersDiv").slideUp();
+			}
+		});
+		
+		$("#show_hide_goods").click(function(){
+			var sh=$("#goodsDiv").attr("class");
+			if(sh==""){
+				$("#goodsDiv").attr("class","showCustormers");
+				$(this).attr("class","icon-submenu lnr lnr-chevron-down");
+				$("#goodsDiv").slideDown();
+			}else if(sh=="showCustormers"){
+				$("#goodsDiv").attr("class","");
+				$(this).attr("class","icon-submenu lnr lnr-chevron-right");
+				$("#goodsDiv").slideUp();
+			}
+		});
+		
+		/*打开操作框*/
+		$("tr").click(function(){
+			var id=$(this).attr("vul");
+			var sh=$("#opreat").attr("class");
+			 if(sh=="hide"){
+				$("#opreat").show();
+				$("#opreat").attr("vul",id);
+				$("#opreat").attr("class","show");
+			}
+		});
+		
+		/*保存或取消*/
+		$("#cancle").click(function(){
+			$("#opreat").hide();
+			$("#opreat").attr("vul","");
+			$("#opreat").attr("class","hide");
+		});
+		
+		/*分页js*/
+		var s=0;
+		$(".pageNext").click(function(){
+			var currentPage = $(".currentPage");
+			var index = $(".pageCurrent").index(currentPage);
+			if(index == 0){
+				pageJia(index);
+				return;
+			}
+			if($("#pageDian").css("display") != "none"){
+				$(".pageq").each(function(index,e){
+					if(index == $(".pageq").length-1){
+						$(e).text(parseInt($(e).text())+1)
+						return;
+					}
+					$(e).text($(".pageq:eq("+(index+1)+")").text());
+				});
+			}
+			if(parseInt($(".pageCurrent:eq("+(index+1)+")").text()) >= parseInt($(".pageDi").text())-1){
+				if(s == 0){
+					$("#pageDian").css("display","none");
+					s++;
+				}
+				else{
+					pageJia(index);
+				}
+				return;
+			}
+		});
+		
+		$(".pagePrev").click(function(){
+			var currentPage = $(".currentPage");
+			var index = $(".pageCurrent").index(currentPage);
+			if($(".pageCurrent:eq("+(index)+")").text() == 1){
+				return;
+			}
+			if($(".pageCurrent:eq("+(index)+")").text() <= 2){
+				pageJian(index);
+				return;
+			}
+			if(parseInt($(".pageCurrent:eq("+(index)+")").text()) == parseInt($(".pageDi").text())-2){
+				$("#pageDian").css("display","block");
+				s=0;
+			}
+			if(parseInt($(".pageCurrent:eq("+(index)+")").text()) > parseInt($(".pageDi").text())-2){
+				pageJian(index);
+				return;
+			}
+			else{
+				$(".pageq").each(function(index,e){
+					if(index == 0){
+						$(e).text(parseInt($(e).text())-1)
+						return;
+					}
+					$(e).text(parseInt($(".pageq:eq("+(index-1)+")").text())+1);
+				});
+				
+			}
+			
+		});
+		
+		$(".pageCurrent").click(function(){
+			
+			var index = $(".pageCurrent").index(this);
+			
+			var currentPage = $(".currentPage");
+			
+			var currentIndex = $(".pageCurrent").index(currentPage);
+			
+			var text = $(this).text();
+			
+			if(text == "1"){
+				$(".pageCurrent").removeClass("currentPage");
+				$(this).addClass("currentPage");
+				return;
+			}
+			
+			if(index != currentIndex){
+				
+				var zhi = parseInt($(".pageCurrent:eq("+index+")").text()-2);
+				if(zhi+2 >= parseInt($(".pageDi").text())-2){
+					
+					$("#pageDian").css("display","none");
+					
+					var dishu = parseInt($(".pageDi").text())-4;
+					$(".pageq").each(function(index,e){
+						$(e).text(++dishu);			
+					});
+					s=1;
+				}else{
+					
+					$("#pageDian").css("display","block");
+					
+					s=0;
+					
+					$(".pageq").each(function(index,e){
+						$(e).text(++zhi);			
+					});
+				}
+				$(".pageCurrent").removeClass("currentPage");
+				$(".pageCurrent").each(function(index,e){
+					if($(e).text() == text){
+						$(e).addClass("currentPage");
+					}
+				});
+			}
+		});
+		
+		$(".show_hiden").click(function(){
+			var sh=$("#sh").attr("class");
+			if(sh=="lnr lnr-chevron-up"){
+				$("#sh").attr("class","lnr lnr-chevron-down");
+				$("#type").slideUp();
+			}else if(sh=="lnr lnr-chevron-down"){
+				$("#sh").attr("class","lnr lnr-chevron-up");
+				$("#type").slideDown();
+			}
+		});
+		
+		
+		$("#customers").click(function(){
+			location="Customer.html";
+		});
+		
+		$("#suppliers").click(function(){
+			location="Supplier.html";
+		});
+		
+		$("#quotes").click(function(){
+			location="Quote.html";
+		});
+
+	});
+	</script>
+</body>
+
+</html>
