@@ -50,8 +50,21 @@
 				position: absolute;
 				z-index: 999;
 			}
+			
+			.delimg {
+				position: absolute;
+				right: -3%;
+				color: #d96767;
+				top: 2%;
+				cursor: pointer;
+			}
+			
+			.imgmaindiv {
+				position: relative;
+				width: 100%;
+				height: 100%;
+			}
 		</style>
-
 	</head>
 
 	<body>
@@ -66,12 +79,10 @@
 						<div class="panel-body">
 
 							<div class="row">
-								<input type="file" class="fileHide" />
-								<div class="img-div text-center">
+
+								<div class="col-lg-2 img-div pickImg text-center">
+									<input type="file" name="files" multiple="multiple" onchange="imgShow(this)" class="fileHide" />
 									<span class="glyphicon glyphicon-plus" style="font-size: 50px;"></span>
-									<div style="position: absolute;top:0;">
-										<img width="100%" height="100%" />
-									</div>
 								</div>
 
 							</div>
@@ -214,7 +225,7 @@
 									</div>
 									<!-- /input-group -->
 								</div>
-								
+
 							</div>
 							<!-- /.row -->
 
@@ -336,9 +347,9 @@
 
 						</div>
 					</div>
-					
+
 					<button id="btn1">导出</button>
-					
+
 					<!--富文本编辑器-->
 					<div id="editor">
 
@@ -368,15 +379,89 @@
 	}
 
 	editor.create();
-	
-	
-	document.getElementById('btn1').addEventListener('click', function () {
-        // 读取 html
-        alert(editor.txt.html())
-    }, false)
-	
+
+	document.getElementById('btn1').addEventListener('click', function() {
+		// 读取 html
+		alert(editor.txt.html())
+	}, false)
+
+	var fileArr = [];
+	var index = 0;
+	/**
+	 * 图片选择回显
+	 * @param {Object} obj
+	 */
+	function imgShow(obj) {
+
+		for(var i = 0; i < obj.files.length; i++) {
+
+			var file = obj.files.item(i);
+			if(!(/^image\/.*$/i.test(file.type))) {
+				continue; //不是图片 就跳出这一次循环  
+			}
+
+			fileArr.push(obj.files[i]);
+
+			//实例化FileReader API  
+			var freader = new FileReader();
+			freader.readAsDataURL(file);
+			freader.onload = function(e) {
+
+				var div = $("<div style='margin-bottom:20px;'  class='img-div col-lg-2 text-center'><div class='imgmaindiv'><span title='删除' index='" + index + "' onclick='delImg(this)' class='glyphicon glyphicon-remove delimg'></span><img id='img' src='" + e.target.result + "' width='100%' height='100%' /></div></div>")
+				index++;
+
+				$(".pickImg").before(div);
+
+			}
+
+		}
+
+		//清空input file,否则将无法同一张图片只能pick一次
+		$(obj).val("");
+
+		console.log(fileArr);
+
+	}
+
+	/**
+	 * 详细图片选择
+	 * @param {Object} obj
+	 */
+	function pojoImg(obj) {
+
+		var file = obj.files.item(0);
+		if(!(/^image\/.*$/i.test(file.type))) {
+			return; //不是图片 就跳出这一次循环  
+		}
+
+
+		//实例化FileReader API  
+		var freader = new FileReader();
+		freader.readAsDataURL(file);
+		freader.onload = function(e) {
+
+			$(obj).next().attr("src", e.target.result);
+		}
+	}
+
+	function delImg(obj) {
+
+		fileArr.splice($(obj).attr("index"), 1);
+
+		$(obj).parent().parent().remove();
+
+		console.log(fileArr);
+
+	}
 
 	$(function() {
+
+		//		$(".fileHide").change(function(){
+		//			
+		//
+		//			
+		//		})
+
 		$(".activePosition").css("width", $(".activePosition").next().width());
 
 		//类型点击事件
@@ -514,10 +599,11 @@
 				for(var j = 0; j < tagObject.isCheckedDlArray[i].tag.length; j++) {
 					var td = $("<td class='text-center' style='vertical-align: inherit;' v='" + tagObject.isCheckedDlArray[i].tag[j].id + "'>").html(tagObject.isCheckedDlArray[i].tag[j].name);
 					if(i == tagObject.isCheckedDlArray.length - 1) {
+
 						var td1 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' type='hidden' value='" + tagObject.isCheckedDlArray[i].tag[j].id + "'><input oninput='countChange(this)' class='text-center' value='50' type=text name='num' v=''></td>");
 						var td2 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' oninput='priceChange(this)' type=text name='price'></td>");
 						var td3 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' value='20' oninput='countChange(this)' type=text name='thNum2'></td>");
-						var tdimg = $("<td class='text-center' style='vertical-align: inherit;'><img src='../assets/img/apple-icon.png'></td>");
+						var tdimg = $("<td class='text-center' style='vertical-align: inherit;'><div style='position:relative;width: 76px;height: 76px;'><input type='file' style='position:absolute;top:0;z-index: 99;width: 100%;height: 100%;opacity: 0;cursor: pointer;' title='选择图片' onchange='pojoImg(this)' name='file[" + (index - 1) + "]' /><img src='../assets/img/apple-icon.png' style='width: 76px;height: 76px;' /></div></td>");
 						var tr = $("<tr class='" + index + "'>");
 						index++;
 						tr.append(td);

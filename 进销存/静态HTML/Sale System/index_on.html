@@ -46,7 +46,7 @@
 				overflow-y: scroll;
 			}*/
 			.lm {
-				height: 98% !important;
+				height: 100% !important;
 			}
 			
 			.lm .sidebar-scroll {
@@ -308,38 +308,23 @@
 									</div>
 								</li>
 								<li>
-									<a href="charts.html" class=""><i class="lnr lnr-chart-bars"></i> <span>Charts</span></a>
-								</li>
-								<li>
-									<a href="panels.html" class=""><i class="lnr lnr-cog"></i> <span>Panels</span></a>
-								</li>
-								<li>
-									<a href="notifications.html" class=""><i class="lnr lnr-alarm"></i> <span>Notifications</span></a>
-								</li>
-								<li>
-									<a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Pages</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+									<a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>系统管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 									<div id="subPages" class="collapse ">
 										<ul class="nav">
 											<li>
-												<a href="page-profile.html" class="">Profile</a>
+												<a href="page-profile.html" target="right" class="">个人中心</a>
 											</li>
 											<li>
-												<a href="page-login.html" class="">Login</a>
+												<a href="czx/ChaXun.html" target="right" class="">用户管理</a>
 											</li>
 											<li>
-												<a href="page-lockscreen.html" class="">Lockscreen</a>
+												<a href="czx/page-login.html" class="">登录</a>
+											</li>
+											<li>
+												<a target="right" href="czx/GeRenZhongXin.html" class="">修改信息</a>
 											</li>
 										</ul>
 									</div>
-								</li>
-								<li>
-									<a href="#" class=""><i class="lnr lnr-dice"></i> <span>Tables</span></a>
-								</li>
-								<li>
-									<a href="typography.html" class=""><i class="lnr lnr-text-format"></i> <span>Typography</span></a>
-								</li>
-								<li>
-									<a href="icons.html" class=""><i class="lnr lnr-linearicons"></i> <span>Icons</span></a>
 								</li>
 							</ul>
 						</nav>
@@ -364,14 +349,16 @@
 		$(function() {
 			$(".nav li a").attr("aria-expanded", "false");
 			$(".nav li a").click(function() {
-				console.log($(this).html())
 				$(".nav li a").removeClass("active");
 				$(this).addClass("active");
 				$(this).parent().parent().parent().prev().addClass("active");
 			});
-			//			var hei = (parseInt($(window).height())-82);
-			//			$("iframe").css("min-height",hei);
-			//			$("#wrapper").css("height",$(window).height());
+			$("li>div>ul>li>a").click(function(){
+				$("li>div>ul>li>a").css("border-left-color","transparent");
+				$("li>div>ul>li>a").css("background-color","transparent");
+				$(this).css("border-left-color","#F0F8FF");
+				$(this).css("background-color","#393D49");
+			});
 		});
 	</script>
 
