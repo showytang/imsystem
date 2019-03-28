@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <title>供应商页面</title>
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="../assets/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon.png">
+	
+    <link href="XiTong/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="XiTong/css/style.css" rel="stylesheet">
+    <!-- You can change the theme colors from here -->
+    <link href="XiTong/css/blue.css" id="theme" rel="stylesheet">
+    
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<style type="text/css">
+	*{
+		-webkit-user-select: none;
+	}
+	[type="checkbox"]:not(:checked), [type="checkbox"]:checked{
+		position: relative;
+    	left: 0px;
+    	opacity: 10;
+	}
+	h5 label{
+		padding-top: 6px;
+		margin-bottom: 0px;
+		margin-right: 8px;
+	}
+	#searchZero{
+		display: flex;
+		flex: row;
+		margin-right: 6%;
+	}
+	.checkbox_css{
+        display: inline-block;
+        box-sizing: content-box;
+        width: 20px;
+        height: 20px;
+        -webkit-appearance: none;
+        border-radius: 50%;
+        background-color: #fff;
+        border: 1px solid #d1d1d1;
+    }
+    .checkbox_css:checked{
+        display: inline-block;
+        box-sizing: content-box;
+        width: 20px;
+        height: 20px;
+        -webkit-appearance: none;
+        border-radius: 50%;
+        background-position: -29px -91px;
+        background-image: url("XiTong/img/operation.png");
+        background-repeat: no-repeat;
+        background-size: 96px 640px;
+        border: 1px solid #2685d2;
+    }
+	.table td, .table th{
+		border-color: rgb(2,143,208);
+	}
+	td img{
+		width: 40%;
+		height: 55%;
+		border-radius: 50%;
+	}
+	a:hover{
+		cursor: pointer;
+	}
+</style>
+</head>
+	<body>
+		<div class="row"style="padding: 28px 20px;">
+                    <!-- column -->
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-block">
+                            	 <h5 class="card-subtitle " style="float: right;display: flex;flex-direction: row;">
+                            	 	<div id="searchZero">
+                            	 		<label>
+                        					<input type="checkbox" class="checkbox_css zero"/>
+                    					</label>
+                    					<span style="display: block;width: 60px;line-height: 38px;">零欠款</span>
+                            	 	</div>
+                            	 	<div class="input-group" style="margin-right: 10%;">
+										<input type="text" value="" class="form-control" placeholder="Search dashboard...">
+										<span class="input-group-btn"><button type="button" class="btn btn-primary">Go</button></span>
+									</div>
+                                	<input type="button" class="btn btn-primary" id="add" value="新增供应商"/>
+                                </h5>
+                                <h4 class="card-title">供应商</h4>
+                               
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>供应商名称</th>
+                                                <th>门店编号</th>
+                                                <th>联系人名</th>
+                                                <th>联系电话</th>
+                                                <th>相关列表</th>
+                                                <th>相关账单</th>
+                                                <th>供应商付款</th>
+                                                <th>供应商详情</th>
+                                                <th>删除供应商</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>紫女</td>
+                                                <td>AT444444</td>
+                                                <td></td>
+                                                <td>15858585822</td>
+                                                <td><a class="stockList">进货单列表</a></td>
+                                                <td><a class="bill">应付对账单</a></td>
+                                                <td><a class="pay">付款</a></td>
+                                                <td><a class="detail">查看详情</a></td>
+                                                <td><a class="del" style="color: red;">删除</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>网仪店主</td>
+                                                <td>AT444444</td>
+                                                <td>卫庄</td>
+                                                <td>15858585822</td>
+                                                <td><a class="stockList">进货单列表</a></td>
+                                                <td><a class="bill">应付对账单</a></td>
+                                                <td><a class="pay">付款</a></td>
+                                                <td><a class="detail">查看详情</a></td>
+                                                <td><a class="del" style="color: red;">删除</a></td>                                              
+                                            </tr>
+                                            <tr>
+                                                <td>花店店主</td>
+                                                <td>AT444444</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><a class="stockList">进货单列表</a></td>
+                                                <td><a class="bill">应付对账单</a></td>
+                                                <td><a class="pay">付款</a></td>
+                                                <td><a class="detail">查看详情</a></td>
+                                                <td><a class="del" style="color: red;">删除</a></td>                                               
+                                            </tr>
+                                            <tr>
+                                                <td>网仪店主</td>
+                                                <td>AT444444</td>
+                                                <td>卫庄</td>
+                                                <td>15858585822</td>
+                                                <td><a class="stockList">进货单列表</a></td>
+                                                <td><a class="bill">应付对账单</a></td>
+                                                <td><a class="pay">付款</a></td>
+                                                <td><a class="detail">查看详情</a></td>
+                                                <td><a class="del" style="color: red;">删除</a></td>                                              
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+	</body>
+	<script src="XiTong/jquery.min.js"></script>
+ 	<script src="../assets/vendor/jquery/jquery.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="XiTong/js/tether.min.js"></script>
+    <script src="XiTong/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="XiTong/js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="XiTong/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="XiTong/js/sidebarmenu.js"></script>
+    <!--stickey kit -->
+    <script src="XiTong/js/sticky-kit.min.js"></script>
+    <!--Custom JavaScript -->
+    <script src="XiTong/js/custom.min.js"></script>
+	<script>
+	
+		$(function() {
+			
+			/*查看详情*/
+			$(".detail").click(function(){
+				location="SupplierDetail.html";
+			});
+			
+			/*新增供货商*/
+			$("#add").click(function(){
+				location="AddSupplier.html";
+			});
+	
+		});
+	</script>
+</html>
