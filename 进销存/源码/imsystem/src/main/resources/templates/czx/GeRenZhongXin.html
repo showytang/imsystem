@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <!-- Head -->
 <head>
@@ -14,17 +14,17 @@
     <!-- Favicon icon -->
     <title></title>
     <!-- Bootstrap Core CSS -->
-    <link href="XiTong/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="XiTong/css/style.css" rel="stylesheet">
+    <link th:href="@{/assets/css/style.css}" rel="stylesheet">
     <!-- You can change the theme colors from here -->
-    <link href="XiTong/css/blue.css" id="theme" rel="stylesheet">
+    <link th:href="@{/assets/css/blue.css}" id="theme" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
+    
+    <script th:src="@{https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js}"></script>
+    <script th:src="@{https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js}"></script>
+
 <style>
 	.btn-block{
 		border-radius: 1px;
@@ -42,13 +42,13 @@
                     <div class="col-lg-4 col-xlg-3 col-md-5">
                         <div class="card">
                             <div class="card-block">
-                                <center class="m-t-30"> <img src="XiTong/img/one.jpg" class="img-circle" width="150">
+                                <center class="m-t-30"> <img th:src="@{/assets/img/one.jpg}" class="img-circle" width="150">
                                    
                                     <h4 class="card-title m-t-10">Laity</h4>
                                     <h6 class="card-subtitle">Accoubts Manager Amix corp</h6>
                                     <div class="row text-center justify-content-md-center">
-                                        <div class="col-4"><a href="javascript:void(0)" class="link"><i class="icon-people"></i> <font class="font-medium">254</font></a></div>
-                                        <div class="col-4"><a href="javascript:void(0)" class="link"><i class="icon-picture"></i> <font class="font-medium">54</font></a></div>
+                                        <div class="col-4"><a th:href="@{javascript:void(0)}" class="link"><i class="icon-people"></i> <font class="font-medium">254</font></a></div>
+                                        <div class="col-4"><a th:href="@{javascript:void(0)}" class="link"><i class="icon-picture"></i> <font class="font-medium">54</font></a></div>
                                     </div>
                                 </center>
                             </div>
@@ -121,21 +121,21 @@
 	
 </body>
 <!-- //Body -->
- 	<script src="XiTong/js/jquery.min.js"></script>
+ 	<script th:src="@{/assets/js/jquery.min.js}"></script>
  
     <!-- Bootstrap tether Core JavaScript -->
-    <script src="XiTong/js/tether.min.js"></script>
-    <script src="XiTong/js/bootstrap.min.js"></script>
+    <script th:src="@{/assets/js/tether.min.js}"></script>
+    <script th:src="@{/assets/js/bootstrap.min.js}"></script>
     <!-- slimscrollbar scrollbar JavaScript -->
-    <script src="XiTong/js/jquery.slimscroll.js"></script>
+    <script th:src="@{/assets/js/jquery.slimscroll.js}"></script>
     <!--Wave Effects -->
-    <script src="XiTong/js/waves.js"></script>
+    <script th:src="@{/assets/js/waves.js}"></script>
     <!--Menu sidebar -->
-    <script src="XiTong/js/sidebarmenu.js"></script>
+    <script th:src="@{/assets/js/sidebarmenu.js}"></script>
     <!--stickey kit -->
-    <script src="XiTong/js/sticky-kit.min.js"></script>
+    <script th:src="@{/assets/js/sticky-kit.min.js}"></script>
     <!--Custom JavaScript -->
-    <script src="XiTong/js/custom.min.js"></script>
+    <script th:src="@{/assets/js/custom.min.js}"></script>
 
 
 </html>
