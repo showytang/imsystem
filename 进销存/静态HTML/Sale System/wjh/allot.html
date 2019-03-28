@@ -108,6 +108,28 @@
 					display: block;
 				}
 			}
+			
+			.list-inline>li {
+				padding: 5px;
+				position: relative;
+				z-index: 2;
+				cursor: pointer;
+				padding: 5px 8px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				max-width: 100px;
+			}
+			
+			.list-inline {
+				-webkit-user-select: none;
+			}
+			
+			.backage {
+				background: rgb(2, 143, 208);
+				position: absolute;
+				z-index: 1;
+			}
 		</style>
 	</head>
 
@@ -148,6 +170,26 @@
 									<span class="glyphicon glyphicon-th-list"></span>
 								</div>
 							</div>
+							<div style="display: flex;padding: 15px 0px 0px 0px;">
+								<span style="padding: 5px;">出货门店：&nbsp;</span>
+								<ul class="list-inline" style="margin: 0px;">
+									<div class="backage"></div>
+									<li>laowangasdfasdfasdfsadfsadfasdfsadf</li>
+									<li>勇哥</li>
+									<li>dws</li>
+									<li>bitch</li>
+								</ul>
+							</div>
+							<div style="display: flex;padding: 5px 0px 15px 0px;">
+								<span style="padding: 5px;">进货门店：&nbsp;</span>
+								<ul class="list-inline" style="margin: 0px;">
+									<div class="backage"></div>
+									<li>现金</li>
+									<li>微信</li>
+									<li>支付宝</li>
+									<li>银行卡</li>
+								</ul>
+							</div>
 							<div class="content text-center">
 								<table class="table table-hover">
 									<thead>
@@ -181,7 +223,6 @@
 							</div>
 
 						</div>
-						<!--商品详情模态框-->
 						<div class="modal fade bs-example-modal-lg" id="modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
 							<div class="modal-dialog modal-lg" role="document">
 								<div class="modal-content">
@@ -216,10 +257,28 @@
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript" src="js/bootstrap-datetimepicker.js"></script>
 		<script type="text/javascript">
+			function posi(index,index1){
+				var height = $(".list-inline:eq("+index1+")>li:eq("+index+")").innerHeight();
+				var width = $(".list-inline:eq("+index1+")>li:eq("+index+")").innerWidth();
+				var top = $(".list-inline:eq("+index1+")>li:eq("+index+")").offset().top;
+				var left = $(".list-inline:eq("+index1+")>li:eq("+index+")").offset().left;
+				$(".list-inline:eq("+index1+")>li").css("color","#676a6d");
+				$(".backage:eq("+index1+")").animate({
+					"top":top+"px",
+					"left":left+"px",
+					"width":width+"px",
+					"height":height+"px"
+				},400,function(){
+					$(".list-inline:eq("+index1+")>li").css("color","#676a6d");
+					$(".list-inline:eq("+index1+")>li:eq("+index+")").css("color","white");
+				});
+			}
+			
 			$(function() {
 				myDate();
+				posi(0, 0);
+				posi(0, 1);
 				$(".order").click(function() {
 					if($(this).find("span").attr("class").indexOf("glyphicon-triangle-bottom") != -1) {
 						$(this).find("span").removeClass("glyphicon-triangle-bottom");
@@ -228,6 +287,11 @@
 						$(this).find("span").addClass("glyphicon-triangle-bottom");
 						$(this).find("span").removeClass("glyphicon-triangle-top");
 					}
+				});
+				$(".list-inline>li").click(function() {
+					var index1 = $(".list-inline").index($(this).parent());
+					var index = $(".list-inline:eq(" + index1 + ")>li").index(this);
+					posi(index, index1);
 				});
 				$("tbody>tr").click(function() {
 					$("#modal").modal("show");

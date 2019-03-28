@@ -57,6 +57,12 @@
 	color: #FFFFFF;
 }
 
+.caption h4{
+	 overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap
+}
+
 @media (min-width:970px) {
 	.xs-span {
 		display: none;

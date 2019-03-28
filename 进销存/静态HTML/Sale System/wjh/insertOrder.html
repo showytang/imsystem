@@ -74,6 +74,27 @@
 					width: 50%;
 				}
 			}
+			.list-inline>li{
+				padding: 5px;
+				position: relative;
+				z-index: 2;
+				cursor: pointer;
+				padding: 5px 8px;
+				overflow:hidden; 
+				text-overflow:ellipsis; 
+				white-space:nowrap;
+				max-width: 100px;
+				
+			}
+			.list-inline{
+				-webkit-user-select: none;
+			}
+			.backage{
+				background: rgb(2, 143, 208);
+				position: absolute;
+				z-index: 1;
+			}
+
 		</style>
 	</head>
 
@@ -88,43 +109,40 @@
 						</div>
 						<form action="#" class="container-fluid" method="post">
 							<div class="row jiben">
-								<div class="col-md-3 col-sm-6 col-xs-12">
+								<div class="col-md-5 col-sm-6 col-xs-12">
 									<div class="input-group">
 										<span class="input-group-addon">编号</span>
 										<input class="form-control" id="No" placeholder="订单编号" />
 									</div>
 								</div>
-								<div class="col-md-3 col-sm-6 col-xs-12">
+								<div class="col-md-7 col-sm-6 col-xs-12">
 									<div class="input-group">
 										<span class="input-group-addon">时间</span>
 										<input class="form-control datetimepicker" style="margin: 0px;" id="time" placeholder="订单编号" />
 									</div>
 								</div>
-								<div class="col-md-3 col-sm-6 col-xs-12">
-									<div class="input-group">
-										<span class="input-group-addon">供应商</span>
-										<select class="form-control">
-											<option>啊咯网</option>
-											<option>20</option>
-											<option>50</option>
-											<option>100</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-md-3 col-sm-6 col-xs-12">
-									<div class="input-group">
-										<span class="input-group-addon">支付类型</span>
-										<select class="form-control">
-											<option>10</option>
-											<option>20</option>
-											<option>50</option>
-											<option>100</option>
-										</select>
-									</div>
-								</div>
 							</div>
-
-							<div class="row" style="margin-top: 20px;margin-bottom: 20px;">
+							<div style="display: flex;padding: 15px 0px 0px 0px;">
+								<span style="padding: 5px;">供应商：&nbsp;</span>
+								<ul class="list-inline" style="margin: 0px;">
+									<div class="backage"></div>
+									<li>laowangasdfasdfasdfsadfsadfasdfsadf</li>
+									<li>勇哥</li>
+									<li>dws</li>
+									<li>bitch</li>
+								</ul>
+							</div>
+							<div style="display: flex;padding: 5px 0px 15px 0px;">
+								<span style="padding: 5px;">支付类型：&nbsp;</span>
+								<ul class="list-inline" style="margin: 0px;">
+									<div class="backage"></div>
+									<li>现金</li>
+									<li>微信</li>
+									<li>支付宝</li>
+									<li>银行卡</li>
+								</ul>
+							</div>
+							<div class="row" style="margin-bottom: 20px;">
 								<div class="col-xs-12">
 									<div class="container-fluid" style="background-color: #00AAFF;border-radius: 4px;">
 										<div class="btn-group btnShapping" style="float: right;">
@@ -276,6 +294,23 @@
 				format: 'yyyy-mm-dd hh:ii',
 				autoclose: 1
 			});
+			
+			function posi(index,index1){
+				var height = $(".list-inline:eq("+index1+")>li:eq("+index+")").innerHeight();
+				var width = $(".list-inline:eq("+index1+")>li:eq("+index+")").innerWidth();
+				var top = $(".list-inline:eq("+index1+")>li:eq("+index+")").offset().top;
+				var left = $(".list-inline:eq("+index1+")>li:eq("+index+")").offset().left;
+				$(".list-inline:eq("+index1+")>li").css("color","#676a6d");
+				$(".backage:eq("+index1+")").animate({
+					"top":top+"px",
+					"left":left+"px",
+					"width":width+"px",
+					"height":height+"px"
+				},400,function(){
+					$(".list-inline:eq("+index1+")>li").css("color","#676a6d");
+					$(".list-inline:eq("+index1+")>li:eq("+index+")").css("color","white");
+				});
+			}
 
 			$(function() {
 				var myDate = new Date();
@@ -283,6 +318,8 @@
 				var time = date + " " + dateTime(myDate.getHours()) + ":" + dateTime(myDate.getMinutes()) + ":" + dateTime(myDate.getSeconds());
 				$("#time").val(time);
 				$("#No").val(myDate.getFullYear() + "" + dateTime(parseInt(myDate.getMonth()) + 1) + "" + dateTime(myDate.getDate()) + dateTime(myDate.getHours()) + "" + dateTime(myDate.getMinutes()) + "" + dateTime(myDate.getSeconds()));
+				posi(0,0);
+				posi(0,1);
 				$(".btn-next").click(function() {
 					if($(this).next().css("display") == "none") {
 						$(this).next().slideDown();
@@ -291,6 +328,11 @@
 						$(this).next().slideUp();
 					}
 
+				});
+				$(".list-inline>li").click(function(){
+					var index1 = $(".list-inline").index($(this).parent());
+					var index = $(".list-inline:eq("+index1+")>li").index(this);
+					posi(index,index1);
 				});
 			});
 

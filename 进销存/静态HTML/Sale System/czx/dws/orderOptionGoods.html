@@ -146,7 +146,21 @@
 				//详细类型点击事件
 				$(".option-span-z").click(function() {
 					optionAddStyle(this);
+					if($(this).parent().find(".active1").length == $(this).parent().find(".option-span-z").length) {
 
+						$(this).parent().find(".option-span-z").removeClass("active1");
+						$(this).parent().find(".option-span-z").animate({
+							backgroundColor: "",
+							color: "#000000"
+						}, 300);
+
+						$(this).parent().find(".option-span-all").addClass("active1");
+						$(this).parent().find(".option-span-all").animate({
+							backgroundColor: "#00AAFF",
+							color: "#ffffff"
+						}, 300);
+
+					}
 				});
 
 				$(".option-span-all").click(function() {
@@ -313,6 +327,28 @@
 									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔</span>
 									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
 									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
+								</div>
+							</div>
+							<div class="option-div option-top-div row">
+								<div class="col-lg-1 col-md-1 text-right option-rongqi">
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型:</span>
+								</div>
+								<div class="col-lg-11 col-md-11 option-rongqi">
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span " typeid="">上衣</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔裤</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">破洞裤</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">运动裤</span>
+								</div>
+							</div>
+							<div class="option-div option-top-div row">
+								<div class="col-lg-1 col-md-1 text-right option-rongqi">
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型:</span>
+								</div>
+								<div class="col-lg-11 col-md-11 option-rongqi">
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span " typeid="">上衣</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔裤</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">破洞裤</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">运动裤</span>
 								</div>
 							</div>
 
