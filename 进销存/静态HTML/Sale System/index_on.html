@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
@@ -21,13 +22,74 @@
 		<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
 		<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
 		<style>
-			iframe{
+			html,
+			body,
+			#wrapper,
+			.main,
+			.main-content,
+			.right {
+				height: 100%;
 				width: 100%;
-				min-height: 650px;
-				height: auto;
+			}
+			
+			#wrapper {
+				overflow: hidden!important;
+			}
+			
+			.main-content {
+				padding: 0px 0px!important;
+			}
+			/*.right{
+				margin: 0px;
+				padding: 0px;
+				width: 100%;
+				overflow-y: scroll;
+			}*/
+			.lm {
+				height: 100% !important;
+			}
+			
+			.lm .sidebar-scroll {
+				height: 100% !important;
+				overflow-y: scroll !important;
+			}
+			
+			#wrapper {
+				overflow-y: scroll;
+			}
+			
+			.lm .sidebar-scroll::-webkit-scrollbar {
+				width: 3px;
+				height: 2px;
+				background: #ccc;
+				border-radius: 10px;
+				/*外层轨道*/
+			}
+			
+			.lm .sidebar-scroll::-webkit-scrollbar-thumb {
+				width: 2px;
+				border-radius: 10px;
+				background: #0089dc;
+				/*内层轨道*/
+			}
+			
+			#wrapper::-webkit-scrollbar {
+				width: 3px;
+				height: 2px;
+				background: #ccc;
+				border-radius: 10px;
+				/*外层轨道*/
+			}
+			
+			#wrapper::-webkit-scrollbar-thumb {
+				width: 2px;
+				border-radius: 10px;
+				background: #205081;
+				/*内层轨道*/
 			}
 		</style>
 	</head>
+
 	<body>
 		<div id="wrapper">
 			<nav class="navbar navbar-default navbar-fixed-top">
@@ -55,30 +117,58 @@
 									<span class="badge bg-danger">5</span>
 								</a>
 								<ul class="dropdown-menu notifications">
-									<li><a href="#" target="right" class="notification-item"><span class="dot bg-warning"></span>System space is almost full</a></li>
-									<li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9 unfinished tasks</a></li>
-									<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report is available</a></li>
-									<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting in 1 hour</a></li>
-									<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request has been approved</a></li>
-									<li><a href="#" class="more">See all notifications</a></li>
+									<li>
+										<a href="#" target="right" class="notification-item"><span class="dot bg-warning"></span>System space is almost full</a>
+									</li>
+									<li>
+										<a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9 unfinished tasks</a>
+									</li>
+									<li>
+										<a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report is available</a>
+									</li>
+									<li>
+										<a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting in 1 hour</a>
+									</li>
+									<li>
+										<a href="#" class="notification-item"><span class="dot bg-success"></span>Your request has been approved</a>
+									</li>
+									<li>
+										<a href="#" class="more">See all notifications</a>
+									</li>
 								</ul>
 							</li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="lnr lnr-question-circle"></i> <span>Help</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 								<ul class="dropdown-menu">
-									<li><a href="#">Basic Use</a></li>
-									<li><a href="#">Working With Data</a></li>
-									<li><a href="#">Security</a></li>
-									<li><a href="#">Troubleshooting</a></li>
+									<li>
+										<a href="#">Basic Use</a>
+									</li>
+									<li>
+										<a href="#">Working With Data</a>
+									</li>
+									<li>
+										<a href="#">Security</a>
+									</li>
+									<li>
+										<a href="#">Troubleshooting</a>
+									</li>
 								</ul>
 							</li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png" class="img-circle" alt="Avatar"> <span>Samuel</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 								<ul class="dropdown-menu">
-									<li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
-									<li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
-									<li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
-									<li><a href="#"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
+									<li>
+										<a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a>
+									</li>
+									<li>
+										<a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a>
+									</li>
+									<li>
+										<a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a>
+									</li>
+									<li>
+										<a href="#"><i class="lnr lnr-exit"></i> <span>Logout</span></a>
+									</li>
 								</ul>
 							</li>
 							<!-- <li>
@@ -89,33 +179,164 @@
 				</div>
 			</nav>
 			<div id="sidebar-nav" class="sidebar">
-				<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 95%;"><div class="sidebar-scroll" style="overflow: hidden; width: auto; height: 95%;">
-					<nav>
-						<ul class="nav">
-							<li><a href="yhb/index.html" target="right" class="active"><i class="lnr lnr-home"></i> <span>首页</span></a></li>
-							<li><a href="yhb/goodsPaim.html" target="right" class=""><i class="lnr lnr-code"></i> <span>商品销量排名</span></a></li>
-							<li><a href="charts.html" class=""><i class="lnr lnr-chart-bars"></i> <span>Charts</span></a></li>
-							<li><a href="panels.html" class=""><i class="lnr lnr-cog"></i> <span>Panels</span></a></li>
-							<li><a href="notifications.html" class=""><i class="lnr lnr-alarm"></i> <span>Notifications</span></a></li>
-							<li>
-								<a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Pages</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-								<div id="subPages" class="collapse ">
-									<ul class="nav">
-										<li><a href="page-profile.html" class="">Profile</a></li>
-										<li><a href="page-login.html" class="">Login</a></li>
-										<li><a href="page-lockscreen.html" class="">Lockscreen</a></li>
-									</ul>
-								</div>
-							</li>
-							<li><a href="tables.html" class=""><i class="lnr lnr-dice"></i> <span>Tables</span></a></li>
-							<li><a href="typography.html" class=""><i class="lnr lnr-text-format"></i> <span>Typography</span></a></li>
-							<li><a href="icons.html" class=""><i class="lnr lnr-linearicons"></i> <span>Icons</span></a></li>
-						</ul>
-					</nav>
-				</div><div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 617px;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div></div>
+				<div class="slimScrollDiv lm" style="position: relative; overflow: hidden; width: auto; height: 95%;">
+					<div class="sidebar-scroll" style="overflow: hidden; width: auto; height: 95%;">
+						<nav class="leftMenu">
+							<ul class="nav">
+								<li>
+									<a href="yhb/index.html" target="right" class="active"><i class="lnr lnr-home"></i> <span>首页</span></a>
+								</li>
+								<li>
+									<a href="yhb/goodsPaim.html" target="right" class=""><i class="lnr lnr-code"></i> <span>商品销量排名</span></a>
+								</li>
+								<li>
+									<a href="#tj" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>统计</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+									<div id="tj" class="collapse ">
+										<ul class="nav">
+											<li>
+												<a target="right" href="yhb/BaoBiao1.html" class="">报表一</a>
+											</li>
+											<li>
+												<a target="right" href="yhb/BaoBiao2.html" class="">报表二</a>
+											</li>
+											<li>
+												<a target="right" href="yhb/BaoBiao3.html" class="">报表仨</a>
+											</li>
+											<li>
+												<a target="right" href="yhb/goodsPaim.html" class="">统计1</a>
+											</li>
+											<li>
+												<a target="right" href="yhb/jinhuo.html" class="">统计2</a>
+											</li>
+											<li>
+												<a target="right" href="yhb/kucun.html" class="">统计3</a>
+											</li>
+											<li>
+												<a target="right" href="yhb/mingxi.html" class="">统计4</a>
+											</li>
+											<li>
+												<a target="right" href="yhb/qiankuan.html" class="">统计5</a>
+											</li>
+											<li>
+												<a target="right" href="yhb/shouzhang.html" class="">统计6</a>
+											</li>
+											<li>
+												<a target="right" href="yhb/XiaoShou.html" class="">统计7</a>
+											</li>
+										</ul>
+									</div>
+								</li>
+								<li>
+									<a href="#jc" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>基础数据</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+									<div id="jc" class="collapse ">
+										<ul class="nav">
+											<li>
+												<a target="right" href="xl/guigeshili.html" class="">基础数据1</a>
+											</li>
+											<li>
+												<a target="right" href="xl/guigezhi.html" class="">基础数据</a>
+											</li>
+											<li>
+												<a target="right" href="xl/kehujibie.html" class="">基础数据</a>
+											</li>
+											<li>
+												<a target="right" href="xl/kehuleixing.html" class="">基础数据</a>
+											</li>
+											<li>
+												<a target="right" href="xl/spdanwei.html" class="">基础数据</a>
+											</li>
+											<li>
+												<a target="right" href="xl/spguige.html" class="">基础数据</a>
+											</li>
+											<li>
+												<a target="right" href="xl/spleixing.html" class="">基础数据</a>
+											</li>
+											<li>
+												<a target="right" href="xl/zhifuleixing.html" class="">基础数据</a>
+											</li>
+										</ul>
+									</div>
+								</li>
+								<li>
+									<a href="#orders" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>订单管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+									<div id="orders" class="collapse ">
+										<ul class="nav">
+											<li>
+												<a target="right" href="wjh/allot.html" class="">订单1</a>
+											</li>
+											<li>
+												<a target="right" href="wjh/index.html" class="">订单</a>
+											</li>
+											<li>
+												<a target="right" href="wjh/insertOrder.html" class="">订单</a>
+											</li>
+											<li>
+												<a target="right" href="wjh/insertOrderOut.html" class="">订单</a>
+											</li>
+											<li>
+												<a target="right" href="wjh/orderDesc.html" class="">订单</a>
+											</li>
+											<li>
+												<a target="right" href="wjh/orderOver.html" class="">订单</a>
+											</li>
+											<li>
+												<a target="right" href="wjh/yetOrder.html" class="">订单</a>
+											</li>
+										</ul>
+									</div>
+								</li>
+								<li>
+									<a href="#goods" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>商品管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+									<div id="goods" class="collapse ">
+										<ul class="nav">
+											<li>
+												<a target="right" href="dws/addGoods.html" class="">添加商品</a>
+											</li>
+											<li>
+												<a target="right" href="dws/detailsGoods.html" class="">商品修改</a>
+											</li>
+											<li>
+												<a target="right" href="dws/Goods.html" class="">商品查询</a>
+											</li>
+											<li>
+												<a target="right" href="dws/orderOptionGoods.html" class="">选中商品</a>
+											</li>
+											<li>
+												<a target="right" href="dws/updateGoods.html" class="">添加</a>
+											</li>
+										</ul>
+									</div>
+								</li>
+								<li>
+									<a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>系统管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+									<div id="subPages" class="collapse ">
+										<ul class="nav">
+											<li>
+												<a href="page-profile.html" target="right" class="">个人中心</a>
+											</li>
+											<li>
+												<a href="czx/ChaXun.html" target="right" class="">用户管理</a>
+											</li>
+											<li>
+												<a href="czx/page-login.html" class="">登录</a>
+											</li>
+											<li>
+												<a target="right" href="czx/GeRenZhongXin.html" class="">修改信息</a>
+											</li>
+										</ul>
+									</div>
+								</li>
+							</ul>
+						</nav>
+					</div>
+					<div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 617px;"></div>
+					<div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
+				</div>
 			</div>
 			<div class="main">
-				<iframe class="right slimScrollBar" frameborder="no" border="0" marginwidth="0" marginheight="0"  name="right" src="yhb/index.html"></iframe>
+				<div class="main-content">
+					<iframe class="right slimScrollBar" frameborder="no" border="0" marginwidth="0" marginheight="0" name="right" src="yhb/index.html"></iframe>
+				</div>
 			</div>
 		</div>
 	</body>
@@ -125,11 +346,20 @@
 	<script src="assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
 	<script src="assets/scripts/klorofil-common.js"></script>
 	<script>
-		$(function(){
-			$(".nav li a").click(function(){
+		$(function() {
+			$(".nav li a").attr("aria-expanded", "false");
+			$(".nav li a").click(function() {
 				$(".nav li a").removeClass("active");
 				$(this).addClass("active");
+				$(this).parent().parent().parent().prev().addClass("active");
+			});
+			$("li>div>ul>li>a").click(function(){
+				$("li>div>ul>li>a").css("border-left-color","transparent");
+				$("li>div>ul>li>a").css("background-color","transparent");
+				$(this).css("border-left-color","#F0F8FF");
+				$(this).css("background-color","#393D49");
 			});
 		});
 	</script>
+
 </html>

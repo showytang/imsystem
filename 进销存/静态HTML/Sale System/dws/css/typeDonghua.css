@@ -1,0 +1,73 @@
+.option-span,
+.option-span-z,
+.option-span-all {
+	cursor: pointer;
+	border-radius: 3px;
+	font-size: 19px;
+	letter-spacing: 5px;
+	height: 100%;
+	line-height: 4vh;
+	min-width: 6vh;
+}
+
+.option-rongqi {
+	position: relative;
+	z-index: 999;
+}
+
+.option-span-title {
+	font-size: 20px;
+	height: 100%;
+	line-height: 4vh;
+}
+
+#body,
+.option-div {
+	user-select: none;
+	/*火狐*/
+	-moz-user-select: none;
+	/*webkit浏览器*/
+	-webkit-user-select: none;
+	/*IE10*/
+	-ms-user-select: none;
+	/*早期浏览器*/
+	-khtml-user-select: none;
+	position: relative;
+}
+
+.option-div {
+	padding: 1vh 0;
+	line-height: 2vh;
+	border-bottom: 1px #CCCCCC solid;
+}
+
+.activePosition {
+	background-color: #00AAFF;
+	;
+	position: absolute;
+	z-index: -1;
+}
+
+.option-rongqi {
+	background-color: inherit;
+	height: 4vh;
+}
+
+.activeColor {
+	color: #FFFFFF;
+}
+
+.caption h4{
+	 overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap
+}
+
+@media (min-width:970px) {
+	.xs-span {
+		display: none;
+	}
+	.lg-md-span {
+		display: ;
+	}
+}
