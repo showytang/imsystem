@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <title>根据商品选择报价客户页面</title>
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="../assets/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon.png">
+	
+    <link href="XiTong/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="XiTong/css/style.css" rel="stylesheet">
+    <!-- You can change the theme colors from here -->
+    <link href="XiTong/css/blue.css" id="theme" rel="stylesheet">
+    
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<style type="text/css">
+	*{
+		-webkit-user-select: none;
+	}
+	[type="checkbox"]:not(:checked), [type="checkbox"]:checked{
+		position: relative;
+    	left: 0px;
+    	opacity: 10;
+	}
+	h5 label{
+		padding-top: 6px;
+		margin-bottom: 0px;
+		margin-right: 8px;
+	}
+	#searchZero{
+		display: flex;
+		flex: row;
+		margin-right: 6%;
+	}
+	.checkbox_css{
+        display: inline-block;
+        box-sizing: content-box;
+        width: 20px;
+        height: 20px;
+        -webkit-appearance: none;
+        border-radius: 50%;
+        background-color: #fff;
+        border: 1px solid #d1d1d1;
+    }
+    .checkbox_css:checked{
+        display: inline-block;
+        box-sizing: content-box;
+        width: 20px;
+        height: 20px;
+        -webkit-appearance: none;
+        border-radius: 50%;
+        background-position: -29px -91px;
+        background-image: url("XiTong/img/operation.png");
+        background-repeat: no-repeat;
+        background-size: 96px 640px;
+        border: 1px solid #2685d2;
+    }
+	.table td, .table th{
+		border-color: rgb(2,143,208);
+	}
+	td img{
+		width: 16%;
+		height: 45%;
+		border-radius: 50%;
+	}
+	td input{
+		width: 30%;
+		color: red;
+	}
+	a:hover{
+		cursor: pointer;
+	}
+</style>
+</head>
+	<body>
+		<div class="row"style="padding: 28px 20px;">
+                    <!-- column -->
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-block">
+                            	 <h5 class="card-subtitle " style="float: right;display: flex;flex-direction: row;">
+                            	 	
+                            	 	<div class="input-group" style="margin-right: 10%;">
+										<input type="text" value="" class="form-control" placeholder="根据客户名称查询">
+										<span class="input-group-btn"><button type="button" class="btn btn-primary">Go</button></span>
+									</div>
+                                	<input type="button" class="btn btn-primary" value="确认客户"/>
+                                </h5>
+                                <h4 class="card-title">选择客户</h4>
+                               
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                            	<th>选择</th>
+                                            	<th>客户头像</th>
+                                                <th>客户名称</th>
+                                                <th>报价</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                            	<td>
+                                            		<label>
+			                        					<input type="checkbox" class="checkbox_css check" checked="checked"/>
+			                    					</label>
+                                            	</td>
+                                                <td><img src="../assets/img/apple-icon.png"/></td>
+                                                <td>鸭舌帽</td>
+                                                <td><input type="text" name="" class="price" value="25" /></td>
+                                            </tr>
+                                            <tr>
+                                            	<td>
+                                            		<label>
+			                        					<input type="checkbox" class="checkbox_css check"/>
+			                    					</label>
+                                            	</td>
+                                                <td><img src="../assets/img/apple-icon.png"/></td>
+                                                <td>鸭舌帽</td>
+                                                <td><input type="text" name="" class="price" value="" /></td>
+                                            </tr>
+                                            <tr>
+                                            	<td>
+                                            		<label>
+			                        					<input type="checkbox" class="checkbox_css check"/>
+			                    					</label>
+                                            	</td>
+                                                <td><img src="../assets/img/apple-icon.png"/></td>
+                                                <td>鸭舌帽</td>
+                                                <td><input type="text" name="" class="price" value="" /></td>
+                                            </tr>
+                                            <tr>
+                                            	<td>
+                                            		<label>
+			                        					<input type="checkbox" class="checkbox_css check" checked="checked"/>
+			                    					</label>
+                                            	</td>
+                                                <td><img src="../assets/img/apple-icon.png"/></td>
+                                                <td>鸭舌帽</td>
+                                                <td><input type="text" name="" class="price" value="22" /></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+	</body>
+	<script src="XiTong/jquery.min.js"></script>
+ 	<script src="../assets/vendor/jquery/jquery.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="XiTong/js/tether.min.js"></script>
+    <script src="XiTong/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="XiTong/js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="XiTong/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="XiTong/js/sidebarmenu.js"></script>
+    <!--stickey kit -->
+    <script src="XiTong/js/sticky-kit.min.js"></script>
+    <!--Custom JavaScript -->
+    <script src="XiTong/js/custom.min.js"></script>
+	<script>
+	
+		$(function() {
+			
+			$(".check").each(function(){
+				if(this.checked==false){
+					$(this).parent().parent().next().next().next().find("input").attr("disabled","disabled");
+				}
+			});
+			$(".price").each(function(){
+				var vul=$(this).val();
+				if(vul==""){
+					$(this).attr("disabled","disabled");
+					$(this).parent().prev().prev().prev().find(".check").removeAttr("checked");
+				}
+			});
+			
+			$(".check").click(function(){
+				$(".check").each(function(){
+					if(this.checked){
+						$(this).parent().parent().next().next().next().find("input").removeAttr("disabled");
+					}else{
+						$(this).parent().parent().next().next().next().find("input").val("");
+						$(this).parent().parent().next().next().next().find("input").attr("disabled","disabled");
+					}
+				});
+			});
+			$(".price").blur(function(){
+				var vul=$(this).val();
+				if(vul==""){
+					$(this).attr("disabled","disabled");
+					$(this).parent().prev().prev().prev().find(".check").removeAttr("checked");
+				}
+			});
+	
+		});
+	</script>
+</html>
