@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -43,6 +44,12 @@ public class WebMvcConfigruation extends WebMvcConfigurationSupport {
 	@Bean
 	public StringHttpMessageConverter stringHttpMessageConverter() {
 		return new StringHttpMessageConverter(StandardCharsets.UTF_8);
+	}
+	
+	@Bean
+	public ByteArrayHttpMessageConverter byteArrayMessageConverter() {
+		ByteArrayHttpMessageConverter c = new ByteArrayHttpMessageConverter();
+		return c;
 	}
 
 	@Bean
@@ -81,6 +88,7 @@ public class WebMvcConfigruation extends WebMvcConfigurationSupport {
 	protected void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 		converters.add(stringHttpMessageConverter());
 //		converters.add(fastJsonHttpMessageConverter());
+		converters.add(byteArrayMessageConverter());
 		converters.add(mappingJackson2HttpMessageConverter());
 		super.configureMessageConverters(converters);
 	}
