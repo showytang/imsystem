@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title>商品详情</title>
-		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
 		<!-- VENDOR CSS -->
-		<link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" href="../assets/vendor/font-awesome/css/font-awesome.min.css">
-		<link rel="stylesheet" href="../assets/vendor/linearicons/style.css">
-		<link rel="stylesheet" href="../assets/vendor/chartist/css/chartist-custom.css">
+		<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+		<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
+		<link rel="stylesheet" th:href="@{/assets/css/style.css}">
+		<link rel="stylesheet" th:href="@{/assets/css/chartist-custom.css}">
 		<!-- MAIN CSS -->
-		<link rel="stylesheet" href="../assets/css/main.css">
+		<link rel="stylesheet" th:href="@{/assets/css/main.css}">
 		<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
-		<link rel="stylesheet" href="../assets/css/demo.css">
+		<link rel="stylesheet" th:href="@{/assets/css/demo.css}">
 		<!-- GOOGLE FONTS -->
-		<link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-		<link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon.png">
+		<link rel="apple-touch-icon" sizes="76x76" th:href="@{/assets/img/apple-icon.png}">
+		<link rel="icon" type="image/png" sizes="96x96" th:href="@{/assets/img/favicon.png}">
 
-		<link rel="stylesheet" href="css/typeDonghua.css" />
+		<link rel="stylesheet" th:href="@{/assets/css/typeDonghua.css}" />
 
 		<style>
 			.list-group-item-hover:hover {
@@ -37,8 +37,8 @@
 			}
 		</style>
 
-		<script type="text/javascript" src="js/jquery-1.8.2.js"></script>
-		<script type="text/javascript" src="js/bootstrap.js"></script>
+		<script type="text/javascript" th:src="@{/assets/js/jquery-1.8.2.js}"></script>
+		<script type="text/javascript" th:src="@{/assets/js/bootstrap.js}"></script>
 		<script>
 			$(function() {
 
@@ -60,11 +60,11 @@
 
 				});
 				
-				$(".AllUp").click(function(){
+/* 				$(".AllUp").click(function(){
 					
-					location = "updateGoods.html";
+					location = "/goods/updateGoodsLoad";
 					
-				});
+				}); */
 
 			});
 		</script>
@@ -83,7 +83,7 @@
 				<div class="panel-heading">
 					<h3 style="padding-right: 20px;background-color:#00AAFF ;color: #FFFFFF;height: 6vh;line-height: 6vh;letter-spacing:2px;text-indent: 20px;border-radius: 5px;" class="panel-title">
 						<span>商品详情</span>
-						<span class="AllUp upqian" style="float: right;cursor: pointer;">更多</span>
+						<a th:href="@{/goods/updateGoodsLoad}"><span class="AllUp upqian" style="float: right;cursor: pointer;">更多</span></a>
 						<span class="upNow upqian" style="float: right;cursor: pointer;">编辑</span>
 						
 						<span class="upAfert upOk" style="float: right;cursor: pointer;display: none;">完成</span>
