@@ -1,0 +1,30 @@
+package com.imsystem.mapper;
+
+import com.imsystem.domain.Salesorder;
+import com.imsystem.domain.SalesorderExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface SalesorderMapper {
+    int countByExample(SalesorderExample example);
+
+    int deleteByExample(SalesorderExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Salesorder record);
+
+    int insertSelective(Salesorder record);
+
+    List<Salesorder> selectByExample(SalesorderExample example);
+
+    Salesorder selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Salesorder record, @Param("example") SalesorderExample example);
+
+    int updateByExample(@Param("record") Salesorder record, @Param("example") SalesorderExample example);
+
+    int updateByPrimaryKeySelective(Salesorder record);
+
+    int updateByPrimaryKey(Salesorder record);
+}
