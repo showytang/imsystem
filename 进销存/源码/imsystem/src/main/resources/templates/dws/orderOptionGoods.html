@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>订单选择商品</title>
+		<link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="../assets/vendor/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="../assets/css/main.css">
+		<link rel="stylesheet" href="css/Animzte.css" />
+		<link rel="stylesheet" href="css/typeDonghua.css" />
+		<!--88888-->
+
+		<style>
+			.pagebtn {
+				height: 28px;
+				width: 25px;
+				border: 1px solid #C0C0C0;
+				border-radius: 3px;
+				list-style: none;
+				text-align: center;
+				line-height: 28px;
+				cursor: pointer;
+			}
+			
+			#page>ul {
+				display: flex;
+				justify-content: space-around;
+				padding: 0px;
+				font-size: 12px;
+			}
+			
+			#page {
+				width: 300px;
+				margin: 20px auto;
+			}
+			
+			.currentPage {
+				background: #1094ce;
+				color: white;
+				border: none;
+			}
+			/*上面是分页*/
+			
+			.sum {
+				max-width: 20%;
+				border-radius: 5px;
+				border: 1px solid #CCCCCC;
+			}
+			/*定义滚动条轨道 内阴影+圆角*/
+			/*.panel-body::-webkit-scrollbar-track {
+				-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+				border-radius: 10px;
+				background-color: lightgray;
+			}*/
+			/*定义滑块 内阴影+圆角*/
+			/*.panel-body::-webkit-scrollbar-thumb {
+				border-radius: 10px;
+				-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+				background-color: blue;
+			}
+			*/
+			
+			.panel-body::-webkit-scrollbar {
+				width: 10px;
+				height: 2px;
+				background: #fff;
+				border-radius: 10px;
+				/*外层轨道*/
+			}
+			
+			.panel-body::-webkit-scrollbar-thumb {
+				display: block;
+				width: 6px;
+				margin: 0 auto;
+				border-radius: 10px;
+				background: #CCCCCC;
+				/*内层轨道*/
+			}
+			
+			.hideDiv {
+				overflow: hidden;
+				display: none;
+			}
+			/*添加样式*/
+			
+			.shoppingCart {
+				width: 94vw;
+				margin: 0 3vh;
+				padding: 0;
+				position: fixed;
+				bottom: 0;
+				min-height: 6vh;
+				max-height: 60vh;
+			}
+			
+			.option-body {
+				background-color: rgba(214, 224, 233, 0.54);
+				border-radius: 20px 20px 10px 10px;
+				box-shadow: 1px 1px 10px #94bcdc;
+			}
+			
+			.panel {
+				margin: 0;
+			}
+			
+			.panel-body {
+				display: block;
+				overflow-y: auto;
+				max-height: 50vh;
+				padding: 0;
+			}
+			
+			.shoppingDel {
+				position: absolute;
+				right: 1vh;
+				top: -0.5vh;
+				color: #f03731;
+				cursor: pointer;
+			}
+			
+			.titleDiv {
+				padding: 2vh 5vh;
+				margin: 0;
+				color: #FFFFFF;
+				background-color: rgb(2, 143, 208);
+				border-radius: 10px;
+			}
+		</style>
+		<script type="text/javascript" src="js/jquery-1.8.2.js"></script>
+		<script type="text/javascript" src="js/jquery.color.js"></script>
+		<script type="text/javascript" src="js/page.js"></script>
+		<script type="text/javascript" src="js/typeDonghua.js"></script>
+		<script src="js/bootstrap.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				$(".activePosition").css("width", $(".activePosition").next().width());
+				//类型点击事件
+				$(".option-span").click(function() {
+					//动画
+					activeSpanStyle(this);
+
+				});
+
+				//详细类型点击事件
+				$(".option-span-z").click(function() {
+					optionAddStyle(this);
+					if($(this).parent().find(".active1").length == $(this).parent().find(".option-span-z").length) {
+
+						$(this).parent().find(".option-span-z").removeClass("active1");
+						$(this).parent().find(".option-span-z").animate({
+							backgroundColor: "",
+							color: "#000000"
+						}, 300);
+
+						$(this).parent().find(".option-span-all").addClass("active1");
+						$(this).parent().find(".option-span-all").animate({
+							backgroundColor: "#00AAFF",
+							color: "#ffffff"
+						}, 300);
+
+					}
+				});
+
+				$(".option-span-all").click(function() {
+					optionAllStyle(this);
+				});
+
+				//商品数量添加
+				$(".add").click(function() {
+
+					addSum(this);
+
+				});
+
+				//商品数量添加
+				$(".subtract").click(function() {
+
+					subtractSum(this);
+
+				});
+
+				//查看选中的商品
+				$(".ppp").toggle(function() {
+
+					$(this).parents(".panel").find(".option-body").slideDown(300);
+					$(this).removeClass("glyphicon-chevron-up");
+					$(this).addClass("glyphicon-chevron-down");
+
+				}, function() {
+
+					$(this).parents(".panel").find(".option-body").slideUp(300);
+					$(this).removeClass("glyphicon-chevron-down");
+					$(this).addClass("glyphicon-chevron-up");
+				});
+
+				//添加动画
+				$(".addgwc").click(function() {
+
+					//					addGwcDonghua(this);
+
+				});
+
+			});
+
+			//			function addGwcDonghua(Obj) {
+			//
+			//				var addImg = $(Obj).parents(".thumbnail").find("img"); //找到该商品的图片
+			//
+			//				var cloneImg = addImg.clone(); //对该图片进行克隆
+			//				cloneImg.css({ //克隆的样式
+			//
+			//					"position": "absolute", //绝对定位
+			//					"left": addImg.offset().left, //该图片的left位置
+			//					"top": addImg.offset().top, //该图片的top位置
+			//					"z-index": "200", //层级，越大越在上
+			//					"opacity": "0.5" //透明度  半透明
+			//				});
+			//
+			//				//克隆到body上的购物车位置
+			//				cloneImg.appendTo($("body")).animate({
+			//					"width": "50px", //克隆后的宽
+			//					"height": "50px", //克隆后的宽
+			//					"left": $(".panel").offset().left, //克隆后的left位置  购物车
+			//					"top": $(".panel").offset().top - 120, //克隆后的left位置  购物车
+			//				}, 1000, function() { //克隆后
+			//					$(this).remove(); //清空购物车  不清除图片会叠加
+			//				});
+			//
+			//			}
+
+			/*
+			 商品添加
+			 * */
+			function addSum(obj) {
+
+				let nowCount = $(obj).next().val();
+
+				$(obj).next().val((parseFloat(nowCount) + 1));
+
+			}
+
+			//商品数量减少
+			function subtractSum(Obj) {
+
+				let nowCount = $(Obj).prev().val();
+
+				if(nowCount > 1) {
+
+					$(Obj).prev().val((parseFloat(nowCount) - 1));
+
+				}
+
+			}
+
+			//输入判定
+			function countChange(Obj) {
+
+				//判定是否数字
+				$(Obj).val($(Obj).val().replace(/[^\d]/g, ''));
+
+				let nowCount = $(Obj).val();
+
+				if(nowCount > 999) {
+					$(Obj).val("999");
+				} else if(nowCount < 1) {
+					$(Obj).val("1");
+				}
+
+			}
+		</script>
+	</head>
+
+	<body>
+
+		<div class="main">
+			<div class="main-content">
+				<div class="container-fluid">
+					<div class="panel panel-headline">
+						<div class="panel-heading">
+							<h3 class="panel-title">报表 - 1</h3>
+							<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
+						</div>
+						<!--小屏幕-->
+						<div class="row" style="margin: 2vh 3vh;">
+
+							<div class="row">
+
+								<div class="col-xs-11 col-lg-12 col-md-12">
+									<div class="input-group">
+										<label class="input-group-addon">搜索:</label>
+										<input type="text" class="form-control" placeholder="请输入关键字">
+
+										<span class="input-group-btn lg-md-span">
+					        <button class="btn btn-primary" type="button">确 定</button>
+					      	</span>
+										<span class="input-group-btn lg-md-span">
+					        <button class="btn btn-primary" type="button">扫一扫</button>
+					      	</span>
+									</div>
+								</div>
+
+								<div class="col-xs-1">
+									<div class="input-group">
+										<span class="input-group-btn xs-span">
+				      		<button class="btn btn-primary glyphicon glyphicon-list"></button>
+				      	</span>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+
+						<!--大，中屏幕的样式-->
+						<div class="row visible-lg-block visible-md-block" style="margin: 0 3vh;">
+							<div class="option-div option-top-div row">
+								<div class="col-lg-1 col-md-1 text-right option-rongqi">
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型:</span>
+								</div>
+								<div class="col-lg-11 col-md-11 option-rongqi">
+									<span class="visible-lg-inline-block visible-md-inline-block visible-md-inline-block text-center activePosition option-span active1"></span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span activeColor">全部</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span" typeid="">上衣</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">裤子</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
+								</div>
+							</div>
+							<div class="option-div option-top-div row">
+								<div class="col-lg-1 col-md-1 text-right option-rongqi">
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型:</span>
+								</div>
+								<div class="col-lg-11 col-md-11 option-rongqi">
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span " typeid="">上衣</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔裤</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">破洞裤</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">运动裤</span>
+								</div>
+							</div>
+							<div class="option-div option-top-div row">
+								<div class="col-lg-1 col-md-1 text-right option-rongqi">
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型:</span>
+								</div>
+								<div class="col-lg-11 col-md-11 option-rongqi">
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span " typeid="">上衣</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔裤</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">破洞裤</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">运动裤</span>
+								</div>
+							</div>
+
+							<div class="option-div row">
+								<div class="col-lg-1 col-md-1 text-right option-rongqi">
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">尺码:</span>
+								</div>
+								<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #00AAFF;">不限</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">S</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">M</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">L</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">XL</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">XL</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">XXL</span>
+								</div>
+							</div>
+
+							<div class="option-div row">
+								<div class="col-lg-1 col-md-1 text-right option-rongqi">
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">颜色:</span>
+								</div>
+								<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #00AAFF;">不限</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">浅粉色</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">卡其色</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">藏青色</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">藕色</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">杏色</span>
+									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">绿棕色</span>
+								</div>
+							</div>
+
+						</div>
+
+						<!--主体-->
+						<div id="body" style="margin: 1vh 3vh 0 3vh; min-height: 60vh;background-color: #eae2e21f;">
+
+							<hr />
+
+							<div class="row">
+
+								<div class="col-sm-6 col-md-3">
+									<div class="thumbnail">
+										<img style="max-height: 20vh;min-height: 20vh;" src="../assets/img/login-bg.jpg" alt="...">
+										<div class="caption text-center">
+											<h4>这是上衣啊</h4>
+											<p style="color: #777070;">
+												<span>红色,L</span> <span>￥：1800</span>
+											</p>
+											<p style="color: #777070;">
+												<span>库存:</span> <span>100</span>
+											</p>
+											<p style="color: #777070;">
+												<div class="input-group">
+													<label class="add btn btn-default btn-xs" style="margin-right: 5px;">+</label>
+													<input type="text" value="1" maxlength="3" oninput="countChange(this)" class="text-center sum">
+													<label style="margin-left: 5px;" class="subtract btn btn-default btn-xs">-</label>
+												</div>
+											</p>
+											<p>
+												<a href="#" class="btn btn-primary addgwc" role="button">加入</a>
+											</p>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+							<div id="page" style="margin-bottom: 45px;">
+								<ul>
+									<li class="pagebtn pagePrev"><span class="glyphicon glyphicon-menu-left"></span></li>
+									<li class="pagebtn currentPage pageCurrent pageq">1</li>
+									<li class="pagebtn pageCurrent pageq">2</li>
+									<li class="pagebtn pageCurrent pageq">3</li>
+									<li class="pagebtn" id="pageDian" style="border: none;background: white;font-size: 20px;">...</li>
+									<li class="pagebtn pageCurrent pageDi">14</li>
+									<li class="pagebtn pageCurrent">15</li>
+									<li class="pagebtn pageCurrent">16</li>
+									<li class="pagebtn pageNext"><span class="glyphicon glyphicon-menu-right"></span></li>
+								</ul>
+							</div>
+
+						</div>
+
+						<div class="row shoppingCart">
+							<div class="panel">
+
+								<div class="option-body hideDiv">
+
+									<div class="panel-body">
+
+										<div class="col-sm-6 col-md-3">
+											<div class="thumbnail">
+												<span class="glyphicon glyphicon-remove shoppingDel" title="删除"></span>
+												<img style="max-height: 20vh;min-height: 20vh;" src="../assets/img/login-bg.jpg" alt="...">
+												<div class="caption text-center">
+													<h4>这是上衣啊</h4>
+													<p style="color: #777070;">
+														<span>￥：1800</span>
+													</p>
+													<p style="color: #777070;">
+														<span>红色,L</span>
+													</p>
+													<p style="color: #777070;">
+														<div class="input-group">
+															<label class="add btn btn-default btn-xs" style="margin-right: 5px;">+</label>
+															<input type="text" value="1" maxlength="3" oninput="countChange(this)" class="text-center sum">
+															<label style="margin-left: 5px;" class="subtract btn btn-default btn-xs">-</label>
+														</div>
+													</p>
+												</div>
+											</div>
+										</div>
+
+									</div>
+
+								</div>
+
+								<div class="row titleDiv">
+									<div class="col-lg-6">
+										<h3 class="panel-title">
+								<font class="btn" style="vertical-align: inherit;margin-right: 50px;"><font style="vertical-align: inherit;">已选购中的商品</font></font>
+								<font style="vertical-align: inherit;margin-right: 50px;"><font style="vertical-align: inherit;">总件数:</font><span id="shoppingCount">20</span></font>
+								<font style="vertical-align: inherit;margin-right: 50px;"><font style="vertical-align: inherit;">总价:￥</font><span>2000</span></font>
+							</h3>
+									</div>
+									<div class="text-right col-lg-6">
+										<span class="btn" style="margin-right: 3vw;">确认订单</span>
+										<i class="glyphicon glyphicon-chevron-up ppp"></i>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

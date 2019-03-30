@@ -1,0 +1,160 @@
+final String table = "customer";
+final String column_id                      ="id";
+final String column_name                         ="name";
+final String column_img                           ="img";
+final String column_telephonename           ="telephonename";
+final String column_telephone               ="telephone";
+final String column_pname                   ="pname";
+final String column_cname                ="cname";
+final String column_aname                ="aname";
+final String column_address              ="address";
+final String column_balance           ="balance";
+final String column_initbalance       ="initbalance";
+final String column_score             ="score";
+final String column_cid               ="cid";
+final String column_lid               ="lid";
+final String column_time              ="time";
+final String column_updatetime        ="updatetime";
+final String column_uid               ="uid";
+final String column_state             ="state";
+final String column_storeid           ="storeid";
+final String column_column1 = "column1";
+final String column_column2 = "column2";
+final String column_column3 = "column3";
+final String column_column4 = "column4";
+final String column_column5 = "column5";
+
+class Customer {
+  String id                          ;
+String name                        ;
+blob img                         ;
+String telephonename         ;
+String telephone             ;  
+String pname                 ;
+String cname              ;
+String aname              ; 
+String address            ;
+double balance         ;
+double initbalance     ;
+int score           ;
+String cid             ; 
+String lid             ;
+String time            ;   
+String updatetime      ;
+String uid             ; 
+int state           ;
+String storeid         ;
+  String column1;
+  String column2;
+  String column3;
+  String column4;
+  String column5;
+  Customer();
+
+  Customer.construct1(this.id             ,
+this.name           ,
+this.img            ,
+this.telephonename  ,
+this.telephone      ,
+this.pname          ,
+this.cname          ,
+this.aname          ,
+this.address        ,
+this.balance        ,
+this.initbalance   ,
+this.score         ,
+this.cid           ,
+this.lid           ,
+this.time          ,
+this.updatetime    ,
+this.uid              ,
+this.state            ,
+this.storeid);
+  Map<String, dynamic> toMap() {
+    var map = <String, dynamic>{
+     column_id               : id                           ,
+column_name             : name                         ,
+column_img              : img                          ,
+column_telephonename    : telephonename          ,
+column_telephone        : telephone               ,
+column_pname            : pname                 ,
+column_cname            : cname               ,
+column_aname            : aname               , 
+column_address          : address           ,
+column_balance          : balance         ,
+column_initbalance      : initbalance    ,
+column_score            : score          ,
+column_cid              : cid            , 
+column_lid              : lid            ,
+column_time             : time           , 
+column_updatetime       : updatetime     ,
+column_uid              : uid            , 
+column_state            : state          ,
+column_storeid          : storeid        ,
+      column_column1: column1,
+      column_column2: column2,
+      column_column3: column3,
+      column_column4: column4,
+      column_column5: column5
+    };
+    if (id != null) {
+      map[column_id] = id;
+    }
+    return map;
+  }
+  Customer.fromMap(Map<String, dynamic> map) {
+    id                    =map[column_id                             ];
+name                  =map[column_name                           ];
+img                   =map[column_img                            ];
+telephonename         =map[column_telephonename            ];
+telephone             =map[column_telephone                 ];
+pname                 =map[column_pname                     ];  
+cname                 =map[column_cname                 ]; 
+aname                 =map[column_aname                 ]; 
+address               =map[column_address             ]; 
+balance               =map[column_balance       ];
+initbalance           =map[column_initbalance    ];      
+score                 =map[column_score         ]; 
+cid                   =map[column_cid           ]; 
+lid                   =map[column_lid           ]; 
+time                  =map[column_time          ];
+updatetime            =map[column_updatetime    ]; 
+uid                   =map[column_uid           ]; 
+state                 =map[column_state         ]; 
+storeid               =map[column_storeid       ];
+    column1 = map[column_column1];
+    column2 = map[column_column2];
+    column3 = map[column_column3];
+    column4 = map[column_column4];
+    column5 = map[column_column5];
+  }
+}
+createTable(Database db) async{
+  await db.execute('create table $table('
+     '$column_id                            Text PRIMARY KEY,'
+'$column_name                          Text,'
+'$column_img                           blob,'
+'$column_telephonename           Text,'
+'$column_telephone               Text,'
+'$column_pname                   Text,'
+'$column_cname                Text,'
+'$column_aname                Text,'
+'$column_address              Text,'
+'$column_balance           real,'
+'$column_initbalance       real,'
+'$column_score             integer,'
+'$column_cid               Text,'
+'$column_lid               Text,'
+'$column_time              Text,'
+'$column_updatetime        Text,'
+'$column_uid               Text,'
+'$column_state             integer,'
+'$column_storeid           Text,'
+      '$column_column1        Text,'
+      '$column_column2        Text,'
+      '$column_column3        Text,'
+      '$column_column4        Text,'
+      '$column_column5        Text'
+      ')');
+}
+

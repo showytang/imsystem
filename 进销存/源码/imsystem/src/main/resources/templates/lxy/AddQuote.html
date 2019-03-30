@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <title>新增客户报价页面</title>
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="../assets/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon.png">
+	
+    <link href="XiTong/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="XiTong/css/style.css" rel="stylesheet">
+    <!-- You can change the theme colors from here -->
+    <link href="XiTong/css/blue.css" id="theme" rel="stylesheet">
+    
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<style type="text/css">
+	*{
+		-webkit-user-select: none;
+	}
+	
+	h5 label{
+		padding-top: 6px;
+		margin-bottom: 0px;
+		margin-right: 8px;
+	}
+	#chooseUl{
+		list-style: none;
+		margin: 0px;
+		padding: 0px;
+		display: flex;
+		flex-direction: row;
+		text-align: center;
+	}
+	#chooseUl li:first-child{
+		width: 20%;
+		margin-left: 29%;
+		margin-right: 1%;
+		text-align: right;
+	}
+	#chooseUl li:last-child{
+		width: 20%;
+		margin-right: 29%;
+		margin-left: 1%;
+		text-align: left;
+	}
+	.check{
+		border-bottom: solid 3px rgb(2,143,208);
+		color: rgb(2,143,208);
+	}
+	
+	.numdiv{
+		position: relative;
+	}
+	.numCss{
+		float: right;
+		position: absolute;
+		top: 5px;
+		right: 50px;
+		color: red;
+	}
+	.uldiv ul{
+		list-style: none;
+		margin-top: 8px;
+	}
+	.uldiv ul li{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		padding: 5px 0px;
+		border-bottom: 1px solid lightgray;
+		color: black;
+	}
+	.uldiv ul li .name{
+		color: rgb(2,143,208);
+	}
+</style>
+</head>
+	<body>
+		<div class="row"style="padding: 28px 20px;">
+                    <!-- column -->
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-block">
+                            	 <h5 class="card-subtitle " style="float: right;display: flex;flex-direction: row;">
+                            	 	
+                                	<input type="button" class="btn btn-primary" value="确定新增报价"/>
+                                </h5>
+                                <h4 class="card-title">
+                                	<ul id="chooseUl">
+                                		<li id="customerChoose" class="check">按客户新增</li>
+                                		<li id="goodsChoose">按货品新增</li>
+                                	</ul>
+                                </h4>
+                               
+                                <form class="form-horizontal form-material" id="customerAdd">
+                                	<div class="form-group">
+                                        <label class="col-md-12">客&nbsp;&nbsp;户&nbsp;&nbsp;名&nbsp;&nbsp;称</label>
+                                        <div class="col-sm-12">
+                                            <select class="form-control form-control-line first-select" id="customerName">
+                                                <option></option>
+                                                <option>AT444444</option>
+                                                <option>AT555555</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12">设置客户报价</label>
+                                        <div class="col-sm-12 numdiv">
+                                            <select class="form-control form-control-line" id="chooseGoods">
+                                            </select>
+                                            <i id="goodsNum" class="numCss">8</i>
+                                        </div>
+                                        <div class="col-sm-12 uldiv" id="culdiv">
+                                            <ul>
+                                            	<li>
+                                            		<span class="goodsName name">华为手机</span>
+                                            		<span class="salebybulk">批发价：￥<span class="bulkPrirce">22</span> </span>
+                                            		<span class="retail">零售价：￥<span class="retailPrirce">32</span> </span>
+                                            		<span class="quote">报价：￥<span class="quotePrirce">28</span> </span>
+                                            	</li>
+                                            	<li>
+                                            		<span class="goodsName name">华为手机</span>
+                                            		<span class="salebybulk">批发价：￥<span class="bulkPrirce">22</span> </span>
+                                            		<span class="retail">零售价：￥<span class="retailPrirce">32</span> </span>
+                                            		<span class="quote">报价：￥<span class="quotePrirce">28</span> </span>
+                                            	</li>
+                                            	<li>
+                                            		<span class="goodsName name">华为手机</span>
+                                            		<span class="salebybulk">批发价：￥<span class="bulkPrirce">22</span> </span>
+                                            		<span class="retail">零售价：￥<span class="retailPrirce">32</span> </span>
+                                            		<span class="quote">报价：￥<span class="quotePrirce">28</span> </span>
+                                            	</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </form>
+                                
+                                <form class="form-horizontal form-material" id="goodsAdd">
+                                	<div class="form-group">
+                                        <label class="col-md-12">货&nbsp;&nbsp;品&nbsp;&nbsp;名&nbsp;&nbsp;称</label>
+                                        <div class="col-sm-12">
+                                            <select class="form-control form-control-line first-select" value="" id="goodsName">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12">设置客户报价</label>
+                                        <div class="col-sm-12 numdiv">
+                                            <select class="form-control form-control-line" id="chooseCustomer">
+                                            </select>
+                                            <i id="customerNum" class="numCss">2</i>
+                                        </div>
+                                        <div class="col-sm-12 uldiv" id="guldiv">
+                                            <ul>
+                                            	<li>
+                                            		<span class="customerName name">紫女</span>
+                                            		<span class="quote">报价：￥<span class="quotePrirce">28</span> </span>
+                                            	</li>
+                                            	<li>
+                                            		<span class="customerName name">紫女</span>
+                                            		<span class="quote">报价：￥<span class="quotePrirce">28</span> </span>
+                                            	</li>
+                                            	<li>
+                                            		<span class="customerName name">紫女</span>
+                                            		<span class="quote">报价：￥<span class="quotePrirce">28</span> </span>
+                                            	</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+	</body>
+	<script src="XiTong/jquery.min.js"></script>
+ 	<script src="../assets/vendor/jquery/jquery.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="XiTong/js/tether.min.js"></script>
+    <script src="XiTong/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="XiTong/js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="XiTong/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="XiTong/js/sidebarmenu.js"></script>
+    <!--stickey kit -->
+    <script src="XiTong/js/sticky-kit.min.js"></script>
+    <!--Custom JavaScript -->
+    <script src="XiTong/js/custom.min.js"></script>
+	<script>
+	
+		function judge(){
+			var cval=$("#customerChoose").attr("class");
+			var gval=$("#goodsChoose").attr("class");
+			var cname=$("#customerName").val();
+			var gname=$("#goodsName").attr("value");
+			if(cval=="check"){
+				$("#goodsAdd").hide();
+				$("#customerAdd").show();
+				if(cname==""){
+					$("#culdiv").hide();
+					$("#goodsNum").html("");
+				}else{
+					$("#culdiv").show();
+					$("#goodsNum").html("8");
+				}
+			}else if(gval=="check"){
+				$("#goodsAdd").show();
+				$("#customerAdd").hide();
+				if(gname==""){
+					$("#guldiv").hide();
+					$("#customerNum").html("");
+				}else{
+					$("#guldiv").show();
+					$("#customerNum").html("2");
+				}
+			}
+		}
+		
+		$(function() {
+			
+			judge();
+			
+			$("#customerChoose").click(function(){
+				$(this).attr("class","check");
+				$("#goodsChoose").attr("class","");
+				judge();
+			});
+			$("#goodsChoose").click(function(){
+				$(this).attr("class","check");
+				$("#customerChoose").attr("class","");
+				judge();
+			});
+			$(".first-select").change(function(){
+				judge();
+			});
+			
+			$("#chooseGoods").click(function(){
+				var cname=$("#customerName").val();
+				if(cname==""){
+					
+				}else{
+					location="ChooseGoods.html";
+				}
+			});
+			
+			$("#chooseCustomer").click(function(){
+				var gname=$("#goodsName").attr("value");
+				if(gname==""){
+					
+				}else{
+					location="ChooseCustomers.html";
+				}
+			});
+	
+		});
+	</script>
+</html>
