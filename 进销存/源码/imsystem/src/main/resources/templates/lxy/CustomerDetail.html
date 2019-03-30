@@ -1,0 +1,172 @@
+
+
+
+<!DOCTYPE html>
+<html>
+
+<!-- Head -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <title>客户详情及修改页面</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="XiTong/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="XiTong/css/style.css" rel="stylesheet">
+    <!-- You can change the theme colors from here -->
+    <link href="XiTong/css/blue.css" id="theme" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<style type="text/css">
+	.img-circle{
+		background-color: lightgrey;
+	}
+	.card .card-subtitle{
+		color: goldenrod;
+		font-size: 16px;
+	}
+	#name{
+		width: 100%;
+		text-align: center;
+		border: none;
+		outline: none;
+	}
+	#integral{
+		width: 80%;
+		padding-left: 5px;
+		color: goldenrod;
+		border: none;
+		outline: none;
+	}
+	.text-center div{
+		margin-bottom: 15px;
+		color: #455a64;
+	}
+	#initialMoney,#balance{
+		width: 50%;
+		text-align: center;
+		border: none;
+		outline: none;
+	}
+</style>
+</head>
+
+<!-- //Head -->
+
+<!-- Body -->
+<body>
+	
+<div class="row" style="padding: 28px 20px;">
+                    <!-- Column -->
+                    <div class="col-lg-4 col-xlg-3 col-md-5">
+                        <div class="card">
+                            <div class="card-block">
+                                <center class="m-t-30"> <img src="XiTong/img/one.jpg" class="img-circle" width="150">
+                                   
+                                    <h4 class="card-title m-t-10"><input type="text" name="name" id="name" value="紫女" /></h4>
+                                    <h6 class="card-subtitle">积分:<input type="text" name="integral" id="integral" value="0" /></h6>
+                                    <div class="row text-center justify-content-md-center">
+                                        <div class="col-6">初始余额:<input type="text" name="" id="initialMoney" value="500" /></div>
+                                        <div class="col-6">余&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;额:<input type="text" name="" id="balance" value="300" /></div>
+                                    </div>
+                                </center>
+                            </div>
+                            
+                            <button class="btn btn-danger btn-block ">
+               					更换头像
+             				</button>
+                        </div>
+                    </div>
+                  	
+                    <!-- Column -->
+                    <!-- Column -->
+                    <div class="col-lg-8 col-xlg-9 col-md-7">
+                        <div class="card">
+                            <div class="card-block">
+                                <form class="form-horizontal form-material">
+                                	<div class="form-group">
+                                        <label class="col-md-12">联系人名称</label>
+                                        <div class="col-md-12">
+                                            <input type="text" value="" class="form-control form-control-line">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12">联系人电话</label>
+                                        <div class="col-md-12">
+                                            <input type="text" value="13548965412" class="form-control form-control-line">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12">收货地址</label>
+                                        <div class="col-md-12">
+                                            <input type="text" value="田园区花竹市护额哦啊佩服你" class="form-control form-control-line">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12">客户类型</label>
+                                        <div class="col-sm-12">
+                                            <select class="form-control form-control-line">
+                                                <option>批发客户</option>
+                                                <option>零售客户</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12">客户等级</label>
+                                        <div class="col-sm-12">
+                                            <select class="form-control form-control-line">
+                                                <option>普通客户</option>
+                                                <option>会员用户</option>
+                                                <option>超级会员用户</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <button class="btn btn-success">确认修改</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                </div>
+	
+</body>
+<!-- //Body -->
+ 	<script src="XiTong/js/jquery.min.js"></script>
+ 	<script src="../assets/vendor/jquery/jquery.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="XiTong/js/tether.min.js"></script>
+    <script src="XiTong/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="XiTong/js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="XiTong/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="XiTong/js/sidebarmenu.js"></script>
+    <!--stickey kit -->
+    <script src="XiTong/js/sticky-kit.min.js"></script>
+    <!--Custom JavaScript -->
+    <script src="XiTong/js/custom.min.js"></script>
+    
+	<script>
+	
+		$(function() {
+			
+		});
+	</script>
+
+</html>

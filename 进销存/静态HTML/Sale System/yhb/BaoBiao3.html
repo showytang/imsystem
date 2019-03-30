@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta charset="UTF-8">
+		<title>BaoBiao - 1</title>
+		<link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="../assets/vendor/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="../assets/vendor/linearicons/style.css">
+		<link rel="stylesheet" href="../assets/vendor/chartist/css/chartist-custom.css">
+		<!-- MAIN CSS -->
+		<link rel="stylesheet" href="../assets/css/main.css">
+		<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+		<link rel="stylesheet" href="../assets/css/demo.css">
+		<!-- GOOGLE FONTS -->
+		<link href="../assets/css/css.css" rel="stylesheet">
+		<!-- ICONS -->
+		<link rel="stylesheet" href="../assets/css/myStyle.css" />
+		<link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon.png">
+		<link rel="stylesheet" type="text/css" media="all" href="../assets/css/daterangepicker.css" />
+		<link rel="stylesheet" type="text/css" href="../assets/css/htmleaf-demo.css">
+		<script type="text/javascript" src="../assets/vendor/jquery/jquery.min.js" ></script>
+		<script>window.jQuery || document.write('<script src="../assets/vendor/bootstrap/js/jquery-1.11.0.min.js"><\/script>')</script>
+		<script type="text/javascript" src="../assets/vendor/bootstrap/js/moment.js"></script>
+      	<script type="text/javascript" src="../assets/vendor/bootstrap/js/daterangepicker.js"></script>
+		<script type="text/javascript" src="../assets/vendor/bootstrap/js/Mydate.js"></script>
+		<script>
+			$(function(){
+				myDate();
+				$(window).resize(function(){
+					var width = parseInt($(".good").width());
+					var span = $(".js").children("span");
+					if(width<540){
+						span.next().css({"margin-left":"0px","line-height":"2px"});
+					}else{
+						span.next().css({"margin-left":"10px","line-height":"30px"});
+					}
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div class="main">
+			<div class="main-content">
+				<div class="container-fluid">
+					<div class="panel panel-headline">
+						<div class="panel-heading">
+							<h3 class="panel-title">报表 - 1</h3>
+							<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
+						</div>
+						<div class="panel-body">
+						<div class="row">
+									<div class="col-md-3">
+										<div class="metric">
+											<span class="icon"><i class="fa fa-download"></i></span>
+											<p>
+												<span class="number">￥1,252</span>
+												<span class="title">今日利润</span>
+											</p>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="metric">
+											<span class="icon"><i class="fa fa-shopping-bag"></i></span>
+											<p>
+												<span class="number">￥203</span>
+												<span class="title">今日销售额</span>
+											</p>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="metric">
+											<span class="icon"><i class="fa fa-eye"></i></span>
+											<p>
+												<span class="number">3</span>
+												<span class="title">店铺排名</span>
+											</p>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="metric">
+											<span class="icon"><i class="fa fa-bar-chart"></i></span>
+											<p>
+												<span class="number">35%</span>
+												<span class="title">对比上月增长</span>
+											</p>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div id="headline-chart" class="ct-chart" _echarts_instance_="ec_1552524890991" style="-webkit-tap-highlight-color: transparent; user-select: none; position: relative;"><div style="position: relative; overflow: hidden; width: 724px; height: 350px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="905" height="437" style="position: absolute; left: 0px; top: 0px; width: 724px; height: 350px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+									</div>
+									<div class="col-md-12">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+											<input class="form-control"  type="text" id="config-demo">
+										</div>
+									</div>
+								</div>
+								<div class="row panel-heading">
+									<h3 class="panel-title">报表商品</h3>
+									<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
+								</div>
+								<div class="row g">
+									<div class="col-md-6 goods">
+										<div class="good">
+											<img class="col-md-3 col-xs-3 goodsImg" src="../assets/img/favicon.png" />
+											<div class="col-md-9 col-xs-8 js">
+												<h3>这是一个商品名来得及发开始减肥</h3>
+												<span class="s">销售总金额￥<b>666</b></span>
+												<span class="s">销售总数量￥<b>333</b></span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6 goods">
+										<div class="good">
+											<img class="col-md-3 col-xs-3 goodsImg" src="../assets/img/favicon.png" />
+											<div class="col-md-9 col-xs-8 js">
+												<h3>这是一个商品名称</h3>
+												<span class="s">销售总金额￥<b>666</b></span>
+												<span class="s">销售总数量￥<b>333</b></span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6 goods">
+										<div class="good">
+											<img class="col-md-3 col-xs-3 goodsImg" src="../assets/img/favicon.png" />
+											<div class="col-md-9 col-xs-8 js">
+												<h3>这是一个商品名称</h3>
+												<span class="s">销售总金额￥<b>666</b></span>
+												<span class="s">销售总数量￥<b>333</b></span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6 goods">
+										<div class="good">
+											<img class="col-md-3 col-xs-3 goodsImg" src="../assets/img/favicon.png" />
+											<div class="col-md-9 col-xs-8 js">
+												<h3>这是一个商品名称</h3>
+												<span class="s">销售总金额￥<b>666</b></span>
+												<span class="s">销售总数量￥<b>333</b></span>
+											</div>
+										</div>
+									</div>
+								</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../assets/vendor/echarts/echarts/echarts.min.js"></script>
+    <script type="text/javascript" src="../assets/vendor/echarts/echarts-gl/echarts-gl.min.js"></script>
+    <script type="text/javascript" src="../assets/vendor/echarts/echarts-stat/ecStat.min.js"></script>
+    <script type="text/javascript" src="../assets/vendor/echarts/echarts/extension/dataTool.min.js"></script>
+    <script type="text/javascript" src="../assets/vendor/echarts/echarts/map/js/china.js"></script>
+    <script type="text/javascript" src="../assets/vendor/echarts/echarts/map/js/world.js"></script>
+    <script type="text/javascript" src="../assets/vendor/echarts/echarts/extension/bmap.min.js"></script>
+    <script type="text/javascript" src="../assets/vendor/echarts/simplex.js"></script>
+	<script>
+		/**
+		 * 盈利亏损图
+		 */
+		var dom = document.getElementById("headline-chart");
+		var myChart = echarts.init(dom);
+		var app = {};
+		option = null;
+		
+		option = {
+		    tooltip: {
+		        trigger: 'axis',
+		        axisPointer: {
+		            type: 'shadow'
+		        }
+		    },
+		    legend: {
+		        data: ['2011年', '2012年']
+		    },
+		    grid: {
+		        left: '3%',
+		        right: '4%',
+		        bottom: '3%',
+		        containLabel: true
+		    },
+		    xAxis: {
+		        type: 'value',
+		        boundaryGap: [0, 0.01]
+		    },
+		    yAxis: {
+		        type: 'category',
+		        data: ['店铺一','店铺二','店铺三','店铺四','店铺五','店铺六']
+		    },
+		    series: [
+		        {
+		            name: '2011年',
+		            type: 'bar',
+		            data: [18203, 23489, 29034, 104970, 131744, 630230]
+		        },
+		        {
+		            name: '2012年',
+		            type: 'bar',
+		            data: [19325, 23438, 31000, 121594, 134141, 681807]
+		        }
+		    ]
+		};
+		;
+		if (option && typeof option === "object") {
+		    myChart.setOption(option, true);
+		    window.onresize = myChart.resize;
+		}
+	</script>
+</html>
