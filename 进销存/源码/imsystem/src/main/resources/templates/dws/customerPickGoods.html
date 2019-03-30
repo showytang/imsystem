@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 	<head>
 		<meta charset="UTF-8">
 		<title>客户选择商品页面</title>
-		<link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" href="../assets/vendor/font-awesome/css/font-awesome.min.css">
-		<link rel="stylesheet" href="../assets/css/main.css">
-		<link rel="stylesheet" href="css/Animzte.css" />
-		<link rel="stylesheet" href="css/typeDonghua.css" />
+		<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+		<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
+		<link rel="stylesheet" th:href="@{/assets/css/main.css}">
+		<link rel="stylesheet" th:href="@{/assets/css/Animzte.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/typeDonghua.css}" />
 		<style>
 			.pagebtn {
 				height: 28px;
@@ -40,11 +40,11 @@
 			}
 			/*上面是分页*/
 		</style>
-		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-		<script type="text/javascript" src="js/jquery.color.js"></script>
-		<script type="text/javascript" src="js/page.js"></script>
-		<script type="text/javascript" src="js/typeDonghua.js"></script>
-		<script src="js/bootstrap.js"></script>
+		<script type="text/javascript" th:src="@{/assets/js/jquery-3.1.1.min.js}"></script>
+		<script type="text/javascript" th:src="@{/assets/js/jquery.color.js}"></script>
+		<script type="text/javascript" th:src="@{/assets/js/page.js}"></script>
+		<script type="text/javascript" th:src="@{/assets/js/typeDonghua.js}"></script>
+		<script th:src="@{/assets/js/bootstrap.js}"></script>
 		<script type="text/javascript">
 			$(function() {
 
