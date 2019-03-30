@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 
-//@MapperScan("com.imsystem.mapper")
+@MapperScan("com.imsystem.mapper")
 @EnableWebSocket//开启websocket
 @SpringBootApplication(exclude = MongoAutoConfiguration.class)
 public class ImsystemApplication {
