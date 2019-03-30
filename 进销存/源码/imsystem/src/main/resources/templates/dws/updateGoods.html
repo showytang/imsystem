@@ -1,30 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title>商品修改</title>
-		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
 		<!-- VENDOR CSS -->
-		<link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" href="../assets/vendor/font-awesome/css/font-awesome.min.css">
-		<link rel="stylesheet" href="../assets/vendor/linearicons/style.css">
-		<link rel="stylesheet" href="../assets/vendor/chartist/css/chartist-custom.css">
+		<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+		<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
+		<link rel="stylesheet" th:href="@{/assets/css/style.css}">
+		<link rel="stylesheet" th:href="@{/assets/css/chartist-custom.css}">
 		<!-- MAIN CSS -->
-		<link rel="stylesheet" href="../assets/css/main.css">
+		<link rel="stylesheet" th:href="@{/assets/css/main.css}">
 		<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
-		<link rel="stylesheet" href="../assets/css/demo.css">
+		<link rel="stylesheet" th:href="@{/assets/css/demo.css}">
 		<!-- GOOGLE FONTS -->
-		<link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-		<link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon.png">
+		<link rel="apple-touch-icon" sizes="76x76" th:href="@{/assets/img/apple-icon.png}">
+		<link rel="icon" type="image/png" sizes="96x96" th:href="@{/assets/img/favicon.png}">
 
-		<link rel="stylesheet" href="css/typeDonghua.css" />
+		<link rel="stylesheet" th:href="@{/assets/css/typeDonghua.css}" />
 
-		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-		<script src="js/bootstrap.js"></script>
-		<script type="text/javascript" src="js/wangEditor.min.js"></script>
-		<script type="text/javascript" src="js/jquery.color.js"></script>
+		<script type="text/javascript" th:src="@{/assets/js/jquery-3.1.1.min.js}"></script>
+		<script th:src="@{/assets/js/bootstrap.js}"></script>
+		<script type="text/javascript" th:src="@{/assets/js/wangEditor.min.js}"></script>
+		<script type="text/javascript" th:src="@{/assets/js/jquery.color.js}"></script>
 
 		<style>
 			td input {
@@ -363,7 +363,7 @@
 	</body>
 
 </html>
-<script type="text/javascript" src="js/typeDonghua.js"></script>
+<script type="text/javascript" th:src="@{/assets/js/typeDonghua.js}"></script>
 <script type="text/javascript">
 	var E = window.wangEditor;
 	var editor = new E('#editor');
