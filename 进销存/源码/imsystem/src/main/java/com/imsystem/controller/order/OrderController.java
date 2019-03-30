@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class OrderController {
 
 	@RequestMapping("/show")
-	public void show() {
-		
+	public String show() {
+		return "wjh/allot";
 	}
 	
 }
