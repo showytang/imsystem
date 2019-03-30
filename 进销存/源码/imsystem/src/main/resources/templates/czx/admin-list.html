@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="x-admin-sm">
+<html xmlns:th="http://www.thymeleaf.org">
   
   <head>
     <meta charset="UTF-8">
@@ -7,12 +7,13 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
-    <link rel="stylesheet" href="SheZhi/css/font.css">
-    <link rel="stylesheet" href="SheZhi/css/xadmin.css">
-    <script type="text/javascript" src="SheZhi/js/jquery.min.js"></script>
-    <script type="text/javascript" src="SheZhi/lib/layui/layui.js" charset="utf-8"></script>
-    <script type="text/javascript" src="SheZhi/js/xadmin.js"></script>
-    <script type="text/javascript" src="SheZhi/js/cookie.js"></script>
+  
+    <link rel="stylesheet" th:href="@{/assets/SheZhi/css/font.css}">
+    <link rel="stylesheet" th:href="@{/assets/SheZhi/css/xadmin.css}">
+    <script type="text/javascript" th:src="@{/assets/SheZhi/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/SheZhi/lib/layui/layui.js}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{/assets/SheZhi/js/xadmin.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/SheZhi/js/cookie.js}"></script>
     
    
   </head>
@@ -29,8 +30,8 @@
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn layui-btn-normal" onclick="x_admin_show('添加用户','./admin-add.html')"><i class="layui-icon "></i>添加</button>
-        <span class="x-right" style="line-height:40px">共有数据：88 条</span>
+        <button class="layui-btn layui-btn-normal" onclick="x_admin_show('添加用户','/all/admin-add')"><i class="layui-icon "></i>添加</button>
+       
       </xblock>
       <table class="layui-table">
         <thead>
@@ -64,7 +65,7 @@
               <a onclick="member_stop(this,'10001')" href="javascript:;"  title="启用">
                 <i class="layui-icon">&#xe601;</i>
               </a>
-              <a title="编辑"  onclick="x_admin_show('编辑','admin-edit.html')" href="javascript:;">
+              <a title="编辑"  onclick="x_admin_show('编辑','/all/admin-edit')" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
               <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
