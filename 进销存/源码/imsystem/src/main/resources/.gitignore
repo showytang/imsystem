@@ -1,4 +1,9 @@
 <<<<<<< HEAD
+/mybatis-generator-config.xml
+/mybatis-config.xml
+/log4j.properties
+=======
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 /mybatis-generator-config.xml
@@ -10,4 +15,5 @@
 /mybatis-config.xml
 /log4j.properties
 >>>>>>> refs/remotes/origin/wjh
+>>>>>>> refs/remotes/origin/master
 /application.properties
