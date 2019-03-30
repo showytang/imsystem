@@ -2,26 +2,60 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
 	<classPathEntry
-		location="D:\Sts\mysql-connector-java-5.1.6.jar" />
+		location="/Volumes/applesdcard/code/jar/mysqldriver/mysql-connector-java-5.1.0-bin.jar" />
 	<context id="context1">
 		<!-- 注释 -->
 		<commentGenerator>
 			<property name="suppressAllComments" value="true" /><!-- 是否取消注释 -->
 			<property name="suppressDate" value="true" /> <!-- 是否生成注释代时间戳 -->
 		</commentGenerator>
-		<jdbcConnection connectionURL="jdbc:mysql://localhost:3306/websocket?useUnicode=true&amp;characterEncoding=utf-8&amp;allowMutilQueries=true"
-			driverClass="com.mysql.jdbc.Driver" password="123456" userId="root" />
+		<jdbcConnection connectionURL="jdbc:mysql://localhost:3306/laimiqi?useUnicode=true&amp;characterEncoding=utf-8&amp;allowMutilQueries=true"
+			driverClass="com.mysql.jdbc.Driver" password="admin" userId="root" />
 		<!-- 实体生成位置 -->
-		<javaModelGenerator targetPackage="com.accp.domain"
+		<javaModelGenerator targetPackage="com.imsystem.domain"
 			targetProject="src/main/java" />
 		<!-- mapper配置文件生成 -->
 		<sqlMapGenerator targetPackage="mapper"
 			targetProject="src/main/resources" />
 		<!-- mapper接口生成 -->
-		<javaClientGenerator targetPackage="com.accp.mapper"
+		<javaClientGenerator targetPackage="com.imsystem.mapper"
 			targetProject="src/main/java" type="XMLMAPPER" />
 		
-		<table schema="Users" tableName="users"></table>
-		<table schema="Um" tableName="um"></table>
+		<table schema="Bit" tableName="bit"></table>
+		<table schema="Commodity" tableName="commodity"></table>
+		<table schema="Customer" tableName="customer"></table>
+		<table schema="Customerlevel" tableName="customerlevel"></table>
+		<table schema="Customerrecharge" tableName="customerrecharge"></table>
+		<table schema="Customertype" tableName="customertype"></table>
+		<table schema="Goods" tableName="goods"></table>
+		<table schema="Goodsprice" tableName="goodsprice"></table>
+		<table schema="Goodsstandardvalue" tableName="goodsstandardvalue"></table>
+		<table schema="Goodstype" tableName="goodstype"></table>
+		<table schema="Goodsvalue" tableName="goodsvalue"></table>
+		<table schema="Img" tableName="img"></table>
+		<table schema="Module" tableName="module"></table>
+		<table schema="Paytype" tableName="paytype"></table>
+		<table schema="Quotedprice" tableName="quotedprice"></table>
+		<table schema="Remittance" tableName="remittance"></table>
+		<table schema="Role" tableName="role"></table>
+		<table schema="Rolemodule" tableName="rolemodule"></table>
+		<table schema="Sales" tableName="sales"></table>
+		<table schema="Salesback" tableName="salesback"></table>
+		<table schema="Salesbackdetails" tableName="salesbackdetails"></table>
+		<table schema="Salesdetails" tableName="salesdetails"></table>
+		<table schema="Salesorder" tableName="salesorder"></table>
+		<table schema="Salesorderdetails" tableName="salesorderdetails"></table>
+		<table schema="Salesstockrecord" tableName="salesstockrecord"></table>
+		<table schema="Standard" tableName="standard"></table>
+		<table schema="Standardvalue" tableName="standardvalue"></table>
+		<table schema="Stock" tableName="stock"></table>
+		<table schema="Stockdetails" tableName="stockdetails"></table>
+		<table schema="Stockrecord" tableName="stockrecord"></table>
+		<table schema="Store" tableName="store"></table>
+		<table schema="Supplier" tableName="supplier"></table>
+		<table schema="Ulrgoods" tableName="ulrgoods"></table>
+		<table schema="User" tableName="user"></table>
+		<table schema="Usercorrelation" tableName="usercorrelation"></table>
+		<table schema="Usertags" tableName="usertags"></table>
 	</context>
 </generatorConfiguration>
