@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 	<head>
 		<meta charset="UTF-8">
 		<title>订单详细信息</title>
-		<link rel="stylesheet" href="css/bootstrap.min.css" />
-		<link rel="stylesheet" href="../assets/vendor/font-awesome/css/font-awesome.min.css">
-		<link rel="stylesheet" type="text/css" media="all" href="../assets/css/daterangepicker.css" />
-		<link rel="stylesheet" href="../assets/css/main.css">
-		<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
-		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
+		<link rel="stylesheet" th:href="@{/assets/vendor/font-awesome/css/font-awesome.min.css}">
+		<link rel="stylesheet" type="text/css" media="all" th:href="@{/assets/css/daterangepicker.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/main.css}">
+		<script type="text/javascript" th:src="@{/assets/js/jquery-2.1.4.min.js}"></script>
+		<script type="text/javascript" th:src="@{/assets/js/bootstrap.min.js}"></script>
 
 		<style type="text/css">
 			.shappingImg {
