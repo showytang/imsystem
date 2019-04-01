@@ -1,5 +1,7 @@
 package com.imsystem.controller.goods;
 
+import java.sql.Connection;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -116,7 +118,7 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/customerPickGoods")
-	public String customerPickGoods() {
+	public String customerPickGoods(Goods goods) {
 
 		return "dws/customerPickGoods";
 	}

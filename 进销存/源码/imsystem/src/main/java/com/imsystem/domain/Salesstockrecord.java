@@ -33,7 +33,17 @@ public class Salesstockrecord {
 
     private String column4;
 
+    private Salesdetails salesdetails;
+    
     private String column5;
+    
+    public Salesdetails getSalesdetails() {
+		return salesdetails;
+	}
+    
+    public void setSalesdetails(Salesdetails salesdetails) {
+		this.salesdetails = salesdetails;
+	}
 
     public String getId() {
         return id;

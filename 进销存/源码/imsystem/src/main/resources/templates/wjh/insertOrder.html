@@ -156,20 +156,18 @@
 							<span style="padding: 5px;">供应商：&nbsp;</span>
 							<ul class="list-inline" style="margin: 0px;">
 								<div class="backage"></div>
-								<li>laowangasdfasdfasdfsadfsadfasdfsadf</li>
-								<li>勇哥</li>
-								<li>dws</li>
-								<li>bitch</li>
+								<li v-for="supplierItem in supplierlist">
+									{{supplierItem.name}}
+								</li>
 							</ul>
 						</div>
 						<div style="display: flex; padding: 5px 0px 15px 0px;">
 							<span style="padding: 5px;">支付类型：&nbsp;</span>
 							<ul class="list-inline" style="margin: 0px;">
 								<div class="backage"></div>
-								<li>现金</li>
-								<li>微信</li>
-								<li>支付宝</li>
-								<li>银行卡</li>
+								<li v-for="payItem in paytypeList">
+									{{payItem.name}}
+								</li>
 							</ul>
 						</div>
 						<div class="row" style="margin-bottom: 20px;">
@@ -245,12 +243,18 @@
 		var vue = new Vue({
 			el:"#main",
 			data:{
-				
+				paytypeList : [],
+				supplierlist : [],
+				shappingList : []
 			},
 			methods:{
 				
 			}
 		});
+		
+		vue.paytypeList = [[${paytypeList}]];
+		
+		vue.supplierlist = [[${supplierlist}]];
 
 		function posi(index, index1) {
 			var height = $(
@@ -315,7 +319,9 @@
 						posi(index, index1);
 					});
 			$("#queryShapping").click(function() {
-				location = [[@{/goods/orderPickGoods}]];
+				
+				location = [[@{/goods/orderPickGoods?list=vue.shappingList}]];
+				
 			});
 			$(".insertOrder").click(function(){
 				
