@@ -1,14 +1,23 @@
 package com.imsystem.controller.goods;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.imsystem.domain.Goods;
+import com.imsystem.domain.GoodsVO;
+import com.imsystem.service.goods.GoodsService;
 
 @Controller
 @RequestMapping("/goods")
 public class GoodsController {
-
+	
+	/**
+	 * 商品服务对象
+	 */
+	@Autowired
+	private GoodsService goodsSer;
+	
 	/**
 	 * 查询所有商品
 	 * 
@@ -88,12 +97,14 @@ public class GoodsController {
 	/**
 	 * 商品添加
 	 * 
-	 * @param goods 商品对象
+	 * @param goodsVo 商品Vo对象
 	 * @return
 	 */
 	@RequestMapping("/insertGoods")
-	protected String insertGoods(Goods goods) {
+	protected String insertGoods(GoodsVO goodsVo) {
 
+		goodsSer.insertGoods(goodsVo);
+		
 		return "";
 
 	}
