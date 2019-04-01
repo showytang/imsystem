@@ -29,6 +29,46 @@ public class GoodsVO {
 	 * 商品价格集合
 	 */
 	private List<Goodsprice> goodsPrices;
+
+
+	public Goods getGoods() {
+		return goods;
+	}
+
+
+	public void setGoods(Goods goods) {
+		this.goods = goods;
+	}
+
+
+	public List<Goodsvalue> getGoodsValues() {
+		return goodsValues;
+	}
+
+
+	public void setGoodsValues(List<Goodsvalue> goodsValues) {
+		this.goodsValues = goodsValues;
+	}
+
+
+	public List<Img> getGoodsImgs() {
+		return goodsImgs;
+	}
+
+
+	public void setGoodsImgs(List<Img> goodsImgs) {
+		this.goodsImgs = goodsImgs;
+	}
+
+
+	public List<Goodsprice> getGoodsPrices() {
+		return goodsPrices;
+	}
+
+
+	public void setGoodsPrices(List<Goodsprice> goodsPrices) {
+		this.goodsPrices = goodsPrices;
+	}
 	
 	
 	

@@ -92,7 +92,7 @@
 								<span class="input-group-btn">
 							<button class="btn btn-primary" type="button">货品名称：</button>
 						</span>
-								<input class="form-control" type="text">
+								<input class="form-control" name="goodsname" type="text">
 							</div>
 							<br>
 
@@ -100,11 +100,12 @@
 								<span class="input-group-btn">
 							<button class="btn btn-primary" type="button">货品编号：</button>
 						</span>
-								<input class="form-control" type="text">
+								<input class="form-control"  type="text">
 							</div>
 							<br>
 
-							<div class="input-group">
+							<!-- 条形码 -->
+							<!-- <div class="input-group">
 								<span class="input-group-btn">
 							<button class="btn btn-primary" type="button">条形码：</button>
 						</span>
@@ -112,9 +113,9 @@
 								<span class="input-group-btn">
 							<button class="btn btn-primary" type="button">扫一扫</button>
 						</span>
-							</div>
+							</div> 
 							<br>
-
+							-->
 							<div class="row">
 								<div class="col-lg-4">
 									<div class="input-group">
@@ -362,7 +363,7 @@
 	</body>
 
 </html>
-<script type="text/javascript" src="js/typeDonghua.js"></script>
+<script type="text/javascript" th:src="@{/assets/js/typeDonghua.js}"></script>
 <script type="text/javascript">
 	var E = window.wangEditor;
 	var editor = new E('#editor');
