@@ -1,27 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
 		<title>Big Boss-Index</title>
-		<link rel="stylesheet" href="@{assets/css/bootstrap.min.css}">
-		<link rel="stylesheet" href="@{assets/css/font-awesome.min.css}">
-		<link rel="stylesheet" href="@{assets/css/style.css}">
-		<link rel="stylesheet" href="@{assets/css/chartist-custom.css}">
+		<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+		<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
+		<link rel="stylesheet" th:href="@{/assets/css/style.css}">
+		<link rel="stylesheet" th:href="@{/assets/css/chartist-custom.css}">
 		<!-- MAIN CSS -->
-		<link rel="stylesheet" href="@{assets/css/main.css}">
+		<link rel="stylesheet" th:href="@{/assets/css/main.css}">
 		<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
-		<link rel="stylesheet" href="@{assets/css/demo.css}">
+		<link rel="stylesheet" th:href="@{/assets/css/demo.css}">
 		<!-- GOOGLE FONTS -->
-		<link href="@{assets/css/css.css}" rel="stylesheet">
+		<link th:href="@{/assets/css/css.css}" rel="stylesheet">
 		<!-- ICONS -->
-		<link rel="apple-touch-icon" sizes="76x76" href="@{assets/img/apple-icon.png}">
-		<link rel="icon" type="image/png" sizes="96x96" href="@{assets/img/favicon.png}">
+		<link rel="apple-touch-icon" sizes="76x76" th:href="@{/assets/img/apple-icon.png}">
+		<link rel="icon" type="image/png" sizes="96x96" th:href="@{/assets/img/favicon.png}">
 		
-		<script src="@{assets/js/klorofil-common.js}"></script>
-		<script src="@{assets/js/jquery.min.js}"></script>
-		<script src="@{assets/js/bootstrap.min.js}"></script>
-		<script src="@{assets/js/jquery.slimscroll.min.js}"></script>
-		<script src="@{assets/js/jquery.easypiechart.min.js}"></script>
+		<script th:src="@{/assets/js/klorofil-common.js}"></script>
+		<script th:src="@{/assets/js/jquery.min.js}"></script>
+		<script th:src="@{/assets/js/bootstrap.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.slimscroll.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.easypiechart.min.js}"></script>
 		<style>
 			.ct-chart{
 				width: 100%;
@@ -65,7 +65,7 @@
 										<span class="icon"><i class="fa fa-eye"></i></span>
 										<p>
 											<span class="number">3</span>
-											<span class="title">店铺排名</span>
+											<span class="title">订单数量</span>
 										</p>
 									</div>
 								</div>
@@ -73,8 +73,8 @@
 									<div class="metric">
 										<span class="icon"><i class="fa fa-bar-chart"></i></span>
 										<p>
-											<span class="number">35%</span>
-											<span class="title">对比上月增长</span>
+											<span class="number">20</span>
+											<span class="title">今日销冠</span>
 										</p>
 									</div>
 								</div>
@@ -322,14 +322,14 @@
 			<!-- END MAIN CONTENT -->
 		</div>
 	</body>
-	<script type="text/javascript" src="@{assets/echarts/echarts/echarts.min.js}"></script>
-    <script type="text/javascript" src="@{assets/echarts/echarts-gl/echarts-gl.min.js}"></script>
-    <script type="text/javascript" src="@{assets/echarts/echarts-stat/ecStat.min.js}"></script>
-    <script type="text/javascript" src="@{assets/echarts/echarts/extension/dataTool.min.js}"></script>
-    <script type="text/javascript" src="@{assets/echarts/echarts/map/js/china.js}"></script>
-    <script type="text/javascript" src="@{assets/echarts/echarts/map/js/world.js}"></script>
-    <script type="text/javascript" src="@{assets/echarts/echarts/extension/bmap.min.js}"></script>
-    <script type="text/javascript" src="@{assets/echarts/simplex.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/echarts/echarts/echarts.min.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/echarts/echarts-gl/echarts-gl.min.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/echarts/echarts-stat/ecStat.min.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/echarts/echarts/extension/dataTool.min.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/echarts/echarts/map/js/china.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/echarts/echarts/map/js/world.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/echarts/echarts/extension/bmap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/echarts/simplex.js}"></script>
 	<script>
 		/**
 		 * Top统计图

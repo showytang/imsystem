@@ -461,4 +461,35 @@
       column5 = #{column5,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="query" resultMap="BaseResultMap">
+  	SELECT * FROM `salesorder` WHERE `progress` = '2' AND `state` = '0'
+  		<if test="startTime != null and startTime != ''">
+  			AND `updatetime` >= #{startTime} 
+  		</if>
+  		<if test="endTime != null and endTime != ''">
+  			AND `updatetime` &lt;= #{endTime}
+  		</if>
+  		<if test="code != null and code != ''">
+  			AND `code` = #{code}
+  		</if>
+  		<if test="storeid != null and storeid != ''">
+  			AND `storeid` = #{storeid}
+  		</if>
+  </select>
+    <select id="queryFirst" resultMap="BaseResultMap">
+  	SELECT * FROM (SELECT *,SUM(paymoney) AS s FROM salesorder GROUP BY storeid) t WHERE progress = '2' AND `state` = '0'  
+  		<if test="startTime != null and startTime != ''">
+  			AND `updatetime` >= #{startTime} 
+  		</if>
+  		<if test="endTime != null and endTime != ''">
+  			AND `updatetime` &lt;= #{endTime}
+  		</if>
+  		<if test="code != null and code != ''">
+  			AND `code` = #{code}
+  		</if>
+  		<if test="storeid != null and storeid != ''">
+  			AND `storeid` = #{storeid}
+  		</if>
+  		ORDER BY t.s DESC LIMIT 1
+  </select>
 </mapper>

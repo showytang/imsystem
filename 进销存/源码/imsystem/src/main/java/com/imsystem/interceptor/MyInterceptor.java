@@ -12,6 +12,7 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		request.setCharacterEncoding("utf-8");
 		System.out.println("你来了.....");
 		return true;
 	}
