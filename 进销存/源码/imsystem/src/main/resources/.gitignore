@@ -1,0 +1,11 @@
+
+/mybatis-generator-config.xml
+/mybatis-config.xml
+/log4j.properties
+
+
+/application.properties
+/banner.txt
+/application-dev.properties
+/application-pro.properties
+/my.properties
