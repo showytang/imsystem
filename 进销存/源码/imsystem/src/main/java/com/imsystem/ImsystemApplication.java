@@ -8,12 +8,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 
 @MapperScan("com.imsystem.mapper")
-<<<<<<< HEAD
 /*@ComponentScan(basePackages = "com.imsystem.mapper.*")
 *///@EnableWebSocket//开启websocket
-=======
 @EnableWebSocket//开启websocket
->>>>>>> refs/remotes/origin/master
 @SpringBootApplication(exclude = MongoAutoConfiguration.class)
 public class ImsystemApplication {
 
