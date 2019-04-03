@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/user")
 public class UserController {
 
-	
+	@RequestMapping("page-login")
+	public String login() {
+		return "czx/page-login";
+
+	}
 	
 }
