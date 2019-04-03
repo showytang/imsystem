@@ -1,5 +1,6 @@
 package com.imsystem.controller.setup;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -7,6 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/user")
 public class UserController {
 
-	
+	@RequestMapping("page-login")
+	public String login() {
+		return "czx/page-login";
+
+	}
 	
 }

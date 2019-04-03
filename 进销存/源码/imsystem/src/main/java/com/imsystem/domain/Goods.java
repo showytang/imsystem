@@ -1,6 +1,7 @@
 package com.imsystem.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class Goods {
     private String id;
@@ -52,8 +53,22 @@ public class Goods {
     private String column5;
 
     private byte[] img;
+    
+    /**
+     * 商品实例集合
+     */
+    private List<Goodsvalue> goodsValues;
+    
+   
+    public List<Goodsvalue> getGoodsValues() {
+		return goodsValues;
+	}
 
-    public String getId() {
+	public void setGoodsValues(List<Goodsvalue> goodsValues) {
+		this.goodsValues = goodsValues;
+	}
+
+	public String getId() {
         return id;
     }
 
