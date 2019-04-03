@@ -8,12 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/user")
 public class UserController {
 
-	@RequestMapping("/login")
-	public String login() {
-		
-		return "yhb/page-login";
-		
-		
-	}
+	
 	
 }
