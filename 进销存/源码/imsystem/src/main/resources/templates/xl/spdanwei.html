@@ -1,8 +1,10 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
 	<title>Notifications</title>
 	<meta charset="utf-8">
+
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<!-- VENDOR CSS -->
@@ -43,7 +45,7 @@
 				background-color: transparent;
 			}
 		.an{
-			background-color: rgb(2, 143, 208);
+			background-color: #00AAFF;
 			color:white;
 		} 
 	</style>
@@ -67,42 +69,29 @@
 						</button>
 						<table class="table table-striped">
 							<tr>
-								<!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+								
 								<th>单位名称</th>
 								<th>创建时间</th>
 								<th>最后修改时间</th>
 								<th>操作人编号</th>
 								
-								<th>操作</th>
+								<th style="padding-left: 0px; padding-right: 40px">操作</th>
 							</tr>
-							<tr>
-								<td>张三</td>
-								<td>李四</td>
-								<td>0.8</td>
-								<td>003号</td>
+							<tr th:each="item : ${list}">
+							 
+								<td th:text="${item.name}"></td>
+								<td th:text="${item.time}"></td>
+								<td th:text="${item.updatetime}"></td>
+								<td th:text="${item.uid}"></td>
 								
-								<td>
+								<td style="padding-left: 0px; padding-right: 40px" >
 									<button type="button"  data-toggle="modal" data-target="#myModal1" class="an">
 			  						修改
 									</button>
-									<a href="#"><input type="button" class="an" value="删除"/></a>
+									<a href=""><input type="button" class="an" value="删除"/></a>
 								</td>
 							</tr>
-							<!--<tr>
-								<td>张三</td>
-								<td>李四</td>
-								<td>0.8</td>
-								<td>003号</td>
-								<td>正常</td>
-								<td>2019-03-12</td>
-								<td>2019-03-16</td>
-								<td>Z004</td>
-								<td>
-									<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal1" style="height: 30px;line-height: 5px;">
-			  						修改
-									</button>
-								</td>
-							</tr>-->
+							 
 						</table>
 							<div class="col-md-3 col-md-offset-5">
 								<a href="#">上一页</a> 

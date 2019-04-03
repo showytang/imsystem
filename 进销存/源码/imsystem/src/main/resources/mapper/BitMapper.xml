@@ -89,11 +89,8 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from bit
-    where id = #{id,jdbcType=VARCHAR}
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" >
+   SELECT * FROM BIT WHERE state=0
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from bit
@@ -302,4 +299,6 @@
       column5 = #{column5,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+  
 </mapper>

@@ -16,7 +16,7 @@ public interface BitMapper {
 
     int insertSelective(Bit record);
 
-    List<Bit> selectByExample(BitExample example);
+    List<Bit> selectByExample();
 
     Bit selectByPrimaryKey(String id);
 
