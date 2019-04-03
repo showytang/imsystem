@@ -23,6 +23,9 @@ public class Goodsvalue {
 
     private String enname;
 
+    /**
+     * 商品实例图片路径
+     */
     private String column1;
 
     private String column2;
