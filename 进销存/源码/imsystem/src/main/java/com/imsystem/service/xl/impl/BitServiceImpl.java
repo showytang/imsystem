@@ -30,14 +30,20 @@ public class BitServiceImpl implements BitService {
 	}
 
 	@Override
-	public List<Bit> selectByExample() {
+	public List<Bit> queryall() {
 		
-		return ma.selectByExample();
+		return ma.queryall();
 	}
 
 	@Override
 	public int updateByPrimaryKey(Bit record) {
 		
 		return ma.updateByPrimaryKey(record);
+	}
+
+	@Override
+	public int updatestate(int id) {
+		
+		return ma.updatestate(id);
 	}
 }

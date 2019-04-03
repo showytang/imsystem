@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.imsystem.domain.Bit;
@@ -21,7 +21,7 @@ public class BitController {
 	
 	@RequestMapping("/query")
 	public String queryBit(Model model) {
-		List<Bit> list=ser.selectByExample();
+		List<Bit> list=ser.queryall();
 		model.addAttribute("list", list);
 		return "xl/spdanwei";
 	}
@@ -34,10 +34,10 @@ public class BitController {
 		return "redirect:query";
 	}
 	
-	@RequestMapping("/bbb")
-	public String AAA() {
-		
-		return "lxy/Customer";
+	@RequestMapping("/updatestate")
+	public String updatestate(Integer id) {
+		ser.updatestate(id);
+		return "redirect:query";
 	}
 	
 	
