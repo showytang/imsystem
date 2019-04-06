@@ -1,6 +1,9 @@
 package com.imsystem.domain;
 
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class Goodsvalue {
     private String id;
@@ -22,7 +25,7 @@ public class Goodsvalue {
     private Integer defaultvalue;
 
     private String enname;
-
+    
     /**
      * 商品实例图片路径
      */
@@ -35,6 +38,46 @@ public class Goodsvalue {
     private String column4;
 
     private String column5;
+    
+    private MultipartFile img;
+    
+    /**
+     * 商品实例规格集合
+     */
+    private List<Goodsstandardvalue> goodsstandardvalues;
+    
+    
+    /**
+	 * 商品价格集合
+	 */
+	private List<Goodsprice> goodsPrices;
+
+	
+    
+    public List<Goodsprice> getGoodsPrices() {
+		return goodsPrices;
+	}
+
+	public void setGoodsPrices(List<Goodsprice> goodsPrices) {
+		this.goodsPrices = goodsPrices;
+	}
+
+	
+    public List<Goodsstandardvalue> getGoodsstandardvalues() {
+		return goodsstandardvalues;
+	}
+
+	public void setGoodsstandardvalues(List<Goodsstandardvalue> goodsstandardvalues) {
+		this.goodsstandardvalues = goodsstandardvalues;
+	}
+
+	public MultipartFile getImg() {
+		return img;
+	}
+    
+    public void setImg(MultipartFile img) {
+		this.img = img;
+	}
 
     public String getId() {
         return id;

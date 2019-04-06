@@ -1,9 +1,17 @@
 package com.imsystem.controller.goods;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.imsystem.domain.Customertype;
 import com.imsystem.domain.Goods;
 import com.imsystem.domain.GoodsVO;
 import com.imsystem.service.goods.GoodsService;
@@ -93,6 +101,31 @@ public class GoodsController {
 
 		return "dws/addGoods";
 	}
+	
+	@RequestMapping("/queryCustomerType")
+	@ResponseBody
+	protected List queryCustomerType() {
+		
+		List<Customertype> cts = new ArrayList<Customertype>();
+		
+		Customertype ct1 = new Customertype();
+		ct1.setId("1");
+		ct1.setViewname("神仙客户");
+		Customertype ct2 = new Customertype();
+		ct2.setId("2");
+		ct2.setViewname("神经客户");
+		Customertype ct3 = new Customertype();
+		ct3.setId("3");
+		ct3.setViewname("只问价格客户");
+		
+		cts.add(ct1);
+		cts.add(ct2);
+		cts.add(ct3);
+		
+		return cts;
+		
+	}
+	
 
 	/**
 	 * 商品添加
@@ -101,10 +134,10 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/insertGoods")
-	protected String insertGoods(GoodsVO goodsVo) {
+	@ResponseBody
+	public String insertGoods(MultipartFile[] files,GoodsVO goodsVo) {
 
-		goodsSer.insertGoods(goodsVo);
-		
+//		goodsSer.insertGoods(goodsVo);
 		return "";
 
 	}

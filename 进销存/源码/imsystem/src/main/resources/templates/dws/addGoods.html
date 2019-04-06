@@ -1,111 +1,115 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>商品新增</title>
-		<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
-		<!-- VENDOR CSS -->
-		<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
-		<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
-		<link rel="stylesheet" th:href="@{/assets/css/style.css}">
-		<link rel="stylesheet" th:href="@{/assets/css/chartist-custom.css}">
-		<!-- MAIN CSS -->
-		<link rel="stylesheet" th:href="@{/assets/css/main.css}">
-		<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
-		<link rel="stylesheet" th:href="@{/assets/css/demo.css}">
-		<!-- GOOGLE FONTS -->
-		<link rel="apple-touch-icon" sizes="76x76" th:href="@{/assets/img/apple-icon.png}">
-		<link rel="icon" type="image/png" sizes="96x96" th:href="@{/assets/img/favicon.png}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<title>商品新增</title>
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
+<!-- VENDOR CSS -->
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
+<link rel="stylesheet" th:href="@{/assets/css/style.css}">
+<link rel="stylesheet" th:href="@{/assets/css/chartist-custom.css}">
+<!-- MAIN CSS -->
+<link rel="stylesheet" th:href="@{/assets/css/main.css}">
+<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+<link rel="stylesheet" th:href="@{/assets/css/demo.css}">
+<!-- GOOGLE FONTS -->
+<link rel="apple-touch-icon" sizes="76x76"
+	th:href="@{/assets/img/apple-icon.png}">
+<link rel="icon" type="image/png" sizes="96x96"
+	th:href="@{/assets/img/favicon.png}">
 
-		<link rel="stylesheet" th:href="@{/assets/css/typeDonghua.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/typeDonghua.css}" />
 
-		<script type="text/javascript" th:src="@{/assets/js/jquery-3.1.1.min.js}"></script>
-		<script th:src="@{/assets/js/bootstrap.js}"></script>
-		<script type="text/javascript" th:src="@{/assets/js/wangEditor.min.js}"></script>
-		<script type="text/javascript" th:src="@{/assets/js/jquery.color.js}"></script>
+<script type="text/javascript"
+	th:src="@{/assets/js/jquery-3.1.1.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/wangEditor.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/jquery.color.js}"></script>
 
-		<style>
-			td input {
-				width: 100%;
-				font-size: 20px;
-				border: none;
-				border-left: 1px solid #CCCCCC;
-				outline: none;
-			}
-			
-			.img-div {
-				width: 20vh;
-				height: 20vh;
-				margin-left: 3vh;
-				line-height: 23vh;
-				position: relative;
-			}
-			
-			.fileHide {
-				height: 20vh;
-				width: 20vh;
-				opacity: 0;
-				position: absolute;
-				z-index: 999;
-			}
-			
-			.delimg {
-				position: absolute;
-				right: -3%;
-				color: #d96767;
-				top: 2%;
-				cursor: pointer;
-			}
-			
-			.imgmaindiv {
-				position: relative;
-				width: 100%;
-				height: 100%;
-			}
-		</style>
-	</head>
+<style>
+td input {
+	width: 100%;
+	font-size: 20px;
+	border: none;
+	border-left: 1px solid #CCCCCC;
+	outline: none;
+}
 
-	<body>
-		<div class="main">
-			<div class="main-content">
-				<div class="container-fluid">
-					<div class="panel panel-headline">
-						<div class="panel-heading">
-							<h3 class="panel-title">报表 - 1</h3>
-							<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
+.img-div {
+	width: 20vh;
+	height: 20vh;
+	margin-left: 3vh;
+	line-height: 23vh;
+	position: relative;
+}
+
+.fileHide {
+	height: 20vh;
+	width: 20vh;
+	opacity: 0;
+	position: absolute;
+	z-index: 999;
+}
+
+.delimg {
+	position: absolute;
+	right: -3%;
+	color: #d96767;
+	top: 2%;
+	cursor: pointer;
+}
+
+.imgmaindiv {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+</style>
+</head>
+
+<body>
+	
+	<div class="main">
+		<div class="main-content">
+			<div class="container-fluid">
+				<div class="panel panel-headline">
+					<div class="panel-heading">
+						<h3 class="panel-title">报表 - 1</h3>
+						<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
+					</div>
+					<div class="panel-body">
+
+						<div class="row">
+
+							<div class="col-lg-2 img-div pickImg text-center">
+								<input type="file" name="files" multiple="multiple"
+									onchange="imgShow(this)" class="fileHide" /> <span
+									class="glyphicon glyphicon-plus" style="font-size: 50px;"></span>
+							</div>
+
 						</div>
-						<div class="panel-body">
 
-							<div class="row">
+						<br>
 
-								<div class="col-lg-2 img-div pickImg text-center">
-									<input type="file" name="files" multiple="multiple" onchange="imgShow(this)" class="fileHide" />
-									<span class="glyphicon glyphicon-plus" style="font-size: 50px;"></span>
-								</div>
+						<div class="input-group">
+							<span class="input-group-btn">
+								<button class="btn btn-primary" type="button">货品名称：</button>
+							</span> <input class="form-control" name="name" type="text">
+						</div>
+						<br>
 
-							</div>
+						<div class="input-group">
+							<span class="input-group-btn">
+								<button class="btn btn-primary" type="button">货品编号：</button>
+							</span> <input class="form-control" type="text">
+						</div>
+						<br>
 
-							<br>
-
-							<div class="input-group">
-								<span class="input-group-btn">
-							<button class="btn btn-primary" type="button">货品名称：</button>
-						</span>
-								<input class="form-control" name="goodsname" type="text">
-							</div>
-							<br>
-
-							<div class="input-group">
-								<span class="input-group-btn">
-							<button class="btn btn-primary" type="button">货品编号：</button>
-						</span>
-								<input class="form-control"  type="text">
-							</div>
-							<br>
-
-							<!-- 条形码 -->
-							<!-- <div class="input-group">
+						<!-- 条形码 -->
+						<!-- <div class="input-group">
 								<span class="input-group-btn">
 							<button class="btn btn-primary" type="button">条形码：</button>
 						</span>
@@ -116,255 +120,349 @@
 							</div> 
 							<br>
 							-->
-							<div class="row">
-								<div class="col-lg-4">
-									<div class="input-group">
-										<div class="input-group-btn">
-											<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">主单位<span class="caret"></span></button>
-											<ul class="dropdown-menu">
-												<li>
-													<a href="#">包</a>
-												</li>
-												<li>
-													<a href="#">箱</a>
-												</li>
-												<li>
-													<a href="#">车</a>
-												</li>
-												<li>
-													<a href="#">坨</a>
-												</li>
-												<li>
-													<a href="#">件</a>
-												</li>
-												<li>
-													<a href="#">个</a>
-												</li>
-												<li>
-													<a href="#">只</a>
-												</li>
-												<li>
-													<a href="#">双</a>
-												</li>
-											</ul>
-										</div>
-										<!-- /btn-group -->
-										<input type="text" class="form-control" aria-label="...">
+						<div class="row">
+							<div class="col-lg-4">
+								<div class="input-group">
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-primary dropdown-toggle"
+											data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">
+											主单位<span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu">
+											<li class="dw"><a>包</a></li>
+											<li class="dw"><a>箱</a></li>
+											<li class="dw"><a>车</a></li>
+											<li class="dw"><a>坨</a></li>
+											<li class="dw"><a>件</a></li>
+											<li class="dw"><a>个</a></li>
+											<li class="dw"><a>只</a></li>
+											<li class="dw"><a>双</a></li>
+										</ul>
 									</div>
-									<!-- /input-group -->
+									<!-- /前缀 -->
+									<input type="text" name="prevbit" class="form-control"
+										aria-label="...">
 								</div>
-								<div class="col-lg-4">
-									<div class="input-group">
-										<div class="input-group-btn">
-											<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">副单位<span class="caret"></span></button>
-											<ul class="dropdown-menu">
-												<li>
-													<a href="#">包</a>
-												</li>
-												<li>
-													<a href="#">箱</a>
-												</li>
-												<li>
-													<a href="#">车</a>
-												</li>
-												<li>
-													<a href="#">坨</a>
-												</li>
-												<li>
-													<a href="#">件</a>
-												</li>
-												<li>
-													<a href="#">个</a>
-												</li>
-												<li>
-													<a href="#">只</a>
-												</li>
-												<li>
-													<a href="#">双</a>
-												</li>
-											</ul>
-										</div>
-										<!-- /btn-group -->
-										<input type="text" class="form-control" aria-label="...">
-									</div>
-									<!-- /input-group -->
-								</div>
-								<div class="col-lg-4">
-									<div class="input-group">
-										<div class="input-group-btn">
-											<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">单位值 <span class="caret"></span></button>
-											<ul class="dropdown-menu">
-												<li>
-													<a href="#">包</a>
-												</li>
-												<li>
-													<a href="#">箱</a>
-												</li>
-												<li>
-													<a href="#">车</a>
-												</li>
-												<li>
-													<a href="#">坨</a>
-												</li>
-												<li>
-													<a href="#">件</a>
-												</li>
-												<li>
-													<a href="#">个</a>
-												</li>
-												<li>
-													<a href="#">只</a>
-												</li>
-												<li>
-													<a href="#">双</a>
-												</li>
-											</ul>
-										</div>
-										<!-- /btn-group -->
-										<input type="text" class="form-control" aria-label="...">
-									</div>
-									<!-- /input-group -->
-								</div>
-
+								<!-- /input-group -->
 							</div>
-							<!-- /.row -->
-
-							<br />
-
-							<div class="input-group">
-								<span class="input-group-btn">
-							<button class="btn btn-primary" type="button">库存：</button>
-						</span>
-								<input class="form-control" type="text">
+							<div class="col-lg-4">
+								<div class="input-group">
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-primary dropdown-toggle"
+											data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">
+											副单位<span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu">
+											<li class="dw"><a>包</a></li>
+											<li class="dw"><a>箱</a></li>
+											<li class="dw"><a>车</a></li>
+											<li class="dw"><a>坨</a></li>
+											<li class="dw"><a>件</a></li>
+											<li class="dw"><a>个</a></li>
+											<li class="dw"><a>只</a></li>
+											<li class="dw"><a>双</a></li>
+										</ul>
+									</div>
+									<!-- /后缀 -->
+									<input type="text" name="sufbit" class="form-control"
+										aria-label="...">
+								</div>
+								<!-- /input-group -->
 							</div>
-							<br>
-
-							<div class="input-group">
-								<span class="input-group-btn">
-							<button class="btn btn-primary" type="button">批发价：</button>
-						</span>
-								<input class="form-control" type="text">
+							<div class="col-lg-4">
+								<div class="input-group">
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-primary dropdown-toggle"
+											data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">
+											单位值 <span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu">
+											<li class="dw"><a>包</a></li>
+											<li class="dw"><a>箱</a></li>
+											<li class="dw"><a>车</a></li>
+											<li class="dw"><a>坨</a></li>
+											<li class="dw"><a>件</a></li>
+											<li class="dw"><a>个</a></li>
+											<li class="dw"><a>只</a></li>
+											<li class="dw"><a>双</a></li>
+										</ul>
+									</div>
+									<!-- /单位值 -->
+									<input type="text" name="bitval" class="form-control"
+										aria-label="...">
+								</div>
+								<!-- /input-group -->
 							</div>
-							<br>
-
-							<div class="input-group">
-								<span class="input-group-btn">
-							<button class="btn btn-primary" type="button">XX价：</button>
-						</span>
-								<input class="form-control" type="text">
-							</div>
-							<br>
-
-							<div class="row visible-lg-block visible-md-block" style="margin: 0 3vh;">
-
-								<div class="option-div option-top-div row">
-									<div class="col-lg-1 col-md-1 text-right option-rongqi">
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span>
-									</div>
-									<div class="col-lg-11 col-md-11 option-rongqi">
-										<span class="visible-lg-inline-block visible-md-inline-block visible-md-inline-block text-center activePosition option-span active1"></span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span activeColor" typeid="">上衣</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">裤子</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
-									</div>
-								</div>
-
-								<div class="option-div option-top-div row">
-									<div class="col-lg-1 col-md-1 text-right option-rongqi">
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span>
-									</div>
-									<div class="col-lg-11 col-md-11 option-rongqi">
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span " typeid="">上衣</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔裤</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">破洞裤</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">运动裤</span>
-									</div>
-								</div>
-								<div class="option-div option-top-div row">
-									<div class="col-lg-1 col-md-1 text-right option-rongqi">
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span>
-									</div>
-									<div class="col-lg-11 col-md-11 option-rongqi">
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span " typeid="">上衣</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔裤</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">破洞裤</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">运动裤</span>
-									</div>
-								</div>
-								<div class="option-div option-top-div row">
-									<div class="col-lg-1 col-md-1 text-right option-rongqi">
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span>
-									</div>
-									<div class="col-lg-11 col-md-11 option-rongqi">
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span " typeid="">上衣</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔裤</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">破洞裤</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">运动裤</span>
-									</div>
-								</div>
-
-								<div class="option-div option-type row">
-									<div class="col-lg-1 col-md-1 text-right option-rongqi">
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">尺码</span>
-									</div>
-									<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">
-										<!--<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #DC4E41;">不限</span>-->
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="s">S</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="m">M</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="l">L</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="xl">XL</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="xl">XL</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="xxl">XXL</span>
-									</div>
-								</div>
-
-								<div class="option-div option-type row">
-									<div class="col-lg-1 col-md-1 text-right option-rongqi">
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">颜色</span>
-									</div>
-									<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">
-										<!--<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #DC4E41;">不限</span>-->
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="f">浅粉色</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="k">卡其色</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="z">藏青色</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="o">藕色</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="s">杏色</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="l">绿棕色</span>
-									</div>
-								</div>
-
-							</div>
-							<br>
-							<br>
-							<div class="panel">
-								<div class="panel-body">
-
-								</div>
-							</div>
-							<br>
 
 						</div>
+						<!-- /.row -->
+
+						<br />
+
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="input-group">
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-primary dropdown-toggle"
+											data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">
+											最大库存<span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu">
+											<li class="dw"><a>800</a></li>
+											<li class="dw"><a>700</a></li>
+											<li class="dw"><a>600</a></li>
+											<li class="dw"><a>500</a></li>
+											<li class="dw"><a>400</a></li>
+											<li class="dw"><a>300</a></li>
+											<li class="dw"><a>200</a></li>
+											<li class="dw"><a>100</a></li>
+										</ul>
+									</div>
+									<!-- /最大库存 -->
+									<input type="text" oninput="countChange(this)"
+										name="maxsecurity" class="form-control" aria-label="...">
+								</div>
+								<!-- /input-group -->
+							</div>
+							<div class="col-lg-6">
+								<div class="input-group">
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-primary dropdown-toggle"
+											data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">
+											最小库存<span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu">
+											<li class="dw"><a>100</a></li>
+											<li class="dw"><a>200</a></li>
+											<li class="dw"><a>300</a></li>
+											<li class="dw"><a>400</a></li>
+											<li class="dw"><a>500</a></li>
+											<li class="dw"><a>600</a></li>
+											<li class="dw"><a>700</a></li>
+											<li class="dw"><a>800</a></li>
+										</ul>
+									</div>
+									<!-- /最小库存 -->
+									<input type="text" oninput="countChange(this)"
+										name="minsecurity" class="form-control" aria-label="...">
+								</div>
+								<!-- /input-group -->
+							</div>
+
+						</div>
+
+						<br>
+						<div class="input-group">
+								<span class="input-group-btn">
+									<button class="btn btn-danger" type="button">进货价：</button>
+								</span> <input oninput='priceChange(this)'  name="jprice" class="form-control"
+									type="text">
+						</div>
+						<br>
+						<div class="input-group">
+								<span class="input-group-btn">
+									<button class="btn btn-danger" type="button">售价：</button>
+								</span> <input oninput='priceChange(this)' name="price" class="form-control"
+									type="text">
+						</div>
+						<br>
+					
+						<div v-for="(item,index) in customerTypeList">
+							<div class="input-group">
+								<span class="input-group-btn">
+									<button class="btn btn-danger"  type="button">{{item.viewname}}：</button>
+								</span> <input :name='"customerType"+index'  :cid='item.id' oninput='customerpriceChange(this)' class="form-control customerpricemain"
+									type="text">
+							</div>
+							<br>
+						</div>
+						
+
+						<div class="row visible-lg-block visible-md-block"
+							style="margin: 0 3vh;">
+
+							<div class="option-div option-top-div row">
+								<div class="col-lg-1 col-md-1 text-right option-rongqi">
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span>
+								</div>
+								<div class="col-lg-11 col-md-11 option-rongqi">
+									<span
+										class="visible-lg-inline-block visible-md-inline-block visible-md-inline-block text-center activePosition option-span active1"></span>
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span activeColor"
+										typeid="">上衣</span> <span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span">裤子</span>
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔</span>
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
+								</div>
+							</div>
+
+							<div class="option-div option-top-div row">
+								<div class="col-lg-1 col-md-1 text-right option-rongqi">
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span>
+								</div>
+								<div class="col-lg-11 col-md-11 option-rongqi">
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span "
+										typeid="">上衣</span> <span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔裤</span>
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span">破洞裤</span>
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span">运动裤</span>
+								</div>
+							</div>
+							<div class="option-div option-top-div row">
+								<div class="col-lg-1 col-md-1 text-right option-rongqi">
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span>
+								</div>
+								<div class="col-lg-11 col-md-11 option-rongqi">
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span "
+										typeid="">上衣</span> <span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔裤</span>
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span">破洞裤</span>
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span">运动裤</span>
+								</div>
+							</div>
+							<div class="option-div option-top-div row">
+								<div class="col-lg-1 col-md-1 text-right option-rongqi">
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span>
+								</div>
+								<div class="col-lg-11 col-md-11 option-rongqi">
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span "
+										typeid="">上衣</span> <span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔裤</span>
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span">破洞裤</span>
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span">运动裤</span>
+								</div>
+							</div>
+
+							<div class="option-div option-type row">
+								<div class="col-lg-1 col-md-1 text-right option-rongqi">
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">尺码</span>
+								</div>
+								<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">
+									<!--<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #DC4E41;">不限</span>-->
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
+										sizeid="1">S</span> <span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
+										sizeid="2">M</span> <span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
+										sizeid="3">L</span> <span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
+										sizeid="4">XL</span> <span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
+										sizeid="5">XXL</span> <span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
+										sizeid="6">XXXL</span>
+								</div>
+							</div>
+							<div class="option-div option-type row">
+								<div class="col-lg-1 col-md-1 text-right option-rongqi">
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">尺码</span>
+								</div>
+								<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">
+									<!--<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #DC4E41;">不限</span>-->
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
+										sizeid="1">S</span> <span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
+										sizeid="2">M</span> <span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
+										sizeid="3">L</span> <span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
+										sizeid="4">XL</span> <span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
+										sizeid="5">XXL</span> <span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
+										sizeid="6">XXXL</span>
+								</div>
+							</div>
+						
+
+							<div class="option-div option-type row">
+								<div class="col-lg-1 col-md-1 text-right option-rongqi">
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">颜色</span>
+								</div>
+								<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">
+									<!--<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #DC4E41;">不限</span>-->
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
+										sizeid="7">浅粉色</span> <span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
+										sizeid="8">卡其色</span> <span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
+										sizeid="9">藏青色</span> <span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
+										sizeid="10">藕色</span> <span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
+										sizeid="11">杏色</span> <span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
+										sizeid="12">绿棕色</span>
+								</div>
+							</div>
+
+						</div>
+						<br> <br>
+						<div class="panel">
+							<div class="panel-body"></div>
+						</div>
+						<br>
+
 					</div>
-
-					<button id="btn1">导出</button>
-
-					<!--富文本编辑器-->
-					<div id="editor">
-
-					</div>
-
 				</div>
+				
+				<div class="text-center">
+					<button id="btn1" style="min-width: 200px" class="btn btn-success">确定新增</button>
+				</div>
+<br/>
+				<!--富文本编辑器-->
+				<div id="editor"></div>
+
 			</div>
 		</div>
-		</div>
+	</div>
+	</div>
 
-	</body>
+</body>
 
 </html>
 <script type="text/javascript" th:src="@{/assets/js/typeDonghua.js}"></script>
-<script type="text/javascript">
+<script type="text/javascript" th:src="@{/assets/js/vue.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+
+	var vuePojo = new Vue({
+		el:".main",
+		data:{
+			customerTypeList:""
+		}
+	});
+	//商品描述
+	var detail;
+
 	var E = window.wangEditor;
 	var editor = new E('#editor');
 	//	editor.customConfig.uploadImgShowBase64 = true;
@@ -382,9 +480,11 @@
 
 	document.getElementById('btn1').addEventListener('click', function() {
 		// 读取 html
-		alert(editor.txt.html())
-	}, false)
+		detail = editor.txt.html();
+	}, false);
+	
 
+	/*图片数组*/
 	var fileArr = [];
 	var index = 0;
 	/**
@@ -393,33 +493,40 @@
 	 */
 	function imgShow(obj) {
 
-		for(var i = 0; i < obj.files.length; i++) {
+		 var j = 0;
+		 
+		for (var i = 0; i < obj.files.length; i++) {
 
 			var file = obj.files.item(i);
-			if(!(/^image\/.*$/i.test(file.type))) {
+			if (!(/^image\/.*$/i.test(file.type))) {
 				continue; //不是图片 就跳出这一次循环  
 			}
-
+			j = i;
+		
 			fileArr.push(obj.files[i]);
-
+			
 			//实例化FileReader API  
 			var freader = new FileReader();
 			freader.readAsDataURL(file);
 			freader.onload = function(e) {
 
-				var div = $("<div style='margin-bottom:20px;'  class='img-div col-lg-2 text-center'><div class='imgmaindiv'><span title='删除' index='" + index + "' onclick='delImg(this)' class='glyphicon glyphicon-remove delimg'></span><img id='img' src='" + e.target.result + "' width='100%' height='100%' /></div></div>")
+				var div = $("<div style='margin-bottom:20px;'  class='img-div col-lg-2 text-center'><div class='imgmaindiv'><span title='删除' index='"
+						+ index
+						+ "' onclick='delImg(this)' class='glyphicon glyphicon-remove delimg'></span><img class='imgmain' src='"
+						+ e.target.result
+						+ "' width='100%' height='100%' /></div></div>");
+				
 				index++;
-
+				
 				$(".pickImg").before(div);
 
 			}
 
-		}
+		}		
 
 		//清空input file,否则将无法同一张图片只能pick一次
 		$(obj).val("");
-
-		console.log(fileArr);
+		
 
 	}
 
@@ -430,10 +537,9 @@
 	function pojoImg(obj) {
 
 		var file = obj.files.item(0);
-		if(!(/^image\/.*$/i.test(file.type))) {
+		if (!(/^image\/.*$/i.test(file.type))) {
 			return; //不是图片 就跳出这一次循环  
 		}
-
 
 		//实例化FileReader API  
 		var freader = new FileReader();
@@ -450,17 +556,140 @@
 
 		$(obj).parent().parent().remove();
 
-		console.log(fileArr);
 
 	}
 
+	function dw(obj) {
+
+		var dw = $(obj).find("a").text();
+		$(obj).parent().parent().parent().find("input").val(dw);
+	}
+
+	
+function inserGoods(){
+		
+		
+		var formData = new FormData();
+		 
+		for(var j = 0; j < fileArr.length;j++){
+		 
+		 formData.append("files",fileArr[j]);
+		 
+		}
+		
+		//商品名称
+		formData.append("goods.name",$("[name=name]").val());
+		//单位前缀
+		formData.append("goods.prevbit",$("[name=prevbit]").val());
+		//单位后缀
+		formData.append("goods.sufbit",$("[name=sufbit]").val());
+		//单位值
+		formData.append("goods.bitval",$("[name=bitval]").val());
+		//商品进价
+		formData.append("goods.jprice",$("[name=jprice]").val());
+		//商品售价
+		formData.append("goods.price",$("[name=price]").val());
+		//最小库存
+		formData.append("goods.minsecurity",$("[name=minsecurity]").val());
+		//最大库存
+		formData.append("goods.maxsecurity",$("[name=maxsecurity]").val());
+		//描述
+		formData.append("goods.detail",detail);
+		
+	  $.each($(".table tr"),function(index,obj){
+			
+		   //第一个空的tr 不循环
+		   if(index > 0){
+			   
+			   /*中文规格总名称*/
+			   var gcname = $(obj).find("[name=goodsType]").attr("tyname");
+			   formData.append("goodsVo.goodsValues["+index+"].name",gcname);
+			   formData.append("goodsVo.goodsValues["+index+"].jprice",$(obj).find("[name=detailprice]").val());
+			   
+			   if($(obj).find("[type=file]").files != undefined){
+				   
+			   
+			   formData.append("goodsVo.goodsValues["+index+"].img",$(obj).find("[type=file]")[0].files[0]);
+			   
+			   }
+			   
+			   /*商品实例规格添加*/
+			   var typeIds = $(obj).find("[name=goodsType]").val();
+			   var typeIdArr = typeIds.split(",");
+			   
+			   for(var n = 0;n < typeIdArr.length;n++){
+				formData.append("goodsValues["+index+"].goodsstandardvalues["+n+"].name",gcname);
+				formData.append("goodsValues["+index+"].goodsstandardvalues["+n+"].svids",typeIds);
+				formData.append("goodsValues["+index+"].goodsstandardvalues["+n+"].svid",typeIdArr[n]);
+				
+			   }
+			   
+				//商品客户价格添加
+				
+				$.each($(obj).find(".customerprick"),function(item,pojo){
+					
+					formData.append("goodsCalues["+index+"].goodsPrices["+item+"].ctid",$(pojo).attr("ctid"));
+					formData.append("goodsCalues["+index+"].goodsPrices["+item+"].sufname",$(pojo).attr("viewname"));
+					formData.append("goodsCalues["+index+"].goodsPrices["+item+"].price",$(pojo).val());
+					
+				});
+				
+		  }
+			 
+			
+		}); 
+	  
+		  $.ajax({
+			url:[[@{/goods/insertGoods}]],
+ 			data:formData,
+ 			dataType:"text",
+ 			type:"post",
+ 			processData:false,
+			contentType:false,
+ 			success:function(data){
+ 				console.log("-.-");
+ 				
+ 			}
+			
+		});   
+		
+		
+		
+		
+	}
+	
 	$(function() {
 
-		//		$(".fileHide").change(function(){
-		//			
-		//
-		//			
-		//		})
+
+		/*页面加载客户类型查询*/
+		$.ajax({
+			
+			url:[[@{/goods/queryCustomerType}]],
+			dataType:"json",
+			type:"post",
+			success:function(data){
+				
+				vuePojo.customerTypeList = data;
+				
+				console.log(JSON.stringify(vuePojo.customerTypeList));
+				
+			}
+			
+		});
+		
+		/*提交按钮*/
+		$("#btn1").click(function(){
+			inserGoods()
+			/* alert("提交"); */
+			
+		});
+		
+
+		$(".dw").click(function() {
+
+			dw(this);
+
+		});
 
 		$(".activePosition").css("width", $(".activePosition").next().width());
 
@@ -477,28 +706,28 @@
 			$(this).parent().find(".option-span-all").removeClass("active1");
 
 			$(this).parent().find(".option-span-all").animate({
-				backgroundColor: "",
-				color: "#000000"
+				backgroundColor : "",
+				color : "#000000"
 			}, 300);
 
-			if($(this).hasClass("active1")) {
+			if ($(this).hasClass("active1")) {
 
 				$(this).removeClass("active1");
 				$(this).animate({
-					backgroundColor: "",
-					color: "#000000"
+					backgroundColor : "",
+					color : "#000000"
 				}, 300);
 
 			} else {
 
 				$(this).addClass("active1");
 				$(this).animate({
-					backgroundColor: "#00AAFF",
-					color: "#ffffff"
+					backgroundColor : "#00AAFF",
+					color : "#ffffff"
 				}, 300);
 			}
 
-			if($(".option-type").find(".active1").length != 0) {
+			if ($(".option-type").find(".active1").length != 0) {
 
 				checkedDl();
 			} else {
@@ -519,19 +748,32 @@
 
 		let nowCount = $(Obj).val();
 
-		if(nowCount < 1) {
+		if (nowCount < 1) {
 			$(Obj).val("");
 		}
 
 	}
 
+	function customerpriceChange(obj){
+		
+		priceChange(obj);
+		
+		var cid = $(obj).attr("cid");
+		var price = $(obj).val();
+		$(".customerprick").each(function(){
+			if(cid == $(this).attr("ctid")){
+				$(this).val(price);
+			}
+			
+		});
+		
+	}
+	
 	//价格小数2位输入
 	function priceChange(Obj) {
 
 		//判定是否数字
 		$(Obj).val($(Obj).val().match(/\d+(\.\d{0,2})?/) ? $(Obj).val().match(/\d+(\.\d{0,2})?/)[0] : '');
-
-		let nowCount = $(Obj).val();
 
 	}
 
@@ -542,34 +784,37 @@
 		$(".option-type").each(function(i, e) {
 
 			var isChecked = $(this).find(".active1");
-			if(isChecked.length != 0) {
+			if (isChecked.length != 0) {
 				var checkedTag = [];
 				$.each(isChecked, function() {
 					checkedTag.push({
-						id: $(this).attr("sizeid"),
-						name: $(this).text()
+						id : $(this).attr("sizeid"),
+						name : $(this).text()
 					});
 				});
 
 				allIndex *= isChecked.length;
 				isCheckedDlArray[isCheckedDl] = {
-					num: allIndex / isChecked.length,
-					index: isCheckedDl,
-					checkedInput: isChecked.length,
-					tag: checkedTag,
-					thName: $(this).find(".option-span-title").html()
+					num : allIndex / isChecked.length,
+					index : isCheckedDl,
+					checkedInput : isChecked.length,
+					tag : checkedTag,
+					thName : $(this).find(".option-span-title").html()
 				};
 				isCheckedDl++;
 			}
 		});
 		var tagObject = {
-			allIndex: allIndex,
-			isCheckedDlArray: isCheckedDlArray
+			allIndex : allIndex,
+			isCheckedDlArray : isCheckedDlArray
 		}
 		eachCreate(tagObject);
 	}
 
 	function eachCreate(tagObject) {
+		
+		
+		
 		$("table").remove();
 		var table = $("<table class='table' >");
 
@@ -584,37 +829,66 @@
 		ttile.append(thead);
 		var thNum = $("<th class='text-center'>库存</th>");
 		ttile.append(thNum);
-		var thPrice = $("<th class='text-center'>单价</th>");
-		ttile.append(thPrice);
-		var thNum2 = $("<th class='text-center'>库存预警</th>");
+		var thNum2 = $("<th class='text-center'>进货价</th>");
 		ttile.append(thNum2);
+		
+		//价格表头
+		$.each(vuePojo.customerTypeList,function(){
+			
+			var thprick = $("<th class='text-center'>"+this.viewname+"</th>");
+			ttile.append(thprick);
+		});
+		
 		var thimg = $("<th class='text-center'>图片</th>");
 		ttile.append(thimg);
 		table.append(thead);
-		for(var i = tagObject.isCheckedDlArray.length - 1; i >= 0; i--) {
-			var th = $("<th class='text-center'>").html(tagObject.isCheckedDlArray[i].thName);
+		
+		//价格联动
+		var jhprice = $("[name=jprice]").val();
+		
+		
+		for (var i = tagObject.isCheckedDlArray.length - 1; i >= 0; i--) {
+			var th = $("<th class='text-center'>").html(
+					tagObject.isCheckedDlArray[i].thName);
 			ttile.prepend(th);
 			var indexRow = 1;
-			for(var x = 0; x < tagObject.isCheckedDlArray[i].num; x++) {
-				for(var j = 0; j < tagObject.isCheckedDlArray[i].tag.length; j++) {
-					var td = $("<td class='text-center' style='vertical-align: inherit;' v='" + tagObject.isCheckedDlArray[i].tag[j].id + "'>").html(tagObject.isCheckedDlArray[i].tag[j].name);
-					if(i == tagObject.isCheckedDlArray.length - 1) {
+			for (var x = 0; x < tagObject.isCheckedDlArray[i].num; x++) {
+				for (var j = 0; j < tagObject.isCheckedDlArray[i].tag.length; j++) {
+					var td = $(
+							"<td class='text-center' style='vertical-align: inherit;' m='" + tagObject.isCheckedDlArray[i].tag[j].name + "' v='" + tagObject.isCheckedDlArray[i].tag[j].id + "'>")
+							.html(tagObject.isCheckedDlArray[i].tag[j].name);
+					if (i == tagObject.isCheckedDlArray.length - 1) {
 
-						var td1 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' type='hidden' value='" + tagObject.isCheckedDlArray[i].tag[j].id + "'><input oninput='countChange(this)' class='text-center' value='50' type=text name='num' v=''></td>");
-						var td2 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' oninput='priceChange(this)' type=text name='price'></td>");
-						var td3 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' value='20' oninput='countChange(this)' type=text name='thNum2'></td>");
-						var tdimg = $("<td class='text-center' style='vertical-align: inherit;'><div style='position:relative;width: 76px;height: 76px;'><input type='file' style='position:absolute;top:0;z-index: 99;width: 100%;height: 100%;opacity: 0;cursor: pointer;' title='选择图片' onchange='pojoImg(this)' name='file[" + (index - 1) + "]' /><img src='../assets/img/apple-icon.png' style='width: 76px;height: 76px;' /></div></td>");
+						var td1 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' type='hidden' name='goodsType' tyname='' vm='" + tagObject.isCheckedDlArray[i].tag[j].name + "' value='" + tagObject.isCheckedDlArray[i].tag[j].id + "'><input oninput='countChange(this)' class='text-center' value='50' type=text name='num' v=''></td>");
+						var td2 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' oninput='priceChange(this)' type=text value='"+jhprice+"' name='detailprice'></td>");
+						var tdimg = $("<td class='text-center' style='vertical-align: inherit;'><div style='position:relative;width: 76px;height: 76px;'><input type='file' style='position:absolute;top:0;z-index: 99;width: 100%;height: 100%;opacity: 0;cursor: pointer;' title='选择图片' onchange='pojoImg(this)' name='file["
+								+ (index - 1)
+								+ "]' /><img src='../assets/img/apple-icon.png' style='width: 76px;height: 76px;' /></div></td>");
 						var tr = $("<tr class='" + index + "'>");
-						index++;
 						tr.append(td);
-						tr.append(td1).append(td2).append(td3).append(tdimg);
+						tr.append(td1).append(td2);
+						
+						//价格input
+						$.each(vuePojo.customerTypeList,function(inx,obj){
+							var p = $('.customerpricemain:eq('+inx+')').val();
+							var tdprick = $("<td class='text-center' style='vertical-align: inherit;'><input  class='text-center customerprick' ctid='"+obj.id+"' value='"+p+"' viewname='"+obj.viewname+"'  oninput='priceChange(this)' type=text name='price'></td>");
+							tr.append(tdprick);
+						});
+						
+						
+						tr.append(tdimg);
+						
 						tbody.append(tr);
+						index++;
 					} else {
-						var rowspan = tagObject.allIndex / tagObject.isCheckedDlArray[i + 1].num;
-						td.attr("rowspan", tagObject.allIndex / tagObject.isCheckedDlArray[i + 1].num);
+						var rowspan = tagObject.allIndex
+								/ tagObject.isCheckedDlArray[i + 1].num;
+						td.attr("rowspan", tagObject.allIndex
+								/ tagObject.isCheckedDlArray[i + 1].num);
 						//								td.attr("sl",rowspan);
 						$("." + indexRow).prepend(td);
-						var x1 = tagObject.allIndex / (tagObject.isCheckedDlArray[i].tag.length * tagObject.isCheckedDlArray[i].num);
+						var x1 = tagObject.allIndex
+								/ (tagObject.isCheckedDlArray[i].tag.length * tagObject.isCheckedDlArray[i].num);
 						indexRow += x1;
 						appendId(td);
 					}
@@ -626,12 +900,18 @@
 	function appendId(t) {
 		var index = t.attr("rowspan") - 1;
 		var bb = t.parent().find("[type=hidden]").val();
+		var aa = t.parent().find("[type=hidden]").attr("vm");
 		t.parent().find("[type=hidden]").val(t.attr("v") + "," + bb);
+		t.parent().find("[type=hidden]").attr("tyname",t.attr("m") + "," + aa);
+		t.parent().find("[type=hidden]").attr("vm",t.attr("m") + "," + aa);
 		var tr = t.parent();
-		for(var i = 0; i < index; i++) {
+		for (var i = 0; i < index; i++) {
 			tr = tr.next();
 			var v = tr.find("[type=hidden]").val();
+			var m = tr.find("[type=hidden]").attr("vm");
 			tr.find("[type=hidden]").val(t.attr("v") + "," + v);
+			tr.find("[type=hidden]").attr("tyname",t.attr("m") + "," + m);
+			tr.find("[type=hidden]").attr("vm",t.attr("m") + "," + m);
 		}
 	}
 </script>
