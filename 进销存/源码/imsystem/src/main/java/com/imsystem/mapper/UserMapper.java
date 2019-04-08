@@ -28,5 +28,8 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
     
-    User queryByName(String name,String pwd);
+    User queryUserByName(@Param("name") String name,@Param("pwd") String pwd);
+    
+    User queryUserById(String id);
+    
 }

@@ -1,8 +1,11 @@
 package com.imsystem.controller.setup;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.imsystem.domain.User;
 import com.imsystem.service.setup.UserService;
@@ -19,12 +22,20 @@ public class UserController {
 		return "czx/page-login";
 	}
 	
-	@RequestMapping("queryByName")
-	public String queryByName(String name, String pwd) {
+	@RequestMapping("queryUserByName")
+	@ResponseBody
+	public String queryByName(String name, String pwd,HttpSession session) {
 		
-	   User user= userService.queryByName(name, pwd);
-		 
-	   return "";
+		
+		 User user= userService.queryUserByName(name, pwd);
+		
+		 if (user!=null) {
+			   session.setAttribute("user", user);
+			   return "1";
+		  }else {	  
+			  return "";
+		  }
+	   
 		 
 	}
 	
