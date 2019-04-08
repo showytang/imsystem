@@ -17,11 +17,6 @@
     <result column="column4" property="column4" jdbcType="VARCHAR" />
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
-  
-  <update id="updateDefaultType">
-  	UPDATE customertype SET defaulttype=1 WHERE id &lt;&gt; #{ctId}
-  </update>
-  
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -114,7 +109,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" keyProperty="id" useGeneratedKeys="true" parameterType="com.imsystem.domain.Customertype" >
+  <insert id="insert" parameterType="com.imsystem.domain.Customertype" >
     insert into customertype (id, name, viewname, 
       agio, state, time, 
       updatetime, uid, defaulttype, 

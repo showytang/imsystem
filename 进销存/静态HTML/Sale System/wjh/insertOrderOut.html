@@ -22,7 +22,6 @@
 		<link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon.png">
 		<script src="../assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 		<script src="../assets/scripts/klorofil-common.js"></script>
-		<script src="js/vue.js"></script>
 		<style type="text/css">
 			.jiben>div {
 				margin-top: 10px;
@@ -124,7 +123,7 @@
 								<div class="col-md-4 col-sm-6 col-xs-12">
 									<div class="input-group">
 										<span class="input-group-addon">时间</span>
-										<input class="form-control datetimepicker" style="margin: 0px;" id="time"/>
+										<input class="form-control datetimepicker" style="margin: 0px;" id="time" placeholder="订单编号" />
 									</div>
 								</div>
 								<div class="col-md-4 col-sm-6 col-xs-12">
@@ -369,10 +368,9 @@
 		</div>
 		<script type="text/javascript">
 			$('.datetimepicker').datetimepicker({
-				format: 'yyyy-mm-dd hh:ii:ss',
+				format: 'yyyy-mm-dd hh:ii',
 				autoclose: 1
 			});
-			
 
 			function posi(index,index1){
 				var height = $(".list-inline:eq("+index1+")>li:eq("+index+")").innerHeight();

@@ -6,9 +6,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface StockMapper {
-	
-	List<Stock> query(@Param("code") String code,@Param("time") String time,@Param("endTime") String endTime);
-	
     int countByExample(StockExample example);
 
     int deleteByExample(StockExample example);

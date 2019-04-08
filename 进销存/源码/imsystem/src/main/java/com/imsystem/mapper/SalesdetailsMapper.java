@@ -1,15 +1,11 @@
 package com.imsystem.mapper;
 
-import com.imsystem.domain.Sales;
 import com.imsystem.domain.Salesdetails;
 import com.imsystem.domain.SalesdetailsExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface SalesdetailsMapper {
-	
-	int add(Sales sales);
-	
     int countByExample(SalesdetailsExample example);
 
     int deleteByExample(SalesdetailsExample example);

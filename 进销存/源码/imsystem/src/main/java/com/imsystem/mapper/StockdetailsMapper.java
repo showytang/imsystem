@@ -1,15 +1,11 @@
 package com.imsystem.mapper;
 
-import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.StockdetailsExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface StockdetailsMapper {
-	
-	int add(Stock stock);
-	
     int countByExample(StockdetailsExample example);
 
     int deleteByExample(StockdetailsExample example);
