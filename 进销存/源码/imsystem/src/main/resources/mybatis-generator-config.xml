@@ -50,12 +50,5 @@
 		<table schema="Standardvalue" tableName="standardvalue"></table>
 		<table schema="Stock" tableName="stock"></table>
 		<table schema="Stockdetails" tableName="stockdetails"></table>
-		<table schema="Stockrecord" tableName="stockrecord"></table>
-		<table schema="Store" tableName="store"></table>
-		<table schema="Supplier" tableName="supplier"></table>
-		<table schema="Ulrgoods" tableName="ulrgoods"></table>
-		<table schema="User" tableName="user"></table>
-		<table schema="Usercorrelation" tableName="usercorrelation"></table>
-		<table schema="Usertags" tableName="usertags"></table>
 	</context>
 </generatorConfiguration>

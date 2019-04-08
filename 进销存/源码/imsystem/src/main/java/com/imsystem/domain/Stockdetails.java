@@ -6,10 +6,17 @@ import java.util.UUID;
 public class Stockdetails {
     private String id;
 
-    /**
-     * 库存主表id
-     */
     private String code;
+
+    private String gvid;
+
+    private String sid;
+
+    private Integer count;
+
+    private Integer scount;
+
+    private Double price;
 
     private Date time;
 
@@ -21,24 +28,12 @@ public class Stockdetails {
 
     private String storeid;
 
-    /**
-     * 商品实例id
-     */
     private String column1;
 
-    /**
-     * 进货价
-     */
     private String column2;
 
-    /**
-     * 进货库存
-     */
     private String column3;
 
-    /**
-     * 销售库存
-     */
     private String column4;
 
     private String column5;
@@ -48,7 +43,6 @@ public class Stockdetails {
     }
 
     public void setId(String id) {
-    	
         this.id = id;
     }
 
@@ -58,6 +52,46 @@ public class Stockdetails {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getGvid() {
+        return gvid;
+    }
+
+    public void setGvid(String gvid) {
+        this.gvid = gvid;
+    }
+
+    public String getSid() {
+        return sid;
+    }
+
+    public void setSid(String sid) {
+        this.sid = sid;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public Integer getScount() {
+        return scount;
+    }
+
+    public void setScount(Integer scount) {
+        this.scount = scount;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public Date getTime() {

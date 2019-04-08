@@ -442,7 +442,10 @@
 							tainmoney : $(".sprice").val(),
 							count : $(".sumcount").text(),
 							cid : 0,
-							state : 0
+							state : 0,
+							progress : 0,
+							storeid : 1,
+							uid : 1
 					};
 					
 					order.time = eval('new Date(' + order.time.replace(/\d+(?=-[^-]+$)/,    
@@ -459,7 +462,7 @@
 								price : $(".jprice:eq("+(i-1)+")").text(),
 								oldprice : $(".oldprice:eq("+(i-1)+")").text(),
 								time : order.time,
-								state : 0,
+								state : 0
 						};
 						
 						order.list.push(shapping);

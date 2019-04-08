@@ -20,10 +20,10 @@
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
   <insert id="add">
-  	insert into salesorderdetails(id,sid,gvid,time,oldprice,price,count,state)
+  	insert into salesorderdetails(id,sid,gvid,time,updatetime,oldprice,price,count,state,uid,storeid)
   	values
   	<foreach collection="list" item="item" separator=",">
-  		(#{item.id},#{id},#{item.gvid},#{time},#{item.oldprice},#{item.price},#{item.count},#{item.state})
+  		(#{item.id},#{id},#{item.gvid},#{time},#{time},#{item.oldprice},#{item.price},#{item.count},#{item.state},#{uid},#{storeid})
   	</foreach>
   </insert>
   <sql id="Example_Where_Clause" >
