@@ -1,6 +1,7 @@
 package com.imsystem.domain;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class Salesdetails {
     private String id;
@@ -34,13 +35,13 @@ public class Salesdetails {
     private String column4;
 
     private String column5;
-
+    
     public String getId() {
-        return id;
+        return UUID.randomUUID().toString();
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getSid() {

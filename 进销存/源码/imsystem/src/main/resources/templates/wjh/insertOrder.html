@@ -6,14 +6,11 @@
 	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 <title>订单新增</title>
 <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
-<script type="text/javascript" th:src="@{/assets/js/jquery-1.8.2.js}"></script>
 <link rel="stylesheet"
 	th:href="@{/assets/css/bootstrap-datetimepicker.min.css}" />
-<script type="text/javascript" th:src="@{/assets/js/bootstrap.min.js}"></script>
-<script type="text/javascript"
-	th:src="@{/assets/js/bootstrap-datetimepicker.js}"></script>
 <link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
 <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+<link rel="stylesheet" th:href="@{/assets/css/toastr.css}">
 <!-- MAIN CSS -->
 <link rel="stylesheet" th:href="@{/assets/css/main.css}">
 <link rel="stylesheet" th:href="@{/assets/css/demo.css}">
@@ -22,9 +19,16 @@
 	th:href="@{/assets/img/apple-icon.png}">
 <link rel="icon" type="image/png" sizes="96x96"
 	th:href="@{/assets/img/favicon.png}">
+<script type="text/javascript"
+	th:src="@{/assets/js/jquery-2.1.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/bootstrap.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{/assets/js/bootstrap-datetimepicker.js}"></script>
 <script th:src="@{/assets/js/jquery.slimscroll.min.js}"></script>
 <script th:src="@{/assets/js/klorofil-common.js}"></script>
-<script type="text/javascript"  th:src="@{/assets/js/vue.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/vue.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/toastr.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/klorofil-common.js}"></script>
 <style type="text/css">
 .jiben>div {
 	margin-top: 10px;
@@ -100,9 +104,55 @@
 	position: absolute;
 	z-index: 1;
 }
+
+.sprice {
+	max-width: 80px;
+	border: none;
+	background: rgb(0, 170, 255);
+	outline: none;
+	color: white;
+}
+
+.giveme {
+	cursor: pointer;
+	padding: 0px 10px;
+}
+
+.model-list {
+	display: flex;
+	list-style: none;
+	flex-wrap: wrap;
+	line-height: 30px padding:; 0;
+	margin: 10px;
+}
+
+.model-list>li {
+	padding: 2px 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 120px
+}
+
+.givemedianji {
+	background: rgb(2, 143, 208);
+	color: white;
+}
+
+.toast-top-right {
+	right: 50%;
+	top: 10%;
+}
+
+.toast-top-center {
+	top: 5%;
+}
+
+#toast-container {
+	position: fixed;
+}
 </style>
 </head>
-
 <body>
 	<div class="main">
 		<div class="main-content">
@@ -110,6 +160,9 @@
 				<div class="panel panel-headline" id="main">
 					<div class="panel-heading">
 						<h3 class="panel-title">添加进货订单</h3>
+						<!-- <div id="toastr-demo" class="panel">
+							<button type="button" class="btn btn-default btn-toastr" data-context="info" data-message="Hi, I'm here" data-position="top-center">Top Center</button>
+						</div> -->
 						<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
 					</div>
 					<div class="row"
@@ -120,11 +173,13 @@
 								<div class="btn-group" style="float: right;">
 									<div class="btn"
 										style="border: none; box-shadow: none; color: #e84242; font-size: 16px;">
-										<span style="color:white">应付：</span>$<span>2100</span>
+										<span style="color: white">应付：</span>$<span class="yprice">0</span>
 									</div>
 									<div class="btn"
 										style="border: none; box-shadow: none; color: #e84242; font-size: 16px;">
-										<span style="color:white">实付：</span>$<span>2100</span>&nbsp;<span class="badge" style="background: #e84242;">4</span>
+										<span style="color: white">实付：</span>$<input class="sprice"
+											placeholder="请输入">&nbsp;<span class="badge sumcount"
+											style="background: #e84242;">4</span>
 									</div>
 									<div class="btn btn-primary" id="insertOrder"
 										style="border: none; box-shadow: none; font-size: 16px;">确定订单</div>
@@ -156,18 +211,16 @@
 							<span style="padding: 5px;">供应商：&nbsp;</span>
 							<ul class="list-inline" style="margin: 0px;">
 								<div class="backage"></div>
-								<li v-for="supplierItem in supplierlist">
-									{{supplierItem.name}}
-								</li>
+								<li v-for="supplierItem in supplierlist" :data="supplierItem.id">
+									{{supplierItem.name}}</li>
 							</ul>
+							<div onclick="giveme()" class="giveme">.&nbsp;.&nbsp;.</div>
 						</div>
 						<div style="display: flex; padding: 5px 0px 15px 0px;">
 							<span style="padding: 5px;">支付类型：&nbsp;</span>
 							<ul class="list-inline" style="margin: 0px;">
 								<div class="backage"></div>
-								<li v-for="payItem in paytypeList">
-									{{payItem.name}}
-								</li>
+								<li v-for="payItem in paytypeList" :data="payItem.id">{{payItem.name}}</li>
 							</ul>
 						</div>
 						<div class="row" style="margin-bottom: 20px;">
@@ -189,24 +242,76 @@
 								</div>
 							</div>
 						</div>
+						<div class="modal fade bs-example-modal-lg" tabindex="-1"
+							role="dialog" aria-labelledby="myLargeModalLabel">
+							<div class="modal-dialog modal-lg" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+										<h4 class="modal-title" id="myModalLabel">订单详情</h4>
+									</div>
+									<div class="modal-body">
+										<div class="row" style="margin-bottom: 30px">
+											<div class="col-xs-8">
+												<div class="input-group">
+													<span class="input-group-addon" id="basic-addon1">姓名</span>
+													<input type="text" class="form-control"
+														placeholder="Username" aria-describedby="basic-addon1">
+												</div>
+											</div>
+										</div>
+										<div>
+											<ul class="model-list">
+												<li>laowangsss</li>
+												<li>laowangsss</li>
+												<li>laowangsss</li>
+												<li>laowangsss</li>
+												<li>laowangsss</li>
+												<li>laowangsss</li>
+												<li>laowangsss</li>
+												<li>laowangsss</li>
+												<li>laowangsssasdfasdf</li>
+												<li>laowangsss</li>
+												<li>laowangsss</li>
+												<li>laowangsss</li>
+												<li>laowangsss</li>
+												<li>laowangsss</li>
+												<li>laowangsss</li>
+												<li>laowangsss</li>
+											</ul>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">关闭</button>
+										<button type="button" class="btn btn-primary givemeok"
+											data-dismiss="modal">确定</button>
+									</div>
+								</div>
+							</div>
+						</div>
 						<div class="row" style="margin-top: 10px;">
-							<div class="col-md-4 col-sm-6 col-xs-12" style="display: none">
-								<div id="panel-scrolling-demo" class="panel">
+							<div v-for="shappingItem in shappinglist"
+								class="col-md-4 col-sm-6 col-xs-12">
+								<div v-for="item in shappingItem.goodsValues"
+									id="panel-scrolling-demo" class="panel">
 									<div class="panel-heading row btn-next">
-										<h3 class="panel-title col-md-4 col-xs-4">vovi 21x</h3>
+										<h3 class="panel-title col-md-4 col-xs-4" :data="item.id">{{shappingItem.name}}</h3>
 										<div class="col-md-5 col-xs-5"
 											style="overflow-x: hidden; font-size: 14px; color: #ACB0B5;">
-											<span>8G*64G，红色</span>
+											<span>{{item.name}}</span>
 										</div>
 										<div class="col-md-1 col-xs-1">
-											<span class="badge" style="background: #e84242;">1</span>
+											<span class="badge badgecount" style="background: #e84242;">{{item.column2}}</span>
 										</div>
 										<div class="right" style="right: 25px;">
 											<button type="button">
-												<i>×</i>
+												<i>x</i>
 											</button>
 										</div>
-
 									</div>
 									<div class="panel-body row">
 										<div class="col-md-3 col-md-offset-1">
@@ -215,14 +320,17 @@
 										</div>
 										<div class="col-md-8"
 											style="font-size: 14px; white-space: nowrap;">
-											<div style="font-size: 20px;">vovi 21X</div>
-											<div>8G*64G，红色</div>
+											<div style="font-size: 20px;">{{shappingItem.name}}</div>
+											<div>{{item.name}}</div>
 											<div>
-												<span>$2100</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Count:&nbsp;<input
-													value="1" style="border: none; outline: none;"></span>
+												$<span class='jprice'>{{item.jprice}}</span>
+												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Count:&nbsp;<input
+													:value="item.column2" class="count"
+													style="border: none; outline: none;"></span>
 											</div>
 											<div>
-												总计：<span style="color: red; font-size: 18px;">$2100</span>
+												总计：<span style="color: red; font-size: 18px;">$<span
+													class="sumPrice">{{item.column3}}</span></span>
 											</div>
 										</div>
 									</div>
@@ -236,7 +344,7 @@
 	</div>
 	<script type="text/javascript" th:inline="javascript">
 		$('.datetimepicker').datetimepicker({
-			format : 'yyyy-mm-dd hh:ii',
+			format : 'yyyy-MM-dd hh:mm:ss',
 			autoclose : 1
 		});
 		
@@ -245,7 +353,9 @@
 			data:{
 				paytypeList : [],
 				supplierlist : [],
-				shappingList : []
+				shappinglist : [],
+				givemeId:"",
+				typeId:""
 			},
 			methods:{
 				
@@ -255,6 +365,8 @@
 		vue.paytypeList = [[${paytypeList}]];
 		
 		vue.supplierlist = [[${supplierlist}]];
+		
+		vue.shappinglist = [[${shappinglist}]];
 
 		function posi(index, index1) {
 			var height = $(
@@ -283,6 +395,12 @@
 								".list-inline:eq(" + index1 + ")>li:eq("
 										+ index + ")").css("color", "white");
 					});
+			if(index1 == 0){
+				vue.givemeId = $(".list-inline:eq(" + index1 + ")>li:eq("+ index + ")").attr("data");
+			}
+			else{
+				vue.typeId = $(".list-inline:eq(" + index1 + ")>li:eq("+ index + ")").attr("data");
+			}
 		}
 
 		$(function() {
@@ -301,8 +419,6 @@
 							+ dateTime(myDate.getHours()) + ""
 							+ dateTime(myDate.getMinutes()) + ""
 							+ dateTime(myDate.getSeconds()));
-			posi(0, 0);
-			posi(0, 1);
 			$(".btn-next").click(function() {
 				if ($(this).next().css("display") == "none") {
 					$(this).next().slideDown();
@@ -320,21 +436,152 @@
 					});
 			$("#queryShapping").click(function() {
 				
-				location = [[@{/goods/orderPickGoods?list=vue.shappingList}]];
+				location = [[@{/goods/orderPickGoods?list=vue.shappinglist}]];
 				
 			});
-			$(".insertOrder").click(function(){
+			$("#insertOrder").click(function(){
 				
+				if(vue.typeId){
+					
+					var order = {
+							column1 : $(".yprice").text(),
+							sid : vue.givemeId,
+							code : $("#No").val(),
+							time : $("#time").val(),
+							stockdetails : [],
+							column2 : $(".sprice").val(),
+							column3 : $(".sumcount").text()
+					};
+					
+					order.time = eval('new Date(' + order.time.replace(/\d+(?=-[^-]+$)/,    
+							function (a) { return parseInt(a, 10) - 1; }).match(/\d+/g) + ')');  
+					
+					order.updatetime = order.time;
+					
+					//添加商品id
+					for(var i = 1 ; i < $(".panel-title").length ; i ++){
+						
+						var shapping = {
+								column1 : $(".panel-title:eq("+i+")").attr("data"),
+								column3 : $(".panel-title:eq("+i+")").next().next().text(),
+								column2 : $(".jprice:eq("+(i-1)+")").text(),
+								time : order.time
+						};
+						
+						order.stockdetails.push(shapping);
+						
+					}
+					$.ajax({
+						url : "/insertOrder/insertOrder",
+						data : JSON.stringify(order),
+						type : "post",
+						dataType : "text",
+						contentType : "application/json",
+						processData : false,
+						success : function(result){
+							alert(result);
+						}
+						
+					});
+					
+				}else{
+					alerts("请选择供应商")
+				}
 			});
+			$(".count").bind("input propertyChange",function(){
+				
+				var count = $(this).val();
+				
+				var price = $(this).parent().prev().text();
+				
+				var index = $(".count").index(this);
+				
+				$(".sumPrice:eq("+index+")").text(count*price);
+				
+				if(count == ""){
+					count = 0;
+				}
+				
+				$(".badgecount:eq("+index+")").text(count);
+				count();
+         	});
+         	$(".model-list>li").click(function(){
+         		$(".model-list>li").removeClass("givemedianji");
+         		$(this).addClass("givemedianji");
+         	});
+         	$(".givemeok").click(function(){
+         		var name = $(".givemedianji").text();
+         		if(name){
+         			var li = $(".giveme").prev().find("li:eq(0)");
+             		var li1 = li.clone(true)
+             		li1.text(name);
+             		$(".giveme").prev().append(li1);
+             		posi(($(".giveme").prev().find("li").length)-1,0);
+         		}
+         		
+         	});
+         	count();
+         	posi(0, 0);
+			posi(0, 1);
+         	
 		});
+		
+		function alerts(str){
+			
+			toastr.options.timeOut = "false"
+			
+			toastr.options.closeButton = true;
+			
+			toastr['info']
+					(str);
+			
+			$positionClass = 'toast-top-center';
+			
+			toastr.remove();
+			
+			$context="info";
+			
+			toastr[$context](str, '', {
+				
+				positionClass : $positionClass
+				
+			});
+			
+			setTimeout(function(){
+				$("#toast-container").fadeOut(1000);
+			},4000)
+		}
+		
+		function count(){
+			var sumPrices = $(".sumPrice");
+			var sum = 0 ; 
+			
+			$(".badgecount").each(function(i,e){
+				
+				sum+=parseInt($(e).text());
+				
+			});
+			
+			$(".sumcount").text(sum);
+			
+			sum = 0;
+			
+			$(sumPrices).each(function(i,e){
+				sum +=parseFloat($(e).text());
+			});
+			
+			$(".yprice").text(sum);
+		}
 		function dateTime(th) {
 			if (th < 10) {
 				return "0" + th;
 			}
 			return th;
 		}
+		function giveme(){
+			$(".fade").modal("show");
+		}
 	</script>
-	</div>
+	
 </body>
-
 </html>

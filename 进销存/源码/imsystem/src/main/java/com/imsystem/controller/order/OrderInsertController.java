@@ -7,11 +7,16 @@ import java.util.Vector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.imsystem.domain.Goods;
+import com.imsystem.domain.Goodsvalue;
 import com.imsystem.domain.Paytype;
-import com.imsystem.domain.Salesstockrecord;
+import com.imsystem.domain.Sales;
+import com.imsystem.domain.Salesorder;
+import com.imsystem.domain.Stock;
 import com.imsystem.domain.Supplier;
 import com.imsystem.service.order.OrderInsertService;
 
@@ -29,6 +34,8 @@ public class OrderInsertController {
 		
 		pay.setName("微信");
 		
+		pay.setId("1");
+		
 		list.add(pay);
 		
 		return list;
@@ -41,6 +48,8 @@ public class OrderInsertController {
 		
 		pay.setName("老王");
 		
+		pay.setId("1");
+		
 		list.add(pay);
 		
 		return list;
@@ -51,9 +60,58 @@ public class OrderInsertController {
 		
 		Goods pay = new Goods();
 		
+		List<Goodsvalue> goodsList =  new Vector<Goodsvalue>();
+		
+		Goodsvalue goods = new Goodsvalue();
+		
+		goods.setColumn1("assetc/img/one.jpg");
+		
+		goods.setColumn2("2");
+		
+		goods.setDefaultvalue(199);
+		
+		goods.setId("1");
+		
+		goods.setName("红色，L");
+		
+		goods.setJprice(199.99);
+		
+		goods.setColumn3("399.98");
+		
+		goodsList.add(goods);
+		
+		pay.setGoodsValues(goodsList);
+		
 		pay.setName("老王");
 		
+		Goods pay1 = new Goods();
+		
+		List<Goodsvalue> goodsList1 =  new Vector<Goodsvalue>();
+		
+		Goodsvalue goods1 = new Goodsvalue();
+		
+		goods1.setColumn1("assetc/img/one.jpg");
+		
+		goods1.setColumn2("2");
+		
+		goods1.setName("红色，L");
+		
+		goods1.setId("2");
+		
+		goods1.setJprice(199.99);
+		
+		goods1.setDefaultvalue(198);
+		
+		goods1.setColumn3("399.98");
+		
+		goodsList1.add(goods1);
+		
+		pay1.setGoodsValues(goodsList1);
+		
+		pay1.setName("老王");
+		
 		list.add(pay);
+		list.add(pay1);
 		
 		return list;
 	}
@@ -65,25 +123,23 @@ public class OrderInsertController {
 		
 		model.addAttribute("supplierlist", supplierlist());
 		
+		model.addAttribute("shappinglist", shappinglist());
+		
 		return "wjh/insertOrder";
 	}
 	
 	@RequestMapping("/insertOrder")
-	public String insertOrder(Salesstockrecord sales) {
+	@ResponseBody
+	public String insertOrder(@RequestBody Stock stock) {
 		
-		orderInsert.insert(sales);
-		
-		return "wjh/yetOrder";
+		return orderInsert.insert(stock)+"";
 	}
 	
 	@RequestMapping("/insertOrderOut")
-	public String insertOrderOut() {
-		return "wjh/index";
-	}
-	
-	@RequestMapping("/toInsertOrder")
-	public String toInsertOrder() {
-		return "wjh/insertOrder";
+	@ResponseBody
+	public String insertOrderOut(@RequestBody Sales sales) {
+		
+		return orderInsert.insertOut(sales)+"";
 	}
 	
 	@RequestMapping("/uploadInsertOrder")
@@ -92,13 +148,36 @@ public class OrderInsertController {
 	}
 	
 	@RequestMapping("/toInsertOrderOut")
-	public String toInsertOrderOut() {
-		return "wjh/insertOrder";
+	public String toInsertOrderOut(Model model) {
+		
+		model.addAttribute("paytypeList", paytypeList());
+		
+		model.addAttribute("supplierlist", supplierlist());
+		
+		model.addAttribute("shappinglist", shappinglist());
+		
+		return "wjh/insertOrderOut";
+	}
+	
+	@RequestMapping("/insertSalesorder")
+	@ResponseBody
+	public String insertSalesorder(@RequestBody Salesorder salesorder) {
+		
+		return orderInsert.insertSalesorder(salesorder)+"";
 	}
 	
 	@RequestMapping("/uploadInsertOrderOut")
 	public String uploadInsertOrderOut() {
 		return "wjh/yetOrder";
+	}
+	
+	
+
+	@RequestMapping("/allot")
+	public String allot(Sales sales) {
+		
+		
+		return "";
 	}
 	
 	
