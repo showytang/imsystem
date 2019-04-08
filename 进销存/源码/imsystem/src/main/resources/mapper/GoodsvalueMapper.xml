@@ -18,6 +18,13 @@
     <result column="column4" property="column4" jdbcType="VARCHAR" />
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
+  <select id="queryByCode" resultMap="BaseResultMap">
+  	SELECT g.id AS id,g.name AS `name`,g.id AS gid,sd.time AS TIME,gv.gid AS gvid,sd.sid AS sid, gv.name AS column1,g.img AS column2,SUM(sd.price*sd.count) AS jprice,SUM(sd.count) AS column3 FROM salesdetails AS sd JOIN goodsvalue AS gv ON sd.gvid = gv.id JOIN goods AS g ON g.id = gv.gid  WHERE sd.state = '0'
+  	<if test="code != null and code != ''">
+  		 AND sd.sid = #{code}
+  	</if>
+  	 GROUP BY DATE_FORMAT(sd.TIME,'%Y-%m-%d')
+  </select>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >

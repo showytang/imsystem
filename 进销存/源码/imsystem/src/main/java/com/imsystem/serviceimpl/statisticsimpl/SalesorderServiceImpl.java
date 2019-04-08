@@ -32,5 +32,15 @@ public class SalesorderServiceImpl implements SalesorderService{
 		// TODO Auto-generated method stub
 		return sm.queryDaysAgo(storeid);
 	}
+	@Override
+	public List<Salesorder> queryRanking(String startTime, String endTime) {
+		// TODO Auto-generated method stub
+		return sm.queryRanking(startTime, endTime);
+	}
+	@Override
+	public Integer queryTedayMoney(String store) {
+		// TODO Auto-generated method stub
+		return sm.queryTedayMoney(store);
+	}
 	
 }

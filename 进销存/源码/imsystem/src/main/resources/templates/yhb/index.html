@@ -22,69 +22,11 @@
 		<script th:src="@{/assets/js/jquery.slimscroll.min.js}"></script>
 		<script th:src="@{/assets/js/jquery.easypiechart.min.js}"></script>
 		<script th:src="@{/assets/js/vue.js}"></script>
-		<style>
-			.ct-chart{
-				width: 100%;
-				height: 350px;
-			}
-			.first{
-				font-size:1.1em!important;
-				height:34px;
-				line-height:34px;
-				color:#E59101;
-				overflow: hidden;
-				text-overflow: ellipsis;
-			}
-		</style>
+		<script th:src="@{/assets/js/statistics.js}"></script>
 		<script>
-			function queryTop(storeid,code,startTime,endTime){
-				var data;
-				$.ajax({
-					url:"/statistics/query",
-					type:"post",
-					async:false, 
-					data:{
-						storeid:storeid,
-						code:code,
-						startTime:startTime,
-						endTime:endTime
-					},
-					dataType:"json",
-					success:function(result){
-						data =  result;
-					}
-				});
-				
-				return data;
-				
-				
-			}
-			function queryDaysAgo(storeid){
-				var data;
-				$.ajax({
-					url:"/statistics/queryDaysAgo",
-					type:"post",
-					async:false, 
-					data:{
-						storeid:storeid
-					},
-					dataType:"json",
-					success:function(result){
-						data =  result;
-					}
-				});
-				
-				return data;
-				
-				
-			}
 			$(function(){
-				var myDate = new Date;
-			    var year = myDate.getFullYear();
-			    var yue = myDate.getMonth()+1;
-			    var date = myDate.getDate();
-			    var startTime = year+"-"+yue+"-"+date+" 00:00:00";
-			    var endTime = year+"-"+yue+"-"+date+" 23:59:59";
+				var startTime = getStartTime();
+				var endTime = getEndTime();
 				var top =  queryTop("","",startTime,endTime);
 				$(".profit").text("￥"+top.column2);
 				$(".SalesMoney").text("￥"+top.paymoney);

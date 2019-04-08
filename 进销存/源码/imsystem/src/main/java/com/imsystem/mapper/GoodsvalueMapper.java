@@ -27,4 +27,6 @@ public interface GoodsvalueMapper {
     int updateByPrimaryKeySelective(Goodsvalue record);
 
     int updateByPrimaryKey(Goodsvalue record);
+    
+    List<Goodsvalue> queryByCode(@Param("code") String code);
 }

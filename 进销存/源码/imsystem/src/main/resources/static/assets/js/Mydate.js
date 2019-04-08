@@ -1,51 +1,62 @@
-function myDate(){
-			$('#config-text').keyup(function() {
-          eval($(this).val());
-        });
-        
-        $('.configurator input, .configurator select').change(function() {
-          updateConfig();
-        });
+function myDate() {
+	$('#config-text').keyup(function() {
+		eval($(this).val());
+	});
 
-        $('.demo i').click(function() {
-          $(this).parent().find('input').click();
-        });
+	$('.configurator input, .configurator select').change(function() {
+		updateConfig();
+	});
 
-        $('#startDate').daterangepicker({
-          singleDatePicker: true,
-          startDate: moment().subtract(6, 'days')
-        });
+	$('.demo i').click(function() {
+		$(this).parent().find('input').click();
+	});
 
-        $('#endDate').daterangepicker({
-          singleDatePicker: true,
-          startDate: moment()
-        });
+	$('#startDate').daterangepicker({
+		singleDatePicker : true,
+		startDate : moment().subtract(6, 'days')
+	});
 
-        updateConfig();
+	$('#endDate').daterangepicker({
+		singleDatePicker : true,
+		startDate : moment()
+	});
 
-        function updateConfig() {
-          var options = {};
+	updateConfig();
 
-          if ($('#singleDatePicker').is(':checked'))
-            options.singleDatePicker = true;
-          
-          if ($('#showDropdowns').is(':checked'))
-            options.showDropdowns = true;
+	function updateConfig() {
+		var options = {};
 
-          if ($('#showWeekNumbers').is(':checked'))
-            options.showWeekNumbers = true;
+		if ($('#singleDatePicker').is(':checked'))
+			options.singleDatePicker = true;
 
-          if ($('#showISOWeekNumbers').is(':checked'))
-            options.showISOWeekNumbers = true;
+		if ($('#showDropdowns').is(':checked'))
+			options.showDropdowns = true;
 
-          if ($('#timePicker').is(':checked'))
-            options.timePicker = true;
-          
-          if ($('#timePicker24Hour').is(':checked'))
-            options.timePicker24Hour = true;
-          $('#config-text').val("$('#demo').daterangepicker(" + JSON.stringify(options, null, '    ') + ", function(start, end, label) {\n  console.log(\"New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')\");\n});");
+		if ($('#showWeekNumbers').is(':checked'))
+			options.showWeekNumbers = true;
 
-          $('#config-demo').daterangepicker(options, function(start, end, label) { console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')'); });
-          
-        }
+		if ($('#showISOWeekNumbers').is(':checked'))
+			options.showISOWeekNumbers = true;
+
+		if ($('#timePicker').is(':checked'))
+			options.timePicker = true;
+
+		if ($('#timePicker24Hour').is(':checked'))
+			options.timePicker24Hour = true;
+		$('#config-text')
+				.val(
+						"$('#demo').daterangepicker("
+								+ JSON.stringify(options, null, '    ')
+								+ ", function(start, end, label) {\n  console.log(\"New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')\");\n});");
+
+		$('#config-demo').daterangepicker(
+				options,
+				function(start, end, label) {
+					console.log('New date range selected: '
+							+ start.format('YYYY-MM-DD') + ' to '
+							+ end.format('YYYY-MM-DD') + ' (predefined range: '
+							+ label + ')');
+				});
+
+	}
 }

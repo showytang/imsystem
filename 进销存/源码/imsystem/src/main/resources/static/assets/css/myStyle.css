@@ -32,16 +32,20 @@
 				font-size: 1em;
 			}
 			.js h3{
-				white-space: nowrap;  /*强制span不换行*/
-		      	display: inline-block;  /*将span当做块级元素对待*/
-		      	width: 100%;  /*限制宽度*/
-		      	overflow: hidden;  /*超出宽度部分隐藏*/
-		      	text-overflow: ellipsis;  /*超出部分以点号代替*/
-		     	line-height: 0.9;  /*数字与之前的文字对齐*/
+				white-space: nowrap;  /*寮哄埗span涓嶆崲琛�*/
+		      	display: inline-block;  /*灏唖pan褰撳仛鍧楃骇鍏冪礌瀵瑰緟*/
+		      	width: 100%;  /*闄愬埗瀹藉害*/
+		      	overflow: hidden;  /*瓒呭嚭瀹藉害閮ㄥ垎闅愯棌*/
+		      	text-overflow: ellipsis;  /*瓒呭嚭閮ㄥ垎浠ョ偣鍙蜂唬鏇�*/
+		     	line-height: 1.2;  /*鏁板瓧涓庝箣鍓嶇殑鏂囧瓧瀵归綈*/
 			}
 			.s{
 				white-space: nowrap;
-				line-height: 30px;
+				line-height: 20px;
+			}
+			.s b{
+				color:#00AA00;	
+				margin-left:3px;
 			}
 			.js .s:nth-of-type(2){
 				margin-left: 10px;
@@ -137,4 +141,7 @@
 			}
 			.gs:nth-child(3) .good label{
 				color: #E59101;
+			}
+			.guige{
+				font-size:14px;
 			}

@@ -499,4 +499,23 @@
   		</if>
   		 GROUP BY DATE_FORMAT(TIME,'%Y-%m-%d') ORDER BY TIME) AS t 
   </select>
+  <select id="queryRanking" resultMap="BaseResultMap"> 
+  		SELECT ss.id AS id,ss.name AS column3,ss.sufname AS column4,t.s AS column5 FROM (SELECT *,SUM(paymoney) AS s FROM salesorder WHERE 
+  		<if test="startTime != null and startTime != ''">
+  			`time` >= #{startTime} AND `time` &lt;= #{endTime}
+  		</if>
+  		<if test="startTime == null || startTime == ''">
+  			DATE_FORMAT( TIME, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+  		</if>
+  		 GROUP BY storeid) t JOIN store AS ss ON ss.id = t.storeid WHERE t.progress = '2' AND t.state = '0'   ORDER BY t.s DESC 
+  		 <if test="startTime == null || startTime == ''">
+  		 	LIMIT 6
+  		 </if>
+  </select>
+  <select id="queryTedayMoney" resultType="java.lang.Integer">
+  	SELECT SUM(paymoney) FROM salesorder WHERE  TO_DAYS(TIME) = TO_DAYS(NOW())
+  	<if test="store != null and store != ''">
+  		AND storeid = #{store}
+  	</if>
+  </select>
 </mapper>

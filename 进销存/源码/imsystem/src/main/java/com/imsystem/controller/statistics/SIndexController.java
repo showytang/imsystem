@@ -10,4 +10,8 @@ public class SIndexController {
 	public String goIndex() {
 		return "yhb/index";
 	}
+	@RequestMapping("goBaoBiao_1")
+	public String goBaoBiao_1() {
+		return "yhb/BaoBiao1";
+	}
 }

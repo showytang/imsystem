@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.imsystem.domain.Goodsvalue;
 import com.imsystem.domain.Salesorder;
 import com.imsystem.domain.Store;
+import com.imsystem.service.statistics.GoodsValueService;
 import com.imsystem.service.statistics.SalesorderService;
 import com.imsystem.service.statistics.StoreService;
 
@@ -21,6 +23,8 @@ public class AllController {
 	SalesorderService salesorderS;
 	@Autowired
 	StoreService storeS;
+	@Autowired
+	GoodsValueService gvs;
 	
 	@RequestMapping("query")
 	@ResponseBody
@@ -48,11 +52,39 @@ public class AllController {
 		}
 		return sale;
 	}
-	
+	/**
+	 * By cody 查询商品
+	 * @param code
+	 * @return
+	 */
+	@RequestMapping("queryByCode")
+	@ResponseBody
+	public List<Goodsvalue> queryByCode(String code){
+		List<Goodsvalue> list = gvs.queryByCode(code);
+		return list;
+	}
+	/**
+	 * index top 四方格
+	 * @param storeid
+	 * @return
+	 */
 	@RequestMapping("queryDaysAgo")
 	@ResponseBody
 	public List<Salesorder> queryDaysAgo(String storeid){
 		List<Salesorder> list = salesorderS.queryDaysAgo(storeid);
+		for (Salesorder s : list) {
+			s.setList(gvs.queryByCode(s.getId()));
+		}
+		return list;
+	}
+	
+	@RequestMapping("queryRanking")
+	@ResponseBody
+	public List<Salesorder> queryRanking(String startTime, String endTime){
+		List<Salesorder> list = salesorderS.queryRanking(startTime, endTime);
+		for (Salesorder ss : list) {
+			ss.setColumn3(salesorderS.queryTedayMoney(ss.getStoreid()).toString());
+		}
 		return list;
 	}
 }
