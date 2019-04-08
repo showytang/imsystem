@@ -3,6 +3,7 @@ package com.imsystem.service.customer;
 import java.util.List;
 
 import com.imsystem.domain.Customertype;
+import com.imsystem.domain.QueryCustomerTypeVO;
 
 public interface CustomerTypeService {
 	
@@ -12,6 +13,12 @@ public interface CustomerTypeService {
 	 * @return
 	 */
 	public List<Customertype> queryCustomerType();
+	
+	/**
+	 * 查询所有客户类型VO
+	 * @return
+	 */
+	public List<QueryCustomerTypeVO> queryAllCustomerType();
 	
 	/**
 	 * 新增客户类型
