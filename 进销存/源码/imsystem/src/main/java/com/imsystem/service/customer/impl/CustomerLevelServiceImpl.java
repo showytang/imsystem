@@ -1,4 +1,4 @@
-package com.imsystem.service.customerlevel.impl;
+package com.imsystem.service.customer.impl;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.imsystem.domain.Customerlevel;
-import com.imsystem.service.customerlevel.CustomerLevelService;
+import com.imsystem.service.customer.CustomerLevelService;
 
 @Service
 @Transactional

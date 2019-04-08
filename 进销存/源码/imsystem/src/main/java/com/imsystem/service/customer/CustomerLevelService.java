@@ -1,4 +1,4 @@
-package com.imsystem.service.customerlevel;
+package com.imsystem.service.customer;
 
 import java.util.List;
 

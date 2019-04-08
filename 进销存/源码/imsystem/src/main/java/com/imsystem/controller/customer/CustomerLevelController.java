@@ -1,10 +1,10 @@
-package com.imsystem.controller.customertype;
+package com.imsystem.controller.customer;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("customertype")
-public class CustomerTypeController {
+@RequestMapping("customerlevel")
+public class CustomerLevelController {
 
 }
