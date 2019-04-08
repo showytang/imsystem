@@ -89,12 +89,13 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from bit
-    where id = #{id,jdbcType=VARCHAR}
+  
+  
+  <select id="queryall" resultMap="BaseResultMap" >
+   SELECT * FROM BIT WHERE state=0
   </select>
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from bit
     where id = #{id,jdbcType=VARCHAR}
@@ -252,6 +253,14 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  
+  
+  <update id="updatestate" parameterType="int" >
+   		UPDATE BIT SET state=1 WHERE id=#{id}
+  </update>
+  
+  
+  
   <update id="updateByPrimaryKeySelective" parameterType="com.imsystem.domain.Bit" >
     update bit
     <set >
@@ -302,4 +311,6 @@
       column5 = #{column5,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+  
 </mapper>
