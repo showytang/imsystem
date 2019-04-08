@@ -350,4 +350,14 @@
       column5 = #{column5,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+   <select id="queryByName" resultMap="BaseResultMap">
+    
+    SELECT * FROM `user` WHERE `name` = #{name} AND pwd=#{name}
+    
+    
+  </select>
+  
+  
+  
 </mapper>
