@@ -306,55 +306,47 @@ td input {
 										class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
 								</div>
 							</div>
+							<div class="option-div option-top-div row">
+								<div class="col-lg-1 col-md-1 text-right option-rongqi">
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span>
+								</div>
+								<div class="col-lg-11 col-md-11 option-rongqi">
+									<span
+										class="visible-lg-inline-block visible-md-inline-block visible-md-inline-block text-center activePosition option-span active1"></span>
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span activeColor"
+										typeid="">上衣</span> <span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span">裤子</span>
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔</span>
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
+								</div>
+							</div>
+							<div class="option-div option-top-div row">
+								<div class="col-lg-1 col-md-1 text-right option-rongqi">
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span>
+								</div>
+								<div class="col-lg-11 col-md-11 option-rongqi">
+									<span
+										class="visible-lg-inline-block visible-md-inline-block visible-md-inline-block text-center activePosition option-span active1"></span>
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span activeColor"
+										typeid="">上衣</span> <span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span">裤子</span>
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔</span>
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
+									<span
+										class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
+								</div>
+							</div>
 
-							<div class="option-div option-top-div row">
-								<div class="col-lg-1 col-md-1 text-right option-rongqi">
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span>
-								</div>
-								<div class="col-lg-11 col-md-11 option-rongqi">
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span "
-										typeid="">上衣</span> <span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔裤</span>
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span">破洞裤</span>
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span">运动裤</span>
-								</div>
-							</div>
-							<div class="option-div option-top-div row">
-								<div class="col-lg-1 col-md-1 text-right option-rongqi">
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span>
-								</div>
-								<div class="col-lg-11 col-md-11 option-rongqi">
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span "
-										typeid="">上衣</span> <span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔裤</span>
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span">破洞裤</span>
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span">运动裤</span>
-								</div>
-							</div>
-							<div class="option-div option-top-div row">
-								<div class="col-lg-1 col-md-1 text-right option-rongqi">
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span>
-								</div>
-								<div class="col-lg-11 col-md-11 option-rongqi">
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span "
-										typeid="">上衣</span> <span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔裤</span>
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span">破洞裤</span>
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span">运动裤</span>
-								</div>
-							</div>
 
 							<div class="option-div option-type row">
 								<div class="col-lg-1 col-md-1 text-right option-rongqi">
@@ -603,13 +595,12 @@ function inserGoods(){
 			   
 			   /*中文规格总名称*/
 			   var gcname = $(obj).find("[name=goodsType]").attr("tyname");
-			   formData.append("goodsVo.goodsValues["+index+"].name",gcname);
-			   formData.append("goodsVo.goodsValues["+index+"].jprice",$(obj).find("[name=detailprice]").val());
+			   formData.append("goodsValues["+(index-1)+"].name",gcname);
+			   formData.append("goodsValues["+(index-1)+"].jprice",$(obj).find("[name=detailprice]").val());
 			   
-			   if($(obj).find("[type=file]").files != undefined){
+			   if($(obj).find("[type=file]")[0].files.length > 0){
 				   
-			   
-			   formData.append("goodsVo.goodsValues["+index+"].img",$(obj).find("[type=file]")[0].files[0]);
+				   formData.append("goodsValues["+(index-1)+"].img",$(obj).find("[type=file]")[0].files[0]);
 			   
 			   }
 			   
@@ -618,9 +609,10 @@ function inserGoods(){
 			   var typeIdArr = typeIds.split(",");
 			   
 			   for(var n = 0;n < typeIdArr.length;n++){
-				formData.append("goodsValues["+index+"].goodsstandardvalues["+n+"].name",gcname);
-				formData.append("goodsValues["+index+"].goodsstandardvalues["+n+"].svids",typeIds);
-				formData.append("goodsValues["+index+"].goodsstandardvalues["+n+"].svid",typeIdArr[n]);
+				   
+				formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].name",gcname);
+				formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].svids",typeIds);
+				formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].svid",typeIdArr[n]);
 				
 			   }
 			   
@@ -628,9 +620,9 @@ function inserGoods(){
 				
 				$.each($(obj).find(".customerprick"),function(item,pojo){
 					
-					formData.append("goodsCalues["+index+"].goodsPrices["+item+"].ctid",$(pojo).attr("ctid"));
-					formData.append("goodsCalues["+index+"].goodsPrices["+item+"].sufname",$(pojo).attr("viewname"));
-					formData.append("goodsCalues["+index+"].goodsPrices["+item+"].price",$(pojo).val());
+					formData.append("goodsValues["+(index-1)+"].goodsPrices["+item+"].ctid",$(pojo).attr("ctid"));
+					formData.append("goodsValues["+(index-1)+"].goodsPrices["+item+"].sufname",$(pojo).attr("viewname"));
+					formData.append("goodsValues["+(index-1)+"].goodsPrices["+item+"].price",$(pojo).val());
 					
 				});
 				
@@ -648,7 +640,6 @@ function inserGoods(){
 			contentType:false,
  			success:function(data){
  				console.log("-.-");
- 				
  			}
 			
 		});   

@@ -137,6 +137,7 @@ public class GoodsController {
 	@ResponseBody
 	public String insertGoods(MultipartFile[] files,GoodsVO goodsVo) {
 
+		
 //		goodsSer.insertGoods(goodsVo);
 		return "";
 
