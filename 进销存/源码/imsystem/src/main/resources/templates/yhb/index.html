@@ -6,7 +6,6 @@
 		<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
 		<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
 		<link rel="stylesheet" th:href="@{/assets/css/style.css}">
-		<link rel="stylesheet" th:href="@{/assets/css/chartist-custom.css}">
 		<!-- MAIN CSS -->
 		<link rel="stylesheet" th:href="@{/assets/css/main.css}">
 		<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
@@ -22,12 +21,77 @@
 		<script th:src="@{/assets/js/bootstrap.min.js}"></script>
 		<script th:src="@{/assets/js/jquery.slimscroll.min.js}"></script>
 		<script th:src="@{/assets/js/jquery.easypiechart.min.js}"></script>
+		<script th:src="@{/assets/js/vue.js}"></script>
 		<style>
 			.ct-chart{
 				width: 100%;
 				height: 350px;
 			}
+			.first{
+				font-size:1.1em!important;
+				height:34px;
+				line-height:34px;
+				color:#E59101;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
 		</style>
+		<script>
+			function queryTop(storeid,code,startTime,endTime){
+				var data;
+				$.ajax({
+					url:"/statistics/query",
+					type:"post",
+					async:false, 
+					data:{
+						storeid:storeid,
+						code:code,
+						startTime:startTime,
+						endTime:endTime
+					},
+					dataType:"json",
+					success:function(result){
+						data =  result;
+					}
+				});
+				
+				return data;
+				
+				
+			}
+			function queryDaysAgo(storeid){
+				var data;
+				$.ajax({
+					url:"/statistics/queryDaysAgo",
+					type:"post",
+					async:false, 
+					data:{
+						storeid:storeid
+					},
+					dataType:"json",
+					success:function(result){
+						data =  result;
+					}
+				});
+				
+				return data;
+				
+				
+			}
+			$(function(){
+				var myDate = new Date;
+			    var year = myDate.getFullYear();
+			    var yue = myDate.getMonth()+1;
+			    var date = myDate.getDate();
+			    var startTime = year+"-"+yue+"-"+date+" 00:00:00";
+			    var endTime = year+"-"+yue+"-"+date+" 23:59:59";
+				var top =  queryTop("","",startTime,endTime);
+				$(".profit").text("￥"+top.column2);
+				$(".SalesMoney").text("￥"+top.paymoney);
+				$(".count").text(top.count);
+				$(".first").text(top.column3);
+			});
+		</script>
 	</head>
 	<body>
 		<div class="main">
@@ -46,7 +110,7 @@
 									<div class="metric">
 										<span class="icon"><i class="fa fa-download"></i></span>
 										<p>
-											<span class="number">￥1,252</span>
+											<span class="number profit">￥1,252</span>
 											<span class="title">今日利润</span>
 										</p>
 									</div>
@@ -55,7 +119,7 @@
 									<div class="metric">
 										<span class="icon"><i class="fa fa-shopping-bag"></i></span>
 										<p>
-											<span class="number">￥203</span>
+											<span class="number SalesMoney">￥203</span>
 											<span class="title">今日销售额</span>
 										</p>
 									</div>
@@ -64,7 +128,7 @@
 									<div class="metric">
 										<span class="icon"><i class="fa fa-eye"></i></span>
 										<p>
-											<span class="number">3</span>
+											<span class="number count">3</span>
 											<span class="title">订单数量</span>
 										</p>
 									</div>
@@ -73,7 +137,7 @@
 									<div class="metric">
 										<span class="icon"><i class="fa fa-bar-chart"></i></span>
 										<p>
-											<span class="number">20</span>
+											<span class="number first">20</span>
 											<span class="title">今日销冠</span>
 										</p>
 									</div>
@@ -334,17 +398,37 @@
 		/**
 		 * Top统计图
 		 */
+		 $(function(){
+			 var img1 = queryDaysAgo("");
+				var profit = [];
+				var SalesMoney = [];
+				var count = [];
+				var time = [];
+				$.each(img1,function(i,obj){
+					profit.push(obj.column2);
+					time.push(obj.column3);
+					count.push(obj.count);
+					SalesMoney.push(obj.paymoney);
+				});
+				var options = myChart.getOption();
+				options.series[0].data=SalesMoney;
+				options.series[1].data=profit;
+				options.series[2].data=count;
+				options.xAxis[0].data = time;
+				options.yAxis[0].max = Math.max.apply(null,SalesMoney)+200;
+				options.yAxis[1].max = Math.max.apply(null,profit)+200;
+				options.yAxis[2].max = Math.max.apply(null,count)+20;
+				myChart.setOption(options);
+		 })
 		var dom = document.getElementById("headline-chart");
 		var myChart = echarts.init(dom);
 		var app = {};
 		option = null;
-		app.title = '多 Y 轴示例';
 		
-		var colors = ['rgb(2, 143, 208)', '#d14a61', '#675bba'];
+		var colors = ['rgb(2, 143, 208)', '#d14a61', '#00AA00'];
 		
 		option = {
 		    color: colors,
-		
 		    tooltip: {
 		        trigger: 'axis',
 		        axisPointer: {
@@ -362,7 +446,7 @@
 		        }
 		    },
 		    legend: {
-		        data:['蒸发量','降水量','平均温度']
+		        data:['销售额','总利润','订单数量']
 		    },
 		    xAxis: [
 		        {
@@ -370,15 +454,18 @@
 		            axisTick: {
 		                alignWithLabel: true
 		            },
-		            data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+		            data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+		            splitLine:{
+			            　　　　show:false
+			            　　}
 		        }
 		    ],
 		    yAxis: [
 		        {
 		            type: 'value',
-		            name: '蒸发量',
+		            name: '销售额',
 		            min: 0,
-		            max: 250,
+		            max: 30000,
 		            position: 'right',
 		            axisLine: {
 		                lineStyle: {
@@ -386,14 +473,17 @@
 		                }
 		            },
 		            axisLabel: {
-		                formatter: '{value} ml'
-		            }
+		                formatter: '{value} ￥'
+		            },
+		            splitLine:{
+			            　　　　show:false
+			            　　}
 		        },
 		        {
 		            type: 'value',
-		            name: '降水量',
+		            name: '总利润',
 		            min: 0,
-		            max: 250,
+		            max: 30000,
 		            position: 'right',
 		            offset: 80,
 		            axisLine: {
@@ -402,14 +492,14 @@
 		                }
 		            },
 		            axisLabel: {
-		                formatter: '{value} ml'
+		                formatter: '{value} ￥'
 		            }
 		        },
 		        {
 		            type: 'value',
-		            name: '温度',
+		            name: '订单数量',
 		            min: 0,
-		            max: 25,
+		            max: 500,
 		            position: 'left',
 		            axisLine: {
 		                lineStyle: {
@@ -417,24 +507,24 @@
 		                }
 		            },
 		            axisLabel: {
-		                formatter: '{value} °C'
+		                formatter: '{value} 单'
 		            }
 		        }
 		    ],
 		    series: [
 		        {
-		            name:'蒸发量',
+		            name:'销售额',
 		            type:'bar',
 		            data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
 		        },
 		        {
-		            name:'降水量',
+		            name:'总利润',
 		            type:'bar',
 		            yAxisIndex: 1,
 		            data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
 		        },
 		        {
-		            name:'平均温度',
+		            name:'订单数量',
 		            type:'line',
 		            yAxisIndex: 2,
 		            data:[2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
@@ -456,7 +546,7 @@
 		    }
 		};
 		option1 = {
-			color : "rgb(2, 143, 208)",
+			color : 'rgb(2, 143, 208)',
 		    tooltip : {
 		        trigger: 'axis',
 		        axisPointer : {            // 坐标轴指示器，坐标轴触发有效

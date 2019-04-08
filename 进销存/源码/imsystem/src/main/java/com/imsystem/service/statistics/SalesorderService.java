@@ -13,4 +13,6 @@ public interface SalesorderService{
 	List<Salesorder> query( String storeid,String code, String startTime, String endTime);
 	
 	Salesorder queryFirst(@Param("storeid") String storeid,@Param("code") String code,@Param("startTime") String startTime,@Param("endTime") String endTime);
+	
+	List<Salesorder> queryDaysAgo(@Param("storeid") String storeid);
 }

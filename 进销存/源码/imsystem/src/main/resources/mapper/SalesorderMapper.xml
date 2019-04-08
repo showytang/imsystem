@@ -464,10 +464,10 @@
   <select id="query" resultMap="BaseResultMap">
   	SELECT * FROM `salesorder` WHERE `progress` = '2' AND `state` = '0'
   		<if test="startTime != null and startTime != ''">
-  			AND `updatetime` >= #{startTime} 
+  			AND `time` >= #{startTime} 
   		</if>
   		<if test="endTime != null and endTime != ''">
-  			AND `updatetime` &lt;= #{endTime}
+  			AND `time` &lt;= #{endTime}
   		</if>
   		<if test="code != null and code != ''">
   			AND `code` = #{code}
@@ -476,13 +476,13 @@
   			AND `storeid` = #{storeid}
   		</if>
   </select>
-    <select id="queryFirst" resultMap="BaseResultMap">
+  <select id="queryFirst" resultMap="BaseResultMap">
   	SELECT * FROM (SELECT *,SUM(paymoney) AS s FROM salesorder GROUP BY storeid) t WHERE progress = '2' AND `state` = '0'  
   		<if test="startTime != null and startTime != ''">
-  			AND `updatetime` >= #{startTime} 
+  			AND `time` >= #{startTime} 
   		</if>
   		<if test="endTime != null and endTime != ''">
-  			AND `updatetime` &lt;= #{endTime}
+  			AND `time` &lt;= #{endTime}
   		</if>
   		<if test="code != null and code != ''">
   			AND `code` = #{code}
@@ -491,5 +491,12 @@
   			AND `storeid` = #{storeid}
   		</if>
   		ORDER BY t.s DESC LIMIT 1
+  </select>
+  <select id="queryDaysAgo" resultMap="BaseResultMap">
+  		SELECT t.* FROM (SELECT SUM(paymoney) paymoney,COUNT(*) `count`,SUM(paymoney) - SUM(column1) column2,DATE_FORMAT(`time`,'%Y-%m-%d') column3,`id` FROM salesorder WHERE DATE_SUB(CURDATE(), INTERVAL 6 DAY) &lt;= DATE(`time`)
+  		<if test="storeid != null and storeid != ''">
+  			 AND storeid=#{storeid} 
+  		</if>
+  		 GROUP BY DATE_FORMAT(TIME,'%Y-%m-%d') ORDER BY TIME) AS t 
   </select>
 </mapper>

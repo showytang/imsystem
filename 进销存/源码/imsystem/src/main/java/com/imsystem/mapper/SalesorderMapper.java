@@ -31,4 +31,6 @@ public interface SalesorderMapper {
     List<Salesorder> query(@Param("storeid") String storeid,@Param("code") String code,@Param("startTime") String startTime,@Param("endTime") String endTime);
     
     Salesorder queryFirst(@Param("storeid") String storeid,@Param("code") String code,@Param("startTime") String startTime,@Param("endTime") String endTime);
+
+	List<Salesorder> queryDaysAgo(@Param("storeid") String storeid);
 }
