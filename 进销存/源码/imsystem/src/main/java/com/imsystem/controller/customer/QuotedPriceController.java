@@ -1,10 +1,10 @@
-package com.imsystem.controller.customerlevel;
+package com.imsystem.controller.customer;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("customerlevel")
-public class CustomerLevelController {
+@RequestMapping("quotedprice")
+public class QuotedPriceController {
 
 }

@@ -1,4 +1,4 @@
-package com.imsystem.service.quotedprice;
+package com.imsystem.service.customer;
 
 import java.util.List;
 

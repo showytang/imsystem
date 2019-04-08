@@ -1,4 +1,4 @@
-package com.imsystem.service.customertype;
+package com.imsystem.service.customer;
 
 import java.util.List;
 
