@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.imsystem.domain.Bit;
-import com.imsystem.service.xl.BitService;
+import com.imsystem.service.monomer.BitService;
 
 @Controller
 @RequestMapping("/bit")

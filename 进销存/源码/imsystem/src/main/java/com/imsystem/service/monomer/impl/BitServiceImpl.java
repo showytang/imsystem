@@ -1,4 +1,4 @@
-package com.imsystem.service.xl.impl;
+package com.imsystem.service.monomer.impl;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.imsystem.domain.Bit;
 import com.imsystem.domain.BitExample;
 import com.imsystem.mapper.BitMapper;
-import com.imsystem.service.xl.BitService;
+import com.imsystem.service.monomer.BitService;
 
 @Service
 @Transactional
