@@ -17,6 +17,7 @@
 		<script type="text/javascript" th:src="@{/assets/js/Mydate.js}"></script>
 		<script type="text/javascript" th:src="@{/assets/js/page.js}"></script>
 		<script type="text/javascript" th:src="@{/assets/js/bootstrap.min.js}"></script>
+		<script type="text/javascript" th:src="@{/assets/js/vue.js}" ></script>
 		<style type="text/css">
 			.selected>div {
 				padding-top: 1vw;
@@ -127,7 +128,7 @@
 	<body>
 		<div class="main">
 			<div class="main-content">
-				<div class="container-fluid" style="background: white;">
+				<div class="container-fluid" id="main" style="background: white;">
 					<div class="panel-heading">
 						<h3 class="panel-title">报表 - 1</h3>
 						<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
@@ -176,180 +177,24 @@
 							<thead>
 								<tr>
 									<th style="text-align: center;">订单编号</th>
-									<th style="text-align: center;width: 20px;">数量</th>
 									<th style="text-align: center;">时间</th>
 									<th style="text-align: center;">应付金额</th>
 									<th style="text-align: center;">实付金额</th>
-									<th style="text-align: center;">优惠金额</th>
 									<th style="text-align: center;">操作</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>1231231231231</td>
-									<td>12</td>
-									<td>2001-1-1</td>
-									<td>44496.00</td>
-									<td>40000.00</td>
-									<td>4496.00</td>
+								<tr v-for="item in pageIf.list">
+									<td>{{item.code}}</td>
+									<td>{{item.time}}</td>
+									<td>{{item.column1}}</td>
+									<td>{{item.column2}}</td>
 									<td>
-										<div style="display: flex;">
+										<div :data="item.id" style="display: flex;">
 											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
 											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
 										</div>
 									</td>
-								</tr>
-								<tr>
-									<td>1231231231231</td>
-									<td>12</td>
-									<td>2001-1-1</td>
-									<td>44496.00</td>
-									<td>40000.00</td>
-									<td>4496.00</td>
-									<td>
-										<div style="display: flex;">
-											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>1231231231231</td>
-									<td>12</td>
-									<td>2001-1-1</td>
-									<td>44496.00</td>
-									<td>40000.00</td>
-									<td>4496.00</td>
-									<td>
-										<div style="display: flex;">
-											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>1231231231231</td>
-									<td>12</td>
-									<td>2001-1-1</td>
-									<td>44496.00</td>
-									<td>40000.00</td>
-									<td>4496.00</td>
-									<td>
-										<div style="display: flex;">
-											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>1231231231231</td>
-									<td>12</td>
-									<td>2001-1-1</td>
-									<td>44496.00</td>
-									<td>40000.00</td>
-									<td>4496.00</td>
-									<td>
-										<div style="display: flex;">
-											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>1231231231231</td>
-									<td>12</td>
-									<td>2001-1-1</td>
-									<td>44496.00</td>
-									<td>40000.00</td>
-									<td>4496.00</td>
-									<td>
-										<div style="display: flex;">
-											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>1231231231231</td>
-									<td>12</td>
-									<td>2001-1-1</td>
-									<td>44496.00</td>
-									<td>40000.00</td>
-									<td>4496.00</td>
-									<td>
-										<div style="display: flex;">
-											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>1231231231231</td>
-									<td>12</td>
-									<td>2001-1-1</td>
-									<td>44496.00</td>
-									<td>40000.00</td>
-									<td>4496.00</td>
-									<td>
-										<div style="display: flex;">
-											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>1231231231231</td>
-									<td>12</td>
-									<td>2001-1-1</td>
-									<td>44496.00</td>
-									<td>40000.00</td>
-									<td>4496.00</td>
-									<td>
-										<div style="display: flex;">
-											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>1231231231231</td>
-									<td>12</td>
-									<td>2001-1-1</td>
-									<td>44496.00</td>
-									<td>40000.00</td>
-									<td>4496.00</td>
-									<td>
-										<div style="display: flex;">
-											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>1231231231231</td>
-									<td>12</td>
-									<td>2001-1-1</td>
-									<td>44496.00</td>
-									<td>40000.00</td>
-									<td>4496.00</td>
-									<td>
-										<div style="display: flex;">
-											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>1231231231231</td>
-									<td>12</td>
-									<td>2001-1-1</td>
-									<td>44496.00</td>
-									<td>40000.00</td>
-									<td>4496.00</td>
-									<td><div style="display: flex;">
-											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-										</div></td>
 								</tr>
 							</tbody>
 						</table>
@@ -395,7 +240,16 @@
 			</div>
 		</div>
 		<script type="text/javascript" src="js/bootstrap-datetimepicker.js"></script>
-		<script type="text/javascript">
+		<script type="text/javascript" th:inline="javascript">
+			var vue = new Vue({
+				el : "#main",
+				data : {
+					pageIf : {}
+				}
+			});
+			vue.pageIf = [[${pageif}]];
+
+			console.log(JSON.stringify([[${pageif}]]))
 			$(function() {
 				myDate();
 				$(window).resize(function() {

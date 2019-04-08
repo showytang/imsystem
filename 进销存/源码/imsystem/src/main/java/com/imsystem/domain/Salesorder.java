@@ -1,6 +1,8 @@
 package com.imsystem.domain;
 
 import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 public class Salesorder {
     private String id;
@@ -44,13 +46,23 @@ public class Salesorder {
     private String column4;
 
     private String column5;
+    
+    private List<Salesorderdetails> list;
+    
+    public List<Salesorderdetails> getList() {
+		return list;
+	}
+    
+    public void setList(List<Salesorderdetails> list) {
+		this.list = list;
+	}
 
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getCode() {

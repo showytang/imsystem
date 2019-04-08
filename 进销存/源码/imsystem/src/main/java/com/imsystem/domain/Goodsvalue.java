@@ -28,8 +28,14 @@ public class Goodsvalue {
      */
     private String column1;
 
+    /**
+     * 订单进货使用：商品数量
+     */
     private String column2;
 
+    /**
+     * 订单进货使用：总金额
+     */
     private String column3;
 
     private String column4;

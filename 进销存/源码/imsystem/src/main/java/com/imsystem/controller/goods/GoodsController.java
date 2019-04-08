@@ -127,7 +127,7 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/customerPickGoods")
-	public String customerPickGoods() {
+	public String customerPickGoods(Goods goods) {
 
 		return "dws/customerPickGoods";
 	}

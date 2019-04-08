@@ -1,10 +1,14 @@
 package com.imsystem.domain;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class Stockdetails {
     private String id;
 
+    /**
+     * 库存主表id
+     */
     private String code;
 
     private Date time;
@@ -17,21 +21,34 @@ public class Stockdetails {
 
     private String storeid;
 
+    /**
+     * 商品实例id
+     */
     private String column1;
 
+    /**
+     * 进货价
+     */
     private String column2;
 
+    /**
+     * 进货库存
+     */
     private String column3;
 
+    /**
+     * 销售库存
+     */
     private String column4;
 
     private String column5;
 
     public String getId() {
-        return id;
+        return UUID.randomUUID().toString();
     }
 
     public void setId(String id) {
+    	
         this.id = id;
     }
 

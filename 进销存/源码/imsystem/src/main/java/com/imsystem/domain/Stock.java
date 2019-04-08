@@ -1,16 +1,24 @@
 package com.imsystem.domain;
 
 import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class Stock {
     private String id;
 
+    /**
+     	* 客户编号
+     */
     private String cid;
 
     private String code;
 
     private String sid;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date time;
 
     private Date updatetime;
@@ -21,22 +29,44 @@ public class Stock {
 
     private String storeid;
 
+    /**
+     * <h1>应付金额
+     */
     private String column1;
 
+    /**
+     * 实付金额
+     */
     private String column2;
 
+    /**
+     * count
+     */
     private String column3;
 
     private String column4;
 
     private String column5;
+    
+    private List<Stockdetails> stockdetails;
+    
+    public List<Stockdetails> getStockdetails() {
+		return stockdetails;
+	}
+    
+    public void setStockdetails(List<Stockdetails> stockdetails) {
+		this.stockdetails = stockdetails;
+	}
 
     public String getId() {
+    	
         return id;
     }
 
     public void setId(String id) {
-        this.id = id;
+    	
+        this.id = UUID.randomUUID().toString();
+        
     }
 
     public String getCid() {
