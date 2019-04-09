@@ -31,7 +31,7 @@
   	SELECT s.*,sd.id as sdid,sd.code as sdcode,sd.column1 as sdcolumn1,sd.column2 as sdcolumn2,sd.column3 as sdcolumn3,sd.column4 as sdcolumn4 FROM stock AS s INNER JOIN stockdetails AS sd ON s.`id` = sd.`code`
   	<where>
 	  	<if test="code != null">
-	  		and s.code = #{code}
+	  		and s.code like concat('%',#{code},'%')
 	  	</if>
 	  	<if test="time != null">
 	  		and s.updatetime BETWEEN #{time} AND #{endTime}

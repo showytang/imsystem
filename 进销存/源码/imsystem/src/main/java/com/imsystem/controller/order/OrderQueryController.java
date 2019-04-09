@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageInfo;
+import com.imsystem.domain.Stock;
 import com.imsystem.service.order.OrderQueryService;
 
 @Controller
@@ -14,8 +17,16 @@ public class OrderQueryController {
 	@Autowired
 	OrderQueryService orderquery;
 	
+	@RequestMapping("/toQuery")
+	public String toQuery() {
+		
+		return "wjh/index";
+	}
+	
+
 	@RequestMapping("/query")
-	public String query(Model model,String code,String time,String endTime,Integer currentPage,Integer pageSize) {
+	@ResponseBody
+	public PageInfo<Stock> query(String code,String time,String endTime,Integer currentPage,Integer pageSize) {
 		
 		if(currentPage == null || currentPage <= 0) {
 			currentPage = 1;
@@ -25,10 +36,10 @@ public class OrderQueryController {
 			pageSize = 10;
 		}
 		
-		model.addAttribute("pageif",orderquery.queryStock(code, time, endTime, currentPage, pageSize));
-		
-		return "wjh/index";
+		return orderquery.queryStock(code, time, endTime, currentPage, pageSize);
 	}
+	
+	
 	
 	@RequestMapping("/yetQuery")
 	public String yetQuery() {

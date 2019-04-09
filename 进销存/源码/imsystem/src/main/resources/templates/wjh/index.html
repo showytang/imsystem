@@ -137,13 +137,13 @@
 						<div class="col-md-4 col-sm-6 col-xs-11 tj">
 							<div class="input-group">
 								<span class="input-group-addon">No</span>
-								<input class="form-control" placeholder="订单编号" />
+								<input @keyup.enter="code" v-model="no" id="no"  class="form-control" placeholder="订单编号" />
 							</div>
 						</div>
 						<div class="col-md-3 col-sm-6 col-xs-11 display tj">
 							<div class="input-group">
 								<span class="input-group-addon">每页数</span>
-								<select class="form-control" style="border-right: none;height: 100%;">
+								<select class="form-control" v-model="pagesize" style="border-right: none;height: 100%;">
 									<option>10</option>
 									<option>20</option>
 									<option>50</option>
@@ -158,7 +158,7 @@
 						<div class="col-md-5 col-sm-12 col-xs-11 display tj">
 							<div class="input-group">
 								<span class="input-group-addon">Time</span>
-								<input class="form-control" id="config-demo" style="border: none;border-right: 1px solid #ddd;border-radius: 0px;" placeholder="开始时间" />
+								<input class="form-control" onchange="time(this)" id="config-demo" style="border: none;border-right: 1px solid #ddd;border-radius: 0px;" placeholder="开始时间" />
 							</div>
 						</div>
 						<div class="col-xs-1 xsoptions">
@@ -207,7 +207,7 @@
 										<h4 class="modal-title" id="myModalLabel">订单详情</h4>
 									</div>
 									<div class="modal-body">
-										<iframe width="100%" style="border: none;overflow-x: auto;" src="indexDatail.html"></iframe>
+										<!-- <iframe width="100%" style="border: none;overflow-x: auto;" src="indexDatail.html"></iframe> -->
 									</div>
 									<div class="modal-footer">
 										<span style="font-size: 13px; color: #DDDDDD;">点击数量可修改</span>
@@ -239,19 +239,60 @@
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript" src="js/bootstrap-datetimepicker.js"></script>
+		<script type="text/javascript" th:src="@{assets/js/bootstrap-datetimepicker.js}"></script>
 		<script type="text/javascript" th:inline="javascript">
+			var z = 0;
+			myDate();
 			var vue = new Vue({
 				el : "#main",
 				data : {
-					pageIf : {}
+					pageIf : {},
+					no : "",
+					pagesize : "10"
+				},
+				methods : {
+					code : function(){
+						query();
+					}
+				},
+				watch : {
+					
+					pagesize : function(e){
+						alert(e);
+					},
 				}
 			});
-			vue.pageIf = [[${pageif}]];
-
-			console.log(JSON.stringify([[${pageif}]]))
+			
+			
+			function time(th){
+				if(z == 0){
+					z=1;
+				}else{
+					query();
+				}
+			}
+			query();
+			function query(){
+				var times = $("#config-demo").val();
+				
+				var time = times.substring(0,(times.indexOf('-')-1));
+				
+				var endTime = times.substring((times.indexOf('-')+2),times.length)
+				
+				$.ajax({
+					url : [[@{/orderQueryController/query}]],
+					data : {
+						code : vue.no,
+						pageSize : vue.pagesize 
+					},
+					type : "post",
+					dataType : "json",
+					success:function(result){
+						vue.pageIf = result;
+					}
+				});
+			}
 			$(function() {
-				myDate();
 				$(window).resize(function() {
 
 					var width = parseInt($(window).width());

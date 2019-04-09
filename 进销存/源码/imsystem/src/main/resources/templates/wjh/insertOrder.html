@@ -474,7 +474,7 @@
 						
 					}
 					$.ajax({
-						url : "/insertOrder/insertOrder",
+						url : [[@{/insertOrder/insertOrder}]],
 						data : JSON.stringify(order),
 						type : "post",
 						dataType : "text",
