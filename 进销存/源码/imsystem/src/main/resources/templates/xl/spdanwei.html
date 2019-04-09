@@ -71,7 +71,7 @@
 						</button>
 						<table class="table table-striped">
 							<tr>
-								
+								<th>单位ID</th>
 								<th>单位名称</th>
 								<th>创建时间</th>
 								<th>最后修改时间</th>
@@ -80,7 +80,7 @@
 								<th style="padding-left: 0px; padding-right: 40px">操作</th>
 							</tr>
 							<tr th:each="item : ${list}">
-							 
+							 	<td th:text="${item.id}"></td>
 								<td th:text="${item.name}"></td>
 								<td th:text="${#dates.format(item.time,'yyyy-MM-dd HH:mm:ss')}"></td>
 								<td th:text="${#dates.format(item.updatetime,'yyyy-MM-dd HH:mm:ss')}"></td>
@@ -112,29 +112,24 @@
 								      <div class="modal-body">
 								        	
 										<form class="form-horizontal">
-										  	<div class="form-group">
-										    	<label for="InSname" class="col-sm-3 control-label">使用姓名</label>
+											
+											<div class="form-group">
+										    	<label for="InSname" class="col-sm-3 control-label">单位id</label>
 											    <div class="col-sm-9">
-											    	<input type="text" class="form-control" id="InSname">
+											    	<input type="text" class="form-control" id="dwid">
 											    </div>
 										  	</div>
 										  	<div class="form-group">
-										    	<label for="InName" class="col-sm-3 control-label">创建时间</label>
+										    	<label for="InSname" class="col-sm-3 control-label">单位名称</label>
 											    <div class="col-sm-9">
-											      <input type="text" class="form-control" id="InName">
+											    	<input type="text" class="form-control" id="dwmc">
 											    </div>
 										  	</div>
-										  	
-										  	<div class="form-group">
-										    	<label for="inputPassword3" class="col-sm-3 control-label">最后修改时间</label>
-											    <div class="col-sm-9">
-											      <input type="text" class="form-control" id="inputPassword3">
-											    </div>
-										  	</div>
+										  
 										  	<div class="form-group">
 										    	<label for="inputEmail3" class="col-sm-3 control-label">操作人编号</label>
 											    <div class="col-sm-9">
-											    	<input type="text" class="form-control" id="inputEmail3">
+											    	<input type="text" class="form-control" id="bianhao">
 											    </div>
 										  	</div>
 										  	
@@ -145,7 +140,7 @@
 								      </div>
 								      <div class="modal-footer">
 								        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-								        <button type="button" class="btn btn-primary" id="tijiao">提交</button>
+								        <button type="button" class="btn btn-primary" id="tijiao">新增</button>
 								      </div>
 								      
 		    						</div>
@@ -161,25 +156,22 @@
 		      							</div>
 								      	<div class="modal-body">
 								      		<form class="form-horizontal">
+								      		
+								      		<div class="form-group">
+										    	<label for="inputPassword3" class="col-sm-3 control-label">单位ID</label>
+											    <div class="col-sm-9">
+											      <input type="text" class="form-control" value="" id="inputPassword3">
+											    </div>
+										  	</div>
 										  	<div class="form-group">
 										    	<label for="inputEmail3" class="col-sm-3 control-label">单位名称</label>
 											    <div class="col-sm-9">
 											    	<input type="text" class="form-control" id="inputEmail3">
 											    </div>
 										  	</div>
-										  	<div class="form-group">
-										    	<label for="inputPassword3" class="col-sm-3 control-label">创建时间</label>
-											    <div class="col-sm-9">
-											      <input type="text" class="form-control" id="inputPassword3">
-											    </div>
-										  	</div>
+										  
 										  	
-										  	<div class="form-group">
-										    	<label for="inputPassword3" class="col-sm-3 control-label">最后修改时间</label>
-											    <div class="col-sm-9">
-											      <input type="text" class="form-control" id="inputPassword3">
-											    </div>
-										  	</div>
+										  
 										  	<div class="form-group">
 										    	<label for="inputEmail3" class="col-sm-3 control-label">操作人编号</label>
 											    <div class="col-sm-9">
@@ -187,14 +179,13 @@
 											    </div>
 										  	</div>
 										  	
-										  	
 										  
 										</form>
 								        
 								      	</div>
 								      <div class="modal-footer">
 								        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-								        <button type="button" class="btn btn-primary">提交</button>
+								        <button type="button" class="btn btn-primary" >修改</button>
 								      </div>
 		    						</div>
 		  						</div>
@@ -211,6 +202,30 @@
 	<script th:src="@{/assets/js/bootstrap.min.js}"></script>
 	<script th:src="@{/assets/js/jquery.slimscroll.min.js}"></script>
 	<script th:src="@{/assets/js/toastr.min.js}"></script>
-	<script th:src="@{/assets/js/klorofil-common.js}"></script>			
+	<script th:src="@{/assets/js/klorofil-common.js}"></script>
+	<script type="text/javascript">
+		$(function(){
+			$("#tijiao").click(function(){
+				var id=$("#dwid").val();
+				var name=$("#dwmc").val();
+				var uid=$("#bianhao").val();
+
+				$.ajax({
+					url:"insert",
+					data:{
+						id:id,
+						name:name,
+						uid:uid
+						},
+					type:"post",
+					dataType:"json",
+					success:function(result){
+						location.href = "query";
+					}
+				});
+			});
+		});
+		
+	</script>			
 </body>
 </html>

@@ -12,4 +12,6 @@ public interface BitService {
 	 public int insert(Bit record);
 	 public List<Bit> queryall();
 	 public int updateByPrimaryKey(Bit record);
+	 
+	 public int insertSelective(Bit bi);
 }

@@ -46,4 +46,10 @@ public class BitServiceImpl implements BitService {
 		
 		return ma.updatestate(id);
 	}
+
+	@Override
+	public int insertSelective(Bit bi) {
+		
+		return ma.insertSelective(bi);
+	}
 }
