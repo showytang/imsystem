@@ -1,248 +1,264 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<meta charset="utf-8" />
+<title>订单页面</title>
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
+<link rel="stylesheet" th:href="@{/assets/css/main.css}">
+<link rel="stylesheet" th:href="@{/assets/css/myStyle.css}" />
+<link rel="icon" type="image/png" sizes="96x96"
+	th:href="@{/assets/img/favicon.png}">
+<link rel="stylesheet" type="text/css" media="all"
+	th:href="@{/assets/css/daterangepicker.css}" />
+<script type="text/javascript"
+	th:src="@{/assets/vendor/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/moment.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/daterangepicker.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/Mydate.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/page.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/vue.js}"></script>
+<style type="text/css">
+.selected>div {
+	padding-top: 1vw;
+	padding-bottom: 1vw;
+}
 
-	<head>
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<meta charset="utf-8" />
-		<title>订单页面</title>
-		<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
-		<link rel="stylesheet" th:href="@{/assets/vendor/font-awesome/css/font-awesome.min.css}">
-		<link rel="stylesheet" th:href="@{/assets/css/main.css}">
-		<link rel="stylesheet" th:href="@{/assets/css/myStyle.css}" />
-		<link rel="icon" type="image/png" sizes="96x96" th:href="@{/assets/img/favicon.png}">
-		<link rel="stylesheet" type="text/css" media="all" th:href="@{/assets/css/daterangepicker.css}" />
-		<script type="text/javascript" th:src="@{/assets/vendor/jquery/jquery.min.js}"></script>
-		<script type="text/javascript" th:src="@{/assets/js/moment.js}"></script>
-		<script type="text/javascript" th:src="@{/assets/js/daterangepicker.js}"></script>
-		<script type="text/javascript" th:src="@{/assets/js/Mydate.js}"></script>
-		<script type="text/javascript" th:src="@{/assets/js/page.js}"></script>
-		<script type="text/javascript" th:src="@{/assets/js/bootstrap.min.js}"></script>
-		<script type="text/javascript" th:src="@{/assets/js/vue.js}" ></script>
-		<style type="text/css">
-			.selected>div {
-				padding-top: 1vw;
-				padding-bottom: 1vw;
-			}
-			
-			.content {
-				overflow-x: auto;
-				padding-top: 15px;
-			}
-			
-			.datetimepicker {
-				margin: 0px;
-			}
-			
-			.pagebtn {
-				height: 28px;
-				width: 25px;
-				border: 1px solid #C0C0C0;
-				list-style: none;
-				text-align: center;
-				background: #DDDDDD;
-				line-height: 28px;
-				cursor: pointer;
-			}
-			
-			#page>ul {
-				display: flex;
-				justify-content: space-around;
-				padding: 0px;
-				font-size: 12px;
-			}
-			
-			#page {
-				width: 300px;
-				margin: 20px auto;
-			}
-			
-			.currentPage {
-				background: rgb(2, 143, 208);
-				color: white;
-				border: none;
-			}
-			
-			.table>tbody>tr {
-				cursor: pointer;
-			}
-			
-			.table>tbody>tr>td {
-				white-space: nowrap;
-				padding: 8px 20px;
-			}
-			
-			.table>thead>tr>th {
-				white-space: nowrap;
-				padding: 8px 20px;
-			}
-			
-			.xsoptions {
-				display: none;
-			}
-			
-			#options {
-				display: none;
-			}
-			
-			.display {
-				display: block;
-			}
-			
-			.boss,
-			.tj {
-				margin-bottom: 0px;
-			}
-			
-			.glyphicon {
-				color: rgb(2, 143, 208);
-			}
-			
-			.page-title {
-				font-weight: bold;
-				color: rgb(2, 143, 208);
-				letter-spacing: 5px;
-			}
-			
-			.tj span {
-				background: rgb(2, 143, 208);
-				border-color: rgb(2, 143, 208);
-				color: white;
-			}
-			
-			@media (max-width: 767px) {
-				.xsoptions {
-					display: block;
-					line-height: 30px;
-					margin-left: -15px;
-				}
-				.display {
-					display: none;
-				}
-				.displayBlock {
-					display: block;
-				}
-			}
-		</style>
-	</head>
+.content {
+	overflow-x: auto;
+	padding-top: 15px;
+}
 
-	<body>
-		<div class="main">
-			<div class="main-content">
-				<div class="container-fluid" id="main" style="background: white;">
-					<div class="panel-heading">
-						<h3 class="panel-title">报表 - 1</h3>
-						<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
+.datetimepicker {
+	margin: 0px;
+}
+
+.pagebtn {
+	height: 28px;
+	width: 25px;
+	border: 1px solid #C0C0C0;
+	list-style: none;
+	text-align: center;
+	background: #DDDDDD;
+	line-height: 28px;
+	cursor: pointer;
+}
+
+#page>ul {
+	display: flex;
+	justify-content: space-around;
+	padding: 0px;
+	font-size: 12px;
+}
+
+#page {
+	width: 300px;
+	margin: 20px auto;
+}
+
+.currentPage {
+	background: rgb(2, 143, 208);
+	color: white;
+	border: none;
+}
+
+.table>tbody>tr {
+	cursor: pointer;
+}
+
+.table>tbody>tr>td {
+	white-space: nowrap;
+	padding: 8px 20px;
+}
+
+.table>thead>tr>th {
+	white-space: nowrap;
+	padding: 8px 20px;
+}
+
+.xsoptions {
+	display: none;
+}
+
+#options {
+	display: none;
+}
+
+.display {
+	display: block;
+}
+
+.boss, .tj {
+	margin-bottom: 0px;
+}
+
+.glyphicon {
+	color: rgb(2, 143, 208);
+}
+
+.page-title {
+	font-weight: bold;
+	color: rgb(2, 143, 208);
+	letter-spacing: 5px;
+}
+
+.tj span {
+	background: rgb(2, 143, 208);
+	border-color: rgb(2, 143, 208);
+	color: white;
+}
+
+@media ( max-width : 767px) {
+	.xsoptions {
+		display: block;
+		line-height: 30px;
+		margin-left: -15px;
+	}
+	.display {
+		display: none;
+	}
+	.displayBlock {
+		display: block;
+	}
+}
+</style>
+</head>
+<body>
+	<div class="main">
+		<div class="main-content">
+			<div class="container-fluid" id="main" style="background: white;">
+				<div class="panel-heading">
+					<h3 class="panel-title">报表 - 1</h3>
+					<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
+				</div>
+				<div class="selected row boss">
+					<div class="col-md-4 col-sm-6 col-xs-11 tj">
+						<div class="input-group">
+							<span class="input-group-addon">No</span> <input
+								@keyup.enter="code" v-model="no" id="no" class="form-control"
+								placeholder="订单编号" />
+						</div>
 					</div>
-					<div class="selected row boss">
-						<div class="col-md-4 col-sm-6 col-xs-11 tj">
-							<div class="input-group">
-								<span class="input-group-addon">No</span>
-								<input @keyup.enter="code" v-model="no" id="no"  class="form-control" placeholder="订单编号" />
-							</div>
+					<!-- <div class="col-md-3 col-sm-6 col-xs-11 display tj">
+						<div class="input-group">
+							<span class="input-group-addon">每页数</span> <select
+								class="form-control" v-model="pagesize"
+								style="border-right: none; height: 100%;">
+								<option>1</option>
+								<option>5</option>
+								<option>20</option>
+								<option>50</option>
+								<option>100</option>
+							</select> 
 						</div>
-						<div class="col-md-3 col-sm-6 col-xs-11 display tj">
-							<div class="input-group">
-								<span class="input-group-addon">每页数</span>
-								<select class="form-control" v-model="pagesize" style="border-right: none;height: 100%;">
-									<option>10</option>
-									<option>20</option>
-									<option>50</option>
-									<option>100</option>
-								</select>
-								<span class="input-group-addon">时间</span>
-								<span class="input-group-addon order">
-							<span class="glyphicon glyphicon-triangle-bottom"></span>
-								</span>
-							</div>
-						</div>
-						<div class="col-md-5 col-sm-12 col-xs-11 display tj">
-							<div class="input-group">
-								<span class="input-group-addon">Time</span>
-								<input class="form-control" onchange="time(this)" id="config-demo" style="border: none;border-right: 1px solid #ddd;border-radius: 0px;" placeholder="开始时间" />
-							</div>
-						</div>
-						<div class="col-xs-1 xsoptions">
-							<span class="glyphicon glyphicon-triangle-bottom"></span>
+					</div> -->
+					<div class="col-md-5 col-sm-12 col-xs-11 display tj">
+						<div class="input-group">
+							<span class="input-group-addon">Time</span> <input
+								class="form-control" onchange="time(this)" id="config-demo"
+								style="border: none; border-right: 1px solid #ddd; border-radius: 0px;"
+								placeholder="开始时间" />
+								<span class="input-group-addon">时间</span> <span
+								class="input-group-addon order"data="1"> <span
+								class="glyphicon glyphicon-triangle-bottom"  ></span>
+							</span>
 						</div>
 					</div>
-					<div id="options">
-						<ul class="list-group well">
-							<li class="list-group-item" data="0">订单查询</li>
-							<li class="list-group-item" data="1">排序And条数</li>
-							<li class="list-group-item" data="2">时间查询</li>
-						</ul>
+					<div class="col-xs-1 xsoptions">
+						<span class="glyphicon glyphicon-triangle-bottom"></span>
 					</div>
-					<div class="content text-center">
-						<table class="table table-hover">
-							<thead>
-								<tr>
-									<th style="text-align: center;">订单编号</th>
-									<th style="text-align: center;">时间</th>
-									<th style="text-align: center;">应付金额</th>
-									<th style="text-align: center;">实付金额</th>
-									<th style="text-align: center;">操作</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr v-for="item in pageIf.list">
-									<td>{{item.code}}</td>
-									<td>{{item.time}}</td>
-									<td>{{item.column1}}</td>
-									<td>{{item.column2}}</td>
-									<td>
-										<div :data="item.id" style="display: flex;">
-											<span style="margin: auto;" title="修改" data-toggle="modal" data-target=".bs-example-modal-lg" class="glyphicon glyphicon glyphicon-edit"></span> &nbsp;&nbsp;
-											<span style="margin: auto;" title="发货" class="glyphicon glyphicon-check"></span>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						</div>
-						<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-							<div class="modal-dialog modal-lg" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title" id="myModalLabel">订单详情</h4>
+				</div>
+				<div id="options">
+					<ul class="list-group well">
+						<li class="list-group-item" data="0">订单查询</li>
+						<li class="list-group-item" data="1">排序And条数</li>
+					</ul>
+				</div>
+				<div class="content text-center">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th style="text-align: center;">订单编号</th>
+								<th style="text-align: center;">时间</th>
+								<th style="text-align: center;">应付金额</th>
+								<th style="text-align: center;">实付金额</th>
+								<th style="text-align: center;">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="item in pageIf.list">
+								<td>{{item.code}}</td>
+								<td>{{item.updatetime}}</td>
+								<td>{{item.column1}}</td>
+								<td>{{item.column2}}</td>
+								<td>
+									<div :data="item.id" style="display: flex;">
+										<span style="margin: auto;" title="修改" data-toggle="modal"
+											data-target=".bs-example-modal-lg"
+											class="glyphicon glyphicon glyphicon-edit"></span>
+										&nbsp;&nbsp; <span style="margin: auto;" title="发货"
+											class="glyphicon glyphicon-check"></span>
 									</div>
-									<div class="modal-body">
-										<!-- <iframe width="100%" style="border: none;overflow-x: auto;" src="indexDatail.html"></iframe> -->
-									</div>
-									<div class="modal-footer">
-										<span style="font-size: 13px; color: #DDDDDD;">点击数量可修改</span>
-										<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-										<button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
-									</div>
-								</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal fade bs-example-modal-lg" tabindex="-1"
+					role="dialog" aria-labelledby="myLargeModalLabel">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">订单详情</h4>
+							</div>
+							<div class="modal-body">
+								<!-- <iframe width="100%" style="border: none;overflow-x: auto;" src="indexDatail.html"></iframe> -->
+							</div>
+							<div class="modal-footer">
+								<span style="font-size: 13px; color: #DDDDDD;">点击数量可修改</span>
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">关闭</button>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal">确定</button>
 							</div>
 						</div>
-						<div id="page">
-							<ul>
-								<li class="pagebtn pagePrev"><span class="glyphicon glyphicon-menu-left"></span></li>
-								<li class="pagebtn currentPage pageCurrent pageq">1</li>
-								<li class="pagebtn pageCurrent pageq">2</li>
-								<li class="pagebtn pageCurrent pageq">3</li>
-								<li class="pagebtn" id="pageDian" style="border: none;background: #DDDDDD;font-size: 20px;">...</li>
-								<li class="pagebtn pageCurrent pageDi">14</li>
-								<li class="pagebtn pageCurrent">15</li>
-								<li class="pagebtn pageCurrent">16</li>
-								<li class="pagebtn pageNext"><span class="glyphicon glyphicon-menu-right"></span></li>
-							</ul>
-						</div>
-						</div>
-						</div>
-						</div>
-						</div>
-						
 					</div>
+				</div>
+				<div id="page">
+					<ul>
+						<li class="pagebtn pagePrev"><span
+							class="glyphicon glyphicon-menu-left"></span></li>
+						<li class="pagebtn currentPage pageCurrent pageq">1</li>
+						<li class="pagebtn pageCurrent pageq">2</li>
+						<li class="pagebtn pageCurrent pageq">3</li>
+						<li class="pagebtn" id="pageDian"
+							style="border: none; display:block; background: #DDDDDD; font-size: 20px;">...</li>
+						<li class="pagebtn pageCurrent pageDi">14</li>
+						<li class="pagebtn pageCurrent">15</li>
+						<li class="pagebtn pageCurrent">16</li>
+						<li class="pagebtn pageNext"><span
+							class="glyphicon glyphicon-menu-right"></span></li>
+					</ul>
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript" th:src="@{assets/js/bootstrap-datetimepicker.js}"></script>
-		<script type="text/javascript" th:inline="javascript">
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	<script type="text/javascript"
+		th:src="@{/assets/js/bootstrap-datetimepicker.js}"></script>
+	<script type="text/javascript" th:inline="javascript">
 			var z = 0;
-			myDate();
 			var vue = new Vue({
 				el : "#main",
 				data : {
@@ -252,26 +268,45 @@
 				},
 				methods : {
 					code : function(){
+						vue.pageIf.pageNum = "1";
 						query();
+						setTimeout(function(){
+							page(vue);
+						},100)
 					}
 				},
 				watch : {
-					
-					pagesize : function(e){
-						alert(e);
-					},
+					/* pagesize : function(e){
+						vue.pageIf.pageNum = "1";
+						query();
+						setTimeout(function(){
+							page(vue);
+						},100)
+					}, */
 				}
 			});
 			
 			
 			function time(th){
 				if(z == 0){
-					z=1;
+					z++;
 				}else{
+					vue.pageIf.pageNum = "1";
 					query();
+					setTimeout(function(){
+						page(vue);
+					},100)
 				}
 			}
-			query();
+			
+			function  floatPage(){
+				
+				vue.pageIf.pageNum = $(".currentPage").text();
+				
+				query();
+				
+			}
+			
 			function query(){
 				var times = $("#config-demo").val();
 				
@@ -279,11 +314,19 @@
 				
 				var endTime = times.substring((times.indexOf('-')+2),times.length)
 				
+				if(time){
+					time = timess(time);
+					endTime = timess(endTime) + " 23:59:59";
+				}
 				$.ajax({
 					url : [[@{/orderQueryController/query}]],
 					data : {
 						code : vue.no,
-						pageSize : vue.pagesize 
+						pageSize : vue.pagesize,
+						time : time,
+						endTime : endTime,
+						order : $(".order").attr("data"),
+						currentPage : vue.pageIf.pageNum
 					},
 					type : "post",
 					dataType : "json",
@@ -292,7 +335,19 @@
 					}
 				});
 			}
+			function timess(time){
+				
+				time = time.substring(6,time.length)+"-"+time.substring(0,2)+"-"+time.substring(3,5);
+				
+				return time;
+			}
+			
 			$(function() {
+				query();
+				myDate();
+				setTimeout(function(){
+					page(vue);
+				},200)
 				$(window).resize(function() {
 
 					var width = parseInt($(window).width());
@@ -329,16 +384,19 @@
 				});
 
 				$(".order").click(function() {
+					
 					if($(this).find("span").attr("class").indexOf("glyphicon-triangle-bottom") != -1) {
 						$(this).find("span").removeClass("glyphicon-triangle-bottom");
 						$(this).find("span").addClass("glyphicon-triangle-top");
+						$(this).attr("data","0");
 					} else {
 						$(this).find("span").addClass("glyphicon-triangle-bottom");
 						$(this).find("span").removeClass("glyphicon-triangle-top");
+						$(this).attr("data","1");
 					}
+					query();
 				});
 			});
 		</script>
-	</body>
-
+</body>
 </html>

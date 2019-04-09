@@ -17,26 +17,32 @@
     <result column="column4" property="column4" jdbcType="VARCHAR" />
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap type="com.imsystem.domain.Stock" id="queryStock" extends="BaseResultMap">
+  <!-- <resultMap type="com.imsystem.domain.Stock" id="queryStock" extends="BaseResultMap">
   	<collection property="stockdetails" ofType="com.imsystem.domain.Stockdetails">
   		<id property="id" column="sdid" />
   		<result property="code" column="sdcode" />
-  		<result property="column1" column="sdcolumn1" />
-  		<result property="column2" column="sdcolumn2"/>
-  		<result property="column3" column="sdcolumn3"/>
-  		<result property="column4" column="sdcolumn4" />
+  		<result property="gvid" column="sdgvid" />
+  		<result property="sid" column="sdsid"/>
+  		<result property="updatetime" column="sdupdatetime"/>
+  		<result property="count" column="sdcount" />
   	</collection>
-  </resultMap>
-  <select id="query" resultMap="queryStock">
-  	SELECT s.*,sd.id as sdid,sd.code as sdcode,sd.column1 as sdcolumn1,sd.column2 as sdcolumn2,sd.column3 as sdcolumn3,sd.column4 as sdcolumn4 FROM stock AS s INNER JOIN stockdetails AS sd ON s.`id` = sd.`code`
+  </resultMap> -->
+  <select id="query" resultMap="BaseResultMap">
+  	SELECT * FROM stock AS s
   	<where>
 	  	<if test="code != null">
 	  		and s.code like concat('%',#{code},'%')
 	  	</if>
-	  	<if test="time != null">
-	  		and s.updatetime BETWEEN #{time} AND #{endTime}
+	  	<if test="time != null and time != ''">
+	  		and s.`updatetime` >= #{time} AND s.`updatetime` &lt;= #{endTime}
 	  	</if>
   	</where>
+  	<if test="order == 0">
+  		order by s.`updatetime` 
+  	</if>
+  	<if test="order == 1">
+  		order by s.`updatetime` desc
+  	</if>
   </select>
   <sql id="Example_Where_Clause" >
     <where >
@@ -160,7 +166,7 @@
       <if test="time != null" >
         time,
       </if>
-      <if test="updatetime != null" >
+      <if test="time != null" >
         updatetime,
       </if>
       <if test="uid != null" >
@@ -204,8 +210,8 @@
       <if test="time != null" >
         #{time,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatetime != null" >
-        #{updatetime,jdbcType=TIMESTAMP},
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
       </if>
       <if test="uid != null" >
         #{uid,jdbcType=VARCHAR},

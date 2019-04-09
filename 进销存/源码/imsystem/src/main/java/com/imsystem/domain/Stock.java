@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Stock {
     private String id;
 
@@ -20,7 +22,9 @@ public class Stock {
 
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date time;
-
+    
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date updatetime;
 
     private String uid;

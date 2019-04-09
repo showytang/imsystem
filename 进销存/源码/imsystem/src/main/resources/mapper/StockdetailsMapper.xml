@@ -24,7 +24,7 @@
   	insert into stockdetails(id,code,gvid,sid,count,scount,price,time,updatetime,uid,state,storeid)
   	values
   	<foreach collection="stockdetails" item="item" separator=",">
-  		(#{item.id},#{id},#{code},#{item.gvid},#{item.count},'0',#{item.price},#{time},#{time},'1','0','1')
+  		(#{item.id},#{code},#{item.gvid},#{id},#{item.count},'0',#{item.price},#{time},#{time},'1','0','1')
   	</foreach>
   </insert>
   <sql id="Example_Where_Clause" >

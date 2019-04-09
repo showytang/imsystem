@@ -2,7 +2,6 @@ package com.imsystem.controller.order;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -26,17 +25,15 @@ public class OrderQueryController {
 
 	@RequestMapping("/query")
 	@ResponseBody
-	public PageInfo<Stock> query(String code,String time,String endTime,Integer currentPage,Integer pageSize) {
+	public PageInfo<Stock> query(String code,String time,String endTime,Integer currentPage,Integer pageSize,String order) {
 		
 		if(currentPage == null || currentPage <= 0) {
 			currentPage = 1;
 		}
 		
-		if(pageSize == null) {
-			pageSize = 10;
-		}
+		PageInfo<Stock> page = orderquery.queryStock(code, time, endTime, currentPage, pageSize,order);
 		
-		return orderquery.queryStock(code, time, endTime, currentPage, pageSize);
+		return page;
 	}
 	
 	

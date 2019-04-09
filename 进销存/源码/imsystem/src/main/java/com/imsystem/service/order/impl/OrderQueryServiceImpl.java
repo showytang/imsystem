@@ -21,12 +21,12 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	StockMapper stockMapper;
 	
 	@Override
-	public PageInfo<Stock> queryStock(String code,String time,String endTime,Integer currentPage,Integer pageSize) {
+	public PageInfo<Stock> queryStock(String code,String time,String endTime,Integer currentPage,Integer pageSize,String order) {
 		// TODO Auto-generated method stub
 		
 		Page<Stock> page = PageHelper.startPage(currentPage, pageSize, true);
 		
-		stockMapper.query(code, time, endTime);
+		stockMapper.query(code, time, endTime,order);
 		
 		return page.toPageInfo();
 		

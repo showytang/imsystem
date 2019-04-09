@@ -459,7 +459,6 @@
 					order.time = eval('new Date(' + order.time.replace(/\d+(?=-[^-]+$)/,    
 							function (a) { return parseInt(a, 10) - 1; }).match(/\d+/g) + ')');  
 					
-					order.updatetime = order.time;
 					
 					//添加商品id
 					for(var i = 1 ; i < $(".panel-title").length ; i ++){
@@ -505,7 +504,7 @@
 				}
 				
 				$(".badgecount:eq("+index+")").text(count);
-				count();
+				counts();
          	});
          	$(".model-list>li").click(function(){
          		$(".model-list>li").removeClass("givemedianji");
@@ -522,7 +521,7 @@
          		}
          		
          	});
-         	count();
+         	counts();
          	posi(0, 0);
 			posi(0, 1);
          	
@@ -554,7 +553,7 @@
 			},4000)
 		}
 		
-		function count(){
+		function counts(){
 			var sumPrices = $(".sumPrice");
 			var sum = 0 ; 
 			

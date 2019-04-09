@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface StockMapper {
 	
-	List<Stock> query(@Param("code") String code,@Param("time") String time,@Param("endTime") String endTime);
+	List<Stock> query(@Param("code") String code,@Param("time") String time,@Param("endTime") String endTime,@Param("order")String order);
 	
     int countByExample(StockExample example);
 
