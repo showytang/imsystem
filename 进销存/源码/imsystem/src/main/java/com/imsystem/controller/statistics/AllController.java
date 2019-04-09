@@ -72,8 +72,10 @@ public class AllController {
 	@ResponseBody
 	public List<Salesorder> queryDaysAgo(String storeid){
 		List<Salesorder> list = salesorderS.queryDaysAgo(storeid);
-		for (Salesorder s : list) {
-			s.setList(gvs.queryByCode(s.getId()));
+		if (list.size()>0) {
+			for (Salesorder s : list) {
+				s.setList(gvs.queryByCode(s.getId()));
+			}
 		}
 		return list;
 	}
@@ -82,8 +84,19 @@ public class AllController {
 	@ResponseBody
 	public List<Salesorder> queryRanking(String startTime, String endTime){
 		List<Salesorder> list = salesorderS.queryRanking(startTime, endTime);
-		for (Salesorder ss : list) {
-			ss.setColumn3(salesorderS.queryTedayMoney(ss.getStoreid()).toString());
+		if (list.size()>0) {
+			for (Salesorder ss : list) {
+				Integer tedayMoney = salesorderS.queryTedayMoney(ss.getStoreid());
+				if (tedayMoney != null) {
+					ss.setColumn2(tedayMoney+"");
+				}else {
+					ss.setColumn2("0");
+				}
+				List<Goodsvalue> l = gvs.queryByCode(ss.getId());
+				if (l.size()>0) {
+					ss.setList(l);
+				}
+			}
 		}
 		return list;
 	}

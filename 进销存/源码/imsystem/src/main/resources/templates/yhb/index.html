@@ -361,6 +361,20 @@
 				options.yAxis[1].max = Math.max.apply(null,profit)+200;
 				options.yAxis[2].max = Math.max.apply(null,count)+20;
 				myChart.setOption(options);
+				var img2 = queryRanking("","");
+				var options2 = myChart2.getOption();
+				var name = [];
+				var tedayMoney = [];
+				var sumMoney = [];
+				$.each(img2,function(ss,objs){
+					name.push(objs.column3+"["+objs.column4+"]");
+					tedayMoney.push(objs.column5);
+					sumMoney.push(objs.column2);
+				});
+				options2.series[1].data=sumMoney;
+				options2.series[0].data=tedayMoney;
+				options2.yAxis[0].data = name;
+				myChart2.setOption(options2);
 		 })
 		var dom = document.getElementById("headline-chart");
 		var myChart = echarts.init(dom);
@@ -557,7 +571,7 @@
 		        }
 		    },
 		    legend: {
-		        data: ['2011年', '2012年']
+		        data: ['本月销售额', '今日销售额']
 		    },
 		    grid: {
 		        left: '3%',
@@ -571,16 +585,16 @@
 		    },
 		    yAxis: {
 		        type: 'category',
-		        data: ['巴西','印尼','美国','印度','中国','世界人口(万)']
+		        data: ['巴西','印尼','美国','印度','中国','世界人口(万)'],
 		    },
 		    series: [
 		        {
-		            name: '2011年',
+		            name: '本月销售额',
 		            type: 'bar',
-		            data: [18203, 23489, 29034, 104970, 131744, 630230]
+		            data: [18203, 23489, 29034, 104970, 131744, 630230],
 		        },
 		        {
-		            name: '2012年',
+		            name: '今日销售额',
 		            type: 'bar',
 		            data: [19325, 23438, 31000, 121594, 134141, 681807]
 		        }

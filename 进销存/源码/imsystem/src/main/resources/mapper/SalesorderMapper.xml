@@ -500,14 +500,14 @@
   		 GROUP BY DATE_FORMAT(TIME,'%Y-%m-%d') ORDER BY TIME) AS t 
   </select>
   <select id="queryRanking" resultMap="BaseResultMap"> 
-  		SELECT ss.id AS id,ss.name AS column3,ss.sufname AS column4,t.s AS column5 FROM (SELECT *,SUM(paymoney) AS s FROM salesorder WHERE 
+  		SELECT t.id AS id,ss.id AS storeid,ss.name AS column3,ss.sufname AS column4,t.s AS column5 FROM (SELECT *,SUM(paymoney) AS s FROM salesorder WHERE 
   		<if test="startTime != null and startTime != ''">
   			`time` >= #{startTime} AND `time` &lt;= #{endTime}
   		</if>
   		<if test="startTime == null || startTime == ''">
   			DATE_FORMAT( TIME, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
   		</if>
-  		 GROUP BY storeid) t JOIN store AS ss ON ss.id = t.storeid WHERE t.progress = '2' AND t.state = '0'   ORDER BY t.s DESC 
+  		 GROUP BY storeid) t JOIN store AS ss ON ss.id = t.storeid WHERE t.progress = '2' AND t.state = '0'   ORDER BY t.s asc 
   		 <if test="startTime == null || startTime == ''">
   		 	LIMIT 6
   		 </if>

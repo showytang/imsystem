@@ -14,4 +14,8 @@ public class SIndexController {
 	public String goBaoBiao_1() {
 		return "yhb/BaoBiao1";
 	}
+	@RequestMapping("goBaoBiao_3")
+	public String goBaoBiao_3() {
+		return "yhb/BaoBiao3";
+	}
 }

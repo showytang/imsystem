@@ -1,5 +1,5 @@
 /**
- * 首页顶部统计方法
+ * 首页顶部统计
  * 
  */
 function queryTop(storeid, code, startTime, endTime) {
@@ -63,4 +63,31 @@ function getStartTime() {
  */
 function getEndTime() {
 	return year + "-" + yue + "-" + date + " 23:59:59";
+}
+/***
+ * 店铺排名查询
+ * @param startTime
+ * @param endTime
+ * @returns
+ */
+function queryRanking(startTime,endTime){
+	var v;
+	$.ajax({
+		url:"/statistics/queryRanking",
+		type:"opst",
+		async : false,
+		data:{
+			startTime:startTime,
+			endTime:endTime
+		},
+		dataType:"json",
+		success:function(data){
+			v = data;
+		},
+		error:function(){
+			v = "暂无数据";
+		}
+		
+	});
+	return v;
 }
