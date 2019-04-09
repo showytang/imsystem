@@ -62,6 +62,8 @@
 			</style>
 </head>
 <body>
+	<form action="" method="post">
+	
 	<div class='login'>
 	  <div class='login_title'>
 	    <span>管理员登录</span>
@@ -129,13 +131,13 @@
     <script type="text/javascript" th:src="@{/assets/login/js/Treatment.js}"></script>
     <script type="text/javascript" th:src="@{/assets/login/js/jquery.mockjax.js}"></script>
 	<script type="text/javascript">
-		var canGetCookie = 0;//是否支持存储Cookie 0 不支持 1 支持
+		var canGetCookie = 1;//是否支持存储Cookie 0 不支持 1 支持
 		var ajaxmockjax = 1;//是否启用虚拟Ajax的请求响 0 不启用  1 启用
 		//默认账号密码
 		
-		var truelogin = "123456";
+		/* var truelogin = "123456";
 		var truepwd = "123456";
-		
+		 */
 		var CodeVal = 0;
 	    Code();
 	    function Code() {
@@ -235,16 +237,16 @@
 	                var JsonData = { login: login, pwd: pwd, code: code };
 					//此处做为ajax内部判断
 					var url = "";
-					if(JsonData.login == truelogin && JsonData.pwd == truepwd && JsonData.code.toUpperCase() == CodeVal.toUpperCase()){
+					 if(JsonData.login!=null && JsonData.pwd!=null && JsonData.code.toUpperCase() == CodeVal.toUpperCase()){
 						url = "Ajax/Login";
 					}else{
 						url = "Ajax/LoginFalse";
-					}
+					} 
 					
 					
 	                AjaxPost(url, JsonData,
 	                                function () {
-	                                    //ajax加载中
+	                                  
 	                                },
 	                                function (data) {
 	                                    //ajax返回 
@@ -264,17 +266,32 @@
 	                                    setTimeout(function () {
 	                                        $('.authent').hide();
 	                                        $('.login').removeClass('test');
-	                                        if (data.Status == 'ok') {
-	                                            //登录成功
-	                                            $('.login div').fadeOut(100);
-	                                            $('.success').fadeIn(1000);
-	                                            $('.success').html(data.Text);
-												
-												location.href="index_on.html"
-												
-	                                        } else {
-	                                            AjaxErro(data);
-	                                        }
+	                                        
+	                                        $.ajax({
+                                            	url:"/user/queryByName",
+                                            	data:{
+                                            		name:login,
+                                            		pwd:pwd
+                                            	},
+                                            	type:"post",
+                                            	success:function(result){
+                                            		if (result) {
+        	                                            //登录成功
+        	                                             
+        	                                            $('.login div').fadeOut(100);
+         	                                            $('.success').fadeIn(1000);
+         	                                            $('.success').html(data.Text);
+        	                                            
+        												
+        	                                        } else {
+        	                                        	var index = layer.alert("登录失败", { icon: 6, time: 4000, offset: 't', closeBtn: 0, title: '友情提示', btn: [], anim: 2, shade: 0 }); 
+        	                                        	layer.style(index, {
+        	                                				color: 'black'
+        	                                			});
+        	                                        }
+                                            	}
+                                            });
+	                                        
 	                                    }, 2400);
 	                                })
 	            }
@@ -294,17 +311,17 @@
 	    }  
 		if(ajaxmockjax == 1){
 			$.mockjax({  
-				url: 'Ajax/Login',  
+				url: "Ajax/Login",  
 				status: 200,  
 				responseTime: 50,          
 				responseText: {"Status":"ok","Text":"登录成功<br /><br />欢迎回来"}  
-			}); 
+			});
 			$.mockjax({  
 				url: 'Ajax/LoginFalse',  
 				status: 200,  
 				responseTime: 50,          
 				responseText: {"Status":"Erro","Erro":"账号名或密码或验证码有误"}
-			});   
+			});  
 		}
     </script>
 
