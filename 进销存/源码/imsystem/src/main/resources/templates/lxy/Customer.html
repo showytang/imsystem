@@ -119,9 +119,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
+                                            <tr th:each="item,state : ${clist}">
                                                 <td><img th:src="@{/assets/img/apple-icon.png}"/></td>
-                                                <td>紫女</td>
+                                                <td th:text="${item.name}"><!-- 紫女 --></td>
                                                 <td></td>
                                                 <td>15858585822</td>
                                                 <td><a class="saleList">销售列表</a></td>
@@ -190,6 +190,8 @@
 	
 		$(function() {
 			
+			
+			
 			/*查看详情*/
 			$(".detail").click(function(){
 				location="CustomerDetail.html";
@@ -199,6 +201,8 @@
 			$("#add").click(function(){
 				location="AddCustomer.html";
 			});
+			
+			
 	
 		});
 	</script>

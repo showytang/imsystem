@@ -14,7 +14,41 @@
     <script type="text/javascript" th:src="@{/assets/SheZhi/lib/layui/layui.js}" charset="utf-8"></script>
     <script type="text/javascript" th:src="@{/assets/SheZhi/js/xadmin.js}"></script>
     <script type="text/javascript" th:src="@{/assets/SheZhi/js/cookie.js}"></script>
-    
+     <style type="text/css">
+    	
+    	[type="checkbox"] {
+				-webkit-appearance: none;
+				vertical-align: middle;
+				margin-top: 0;
+				background: #fff;
+				border: 1px solid gainsboro;
+				border-radius: 5px;
+				min-height: 20px;
+				min-width: 20px;
+				margin-left: 35px;
+			}
+			
+			[type="checkbox"]:checked {
+				background: gainsboro;
+			}
+			
+			[type="checkbox"]:checked::after {
+				content: '';
+				top: 45px;
+				left: 39px;
+				position: absolute;
+				background: transparent;
+				border: #fff solid 2px;
+				border-top: none;
+				border-right: none;
+				height: 6px;
+				width: 10px;
+				-moz-transform: rotate(-45deg);
+				-ms-transform: rotate(-45deg);
+				-webkit-transform: rotate(-45deg);
+				transform: rotate(-45deg);
+			}
+    </style>
    
   </head>
   
@@ -37,8 +71,8 @@
         <thead>
           <tr>
             <th>
-              <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
-            </th>
+           	  <input type="checkbox">
+             </th>
             <th>ID</th>
             <th>登录名</th>
             <th>手机</th>
@@ -51,7 +85,7 @@
         <tbody>
           <tr>
             <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
+              <input type="checkbox"> 
             </td>
             <td>1</td>
             <td>admin</td>

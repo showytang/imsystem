@@ -2,11 +2,14 @@ package com.imsystem.domain;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Bit {
     private String id;
 
     private String name;
 
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
     private Date time;
 
     private Date updatetime;
