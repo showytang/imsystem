@@ -89,12 +89,13 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from bit
-    where id = #{id,jdbcType=VARCHAR}
+  
+  
+  <select id="queryall" resultMap="BaseResultMap" >
+   SELECT * FROM BIT WHERE state=0
   </select>
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from bit
     where id = #{id,jdbcType=VARCHAR}
@@ -115,7 +116,13 @@
       #{column1,jdbcType=VARCHAR}, #{column2,jdbcType=VARCHAR}, #{column3,jdbcType=VARCHAR}, 
       #{column4,jdbcType=VARCHAR}, #{column5,jdbcType=VARCHAR})
   </insert>
+  
   <insert id="insertSelective" parameterType="com.imsystem.domain.Bit" >
+  	INSERT INTO BIT(id,NAME,TIME,updatetime,uid,state) VALUE(#{id},#{name},NOW(),NOW(),#{uid},0)
+  </insert>
+   
+   
+  <insert id="insertSelective1" parameterType="com.imsystem.domain.Bit" >
     insert into bit
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -124,16 +131,16 @@
       <if test="name != null" >
         name,
       </if>
-      <if test="time != null" >
+      <if test="time == null" >
         time,
       </if>
-      <if test="updatetime != null" >
+      <if test="updatetime == null" >
         updatetime,
       </if>
       <if test="uid != null" >
         uid,
       </if>
-      <if test="state != null" >
+      <if test="state == null" >
         state,
       </if>
       <if test="column1 != null" >
@@ -235,7 +242,13 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  
   <update id="updateByExample" parameterType="map" >
+  	UPDATE BIT SET id=#{id},NAME=#{name},updatetime=NOW(),uid=#{uid} WHERE id=#{id}
+  </update>
+  
+  
+  <update id="updateByExample1" parameterType="map" >
     update bit
     set id = #{record.id,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
@@ -252,6 +265,14 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  
+  
+  <update id="updatestate" parameterType="int" >
+   		UPDATE BIT SET state=1 WHERE id=#{id}
+  </update>
+  
+  
+  
   <update id="updateByPrimaryKeySelective" parameterType="com.imsystem.domain.Bit" >
     update bit
     <set >
@@ -302,4 +323,6 @@
       column5 = #{column5,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+  
 </mapper>
