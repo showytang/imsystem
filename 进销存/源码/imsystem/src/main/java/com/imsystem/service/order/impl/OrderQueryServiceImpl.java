@@ -29,6 +29,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		stockMapper.query(code, time, endTime);
 		
 		return page.toPageInfo();
+		
 	}
 
 	
