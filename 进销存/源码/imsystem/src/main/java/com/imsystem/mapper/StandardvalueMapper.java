@@ -6,6 +6,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface StandardvalueMapper {
+	
+	List<Standardvalue> queryStandardvalueByid(Integer id);
+	
     int countByExample(StandardvalueExample example);
 
     int deleteByExample(StandardvalueExample example);

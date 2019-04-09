@@ -1,6 +1,7 @@
 package com.imsystem.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class Goodstype {
     private String id;
@@ -26,6 +27,8 @@ public class Goodstype {
     private String column4;
 
     private String column5;
+    
+  
 
     public String getId() {
         return id;

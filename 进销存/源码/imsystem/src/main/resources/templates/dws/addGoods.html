@@ -10,7 +10,6 @@
 <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
 <link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
 <link rel="stylesheet" th:href="@{/assets/css/style.css}">
-<link rel="stylesheet" th:href="@{/assets/css/chartist-custom.css}">
 <!-- MAIN CSS -->
 <link rel="stylesheet" th:href="@{/assets/css/main.css}">
 <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
@@ -22,12 +21,13 @@
 	th:href="@{/assets/img/favicon.png}">
 
 <link rel="stylesheet" th:href="@{/assets/css/typeDonghua.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/xcConfirm.css}" />
 
-<script type="text/javascript"
-	th:src="@{/assets/js/jquery-3.1.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/jquery-3.1.1.min.js}"></script>
 <script th:src="@{/assets/js/bootstrap.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/wangEditor.min.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/jquery.color.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/xcConfirm.js}"></script>
 
 <style>
 td input {
@@ -67,11 +67,17 @@ td input {
 	width: 100%;
 	height: 100%;
 }
+.option-span-z,.option-span{
+
+	margin: 0 10px;
+
+}
+
 </style>
 </head>
 
 <body>
-	
+
 	<div class="main">
 		<div class="main-content">
 			<div class="container-fluid">
@@ -258,184 +264,62 @@ td input {
 
 						<br>
 						<div class="input-group">
-								<span class="input-group-btn">
-									<button class="btn btn-danger" type="button">进货价：</button>
-								</span> <input oninput='priceChange(this)'  name="jprice" class="form-control"
-									type="text">
+							<span class="input-group-btn">
+								<button class="btn btn-danger" type="button">进货价：</button>
+							</span> <input oninput='priceChange(this)' name="jprice"
+								class="form-control" type="text">
 						</div>
 						<br>
 						<div class="input-group">
-								<span class="input-group-btn">
-									<button class="btn btn-danger" type="button">售价：</button>
-								</span> <input oninput='priceChange(this)' name="price" class="form-control"
-									type="text">
+							<span class="input-group-btn">
+								<button class="btn btn-danger" type="button">售价：</button>
+							</span> <input oninput='priceChange(this)' name="price"
+								class="form-control" type="text">
 						</div>
 						<br>
-					
+
 						<div v-for="(item,index) in customerTypeList">
 							<div class="input-group">
 								<span class="input-group-btn">
-									<button class="btn btn-danger"  type="button">{{item.viewname}}：</button>
-								</span> <input :name='"customerType"+index'  :cid='item.id' oninput='customerpriceChange(this)' class="form-control customerpricemain"
-									type="text">
+									<button class="btn btn-danger" type="button">{{item.viewname}}：</button>
+								</span> <input :name='"customerType"+index' :cid='item.id'
+									oninput='customerpriceChange(this)'
+									class="form-control customerpricemain" type="text">
 							</div>
 							<br>
 						</div>
-						
+
 
 						<div class="row visible-lg-block visible-md-block"
 							style="margin: 0 3vh;">
 
-							<div class="option-div option-top-div row">
-								<div class="col-lg-1 col-md-1 text-right option-rongqi">
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span>
-								</div>
-								<div class="col-lg-11 col-md-11 option-rongqi">
-									<span
-										class="visible-lg-inline-block visible-md-inline-block visible-md-inline-block text-center activePosition option-span active1"></span>
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span activeColor"
-										typeid="">上衣</span> <span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span">裤子</span>
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔</span>
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
-								</div>
-							</div>
-							<div class="option-div option-top-div row">
-								<div class="col-lg-1 col-md-1 text-right option-rongqi">
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span>
-								</div>
-								<div class="col-lg-11 col-md-11 option-rongqi">
-									<span
-										class="visible-lg-inline-block visible-md-inline-block visible-md-inline-block text-center activePosition option-span active1"></span>
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span activeColor"
-										typeid="">上衣</span> <span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span">裤子</span>
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔</span>
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
-								</div>
-							</div>
-							<div class="option-div option-top-div row">
-								<div class="col-lg-1 col-md-1 text-right option-rongqi">
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span>
-								</div>
-								<div class="col-lg-11 col-md-11 option-rongqi">
-									<span
-										class="visible-lg-inline-block visible-md-inline-block visible-md-inline-block text-center activePosition option-span active1"></span>
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span activeColor"
-										typeid="">上衣</span> <span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span">裤子</span>
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔</span>
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
-								</div>
-							</div>
+							<div id="goodstype"></div>
 
 
-							<div class="option-div option-type row">
-								<div class="col-lg-1 col-md-1 text-right option-rongqi">
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">尺码</span>
-								</div>
-								<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">
-									<!--<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #DC4E41;">不限</span>-->
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
-										sizeid="1">S</span> <span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
-										sizeid="2">M</span> <span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
-										sizeid="3">L</span> <span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
-										sizeid="4">XL</span> <span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
-										sizeid="5">XXL</span> <span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
-										sizeid="6">XXXL</span>
-								</div>
-							</div>
-							<div class="option-div option-type row">
-								<div class="col-lg-1 col-md-1 text-right option-rongqi">
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">尺码</span>
-								</div>
-								<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">
-									<!--<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #DC4E41;">不限</span>-->
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
-										sizeid="1">S</span> <span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
-										sizeid="2">M</span> <span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
-										sizeid="3">L</span> <span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
-										sizeid="4">XL</span> <span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
-										sizeid="5">XXL</span> <span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
-										sizeid="6">XXXL</span>
-								</div>
-							</div>
-						
-
-							<div class="option-div option-type row">
-								<div class="col-lg-1 col-md-1 text-right option-rongqi">
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">颜色</span>
-								</div>
-								<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">
-									<!--<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #DC4E41;">不限</span>-->
-									<span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
-										sizeid="7">浅粉色</span> <span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
-										sizeid="8">卡其色</span> <span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
-										sizeid="9">藏青色</span> <span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
-										sizeid="10">藕色</span> <span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
-										sizeid="11">杏色</span> <span
-										class="visible-lg-inline-block visible-md-inline-block text-center option-span-z"
-										sizeid="12">绿棕色</span>
-								</div>
-							</div>
+							<div id="typeoption"></div>
 
 						</div>
-						<br> <br>
-						<div class="panel">
-							<div class="panel-body"></div>
-						</div>
-						<br>
 
 					</div>
-				</div>
-				
-				<div class="text-center">
-					<button id="btn1" style="min-width: 200px" class="btn btn-success">确定新增</button>
-				</div>
-<br/>
-				<!--富文本编辑器-->
-				<div id="editor"></div>
+					<br> <br>
+					<div class="panel">
+						<div class="panel-body"></div>
+					</div>
+					<br>
 
+				</div>
 			</div>
+
+			<div class="text-center">
+				<button id="btn1" style="min-width: 200px" class="btn btn-success">确定新增</button>
+			</div>
+			<br />
+			<!--富文本编辑器-->
+			<div id="editor">
+			</div>
+
 		</div>
+	</div>
 	</div>
 	</div>
 
@@ -445,7 +329,6 @@ td input {
 <script type="text/javascript" th:src="@{/assets/js/typeDonghua.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/vue.js}"></script>
 <script type="text/javascript" th:inline="javascript">
-
 	var vuePojo = new Vue({
 		el:".main",
 		data:{
@@ -631,7 +514,9 @@ function inserGoods(){
 			
 		}); 
 	  
-		  $.ajax({
+	  
+	  
+		   $.ajax({
 			url:[[@{/goods/insertGoods}]],
  			data:formData,
  			dataType:"text",
@@ -639,18 +524,165 @@ function inserGoods(){
  			processData:false,
 			contentType:false,
  			success:function(data){
- 				console.log("-.-");
+ 				
+ 				window.wxc.xcConfirm("新增成功！是否继续？", window.wxc.xcConfirm.typeEnum.confirm);
+ 				
  			}
 			
-		});   
-		
-		
+		});    
 		
 		
 	}
 	
+	function tiaozhuang(bl){
+		
+		if(bl){
+				//file数组
+				fileArr = [];
+				$("input").val("");
+				//图片预览
+				$(".imgmaindiv").parent().remove();
+				$("table").remove();
+				//类型选择
+				$("#goodstype").html("");
+				//富文本
+				$("#editor p").html("<br/>");
+				queryGoodsTypeByPid(null,0,true);
+				
+			}else{
+				
+				location = [[@{/goods/queryAllGoods}]];
+				
+				
+			}
+		
+	}
+	
+	/*
+	*商品类型查询
+	*id 父级id
+	*/
+	function queryGoodsTypeByPid(obj,id,op){
+		var bool =  activeSpanStyle(obj,op);
+		
+		if(!bool){
+			
+			return;
+			
+		}
+		
+		$.ajax({
+			
+			url:[[@{/goods/queryGoodsTypeByPid}]],
+			dataType:"json",
+			data:{"id":id},
+			type:"post",
+			success:function(data){
+				
+			 	var ind = $(obj).parent().parent().index();
+				$(".option-top-div:gt("+ind+")").remove()
+				
+				if(data.length > 0){
+						
+					var div = $("<div class='option-div option-top-div row'>");
+					var divtitle = $('<div class="col-lg-1 col-md-1 text-right option-rongqi"><span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span></div>');
+					div.append(divtitle);
+					var divoption = $('<div class="col-lg-11 col-md-11 option-rongqi">');
+					div.append(divoption);
+					var activc = $('<span style="background-color:#fff;" class="visible-lg-inline-block visible-md-inline-block visible-md-inline-block text-center activePosition option-span active1">');
+					
+					divoption.append(activc);
+					$.each(data,function(){
+						
+						var option = $('<span onclick="queryGoodsTypeByPid(this,'+this.id+',false)" class="visible-lg-inline-block visible-md-inline-block text-center option-span" typeid="'+this.id+'">'+this.name+'</span>');
+						divoption.append(option);
+						
+					});
+					
+					$("#goodstype").append(div);
+				}
+				
+			} 
+			
+		});
+		$.ajax({
+			
+			url:[[@{/goods/queryGoodsStandradByid}]],
+			dataType:"json",
+			data:{"id":id},
+			type:"post",
+			success:function(data){
+			 	
+				$("#typeoption").html("");	
+				
+					$.each(data,function(index,obj){
+						
+						var div = $('<div class="option-div option-type row">');
+						$("#typeoption").append(div);
+						
+						var divtitle = $('<div class="col-lg-1 col-md-1 text-right option-rongqi"><span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">'+obj.name+'</span> </div>')
+						div.append(divtitle);
+						
+						var divmain = $('<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">');
+						div.append(divmain);
+						
+						$.each(obj.stabndardValueList,function(ind,item){
+							
+							
+							var span = $('<span onclick="addGoodsOption(this)" class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="'+item.id+'">'+item.name+'</span>')
+							divmain.append(span);
+							
+						})
+						
+					})
+					
+			}  
+			
+		});
+		
+	}
+	
+	
+	function addGoodsOption(obj){
+		
+		$(obj).parent().find(".option-span-all").removeClass("active1");
+
+		$(obj).parent().find(".option-span-all").animate({
+			backgroundColor : "",
+			color : "#000000"
+		}, 300);
+
+		if ($(obj).hasClass("active1")) {
+
+			$(obj).removeClass("active1");
+			$(obj).animate({
+				backgroundColor : "",
+				color : "#000000"
+			}, 300);
+
+		} else {
+
+			$(obj).addClass("active1");
+			$(obj).animate({
+				backgroundColor : "#00AAFF",
+				color : "#ffffff"
+			}, 300);
+		}
+
+		if ($(".option-type").find(".active1").length != 0) {
+
+			checkedDl();
+		} else {
+			$("table").remove();
+		}
+		
+	}
+
+	
 	$(function() {
 
+		
+		queryGoodsTypeByPid(null,0,true);
 
 		/*页面加载客户类型查询*/
 		$.ajax({
@@ -662,16 +694,14 @@ function inserGoods(){
 				
 				vuePojo.customerTypeList = data;
 				
-				console.log(JSON.stringify(vuePojo.customerTypeList));
-				
 			}
 			
 		});
 		
 		/*提交按钮*/
 		$("#btn1").click(function(){
-			inserGoods()
-			/* alert("提交"); */
+			inserGoods();
+			
 			
 		});
 		
@@ -684,50 +714,11 @@ function inserGoods(){
 
 		$(".activePosition").css("width", $(".activePosition").next().width());
 
-		//类型点击事件
-		$(".option-span").click(function() {
-			//动画
-			activeSpanStyle(this);
-
-		});
-
-		//详细类型点击事件
-		$(".option-span-z").click(function() {
-
-			$(this).parent().find(".option-span-all").removeClass("active1");
-
-			$(this).parent().find(".option-span-all").animate({
-				backgroundColor : "",
-				color : "#000000"
-			}, 300);
-
-			if ($(this).hasClass("active1")) {
-
-				$(this).removeClass("active1");
-				$(this).animate({
-					backgroundColor : "",
-					color : "#000000"
-				}, 300);
-
-			} else {
-
-				$(this).addClass("active1");
-				$(this).animate({
-					backgroundColor : "#00AAFF",
-					color : "#ffffff"
-				}, 300);
-			}
-
-			if ($(".option-type").find(".active1").length != 0) {
-
-				checkedDl();
-			} else {
-				$("table").remove();
-			}
-
-		});
-
+		
 	});
+	
+	
+	
 
 	//this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''
 
