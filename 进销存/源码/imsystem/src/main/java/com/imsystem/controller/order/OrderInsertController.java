@@ -27,6 +27,7 @@ public class OrderInsertController {
 	OrderInsertService orderInsert;
 	
 	public List<Paytype> paytypeList(){
+		
 		List<Paytype> list = new Vector<Paytype>();
 		
 		Paytype pay = new Paytype();
@@ -41,6 +42,7 @@ public class OrderInsertController {
 	}
 	
 	public List<Supplier> supplierlist(){
+		
 		List<Supplier> list = new Vector<Supplier>();
 		
 		Supplier pay = new Supplier();
@@ -55,6 +57,7 @@ public class OrderInsertController {
 	}
 	
 	public List<Goods> shappinglist(){
+		
 		List<Goods> list = new Vector<Goods>();
 		
 		Goods pay = new Goods();
