@@ -26,11 +26,6 @@ public class GoodsVO {
 	
 	
 	/**
-	 * 库存实例集合
-	 */
-	private List<Stockdetails> stockDetailsList;
-	
-	/**
 	 * 库存主表
 	 */
 	private Stock stock;
@@ -44,16 +39,6 @@ public class GoodsVO {
 
 	public void setStock(Stock stock) {
 		this.stock = stock;
-	}
-
-
-	public List<Stockdetails> getStockDetailsList() {
-		return stockDetailsList;
-	}
-
-
-	public void setStockDetailsList(List<Stockdetails> stockDetailsList) {
-		this.stockDetailsList = stockDetailsList;
 	}
 
 
