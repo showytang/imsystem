@@ -34,7 +34,7 @@ public class QuotedPriceServiceImpl implements QuotedPriceService{
 	 * 删除报价
 	 */
 	@Override
-	public int deleteQuotedPrice(int quoteId) {
+	public int deleteQuotedPrice(String quoteId) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

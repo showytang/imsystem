@@ -49,7 +49,7 @@ public class CustomerServiceImpl implements CustomerService{
 	 * 根据ID查询客户
 	 */
 	@Override
-	public Customer queryCustomerById(int cusId) {
+	public Customer queryCustomerById(String cusId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

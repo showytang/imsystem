@@ -31,6 +31,6 @@ public interface CustomerService {
 	 * @param cusId  客户id
 	 * @return
 	 */
-	public Customer queryCustomerById(int cusId);
+	public Customer queryCustomerById(String cusId);
 
 }

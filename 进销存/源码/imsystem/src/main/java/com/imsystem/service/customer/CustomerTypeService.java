@@ -3,6 +3,7 @@ package com.imsystem.service.customer;
 import java.util.List;
 
 import com.imsystem.domain.Customertype;
+import com.imsystem.domain.QueryCustomerTypeVO;
 
 public interface CustomerTypeService {
 	
@@ -25,7 +26,7 @@ public interface CustomerTypeService {
 	 * @param ctId  客户类型id
 	 * @return
 	 */
-	public int deleteCustomerType(int ctId);
+	public int deleteCustomerType(String ctId);
 	
 	/**
 	 * 修改客户类型
@@ -39,6 +40,12 @@ public interface CustomerTypeService {
 	 * @param ctId  客户类型id
 	 * @return
 	 */
-	public Customertype queryCustomerTypeById(int ctId);
+	public Customertype queryCustomerTypeById(String ctId);
+	
+	/**
+	 * 查询所有客户类型VO
+	 * @return
+	 */
+	public List<QueryCustomerTypeVO> queryAllCustomerType();
 
 }

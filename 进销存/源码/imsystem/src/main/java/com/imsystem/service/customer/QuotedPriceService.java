@@ -24,7 +24,7 @@ public interface QuotedPriceService {
 	 * @param quoteId  报价id
 	 * @return
 	 */
-	public int deleteQuotedPrice(int quoteId);
+	public int deleteQuotedPrice(String quoteId);
 	
 	/**
 	 * 修改报价
