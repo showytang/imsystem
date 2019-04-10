@@ -17,6 +17,27 @@
     <result column="column4" property="column4" jdbcType="VARCHAR" />
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
+  
+  <update id="updateDefaultType">
+  	UPDATE customertype SET defaulttype=1 WHERE id &lt;&gt; #{ctId}
+  </update>
+  
+  <update id="deleteCustomerType">
+  	UPDATE customertype SET state=1 WHERE id = #{ctId}
+  </update>
+  
+  <select id="queryCustomerType" resultMap="BaseResultMap">
+  	SELECT * FROM customertype WHERE state=0
+  </select>
+  
+  <update id="updateCustomerType">
+  	UPDATE customertype SET name=#{name},viewname=#{viewname},agio=#{agio},updatetime=#{updatetime},defaulttype=#{defaulttype} WHERE id = #{id}
+  </update>
+  
+  <select id="queryLikeCustomerType" resultMap="BaseResultMap">
+  	SELECT * FROM customertype c,`user` u WHERE c.state=0 AND c.uid=u.id AND (c.`name` LIKE concat('%',#{content},'%') OR c.viewname LIKE concat('%',#{content},'%') OR c.agio LIKE concat('%',#{content},'%') OR u.name LIKE concat('%',#{content},'%'))
+  </select>
+  
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -109,7 +130,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.imsystem.domain.Customertype" >
+  <insert id="insert" keyProperty="id" useGeneratedKeys="true"  parameterType="com.imsystem.domain.Customertype" >
     insert into customertype (id, name, viewname, 
       agio, state, time, 
       updatetime, uid, defaulttype, 
