@@ -60,22 +60,22 @@ function activeSpanStyle(obj,op) {
 		return true;
 	}
 	
-	if($(obj).parent().parent().find("span").hasClass("activeColor")){
+	if($(obj).parent().find("span").hasClass("activeColor")){
 		
-		if($(obj).parent().parent().find(".activeColor")[0] == obj){
+		if($(obj).parent().find(".activeColor")[0] == obj){
 			return false;
 		}
 		
 	}
 	
 	//获取上一个span的X轴坐标
-	let parX = $(obj).parent().parent().find(".active1").offset().left;
+	let parX = $(obj).parent().find(".active1").offset().left;
 	//获取当前span的X轴坐标
 	let nowX = $(obj).offset().left;
 	
 	//禁用点击事件，在动画未完成之前再次点击选项会异常
 	$(obj).parents().find("span").css("pointer-events", "none");
-	let activeSpan = $(obj).parent().parent().find(".active1");
+	let activeSpan = $(obj).parent().find(".active1");
 	
 	//当前span的宽度
 	var nowWidth = $(obj).width();
@@ -89,7 +89,7 @@ function activeSpanStyle(obj,op) {
 //	//获取当前span的Y轴坐标
 //	let nowY = $(obj).offset().top;
 
-	 $(obj).parent().parent().find("span").removeClass("activeColor");
+	 $(obj).parent().find("span").removeClass("activeColor");
 
 	
 
