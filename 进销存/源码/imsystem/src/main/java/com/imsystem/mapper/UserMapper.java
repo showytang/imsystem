@@ -27,4 +27,9 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+    
+    User queryUserByName(@Param("name") String name,@Param("pwd") String pwd);
+    
+    User queryUserById(String id);
+    
 }

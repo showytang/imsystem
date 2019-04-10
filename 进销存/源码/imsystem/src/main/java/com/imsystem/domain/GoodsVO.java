@@ -24,13 +24,6 @@ public class GoodsVO {
 	 */
 	private List<Img> goodsImgs;
 	
-	
-	/**
-	 * 商品价格集合
-	 */
-	private List<Goodsprice> goodsPrices;
-
-
 	public Goods getGoods() {
 		return goods;
 	}
@@ -61,18 +54,6 @@ public class GoodsVO {
 	}
 
 
-	public List<Goodsprice> getGoodsPrices() {
-		return goodsPrices;
-	}
-
-
-	public void setGoodsPrices(List<Goodsprice> goodsPrices) {
-		this.goodsPrices = goodsPrices;
-	}
-	
-	
-	
-	
 	
 	
 }

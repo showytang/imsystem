@@ -15,6 +15,13 @@
     <result column="column4" property="column4" jdbcType="VARCHAR" />
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
+  
+  <select id="queryStandardvalueByid" resultMap="BaseResultMap">
+  
+  	SELECT * FROM `standardvalue`
+	WHERE sid = #{id};
+  </select>
+  
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >

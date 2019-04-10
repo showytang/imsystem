@@ -9,6 +9,11 @@
 	line-height: 4vh;
 	min-width: 6vh;
 }
+.option-span-z,.option-span{
+
+	margin: 0 10px;
+
+}
 
 .option-rongqi {
 	position: relative;
@@ -24,13 +29,13 @@
 #body,
 .option-div {
 	user-select: none;
-	/*火狐*/
+	/*鐏嫄*/
 	-moz-user-select: none;
-	/*webkit浏览器*/
+	/*webkit娴忚鍣�*/
 	-webkit-user-select: none;
 	/*IE10*/
 	-ms-user-select: none;
-	/*早期浏览器*/
+	/*鏃╂湡娴忚鍣�*/
 	-khtml-user-select: none;
 	position: relative;
 }
