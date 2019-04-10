@@ -3,6 +3,7 @@ package com.imsystem.service.goods.impl;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.imsystem.domain.GoodsVO;
+import com.imsystem.domain.GoodsValueVo;
 import com.imsystem.domain.Goodsprice;
 import com.imsystem.domain.Goodsstandardvalue;
 import com.imsystem.domain.Goodsvalue;
@@ -119,7 +121,7 @@ public class GoodsServiceImpl implements GoodsService {
 			String goodsvID = UUID.randomUUID().toString();
 			goodsValue.setId(goodsvID);
 			goodsValue.setGid(gid);
-			
+			goodsValue.setDefaultvalue(1);
 			goodsValueMap.insertSelective(goodsValue);
 			
 			//添加库存
@@ -170,6 +172,7 @@ public class GoodsServiceImpl implements GoodsService {
 							System.out.println("图片长度:"+gv.getColumn1().length());
 							
 							gv.getImg().transferTo(fileImg);
+							gv.setDefaultvalue(0);
 						}
 
 					} catch (IllegalStateException e) {
@@ -220,6 +223,13 @@ public class GoodsServiceImpl implements GoodsService {
 		}
 
 		return count;
+	}
+
+
+	@Override
+	public List<GoodsValueVo> queryAllGoods() {
+		// TODO Auto-generated method stub
+		return goodsMap.queryAllGoods();
 	}
 
 }

@@ -31,11 +31,37 @@
     <result column="img" property="img" jdbcType="LONGVARBINARY" />
   </resultMap>
   
-  <resultMap type="com.imsystem.domain.GoodsValueVo" id="GoodsValueVo" extends="ResultMapWithBLOBs">
+  <resultMap type="com.imsystem.domain.GoodsValueVo" id="GoodsValueVo" >
   
-  	<association property="goodsValue" javaType="com.imsystem.domain.Goodsvalue"></association>
+  	<association  property="goods" javaType="com.imsystem.domain.Goods">
+  	 	<id column="id" property="id" jdbcType="VARCHAR" />
+    	<result column="gname" property="name" jdbcType="VARCHAR" />
+  		<result column="img" property="img" jdbcType="LONGVARBINARY" />
+  		<result column="price" property="price" jdbcType="DOUBLE" />
+  	</association>
+  
+  	<association property="goodsValue" javaType="com.imsystem.domain.Goodsvalue">
+  		 <id column="gvid" property="id" jdbcType="VARCHAR" />
+	    <result column="gvname" property="name" jdbcType="VARCHAR" />
+	    <result column="id" property="gid" jdbcType="VARCHAR" />
+	    <result column="gvcol" property="column1" jdbcType="VARCHAR" />
+  	</association>
+  
+  <!-- 	<association property="stockDetails" javaType="com.imsystem.domain.Stockdetails">
+  	
+  	</association> -->
   
   </resultMap>
+  
+  <select id="queryAllGoods" resultMap="GoodsValueVo">
+  
+  	SELECT gs.id ,gv.id AS gvid,gs.name AS gname,gv.`name` AS gvname,gs.price,gs.img,gv.`column1` AS gvcol 
+FROM `goods` AS gs 
+INNER JOIN `goodsvalue` gv
+ON gs.id = gv.`gid`
+  
+  </select>
+  
   
   
   <sql id="Example_Where_Clause" >

@@ -46,12 +46,18 @@ public class GoodsController {
 	 */
 	@RequestMapping("/queryAllGoods")
 	protected String queryAllGoods() {
-
-		
 		
 		return "dws/Goods";
 	}
 
+	@RequestMapping("/queryGoodsLikeAll")
+	@ResponseBody
+	protected List queryGoodsLikeAll() {
+		
+		return goodsSer.queryAllGoods();
+		
+	}
+	
 	/**
 	 * 按商品id查询单个商品详情
 	 * 

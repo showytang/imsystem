@@ -2,10 +2,15 @@ package com.imsystem.mapper;
 
 import com.imsystem.domain.Goods;
 import com.imsystem.domain.GoodsExample;
+import com.imsystem.domain.GoodsValueVo;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface GoodsMapper {
+	
+	
+	List<GoodsValueVo> queryAllGoods();
 	
     int countByExample(GoodsExample example);
 
