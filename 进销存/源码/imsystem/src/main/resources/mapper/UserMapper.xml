@@ -351,19 +351,68 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
   
+  <!-- 登录 -->
    <select id="queryUserByName" resultMap="BaseResultMap">
     
-    SELECT * FROM `user` WHERE `name`= #{name} AND pwd=#{pwd}
-    
+    SELECT * FROM `user` WHERE `name`= #{name} AND pwd=#{pwd} AND state =0
     
   </select>
   
+ <!--  查询所有用户 -->
+  <select id="queryUserAll" resultMap="BaseResultMap">
+    
+     SELECT * FROM `user` WHERE state =0
+    
+  </select>
+  
+  <!-- 根据ID查询用户 -->
    <select id="queryUserById" resultMap="BaseResultMap">
     
-     SELECT * FROM `user` WHERE id=#{id}
-    
+     SELECT * FROM `user` WHERE id=#{id} AND state =0
     
   </select>
  
+	<!--  新增用户 -->
+  <insert id="insertUser">
+ 	INSERT INTO `user` (id, `name`, pwd, 
+      storeid, rid, `time`, 
+      updatetime, state, uid, 
+      column1, column2, column3, 
+      column4, column5)
+    VALUES (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, 
+      #{storeid,jdbcType=INTEGER}, #{rid,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, 
+      #{column1,jdbcType=VARCHAR}, #{column2,jdbcType=VARCHAR}, #{column3,jdbcType=VARCHAR}, 
+      #{column4,jdbcType=VARCHAR}, #{column5,jdbcType=VARCHAR})
+  </insert>
+ 	
+ 	
+ 	<!--  根据ID删除用户 -->
+ 	<delete id="deleteUserById">
+ 		
+   	  delete from `user`  where id = #{id,jdbcType=VARCHAR}
+ 
+ 	</delete>
+ 	
+ 	<!-- 根据ID修改用户 -->
+  <update id="updateUserById">
+    UPDATE `user` SET `name` = #{name,jdbcType=VARCHAR},
+      pwd = #{pwd,jdbcType=VARCHAR},
+      storeid = #{storeid,jdbcType=INTEGER},
+      rid = #{rid,jdbcType=INTEGER},
+      `time` = #{time,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=VARCHAR},
+      column1 = #{column1,jdbcType=VARCHAR},
+      column2 = #{column2,jdbcType=VARCHAR},
+      column3 = #{column3,jdbcType=VARCHAR},
+      column4 = #{column4,jdbcType=VARCHAR},
+      column5 = #{column5,jdbcType=VARCHAR}
+    WHERE id = #{id,jdbcType=VARCHAR}
+  </update>
+ 	
+ 	
+ 	
   
 </mapper>
