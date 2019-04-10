@@ -471,13 +471,25 @@ function inserGoods(){
 		//描述
 		formData.append("goods.detail",detail);
 		
+		/*
+		*库存添加
+		*/
+		$.each($("[name=detailprice"),function(index,obj){
+			
+			 console.log($(obj).val());
+			console.log($("[name=num]:eq("+index+")").val()) 
+			formData.append("stockDetailsList["+(index)+"].",)
+			
+		});
+		
+		
 	  $.each($(".table tr"),function(index,obj){
 			
 		   //第一个空的tr 不循环
 		   if(index > 0){
-			   
 			   /*中文规格总名称*/
 			   var gcname = $(obj).find("[name=goodsType]").attr("tyname");
+			   
 			   formData.append("goodsValues["+(index-1)+"].name",gcname);
 			   formData.append("goodsValues["+(index-1)+"].jprice",$(obj).find("[name=detailprice]").val());
 			   
@@ -497,6 +509,11 @@ function inserGoods(){
 				formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].svids",typeIds);
 				formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].svid",typeIdArr[n]);
 				
+				/* formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].svid",);
+				formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].svid",typeIdArr[n]);
+				 */
+				
+				
 			   }
 			   
 				//商品客户价格添加
@@ -509,6 +526,8 @@ function inserGoods(){
 					
 				});
 				
+				
+				
 		  }
 			 
 			
@@ -516,7 +535,11 @@ function inserGoods(){
 	  
 	  
 	  
-		   $.ajax({
+	  
+	  
+	  
+	  
+		/*    $.ajax({
 			url:[[@{/goods/insertGoods}]],
  			data:formData,
  			dataType:"text",
@@ -529,7 +552,7 @@ function inserGoods(){
  				
  			}
 			
-		});    
+		});   */  
 		
 		
 	}
