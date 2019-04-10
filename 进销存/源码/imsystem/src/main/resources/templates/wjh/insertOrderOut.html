@@ -368,6 +368,25 @@
 				format: 'yyyy-mm-dd hh:ii',
 				autoclose: 1
 			});
+			var vue = new Vue({
+				el:"#main",
+				data:{
+					paytypeList : [],
+					supplierlist : [],
+					shappinglist : [],
+					typeId:""
+				},
+				methods:{
+					
+				}
+			});
+			
+			vue.paytypeList = [[${paytypeList}]];
+			
+			vue.supplierlist = [[${supplierlist}]];
+			
+			vue.shappinglist = [[${shappinglist}]];
+			
 
 			function posi(index,index1){
 				var height = $(".list-inline:eq("+index1+")>li:eq("+index+")").innerHeight();
