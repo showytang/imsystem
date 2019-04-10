@@ -18,6 +18,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
+
 import com.imsystem.interceptor.MyInterceptor;
 
 @Configuration
@@ -80,7 +81,10 @@ public class WebMvcConfigruation extends WebMvcConfigurationSupport {
 	 */
 	@Override
 	protected void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(my).addPathPatterns("/**").excludePathPatterns("/js/**");
+		registry.addInterceptor(my).addPathPatterns("/**")
+		.excludePathPatterns("/assets/**")
+		.excludePathPatterns("/user/page-login")
+		.excludePathPatterns("/user/login");
 		super.addInterceptors(registry);
 	}
 

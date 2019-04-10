@@ -22,18 +22,19 @@ public class UserController {
 		return "czx/page-login";
 	}
 	
-	@RequestMapping("queryUserByName")
+	@RequestMapping("login")
 	@ResponseBody
 	public String queryByName(String name, String pwd,HttpSession session) {
-		
-		
+		 
+		 System.out.println("进来了");
+		 
 		 User user= userService.queryUserByName(name, pwd);
-		
+		 
 		 if (user!=null) {
 			   session.setAttribute("user", user);
 			   return "1";
 		  }else {	  
-			  return "";
+			  return null;
 		  }
 	   
 		 
