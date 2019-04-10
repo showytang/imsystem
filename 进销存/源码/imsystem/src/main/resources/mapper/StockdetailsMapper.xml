@@ -20,6 +20,24 @@
     <result column="column4" property="column4" jdbcType="VARCHAR" />
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
+  <resultMap type="com.imsystem.domain.Stockdetails" id="queryresultMap" extends="BaseResultMap">
+  	<collection property="goods" javaType="com.imsystem.domain.Goods" >
+  		<id column="goodid" property="id" />
+  		<result  column="goodname" property="name" />
+  		<result column="goodimg" property="img" />
+  		<collection property="goodsValues" ofType="com.imsystem.domain.Goodsvalue" >
+  			<id column="gvid" property="id"/>
+  			<result column="gvname" property="name" />
+  			<result column="column1" property="column1" />
+  		</collection>
+  	</collection>
+  </resultMap>
+  <select id="query" resultMap="queryresultMap">
+  		SELECT s.`code`,s.count,s.scount,s.price,g.name AS goodname,g.img AS goodimg,gv.name AS gvname,gv.column1 FROM `stockdetails` AS s 
+		LEFT JOIN `goodsvalue` AS gv ON gv.id = s.gvid
+		INNER JOIN `goods` AS g ON gv.gid = g.id
+		WHERE s.`code` = #{code}
+  </select>
   <insert id="add">
   	insert into stockdetails(id,code,gvid,sid,count,scount,price,time,updatetime,uid,state,storeid)
   	values

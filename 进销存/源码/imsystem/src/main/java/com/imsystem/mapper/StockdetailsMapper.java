@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Param;
 
 public interface StockdetailsMapper {
 	
+	List<Stockdetails> query();
+	
 	int add(Stock stock);
 	
     int countByExample(StockdetailsExample example);
