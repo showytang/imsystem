@@ -56,6 +56,13 @@ var date = myDate.getDate();
 function getStartTime() {
 	return year + "-" + yue + "-" + date + " 00:00:00";
 }
+/***
+ * 获取Year
+ * @returns
+ */
+function getThisYear() {
+	return year;
+}
 /**
  * 结束时间
  * 
@@ -85,9 +92,67 @@ function queryRanking(startTime,endTime){
 			v = data;
 		},
 		error:function(){
-			v = "暂无数据";
+			v = null;
 		}
 		
 	});
 	return v;
+}
+/***
+ * 查询今年每月盈利额
+ * @param year
+ * @param storeId
+ * @returns
+ */
+function queryThisYear(year,storeId){
+	var resp;
+	$.ajax({
+		url:"/statistics/queryThisYear",
+		type:"post",
+		data:{
+			year:year,
+			storeId:storeId
+		},
+		async : false,
+		dataType:"json",
+		success:function(data){
+			resp = data;
+		},
+		error:function(){
+			console.log("ERROR:'queryThisYear'");
+			resp = null;
+		}
+	});
+	return resp;
+}
+/***
+ * 查询商品排名
+ * @param time 年月 : '2019-06'
+ * @param startTime
+ * @param endTime
+ * @param storeId
+ * @returns
+ */
+function queryGoodsRanking(time,startTime,endTime,storeId){
+	var value;
+	$.ajax({
+		url:"/statistics/queryGoodsRanking",
+		type:"post",
+		data:{
+			time:time,
+			startTime:startTime,
+			endTime:endTime,
+			storeId:storeId
+		},
+		dataType:"json",
+		async:false,
+		success:function(data){
+			value = data;
+		},
+		error:function(){
+			console.log("ERROR:'queryGoodsRanking'");
+			value = null;
+		}
+	});
+	return value;
 }

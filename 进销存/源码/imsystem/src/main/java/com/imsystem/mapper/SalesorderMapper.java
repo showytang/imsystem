@@ -37,4 +37,6 @@ public interface SalesorderMapper {
 	List<Salesorder> queryRanking(@Param("startTime") String startTime,@Param("endTime") String endTime);
 	
 	Integer queryTedayMoney(@Param("store") String store);
+	
+	List<Salesorder> queryThisYear(@Param("year") String year);
 }

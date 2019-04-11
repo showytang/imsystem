@@ -2,6 +2,7 @@ package com.imsystem.serviceimpl.statisticsimpl;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,12 @@ public class GoodsValueServiceImpl implements GoodsValueService{
 	public List<Goodsvalue> queryByCode(String code) {
 		// TODO Auto-generated method stub
 		return gvm.queryByCode(code);
+	}
+
+	@Override
+	public List<Goodsvalue> queryGoodsByTime(String time,String startTime,String endTime,String storeId) {
+		// TODO Auto-generated method stub
+		return gvm.queryGoodsByTime(time,startTime,endTime,storeId);
 	}
 
 }
