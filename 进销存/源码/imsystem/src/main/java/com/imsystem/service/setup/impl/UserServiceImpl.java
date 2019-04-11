@@ -1,5 +1,7 @@
 package com.imsystem.service.setup.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +29,34 @@ public class UserServiceImpl implements UserService{
 	public User queryUserById(String id) {
 		
 		return userMapper.queryUserById(id);
+	}
+
+
+	@Override
+	public List<User> queryUserAll() {
+		
+		return userMapper.queryUserAll();
+	}
+
+
+	@Override
+	public int insertUser(User user) {
+		
+		return userMapper.insertUser(user);
+	}
+
+
+	@Override
+	public int deleteUserById(String id) {
+		
+		return userMapper.deleteUserById(id);
+	}
+
+
+	@Override
+	public int updateUserById(User user) {
+		
+		return userMapper.updateUserById(user);
 	}
 
 	

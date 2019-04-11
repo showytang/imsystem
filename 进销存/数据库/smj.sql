@@ -12,6 +12,8 @@ MySQL - 5.5.60 : Database - laimiqi
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+#数据库2
 CREATE DATABASE /*!32312 IF NOT EXISTS*/`laimiqi` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 USE `laimiqi`;
@@ -21,19 +23,19 @@ USE `laimiqi`;
 DROP TABLE IF EXISTS `bit`;
 
 CREATE TABLE `bit` (
-  `id` varchar(20) NOT NULL,
-  `name` varchar(20) DEFAULT NULL,
-  `time` datetime DEFAULT NULL,
-  `updatetime` datetime DEFAULT NULL,
-  `uid` varchar(20) DEFAULT NULL,
-  `state` int(4) DEFAULT NULL,
-  `column1` varchar(50) DEFAULT NULL,
-  `column2` varchar(50) DEFAULT NULL,
-  `column3` varchar(50) DEFAULT NULL,
-  `column4` varchar(50) DEFAULT NULL,
-  `column5` varchar(50) DEFAULT NULL,
+  `id` VARCHAR(20) NOT NULL,
+  `name` VARCHAR(20) DEFAULT NULL,
+  `time` DATETIME DEFAULT NULL,
+  `updatetime` DATETIME DEFAULT NULL,
+  `uid` VARCHAR(20) DEFAULT NULL,
+  `state` INT(4) DEFAULT NULL,
+  `column1` VARCHAR(50) DEFAULT NULL,
+  `column2` VARCHAR(50) DEFAULT NULL,
+  `column3` VARCHAR(50) DEFAULT NULL,
+  `column4` VARCHAR(50) DEFAULT NULL,
+  `column5` VARCHAR(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Data for the table `bit` */
 
@@ -42,18 +44,18 @@ CREATE TABLE `bit` (
 DROP TABLE IF EXISTS `commodity`;
 
 CREATE TABLE `commodity` (
-  `id` varchar(20) NOT NULL,
-  `name` varchar(50) DEFAULT NULL,
-  `uid` varchar(20) DEFAULT NULL,
-  `time` datetime DEFAULT NULL,
-  `state` int(4) DEFAULT NULL,
-  `column1` varchar(50) DEFAULT NULL,
-  `column2` varchar(50) DEFAULT NULL,
-  `column3` varchar(50) DEFAULT NULL,
-  `column4` varchar(50) DEFAULT NULL,
-  `column5` varchar(50) DEFAULT NULL,
+  `id` VARCHAR(20) NOT NULL,
+  `name` VARCHAR(50) DEFAULT NULL,
+  `uid` VARCHAR(20) DEFAULT NULL,
+  `time` DATETIME DEFAULT NULL,
+  `state` INT(4) DEFAULT NULL,
+  `column1` VARCHAR(50) DEFAULT NULL,
+  `column2` VARCHAR(50) DEFAULT NULL,
+  `column3` VARCHAR(50) DEFAULT NULL,
+  `column4` VARCHAR(50) DEFAULT NULL,
+  `column5` VARCHAR(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Data for the table `commodity` */
 
@@ -62,32 +64,32 @@ CREATE TABLE `commodity` (
 DROP TABLE IF EXISTS `customer`;
 
 CREATE TABLE `customer` (
-  `id` varchar(20) NOT NULL,
-  `name` varchar(20) DEFAULT NULL,
-  `img` blob,
-  `telephonename` varchar(20) DEFAULT NULL,
-  `telephone` varchar(20) DEFAULT NULL,
-  `pname` varchar(20) DEFAULT NULL,
-  `cname` varchar(20) DEFAULT NULL,
-  `aname` varchar(20) DEFAULT NULL,
-  `address` varchar(50) DEFAULT NULL,
-  `balance` double DEFAULT NULL,
-  `initbalance` double DEFAULT NULL,
-  `score` int(4) DEFAULT NULL,
-  `cid` varchar(20) DEFAULT NULL,
-  `lid` varchar(20) DEFAULT NULL,
-  `time` datetime DEFAULT NULL,
-  `updatetime` datetime DEFAULT NULL,
-  `uid` varchar(20) DEFAULT NULL,
-  `state` int(4) DEFAULT NULL,
-  `storeid` varchar(20) DEFAULT NULL,
-  `column1` varchar(50) DEFAULT NULL,
-  `column2` varchar(50) DEFAULT NULL,
-  `column3` varchar(50) DEFAULT NULL,
-  `column4` varchar(50) DEFAULT NULL,
-  `column5` varchar(50) DEFAULT NULL,
+  `id` VARCHAR(20) NOT NULL,
+  `name` VARCHAR(20) DEFAULT NULL,
+  `img` BLOB,
+  `telephonename` VARCHAR(20) DEFAULT NULL,
+  `telephone` VARCHAR(20) DEFAULT NULL,
+  `pname` VARCHAR(20) DEFAULT NULL,
+  `cname` VARCHAR(20) DEFAULT NULL,
+  `aname` VARCHAR(20) DEFAULT NULL,
+  `address` VARCHAR(50) DEFAULT NULL,
+  `balance` DOUBLE DEFAULT NULL,
+  `initbalance` DOUBLE DEFAULT NULL,
+  `score` INT(4) DEFAULT NULL,
+  `cid` VARCHAR(20) DEFAULT NULL,
+  `lid` VARCHAR(20) DEFAULT NULL,
+  `time` DATETIME DEFAULT NULL,
+  `updatetime` DATETIME DEFAULT NULL,
+  `uid` VARCHAR(20) DEFAULT NULL,
+  `state` INT(4) DEFAULT NULL,
+  `storeid` VARCHAR(20) DEFAULT NULL,
+  `column1` VARCHAR(50) DEFAULT NULL,
+  `column2` VARCHAR(50) DEFAULT NULL,
+  `column3` VARCHAR(50) DEFAULT NULL,
+  `column4` VARCHAR(50) DEFAULT NULL,
+  `column5` VARCHAR(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Data for the table `customer` */
 
@@ -96,20 +98,20 @@ CREATE TABLE `customer` (
 DROP TABLE IF EXISTS `customerlevel`;
 
 CREATE TABLE `customerlevel` (
-  `id` varchar(20) NOT NULL,
-  `name` varchar(20) DEFAULT NULL,
-  `agio` double DEFAULT NULL,
-  `time` datetime DEFAULT NULL,
-  `updatetime` datetime DEFAULT NULL,
-  `uid` varchar(20) DEFAULT NULL,
-  `state` int(4) DEFAULT NULL,
-  `column1` varchar(50) DEFAULT NULL,
-  `column2` varchar(50) DEFAULT NULL,
-  `column3` varchar(50) DEFAULT NULL,
-  `column4` varchar(50) DEFAULT NULL,
-  `column5` varchar(50) DEFAULT NULL,
+  `id` VARCHAR(20) NOT NULL,
+  `name` VARCHAR(20) DEFAULT NULL,
+  `agio` DOUBLE DEFAULT NULL,
+  `time` DATETIME DEFAULT NULL,
+  `updatetime` DATETIME DEFAULT NULL,
+  `uid` VARCHAR(20) DEFAULT NULL,
+  `state` INT(4) DEFAULT NULL,
+  `column1` VARCHAR(50) DEFAULT NULL,
+  `column2` VARCHAR(50) DEFAULT NULL,
+  `column3` VARCHAR(50) DEFAULT NULL,
+  `column4` VARCHAR(50) DEFAULT NULL,
+  `column5` VARCHAR(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Data for the table `customerlevel` */
 
@@ -118,22 +120,22 @@ CREATE TABLE `customerlevel` (
 DROP TABLE IF EXISTS `customerrecharge`;
 
 CREATE TABLE `customerrecharge` (
-  `id` varchar(20) NOT NULL,
-  `rechargetime` datetime DEFAULT NULL,
-  `money` double DEFAULT NULL,
-  `cid` varchar(20) DEFAULT NULL,
-  `time` datetime DEFAULT NULL,
-  `updatetime` datetime DEFAULT NULL,
-  `uid` varchar(20) DEFAULT NULL,
-  `state` int(4) DEFAULT NULL,
-  `storeid` varchar(20) DEFAULT NULL,
-  `column1` varchar(50) DEFAULT NULL,
-  `column2` varchar(50) DEFAULT NULL,
-  `column3` varchar(50) DEFAULT NULL,
-  `column4` varchar(50) DEFAULT NULL,
-  `column5` varchar(50) DEFAULT NULL,
+  `id` VARCHAR(20) NOT NULL,
+  `rechargetime` DATETIME DEFAULT NULL,
+  `money` DOUBLE DEFAULT NULL,
+  `cid` VARCHAR(20) DEFAULT NULL,
+  `time` DATETIME DEFAULT NULL,
+  `updatetime` DATETIME DEFAULT NULL,
+  `uid` VARCHAR(20) DEFAULT NULL,
+  `state` INT(4) DEFAULT NULL,
+  `storeid` VARCHAR(20) DEFAULT NULL,
+  `column1` VARCHAR(50) DEFAULT NULL,
+  `column2` VARCHAR(50) DEFAULT NULL,
+  `column3` VARCHAR(50) DEFAULT NULL,
+  `column4` VARCHAR(50) DEFAULT NULL,
+  `column5` VARCHAR(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Data for the table `customerrecharge` */
 
@@ -142,42 +144,44 @@ CREATE TABLE `customerrecharge` (
 DROP TABLE IF EXISTS `customertype`;
 
 CREATE TABLE `customertype` (
-  `id` varchar(20) NOT NULL,
-  `name` varchar(20) DEFAULT NULL,
-  `viewname` varchar(20) DEFAULT NULL,
-  `agio` double DEFAULT NULL,
-  `state` int(4) DEFAULT NULL,
-  `time` datetime DEFAULT NULL,
-  `updatetime` datetime DEFAULT NULL,
-  `uid` varchar(20) DEFAULT NULL,
-  `defaulttype` int(4) DEFAULT NULL,
-  `column1` varchar(50) DEFAULT NULL,
-  `column2` varchar(50) DEFAULT NULL,
-  `column3` varchar(50) DEFAULT NULL,
-  `column4` varchar(50) DEFAULT NULL,
-  `column5` varchar(50) DEFAULT NULL,
+  `id` VARCHAR(20) NOT NULL,
+  `name` VARCHAR(20) DEFAULT NULL,
+  `viewname` VARCHAR(20) DEFAULT NULL,
+  `agio` DOUBLE DEFAULT NULL,
+  `state` INT(4) DEFAULT NULL,
+  `time` DATETIME DEFAULT NULL,
+  `updatetime` DATETIME DEFAULT NULL,
+  `uid` VARCHAR(20) DEFAULT NULL,
+  `defaulttype` INT(4) DEFAULT NULL,
+  `column1` VARCHAR(50) DEFAULT NULL,
+  `column2` VARCHAR(50) DEFAULT NULL,
+  `column3` VARCHAR(50) DEFAULT NULL,
+  `column4` VARCHAR(50) DEFAULT NULL,
+  `column5` VARCHAR(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Data for the table `customertype` */
 
 /*Table structure for table `goods` */
 
+SELECT * FROM customertype
+
 DROP TABLE IF EXISTS `goods`;
 
 CREATE TABLE `goods` (
-  `id` varchar(20) NOT NULL,
-  `name` varchar(20) DEFAULT NULL,
-  `img` blob,
-  `tid` varchar(20) DEFAULT NULL,
-  `code` varchar(20) DEFAULT NULL,
-  `prevbit` varchar(20) DEFAULT NULL,
-  `sufbit` varchar(20) DEFAULT NULL,
-  `bitval` varchar(20) DEFAULT NULL,
-  `price` double DEFAULT NULL,
-  `jprice` double DEFAULT NULL,
-  `remark` varchar(50) DEFAULT NULL,
-  `uid` varchar(20) DEFAULT NULL,
+  `id` VARCHAR(20) NOT NULL,
+  `name` VARCHAR(20) DEFAULT NULL,
+  `img` BLOB,
+  `tid` VARCHAR(20) DEFAULT NULL,
+  `code` VARCHAR(20) DEFAULT NULL,
+  `prevbit` VARCHAR(20) DEFAULT NULL,
+  `sufbit` VARCHAR(20) DEFAULT NULL,
+  `bitval` VARCHAR(20) DEFAULT NULL,
+  `price` DOUBLE DEFAULT NULL,
+  `jprice` DOUBLE DEFAULT NULL,
+  `remark` VARCHAR(50) DEFAULT NULL,
+  `uid` VARCHAR(20) DEFAULT NULL,
   `minsecurity` int(4) DEFAULT NULL,
   `maxsecurity` int(4) DEFAULT NULL,
   `historygid` varchar(20) DEFAULT NULL,

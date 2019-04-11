@@ -26,9 +26,35 @@ public class GoodsVO {
 	
 	
 	/**
-	 * 商品价格集合
+	 * 库存实例集合
 	 */
-	private List<Goodsprice> goodsPrices;
+	private List<Stockdetails> stockDetailsList;
+	
+	/**
+	 * 库存主表
+	 */
+	private Stock stock;
+	
+	
+	
+	public Stock getStock() {
+		return stock;
+	}
+
+
+	public void setStock(Stock stock) {
+		this.stock = stock;
+	}
+
+
+	public List<Stockdetails> getStockDetailsList() {
+		return stockDetailsList;
+	}
+
+
+	public void setStockDetailsList(List<Stockdetails> stockDetailsList) {
+		this.stockDetailsList = stockDetailsList;
+	}
 
 
 	public Goods getGoods() {
@@ -61,18 +87,6 @@ public class GoodsVO {
 	}
 
 
-	public List<Goodsprice> getGoodsPrices() {
-		return goodsPrices;
-	}
-
-
-	public void setGoodsPrices(List<Goodsprice> goodsPrices) {
-		this.goodsPrices = goodsPrices;
-	}
-	
-	
-	
-	
 	
 	
 }

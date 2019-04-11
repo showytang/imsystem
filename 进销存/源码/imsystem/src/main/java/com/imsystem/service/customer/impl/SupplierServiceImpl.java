@@ -34,7 +34,7 @@ public class SupplierServiceImpl implements SupplierService{
 	 * 删除供应商 
 	 */
 	@Override
-	public int deleteSupplier(int supId) {
+	public int deleteSupplier(String supId) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -52,7 +52,7 @@ public class SupplierServiceImpl implements SupplierService{
 	 * 根据ID查询供应商 
 	 */
 	@Override
-	public Supplier querySupplierById(int supId) {
+	public Supplier querySupplierById(String supId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

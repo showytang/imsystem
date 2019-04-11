@@ -350,4 +350,76 @@
       column5 = #{column5,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+  
+  <!-- 查询所有功能权限 -->
+  <select id="queryModuleAll" resultMap="BaseResultMap">
+  
+ 	SELECT * FROM `module` WHERE state=0
+  
+  </select>
+  
+  
+    
+  <!-- 根据ID查询功能权限 -->
+  <select id="queryModuleById" resultMap="BaseResultMap">
+  
+ 	SELECT * FROM `module` WHERE id=#{id} AND state=0
+  
+  </select>
+  
+  
+  <!-- 新增功能权限 -->
+ <insert id="insertModule">
+    INSERT INTO module (id, `name`, enname, 
+      catalog, url, `time`, 
+      parentid, state, uid, 
+      column1, column2, column3, 
+      column4, column5)
+    VALUES (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{enname,jdbcType=VARCHAR}, 
+      #{catalog,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, 
+      #{parentid,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, 
+      #{column1,jdbcType=VARCHAR}, #{column2,jdbcType=VARCHAR}, #{column3,jdbcType=VARCHAR}, 
+      #{column4,jdbcType=VARCHAR}, #{column5,jdbcType=VARCHAR})
+  </insert>
+  
+  
+  <!-- 根据ID删除功能权限 -->
+  <delete id="deleteModuleById">
+  
+  	 DELETE FROM `module`  WHERE id = #{id}	
+  
+  </delete>
+  
+  
+   
+  <!-- 根据ID修改功能权限 -->
+   <update id="updateModuleById">
+ 	 UPDATE `module`  SET `name` = #{name},
+      enname = #{enname},
+      catalog = #{catalog},
+      url = #{url},
+      `time` = #{time},
+      parentid = #{parentid},
+      state = #{state},
+      uid = #{uid},
+      column1 = #{column1},
+      column2 = #{column2},
+      column3 = #{column3},
+      column4 = #{column4},
+      column5 = #{column5}
+   	 WHERE id = #{id}
+     </update>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </mapper>

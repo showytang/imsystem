@@ -6,6 +6,14 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface GoodstypeMapper {
+	
+	/**
+	 * 商品类型查询
+	 * @param id 上级id
+	 * @return
+	 */
+	List<Goodstype> QueryGoodsTypeByPid(Integer id);
+	
     int countByExample(GoodstypeExample example);
 
     int deleteByExample(GoodstypeExample example);

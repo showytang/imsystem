@@ -24,7 +24,7 @@ public interface SupplierService {
 	 * @param supId  供应商id
 	 * @return
 	 */
-	public int deleteSupplier(int supId);
+	public int deleteSupplier(String supId);
 	
 	/**
 	 * 修改供应商
@@ -38,6 +38,6 @@ public interface SupplierService {
 	 * @param supId  供应商id
 	 * @return
 	 */
-	public Supplier querySupplierById(int supId);
+	public Supplier querySupplierById(String supId);
 
 }

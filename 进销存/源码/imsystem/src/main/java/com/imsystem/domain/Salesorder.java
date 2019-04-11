@@ -1,6 +1,7 @@
 package com.imsystem.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class Salesorder {
     private String id;
@@ -44,8 +45,18 @@ public class Salesorder {
     private String column4;
 
     private String column5;
+    
+    private List<Goodsvalue> list;
 
-    public String getId() {
+    public List<Goodsvalue> getList() {
+		return list;
+	}
+
+	public void setList(List<Goodsvalue> list) {
+		this.list = list;
+	}
+
+	public String getId() {
         return id;
     }
 

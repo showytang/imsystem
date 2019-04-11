@@ -6,6 +6,12 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface CustomertypeMapper {
+	int updateDefaultType(String ctId);
+	
+	List<Customertype> queryCustomerType();
+	
+	int updateCustomerType(Customertype ctObj);
+	
     int countByExample(CustomertypeExample example);
 
     int deleteByExample(CustomertypeExample example);

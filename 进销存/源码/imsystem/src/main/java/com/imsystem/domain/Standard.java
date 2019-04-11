@@ -1,6 +1,7 @@
 package com.imsystem.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class Standard {
     private String id;
@@ -26,8 +27,20 @@ public class Standard {
     private String column4;
 
     private String column5;
+    
+    
+    private List<Standardvalue> stabndardValueList;
+    
 
-    public String getId() {
+    public List<Standardvalue> getStabndardValueList() {
+		return stabndardValueList;
+	}
+
+	public void setStabndardValueList(List<Standardvalue> stabndardValueList) {
+		this.stabndardValueList = stabndardValueList;
+	}
+
+	public String getId() {
         return id;
     }
 

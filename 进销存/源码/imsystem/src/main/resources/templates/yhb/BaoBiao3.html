@@ -1,31 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<meta charset="UTF-8">
 		<title>BaoBiao - 1</title>
-		<link rel="stylesheet" href="@{assets/css/bootstrap.min.css}">
-		<link rel="stylesheet" href="@{assets/css/font-awesome.min.css}">
-		<link rel="stylesheet" href="@{assets/css/style.css}">
-		<link rel="stylesheet" href="@{assets/css/chartist-custom.css}">
+		<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+		<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
+		<link rel="stylesheet" th:href="@{/assets/css/style.css}">
 		<!-- MAIN CSS -->
-		<link rel="stylesheet" href="@{assets/css/main.css}">
+		<link rel="stylesheet" th:href="@{/assets/css/main.css}">
 		<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
-		<link rel="stylesheet" href="@{assets/css/demo.css}">
+		<link rel="stylesheet" th:href="@{/assets/css/demo.css}">
 		<!-- GOOGLE FONTS -->
-		<link href="@{assets/css/css.css}" rel="stylesheet">
+		<link th:href="@{/assets/css/css.css}" rel="stylesheet">
 		<!-- ICONS -->
-		<link rel="stylesheet" href="@{assets/css/myStyle.css}" />
-		<link rel="apple-touch-icon" sizes="76x76" href="@{assets/img/apple-icon.png}">
-		<link rel="icon" type="image/png" sizes="96x96" href="@{assets/img/favicon.png}">
-		<script type="text/javascript" src="@{assets/js/jquery.min.js}" ></script>
-		<link rel="stylesheet" type="text/css" media="all" href="@{assets/css/daterangepicker.css}" />
-		<link rel="stylesheet" type="text/css" href="@{assets/css/htmleaf-demo.css}">
-		<script type="text/javascript" src="@{assets/js/jquery.min.js}" ></script>
-		<script>window.jQuery || document.write('<script src="@{assets/js/jquery-1.11.0.min.js}"><\/script>')</script>
-		<script type="text/javascript" src="@{assets/js/moment.js}"></script>
-      	<script type="text/javascript" src="@{assets/js/daterangepicker.js}"></script>
-		<script type="text/javascript" src="@{assets/js/Mydate.js}"></script>
+		<link rel="stylesheet" th:href="@{/assets/css/myStyle.css}" />
+		<link rel="apple-touch-icon" sizes="76x76" th:href="@{/assets/img/apple-icon.png}">
+		<link rel="icon" type="image/png" sizes="96x96" th:href="@{/assets/img/favicon.png}">
+		<script type="text/javascript" th:src="@{/assets/js/jquery.min.js}" ></script>
+		<link rel="stylesheet" type="text/css" media="all" th:href="@{/assets/css/daterangepicker.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/assets/css/htmleaf-demo.css}">
+		<script type="text/javascript" th:src="@{/assets/js/jquery.min.js}" ></script>
+		<script>window.jQuery || document.write('<script th:src="@{/assets/js/jquery-1.11.0.min.js}"><\/script>')</script>
+		<script type="text/javascript" th:src="@{/assets/js/moment.js}"></script>
+      	<script type="text/javascript" th:src="@{/assets/js/daterangepicker.js}"></script>
+      	<script th:src="@{/assets/js/statistics.js}"></script>
+		<script type="text/javascript" th:src="@{/assets/js/Mydate.js}"></script>
 		<script>
 			$(function(){
 				myDate();
@@ -38,6 +38,13 @@
 						span.next().css({"margin-left":"10px","line-height":"30px"});
 					}
 				});
+				var startTime = getStartTime();
+				var endTime = getEndTime();
+				var top =  queryTop("","",startTime,endTime);
+				$(".profit").text("￥"+top.column2);
+				$(".SalesMoney").text("￥"+top.paymoney);
+				$(".count").text(top.count);
+				$(".first").text(top.column3);
 			});
 		</script>
 	</head>
@@ -56,7 +63,7 @@
 										<div class="metric">
 											<span class="icon"><i class="fa fa-download"></i></span>
 											<p>
-												<span class="number">￥1,252</span>
+												<span class="number profit">￥1,252</span>
 												<span class="title">今日利润</span>
 											</p>
 										</div>
@@ -65,7 +72,7 @@
 										<div class="metric">
 											<span class="icon"><i class="fa fa-shopping-bag"></i></span>
 											<p>
-												<span class="number">￥203</span>
+												<span class="number SalesMoney">￥203</span>
 												<span class="title">今日销售额</span>
 											</p>
 										</div>
@@ -74,8 +81,8 @@
 										<div class="metric">
 											<span class="icon"><i class="fa fa-eye"></i></span>
 											<p>
-												<span class="number">3</span>
-												<span class="title">店铺排名</span>
+												<span class="number count">3</span>
+												<span class="title">订单数量</span>
 											</p>
 										</div>
 									</div>
@@ -83,8 +90,8 @@
 										<div class="metric">
 											<span class="icon"><i class="fa fa-bar-chart"></i></span>
 											<p>
-												<span class="number">35%</span>
-												<span class="title">对比上月增长</span>
+												<span class="number first"></span>
+												<span class="title">店铺排名</span>
 											</p>
 										</div>
 									</div>
@@ -102,49 +109,6 @@
 								</div>
 								<div class="row panel-heading">
 									<h3 class="panel-title">报表商品</h3>
-									<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
-								</div>
-								<div class="row g">
-									<div class="col-md-6 goods">
-										<div class="good">
-											<img class="col-md-3 col-xs-3 goodsImg" src="../assets/img/favicon.png" />
-											<div class="col-md-9 col-xs-8 js">
-												<h3>这是一个商品名来得及发开始减肥</h3>
-												<span class="s">销售总金额￥<b>666</b></span>
-												<span class="s">销售总数量￥<b>333</b></span>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6 goods">
-										<div class="good">
-											<img class="col-md-3 col-xs-3 goodsImg" src="../assets/img/favicon.png" />
-											<div class="col-md-9 col-xs-8 js">
-												<h3>这是一个商品名称</h3>
-												<span class="s">销售总金额￥<b>666</b></span>
-												<span class="s">销售总数量￥<b>333</b></span>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6 goods">
-										<div class="good">
-											<img class="col-md-3 col-xs-3 goodsImg" src="../assets/img/favicon.png" />
-											<div class="col-md-9 col-xs-8 js">
-												<h3>这是一个商品名称</h3>
-												<span class="s">销售总金额￥<b>666</b></span>
-												<span class="s">销售总数量￥<b>333</b></span>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6 goods">
-										<div class="good">
-											<img class="col-md-3 col-xs-3 goodsImg" src="../assets/img/favicon.png" />
-											<div class="col-md-9 col-xs-8 js">
-												<h3>这是一个商品名称</h3>
-												<span class="s">销售总金额￥<b>666</b></span>
-												<span class="s">销售总数量￥<b>333</b></span>
-											</div>
-										</div>
-									</div>
 								</div>
 						</div>
 					</div>
@@ -152,15 +116,46 @@
 			</div>
 		</div>
 	</body>
-	<script type="text/javascript" src="@{assets/echarts/echarts/echarts.min.js}"></script>
-    <script type="text/javascript" src="@{assets/echarts/echarts-gl/echarts-gl.min.js}"></script>
-    <script type="text/javascript" src="@{assets/echarts/echarts-stat/ecStat.min.js}"></script>
-    <script type="text/javascript" src="@{assets/echarts/echarts/extension/dataTool.min.js}"></script>
-    <script type="text/javascript" src="@{assets/echarts/echarts/map/js/china.js}"></script>
-    <script type="text/javascript" src="@{assets/echarts/echarts/map/js/world.js}"></script>
-    <script type="text/javascript" src="@{assets/echarts/echarts/extension/bmap.min.js}"></script>
-    <script type="text/javascript" src="@{assets/echarts/simplex.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/echarts/echarts/echarts.min.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/echarts/echarts-gl/echarts-gl.min.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/echarts/echarts-stat/ecStat.min.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/echarts/echarts/extension/dataTool.min.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/echarts/echarts/map/js/china.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/echarts/echarts/map/js/world.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/echarts/echarts/extension/bmap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/echarts/simplex.js}"></script>
 	<script>
+		$(function(){
+			var img2 = queryRanking("","");
+			console.log(img2);
+			var options = myChart.getOption();
+			var name = [];
+			var tedayMoney = [];
+			var sumMoney = [];
+			$.each(img2,function(ss,obj){
+				name.push(obj.column3+"["+obj.column4+"]");
+				tedayMoney.push(obj.column5);
+				sumMoney.push(obj.column2);
+				var title = $("<div class='row panel-heading'><p class='panel-subtitle'>Shop："+obj.column3+"【"+obj.column4+"】</p></div>");
+				var g = $("<div class='row g'></div>");
+				$.each(obj.list,function(s,objs){
+					var goods = $("<div class='col-md-6 goods'><div class='good' gid='"+objs.id+"'><img class='col-md-3 col-xs-3 goodsImg' src='../assets/img/favicon.png' />"+
+					"<div class='col-md-9 col-xs-8 js'>"+
+						"<h3>"+objs.name+"<span class='guige'>["+objs.column1+"]</span></h3>"+
+						"<span class='s'>销售金额￥<b>"+objs.jprice+"</b></span> <span class='s'>销售数量<b>"+objs.column3+"</b></span>"+
+							"</div>"+
+						"</div>"+
+					"</div>");
+					g.append(goods);
+				});
+				$(".panel-body").append(title);
+				$(".panel-body").append(g);
+			});
+			options.series[1].data=sumMoney;
+			options.series[0].data=tedayMoney;
+			options.yAxis[0].data = name;
+			myChart.setOption(options);
+		});
 		/**
 		 * 盈利亏损图
 		 */
@@ -177,7 +172,7 @@
 		        }
 		    },
 		    legend: {
-		        data: ['2011年', '2012年']
+		        data: ['本月销售额', '今日销售额']
 		    },
 		    grid: {
 		        left: '3%',
@@ -195,12 +190,12 @@
 		    },
 		    series: [
 		        {
-		            name: '2011年',
+		            name: '本月销售额',
 		            type: 'bar',
 		            data: [18203, 23489, 29034, 104970, 131744, 630230]
 		        },
 		        {
-		            name: '2012年',
+		            name: '今日销售额',
 		            type: 'bar',
 		            data: [19325, 23438, 31000, 121594, 134141, 681807]
 		        }

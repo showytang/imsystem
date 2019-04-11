@@ -2,6 +2,14 @@
 /*
  页面要求
  * 
+ * js:{
+ * 		
+ * 		定义下一页、上一页、和点击的方法必须是floatPage()不需要参数
+ * 
+ * 		初始化分页方法page(data) data: 是一个vue对象 vue里面分页的对象名字为pageIf
+ * 		
+ * }
+ * 
   css:
   	
  
@@ -53,12 +61,45 @@
  * */
 
 function pageJia(index){
-	$(".pageCurrent:eq("+index+")").removeClass("currentPage");
+	$(".pageCurrent").removeClass("currentPage");
 	$(".pageCurrent:eq("+(index+1)+")").addClass("currentPage");
 }
 function pageJian(index){
-	$(".pageCurrent:eq("+index+")").removeClass("currentPage");
+	$(".pageCurrent").removeClass("currentPage");
 	$(".pageCurrent:eq("+(index-1)+")").addClass("currentPage");
+}
+function page(data){
+	
+	var pages = data.pageIf.pages;
+	
+	var bool = pages > 6 ? false:true;
+	
+	pageJian(1)
+	
+	if(bool){
+		$("#pageDian").hide();
+		$(".pageCurrent:gt("+(pages-1)+")").hide();
+	}
+	else{
+		$("#pageDian").show();
+		$(".pageCurrent").show();
+	}
+	for(var i = 0 ; i < pages ; i++){
+		
+		if(i >= (pages - 4) && bool == false){
+			
+			if(bool == false){
+				
+				$(".pageCurrent:eq("+i+")").text((i+2));
+			}
+		}
+		else{
+			
+			$(".pageCurrent:eq("+i+")").text((i+1));
+		}
+			
+	}
+	
 }
 $(function(){
 		var s=0;
@@ -67,12 +108,13 @@ $(function(){
 			var index = $(".pageCurrent").index(currentPage);
 			if(index == 0){
 				pageJia(index);
+				floatPage();
 				return;
 			}
 			if($("#pageDian").css("display") != "none"){
 				$(".pageq").each(function(index,e){
 					if(index == $(".pageq").length-1){
-						$(e).text(parseInt($(e).text())+1)
+						$(e).text(parseInt($(e).text())+1);
 						return;
 					}
 					$(e).text($(".pageq:eq("+(index+1)+")").text());
@@ -86,6 +128,7 @@ $(function(){
 				else{
 					pageJia(index);
 				}
+				floatPage();
 				return;
 			}
 		});
@@ -98,6 +141,7 @@ $(function(){
 			}
 			if($(".pageCurrent:eq("+(index)+")").text() <= 2){
 				pageJian(index);
+				floatPage();
 				return;
 			}
 			if(parseInt($(".pageCurrent:eq("+(index)+")").text()) == parseInt($(".pageDi").text())-2){
@@ -106,6 +150,7 @@ $(function(){
 			}
 			if(parseInt($(".pageCurrent:eq("+(index)+")").text()) > parseInt($(".pageDi").text())-2){
 				pageJian(index);
+				floatPage();
 				return;
 			}
 			else{
@@ -116,6 +161,7 @@ $(function(){
 					}
 					$(e).text(parseInt($(".pageq:eq("+(index-1)+")").text())+1);
 				});
+				floatPage();
 				
 			}
 			
@@ -123,22 +169,27 @@ $(function(){
 		
 		$(".pageCurrent").click(function(){
 			
+			
 			var index = $(".pageCurrent").index(this);
 			
 			var currentPage = $(".currentPage");
 			
 			var currentIndex = $(".pageCurrent").index(currentPage);
+
+			if(index == currentIndex){
+				return;
+			}
 			
 			var text = $(this).text();
 			
 			if(text == "1"){
 				$(".pageCurrent").removeClass("currentPage");
 				$(this).addClass("currentPage");
+				floatPage();
 				return;
 			}
 			
 			if(index != currentIndex){
-				
 				var zhi = parseInt($(".pageCurrent:eq("+index+")").text()-2);
 				if(zhi+2 >= parseInt($(".pageDi").text())-2){
 					
@@ -150,9 +201,12 @@ $(function(){
 					});
 					s=1;
 				}else{
-					
-					$("#pageDian").css("display","block");
-					
+					if($(".pageCurrent").length > 5){
+						
+						$("#pageDian").css("display","block");
+						
+					}
+						
 					s=0;
 					
 					$(".pageq").each(function(index,e){
@@ -166,5 +220,6 @@ $(function(){
 					}
 				});
 			}
+			floatPage();
 		});
 });

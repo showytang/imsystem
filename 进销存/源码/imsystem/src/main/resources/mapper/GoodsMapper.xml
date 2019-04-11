@@ -30,6 +30,14 @@
   <resultMap id="ResultMapWithBLOBs" type="com.imsystem.domain.Goods" extends="BaseResultMap" >
     <result column="img" property="img" jdbcType="LONGVARBINARY" />
   </resultMap>
+  
+  <resultMap type="com.imsystem.domain.GoodsValueVo" id="GoodsValueVo" extends="ResultMapWithBLOBs">
+  
+  	<association property="goodsValue" javaType="com.imsystem.domain.Goodsvalue"></association>
+  
+  </resultMap>
+  
+  
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >

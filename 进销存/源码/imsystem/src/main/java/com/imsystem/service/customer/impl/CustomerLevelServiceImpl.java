@@ -34,7 +34,7 @@ public class CustomerLevelServiceImpl implements CustomerLevelService{
 	 * 删除客户等级（修改状态）
 	 */
 	@Override
-	public int deleteCustomerLevel(int clId) {
+	public int deleteCustomerLevel(String clId) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -52,7 +52,7 @@ public class CustomerLevelServiceImpl implements CustomerLevelService{
 	 * 根据ID查询客户等级
 	 */
 	@Override
-	public Customerlevel queryCustomerLevelById(int clId) {
+	public Customerlevel queryCustomerLevelById(String clId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

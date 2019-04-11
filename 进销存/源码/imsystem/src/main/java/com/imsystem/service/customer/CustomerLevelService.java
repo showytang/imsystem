@@ -24,7 +24,7 @@ public interface CustomerLevelService {
 	 * @param clId  客户等级id
 	 * @return
 	 */
-	public int deleteCustomerLevel(int clId);
+	public int deleteCustomerLevel(String clId);
 	
 	/**
 	 * 修改客户等级
@@ -38,6 +38,6 @@ public interface CustomerLevelService {
 	 * @param clId  客户等级id
 	 * @return
 	 */
-	public Customerlevel queryCustomerLevelById(int clId);
+	public Customerlevel queryCustomerLevelById(String clId);
 
 }

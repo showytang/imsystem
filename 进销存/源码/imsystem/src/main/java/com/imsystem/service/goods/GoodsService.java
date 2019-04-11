@@ -1,6 +1,9 @@
 package com.imsystem.service.goods;
 
+import java.util.List;
+
 import com.imsystem.domain.GoodsVO;
+import com.imsystem.domain.Goodstype;
 
 /**
  * 商品服务层
@@ -14,7 +17,9 @@ public interface GoodsService {
 	 * @param goods
 	 * @return
 	 */
-	int insertGoods(GoodsVO goodsVo);
+	int insertGoods(GoodsVO goodsVo,String url);
+	
+	
 	
 	
 }

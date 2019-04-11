@@ -236,6 +236,7 @@
 			</div>
 		</div>
 	</div>
+	
 	<script type="text/javascript" th:inline="javascript">
 		$('.datetimepicker').datetimepicker({
 			format : 'yyyy-mm-dd hh:ii',
@@ -243,13 +244,25 @@
 		});
 		
 		var vue = new Vue({
+			
 			el:"#main",
+			
 			data:{
 				
+				paytypeList : [],
+				
+				supplierlist : [],
+				
+				shappinglist : [],
+				
+				givemeId:"",
+				
+				typeId:""
 			},
 			methods:{
 				
 			}
+			
 		});
 
 		function posi(index, index1) {
@@ -320,7 +333,140 @@
 			$(".insertOrder").click(function(){
 				
 			});
+			$("#insertOrder").click(function(){
+				
+				if(vue.typeId){
+					
+					var order = {
+							column1 : $(".yprice").text(),
+							sid : vue.givemeId,
+							code : $("#No").val(),
+							time : $("#time").val(),
+							stockdetails : [],
+							column2 : $(".sprice").val(),
+							column3 : $(".sumcount").text(),
+							uid : 1,
+							state : 0,
+							storeid : 1
+					};
+					
+					order.time = eval('new Date(' + order.time.replace(/\d+(?=-[^-]+$)/,    
+							function (a) { return parseInt(a, 10) - 1; }).match(/\d+/g) + ')');  
+					
+					
+					//添加商品id
+					for(var i = 1 ; i < $(".panel-title").length ; i ++){
+						
+						var shapping = {
+								gvid : $(".panel-title:eq("+i+")").attr("data"),
+								count : $(".panel-title:eq("+i+")").next().next().text(),
+								price : $(".jprice:eq("+(i-1)+")").text()
+						};
+						
+						order.stockdetails.push(shapping);
+						
+					}
+					$.ajax({
+						url : [[@{/insertOrder/insertOrder}]],
+						data : JSON.stringify(order),
+						type : "post",
+						dataType : "text",
+						contentType : "application/json",
+						processData : false,
+						success : function(result){
+							alert(result);
+						}
+						
+					});
+					
+				}else{
+					alerts("请选择供应商")
+				}
+			});
+			$(".count").bind("input propertyChange",function(){
+				
+				var count = $(this).val();
+				
+				var price = $(this).parent().prev().text();
+				
+				var index = $(".count").index(this);
+				
+				$(".sumPrice:eq("+index+")").text(count*price);
+				
+				if(count == ""){
+					count = 0;
+				}
+				
+				$(".badgecount:eq("+index+")").text(count);
+				counts();
+         	});
+         	$(".model-list>li").click(function(){
+         		$(".model-list>li").removeClass("givemedianji");
+         		$(this).addClass("givemedianji");
+         	});
+         	$(".givemeok").click(function(){
+         		var name = $(".givemedianji").text();
+         		if(name){
+         			var li = $(".giveme").prev().find("li:eq(0)");
+             		var li1 = li.clone(true)
+             		li1.text(name);
+             		$(".giveme").prev().append(li1);
+             		posi(($(".giveme").prev().find("li").length)-1,0);
+         		}
+         		
+         	});
+         	counts();
+         	posi(0, 0);
+			posi(0, 1);
+         	
 		});
+		
+		function alerts(str){
+			
+			toastr.options.timeOut = "false"
+			
+			toastr.options.closeButton = true;
+			
+			toastr['info']
+					(str);
+			
+			$positionClass = 'toast-top-center';
+			
+			toastr.remove();
+			
+			$context="info";
+			
+			toastr[$context](str, '', {
+				
+				positionClass : $positionClass
+				
+			});
+			
+			setTimeout(function(){
+				$("#toast-container").fadeOut(1000);
+			},4000)
+		}
+		
+		function counts(){
+			var sumPrices = $(".sumPrice");
+			var sum = 0 ; 
+			
+			$(".badgecount").each(function(i,e){
+				
+				sum+=parseInt($(e).text());
+				
+			});
+			
+			$(".sumcount").text(sum);
+			
+			sum = 0;
+			
+			$(sumPrices).each(function(i,e){
+				sum +=parseFloat($(e).text());
+			});
+			
+			$(".yprice").text(sum);
+		}
 		function dateTime(th) {
 			if (th < 10) {
 				return "0" + th;
@@ -328,7 +474,7 @@
 			return th;
 		}
 	</script>
-	</div>
 </body>
+
 
 </html>
