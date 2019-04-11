@@ -6,6 +6,14 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface CustomerlevelMapper {
+	List<Customerlevel> queryCustomerLevel();
+	
+	int updateCustomerLevel(Customerlevel clObj);
+	
+	int deleteCustomerLevel(String id);
+	
+	List<Customerlevel> queryLikeCustomerLevel(String content);
+	
     int countByExample(CustomerlevelExample example);
 
     int deleteByExample(CustomerlevelExample example);
