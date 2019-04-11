@@ -73,6 +73,11 @@
       </foreach>
     </where>
   </sql>
+  
+  <select id="queryall" resultMap="BaseResultMap" >
+   SELECT * FROM goodstype WHERE state=0
+  </select>
+  
   <sql id="Base_Column_List" >
     id, name, pid, time, updatetime, uid, state, column1, column2, column3, column4, 
     column5

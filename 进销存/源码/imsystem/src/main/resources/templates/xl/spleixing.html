@@ -76,13 +76,13 @@
 								
 								<th>操作</th>
 							</tr>
-							<tr>
-								<td>张三</td>
-								<td>李四</td>
-								<td>0.8</td>
-								<td>0.8</td>
-								<td>003号</td>
-								
+							<tr th:each="item:${page.list}">
+								<td th:text="${item.id}"></td>
+								<td th:text="${item.name}"></td>
+								<td th:text="${item.pid}"></td>
+								<td th:text="${item.time}"></td>
+								<td th:text="${item.updatetime}"></td>
+								<td th:text="${item.uid}"></td>
 								<td>
 									<button type="button"  data-toggle="modal" data-target="#myModal1" class="an">
 			  						修改
