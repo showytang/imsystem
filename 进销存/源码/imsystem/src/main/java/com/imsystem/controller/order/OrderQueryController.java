@@ -5,15 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Stock;
 import com.imsystem.service.order.OrderQueryService;
 
 @Controller
-@RequestMapping("/OrderQueryController")
+@RequestMapping("/orderQueryController")
 public class OrderQueryController {
-
 
 	@Autowired
 	OrderQueryService orderquery;
@@ -26,9 +24,6 @@ public class OrderQueryController {
 	
 
 	@RequestMapping("/query")
-	public String query() {
-		return "wjh/index";
-	}
 	@ResponseBody
 	public PageInfo<Stock> query(String code,String time,String endTime,Integer currentPage,Integer pageSize,String order) {
 		

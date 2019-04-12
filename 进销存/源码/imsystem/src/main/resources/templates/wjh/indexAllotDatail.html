@@ -69,6 +69,17 @@ input {
 </head>
 <body style="background: white;">
 	<div class="container-fluid" id="indexMain">
+		<div class="row" style="margin-bottom: 15px;">
+			<div class="col-xs-8 col-xs-offset-2">
+				<div class="input-group">
+					 <span class="input-group-addon">调拨门店</span>
+					<select class="form-control">
+						<option value="1" >a</option>
+						<option value="2" >b</option>
+					</select>
+				</div>
+			</div>
+		</div>
 		<table class="table" style="margin: 0px;">
 			<thead>
 				<tr>
@@ -113,6 +124,7 @@ input {
 				}
 				
 			});
+			
 			vue.list = [[${list}]];
 			
 			$(function(){
@@ -122,7 +134,6 @@ input {
 					
 				});
 			})
-
 		</script>
 </body>
 </html>

@@ -8,7 +8,9 @@ import org.apache.ibatis.annotations.Param;
 
 public interface StockdetailsMapper {
 	
-	List<Stockdetails> query();
+	List<Stockdetails> query(String code);
+	
+	int del(String code);
 	
 	int add(Stock stock);
 	

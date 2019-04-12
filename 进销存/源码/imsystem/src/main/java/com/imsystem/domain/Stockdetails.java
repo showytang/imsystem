@@ -29,6 +29,10 @@ public class Stockdetails {
 
     private String storeid;
 
+    /**
+     *	 商品新增使用
+     *	  调拨门店id
+     */
     private String column1;
 
     private String column2;

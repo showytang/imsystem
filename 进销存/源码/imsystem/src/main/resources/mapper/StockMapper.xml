@@ -17,7 +17,7 @@
     <result column="column4" property="column4" jdbcType="VARCHAR" />
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
-  <!-- <resultMap type="com.imsystem.domain.Stock" id="queryStock" extends="BaseResultMap">
+  <resultMap type="com.imsystem.domain.Stock" id="queryStock" extends="BaseResultMap">
   	<collection property="stockdetails" ofType="com.imsystem.domain.Stockdetails">
   		<id property="id" column="sdid" />
   		<result property="code" column="sdcode" />
@@ -25,8 +25,37 @@
   		<result property="sid" column="sdsid"/>
   		<result property="updatetime" column="sdupdatetime"/>
   		<result property="count" column="sdcount" />
+  		<result property="scount" column="sdscount"/>
+  		<result property="uid" column="sduid" />
+  		<result property="price" column="sdprice" />
+  		<result property="state" column="sdstate" />
+  		<result property="storeid" column="sdstoreid" />
+  		<result property="column2" column="sdcolumn2" />
+  		<collection property="goods" javaType="com.imsystem.domain.Goods" >
+	  		<id column="goodid" property="id" />
+	  		<result  column="goodname" property="name" />
+	  		<result column="goodimg" property="img" />
+	  		<collection property="goodsValues" ofType="com.imsystem.domain.Goodsvalue" >
+	  			<id column="gvid" property="id"/>
+	  			<result column="gvname" property="name" />
+	  			<result column="gvcolumn1" property="column1" />
+	  		</collection>
+	  	</collection>
   	</collection>
-  </resultMap> -->
+  </resultMap>
+  
+  <select id="querydetails" resultMap="queryStock">
+  		SELECT s.*,sd.id as sdid,sd.uid as sduid,sd.price as sdprice,sd.state as sdstate,sd.storeid as sdstoreid,sd.code as ascode,sd.gvid as sdgvid,sd.sid as sdsid,
+  				sd.updatetime as sdupdatetime,sd.count as sdcount,sd.scount as sdscount,
+  				sd.count-sd.scount as 'sdcolumn2',g.id as gooodid,g.name as goodname,
+  				g.img as goodimg,gv.id as gvid,gv.name as gvname,gv.column1 as gvcolumn1
+  		FROM stock as s
+  		inner join`stockdetails` AS sd on sd.sid = s.id
+		LEFT JOIN `goodsvalue` AS gv ON gv.id = sd.gvid
+		INNER JOIN `goods` AS g ON gv.gid = g.id
+		WHERE s.`code` = #{code}
+  </select>
+  
   <select id="query" resultMap="BaseResultMap">
   	SELECT * FROM stock AS s
   	<where>
