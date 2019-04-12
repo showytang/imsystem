@@ -9,8 +9,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface GoodsMapper {
 	
-	
-	List<GoodsValueVo> queryAllGoods();
+	List<GoodsValueVo> queryAllGoods(@Param("liketext") String liketext,@Param("svid") String svid,@Param("pid") String pid,@Param("tid") String tid);
 	
     int countByExample(GoodsExample example);
 

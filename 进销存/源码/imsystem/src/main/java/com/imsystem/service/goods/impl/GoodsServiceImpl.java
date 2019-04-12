@@ -120,6 +120,7 @@ public class GoodsServiceImpl implements GoodsService {
 			Goodsvalue goodsValue = new Goodsvalue();
 			String goodsvID = UUID.randomUUID().toString();
 			goodsValue.setId(goodsvID);
+			goodsValue.setName("");
 			goodsValue.setGid(gid);
 			goodsValue.setDefaultvalue(1);
 			goodsValueMap.insertSelective(goodsValue);
@@ -167,7 +168,7 @@ public class GoodsServiceImpl implements GoodsService {
 							String suffix = name2.substring(name2.lastIndexOf("."), name2.length());
 							File fileImg = new File(url + uuid + suffix);
 							// 图片路径
-							gv.setColumn1("static/goodsimg/" + uuid + suffix);
+							gv.setColumn1("/goods/" + uuid + suffix);
 							
 							System.out.println("图片长度:"+gv.getColumn1().length());
 							
@@ -227,9 +228,9 @@ public class GoodsServiceImpl implements GoodsService {
 
 
 	@Override
-	public List<GoodsValueVo> queryAllGoods() {
+	public List<GoodsValueVo> queryAllGoods(String liketext,String svid,String pid,String tid) {
 		// TODO Auto-generated method stub
-		return goodsMap.queryAllGoods();
+		return goodsMap.queryAllGoods(liketext,svid,pid,tid);
 	}
 
 }

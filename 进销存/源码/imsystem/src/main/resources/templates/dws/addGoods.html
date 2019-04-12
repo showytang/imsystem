@@ -450,6 +450,7 @@ td input {
 	
 function inserGoods(){
 		
+	
 		
 		var formData = new FormData();
 		 
@@ -477,9 +478,8 @@ function inserGoods(){
 		formData.append("goods.maxsecurity",$("[name=maxsecurity]").val());
 		//描述
 		formData.append("goods.detail",detail);
-		
-		
-		
+		//商品类型
+		formData.append("goods.tid",$("#goodstype .activeColor:last").attr("typeid"));
 		
 	  $.each($(".table tr"),function(index,obj){
 			
@@ -540,7 +540,7 @@ function inserGoods(){
 	  
 	  
 	  
-		    $.ajax({
+		     $.ajax({
 			url:[[@{/goods/insertGoods}]],
  			data:formData,
  			dataType:"text",
@@ -553,7 +553,7 @@ function inserGoods(){
  				
  			}
 			
-		});    
+			});    
 		
 		
 	}

@@ -36,8 +36,12 @@
   	<association  property="goods" javaType="com.imsystem.domain.Goods">
   	 	<id column="id" property="id" jdbcType="VARCHAR" />
     	<result column="gname" property="name" jdbcType="VARCHAR" />
+    	<result column="column1" property="column1" jdbcType="VARCHAR" />
+    	<result column="column2" property="column2" jdbcType="VARCHAR" />
   		<result column="img" property="img" jdbcType="LONGVARBINARY" />
   		<result column="price" property="price" jdbcType="DOUBLE" />
+  		<result column="minsecurity" property="minsecurity" jdbcType="INTEGER" />
+  		
   	</association>
   
   	<association property="goodsValue" javaType="com.imsystem.domain.Goodsvalue">
@@ -54,12 +58,49 @@
   </resultMap>
   
   <select id="queryAllGoods" resultMap="GoodsValueVo">
-  
-  	SELECT gs.id ,gv.id AS gvid,gs.name AS gname,gv.`name` AS gvname,gs.price,gs.img,gv.`column1` AS gvcol 
-FROM `goods` AS gs 
-INNER JOIN `goodsvalue` gv
-ON gs.id = gv.`gid`
-  
+		SELECT 
+		gt.name AS column2,
+		gs.minsecurity,
+		sd.count AS column1,
+		gs.id ,gv.id AS gvid,
+		gs.name AS gname,
+		gv.`name` AS gvname,
+		gs.price,gs.img,gv.`column1` AS gvcol 
+		FROM `goods` AS gs 
+		
+		INNER JOIN `goodsvalue` gv
+		ON gs.id = gv.`gid`
+		
+		LEFT JOIN `stockdetails` AS sd
+		ON gv.id = sd.gvid
+		
+		LEFT JOIN `goodstype` AS gt
+		ON gt.id = gs.tid
+	
+	 <where>
+	
+		CONCAT(gs.name,gv.`name`) LIKE CONCAT('%',#{liketext},'%')
+		
+		 <choose>
+			<when test="pid != null and pid != '' and pid != 0">
+				AND gt.pid = #{pid}
+			</when>
+			<when test="tid != null and tid != '' and tid != 0">
+				AND gt.id = #{tid}
+			</when>
+			<when test="svid != null and svid != '' and svid != 0">
+			
+				AND gv.`id` IN (
+				SELECT gdsv.vid FROM `goodsstandardvalue` AS gdsv
+				WHERE gdsv.svid = #{svid}
+				) 
+			
+			</when>
+		</choose> 
+		
+	
+	</where>
+	
   </select>
   
   
