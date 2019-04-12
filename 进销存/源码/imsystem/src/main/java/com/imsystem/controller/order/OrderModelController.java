@@ -23,6 +23,14 @@ public class OrderModelController {
 		return "wjh/indexDatail";
 	}
 	
+	@RequestMapping("/queryIndexAllot")
+	public String queryIndexAllot(String code,Model model) {
+		
+		model.addAttribute("list",ordermodalservice.queryIndex(code));
+		
+		return "wjh/indexAllotDatail";
+	}
+	
 	@RequestMapping("/orderDesc")
 	public String orderDesc() {
 		return "wjh/orderDescDetails";

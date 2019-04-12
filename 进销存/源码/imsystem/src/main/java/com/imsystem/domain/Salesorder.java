@@ -62,7 +62,7 @@ public class Salesorder {
     }
 
     public void setId(String id) {
-        this.id = UUID.randomUUID().toString();
+        this.id = id;
     }
 
     public String getCode() {

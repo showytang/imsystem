@@ -160,10 +160,9 @@
 							<span class="input-group-addon">Time</span> <input
 								class="form-control" onchange="time(this)" id="config-demo"
 								style="border: none; border-right: 1px solid #ddd; border-radius: 0px;"
-								placeholder="开始时间" />
-								<span class="input-group-addon">时间</span> <span
-								class="input-group-addon order"data="1"> <span
-								class="glyphicon glyphicon-triangle-bottom"  ></span>
+								placeholder="开始时间" /> <span class="input-group-addon">时间</span>
+							<span class="input-group-addon order" data="1"> <span
+								class="glyphicon glyphicon-triangle-bottom"></span>
 							</span>
 						</div>
 					</div>
@@ -197,9 +196,11 @@
 								<td>
 									<div :data="item.id" style="display: flex;">
 										<span style="margin: auto;" title="修改"
-											class="glyphicon glyphicon glyphicon-edit"></span>
-										&nbsp;&nbsp; <span style="margin: auto;" title="详情"
-											class="glyphicon glyphicon-check" v-on:click="openModel(item.code)" ></span>
+											v-on:click="openModel(item.code)"
+											class="glyphicon glyphicon-edit"></span> &nbsp;&nbsp; <span
+											style="margin: auto;" title="调拨"
+											class="glyphicon glyphicon-check"
+											v-on:click="openAllotModel(item.code)"></span>
 									</div>
 								</td>
 							</tr>
@@ -215,37 +216,25 @@
 									aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
-								<h4 class="modal-title" id="myModalLabel">订单详情</h4>
+								<h4 class="modal-title" id="myModalLabel">
+									订单详情&nbsp;&nbsp;<span></span>
+								</h4>
 							</div>
 							<div class="modal-body">
-								<iframe width="100%" style="border: none;overflow-x: auto;" src=""></iframe>
+								<iframe width="100%"
+									style="border: none; overflow-x: auto; min-height: 60vh"></iframe>
 							</div>
 							<div class="modal-footer">
 								<span style="font-size: 13px; color: #DDDDDD;">点击数量可修改</span>
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal">关闭</button>
-								<button type="button" class="btn btn-primary"
+								<button type="button" class="btn btn-primary" id="insertOk"
 									data-dismiss="modal">确定</button>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div id="page">
-					<ul>
-						<li class="pagebtn pagePrev"><span
-							class="glyphicon glyphicon-menu-left"></span></li>
-						<li class="pagebtn currentPage pageCurrent pageq">1</li>
-						<li class="pagebtn pageCurrent pageq">2</li>
-						<li class="pagebtn pageCurrent pageq">3</li>
-						<li class="pagebtn" id="pageDian"
-							style="border: none; display:block; background: #DDDDDD; font-size: 20px;">...</li>
-						<li class="pagebtn pageCurrent pageDi">14</li>
-						<li class="pagebtn pageCurrent">15</li>
-						<li class="pagebtn pageCurrent">16</li>
-						<li class="pagebtn pageNext"><span
-							class="glyphicon glyphicon-menu-right"></span></li>
-					</ul>
-				</div>
+				<div id="page"></div>
 			</div>
 		</div>
 	</div>
@@ -263,34 +252,35 @@
 				data : {
 					pageIf : {},
 					no : "",
-					pagesize : "10"
+					pagesize : "10",
+					storeid : ""
 				},
 				methods : {
 					code : function(){
 						vue.pageIf.pageNum = "1";
 						query();
-						setTimeout(function(){
-							page(vue);
-						},100)
 					},
 					
 					openModel : function(code){
 						
-						$("iframe").attr("scr",[[@{/orderModel/queryIndex}]]+"?code="+code);
+						$("iframe").attr("src",[[@{/orderModel/queryIndex}]]+"?code="+code);
+						
+						$("#myModalLabel").find("span").text(code);
 						
 						$(".modal").modal("show");
 						
+					},
+					openAllotModel : function(code){
+						
+						$("iframe").attr("src",[[@{/orderModel/queryIndexAllot}]]+"?code="+code);
+						
+						$("#myModalLabel").find("span").text(code);
+						
+						$(".modal").modal("show");
 					}
 					
 				},
 				watch : {
-					/* pagesize : function(e){
-						vue.pageIf.pageNum = "1";
-						query();
-						setTimeout(function(){
-							page(vue);
-						},100)
-					}, */
 				}
 			});
 			
@@ -301,16 +291,12 @@
 				}else{
 					vue.pageIf.pageNum = "1";
 					query();
-					setTimeout(function(){
-						page(vue);
-					},100)
 				}
 			}
 			
 			function  floatPage(){
 				
 				vue.pageIf.pageNum = $(".currentPage").text();
-				
 				query();
 				
 			}
@@ -340,6 +326,7 @@
 					dataType : "json",
 					success:function(result){
 						vue.pageIf = result;
+						page(vue);
 					}
 				});
 			}
@@ -353,9 +340,6 @@
 			$(function() {
 				query();
 				myDate();
-				setTimeout(function(){
-					page(vue);
-				},200)
 				$(window).resize(function() {
 
 					var width = parseInt($(window).width());
@@ -404,8 +388,88 @@
 					}
 					query();
 				});
+				$("#insertOk").click(function(){
+					var iframe = $("iframe").contents();
+					
+					var shappingBody = iframe.find("#shappingTbody")
+					
+					if($("iframe").attr("src").indexOf('/orderModel/queryIndexAllot') != -1){
+						
+						var stock = {
+								code : $("#myModalLabel").find("span").text(),
+								stockdetails : [],
+								column3 : iframe.find("select").val(),
+								id : shappingBody.attr("data")
+							};
+							
+							$(shappingBody.find("tr")).each(function(i,e){
+								var shuliang = parseInt($(e).find(".shiliang").val());
+								stockdetail = {
+										count : $(e).find("[name=count]").val(),
+										scount : (parseInt($(e).find("[name=count]").val())-shuliang),
+										price : $(e).find("[name=price]").val(),
+										state : $(e).find("[name=state]").val(),
+										uid : $(e).find("[name=uid]").val(),
+										storeid : $(e).find("[name=storeid]").val(),
+										gvid : $(e).find("img").attr("data")
+										
+								}
+								stock.stockdetails.push(stockdetail);
+								
+							});
+						
+						$.ajax({
+							
+							url : [[@{/insertOrder/allot}]],
+							
+							data : JSON.stringify(stock),
+							
+							type : "post",
+							
+							dataType : "json",
+							
+							contentType : "application/json; charset=UTF-8",
+							
+							processData: false,
+							
+							success : function(result){
+								
+								alert(result)
+								
+							}
+							
+						});
+						
+					}
+					else{
+						
+						$.ajax({
+							
+							url : [[@{/insertOrder/uploadInsertOrder}]],
+							
+							data : "",
+							
+							type : "post",
+							
+							dataType : "json",
+							
+							contentType : "application/json; charset=UTF-8",
+							
+							processData: false,
+							
+							success : function(result){
+								
+								alert(result)
+								
+							}
+							
+						});
+						
+					}
+					
+				});
 			});
+			
 		</script>
 </body>
-
 </html>

@@ -16,6 +16,7 @@ import com.imsystem.domain.Paytype;
 import com.imsystem.domain.Sales;
 import com.imsystem.domain.Salesorder;
 import com.imsystem.domain.Stock;
+import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Supplier;
 import com.imsystem.service.order.OrderInsertService;
 
@@ -145,8 +146,10 @@ public class OrderInsertController {
 	}
 	
 	@RequestMapping("/uploadInsertOrder")
-	public String uploadInsertOrder() {
-		return "wjh/yetOrder";
+	@ResponseBody
+	public String uploadInsertOrder(@RequestBody Stock stock) {
+		
+		return orderInsert.updateInsertOrder(stock)+"";
 	}
 	
 	@RequestMapping("/toInsertOrderOut")
@@ -170,13 +173,15 @@ public class OrderInsertController {
 	
 	@RequestMapping("/uploadInsertOrderOut")
 	public String uploadInsertOrderOut() {
+		
 		return "wjh/yetOrder";
 	}
 	
 	
 
 	@RequestMapping("/allot")
-	public String allot(Sales sales) {
+	@ResponseBody
+	public String allot(@RequestBody Stock stock) {
 		
 		
 		return "";

@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
+import com.imsystem.mapper.StockMapper;
 import com.imsystem.mapper.StockdetailsMapper;
 import com.imsystem.service.order.OrderModalService;
 
@@ -17,10 +19,13 @@ public class OrderModalServiceImpl implements OrderModalService {
 	@Autowired
 	StockdetailsMapper stockdetailsmapper;
 	
+	@Autowired
+	StockMapper stockmapper;
+	
 	@Override
-	public List<Stockdetails> queryIndex(String code) {
+	public Stock queryIndex(String code) {
 		
-		return stockdetailsmapper.query();
+		return stockmapper.querydetails(code);
 	}
 
 }

@@ -69,7 +69,7 @@ public class Stock {
 
     public void setId(String id) {
     	
-        this.id = UUID.randomUUID().toString();
+        this.id = id;
         
     }
 

@@ -5,7 +5,7 @@
 <title>订单详细信息</title>
 <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
 <link rel="stylesheet"
-	th:href="@{/assets/vendor/font-awesome/css/font-awesome.min.css}">
+	th:href="@{/assets/css/font-awesome.min.css}">
 <link rel="stylesheet" type="text/css" media="all"
 	th:href="@{/assets/css/daterangepicker.css}" />
 <link rel="stylesheet" th:href="@{/assets/css/main.css}">
@@ -67,8 +67,8 @@ input {
 			}*/
 </style>
 </head>
-<body style="background: white;" id="indexMain">
-	<div class="container-fluid">
+<body style="background: white;">
+	<div class="container-fluid" id="indexMain">
 		<table class="table" style="margin: 0px;">
 			<thead>
 				<tr>
@@ -77,21 +77,25 @@ input {
 					<th>类型</th>
 					<th>价格</th>
 					<th>数量</th>
-					<th>总计</th>
 					<th>操作</th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr v-for="item in list">
-					<td>
-						<img v-if="item.goods.goodsValues[0].column1 != ''" class="shappingImg" :src="item.goods.goodsValues[0].column1">
-						<img v-else class="shappingImg" :src="item.goods.img">
+			<tbody id="shappingTbody" :data="list.id">
+				<tr v-for="item in list.stockdetails">
+					<td v-for="item1 in item.goods.goodsValues" :sid="item.goods.column5" :data="item1.id" >
+						<img v-if="item1 != ''" class="shappingImg":data="item1.id" :src="item1.column1">
+						<img  v-else class="shappingImg" :data="item1.id" :scr = "item.goods.img">
+						<input type="hidden" name="count" :value="item.count" >
+						<input type="hidden" name="scount" :value="item.scount" >
+						<input type="hidden" name="price" :value="item.price">
+						<input type="hidden" name="state" :value="item.state">
+						<input type="hidden" name="uid" :value="item.uid">
+						<input type="hidden" name="storeid" :value="item.storeid">
 					</td>
-					<td>{{item.goods.name}}</td>
-					<td>{{item.goods.goodsValue}}</td>
-					<td>2100.0</td>
-					<td><input value="1"></td>
-					<td>2100.0</td>
+					<td >{{item.goods.name}}</td>
+					<td v-for="item1 in item.goods.goodsValues" >{{item1.name}}</td>
+					<td>{{item.price}}</td>
+					<td><input class="shiliang" :value="item.column2"></td>
 					<td><span class="glyphicon glyphicon-remove"></span></td>
 				</tr>
 			</tbody>
@@ -104,14 +108,21 @@ input {
 				
 				data : {
 					
-					list : []
+					list : {}
 					
 				}
 				
 			});
-			
 			vue.list = [[${list}]];
 			
+			$(function(){
+				$(".glyphicon-remove").click(function(){
+					
+					$(this).parent().parent().remove();
+					
+				});
+			})
+
 		</script>
 </body>
 </html>
