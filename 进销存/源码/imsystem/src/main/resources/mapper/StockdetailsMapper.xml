@@ -24,7 +24,13 @@
   <delete id="del">
   		delete from stockdetails where `code` = #{code}
   </delete>
-  
+  <insert id="addAllot">
+  	insert into stockdetails(id,code,gvid,sid,count,scount,price,time,updatetime,uid,state)
+  	values
+  	<foreach collection="list" item="item" separator=",">
+  		(#{item.id},#{code},#{item.gvid},#{id},#{item.count},0,#{item.price},#{time},#{time},'1','0')
+  	</foreach>
+  </insert>
   <insert id="add">
   	insert into stockdetails(id,code,gvid,sid,count,scount,price,time,updatetime,uid,state,storeid)
   	values

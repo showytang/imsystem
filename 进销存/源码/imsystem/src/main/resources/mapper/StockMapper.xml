@@ -17,6 +17,10 @@
     <result column="column4" property="column4" jdbcType="VARCHAR" />
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
+  <insert id="add">
+  	insert into stock(id,code,time,updatetime,uid,state,storied)
+  	values(#{id},#{code},#{time},#{time},#{uid},#{state},#{column1})
+  </insert>
   <resultMap type="com.imsystem.domain.Stock" id="queryStock" extends="BaseResultMap">
   	<collection property="stockdetails" ofType="com.imsystem.domain.Stockdetails">
   		<id property="id" column="sdid" />

@@ -1,5 +1,6 @@
 package com.imsystem.service.order.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -95,13 +96,22 @@ public class OrderInsertServiceImpl implements OrderInsertService{
 	}
 
 
-
 	@Override
-	public int allot(Stock stock) {
-		// TODO Auto-generated method stub
+	public int allot(Sales sales) {
 		
+		sales.setTime(new Date());
 		
-		return 0;
+		sales.setId(UUID.randomUUID().toString());
+		
+		int count = salesMapper.insertSelective(sales);
+		
+		count += salesdetailsMapper.add(sales);
+		
+		count += stockM.add(sales);
+		
+		count += stockdetail.addAllot(sales);
+		
+		return count;
 	}
 	
 }

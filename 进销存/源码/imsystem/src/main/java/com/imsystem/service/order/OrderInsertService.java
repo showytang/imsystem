@@ -17,6 +17,6 @@ public interface OrderInsertService {
 	
 	public int updateInsertOrder(Stock stock);
 	
-	public int allot(Stock stock);
+	public int allot(Sales sales);
 	
 }

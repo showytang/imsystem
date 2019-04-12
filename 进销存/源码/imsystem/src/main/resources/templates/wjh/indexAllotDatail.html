@@ -74,8 +74,8 @@ input {
 				<div class="input-group">
 					 <span class="input-group-addon">调拨门店</span>
 					<select class="form-control">
-						<option value="1" >a</option>
-						<option value="2" >b</option>
+						<option value="11" >a</option>
+						<option value="22" >b</option>
 					</select>
 				</div>
 			</div>
@@ -107,7 +107,7 @@ input {
 					<td v-for="item1 in item.goods.goodsValues" >{{item1.name}}</td>
 					<td>{{item.price}}</td>
 					<td><input class="shiliang" :value="item.column2"></td>
-					<td><span class="glyphicon glyphicon-remove"></span></td>
+					<td><input class="checkbox" type="checkbox" value="1" ></td>
 				</tr>
 			</tbody>
 		</table>

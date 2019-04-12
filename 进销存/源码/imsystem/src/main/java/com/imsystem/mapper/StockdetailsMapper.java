@@ -1,5 +1,6 @@
 package com.imsystem.mapper;
 
+import com.imsystem.domain.Sales;
 import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.StockdetailsExample;
@@ -13,6 +14,8 @@ public interface StockdetailsMapper {
 	int del(String code);
 	
 	int add(Stock stock);
+	
+	int addAllot(Sales sales);
 	
     int countByExample(StockdetailsExample example);
 

@@ -252,7 +252,7 @@
 				data : {
 					pageIf : {},
 					no : "",
-					pagesize : "10",
+					pagesize : "1",
 					storeid : ""
 				},
 				methods : {
@@ -392,9 +392,64 @@
 					var iframe = $("iframe").contents();
 					
 					var shappingBody = iframe.find("#shappingTbody")
-					
 					if($("iframe").attr("src").indexOf('/orderModel/queryIndexAllot') != -1){
+						var sales = {
+								code : $("#myModalLabel").find("span").text(),
+								list : [],
+								cid : 0,
+								uid : 1,
+								remark : "调拨",
+								count : 0,
+								paymoney : 0,
+								tainmoney : 0,
+								state : 0,
+								storeid : 1,
+								column1 : iframe.find("select").val()
+							};
+							$(shappingBody.find("tr")).each(function(i,e){
+								if($(e).find(".checkbox").prop("checked")){
+									var shuliang = parseInt($(e).find(".shiliang").val());
+									sales.count += shuliang;
+									salesdetails = {
+											count : shuliang,
+											price : $(e).find("[name=price]").val(),
+											oldprice : 0,
+											state : $(e).find("[name=state]").val(),
+											uid : 1,
+											storeid : $(e).find("[name=storeid]").val(),
+											gvid : $(e).find("img").attr("data")
+											
+									}
+									sales.list.push(salesdetails);
+								}
+							});
+							if(sales.list.length == 0){
+								return;
+							}	
+						 $.ajax({
+							
+							url : [[@{/insertOrder/allot}]],
+							
+							data : JSON.stringify(sales),
+							
+							type : "post",
+							
+							dataType : "json",
+							
+							contentType : "application/json; charset=UTF-8",
+							
+							processData: false,
+							
+							success : function(result){
+								
+								alert(result)
+								
+							}
+							
+						});
 						
+					}
+					else{
 						var stock = {
 								code : $("#myModalLabel").find("span").text(),
 								stockdetails : [],
@@ -420,34 +475,9 @@
 						
 						$.ajax({
 							
-							url : [[@{/insertOrder/allot}]],
-							
-							data : JSON.stringify(stock),
-							
-							type : "post",
-							
-							dataType : "json",
-							
-							contentType : "application/json; charset=UTF-8",
-							
-							processData: false,
-							
-							success : function(result){
-								
-								alert(result)
-								
-							}
-							
-						});
-						
-					}
-					else{
-						
-						$.ajax({
-							
 							url : [[@{/insertOrder/uploadInsertOrder}]],
 							
-							data : "",
+							data : JSON.stringify(stock),
 							
 							type : "post",
 							
