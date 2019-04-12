@@ -179,65 +179,63 @@ public class GoodsController {
 	@ResponseBody
 	public int insertGoods(MultipartFile[] files,GoodsVO goodsVo,HttpServletRequest request) {
 
-//        String url = request.getSession().getServletContext().getRealPath("/static/goodsimg/");
-//        File dest = new File(url);
-//        /*选择文件上传路径,如果没有则创建*/
-//        if (!dest.exists()) {
-//            dest.mkdirs();
-//        }
-//
-//        boolean bool = true;
-//        
-//        try {
-//
-//        	List<Img> goodsImg = new ArrayList<Img>();
-//        	
-//            for (MultipartFile f : files) {
-//
-//            	//图片表对象
-//            	Img img = new Img();
-//            	
-//            	if(bool) {
-//            		goodsVo.getGoods().setImg(f.getBytes());
-//            	}
-//            	
-//                //唯一标示id
-//                String uuid = UUID.randomUUID().toString();
-//                //获取文件名
-//                String name2 = f.getOriginalFilename();
-//                //上传前名称
-//                img.setOldname(name2);
-//
-//                if(name2 != "" && name2 != null){
-//                    //获取文件后缀名
-//                    String suffix = name2.substring(name2.lastIndexOf("."), name2.length());
-//                    File fileImg = new File(url + uuid + suffix);
-//                    //新名称
-//                    img.setName(uuid + suffix);
-//                    
-//                    //图片路径
-//                    img.setUrl("static/goodsimg/"+uuid + suffix);
-//                    f.transferTo(fileImg);
-//
-//                }
-//                
-//                goodsImg.add(img);
-//
-//            }
-//            
-//            goodsVo.setGoodsImgs(goodsImg);
-//
-//        } catch (IllegalStateException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }catch (IOException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        
-//		return goodsSer.insertGoods(goodsVo,url);
-		
-		return 1;
+        String url = request.getSession().getServletContext().getRealPath("/static/goodsimg/");
+        File dest = new File(url);
+        /*选择文件上传路径,如果没有则创建*/
+        if (!dest.exists()) {
+            dest.mkdirs();
+        }
+
+        boolean bool = true;
+        
+        try {
+
+        	List<Img> goodsImg = new ArrayList<Img>();
+        	
+            for (MultipartFile f : files) {
+
+            	//图片表对象
+            	Img img = new Img();
+            	
+            	if(bool) {
+            		goodsVo.getGoods().setImg(f.getBytes());
+            	}
+            	
+                //唯一标示id
+                String uuid = UUID.randomUUID().toString();
+                //获取文件名
+                String name2 = f.getOriginalFilename();
+                //上传前名称
+                img.setOldname(name2);
+
+                if(name2 != "" && name2 != null){
+                    //获取文件后缀名
+                    String suffix = name2.substring(name2.lastIndexOf("."), name2.length());
+                    File fileImg = new File(url + uuid + suffix);
+                    //新名称
+                    img.setName(uuid + suffix);
+                    
+                    //图片路径
+                    img.setUrl("static/goodsimg/"+uuid + suffix);
+                    f.transferTo(fileImg);
+
+                }
+                
+                goodsImg.add(img);
+
+            }
+            
+            goodsVo.setGoodsImgs(goodsImg);
+
+        } catch (IllegalStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+		return goodsSer.insertGoods(goodsVo,url);
 
 	}
 
