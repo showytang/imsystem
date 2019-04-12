@@ -68,11 +68,12 @@ public class GoodsController {
 
 	@RequestMapping("/queryGoodsLikeAll")
 	@ResponseBody
-	protected PageInfo<GoodsValueVo> queryGoodsLikeAll(String liketext,String svid,String pid,String tid) {
+	protected PageInfo<GoodsValueVo> queryGoodsLikeAll(Integer curPage,String liketext,String [] svid,String tid) {
+		svid = svid.length==0?null:svid;
+		Page<GoodsValueVo> page = PageHelper.startPage(curPage, 8, true);
 		
-		Page<GoodsValueVo> page = PageHelper.startPage(1, 8, true);
+		PageInfo<GoodsValueVo> pageInfo = new PageInfo<>(goodsSer.queryAllGoods(liketext,svid,tid));
 		
-		PageInfo<GoodsValueVo> pageInfo = new PageInfo<>(goodsSer.queryAllGoods(liketext,svid,pid,tid));
 		
 		return pageInfo;
 		

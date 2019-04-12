@@ -82,17 +82,19 @@
 		CONCAT(gs.name,gv.`name`) LIKE CONCAT('%',#{liketext},'%')
 		
 		 <choose>
-			<when test="pid != null and pid != '' and pid != 0">
-				AND gt.pid = #{pid}
-			</when>
 			<when test="tid != null and tid != '' and tid != 0">
-				AND gt.id = #{tid}
+				AND (gt.id = #{tid} OR gt.pid = #{tid})
 			</when>
-			<when test="svid != null and svid != '' and svid != 0">
+			<when test="svid != null">
 			
 				AND gv.`id` IN (
 				SELECT gdsv.vid FROM `goodsstandardvalue` AS gdsv
-				WHERE gdsv.svid = #{svid}
+				WHERE gdsv.svid IN
+				
+				<foreach item="item" collection="svid" separator="," open="(" close=")" >
+					#{item}
+				</foreach>
+				
 				) 
 			
 			</when>

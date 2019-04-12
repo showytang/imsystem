@@ -71,7 +71,7 @@ function page(data) {
 
 	var pages = data.pageIf.pages;
 	var bool = pages > 6 ? false : true;
-
+	
 	var ul = $("<ul>"
 			+ "<li class=\"pagebtn pagePrev\" onclick=\"prevPage()\"><span"
 			+ "class=\"glyphicon glyphicon-menu-left\"></span></li>"
@@ -85,8 +85,8 @@ function page(data) {
 			+ "<li onclick=\"currentPage(this)\" class=\"pagebtn pageCurrent\">16</li>"
 			+ "<li class=\"pagebtn pageNext\" onclick=\"nextPage()\"><span"
 			+ "class=\"glyphicon glyphicon-menu-right\"></span></li>" + "</ul>");
+	ul.find(".pageCurrent:eq("+(data.pageIf.pageNum-1)+")").addClass("currentPage")
 	if (bool) {
-		ul.find(".pageCurrent:eq("+(data.pageIf.pageNum-1)+")").addClass("currentPage")
 		ul.find("#pageDian").hide();
 		if(pages == 0){
 			ul.find(".pageCurrent:gt(" + pages + ")").remove();

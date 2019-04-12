@@ -228,9 +228,9 @@ public class GoodsServiceImpl implements GoodsService {
 
 
 	@Override
-	public List<GoodsValueVo> queryAllGoods(String liketext,String svid,String pid,String tid) {
+	public List<GoodsValueVo> queryAllGoods(String liketext,String [] svid,String tid) {
 		// TODO Auto-generated method stub
-		return goodsMap.queryAllGoods(liketext,svid,pid,tid);
+		return goodsMap.queryAllGoods(liketext,svid,tid);
 	}
 
 }

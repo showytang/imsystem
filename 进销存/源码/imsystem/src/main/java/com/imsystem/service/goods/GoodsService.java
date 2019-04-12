@@ -24,6 +24,6 @@ public interface GoodsService {
 	 * 商品查询
 	 * @return
 	 */
-	List<GoodsValueVo> queryAllGoods(String liketext,String svid,String pid,String tid);
+	List<GoodsValueVo> queryAllGoods(String liketext,String [] svid,String tid);
 	
 }

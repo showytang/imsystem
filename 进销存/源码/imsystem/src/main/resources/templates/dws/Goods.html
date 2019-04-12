@@ -72,7 +72,7 @@
 								<div class="input-group">
 									<label class="input-group-addon"
 										style="color: #FFFFFF; background-color: #337ab7;">搜索:</label>
-									<input type="text" id="liketext" class="form-control" placeholder="请输入关键字">
+									<input type="text" id="liketext" oninput='textlike(this)' class="form-control" placeholder="请输入关键字">
 
 									<span class="input-group-btn lg-md-span">
 										<button class="btn btn-primary" type="button">确 定</button>
@@ -110,7 +110,7 @@
 
 						<div class="row">
 
-							<div v-for="(item,index) in goodslist" class="col-sm-6 col-md-3	">
+							<div v-for="(item,index) in pageIf.list" class="col-sm-6 col-md-3	">
 								<div class="thumbnail">
 								
 									<img v-if="item.goodsValue.column1 == null" style="max-height: 20vh; min-height: 20vh;"
@@ -148,7 +148,7 @@
 						</div>
 
 						<div id="page">
-							<ul>
+							<!-- <ul>
 								<li class="pagebtn pagePrev"><span
 									class="glyphicon glyphicon-menu-left"></span></li>
 								<li class="pagebtn currentPage pageCurrent pageq">1</li>
@@ -160,7 +160,7 @@
 								<li class="pagebtn pageCurrent">15</li>
 								<li class="pagebtn pageNext"><span
 									class="glyphicon glyphicon-menu-right"></span></li>
-							</ul>
+							</ul> -->
 						</div>
 
 					</div>
@@ -205,7 +205,7 @@ var vue = new Vue({
 	el:".main",
 	data:{
 		
-		goodslist:""
+		pageIf:""
 		
 	}
 	
@@ -221,9 +221,9 @@ function typeAll(obj){
 	$(".option-top-div:gt("+ind+")").remove();
 	$("#typeoption").html("");
 	
-	var pid = $(obj).attr("pid");
+	var tid = $(obj).attr("id");
 	
-	queryGoods(0,0,0,pid);
+	queryGoods(1,[],tid);
 	
 }
 
@@ -267,8 +267,8 @@ function queryGoodsTypeByPid(obj,id,op){
 				divoption.append(all);
 				
 				$.each(data,function(){
-					all.attr("pid",this.pid);
-					var option = $('<span onclick="queryGoodsTypeByPid(this,'+this.id+',false)" class="visible-lg-inline-block visible-md-inline-block text-center option-span" typeid="'+this.id+'">'+this.name+'</span>');
+					all.attr("id",this.pid);
+					var option = $('<span onclick="queryGoodsTypeByPid(this,'+this.id+',false,)" class="visible-lg-inline-block visible-md-inline-block text-center option-span" id="'+this.id+'">'+this.name+'</span>');
 					divoption.append(option);
 					
 				});
@@ -300,7 +300,7 @@ function queryGoodsTypeByPid(obj,id,op){
 					var divmain = $('<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">');
 					div.append(divmain);
 					
-					var spanall = $('<span onclick="optionAllStyle(this);" class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #00AAFF;">不限</span>')
+					var spanall = $('<span onclick="typePojo(this)" class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #00AAFF;">不限</span>')
 					divmain.append(spanall);
 					$.each(obj.stabndardValueList,function(ind,item){
 						
@@ -314,6 +314,25 @@ function queryGoodsTypeByPid(obj,id,op){
 		}  
 		
 	}); 
+	 
+	 queryGoods(1,[],id);
+	 
+	
+}
+
+function typePojo(obj){
+	
+	optionAllStyle(obj);
+	pojolike();
+	
+}
+
+/**
+ * 分页点击事件
+ */
+function floatPage(){
+	
+	queryGoods($('.currentPage').text(),[],0);
 	
 }
 
@@ -321,6 +340,9 @@ function queryGoodsTypeByPid(obj,id,op){
 function optionCheck(obj){
 	
 	optionAddStyle(obj);
+	
+	pojolike();
+	
 	if ($(obj).parent().find(".active1").length == $(obj)
 			.parent().find(".option-span-z").length) {
 
@@ -345,35 +367,88 @@ function optionCheck(obj){
 
 
 
-	function queryGoods(curPage,svid,tid,pid){
+	function queryGoods(curPage,svid,tid){
 		
 		var liketext = $("#liketext").val();
-		
 		$.ajax({
 			url:[[@{/goods/queryGoodsLikeAll}]],
 			type:"post",
 			data:{
-				"liketext":"",
-				"svid":"",
-				"tid":"",
-				"pid":""
+				"curPage":curPage,
+				"liketext":liketext,
+				"svid":svid.join(','),
+				"tid":tid
 			},
 			dataType:"json",
 			success:function(data){
 				
-				console.log(data);
+				vue.pageIf = data;
 				
-				vue.goodslist = data.list;
+				page(vue);
 				
 			}
 		});
 		
 	}
+	
+	//搜索框联动
+	function textlike(obj){
+		
+		var tid = $("#goodstype .option-div:last").find(".activeColor").attr('id');
+		
+		var svid = 0;
+		
+		 queryGoods(1,[],tid);
+		
+	}
+	
+	
+	//类型值联动
+	function pojolike(){
+		
+		var svid = [];
+		
+		$("#typeoption .option-type").each(function(index,item){
+		
+			console.log($(item).find(".option-span-all").hasClass("active1"))
+			
+			if($(item).find(".option-span-all").hasClass("active1")){
+			
+				$(item).find('span').each(function(){
+					
+				svid.push($(this).attr('sizeid'));
+					
+				});
+				
+				console.log(svid)
+				
+			}else{
+				
+				$(item).find('.active1').each(function(){
+					
+					svid.push($(this).attr('sizeid'));
+					
+				});
+				
+				
+			}
+			
+		});
+		
+		queryGoods(1,svid,0);
+		
+	}
+	
 
 
 	$(function() {
+		
 		queryGoodsTypeByPid(null,0,true);
-		 queryGoods();
+		
+		 queryGoods(1,[],0);
+		 
+		
+		 
 	});
 </script>
 	
