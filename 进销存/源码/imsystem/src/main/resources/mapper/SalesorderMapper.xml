@@ -518,4 +518,8 @@
   		AND storeid = #{store}
   	</if>
   </select>
+  <select resultMap="BaseResultMap" id="queryThisYear">
+	SELECT t.* FROM (SELECT SUM(paymoney) - SUM(column1) column2,DATE_FORMAT(`time`,'%Y-%m') AS column3  FROM salesorder WHERE TIME LIKE CONCAT(#{year},'%')  GROUP BY DATE_FORMAT(TIME,'%Y-%m')) AS t
+
+  </select>
 </mapper>

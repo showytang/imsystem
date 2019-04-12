@@ -29,4 +29,6 @@ public interface GoodsvalueMapper {
     int updateByPrimaryKey(Goodsvalue record);
     
     List<Goodsvalue> queryByCode(@Param("code") String code);
+    
+    List<Goodsvalue> queryGoodsByTime(@Param("time") String time,@Param("startTime") String startTime,@Param("endTime") String endTime,@Param("storeId") String storeId);
 }

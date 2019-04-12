@@ -22,4 +22,8 @@ public class SIndexController {
 	public String goBaoBiao_3() {
 		return "yhb/BaoBiao3";
 	}
+	@RequestMapping("goGoodsRanking")
+	public String goodsRanking() {
+		return "yhb/goodsPaim";
+	}
 }
