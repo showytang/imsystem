@@ -10,6 +10,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,9 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Customertype;
 import com.imsystem.domain.Goods;
 import com.imsystem.domain.GoodsVO;
+import com.imsystem.domain.GoodsValueVo;
 import com.imsystem.domain.Img;
 import com.imsystem.service.goods.GoodsService;
 import com.imsystem.service.goods.GoodsTypeService;
@@ -27,6 +32,9 @@ import com.imsystem.service.goods.GoodsTypeService;
 @Controller
 @RequestMapping("/goods")
 public class GoodsController {
+	
+	@Value("uploadimg")
+	private String updataurl;
 	
 	/**
 	 * 商品服务对象
@@ -46,12 +54,30 @@ public class GoodsController {
 	 */
 	@RequestMapping("/queryAllGoods")
 	protected String queryAllGoods() {
-
-		
 		
 		return "dws/Goods";
 	}
+	
+	@RequestMapping("/queryByAllGoods")
+	@ResponseBody
+	protected List queryByAllGoods() {
+		
+		return null;
+	}
+	
 
+	@RequestMapping("/queryGoodsLikeAll")
+	@ResponseBody
+	protected PageInfo<GoodsValueVo> queryGoodsLikeAll(String liketext,String svid,String pid,String tid) {
+		
+		Page<GoodsValueVo> page = PageHelper.startPage(1, 8, true);
+		
+		PageInfo<GoodsValueVo> pageInfo = new PageInfo<>(goodsSer.queryAllGoods(liketext,svid,pid,tid));
+		
+		return pageInfo;
+		
+	}
+	
 	/**
 	 * 按商品id查询单个商品详情
 	 * 
@@ -185,7 +211,8 @@ public class GoodsController {
 	@ResponseBody
 	public int insertGoods(MultipartFile[] files,GoodsVO goodsVo,HttpServletRequest request) {
 
-        String url = request.getSession().getServletContext().getRealPath("/static/goodsimg/");
+		String url = "d:/img/" +"goods/";
+		
         File dest = new File(url);
         /*选择文件上传路径,如果没有则创建*/
         if (!dest.exists()) {
@@ -222,7 +249,7 @@ public class GoodsController {
                     img.setName(uuid + suffix);
                     
                     //图片路径
-                    img.setUrl("static/goodsimg/"+uuid + suffix);
+                    img.setUrl("/goods/"+uuid + suffix);
                     f.transferTo(fileImg);
 
                 }

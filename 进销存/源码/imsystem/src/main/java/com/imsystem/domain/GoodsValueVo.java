@@ -21,6 +21,30 @@ public class GoodsValueVo {
 	 *库存
 	 */
 	private Stockdetails stockDetails;
+
+	public Goods getGoods() {
+		return goods;
+	}
+
+	public void setGoods(Goods goods) {
+		this.goods = goods;
+	}
+
+	public Goodsvalue getGoodsValue() {
+		return goodsValue;
+	}
+
+	public void setGoodsValue(Goodsvalue goodsValue) {
+		this.goodsValue = goodsValue;
+	}
+
+	public Stockdetails getStockDetails() {
+		return stockDetails;
+	}
+
+	public void setStockDetails(Stockdetails stockDetails) {
+		this.stockDetails = stockDetails;
+	}
 	
 	
 	

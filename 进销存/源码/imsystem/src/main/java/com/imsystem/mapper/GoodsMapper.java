@@ -2,10 +2,14 @@ package com.imsystem.mapper;
 
 import com.imsystem.domain.Goods;
 import com.imsystem.domain.GoodsExample;
+import com.imsystem.domain.GoodsValueVo;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface GoodsMapper {
+	
+	List<GoodsValueVo> queryAllGoods(@Param("liketext") String liketext,@Param("svid") String svid,@Param("pid") String pid,@Param("tid") String tid);
 	
     int countByExample(GoodsExample example);
 

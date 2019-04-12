@@ -3,6 +3,7 @@ package com.imsystem.service.goods;
 import java.util.List;
 
 import com.imsystem.domain.GoodsVO;
+import com.imsystem.domain.GoodsValueVo;
 import com.imsystem.domain.Goodstype;
 
 /**
@@ -19,7 +20,10 @@ public interface GoodsService {
 	 */
 	int insertGoods(GoodsVO goodsVo,String url);
 	
-	
-	
+	/**
+	 * 商品查询
+	 * @return
+	 */
+	List<GoodsValueVo> queryAllGoods(String liketext,String svid,String pid,String tid);
 	
 }
