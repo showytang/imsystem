@@ -122,7 +122,6 @@ $(function(){
 		});
 		
 		$(".pageCurrent").click(function(){
-			
 			var index = $(".pageCurrent").index(this);
 			
 			var currentPage = $(".currentPage");

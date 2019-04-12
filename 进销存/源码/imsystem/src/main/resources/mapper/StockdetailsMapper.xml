@@ -4,6 +4,11 @@
   <resultMap id="BaseResultMap" type="com.imsystem.domain.Stockdetails" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="gvid" property="gvid" jdbcType="VARCHAR" />
+    <result column="sid" property="sid" jdbcType="VARCHAR" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="scount" property="scount" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
     <result column="time" property="time" jdbcType="TIMESTAMP" />
     <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP" />
     <result column="uid" property="uid" jdbcType="VARCHAR" />
@@ -15,6 +20,18 @@
     <result column="column4" property="column4" jdbcType="VARCHAR" />
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
+  
+  <delete id="del">
+  		delete from stockdetails where `code` = #{code}
+  </delete>
+  
+  <insert id="add">
+  	insert into stockdetails(id,code,gvid,sid,count,scount,price,time,updatetime,uid,state,storeid)
+  	values
+  	<foreach collection="stockdetails" item="item" separator=",">
+  		(#{item.id},#{code},#{item.gvid},#{id},#{item.count},#{item.scount},#{item.price},#{time},#{time},'1','0','1')
+  	</foreach>
+  </insert>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -74,8 +91,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, code, time, updatetime, uid, state, storeid, column1, column2, column3, column4, 
-    column5
+    id, code, gvid, sid, count, scount, price, time, updatetime, uid, state, storeid, 
+    column1, column2, column3, column4, column5
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.imsystem.domain.StockdetailsExample" >
     select
@@ -108,16 +125,18 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.imsystem.domain.Stockdetails" >
-    insert into stockdetails (id, code, time, 
-      updatetime, uid, state, 
-      storeid, column1, column2, 
-      column3, column4, column5
-      )
-    values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, 
-      #{updatetime,jdbcType=TIMESTAMP}, #{uid,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
-      #{storeid,jdbcType=VARCHAR}, #{column1,jdbcType=VARCHAR}, #{column2,jdbcType=VARCHAR}, 
-      #{column3,jdbcType=VARCHAR}, #{column4,jdbcType=VARCHAR}, #{column5,jdbcType=VARCHAR}
-      )
+    insert into stockdetails (id, code, gvid, 
+      sid, count, scount, 
+      price, time, updatetime, 
+      uid, state, storeid, 
+      column1, column2, column3, 
+      column4, column5)
+    values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{gvid,jdbcType=VARCHAR}, 
+      #{sid,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER}, #{scount,jdbcType=INTEGER}, 
+      #{price,jdbcType=DOUBLE}, #{time,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, 
+      #{uid,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{storeid,jdbcType=VARCHAR}, 
+      #{column1,jdbcType=VARCHAR}, #{column2,jdbcType=VARCHAR}, #{column3,jdbcType=VARCHAR}, 
+      #{column4,jdbcType=VARCHAR}, #{column5,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.imsystem.domain.Stockdetails" >
     insert into stockdetails
@@ -127,6 +146,21 @@
       </if>
       <if test="code != null" >
         code,
+      </if>
+      <if test="gvid != null" >
+        gvid,
+      </if>
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="scount != null" >
+        scount,
+      </if>
+      <if test="price != null" >
+        price,
       </if>
       <if test="time != null" >
         time,
@@ -165,6 +199,21 @@
       </if>
       <if test="code != null" >
         #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="gvid != null" >
+        #{gvid,jdbcType=VARCHAR},
+      </if>
+      <if test="sid != null" >
+        #{sid,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="scount != null" >
+        #{scount,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
       </if>
       <if test="time != null" >
         #{time,jdbcType=TIMESTAMP},
@@ -213,6 +262,21 @@
       <if test="record.code != null" >
         code = #{record.code,jdbcType=VARCHAR},
       </if>
+      <if test="record.gvid != null" >
+        gvid = #{record.gvid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sid != null" >
+        sid = #{record.sid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.count != null" >
+        count = #{record.count,jdbcType=INTEGER},
+      </if>
+      <if test="record.scount != null" >
+        scount = #{record.scount,jdbcType=INTEGER},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DOUBLE},
+      </if>
       <if test="record.time != null" >
         time = #{record.time,jdbcType=TIMESTAMP},
       </if>
@@ -252,6 +316,11 @@
     update stockdetails
     set id = #{record.id,jdbcType=VARCHAR},
       code = #{record.code,jdbcType=VARCHAR},
+      gvid = #{record.gvid,jdbcType=VARCHAR},
+      sid = #{record.sid,jdbcType=VARCHAR},
+      count = #{record.count,jdbcType=INTEGER},
+      scount = #{record.scount,jdbcType=INTEGER},
+      price = #{record.price,jdbcType=DOUBLE},
       time = #{record.time,jdbcType=TIMESTAMP},
       updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
       uid = #{record.uid,jdbcType=VARCHAR},
@@ -271,6 +340,21 @@
     <set >
       <if test="code != null" >
         code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="gvid != null" >
+        gvid = #{gvid,jdbcType=VARCHAR},
+      </if>
+      <if test="sid != null" >
+        sid = #{sid,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="scount != null" >
+        scount = #{scount,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
       </if>
       <if test="time != null" >
         time = #{time,jdbcType=TIMESTAMP},
@@ -308,6 +392,11 @@
   <update id="updateByPrimaryKey" parameterType="com.imsystem.domain.Stockdetails" >
     update stockdetails
     set code = #{code,jdbcType=VARCHAR},
+      gvid = #{gvid,jdbcType=VARCHAR},
+      sid = #{sid,jdbcType=VARCHAR},
+      count = #{count,jdbcType=INTEGER},
+      scount = #{scount,jdbcType=INTEGER},
+      price = #{price,jdbcType=DOUBLE},
       time = #{time,jdbcType=TIMESTAMP},
       updatetime = #{updatetime,jdbcType=TIMESTAMP},
       uid = #{uid,jdbcType=VARCHAR},

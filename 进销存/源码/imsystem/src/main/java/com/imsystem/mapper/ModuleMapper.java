@@ -27,4 +27,20 @@ public interface ModuleMapper {
     int updateByPrimaryKeySelective(Module record);
 
     int updateByPrimaryKey(Module record);
+    
+    
+    List<Module>  queryModuleAll();
+    
+    Module queryModuleById(String id);
+    
+    int insertModule(Module module);
+    
+    int deleteModuleById(String id);
+    
+    int updateModuleById(Module module) ;
+    
+    
+    
+    
+    
 }

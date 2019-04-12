@@ -24,6 +24,24 @@ public class GoodsVO {
 	 */
 	private List<Img> goodsImgs;
 	
+	
+	/**
+	 * 库存主表
+	 */
+	private Stock stock;
+	
+	
+	
+	public Stock getStock() {
+		return stock;
+	}
+
+
+	public void setStock(Stock stock) {
+		this.stock = stock;
+	}
+
+
 	public Goods getGoods() {
 		return goods;
 	}

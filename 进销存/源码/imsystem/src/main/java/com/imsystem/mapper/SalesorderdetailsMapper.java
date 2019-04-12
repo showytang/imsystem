@@ -1,30 +1,34 @@
 package com.imsystem.mapper;
 
+import com.imsystem.domain.Salesorder;
 import com.imsystem.domain.Salesorderdetails;
 import com.imsystem.domain.SalesorderdetailsExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface SalesorderdetailsMapper {
-    int countByExample(SalesorderdetailsExample example);
+	int add(Salesorder salesOrder);
 
-    int deleteByExample(SalesorderdetailsExample example);
+	int countByExample(SalesorderdetailsExample example);
 
-    int deleteByPrimaryKey(String id);
+	int deleteByExample(SalesorderdetailsExample example);
 
-    int insert(Salesorderdetails record);
+	int deleteByPrimaryKey(String id);
 
-    int insertSelective(Salesorderdetails record);
+	int insert(Salesorderdetails record);
 
-    List<Salesorderdetails> selectByExample(SalesorderdetailsExample example);
+	int insertSelective(Salesorderdetails record);
 
-    Salesorderdetails selectByPrimaryKey(String id);
+	List<Salesorderdetails> selectByExample(SalesorderdetailsExample example);
 
-    int updateByExampleSelective(@Param("record") Salesorderdetails record, @Param("example") SalesorderdetailsExample example);
+	Salesorderdetails selectByPrimaryKey(String id);
 
-    int updateByExample(@Param("record") Salesorderdetails record, @Param("example") SalesorderdetailsExample example);
+	int updateByExampleSelective(@Param("record") Salesorderdetails record,
+			@Param("example") SalesorderdetailsExample example);
 
-    int updateByPrimaryKeySelective(Salesorderdetails record);
+	int updateByExample(@Param("record") Salesorderdetails record, @Param("example") SalesorderdetailsExample example);
 
-    int updateByPrimaryKey(Salesorderdetails record);
+	int updateByPrimaryKeySelective(Salesorderdetails record);
+
+	int updateByPrimaryKey(Salesorderdetails record);
 }

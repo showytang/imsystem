@@ -53,8 +53,20 @@ public class Goodsvalue {
 	private List<Goodsprice> goodsPrices;
 
 	
+	private Stockdetails stockDetails;
+	
     
-    public List<Goodsprice> getGoodsPrices() {
+	
+	
+    public Stockdetails getStockDetails() {
+		return stockDetails;
+	}
+
+	public void setStockDetails(Stockdetails stockDetails) {
+		this.stockDetails = stockDetails;
+	}
+
+	public List<Goodsprice> getGoodsPrices() {
 		return goodsPrices;
 	}
 

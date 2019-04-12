@@ -265,8 +265,15 @@ td input {
 						<br>
 						<div class="input-group">
 							<span class="input-group-btn">
+								<button class="btn btn-primary" type="button">库存：</button>
+							</span> <input oninput='kcChange(this)' name="kc" value="20"
+								class="form-control" type="text">
+						</div>
+						<br>
+						<div class="input-group">
+							<span class="input-group-btn">
 								<button class="btn btn-danger" type="button">进货价：</button>
-							</span> <input oninput='priceChange(this)' name="jprice"
+							</span> <input oninput='jhChange(this)' name="jprice"
 								class="form-control" type="text">
 						</div>
 						<br>
@@ -443,6 +450,7 @@ td input {
 	
 function inserGoods(){
 		
+	
 		
 		var formData = new FormData();
 		 
@@ -470,16 +478,24 @@ function inserGoods(){
 		formData.append("goods.maxsecurity",$("[name=maxsecurity]").val());
 		//描述
 		formData.append("goods.detail",detail);
+		//商品类型
+		formData.append("goods.tid",$("#goodstype .activeColor:last").attr("typeid"));
 		
 	  $.each($(".table tr"),function(index,obj){
 			
 		   //第一个空的tr 不循环
 		   if(index > 0){
-			   
 			   /*中文规格总名称*/
 			   var gcname = $(obj).find("[name=goodsType]").attr("tyname");
+			   
 			   formData.append("goodsValues["+(index-1)+"].name",gcname);
 			   formData.append("goodsValues["+(index-1)+"].jprice",$(obj).find("[name=detailprice]").val());
+			 
+			   //实例库存
+			   formData.append("goodsValues["+(index-1)+"].stockDetails.count",$(obj).find("[name=num]").val());
+			   formData.append("goodsValues["+(index-1)+"].stockDetails.price",$(obj).find("[name=detailprice]").val());
+			   
+			   
 			   
 			   if($(obj).find("[type=file]")[0].files.length > 0){
 				   
@@ -497,6 +513,8 @@ function inserGoods(){
 				formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].svids",typeIds);
 				formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].svid",typeIdArr[n]);
 				
+				
+				
 			   }
 			   
 				//商品客户价格添加
@@ -509,6 +527,8 @@ function inserGoods(){
 					
 				});
 				
+				
+				
 		  }
 			 
 			
@@ -516,7 +536,11 @@ function inserGoods(){
 	  
 	  
 	  
-		   $.ajax({
+	  
+	  
+	  
+	  
+		     $.ajax({
 			url:[[@{/goods/insertGoods}]],
  			data:formData,
  			dataType:"text",
@@ -529,7 +553,7 @@ function inserGoods(){
  				
  			}
 			
-		});    
+			});    
 		
 		
 	}
@@ -735,7 +759,20 @@ function inserGoods(){
 		}
 
 	}
+	
+	
 
+
+	
+	//价格小数2位输入
+	function priceChange(Obj) {
+
+		//判定是否数字
+		$(Obj).val($(Obj).val().match(/\d+(\.\d{0,2})?/) ? $(Obj).val().match(/\d+(\.\d{0,2})?/)[0] : '');
+
+	}
+	
+	//客户价格联动
 	function customerpriceChange(obj){
 		
 		priceChange(obj);
@@ -751,12 +788,19 @@ function inserGoods(){
 		
 	}
 	
-	//价格小数2位输入
-	function priceChange(Obj) {
-
-		//判定是否数字
-		$(Obj).val($(Obj).val().match(/\d+(\.\d{0,2})?/) ? $(Obj).val().match(/\d+(\.\d{0,2})?/)[0] : '');
-
+	//库存联动
+	function kcChange(obj){
+		countChange(obj);
+		
+		$("[name=num]").val($(obj).val());
+		
+	}
+	//进货价联动
+	function jhChange(obj){
+		countChange(obj);
+		
+		$("[name=detailprice]").val($(obj).val());
+		
 	}
 
 	function checkedDl() {
@@ -827,7 +871,10 @@ function inserGoods(){
 		
 		//价格联动
 		var jhprice = $("[name=jprice]").val();
-		
+		var kc = $("[name=kc]").val();
+		if(kc <= 0){
+			kc = 20;
+		}
 		
 		for (var i = tagObject.isCheckedDlArray.length - 1; i >= 0; i--) {
 			var th = $("<th class='text-center'>").html(
@@ -841,7 +888,7 @@ function inserGoods(){
 							.html(tagObject.isCheckedDlArray[i].tag[j].name);
 					if (i == tagObject.isCheckedDlArray.length - 1) {
 
-						var td1 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' type='hidden' name='goodsType' tyname='' vm='" + tagObject.isCheckedDlArray[i].tag[j].name + "' value='" + tagObject.isCheckedDlArray[i].tag[j].id + "'><input oninput='countChange(this)' class='text-center' value='50' type=text name='num' v=''></td>");
+						var td1 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' type='hidden' name='goodsType' tyname='' vm='" + tagObject.isCheckedDlArray[i].tag[j].name + "' value='" + tagObject.isCheckedDlArray[i].tag[j].id + "'><input oninput='countChange(this)' class='text-center' value='"+kc+"' type=text name='num' v=''></td>");
 						var td2 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' oninput='priceChange(this)' type=text value='"+jhprice+"' name='detailprice'></td>");
 						var tdimg = $("<td class='text-center' style='vertical-align: inherit;'><div style='position:relative;width: 76px;height: 76px;'><input type='file' style='position:absolute;top:0;z-index: 99;width: 100%;height: 100%;opacity: 0;cursor: pointer;' title='选择图片' onchange='pojoImg(this)' name='file["
 								+ (index - 1)

@@ -18,6 +18,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
+
 import com.imsystem.interceptor.MyInterceptor;
 
 @Configuration
@@ -33,7 +34,9 @@ public class WebMvcConfigruation extends WebMvcConfigurationSupport {
 	protected void addResourceHandlers(ResourceHandlerRegistry registry) {
 		// registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
 		registry.addResourceHandler("/**").addResourceLocations("classpath:/static/")
-				.addResourceLocations("file:/Volumes/applesdcard/");
+				.addResourceLocations("file:D:/img/");
+	
+	
 	}
 
 	/**
@@ -80,7 +83,10 @@ public class WebMvcConfigruation extends WebMvcConfigurationSupport {
 	 */
 	@Override
 	protected void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(my).addPathPatterns("/**").excludePathPatterns("/js/**");
+		registry.addInterceptor(my).addPathPatterns("/**")
+		.excludePathPatterns("/assets/**")
+		.excludePathPatterns("/user/page-login")
+		.excludePathPatterns("/user/login");
 		super.addInterceptors(registry);
 	}
 

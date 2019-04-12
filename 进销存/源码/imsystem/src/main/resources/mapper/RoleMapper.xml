@@ -287,4 +287,65 @@
       column5 = #{column5,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+  
+  <!-- 查询所有角色 -->
+  <select id="queryRoleAll" resultMap="BaseResultMap">
+  	
+ 	 SELECT * FROM `role` WHERE state =0
+    
+  </select>
+  
+   <!-- 根据ID查询角色 -->
+  <select id="queryRoleById" resultMap="BaseResultMap">
+  	
+ 	SELECT * FROM `role` WHERE id=#{id} AND state =0
+    
+  </select>
+  
+  
+  <!-- 新增角色 -->
+  <insert id="insertRole">
+  	
+    INSERT INTO role (id, `name`, `time`, 
+      state, uid, column1, 
+      column2, column3, column4, 
+      column5)
+    VALUES (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, #{column1,jdbcType=VARCHAR}, 
+      #{column2,jdbcType=VARCHAR}, #{column3,jdbcType=VARCHAR}, #{column4,jdbcType=VARCHAR}, 
+      #{column5,jdbcType=VARCHAR})
+ 
+  </insert>
+  
+  
+  
+ <!--  根据ID删除角色 -->
+  <delete id="deleteRoleById">
+  	
+    DELETE FROM role  WHERE id = #{id,jdbcType=VARCHAR}
+  
+  </delete>
+  
+  
+  <!-- 根据ID修改角色 -->
+  <update id="updateRoleById">
+    UPDATE role SET `name` = #{name,jdbcType=VARCHAR},
+      `time` = #{time,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=VARCHAR},
+      column1 = #{column1,jdbcType=VARCHAR},
+      column2 = #{column2,jdbcType=VARCHAR},
+      column3 = #{column3,jdbcType=VARCHAR},
+      column4 = #{column4,jdbcType=VARCHAR},
+      column5 = #{column5,jdbcType=VARCHAR}
+    WHERE id = #{id,jdbcType=VARCHAR} 
+  </update>
+  
+  
+  
+  
+  
+  
+  
 </mapper>
