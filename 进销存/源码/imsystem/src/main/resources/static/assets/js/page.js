@@ -60,8 +60,8 @@ function pageJian(index) {
 function page(data) {
 
 	var pages = data.pageIf.pages;
-
 	if(pages == 0){
+		$("#page").html("");
 		return;
 	}
 	
