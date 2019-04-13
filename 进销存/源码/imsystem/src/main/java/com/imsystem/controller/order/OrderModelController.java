@@ -2,6 +2,7 @@ package com.imsystem.controller.order;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.imsystem.domain.Stock;
 import com.imsystem.service.order.OrderModalService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ public class OrderModelController {
 	@RequestMapping("/queryIndexAllot")
 	public String queryIndexAllot(String code,Model model) {
 		
+			
 		model.addAttribute("list",ordermodalservice.queryIndex(code));
 		
 		return "wjh/indexAllotDatail";

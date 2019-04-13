@@ -20,11 +20,22 @@
     <result column="column4" property="column4" jdbcType="VARCHAR" />
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
-  
+  <select id="selectCount" resultType="Integer">
+  	SELECT SUM(s.count-s.scount) FROM stockdetails AS s WHERE CODE = #{code}
+  </select>
+  <update id="updateCount">
+  		update stockdetails set scount=scount+#{count} where code = #{code} and gvid = #{gvid}
+  </update>
   <delete id="del">
   		delete from stockdetails where `code` = #{code}
   </delete>
-  
+  <insert id="addAllot">
+  	insert into stockdetails(id,code,gvid,sid,count,scount,price,time,updatetime,uid,state)
+  	values
+  	<foreach collection="list" item="item" separator=",">
+  		(#{item.id},#{code},#{item.gvid},#{id},#{item.count},0,#{item.price},#{time},#{time},'1','0')
+  	</foreach>
+  </insert>
   <insert id="add">
   	insert into stockdetails(id,code,gvid,sid,count,scount,price,time,updatetime,uid,state,storeid)
   	values

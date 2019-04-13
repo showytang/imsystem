@@ -1,5 +1,6 @@
 package com.imsystem.service.order.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -8,9 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.imsystem.domain.Sales;
+import com.imsystem.domain.Salesdetails;
 import com.imsystem.domain.Salesorder;
 import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
+import com.imsystem.domain.StockdetailsExample;
 import com.imsystem.mapper.SalesMapper;
 import com.imsystem.mapper.SalesdetailsMapper;
 import com.imsystem.mapper.SalesorderMapper;
@@ -44,7 +47,7 @@ public class OrderInsertServiceImpl implements OrderInsertService{
 	@Override
 	public int insert(Stock stock) {
 		
-		stock.setId("");
+		stock.setId(UUID.randomUUID().toString());
 		
 		int count = stockM.insertSelective(stock);
 		
@@ -95,13 +98,40 @@ public class OrderInsertServiceImpl implements OrderInsertService{
 	}
 
 
-
 	@Override
-	public int allot(Stock stock) {
-		// TODO Auto-generated method stub
+	public int allot(Sales sales) {
 		
+		sales.setTime(new Date());
 		
-		return 0;
+		sales.setUpdatetime(new Date());
+		
+		sales.setId(UUID.randomUUID().toString());
+		
+		int count = 0;
+		
+		for (Salesdetails item : sales.getList()) {
+			
+			count += stockdetail.updateCount(sales.getCode(), item.getCount(),item.getGvid());
+			
+		}
+		
+		if(stockdetail.selectCount(sales.getCode()) == 0) {
+			
+			count += stockM.updateState(sales.getCode());
+			
+		}
+		
+		sales.setCode(UUID.randomUUID().toString());
+		
+		count = salesMapper.insertSelective(sales);
+		
+		count += salesdetailsMapper.add(sales);
+		
+		count += stockM.add(sales);
+		
+		count += stockdetail.addAllot(sales);
+		
+		return count;
 	}
 	
 }
