@@ -10,8 +10,6 @@
  * }
  * 
  css:
-
-
  .pagebtn{
  height: 28px;
  width: 25px;
@@ -37,10 +35,6 @@
  color: white;
  border: none;
  }
-
-
-
-
  * 
  * <div id="page">
 				</div>
@@ -60,10 +54,8 @@ function pageJian(index) {
 function page(data) {
 
 	var pages = data.pageIf.pages;
-	var bool = pages > 6 ? false : true;
-	
-
 	if(pages == 0){
+		$("#page").html("");
 		return;
 	}
 	
@@ -84,8 +76,6 @@ function page(data) {
 			+ "<li onclick=\"currentPage(this)\" class=\"pagebtn pageCurrent\">16</li>"
 			+ "<li class=\"pagebtn pageNext\" onclick=\"nextPage()\"><span"
 			+ "class=\"glyphicon glyphicon-menu-right\"></span></li>" + "</ul>");
-	ul.find(".pageCurrent:eq("+(data.pageIf.pageNum-1)+")").addClass("currentPage")
-	if (bool) {
 
 	if (pages > 6) {
 
