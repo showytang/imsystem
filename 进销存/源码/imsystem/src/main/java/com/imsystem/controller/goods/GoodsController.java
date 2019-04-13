@@ -86,7 +86,7 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/queryGoodsDetail")
-	protected String queryGoodsDetail(Integer id) {
+	protected String queryGoodsDetail(String id) {
 
 		System.out.println(id);
 
@@ -152,23 +152,7 @@ public class GoodsController {
 	@ResponseBody
 	protected List queryCustomerType() {
 		
-		List<Customertype> cts = new ArrayList<Customertype>();
-		
-		Customertype ct1 = new Customertype();
-		ct1.setId("1");
-		ct1.setViewname("神仙客户");
-		Customertype ct2 = new Customertype();
-		ct2.setId("2");
-		ct2.setViewname("神经客户");
-		Customertype ct3 = new Customertype();
-		ct3.setId("3");
-		ct3.setViewname("只问价格客户");
-		
-		cts.add(ct1);
-		cts.add(ct2);
-		cts.add(ct3);
-		
-		return cts;
+		return goodsSer.queryCustomerType();
 		
 	}
 	

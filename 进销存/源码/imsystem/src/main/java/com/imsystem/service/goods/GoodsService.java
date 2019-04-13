@@ -2,9 +2,9 @@ package com.imsystem.service.goods;
 
 import java.util.List;
 
+import com.imsystem.domain.Customertype;
 import com.imsystem.domain.GoodsVO;
 import com.imsystem.domain.GoodsValueVo;
-import com.imsystem.domain.Goodstype;
 
 /**
  * 商品服务层
@@ -13,6 +13,9 @@ import com.imsystem.domain.Goodstype;
  */
 public interface GoodsService {
 
+	
+	List<Customertype> queryCustomerType();
+	
 	/**
 	 * 商品添加
 	 * @param goods

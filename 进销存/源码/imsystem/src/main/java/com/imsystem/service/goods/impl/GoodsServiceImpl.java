@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.imsystem.domain.Customertype;
 import com.imsystem.domain.GoodsVO;
 import com.imsystem.domain.GoodsValueVo;
 import com.imsystem.domain.Goodsprice;
@@ -18,6 +19,7 @@ import com.imsystem.domain.Goodsvalue;
 import com.imsystem.domain.Img;
 import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
+import com.imsystem.mapper.CustomertypeMapper;
 import com.imsystem.mapper.GoodsMapper;
 import com.imsystem.mapper.GoodspriceMapper;
 import com.imsystem.mapper.GoodsstandardvalueMapper;
@@ -79,9 +81,22 @@ public class GoodsServiceImpl implements GoodsService {
 	@Autowired
 	private StockdetailsMapper stockDetailsMap;
 	
-
 	/**
-	 * 
+	 * 客户类型查询
+	 */
+	@Autowired
+	private CustomertypeMapper customeTypeMap;
+	
+
+	@Override
+	public List<Customertype> queryCustomerType() {
+		// TODO Auto-generated method stub
+		return customeTypeMap.queryCustomerType();
+	}
+	
+	
+	/**
+	 * 商品新增
 	 */
 	@Override
 	public int insertGoods(GoodsVO goodsVo, String url) {

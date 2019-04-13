@@ -335,6 +335,7 @@ td input {
 </html>
 <script type="text/javascript" th:src="@{/assets/js/typeDonghua.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/vue.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/getAscii.js}"></script>
 <script type="text/javascript" th:inline="javascript">
 	var vuePojo = new Vue({
 		el:".main",
@@ -512,8 +513,7 @@ function inserGoods(){
 				formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].name",gcname);
 				formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].svids",typeIds);
 				formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].svid",typeIdArr[n]);
-				
-				
+				formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].enname",ConvertPinyin(gcname));
 				
 			   }
 			   
