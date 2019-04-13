@@ -20,7 +20,12 @@
     <result column="column4" property="column4" jdbcType="VARCHAR" />
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
-  
+  <select id="selectCount" resultType="Integer">
+  	SELECT SUM(s.count-s.scount) FROM stockdetails AS s WHERE CODE = #{code}
+  </select>
+  <update id="updateCount">
+  		update stockdetails set scount=scount+#{count} where code = #{code} and gvid = #{gvid}
+  </update>
   <delete id="del">
   		delete from stockdetails where `code` = #{code}
   </delete>

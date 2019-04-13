@@ -9,9 +9,13 @@ import org.apache.ibatis.annotations.Param;
 
 public interface StockdetailsMapper {
 	
+	int selectCount(String code);
+	
 	List<Stockdetails> query(String code);
 	
 	int del(String code);
+	
+	int updateCount(@Param("code") String code,@Param("count")Integer count,@Param("gvid")String gvid);
 	
 	int add(Stock stock);
 	

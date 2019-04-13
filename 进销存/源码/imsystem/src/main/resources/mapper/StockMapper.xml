@@ -18,8 +18,8 @@
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
   <insert id="add">
-  	insert into stock(id,code,time,updatetime,uid,state,storied)
-  	values(#{id},#{code},#{time},#{time},#{uid},#{state},#{column1})
+  	insert into stock(id,code,time,updatetime,uid,state,storeid,column1,column2)
+  	values(#{id},#{code},#{time},#{time},#{uid},2,#{column1},0,0)
   </insert>
   <resultMap type="com.imsystem.domain.Stock" id="queryStock" extends="BaseResultMap">
   	<collection property="stockdetails" ofType="com.imsystem.domain.Stockdetails">
@@ -47,7 +47,9 @@
 	  	</collection>
   	</collection>
   </resultMap>
-  
+  <update id="updateState">
+  	update stock set state = 1 where code = #{code}
+  </update>
   <select id="querydetails" resultMap="queryStock">
   		SELECT s.*,sd.id as sdid,sd.uid as sduid,sd.price as sdprice,sd.state as sdstate,sd.storeid as sdstoreid,sd.code as ascode,sd.gvid as sdgvid,sd.sid as sdsid,
   				sd.updatetime as sdupdatetime,sd.count as sdcount,sd.scount as sdscount,

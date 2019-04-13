@@ -124,6 +124,16 @@
 		display: block;
 	}
 }
+.orderOver{
+	color:red;
+	margin-right : 10px;
+	font-size : 12px;
+	padding : 0px 3px;
+	border-radius : 15%;
+	
+	border: 1px solid red;
+	
+}
 </style>
 </head>
 <body>
@@ -189,7 +199,11 @@
 						</thead>
 						<tbody>
 							<tr v-for="item in pageIf.list">
-								<td>{{item.code}}</td>
+								<td style="display:flex">
+									<div v-if="item.state == 1" class="orderOver">已售完</div>
+									<div v-if="item.state == 2" class="orderOver">调拨</div>
+									{{item.code}}
+								</td>
 								<td>{{item.updatetime}}</td>
 								<td>{{item.column1}}</td>
 								<td>{{item.column2}}</td>
@@ -234,7 +248,8 @@
 						</div>
 					</div>
 				</div>
-				<div id="page"></div>
+				<div id="page">
+				</div>
 			</div>
 		</div>
 	</div>
