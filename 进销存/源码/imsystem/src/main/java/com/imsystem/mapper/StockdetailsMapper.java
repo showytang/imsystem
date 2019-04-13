@@ -1,5 +1,6 @@
 package com.imsystem.mapper;
 
+import com.imsystem.domain.Sales;
 import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.StockdetailsExample;
@@ -8,11 +9,17 @@ import org.apache.ibatis.annotations.Param;
 
 public interface StockdetailsMapper {
 	
+	int selectCount(String code);
+	
 	List<Stockdetails> query(String code);
 	
 	int del(String code);
 	
+	int updateCount(@Param("code") String code,@Param("count")Integer count,@Param("gvid")String gvid);
+	
 	int add(Stock stock);
+	
+	int addAllot(Sales sales);
 	
     int countByExample(StockdetailsExample example);
 

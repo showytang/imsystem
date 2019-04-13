@@ -181,10 +181,9 @@ public class OrderInsertController {
 
 	@RequestMapping("/allot")
 	@ResponseBody
-	public String allot(@RequestBody Stock stock) {
-		
-		
-		return "";
+	public String allot(@RequestBody Sales sales) {
+				
+		return orderInsert.allot(sales)+"";
 	}
 	
 	

@@ -19,6 +19,12 @@
     <result column="column4" property="column4" jdbcType="VARCHAR" />
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
+  <insert id="add">
+  	insert into salesdetails(id,sid,gvid,time,updatetime,oldprice,price,count)values
+  	<foreach collection="list" item="item" separator="," >
+  		(#{item.id},#{id},#{item.gvid},#{time},#{updatetime},#{item.oldprice},#{item.price},#{item.count})
+  	</foreach>
+  </insert>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
