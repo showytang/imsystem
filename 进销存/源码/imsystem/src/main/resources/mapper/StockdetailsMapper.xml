@@ -20,16 +20,50 @@
     <result column="column4" property="column4" jdbcType="VARCHAR" />
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
+  <resultMap type="com.imsystem.domain.Stockdetails" id="queryGoodsMap">
+	<id property="count" column="count" />
+	<result property="price" column="sprice" />
+	<association property="goods" javaType="com.imsystem.domain.Goods">
+		<id property="name" column="gname" />
+		<result property="img" column="img" />
+		<collection property="goodsValues" ofType="com.imsystem.domain.Goodsvalue">
+			<id property="id" column="gvid"/>
+			<result property="name" column="gvname" />
+			<result property="column1" column="gvcolumn1"/>
+		</collection>
+	</association>  	
+  </resultMap>
+  <update id="update">
+  	update stockdetails set state = 1 where id = #{id}
+  </update>
+  <select id="queryDetails" resultMap="BaseResultMap">
+  		select * from stockdetails as s where s.gvid = #{gvid} and s.storeid = #{storeid} and s.state = '0'
+  </select>
+  <select id="queryGoods" resultMap="queryGoodsMap">
+  	SELECT SUM(s.count-s.scount) AS 'COUNT',s.price as sprice,g.name as gname,gv.name AS gvname,g.img,gv.column1 AS gvcolumn1,gv.id as gvid
+	FROM `stockdetails` AS s
+	INNER JOIN `goodsvalue` AS gv ON gv.id = s.gvid
+	INNER JOIN goods AS g ON gv.gid = g.id
+	where g.name like concat('%',#{name},'%')
+	and s.storeid = 1
+	GROUP BY s.gvid
+  </select>
+  
   <select id="selectCount" resultType="Integer">
   	SELECT SUM(s.count-s.scount) FROM stockdetails AS s WHERE CODE = #{code}
   </select>
-  <update id="updateCount">
+  
+  <select id="count" parameterType="Integer" >
+  	select count from  stockDetails where id = #{id} and gvid = #{gvid}
+  </select>
+  
+  <update id="updateCount" >
   		update stockdetails set scount=scount+#{count} where code = #{code} and gvid = #{gvid}
   </update>
   <delete id="del">
   		delete from stockdetails where `code` = #{code}
   </delete>
-  <insert id="addAllot">
+  <insert id="addAllot" >
   	insert into stockdetails(id,code,gvid,sid,count,scount,price,time,updatetime,uid,state)
   	values
   	<foreach collection="list" item="item" separator=",">
@@ -40,7 +74,7 @@
   	insert into stockdetails(id,code,gvid,sid,count,scount,price,time,updatetime,uid,state,storeid)
   	values
   	<foreach collection="stockdetails" item="item" separator=",">
-  		(#{item.id},#{code},#{item.gvid},#{id},#{item.count},#{item.scount},#{item.price},#{time},#{time},'1','0','1')
+  		(#{item.id},#{code},#{item.gvid},#{id},#{item.count},#{item.scount},#{item.price},#{time},#{time},'1','0',#{storeid})
   	</foreach>
   </insert>
   <sql id="Example_Where_Clause" >

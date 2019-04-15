@@ -1,6 +1,7 @@
 package com.imsystem.service.order;
 
 import java.util.List;
+import java.util.Vector;
 
 import com.imsystem.domain.Sales;
 import com.imsystem.domain.Salesorder;
@@ -17,6 +18,6 @@ public interface OrderInsertService {
 	
 	public int updateInsertOrder(Stock stock);
 	
-	public int allot(Sales sales);
+	public int allot(Vector<Stockdetails> stockdetail);
 	
 }

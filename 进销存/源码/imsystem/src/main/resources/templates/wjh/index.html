@@ -177,10 +177,10 @@
 					</div>
 					<div class="col-md-1 col-sm-12 col-xs-11 display tj">
 						<div class="input-group">
-								<span class="input-group-addon">显示已售</span>
-								<span class="form-control">
-									<input type="checkbox" onchange="check()" id="check" >
-								</span>
+							<span class="input-group-addon">显示已售</span> <span
+								class="form-control"> <input type="checkbox"
+								onchange="check()" id="check">
+							</span>
 						</div>
 					</div>
 					<div class="col-xs-1 xsoptions">
@@ -218,11 +218,11 @@
 									<div :data="item.id" style="display: flex;">
 										<span style="margin: auto;" title="修改"
 											v-on:click="openModel(item.code)"
-											class="glyphicon glyphicon-edit"></span> &nbsp;&nbsp; <span
+											class="glyphicon glyphicon-edit"></span>
+									</div> <!-- &nbsp;&nbsp; <span
 											style="margin: auto;" title="调拨"
 											class="glyphicon glyphicon-check"
-											v-on:click="openAllotModel(item.code)"></span>
-									</div>
+											v-on:click="openAllotModel(item.code)"></span> -->
 								</td>
 							</tr>
 						</tbody>
@@ -258,11 +258,6 @@
 				<div id="page"></div>
 			</div>
 		</div>
-	</div>
-	</div>
-	</div>
-	</div>
-	</div>
 	</div>
 	<script type="text/javascript"
 		th:src="@{/assets/js/bootstrap-datetimepicker.js}"></script>
@@ -424,110 +419,51 @@
 					var iframe = $("iframe").contents();
 					
 					var shappingBody = iframe.find("#shappingTbody")
-					if($("iframe").attr("src").indexOf('/orderModel/queryIndexAllot') != -1){
-						var sales = {
-								code : $("#myModalLabel").find("span").text(),
-								list : [],
-								cid : 0,
-								uid : 1,
-								remark : "调拨",
-								count : 0,
-								paymoney : 0,
-								tainmoney : 0,
-								state : 0,
-								storeid : 1,
-								column1 : iframe.find("select").val()
-							};
-							$(shappingBody.find("tr")).each(function(i,e){
-								if($(e).find(".checkbox").prop("checked")){
-									var shuliang = parseInt($(e).find(".shiliang").val());
-									sales.count += shuliang;
-									salesdetails = {
-											count : shuliang,
-											price : $(e).find("[name=price]").val(),
-											oldprice : 0,
-											state : $(e).find("[name=state]").val(),
-											uid : 1,
-											storeid : $(e).find("[name=storeid]").val(),
-											gvid : $(e).find("img").attr("data")
-											
-									}
-									sales.list.push(salesdetails);
-								}
-							});
-							if(sales.list.length == 0){
-								return;
-							}	
-						 $.ajax({
-							
-							url : [[@{/insertOrder/allot}]],
-							
-							data : JSON.stringify(sales),
-							
-							type : "post",
-							
-							dataType : "json",
-							
-							contentType : "application/json; charset=UTF-8",
-							
-							processData: false,
-							
-							success : function(result){
-								
-								alert(result)
-								
+					
+					var stock = {
+							code : $("#myModalLabel").find("span").text(),
+							stockdetails : [],
+							column3 : iframe.find("select").val(),
+							id : shappingBody.attr("data")
+						};
+						
+						$(shappingBody.find("tr")).each(function(i,e){
+							var shuliang = parseInt($(e).find(".shiliang").val());
+							stockdetail = {
+									count : $(e).find("[name=count]").val(),
+									scount : (parseInt($(e).find("[name=count]").val())-shuliang),
+									price : $(e).find("[name=price]").val(),
+									state : $(e).find("[name=state]").val(),
+									uid : $(e).find("[name=uid]").val(),
+									storeid : $(e).find("[name=storeid]").val(),
+									gvid : $(e).find("img").attr("data")
+									
 							}
+							stock.stockdetails.push(stockdetail);
 							
 						});
+					
+					$.ajax({
 						
-					}
-					else{
-						var stock = {
-								code : $("#myModalLabel").find("span").text(),
-								stockdetails : [],
-								column3 : iframe.find("select").val(),
-								id : shappingBody.attr("data")
-							};
-							
-							$(shappingBody.find("tr")).each(function(i,e){
-								var shuliang = parseInt($(e).find(".shiliang").val());
-								stockdetail = {
-										count : $(e).find("[name=count]").val(),
-										scount : (parseInt($(e).find("[name=count]").val())-shuliang),
-										price : $(e).find("[name=price]").val(),
-										state : $(e).find("[name=state]").val(),
-										uid : $(e).find("[name=uid]").val(),
-										storeid : $(e).find("[name=storeid]").val(),
-										gvid : $(e).find("img").attr("data")
-										
-								}
-								stock.stockdetails.push(stockdetail);
-								
-							});
+						url : [[@{/insertOrder/uploadInsertOrder}]],
 						
-						$.ajax({
-							
-							url : [[@{/insertOrder/uploadInsertOrder}]],
-							
-							data : JSON.stringify(stock),
-							
-							type : "post",
-							
-							dataType : "json",
-							
-							contentType : "application/json; charset=UTF-8",
-							
-							processData: false,
-							
-							success : function(result){
-								
-								alert(result)
-								
-							}
-							
-						});
+						data : JSON.stringify(stock),
 						
-					}
+						type : "post",
+						
+						dataType : "json",
+						
+						contentType : "application/json; charset=UTF-8",
+						
+						processData: false,
+						
+						success : function(result){
+							
+							alert(result)
+							
+						}
+						
+					});
 					
 				});
 			});

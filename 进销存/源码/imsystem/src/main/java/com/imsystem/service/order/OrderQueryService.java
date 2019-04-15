@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Stock;
+import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Stockrecord;
 
 public interface OrderQueryService {
@@ -13,5 +14,9 @@ public interface OrderQueryService {
 	Vector<Stockrecord> queryAllot(String time,String endTime,String code,String jcode);
 	
 	Vector<Stockrecord> queryAllotDetails(String id);
+	
+	Vector<Stockdetails> queryGoods(String name);
+	
+	Vector<Stockdetails> queryDetails(String gvid);
 	
 }

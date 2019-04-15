@@ -20,47 +20,40 @@
 	</resultMap>
 	<resultMap type="com.imsystem.domain.Stockrecord"
 		id="queryMap" extends="BaseResultMap">
-		<association property="stock"
-			javaType="com.imsystem.domain.Stock">
+		<result property="column1" column="cname"  />
+		<result property="column2" column="jname" />
+		<association property="stockdetails" javaType="com.imsystem.domain.Stockdetails">
 			<id property="id" column="sid" />
 			<result property="updatetime" column="supdatetime" />
-			<result property="column3" column="scolumn3" />
+			<result property="count" column="count" />
 		</association>
 	</resultMap>
 	
-	<resultMap type="com.imsystem.domain.Stockrecord" id="queryAllotDetailsMap">
-		<association property="stock"
-			javaType="com.imsystem.domain.Stock">
-			<collection property="stockdetails" ofType="com.imsystem.domain.Stockdetails">
-				<id property="count" column="stkcount" />
-				<association property="goods" javaType="com.imsystem.domain.Goods">
-					<id property="name" column="gname" />
-					<result property="img" column="img"/>
-					<collection property="goodsValues" ofType="com.imsystem.domain.Goodsvalue" >
-						<id column="gdname" property="name" />
-						<result column="gdimg" property="column1"/>
-					</collection>
-				</association>
+	<resultMap type="com.imsystem.domain.Stockdetails" id="queryAllotDetailsMap">
+		<id property="count" column="count" />
+		<association property="goods" javaType="com.imsystem.domain.Goods">
+			<id property="img" column="img" />
+			<result property="name" column="gname" />
+			<collection property="goodsValues" ofType="com.imsystem.domain.Goodsvalue">
+				<id property="name" column="gvname" />
+				<result property="column1" column="gvcolumn1" />
 			</collection>
 		</association>
-		
 	</resultMap>
 	
 	<select id="queryAllotDetails" resultMap="queryAllotDetailsMap">
-		SELECT gd.name AS gdname,g.name AS gname,stk.count AS stkcount,g.img,gd.column1 AS gdimg 
-		FROM `stockrecord` AS s
-		INNER JOIN `stock` AS st ON s.beforesdid = st.code
-		INNER JOIN `stockdetails` AS stk ON stk.sid = st.id
-		INNER JOIN `goodsvalue` AS gd ON stk.gvid = gd.id
-		INNER JOIN `goods` AS g ON g.id = gd.gid
-		WHERE s.`id` = #{id}
+		SELECT st.count-st.scount AS COUNT,g.name AS gname,gv.name AS gvname,gv.column1 AS gvcolumn1,g.img FROM stockdetails AS st 
+		LEFT JOIN goodsvalue AS gv ON gv.id = st.gvid
+		INNER JOIN goods AS g ON gv.gid = g.id
+		WHERE st.id = #{id} 
 	</select>
 	<select id="query" resultMap="queryMap">
-		SELECT st.*,s.`id` AS sid,s.`updatetime` AS supdatetime,(SELECT
-		SUM(stk.`count`) FROM `stockdetails` AS stk WHERE
-		stk.`sid`=s.`id`GROUP BY stk.`sid`) AS scolumn3 FROM `stockrecord` AS
-		st
-		LEFT JOIN stock AS s ON st.beforesdid = s.`code`
+		SELECT SUM(s.count-s.scount) AS COUNT,
+		(SELECT NAME FROM `store` WHERE id = st.aftersid) AS cname,
+		(SELECT NAME FROM `store` WHERE id = st.beforesid) AS jname,
+		s.`updatetime` AS supdatetime,s.id AS sid
+		FROM `stockrecord` AS st
+		LEFT JOIN `stockdetails` AS s ON st.beforesdid = s.`id`
 		<where>
 			<if test="time != null and time != ''">
 				and s.`updatetime` >= #{time} AND s.`updatetime` &lt;= #{endTime}

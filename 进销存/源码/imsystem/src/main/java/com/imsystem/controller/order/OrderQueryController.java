@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Stock;
+import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Stockrecord;
 import com.imsystem.domain.Store;
 import com.imsystem.service.order.OrderQueryService;
@@ -86,6 +87,27 @@ public class OrderQueryController {
 		modal.addAttribute("stockcored",stock);
 		
 		return "wjh/allotDetails";
+	}
+	
+	@RequestMapping("/toGoodsAllot")
+	public String toGoodsAllot(Model model) {
+		
+		model.addAttribute("li", store());
+		
+		return "wjh/indexAllotDatail";
+	}
+	
+	@RequestMapping("/goodsAllot")
+	@ResponseBody
+	public Vector<Stockdetails> goodsAllot(String name){
+		return orderquery.queryGoods(name);
+	}
+	
+	@RequestMapping("/queryDetails")
+	@ResponseBody
+	public Vector<Stockdetails> queryDetails(String gvid){
+		
+		return orderquery.queryDetails(gvid);
 	}
 
 	@RequestMapping("/yetQuery")

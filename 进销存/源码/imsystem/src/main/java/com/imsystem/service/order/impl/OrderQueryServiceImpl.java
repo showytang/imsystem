@@ -11,9 +11,11 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Stock;
+import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Stockrecord;
 import com.imsystem.domain.Store;
 import com.imsystem.mapper.StockMapper;
+import com.imsystem.mapper.StockdetailsMapper;
 import com.imsystem.mapper.StockrecordMapper;
 import com.imsystem.service.order.OrderQueryService;
 
@@ -26,6 +28,9 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	
 	@Autowired
 	StockrecordMapper stockrecord;
+	
+	@Autowired
+	StockdetailsMapper stockDetail;
 	
 	@Override
 	public PageInfo<Stock> queryStock(String code,String time,String endTime,Integer currentPage,Integer pageSize,String order,Integer kucun) {
@@ -49,6 +54,18 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	public Vector<Stockrecord> queryAllotDetails(String id) {
 		// TODO Auto-generated method stub
 		return stockrecord.queryAllotDetails(id);
+	}
+
+	@Override
+	public Vector<Stockdetails> queryGoods(String name) {
+		// TODO Auto-generated method stub
+		return stockDetail.queryGoods(name);
+	}
+
+	@Override
+	public Vector<Stockdetails> queryDetails(String gvid) {
+		// TODO Auto-generated method stub
+		return stockDetail.queryDetails(gvid,"1");
 	}
 
 	

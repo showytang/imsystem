@@ -1,9 +1,12 @@
 package com.imsystem.service.order.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.Vector;
+
+import javax.xml.crypto.Data;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,7 +57,11 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 	public int insert(Stock stock) {
 
 		stock.setId(UUID.randomUUID().toString());
-
+		
+		for(int i = 0; i < stock.getStockdetails().size(); i++) {
+			stock.getStockdetails().get(i).setId(UUID.randomUUID().toString());
+		}
+		
 		int count = stockM.insertSelective(stock);
 
 		count += stockdetail.add(stock);
@@ -98,53 +105,65 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 	}
 
 	@Override
-	public int allot(Sales sales) {
-
-		sales.setTime(new Date());
-
-		sales.setUpdatetime(new Date());
-
-		sales.setId(UUID.randomUUID().toString());
-
-		String code = sales.getCode();
+	public int allot(Vector<Stockdetails> stockde) {
 
 		int count = 0;
-
-		for (Salesdetails item : sales.getList()) {
-
-			count += stockdetail.updateCount(sales.getCode(), item.getCount(), item.getGvid());
-
+		
+		int s = 0;
+		for (Stockdetails item : stockde) {
+			
+			count += stockdetail.updateCount(item.getCode(), item.getCount(), item.getGvid());
+			
+			s += item.getCount();
+			
+			if(stockdetail.selectCount(item.getCode()) == 0) {
+				count += stockM.updateState(item.getCode());
+				count += stockdetail.update(item.getId());
+			}
+			
 		}
-
-		if (stockdetail.selectCount(sales.getCode()) == 0) {
-
-			count += stockM.updateState(sales.getCode());
-
+		
+		Stock stock = new Stock();
+		
+		stock.setId(UUID.randomUUID().toString());
+		stock.setCode(UUID.randomUUID().toString());
+		stock.setTime(new Date());
+		stock.setUpdatetime(new Date());
+		stock.setState(1);
+		stock.setColumn1("0");
+		stock.setColumn2("0");
+		stock.setUid("0");
+		stock.setStoreid(stockde.get(0).getColumn1());
+		
+		count += stockM.insertSelective(stock);
+		
+		List<Stockdetails> list = new ArrayList<Stockdetails>();
+		
+		Stockdetails stod = new Stockdetails();
+		stod.setId(UUID.randomUUID().toString());
+		stod.setCount(s);
+		stod.setCode(stock.getCode());
+		stod.setScount(0);
+		stod.setPrice(stockde.get(0).getPrice());
+		stod.setGvid(stockde.get(0).getGvid());
+		stod.setStoreid(stockde.get(0).getColumn1());
+		list.add(stod);
+		
+		stock.setStockdetails(list);
+		
+		count += stockdetail.add(stock);
+		
+		for (Stockdetails item : stockde) {
+			
+			Stockrecord stockcords = new Stockrecord();
+			stockcords.setId(UUID.randomUUID().toString());
+			stockcords.setAftersdid(item.getId());
+			stockcords.setBeforesdid(stod.getId());
+			stockcords.setAftersid("1");
+			stockcords.setBeforesid(item.getColumn1());
+			
+			count += stockcord.insertSelective(stockcords);
 		}
-
-		sales.setCode(UUID.randomUUID().toString());
-
-		count = salesMapper.insertSelective(sales);
-
-		count += salesdetailsMapper.add(sales);
-
-		count += stockM.add(sales);
-
-		count += stockdetail.addAllot(sales);
-
-		Stockrecord stockrecord = new Stockrecord();
-
-		stockrecord.setId(UUID.randomUUID().toString());
-
-		stockrecord.setAftersdid(code);
-		
-		stockrecord.setBeforesdid(sales.getCode());
-		
-		stockrecord.setAftersid("1");
-		
-		stockrecord.setBeforesid(sales.getColumn1());
-
-		count += stockcord.insertSelective(stockrecord);
 		
 		return count;
 	}
