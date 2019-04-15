@@ -23,6 +23,10 @@ public interface GoodstypeMapper {
     int insert(Goodstype record);
 
     int insertSelective(Goodstype record);
+    
+    List<Goodstype> queryall();
+    
+    List<Goodstype> querygoodstype(@Param("tiaojian")String tiaojian);
 
     List<Goodstype> selectByExample(GoodstypeExample example);
 

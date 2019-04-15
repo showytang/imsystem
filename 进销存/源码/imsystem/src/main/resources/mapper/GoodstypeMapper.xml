@@ -17,6 +17,16 @@
    
   </resultMap>
   
+ <select id="querygoodstype" resultMap="BaseResultMap">
+  	SELECT * FROM goodstype 
+  	<where>
+  		state=0 
+  		<if test="tiaojian!=null">
+  				and id LIKE concat('%',#{tiaojian}) OR  NAME LIKE concat('%',#{tiaojian}) OR pid LIKE concat('%',#{tiaojian}) OR uid LIKE concat('%',#{tiaojian})
+  		</if>
+  	</where>
+  </select>
+  
   
   
   <select id="QueryGoodsTypeByPid" resultMap="BaseResultMap">
@@ -85,6 +95,11 @@
       </foreach>
     </where>
   </sql>
+  
+  <select id="queryall" resultMap="BaseResultMap" >
+   SELECT * FROM goodstype WHERE state=0
+  </select>
+  
   <sql id="Base_Column_List" >
     id, name, pid, time, updatetime, uid, state, column1, column2, column3, column4, 
     column5
