@@ -26,7 +26,7 @@ public class CustomerLevelController {
 		List<QueryCustomerLevelVO> clListVO=clService.queryAllCustomerLevel();
 		model.addAttribute("clList", clListVO);
 		return "lxy/kehujibie";
-	}
+	} 
 	
 	@RequestMapping("addcustomerlevel")
 	public String addCustomertype(Customerlevel cusLevelObj) {
