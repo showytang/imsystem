@@ -5,13 +5,21 @@ import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.StockdetailsExample;
 import java.util.List;
+import java.util.Vector;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface StockdetailsMapper {
 	
 	int selectCount(String code);
 	
+	Vector<Stockdetails> queryGoods(String name);
+	
+	int update(String id);
+	
 	List<Stockdetails> query(String code);
+	
+	Vector<Stockdetails> queryDetails(@Param("gvid") String gvid,@Param("storeid") String storeid);
 	
 	int del(String code);
 	

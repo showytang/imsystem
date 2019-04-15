@@ -4,6 +4,8 @@ import java.util.Date;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Stockdetails {
     private String id;
 
@@ -20,7 +22,7 @@ public class Stockdetails {
     private Double price;
 
     private Date time;
-
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date updatetime;
 
     private String uid;
@@ -54,7 +56,7 @@ public class Stockdetails {
 	}
 
     public String getId() {
-        return UUID.randomUUID().toString();
+        return id;
     }
 
     public void setId(String id) {

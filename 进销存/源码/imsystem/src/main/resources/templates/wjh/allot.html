@@ -182,11 +182,11 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr v-for="item in allotList" v-on:click="showModal(item.id)">
-										<td>{{item.aftersid}}</td>
-										<td>{{item.beforesid}}</td>
-										<td>{{item.stock.column3}}</td>
-										<td>{{item.stock.updatetime}}</td>
+									<tr v-for="item in allotList" v-on:click="showModal(item.stockdetails.id)">
+										<td>{{item.column1}}</td>
+										<td>{{item.column2}}</td>
+										<td>{{item.stockdetails.count}}</td>
+										<td>{{item.stockdetails.updatetime}}</td>
 									</tr>
 								</tbody>
 							</table>
@@ -304,8 +304,13 @@
 					dataType　: "json",
 					
 					success : function(result){
+						if(result != ''){
+							vue.allotList = result;
+						}
+						else{
+							vue.allotList = [];
+						}
 						
-						vue.allotList = result;
 						
 					}
 					

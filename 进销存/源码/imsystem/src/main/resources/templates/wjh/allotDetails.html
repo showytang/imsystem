@@ -80,19 +80,15 @@ body::-webkit-scrollbar-thumb {
 			</thead>
 			<tbody>
 				<tr v-for="item in list">
-					<td v-for="item1 in item.stock.stockdetails">
-						<div v-for="item2 in item1.goods.goodsValues">
-							<img v-if="item2.column1 != null" class="shappingImg"
-								:src="item2.column1"> <img v-else class="shappingImg"
-								:src="item1.goods.img">
-						</div>
+					<td v-for="item2 in item.goods.goodsValues"><img
+						v-if="item2.column1 != null" class="shappingImg"
+						:src="item2.column1"> <img v-else class="shappingImg"
+						:src="item.goods.img"></td>
+					<td>{{item.goods.name}}</td>
+					<td v-for="item2 in item.goods.goodsValues">
+							{{item2.name}}
 					</td>
-					<td v-for="item1 in item.stock.stockdetails">{{item1.goods.name}}</td>
-					<td v-for="item1 in item.stock.stockdetails">
-						<div v-for="item2 in item1.goods.goodsValues">
-							{{item2.name}}</div>
-					</td>
-					<td v-for="item1 in item.stock.stockdetails">{{item1.count}}</td>
+					<td>{{item.count}}</td>
 				</tr>
 			</tbody>
 		</table>
