@@ -124,15 +124,14 @@
 		display: block;
 	}
 }
-.orderOver{
-	color:red;
-	margin-right : 10px;
-	font-size : 12px;
-	padding : 0px 3px;
-	border-radius : 15%;
-	
+
+.orderOver {
+	color: red;
+	margin-right: 10px;
+	font-size: 12px;
+	padding: 0px 3px;
+	border-radius: 15%;
 	border: 1px solid red;
-	
 }
 </style>
 </head>
@@ -171,9 +170,17 @@
 								class="form-control" onchange="time(this)" id="config-demo"
 								style="border: none; border-right: 1px solid #ddd; border-radius: 0px;"
 								placeholder="开始时间" /> <span class="input-group-addon">时间</span>
-							<span class="input-group-addon order" data="1"> <span
+							<span class="input-group-addon order" data="0"> <span
 								class="glyphicon glyphicon-triangle-bottom"></span>
 							</span>
+						</div>
+					</div>
+					<div class="col-md-1 col-sm-12 col-xs-11 display tj">
+						<div class="input-group">
+								<span class="input-group-addon">显示已售</span>
+								<span class="form-control">
+									<input type="checkbox" onchange="check()" id="check" >
+								</span>
 						</div>
 					</div>
 					<div class="col-xs-1 xsoptions">
@@ -199,9 +206,9 @@
 						</thead>
 						<tbody>
 							<tr v-for="item in pageIf.list">
-								<td style="display:flex">
-									<div v-if="item.state == 1" class="orderOver">已售完</div>
-									<div v-if="item.state == 2" class="orderOver">调拨</div>
+								<td style="display: flex">
+									<div v-if="item.state == 2" class="orderOver">已售完</div>
+									<div v-if="item.state == 1" class="orderOver">调拨</div>
 									{{item.code}}
 								</td>
 								<td>{{item.updatetime}}</td>
@@ -248,8 +255,7 @@
 						</div>
 					</div>
 				</div>
-				<div id="page">
-				</div>
+				<div id="page"></div>
 			</div>
 		</div>
 	</div>
@@ -316,12 +322,22 @@
 				
 			}
 			
+			function check(){
+				
+				query();
+			}
+			
 			function query(){
 				var times = $("#config-demo").val();
 				
 				var time = times.substring(0,(times.indexOf('-')-1));
 				
 				var endTime = times.substring((times.indexOf('-')+2),times.length)
+				var kucun;
+				
+				if($("#check").prop("checked")){
+					kucun = 2;
+				}
 				
 				if(time){
 					time = timess(time);
@@ -333,6 +349,7 @@
 						code : vue.no,
 						pageSize : vue.pagesize,
 						time : time,
+						kucun : kucun,
 						endTime : endTime,
 						order : $(".order").attr("data"),
 						currentPage : vue.pageIf.pageNum
@@ -395,11 +412,11 @@
 					if($(this).find("span").attr("class").indexOf("glyphicon-triangle-bottom") != -1) {
 						$(this).find("span").removeClass("glyphicon-triangle-bottom");
 						$(this).find("span").addClass("glyphicon-triangle-top");
-						$(this).attr("data","0");
+						$(this).attr("data","1");
 					} else {
 						$(this).find("span").addClass("glyphicon-triangle-bottom");
 						$(this).find("span").removeClass("glyphicon-triangle-top");
-						$(this).attr("data","1");
+						$(this).attr("data","0");
 					}
 					query();
 				});

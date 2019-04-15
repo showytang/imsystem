@@ -20,6 +20,16 @@ public class Stockrecord {
     private String column4;
 
     private String column5;
+    
+    private Stock stock;
+    
+    public Stock getStock() {
+		return stock;
+	}
+    
+    public void setStock(Stock stock) {
+		this.stock = stock;
+	}
 
     public String getId() {
         return id;

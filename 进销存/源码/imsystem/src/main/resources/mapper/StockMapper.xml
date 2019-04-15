@@ -19,7 +19,7 @@
   </resultMap>
   <insert id="add">
   	insert into stock(id,code,time,updatetime,uid,state,storeid,column1,column2)
-  	values(#{id},#{code},#{time},#{time},#{uid},2,#{column1},0,0)
+  	values(#{id},#{code},#{time},#{time},#{uid},1,#{column1},0,0)
   </insert>
   <resultMap type="com.imsystem.domain.Stock" id="queryStock" extends="BaseResultMap">
   	<collection property="stockdetails" ofType="com.imsystem.domain.Stockdetails">
@@ -48,7 +48,7 @@
   	</collection>
   </resultMap>
   <update id="updateState">
-  	update stock set state = 1 where code = #{code}
+  	update stock set state = 2 where code = #{code}
   </update>
   <select id="querydetails" resultMap="queryStock">
   		SELECT s.*,sd.id as sdid,sd.uid as sduid,sd.price as sdprice,sd.state as sdstate,sd.storeid as sdstoreid,sd.code as ascode,sd.gvid as sdgvid,sd.sid as sdsid,
@@ -71,13 +71,21 @@
 	  	<if test="time != null and time != ''">
 	  		and s.`updatetime` >= #{time} AND s.`updatetime` &lt;= #{endTime}
 	  	</if>
+	  	<if test="kucun == 2">
+  			and s.state = #{kucun}
+  		</if>
+  		<if test="kucun == null or kucun == ''">
+  			and s.state != 2
+  		</if>
   	</where>
   	<if test="order == 0">
-  		order by s.`updatetime` 
+  		order by s.`updatetime`
   	</if>
   	<if test="order == 1">
   		order by s.`updatetime` desc
   	</if>
+  	
+  	
   </select>
   <sql id="Example_Where_Clause" >
     <where >

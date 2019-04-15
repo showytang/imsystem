@@ -102,10 +102,12 @@ function page(data) {
 		
 		ul.find(".pageCurrent:eq(" + (pageNum-1) + ")").addClass("currentPage");
 		
+		ul.find(".pageCurrent").removeClass("pageDi");
+		
 		ul.find(".pageCurrent:eq(" + (pages-1) + ")").addClass("pageDi");
 		
 		$("#page").html("");
-
+		
 		$("#page").append(ul);
 		
 		return;
@@ -183,7 +185,7 @@ function nextPage() {
 	if($(".pageCurrent").length == 1){
 		return;
 	}
-	if (index == 0 || $(".pageCurrent").length < 6) {
+	if (index == 0 || $(".pageCurrent").length < 6 || $("#pageDian").css("display") == "none") {
 		pageJia(index);
 		floatPage();
 		return;
@@ -217,7 +219,7 @@ function prevPage(th) {
 	if ($(".pageCurrent:eq(" + (index) + ")").text() == 1) {
 		return;
 	}
-	if ($(".pageCurrent:eq(" + (index) + ")").text() <= 2) {
+	if ($(".pageCurrent:eq(" + (index) + ")").text() <= 2 || $("#pageDian").css("display") == "none") {
 		pageJian(index);
 		floatPage();
 		return;
