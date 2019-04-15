@@ -17,14 +17,13 @@ import com.imsystem.domain.TypeLevelVO;
 import com.imsystem.service.customer.CustomerLevelService;
 import com.imsystem.service.customer.CustomerService;
 import com.imsystem.service.customer.CustomerTypeService;
-import com.imsystem.service.customer.impl.CustomerServiceImpl;
 
 @Controller
 @RequestMapping("customer")
 public class CustomerController {
 	
 	@Autowired
-	CustomerServiceImpl cService;
+	CustomerService cService;
 	@Autowired
 	CustomerTypeService ctService;
 	@Autowired

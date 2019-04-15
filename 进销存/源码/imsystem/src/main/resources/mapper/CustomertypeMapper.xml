@@ -134,11 +134,10 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-<<<<<<< HEAD
-  <insert id="insert" keyProperty="id" useGeneratedKeys="true" parameterType="com.imsystem.domain.Customertype" >
-=======
+
+  
   <insert id="insert" keyProperty="id" useGeneratedKeys="true"  parameterType="com.imsystem.domain.Customertype" >
->>>>>>> refs/heads/master
+
     insert into customertype (id, name, viewname, 
       agio, state, time, 
       updatetime, uid, defaulttype, 
