@@ -20,8 +20,9 @@
 	<link rel="apple-touch-icon" sizes="76x76" th:href="@{/assets/img/apple-icon.png}">
 	<link rel="icon" type="image/png" sizes="96x96" th:href="@{/assets/img/favicon.png}">
 	<style type="text/css">
-		
-		
+		*{
+			-webkit-user-select: none;
+		}
 		.table{
 				color: rgb(2, 143, 208);
 			
@@ -58,13 +59,18 @@
 						<div class="panel-heading">
 							<h3 class="panel-title ptitle">客户级别</h3>
 							<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
-							
+							<input type="hidden" value="1" id="uid">
 						</div>
 						<div class="ta">
-						 <input class="col-md-2 col-md-offset-7 " type="text" placeholder="请输入搜索条件" /><input class="col-md-1 btn btn-primary btn-lg" type="button" value="GO" style="height: 27px;line-height: 5px;margin-bottom: 5px;" />
+						<form id="lickSearchForm" action="querylikecustomerlevellist" method="post">
+						 	<input class="col-md-2 col-md-offset-7 " type="text" name="content" placeholder="请输入搜索条件" />
+						 	<input id="likeSearch" class="col-md-1 btn btn-primary btn-lg" type="button" value="GO" style="height: 27px;line-height: 5px;margin-bottom: 5px;" />
+						 </form>
+						 
 						<button type="button" value="新增" class="btn btn-primary btn-lg col-md-1 col-md-offset-1" data-toggle="modal" data-target="#myModal" style="height: 30px;line-height: 5px; margin-bottom: 5px; margin-left: 15px;" >
 	  						新增
 						</button>
+						
 						<table class="table table-striped">
 							<tr>
 								<!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
@@ -73,43 +79,26 @@
 								<th>创建时间</th>
 								<th>最后修改时间</th>
 								<th>操作人编号</th>
-								
 								<th>操作</th>
 							</tr>
-							<tr>
-								<td>张三</td>
-								<td>李四</td>
-								<td>0.8</td>
-								<td>0.8</td>
-								<td>003号</td>
+							<tr th:each="item,state:${clList}">
+								<td th:text="${item.clObj.name}"></td>
+								<td th:text="${item.clObj.agio}"></td>
+								<td th:text="${#dates.format(item.clObj.time,'yyyy-MM-dd HH:mm:dd')}"></td>
+								<td th:text="${#dates.format(item.clObj.updatetime,'yyyy-MM-dd HH:mm:dd')}"></td>
+								<td th:text="${item.uObj.name}"></td>
 								
 								<td>
-									<button type="button"  data-toggle="modal" data-target="#myModal1" class="an">
+									<button type="button"  data-toggle="modal" data-target="#myModal1" class="an update">
 			  						修改
 									</button>
-									<a href="#"><input type="button" class="an" value="删除"/></a>
+									<input type="hidden" th:value="${item.clObj.id}" id="clId"/>
+									<a href="#"><input type="button" class="an delete" value="删除"/></a>
 								</td>
 							</tr>
-							<!--<tr>
-								<td>张三</td>
-								<td>李四</td>
-								<td>0.8</td>
-								<td>003号</td>
-								<td>正常</td>
-								<td>2019-03-12</td>
-								<td>2019-03-16</td>
-								<td>Z004</td>
-								<td>
-									<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal1" style="height: 30px;line-height: 5px;">
-			  						修改
-									</button>
-								</td>
-							</tr>-->
+							
 						</table>
-							<div class="col-md-3 col-md-offset-5">
-								<a href="#">上一页</a> 
-								<a href="#">下一页</a> 1 / 3 共 3 页
-							</div>
+							
 						</div>
 						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">		
 								<div class="modal-dialog" role="document">
@@ -120,42 +109,21 @@
 		      							</div>
 								      <div class="modal-body">
 								        	
-										<form class="form-horizontal">
+										<form class="form-horizontal" id="addCustomerLevelForm" action="addcustomerlevel" method="post">
+											<input type="hidden" value="" id="addCustomerLevelUid" name="uid">
 										  	<div class="form-group">
 										    	<label for="InSname" class="col-sm-3 control-label">级别名称</label>
 											    <div class="col-sm-9">
-											    	<input type="text" class="form-control" id="InSname">
+											    	<input type="text" class="form-control name" name="name">
 											    </div>
 										  	</div>
 										  	<div class="form-group">
 										    	<label for="InName" class="col-sm-3 control-label">折扣</label>
 											    <div class="col-sm-9">
-											      <input type="text" class="form-control" id="InName">
+											      <input type="text" class="form-control agio" name="agio">
 											    </div>
 										  	</div>
 										  	
-										  	<div class="form-group">
-										    	<label for="InName" class="col-sm-3 control-label">创建时间</label>
-											    <div class="col-sm-9">
-											      <input type="text" class="form-control" id="InName">
-											    </div>
-										  	</div>
-										  	
-										  	<div class="form-group">
-										    	<label for="inputPassword3" class="col-sm-3 control-label">最后修改时间</label>
-											    <div class="col-sm-9">
-											      <input type="text" class="form-control" id="inputPassword3">
-											    </div>
-										  	</div>
-										  	<div class="form-group">
-										    	<label for="inputEmail3" class="col-sm-3 control-label">操作人编号</label>
-											    <div class="col-sm-9">
-											    	<input type="text" class="form-control" id="inputEmail3">
-											    </div>
-										  	</div>
-										  	
-										  	
-										  
 										</form>
 										
 								      </div>
@@ -176,48 +144,27 @@
 									        <h4 class="modal-title" id="myModalLabel">修改客户级别</h4>
 		      							</div>
 								      	<div class="modal-body">
-								      		<form class="form-horizontal">
+								      		<form class="form-horizontal" id="updateCustomerLevelForm" action="updatecustomerlevel" method="post">
+								      		<input type="hidden" value="" name="id" id="updateClid"/>
 										  	<div class="form-group">
 										    	<label for="inputEmail3" class="col-sm-3 control-label">级别名称</label>
 											    <div class="col-sm-9">
-											    	<input type="text" class="form-control" id="inputEmail3">
+											    	<input type="text" class="form-control name" name="name">
 											    </div>
 										  	</div>
 										  	<div class="form-group">
 										    	<label for="inputPassword3" class="col-sm-3 control-label">折扣</label>
 											    <div class="col-sm-9">
-											      <input type="text" class="form-control" id="inputPassword3">
+											      <input type="text" class="form-control agio" name="agio">
 											    </div>
 										  	</div>
 										  	
-										  	<div class="form-group">
-										    	<label for="inputPassword3" class="col-sm-3 control-label">创建时间</label>
-											    <div class="col-sm-9">
-											      <input type="text" class="form-control" id="inputPassword3">
-											    </div>
-										  	</div>
-										  	
-										  	<div class="form-group">
-										    	<label for="inputPassword3" class="col-sm-3 control-label">最后修改时间</label>
-											    <div class="col-sm-9">
-											      <input type="text" class="form-control" id="inputPassword3">
-											    </div>
-										  	</div>
-										  	<div class="form-group">
-										    	<label for="inputEmail3" class="col-sm-3 control-label">操作人编号</label>
-											    <div class="col-sm-9">
-											    	<input type="text" class="form-control" id="inputEmail3">
-											    </div>
-										  	</div>
-										  	
-										  	
-										  
 										</form>
 								        
 								      	</div>
 								      <div class="modal-footer">
 								        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-								        <button type="button" class="btn btn-primary">提交</button>
+								        <button type="button" class="btn btn-primary" id="update">提交</button>
 								      </div>
 		    						</div>
 		  						</div>
@@ -235,5 +182,86 @@
 	<script th:src="@{/assets/js/jquery.slimscroll.min.js}"></script>
 	<script th:src="@{/assets/js/toastr.min.js}"></script>
 	<script th:src="@{/assets/js/klorofil-common.js}"></script>	
+	<script type="text/javascript">
+	
+		$(function(){
+			
+			 $("#tijiao").click(function(){
+				var uid=$("#uid").val();
+				var name=$("#addCustomerLevelForm .name").val();
+				var agio=$("#addCustomerLevelForm .agio").val();
+				if(uid==""){
+					alert("还未登录，请先登录！");
+				}else{
+					$("#addCustomerLevelUid").val(uid);
+					if(name==""){
+						alert("信息不完整！");
+					}else{
+						if(agio==""){
+							alert("信息不完整！");
+						}else{
+							$("#addCustomerLevelForm").submit();
+						}
+					}
+				}
+			});
+			 
+			$(".update").click(function(){
+				 var clId=$(this).next().val();
+				 $.ajax({
+			        	url:"querycustomerlevelbyid",
+			        	type:"post",
+			        	data:"clId="+clId,
+			        	dataType:"json",
+			        	success:function(result){
+			        		var name=$("#updateCustomerLevelForm #updateClid").val(result.id);
+			        		var name=$("#updateCustomerLevelForm .name").val(result.name);
+							var agio=$("#updateCustomerLevelForm .agio").val(result.agio);
+			        	}
+			        });
+			 }); 
+			 
+			 $("#update").click(function(){
+				 var uid=$("#uid").val();
+					var name=$("#updateCustomerLevelForm .name").val();
+					var agio=$("#updateCustomerLevelForm .agio").val();
+					if(uid==""){
+						alert("还未登录，请先登录！");
+					}else{
+						if(name==""){
+							alert("信息不完整！");
+						}else{
+							if(agio==""){
+								alert("信息不完整！");
+							}else{
+								$("#updateCustomerLevelForm").submit();
+							}
+						}
+					}
+			 }); 
+			 
+			 $(".delete").click(function(){
+				 var clId=$(this).parent().prev().val();
+				 var thisDocument=$(this);
+				 $.ajax({
+			        	url:"deletecustomerlevelbyid",
+			        	type:"post",
+			        	data:"clId="+clId,
+			        	success:function(result){
+			        		if(result>0){
+			        			thisDocument.parent().parent().parent().remove();
+			        		}
+			        	}
+			        });
+			 }); 
+			 
+			 $("#likeSearch").click(function(){
+				 $("#lickSearchForm").submit();
+				 
+			 }); 
+		
+		});	
+	</script>
+	
 </body>
 </html>

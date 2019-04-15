@@ -15,6 +15,8 @@
     <link rel="apple-touch-icon" sizes="76x76" th:href="@{/assets/img/apple-icon.png}">
 	<link rel="icon" type="image/png" sizes="96x96" th:href="@{/assets/img/favicon.png}">
 	
+	<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}"> 
+	
     <link th:href="@{/assets/XiTong/css/bootstrap.min.css}" rel="stylesheet">
     <!-- Custom CSS -->
     <link th:href="@{/assets/XiTong/css/style.css}" rel="stylesheet">
@@ -30,6 +32,12 @@
 <style type="text/css">
 	*{
 		-webkit-user-select: none;
+	}
+	html{
+		font-size: 18px;
+	}
+	.input-group-btn>.btn{
+		width: 50px;
 	}
 	[type="checkbox"]:not(:checked), [type="checkbox"]:checked{
 		position: relative;
@@ -80,10 +88,37 @@
 	a:hover{
 		cursor: pointer;
 	}
+	
+	/* 分页样式 */
+	.pagebtn{
+		height: 28px;
+		width: 25px;
+		border: 1px solid #C0C0C0;
+		border-radius: 3px;
+		list-style: none;
+		text-align: center;
+		line-height: 28px;
+		cursor: pointer;
+	}
+	#page>ul{
+		display: flex;
+		justify-content: space-around;
+		padding: 0px;
+		font-size: 12px;
+	}
+	#page{
+		width: 300px;
+		margin: 20px auto ;
+	}
+	.currentPage{
+		background: #1094ce;
+		color: white;
+		border: none;
+	}
 </style>
 </head>
 	<body>
-		<div class="row"style="padding: 28px 20px;">
+		<div class="row elDocument"style="padding: 28px 20px;">
                     <!-- column -->
                     <div class="col-lg-12">
                         <div class="card">
@@ -95,14 +130,14 @@
                     					</label>
                     					<span style="display: block;width: 60px;line-height: 38px;">零欠款</span>
                             	 	</div>
-                            	 	<div class="input-group" style="margin-right: 10%;">
+                            	 	<div class="input-group" style="margin-right: 15%;">
 										<input type="text" value="" class="form-control" placeholder="Search dashboard...">
 										<span class="input-group-btn"><button type="button" class="btn btn-primary">Go</button></span>
 									</div>
                                 	<input type="button" class="btn btn-primary" id="add" value="新增供应商"/>
                                 </h5>
                                 <h4 class="card-title">供应商</h4>
-                               
+                               <form id="supplierForm" action="" method="post"></form>
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
@@ -130,42 +165,23 @@
                                                 <td><a class="detail">查看详情</a></td>
                                                 <td><a class="del" style="color: red;">删除</a></td>
                                             </tr>
-                                            <tr>
-                                                <td>网仪店主</td>
-                                                <td>AT444444</td>
-                                                <td>卫庄</td>
-                                                <td>15858585822</td>
-                                                <td><a class="stockList">进货单列表</a></td>
-                                                <td><a class="bill">应付对账单</a></td>
-                                                <td><a class="pay">付款</a></td>
-                                                <td><a class="detail">查看详情</a></td>
-                                                <td><a class="del" style="color: red;">删除</a></td>                                              
-                                            </tr>
-                                            <tr>
-                                                <td>花店店主</td>
-                                                <td>AT444444</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td><a class="stockList">进货单列表</a></td>
-                                                <td><a class="bill">应付对账单</a></td>
-                                                <td><a class="pay">付款</a></td>
-                                                <td><a class="detail">查看详情</a></td>
-                                                <td><a class="del" style="color: red;">删除</a></td>                                               
-                                            </tr>
-                                            <tr>
-                                                <td>网仪店主</td>
-                                                <td>AT444444</td>
-                                                <td>卫庄</td>
-                                                <td>15858585822</td>
-                                                <td><a class="stockList">进货单列表</a></td>
-                                                <td><a class="bill">应付对账单</a></td>
-                                                <td><a class="pay">付款</a></td>
-                                                <td><a class="detail">查看详情</a></td>
-                                                <td><a class="del" style="color: red;">删除</a></td>                                              
-                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
+                                
+                                <!-- 分页 -->
+                                <div id="page">
+									<ul>
+										<li class="pagebtn pagePrev"><span class="glyphicon glyphicon-menu-left"></span></li>
+										<li class="pagebtn pageCurrent pageq" v-for="(o,i) in pages">{{o.val}}</li>
+										
+										<li class="pagebtn currentPage pageCurrent pageq">1</li>
+										<li class="pagebtn" id="pageDian" style="border: none;background: white;font-size: 20px;">...</li>
+										<li class="pagebtn pageCurrent pageDi">14</li>
+										<li class="pagebtn pageCurrent">15</li>
+										<li class="pagebtn pageNext"><span class="glyphicon glyphicon-menu-right"></span></li>
+									</ul>
+								</div>
                             </div>
                         </div>
                     </div>
@@ -186,18 +202,159 @@
     <script th:src="@{/assets/js/sticky-kit.min.js}"></script>
     <!--Custom JavaScript -->
     <script th:src="@{/assets/js/custom.min.js}"></script>
+    <script th:src="@{/assets/js/vue.js}"></script>
 	<script>
+	var vue=new Vue({
+		el:".elDocument",
+		data:{
+			pages:[]
+		}
+	});
+	
+	function pageJia(index){
+		$(".pageCurrent:eq("+index+")").removeClass("currentPage");
+		$(".pageCurrent:eq("+(index+1)+")").addClass("currentPage");
+	}
+	function pageJian(index){
+		$(".pageCurrent:eq("+index+")").removeClass("currentPage");
+		$(".pageCurrent:eq("+(index-1)+")").addClass("currentPage");
+	}
 	
 		$(function() {
 			
 			/*查看详情*/
 			$(".detail").click(function(){
-				location="SupplierDetail.html";
+				
 			});
 			
 			/*新增供货商*/
 			$("#add").click(function(){
-				location="AddSupplier.html";
+				$("#supplierForm").attr("action","toaddsupplier");
+				$("#supplierForm").submit();
+			});
+			
+			$.ajax({
+				url:"querysupplierlist",
+				data:"curentPage=1&pageSize=1",
+				type:"post",
+				dataType:"json",
+				success:function(result){
+					console.log(result);
+					for(var i=0;i<result.pages;i++){
+						vue.pages.push({
+							index: i,
+							val: i+1
+						});
+					}
+				}
+			});
+			
+			/* 分页js */
+			var s=0;
+			$(".pageNext").click(function(){
+				var currentPage = $(".currentPage");
+				var index = $(".pageCurrent").index(currentPage);
+				if(index == 0){
+					pageJia(index);
+					return;
+				}
+				if($("#pageDian").css("display") != "none"){
+					$(".pageq").each(function(index,e){
+						if(index == $(".pageq").length-1){
+							$(e).text(parseInt($(e).text())+1)
+							return;
+						}
+						$(e).text($(".pageq:eq("+(index+1)+")").text());
+					});
+				}
+				if(parseInt($(".pageCurrent:eq("+(index+1)+")").text()) >= parseInt($(".pageDi").text())-1){
+					if(s == 0){
+						$("#pageDian").css("display","none");
+						s++;
+					}
+					else{
+						pageJia(index);
+					}
+					return;
+				}
+			});
+			
+			$(".pagePrev").click(function(){
+				var currentPage = $(".currentPage");
+				var index = $(".pageCurrent").index(currentPage);
+				if($(".pageCurrent:eq("+(index)+")").text() == 1){
+					return;
+				}
+				if($(".pageCurrent:eq("+(index)+")").text() <= 2){
+					pageJian(index);
+					return;
+				}
+				if(parseInt($(".pageCurrent:eq("+(index)+")").text()) == parseInt($(".pageDi").text())-2){
+					$("#pageDian").css("display","block");
+					s=0;
+				}
+				if(parseInt($(".pageCurrent:eq("+(index)+")").text()) > parseInt($(".pageDi").text())-2){
+					pageJian(index);
+					return;
+				}
+				else{
+					$(".pageq").each(function(index,e){
+						if(index == 0){
+							$(e).text(parseInt($(e).text())-1)
+							return;
+						}
+						$(e).text(parseInt($(".pageq:eq("+(index-1)+")").text())+1);
+					});
+					
+				}
+				
+			});
+			
+			$(".pageCurrent").click(function(){
+				
+				var index = $(".pageCurrent").index(this);
+				
+				var currentPage = $(".currentPage");
+				
+				var currentIndex = $(".pageCurrent").index(currentPage);
+				
+				var text = $(this).text();
+				
+				if(text == "1"){
+					$(".pageCurrent").removeClass("currentPage");
+					$(this).addClass("currentPage");
+					return;
+				}
+				
+				if(index != currentIndex){
+					
+					var zhi = parseInt($(".pageCurrent:eq("+index+")").text()-2);
+					if(zhi+2 >= parseInt($(".pageDi").text())-2){
+						
+						$("#pageDian").css("display","none");
+						
+						var dishu = parseInt($(".pageDi").text())-4;
+						$(".pageq").each(function(index,e){
+							$(e).text(++dishu);			
+						});
+						s=1;
+					}else{
+						
+						$("#pageDian").css("display","block");
+						
+						s=0;
+						
+						$(".pageq").each(function(index,e){
+							$(e).text(++zhi);			
+						});
+					}
+					$(".pageCurrent").removeClass("currentPage");
+					$(".pageCurrent").each(function(index,e){
+						if($(e).text() == text){
+							$(e).addClass("currentPage");
+						}
+					});
+				}
 			});
 	
 		});
