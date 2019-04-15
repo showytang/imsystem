@@ -57,6 +57,7 @@
   
   </resultMap>
   
+  
   <select id="queryAllGoods" resultMap="GoodsValueVo">
 		SELECT 
 		gt.name AS column2,

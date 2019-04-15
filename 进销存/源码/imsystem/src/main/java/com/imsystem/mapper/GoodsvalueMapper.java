@@ -1,11 +1,15 @@
 package com.imsystem.mapper;
 
+import com.imsystem.domain.GoodsDetailVo;
 import com.imsystem.domain.Goodsvalue;
 import com.imsystem.domain.GoodsvalueExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface GoodsvalueMapper {
+	
+	GoodsDetailVo queryGoodsDetail(String id);
+	
     int countByExample(GoodsvalueExample example);
 
     int deleteByExample(GoodsvalueExample example);

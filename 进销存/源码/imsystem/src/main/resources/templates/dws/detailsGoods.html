@@ -10,7 +10,6 @@
 		<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
 		<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
 		<link rel="stylesheet" th:href="@{/assets/css/style.css}">
-		<link rel="stylesheet" th:href="@{/assets/css/chartist-custom.css}">
 		<!-- MAIN CSS -->
 		<link rel="stylesheet" th:href="@{/assets/css/main.css}">
 		<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
@@ -101,7 +100,7 @@
 								<div class="row">
 									<div class="col-xs-6 col-md-2">
 										<a href="#" class="thumbnail">
-											<img src="../assets/img/login-bg.jpg" alt="...">
+											<img  th:src="${gdv.goodsvalue.column1}" alt="...">
 										</a>
 									</div>
 								</div>
@@ -110,65 +109,34 @@
 							<li class="list-group-item list-group-item-heading">
 								<big>商品图片</big>
 								<div class="row">
-									<div class="col-xs-6 col-md-2">
+									<div  class="col-xs-6 col-md-2">
 										<a href="#" class="thumbnail">
-											<img src="../assets/img/login-bg.jpg" alt="...">
+											<img  id="goodstu" alt="...">
 										</a>
 									</div>
-									<div class="col-xs-6 col-md-2">
+									<div class="col-xs-6 col-md-2" th:each="item,index:${gdv.img}">
 										<a href="#" class="thumbnail">
-											<img src="../assets/img/login-bg.jpg" alt="...">
-										</a>
-									</div>
-									<div class="col-xs-6 col-md-2">
-										<a href="#" class="thumbnail">
-											<img src="../assets/img/login-bg.jpg" alt="...">
-										</a>
-									</div>
-									<div class="col-xs-6 col-md-2">
-										<a href="#" class="thumbnail">
-											<img src="../assets/img/login-bg.jpg" alt="...">
-										</a>
-									</div>
-									<div class="col-xs-6 col-md-2">
-										<a href="#" class="thumbnail">
-											<img src="../assets/img/login-bg.jpg" alt="...">
-										</a>
-									</div>
-									<div class="col-xs-6 col-md-2">
-										<a href="#" class="thumbnail">
-											<img src="../assets/img/login-bg.jpg" alt="...">
+											<img th:src="${item.url}" alt="...">
 										</a>
 									</div>
 								</div>
 							</li>
 
 							<li class="list-group-item list-group-item-heading list-group-item-hover">
-								<big>商品名称：</big><span>超级保暖的夏天衣服</span>
+								<big>商品名称：</big><span th:text="${gdv.goods.name}"></span>
 							</li>
 							<li class="list-group-item list-group-item-heading list-group-item-hover">
-								<big>商品类型：</big><span>黑色,M,魔幻樱花</span>
+								<big>商品类型：</big><span th:text="${gdv.goodsvalue.name}"></span>
 							</li>
 							<li class="list-group-item list-group-item-heading list-group-item-hover">
-								<big>进货价：￥</big><span class="text-span">666</span>
-								<input class="inp" value="666" />
+								<big>进货价：￥</big><span th:text="${gdv.goodsvalue.jprice}" class="text-span"></span>
+								<input class="inp" th:value="${gdv.goodsvalue.jprice}" />
 
 							</li>
-							<li class="list-group-item list-group-item-heading list-group-item-hover">
-								<big>批发价：￥</big><span class="text-span">777</span>
-								<input class="inp" value="777" />
-
-							</li>
-							<li class="list-group-item list-group-item-heading list-group-item-hover">
-								<big>零售价：￥</big><span class="text-span">888</span>
-								<input class="inp" value="888" />
-
-							</li>
-							<li class="list-group-item list-group-item-heading list-group-item-hover">
-								<big>神仙价：￥</big><span class="text-span">99999</span>
-								<input class="inp" value="99999" />
-
-							</li>
+							 <li th:each="item2,index:${gdv.goodsprice}" class="list-group-item list-group-item-heading list-group-item-hover">
+								<big><span th:text="${item2.sufname}"></span>：￥</big><span th:text="${item2.price}" class="text-span"></span>
+								<input class="inp" th:value="${item2.price}" />
+							</li> 
 
 						</ul>
 
@@ -180,8 +148,8 @@
 
 				<div class="panel">
 
-					<div class="panel-body">
-						富文本区域
+					<div id="fuwenben" class="panel-body">
+						
 					</div>
 
 				</div>
@@ -192,5 +160,15 @@
 			</div>
 
 	</body>
+
+	<script  th:inline="javascript">
+	
+		var goods = [[${gdv.goods}]];
+		
+		$("#goodstu").attr("src","data:image/png;base64,"+goods.img);
+	
+		$("#fuwenben").html(goods.detail);
+		
+	</script>
 
 </html>

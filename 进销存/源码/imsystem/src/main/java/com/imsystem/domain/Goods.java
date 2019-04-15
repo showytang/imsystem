@@ -59,8 +59,19 @@ public class Goods {
      */
     private List<Goodsvalue> goodsValues;
     
+    private List<Img> imgs;
+    
+    
    
-    public List<Goodsvalue> getGoodsValues() {
+    public List<Img> getImgs() {
+		return imgs;
+	}
+
+	public void setImgs(List<Img> imgs) {
+		this.imgs = imgs;
+	}
+
+	public List<Goodsvalue> getGoodsValues() {
 		return goodsValues;
 	}
 

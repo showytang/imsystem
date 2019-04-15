@@ -21,7 +21,8 @@ public class GoodsValueVo {
 	 *库存
 	 */
 	private Stockdetails stockDetails;
-
+	
+	
 	public Goods getGoods() {
 		return goods;
 	}

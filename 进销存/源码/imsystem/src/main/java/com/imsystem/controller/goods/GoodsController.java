@@ -12,20 +12,20 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.imsystem.domain.Customertype;
 import com.imsystem.domain.Goods;
+import com.imsystem.domain.GoodsDetailVo;
 import com.imsystem.domain.GoodsVO;
 import com.imsystem.domain.GoodsValueVo;
 import com.imsystem.domain.Img;
+import com.imsystem.service.goods.GoodsDetailsService;
 import com.imsystem.service.goods.GoodsService;
 import com.imsystem.service.goods.GoodsTypeService;
 
@@ -46,6 +46,12 @@ public class GoodsController {
 	 */
 	@Autowired
 	private GoodsTypeService goodsTypeSer;
+	
+	/**
+	 * 商品实例
+	 */
+	@Autowired
+	private GoodsDetailsService goodsDetailSer;
 	
 	/**
 	 * 查询所有商品
@@ -86,10 +92,12 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/queryGoodsDetail")
-	protected String queryGoodsDetail(String id) {
+	protected String queryGoodsDetail(String id,Model model) {
 
-		System.out.println(id);
+		GoodsDetailVo gdv = goodsDetailSer.queryGoodsDetail(id);
 
+		model.addAttribute("gdv", gdv);
+		
 		return "dws/detailsGoods";
 
 	}
@@ -217,6 +225,7 @@ public class GoodsController {
             	
             	if(bool) {
             		goodsVo.getGoods().setImg(f.getBytes());
+            		continue;
             	}
             	
                 //唯一标示id
