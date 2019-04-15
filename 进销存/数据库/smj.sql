@@ -167,6 +167,13 @@ CREATE TABLE `customertype` (
 
 SELECT * FROM customertype
 
+<<<<<<< HEAD
+=======
+SELECT * FROM customertype c,`user` u
+WHERE c.state=0 AND c.uid=u.id
+AND (c.`name` LIKE '%霖%' OR c.viewname LIKE '%霖%' OR c.agio LIKE '%霖%' OR c.`time` LIKE '%霖%' OR c.updatetime LIKE '%霖%' OR u.name LIKE '%霖%')
+
+>>>>>>> refs/heads/master
 DROP TABLE IF EXISTS `goods`;
 
 CREATE TABLE `goods` (
@@ -182,6 +189,7 @@ CREATE TABLE `goods` (
   `jprice` DOUBLE DEFAULT NULL,
   `remark` VARCHAR(50) DEFAULT NULL,
   `uid` VARCHAR(20) DEFAULT NULL,
+<<<<<<< HEAD
   `minsecurity` int(4) DEFAULT NULL,
   `maxsecurity` int(4) DEFAULT NULL,
   `historygid` varchar(20) DEFAULT NULL,
@@ -195,8 +203,23 @@ CREATE TABLE `goods` (
   `column3` varchar(50) DEFAULT NULL,
   `column4` varchar(50) DEFAULT NULL,
   `column5` varchar(50) DEFAULT NULL,
+=======
+  `minsecurity` INT(4) DEFAULT NULL,
+  `maxsecurity` INT(4) DEFAULT NULL,
+  `historygid` VARCHAR(20) DEFAULT NULL,
+  `time` DATETIME DEFAULT NULL,
+  `updatetime` DATETIME DEFAULT NULL,
+  `detail` VARCHAR(50) DEFAULT NULL,
+  `state` INT(4) DEFAULT NULL,
+  `enname` VARCHAR(50) DEFAULT NULL,
+  `column1` VARCHAR(50) DEFAULT NULL,
+  `column2` VARCHAR(50) DEFAULT NULL,
+  `column3` VARCHAR(50) DEFAULT NULL,
+  `column4` VARCHAR(50) DEFAULT NULL,
+  `column5` VARCHAR(50) DEFAULT NULL,
+>>>>>>> refs/heads/master
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods` */
 
@@ -205,23 +228,23 @@ CREATE TABLE `goods` (
 DROP TABLE IF EXISTS `goodsprice`;
 
 CREATE TABLE `goodsprice` (
-  `id` varchar(4) NOT NULL,
-  `ctid` varchar(20) DEFAULT NULL,
-  `sufname` varchar(20) DEFAULT NULL,
-  `price` double DEFAULT NULL,
-  `gvid` varchar(20) DEFAULT NULL,
-  `time` datetime DEFAULT NULL,
-  `updatetime` datetime DEFAULT NULL,
-  `uid` varchar(20) DEFAULT NULL,
-  `preferential` double DEFAULT NULL,
-  `state` int(4) DEFAULT NULL,
-  `column1` varchar(50) DEFAULT NULL,
-  `column2` varchar(50) DEFAULT NULL,
-  `column3` varchar(50) DEFAULT NULL,
-  `column4` varchar(50) DEFAULT NULL,
-  `column5` varchar(50) DEFAULT NULL,
+  `id` VARCHAR(4) NOT NULL,
+  `ctid` VARCHAR(20) DEFAULT NULL,
+  `sufname` VARCHAR(20) DEFAULT NULL,
+  `price` DOUBLE DEFAULT NULL,
+  `gvid` VARCHAR(20) DEFAULT NULL,
+  `time` DATETIME DEFAULT NULL,
+  `updatetime` DATETIME DEFAULT NULL,
+  `uid` VARCHAR(20) DEFAULT NULL,
+  `preferential` DOUBLE DEFAULT NULL,
+  `state` INT(4) DEFAULT NULL,
+  `column1` VARCHAR(50) DEFAULT NULL,
+  `column2` VARCHAR(50) DEFAULT NULL,
+  `column3` VARCHAR(50) DEFAULT NULL,
+  `column4` VARCHAR(50) DEFAULT NULL,
+  `column5` VARCHAR(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Data for the table `goodsprice` */
 
