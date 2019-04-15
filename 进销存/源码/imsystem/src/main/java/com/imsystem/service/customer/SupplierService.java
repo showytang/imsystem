@@ -2,6 +2,8 @@ package com.imsystem.service.customer;
 
 import java.util.List;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Supplier;
 
 public interface SupplierService {
@@ -39,5 +41,15 @@ public interface SupplierService {
 	 * @return
 	 */
 	public Supplier querySupplierById(int supId);
+	
+	/**
+	 * 根据条件分页查询供应商
+	 * @param zero 是否查询0欠款
+	 * @param content  是否包含条件
+	 * @param curentPage 当前页码
+	 * @param pageSize  当前页数据条数
+	 * @return
+	 */
+	public PageInfo<Supplier> querySupplierList(Double zero,String content,Integer curentPage,Integer pageSize);
 
 }
