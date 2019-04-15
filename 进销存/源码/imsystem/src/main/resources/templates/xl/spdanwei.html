@@ -17,7 +17,7 @@
 	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
 	<link rel="stylesheet" th:href="@{/assets/css/demo.css}">
 	<!-- GOOGLE FONTS -->
-	<link th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700}" rel="stylesheet">
+	<!-- <link th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700}" rel="stylesheet"> -->
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" th:href="@{/assets/img/apple-icon.png}">
 	<link rel="icon" type="image/png" sizes="96x96" th:href="@{/assets/img/favicon.png}">
@@ -50,11 +50,40 @@
 			color:white;
 			border: 0px;
 		} 
+		
+		#page>ul {
+			display: flex;
+			justify-content: space-around;
+			padding: 0px;
+			font-size: 12px;
+		}
+
+		#page {
+			width: 300px;
+			margin: 20px auto;
+		}
+		
+		.currentPage {
+			background: rgb(2, 143, 208);
+			color: white;
+			border: none;
+		}
+		
+		.pagebtn {
+			height: 28px;
+			width: 25px;
+			border: 1px solid #C0C0C0;
+			list-style: none;
+			text-align: center;
+			background: #DDDDDD;
+			line-height: 28px;
+			cursor: pointer;
+		}
 	</style>
 	</head>
 	<body>
 	
-		<div class="main">
+		<div id="main">
 			<!-- MAIN CONTENT -->
 			<div class="main-content">
 				<div class="container-fluid">
@@ -65,11 +94,12 @@
 							
 						</div>
 						<div class="ta">
-						 <input class="col-md-2 col-md-offset-7 " type="text" placeholder="请输入搜索条件" /><input class="col-md-1 btn btn-primary btn-lg" type="button" value="GO" style="height: 27px;line-height: 5px;margin-bottom: 5px;" />
+						 <input class="col-md-2 col-md-offset-7 tiaojian " type="text" placeholder="请输入搜索条件" /><input class="col-md-1 btn btn-primary btn-lg" type="button" value="GO" style="height: 27px;line-height: 5px;margin-bottom: 5px;" @click="query()" />
 						<button type="button" value="新增" class="btn btn-primary btn-lg col-md-1 " data-toggle="modal" data-target="#myModal" style="height: 30px;line-height: 5px; margin-bottom: 5px;margin-left: 10px;" >
 	  						新增
 						</button>
 						<table class="table table-striped">
+						<thead>
 							<tr>
 								<th>单位ID</th>
 								<th>单位名称</th>
@@ -79,28 +109,56 @@
 								
 								<th style="padding-left: 0px; padding-right: 40px">操作</th>
 							</tr>
-							<tr th:each="item : ${list}">
+						</thead>
+						<tbody>
+							<!-- <tr th:each="item,state : ${pageInfo.list}">
 							 	<td th:text="${item.id}"></td>
 								<td th:text="${item.name}"></td>
-								<td th:text="${#dates.format(item.time,'yyyy-MM-dd HH:mm:ss')}"></td>
-								<td th:text="${#dates.format(item.updatetime,'yyyy-MM-dd HH:mm:ss')}"></td>
+								<td th:text="${#dates.format(item.time,'yyyy-MM-dd hh:mm:ss')}"></td>
+								<td th:text="${#dates.format(item.updatetime,'yyyy-MM-dd hh:mm:ss')}"></td>
 								<td th:text="${item.uid}"></td>
 								
 								<td style="padding-left: 0px; padding-right: 40px" >
-									<button type="button"  data-toggle="modal" data-target="#myModal1" class="an">
+									<a th:href="@{queryByid(id=${item.id})}"><button type="button"  data-toggle="modal" data-target="#myModal1" class="an">
 			  						修改
-									</button>
+									</button></a>
 									<a th:href="@{updatestate(id=${item.id})}"><input type="button" class="an" value="删除"/></a>
 									
 								</td>
+							</tr> -->
+							
+							<tr v-for="(temp,index) in pageIf.list">
+							 	<td v-text="temp.id"></td>
+								<td v-text="temp.name"></td>
+								<td v-text="temp.time"></td>
+								<td v-text="formatDate(temp.updatetime)"></td>
+								<td v-text="temp.uid"></td>
+								
+								<td style="padding-left: 0px; padding-right: 40px" >
+									<a v-on:click="open(temp.id)"><input type="button" value="修改"  id="open" class="an open"></a>
+			  						
+									<a :href="dele(temp.id)"><input type="button" class="an" value="删除"/></a>
+									
+								</td> 
 							</tr>
-							 
+						</tbody>
 						</table>
-							<div class="col-md-3 col-md-offset-5">
-								<a href="#">上一页</a> 
-								<a href="#">下一页</a>
-								<span>1 / 3 共 3 页</span> 
-							</div>
+				<div id="page">
+					<ul>
+						<li class="pagebtn pagePrev"><span
+							class="glyphicon glyphicon-menu-left"></span></li>
+						<li class="pagebtn currentPage pageCurrent pageq">1</li>
+						<li class="pagebtn pageCurrent pageq">2</li>
+						<li class="pagebtn pageCurrent pageq">3</li>
+						<li class="pagebtn" id="pageDian"
+							style="border: none; display: block; background: #DDDDDD; font-size: 20px;">...</li>
+						<li class="pagebtn pageCurrent pageDi">14</li>
+						<li class="pagebtn pageCurrent">15</li>
+						<li class="pagebtn pageCurrent">16</li>
+						<li class="pagebtn pageNext"><span
+							class="glyphicon glyphicon-menu-right"></span></li>
+					</ul>
+				</div> 
 						</div>
 						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">		
 								<div class="modal-dialog" role="document">
@@ -160,22 +218,28 @@
 								      		<div class="form-group">
 										    	<label for="inputPassword3" class="col-sm-3 control-label">单位ID</label>
 											    <div class="col-sm-9">
-											      <input type="text" class="form-control" value="" id="inputPassword3">
+											      <input type="text" class="form-control a1" id="inputPassword3 b1">
 											    </div>
 										  	</div>
 										  	<div class="form-group">
 										    	<label for="inputEmail3" class="col-sm-3 control-label">单位名称</label>
 											    <div class="col-sm-9">
-											    	<input type="text" class="form-control" id="inputEmail3">
+											    	<input type="text" class="form-control a2" id="inputEmail3">
 											    </div>
 										  	</div>
-										  
+										  	
+										  	<div class="form-group">
+										    	<label for="inputEmail3" class="col-sm-3 control-label">创建时间</label>
+											    <div class="col-sm-9">
+											    	<input type="text" class="form-control a4" id="inputEmail3">
+											    </div>
+										  	</div>
 										  	
 										  
 										  	<div class="form-group">
 										    	<label for="inputEmail3" class="col-sm-3 control-label">操作人编号</label>
 											    <div class="col-sm-9">
-											    	<input type="text" class="form-control" id="inputEmail3">
+											    	<input type="text" class="form-control a3" id="inputEmail3">
 											    </div>
 										  	</div>
 										  	
@@ -185,7 +249,7 @@
 								      	</div>
 								      <div class="modal-footer">
 								        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-								        <button type="button" class="btn btn-primary" >修改</button>
+								        <button type="button" class="btn btn-primary" id="xiu" >修改</button>
 								      </div>
 		    						</div>
 		  						</div>
@@ -202,29 +266,180 @@
 	<script th:src="@{/assets/js/bootstrap.min.js}"></script>
 	<script th:src="@{/assets/js/jquery.slimscroll.min.js}"></script>
 	<script th:src="@{/assets/js/toastr.min.js}"></script>
+	<script th:src="@{/assets/js/page.js}"></script>
 	<script th:src="@{/assets/js/klorofil-common.js}"></script>
-	<script type="text/javascript">
-		$(function(){
-			$("#tijiao").click(function(){
-				var id=$("#dwid").val();
-				var name=$("#dwmc").val();
-				var uid=$("#bianhao").val();
-
+	<script type="text/javascript" th:src="@{/assets/js/bootstrap-datetimepicker.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/js/vue.js}"></script>
+	<script type="text/javascript"  th:inline="javascript" >
+	//分页查询
+	var z = 0;
+	var vue = new Vue({
+		el : "#main",
+		data : {
+			pageIf : {}
+			/* pagesize : "2" */
+		},
+		methods : {
+			query:function(){
+				var text=$(".tiaojian").val();
+				this.pageIf.pageNum = $(".currentPage").text();
+				myVue =this;
+				$.getJSON(
+					"/bit/toquery/"+text+"/"+myVue.pageIf.pageNum,function(result){
+						myVue.pageIf = result;
+					}
+				);
+			},
+		
+		
+			dele:function(id){
+				return "/bit/updatestate?id="+id;
+			},
+			
+			open:function(id){
+				$('#myModal1').modal('toggle')
+			
 				$.ajax({
-					url:"insert",
+					url:"/bit/querybyid",
+					data:{
+						id:id
+						},
+					type:"post",
+					dataType:"json",
+					success:function(data){
+	                            //赋值
+	                            $('.a1').val(data.id);
+	                            $('.a2').val(data.name);
+	                            $('.a3').val(data.uid);
+	                            $('.a4').val(data.time);
+	                            $('.a3').attr("readonly","readonly");
+	                            $('.a1').attr("readonly","readonly");
+	                            $('.a4').attr("readonly","readonly");
+					}
+				});
+				
+			},
+			
+			queryByid:function(id){
+				return "/bit/queryByid?id="+id;
+			},
+			 
+			 formatDate: function (value) {
+			        let date = new Date(value);
+			        let y = date.getFullYear();
+			        let MM = date.getMonth() + 1;
+			        MM = MM < 10 ? ('0' + MM) : MM;
+			        let d = date.getDate();
+			        d = d < 10 ? ('0' + d) : d;
+			        let h = date.getHours();
+			        h = h < 10 ? ('0' + h) : h;
+			        let m = date.getMinutes();
+			        m = m < 10 ? ('0' + m) : m;
+			        let s = date.getSeconds();
+			        s = s < 10 ? ('0' + s) : s;
+			        return y + '-' + MM + '-' + d + ' ' + h + ':' + m + ':' + s;
+			      }
+			    
+			
+			
+		},
+		created:function(){
+			this.query();
+		}
+	});
+	
+	
+	
+	
+	
+
+	
+	function  floatPage(){
+		 vue.pageIf.pageNum = $(".currentPage").text();
+	};
+	
+	$(function(){
+		
+		 $("#tijiao").click(function(){
+			var id=$("#dwid").val();
+			var name=$("#dwmc").val();
+			var uid=$("#bianhao").val();
+
+			$.ajax({
+				url:"/bit/insert",
+				data:{
+					id:id,
+					name:name,
+					uid:uid
+					},
+				type:"post",
+				dataType:"json",
+				success:function(result){
+					location.href = "query";
+				}
+			});
+		});
+		 
+		 $("#xiu").click(function(){
+			 var id=$(".a1").val();
+			 var name=$(".a2").val();
+			 
+			 $.ajax({
+					url:"/bit/toupdate",
 					data:{
 						id:id,
-						name:name,
-						uid:uid
+						name:name
 						},
 					type:"post",
 					dataType:"json",
 					success:function(result){
 						location.href = "query";
-					}
+				}	 
+			 });
+		 }) ;
+		 
+	
+	});
+	/* $("[value='GO']").click(function(){
+		var text=$(".tiaojian").val();
+		vue.pageIf.pageNum = $(".currentPage").text();
+		
+		$.ajax({
+			url:[[@{/bit/queryByLike}]],
+			data:{
+				text:text,
+				currentPage:vue.pageIf.pageNum
+			},
+			type:"post",
+			dateType:"json",
+			success:function(data){
+				$("tbody tr").remove();
+				$.each(data.list,function(i,obj){
+					var da = new Date(obj.time);
+					var tr = $("<tr></tr>");
+					var td = $("<td>"+obj.id+"</td>"+
+					"<td>"+obj.name+"</td>"+
+					"<td>"+obj.time+"</td>"+
+					"<td>"+da.getFullYear()+"-"+(da.getMonth()+1)+"-"+da.getDate() +" "+ da.getHours()+":"+da.getMinutes()+":"+da.getSeconds()+"</td>"+
+					"<td>"+obj.uid+"</td>"+
+					"<td style='padding-left: 0px; padding-right: 40px'><button type='button'  data-toggle='modal' data-target='#myModal1' class='an'>修改</button>&nbsp;"+
+					"<a href='updatestate?id="+obj.id+"'><input type='button' class='an' value='删除'/></a></td>");
+					tr.append(td);
+					$("tbody").append(tr);
 				});
-			});
-		});
+				vue.pageIf = data;
+			}
+			
+		})
+	});  */
+	
+	//添加数据
+	 
+		
+
+	
+
+
 		
 	</script>			
 </body>

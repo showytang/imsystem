@@ -17,6 +17,16 @@
    
   </resultMap>
   
+ <select id="querygoodstype" resultMap="BaseResultMap">
+  	SELECT * FROM goodstype 
+  	<where>
+  		state=0 
+  		<if test="tiaojian!=null">
+  				and id LIKE concat('%',#{tiaojian}) OR  NAME LIKE concat('%',#{tiaojian}) OR pid LIKE concat('%',#{tiaojian}) OR uid LIKE concat('%',#{tiaojian})
+  		</if>
+  	</where>
+  </select>
+  
   
   
   <select id="QueryGoodsTypeByPid" resultMap="BaseResultMap">
