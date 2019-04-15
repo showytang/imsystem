@@ -16,6 +16,7 @@ public class Stock {
 
     private String sid;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date time;
     
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")

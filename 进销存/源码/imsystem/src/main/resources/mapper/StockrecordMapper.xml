@@ -1,291 +1,370 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.imsystem.mapper.StockrecordMapper" >
-  <resultMap id="BaseResultMap" type="com.imsystem.domain.Stockrecord" >
-    <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="aftersdid" property="aftersdid" jdbcType="VARCHAR" />
-    <result column="beforesdid" property="beforesdid" jdbcType="VARCHAR" />
-    <result column="aftersid" property="aftersid" jdbcType="VARCHAR" />
-    <result column="beforesid" property="beforesid" jdbcType="VARCHAR" />
-    <result column="column1" property="column1" jdbcType="VARCHAR" />
-    <result column="column2" property="column2" jdbcType="VARCHAR" />
-    <result column="column3" property="column3" jdbcType="VARCHAR" />
-    <result column="column4" property="column4" jdbcType="VARCHAR" />
-    <result column="column5" property="column5" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List" >
-    id, aftersdid, beforesdid, aftersid, beforesid, column1, column2, column3, column4, 
-    column5
-  </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.imsystem.domain.StockrecordExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from stockrecord
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from stockrecord
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from stockrecord
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.imsystem.domain.StockrecordExample" >
-    delete from stockrecord
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.imsystem.domain.Stockrecord" >
-    insert into stockrecord (id, aftersdid, beforesdid, 
-      aftersid, beforesid, column1, 
-      column2, column3, column4, 
-      column5)
-    values (#{id,jdbcType=VARCHAR}, #{aftersdid,jdbcType=VARCHAR}, #{beforesdid,jdbcType=VARCHAR}, 
-      #{aftersid,jdbcType=VARCHAR}, #{beforesid,jdbcType=VARCHAR}, #{column1,jdbcType=VARCHAR}, 
-      #{column2,jdbcType=VARCHAR}, #{column3,jdbcType=VARCHAR}, #{column4,jdbcType=VARCHAR}, 
-      #{column5,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.imsystem.domain.Stockrecord" >
-    insert into stockrecord
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="aftersdid != null" >
-        aftersdid,
-      </if>
-      <if test="beforesdid != null" >
-        beforesdid,
-      </if>
-      <if test="aftersid != null" >
-        aftersid,
-      </if>
-      <if test="beforesid != null" >
-        beforesid,
-      </if>
-      <if test="column1 != null" >
-        column1,
-      </if>
-      <if test="column2 != null" >
-        column2,
-      </if>
-      <if test="column3 != null" >
-        column3,
-      </if>
-      <if test="column4 != null" >
-        column4,
-      </if>
-      <if test="column5 != null" >
-        column5,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="aftersdid != null" >
-        #{aftersdid,jdbcType=VARCHAR},
-      </if>
-      <if test="beforesdid != null" >
-        #{beforesdid,jdbcType=VARCHAR},
-      </if>
-      <if test="aftersid != null" >
-        #{aftersid,jdbcType=VARCHAR},
-      </if>
-      <if test="beforesid != null" >
-        #{beforesid,jdbcType=VARCHAR},
-      </if>
-      <if test="column1 != null" >
-        #{column1,jdbcType=VARCHAR},
-      </if>
-      <if test="column2 != null" >
-        #{column2,jdbcType=VARCHAR},
-      </if>
-      <if test="column3 != null" >
-        #{column3,jdbcType=VARCHAR},
-      </if>
-      <if test="column4 != null" >
-        #{column4,jdbcType=VARCHAR},
-      </if>
-      <if test="column5 != null" >
-        #{column5,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.imsystem.domain.StockrecordExample" resultType="java.lang.Integer" >
-    select count(*) from stockrecord
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map" >
-    update stockrecord
-    <set >
-      <if test="record.id != null" >
-        id = #{record.id,jdbcType=VARCHAR},
-      </if>
-      <if test="record.aftersdid != null" >
-        aftersdid = #{record.aftersdid,jdbcType=VARCHAR},
-      </if>
-      <if test="record.beforesdid != null" >
-        beforesdid = #{record.beforesdid,jdbcType=VARCHAR},
-      </if>
-      <if test="record.aftersid != null" >
-        aftersid = #{record.aftersid,jdbcType=VARCHAR},
-      </if>
-      <if test="record.beforesid != null" >
-        beforesid = #{record.beforesid,jdbcType=VARCHAR},
-      </if>
-      <if test="record.column1 != null" >
-        column1 = #{record.column1,jdbcType=VARCHAR},
-      </if>
-      <if test="record.column2 != null" >
-        column2 = #{record.column2,jdbcType=VARCHAR},
-      </if>
-      <if test="record.column3 != null" >
-        column3 = #{record.column3,jdbcType=VARCHAR},
-      </if>
-      <if test="record.column4 != null" >
-        column4 = #{record.column4,jdbcType=VARCHAR},
-      </if>
-      <if test="record.column5 != null" >
-        column5 = #{record.column5,jdbcType=VARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map" >
-    update stockrecord
-    set id = #{record.id,jdbcType=VARCHAR},
-      aftersdid = #{record.aftersdid,jdbcType=VARCHAR},
-      beforesdid = #{record.beforesdid,jdbcType=VARCHAR},
-      aftersid = #{record.aftersid,jdbcType=VARCHAR},
-      beforesid = #{record.beforesid,jdbcType=VARCHAR},
-      column1 = #{record.column1,jdbcType=VARCHAR},
-      column2 = #{record.column2,jdbcType=VARCHAR},
-      column3 = #{record.column3,jdbcType=VARCHAR},
-      column4 = #{record.column4,jdbcType=VARCHAR},
-      column5 = #{record.column5,jdbcType=VARCHAR}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.imsystem.domain.Stockrecord" >
-    update stockrecord
-    <set >
-      <if test="aftersdid != null" >
-        aftersdid = #{aftersdid,jdbcType=VARCHAR},
-      </if>
-      <if test="beforesdid != null" >
-        beforesdid = #{beforesdid,jdbcType=VARCHAR},
-      </if>
-      <if test="aftersid != null" >
-        aftersid = #{aftersid,jdbcType=VARCHAR},
-      </if>
-      <if test="beforesid != null" >
-        beforesid = #{beforesid,jdbcType=VARCHAR},
-      </if>
-      <if test="column1 != null" >
-        column1 = #{column1,jdbcType=VARCHAR},
-      </if>
-      <if test="column2 != null" >
-        column2 = #{column2,jdbcType=VARCHAR},
-      </if>
-      <if test="column3 != null" >
-        column3 = #{column3,jdbcType=VARCHAR},
-      </if>
-      <if test="column4 != null" >
-        column4 = #{column4,jdbcType=VARCHAR},
-      </if>
-      <if test="column5 != null" >
-        column5 = #{column5,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.imsystem.domain.Stockrecord" >
-    update stockrecord
-    set aftersdid = #{aftersdid,jdbcType=VARCHAR},
-      beforesdid = #{beforesdid,jdbcType=VARCHAR},
-      aftersid = #{aftersid,jdbcType=VARCHAR},
-      beforesid = #{beforesid,jdbcType=VARCHAR},
-      column1 = #{column1,jdbcType=VARCHAR},
-      column2 = #{column2,jdbcType=VARCHAR},
-      column3 = #{column3,jdbcType=VARCHAR},
-      column4 = #{column4,jdbcType=VARCHAR},
-      column5 = #{column5,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+<mapper namespace="com.imsystem.mapper.StockrecordMapper">
+	<resultMap id="BaseResultMap"
+		type="com.imsystem.domain.Stockrecord">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="aftersdid" property="aftersdid"
+			jdbcType="VARCHAR" />
+		<result column="beforesdid" property="beforesdid"
+			jdbcType="VARCHAR" />
+		<result column="aftersid" property="aftersid"
+			jdbcType="VARCHAR" />
+		<result column="beforesid" property="beforesid"
+			jdbcType="VARCHAR" />
+		<result column="column1" property="column1" jdbcType="VARCHAR" />
+		<result column="column2" property="column2" jdbcType="VARCHAR" />
+		<result column="column3" property="column3" jdbcType="VARCHAR" />
+		<result column="column4" property="column4" jdbcType="VARCHAR" />
+		<result column="column5" property="column5" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap type="com.imsystem.domain.Stockrecord"
+		id="queryMap" extends="BaseResultMap">
+		<association property="stock"
+			javaType="com.imsystem.domain.Stock">
+			<id property="id" column="sid" />
+			<result property="updatetime" column="supdatetime" />
+			<result property="column3" column="scolumn3" />
+		</association>
+	</resultMap>
+	
+	<resultMap type="com.imsystem.domain.Stockrecord" id="queryAllotDetailsMap">
+		<association property="stock"
+			javaType="com.imsystem.domain.Stock">
+			<collection property="stockdetails" ofType="com.imsystem.domain.Stockdetails">
+				<id property="count" column="stkcount" />
+				<association property="goods" javaType="com.imsystem.domain.Goods">
+					<id property="name" column="gname" />
+					<result property="img" column="img"/>
+					<collection property="goodsValues" ofType="com.imsystem.domain.Goodsvalue" >
+						<id column="gdname" property="name" />
+						<result column="gdimg" property="column1"/>
+					</collection>
+				</association>
+			</collection>
+		</association>
+		
+	</resultMap>
+	
+	<select id="queryAllotDetails" resultMap="queryAllotDetailsMap">
+		SELECT gd.name AS gdname,g.name AS gname,stk.count AS stkcount,g.img,gd.column1 AS gdimg 
+		FROM `stockrecord` AS s
+		INNER JOIN `stock` AS st ON s.beforesdid = st.code
+		INNER JOIN `stockdetails` AS stk ON stk.sid = st.id
+		INNER JOIN `goodsvalue` AS gd ON stk.gvid = gd.id
+		INNER JOIN `goods` AS g ON g.id = gd.gid
+		WHERE s.`id` = #{id}
+	</select>
+	<select id="query" resultMap="queryMap">
+		SELECT st.*,s.`id` AS sid,s.`updatetime` AS supdatetime,(SELECT
+		SUM(stk.`count`) FROM `stockdetails` AS stk WHERE
+		stk.`sid`=s.`id`GROUP BY stk.`sid`) AS scolumn3 FROM `stockrecord` AS
+		st
+		LEFT JOIN stock AS s ON st.beforesdid = s.`code`
+		<where>
+			<if test="time != null and time != ''">
+				and s.`updatetime` >= #{time} AND s.`updatetime` &lt;= #{endTime}
+			</if>
+			<if test="code != null and code != ''">
+				and st.aftersid = #{code}
+			</if>
+			<if test="jcode != null and jcode != ''">
+				and st.beforesid = #{jcode}
+			</if>
+		</where>
+	</select>
+
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, aftersdid, beforesdid, aftersid, beforesid, column1, column2,
+		column3, column4,
+		column5
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.imsystem.domain.StockrecordExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from stockrecord
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from stockrecord
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from stockrecord
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="com.imsystem.domain.StockrecordExample">
+		delete from stockrecord
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert"
+		parameterType="com.imsystem.domain.Stockrecord">
+		insert into stockrecord (id, aftersdid, beforesdid,
+		aftersid, beforesid, column1,
+		column2, column3, column4,
+		column5)
+		values (#{id,jdbcType=VARCHAR}, #{aftersdid,jdbcType=VARCHAR},
+		#{beforesdid,jdbcType=VARCHAR},
+		#{aftersid,jdbcType=VARCHAR}, #{beforesid,jdbcType=VARCHAR}, #{column1,jdbcType=VARCHAR},
+		#{column2,jdbcType=VARCHAR}, #{column3,jdbcType=VARCHAR},
+		#{column4,jdbcType=VARCHAR},
+		#{column5,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.imsystem.domain.Stockrecord">
+		insert into stockrecord
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="aftersdid != null">
+				aftersdid,
+			</if>
+			<if test="beforesdid != null">
+				beforesdid,
+			</if>
+			<if test="aftersid != null">
+				aftersid,
+			</if>
+			<if test="beforesid != null">
+				beforesid,
+			</if>
+			<if test="column1 != null">
+				column1,
+			</if>
+			<if test="column2 != null">
+				column2,
+			</if>
+			<if test="column3 != null">
+				column3,
+			</if>
+			<if test="column4 != null">
+				column4,
+			</if>
+			<if test="column5 != null">
+				column5,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="aftersdid != null">
+				#{aftersdid,jdbcType=VARCHAR},
+			</if>
+			<if test="beforesdid != null">
+				#{beforesdid,jdbcType=VARCHAR},
+			</if>
+			<if test="aftersid != null">
+				#{aftersid,jdbcType=VARCHAR},
+			</if>
+			<if test="beforesid != null">
+				#{beforesid,jdbcType=VARCHAR},
+			</if>
+			<if test="column1 != null">
+				#{column1,jdbcType=VARCHAR},
+			</if>
+			<if test="column2 != null">
+				#{column2,jdbcType=VARCHAR},
+			</if>
+			<if test="column3 != null">
+				#{column3,jdbcType=VARCHAR},
+			</if>
+			<if test="column4 != null">
+				#{column4,jdbcType=VARCHAR},
+			</if>
+			<if test="column5 != null">
+				#{column5,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.imsystem.domain.StockrecordExample"
+		resultType="java.lang.Integer">
+		select count(*) from stockrecord
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update stockrecord
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=VARCHAR},
+			</if>
+			<if test="record.aftersdid != null">
+				aftersdid = #{record.aftersdid,jdbcType=VARCHAR},
+			</if>
+			<if test="record.beforesdid != null">
+				beforesdid = #{record.beforesdid,jdbcType=VARCHAR},
+			</if>
+			<if test="record.aftersid != null">
+				aftersid = #{record.aftersid,jdbcType=VARCHAR},
+			</if>
+			<if test="record.beforesid != null">
+				beforesid = #{record.beforesid,jdbcType=VARCHAR},
+			</if>
+			<if test="record.column1 != null">
+				column1 = #{record.column1,jdbcType=VARCHAR},
+			</if>
+			<if test="record.column2 != null">
+				column2 = #{record.column2,jdbcType=VARCHAR},
+			</if>
+			<if test="record.column3 != null">
+				column3 = #{record.column3,jdbcType=VARCHAR},
+			</if>
+			<if test="record.column4 != null">
+				column4 = #{record.column4,jdbcType=VARCHAR},
+			</if>
+			<if test="record.column5 != null">
+				column5 = #{record.column5,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update stockrecord
+		set id = #{record.id,jdbcType=VARCHAR},
+		aftersdid = #{record.aftersdid,jdbcType=VARCHAR},
+		beforesdid = #{record.beforesdid,jdbcType=VARCHAR},
+		aftersid = #{record.aftersid,jdbcType=VARCHAR},
+		beforesid = #{record.beforesid,jdbcType=VARCHAR},
+		column1 = #{record.column1,jdbcType=VARCHAR},
+		column2 = #{record.column2,jdbcType=VARCHAR},
+		column3 = #{record.column3,jdbcType=VARCHAR},
+		column4 = #{record.column4,jdbcType=VARCHAR},
+		column5 = #{record.column5,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.imsystem.domain.Stockrecord">
+		update stockrecord
+		<set>
+			<if test="aftersdid != null">
+				aftersdid = #{aftersdid,jdbcType=VARCHAR},
+			</if>
+			<if test="beforesdid != null">
+				beforesdid = #{beforesdid,jdbcType=VARCHAR},
+			</if>
+			<if test="aftersid != null">
+				aftersid = #{aftersid,jdbcType=VARCHAR},
+			</if>
+			<if test="beforesid != null">
+				beforesid = #{beforesid,jdbcType=VARCHAR},
+			</if>
+			<if test="column1 != null">
+				column1 = #{column1,jdbcType=VARCHAR},
+			</if>
+			<if test="column2 != null">
+				column2 = #{column2,jdbcType=VARCHAR},
+			</if>
+			<if test="column3 != null">
+				column3 = #{column3,jdbcType=VARCHAR},
+			</if>
+			<if test="column4 != null">
+				column4 = #{column4,jdbcType=VARCHAR},
+			</if>
+			<if test="column5 != null">
+				column5 = #{column5,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.imsystem.domain.Stockrecord">
+		update stockrecord
+		set aftersdid = #{aftersdid,jdbcType=VARCHAR},
+		beforesdid = #{beforesdid,jdbcType=VARCHAR},
+		aftersid = #{aftersid,jdbcType=VARCHAR},
+		beforesid = #{beforesid,jdbcType=VARCHAR},
+		column1 = #{column1,jdbcType=VARCHAR},
+		column2 = #{column2,jdbcType=VARCHAR},
+		column3 = #{column3,jdbcType=VARCHAR},
+		column4 = #{column4,jdbcType=VARCHAR},
+		column5 = #{column5,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
 </mapper>
