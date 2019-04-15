@@ -64,6 +64,13 @@ function getThisYear() {
 	return year;
 }
 /**
+ * 获取当前月
+ * @returns
+ */
+function getCurrentMonth() {
+	return yue;
+}
+/**
  * 结束时间
  * 
  * @returns
@@ -155,4 +162,71 @@ function queryGoodsRanking(time,startTime,endTime,storeId){
 		}
 	});
 	return value;
+}
+/***
+ * 查询明细
+ * @param currentPage
+ * @param time
+ * @param startTime
+ * @param endTime
+ * @param storeId
+ * @param gid
+ * @returns
+ */
+function queryGoodsDetail(currentPage,time,startTime,endTime,storeId,gid){
+	var v;
+	$.ajax({
+		url:"/statistics/queryGoodsDetail",
+		type:"post",
+		data:{
+			currentPage:currentPage,
+			time:time,
+			startTime:startTime,
+			endTime:endTime,
+			storeId:storeId,
+			gid:gid
+		},
+		dataType:"json",
+		async:false,
+		success:function(data){
+			v = data;
+		},
+		error:function(){
+			console.log("ERROR:'queryGoodsDetail'");
+		}
+	});
+	return v;
+}
+
+/**
+ * 进货统计
+ * @param currentPage
+ * @param time
+ * @param startTime
+ * @param endTime
+ * @param storeId
+ * @param cid
+ * @returns
+ */
+function queryJinHuo(currentPage,startTime,endTime,cid){
+	var v;
+	$.ajax({
+		url:"/statistics/queryJinHuo",
+		type:"post",
+		data:{
+			currentPage:currentPage,
+			startTime:startTime,
+			endTime:endTime,
+			cid:cid
+		},
+		dataType:"json",
+		async:false,
+		success:function(data){
+			v = data;
+		},
+		error:function(){
+			console.log("ERROR:'queryGoodsDetail'");
+		}
+	});
+	return v;
 }

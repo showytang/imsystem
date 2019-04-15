@@ -409,4 +409,13 @@
       column5 = #{column5,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="queryJinHuo" resultMap="BaseResultMap">
+  	SELECT sd.count AS `count`, sd.price AS price , g.name AS gvid , gv.name AS column4 , g.jprice AS column1, c.name AS column2 , s.time AS TIME,s.updateTime AS column3  FROM stockdetails AS sd JOIN stock AS s ON s.id = sd.sid JOIN customer AS c ON c.id = s.cid JOIN goodsvalue AS gv ON gv.id = sd.gvid JOIN goods AS g ON g.id = gv.gid  WHERE s.state = '0'
+	<if test="cid != null and cid != ''">
+		and s.cid = #{cid}
+	</if>
+  	<if test="startTime != null and startTime !='' and endTime != null and endTime != ''">
+  		AND s.TIME >= DATE_FORMAT(#{startTime},'%Y-%m-%d 00:00:00') AND s.TIME &lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d 23:59:59')
+  	</if>
+  </select>
 </mapper>

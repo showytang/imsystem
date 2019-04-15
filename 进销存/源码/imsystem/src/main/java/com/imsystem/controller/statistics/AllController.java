@@ -5,13 +5,19 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Goodsvalue;
 import com.imsystem.domain.Salesorder;
+import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Store;
 import com.imsystem.service.statistics.GoodsValueService;
 import com.imsystem.service.statistics.SalesorderService;
+import com.imsystem.service.statistics.StockDetailsService;
 import com.imsystem.service.statistics.StoreService;
 
 @Controller
@@ -23,7 +29,13 @@ public class AllController {
 	StoreService storeS;
 	@Autowired
 	GoodsValueService gvs;
+	@Autowired
+	StockDetailsService stockDS;
 	
+	/**
+	 * index top 四方格
+	 * @return
+	 */
 	@RequestMapping("query")
 	@ResponseBody
 	public Salesorder query(String storeid, String code, String startTime, String endTime) {
@@ -61,11 +73,6 @@ public class AllController {
 		List<Goodsvalue> list = gvs.queryByCode(code);
 		return list;
 	}
-	/**
-	 * index top 四方格
-	 * @param storeid
-	 * @return
-	 */
 	@RequestMapping("queryDaysAgo")
 	@ResponseBody
 	public List<Salesorder> queryDaysAgo(String storeid){
@@ -110,7 +117,7 @@ public class AllController {
 		List<Salesorder> list = salesorderS.queryThisYear(year);
 		if (list.size()>0) {
 			for (Salesorder ss : list) {
-				List<Goodsvalue> gv = gvs.queryGoodsByTime(ss.getColumn3(),"","",storeId);
+				List<Goodsvalue> gv = gvs.queryGoodsByTime(ss.getColumn3(),"","",storeId,"");
 				if (gv.size()>0) {
 					ss.setList(gv);
 				}
@@ -121,7 +128,29 @@ public class AllController {
 	@RequestMapping("queryGoodsRanking")
 	@ResponseBody
 	public List<Goodsvalue> queryGoodsRanking(String time,String startTime,String endTime,String storeId){
-		List<Goodsvalue> list = gvs.queryGoodsByTime(time, startTime, endTime, storeId);
+		List<Goodsvalue> list = gvs.queryGoodsByTime(time, startTime, endTime, storeId,"");
 		return list;
+	}
+	
+	@RequestMapping("queryGoodsDetail")
+	@ResponseBody
+	public PageInfo<Goodsvalue> queryGoodsDetail(Integer currentPage,String time,String startTime,String endTime,String storeId,String gid){
+		if (currentPage == null || currentPage == 0) {
+			currentPage = 1;
+		}
+		Page<Goodsvalue> page = PageHelper.startPage(currentPage, 2, true);
+		List<Goodsvalue> list = gvs.queryGoodsByTime(time, startTime, endTime, storeId, gid);
+		return page.toPageInfo();
+	}
+	
+	@RequestMapping("queryJinHuo")
+	@ResponseBody
+	public PageInfo<Stockdetails> queryJinHuo(Integer currentPage,String startTime,String endTime,String cid){
+		if (currentPage == null || currentPage == 0) {
+			currentPage = 1;
+		}
+		Page<Stockdetails> page = PageHelper.startPage(currentPage, 2, true);
+		List<Stockdetails> list = stockDS.queryJinHuo(startTime, endTime, cid);
+		return page.toPageInfo();
 	}
 }

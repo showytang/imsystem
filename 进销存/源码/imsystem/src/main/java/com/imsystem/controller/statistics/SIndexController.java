@@ -30,4 +30,16 @@ public class SIndexController {
 	public String goJinHuo() {
 		return "yhb/jinhuo";
 	}
+	@RequestMapping("goKuCun")
+	public String goKuCun() {
+		return "yhb/Kucun";
+	}
+	@RequestMapping("goMingXi")
+	public String goMingXi() {
+		return "yhb/mingxi";
+	}
+	@RequestMapping("goQianKuan")
+	public String goQianKuan() {
+		return "yhb/qiankuan";
+	}
 }

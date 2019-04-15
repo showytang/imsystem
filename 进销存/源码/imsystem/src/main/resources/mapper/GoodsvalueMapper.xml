@@ -19,14 +19,14 @@
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
   <select id="queryByCode" resultMap="BaseResultMap">
-  	SELECT g.id AS id,g.name AS `name`,g.id AS gid,sd.time AS TIME,gv.gid AS gvid,sd.sid AS sid, gv.name AS column1,g.img AS column2,SUM(sd.price*sd.count) AS jprice,SUM(sd.count) AS column3 FROM salesdetails AS sd JOIN goodsvalue AS gv ON sd.gvid = gv.id JOIN goods AS g ON g.id = gv.gid  WHERE sd.state = '0'
+  	SELECT g.id AS id,g.name AS `name`,g.id AS gid,sd.time AS TIME,gv.gid AS gvid,sd.sid AS sid, gv.name AS column1,gv.column1 AS column2,SUM(sd.price*sd.count) AS jprice,SUM(sd.count) AS column3 FROM salesdetails AS sd JOIN goodsvalue AS gv ON sd.gvid = gv.id JOIN goods AS g ON g.id = gv.gid  WHERE sd.state = '0'
   	<if test="code != null and code != ''">
   		 AND sd.sid = #{code}
   	</if>
   	 GROUP BY DATE_FORMAT(sd.TIME,'%Y-%m-%d')
   </select>
   <select id="queryGoodsByTime" resultMap="BaseResultMap">
-  SELECT g.id AS id,g.name AS `name`,g.id AS gid,sd.time AS TIME,gv.gid AS gvid,sd.sid AS sid, gv.name AS column1,g.img AS column2,SUM(sd.price*sd.count) AS jprice,SUM(sd.count) AS column3 FROM salesdetails AS sd JOIN goodsvalue AS gv ON sd.gvid = gv.id JOIN goods AS g ON g.id = gv.gid   WHERE sd.state = '0' 
+  SELECT c.name AS id,sd.oldprice AS column4,SUM(sd.oldprice*sd.count)-SUM(sd.price*sd.count) AS column5,g.name AS `name`,g.id AS gid,sd.time AS TIME,gv.gid AS gvid,sd.sid AS sid, gv.name AS column1,gv.column1 AS column2,SUM(sd.price*sd.count) AS jprice,SUM(sd.count) AS column3 FROM salesdetails AS sd JOIN goodsvalue AS gv ON sd.gvid = gv.id JOIN goods AS g ON g.id = gv.gid JOIN sales AS s ON s.id = sd.sid JOIN customer AS c ON c.id = s.cid    WHERE sd.state = '0' 
   <if test="time != null and time != '' and startTime == null || startTime == ''">
   	AND DATE_FORMAT(sd.TIME,'%Y-%m')= #{time}
   </if>
@@ -35,6 +35,9 @@
   </if>
   <if test="storeId != null and storeId != ''">
   	and sd.storeid = #{storeId}
+  </if>
+  <if test="gid != null and gid != ''">
+  	and g.id = #{gid}
   </if>
    GROUP BY gv.gid ORDER BY gv.jprice DESC
   
