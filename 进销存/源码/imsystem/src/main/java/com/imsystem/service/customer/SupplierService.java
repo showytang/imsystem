@@ -51,7 +51,7 @@ public interface SupplierService {
 	 * @param pageSize  当前页数据条数
 	 * @return
 	 */
-	public PageInfo<Supplier> querySupplierList(Double zero,String content,Integer curentPage,Integer pageSize);
+	public PageInfo<Supplier> querySupplierList(Double zero,String content,Integer curentPage);
 
 
 }

@@ -29,9 +29,9 @@ public class SupplierController {
 	
 	@RequestMapping("querysupplierlist")
 	@ResponseBody
-	public PageInfo<Supplier> queryCustomerList(Double zero,String content,Integer curentPage,Integer pageSize) {
+	public PageInfo<Supplier> queryCustomerList(Double zero,String content,Integer curentPage) {
 		
-		return sService.querySupplierList(zero, content, curentPage, pageSize);
+		return sService.querySupplierList(zero, content, curentPage);
 	}
 	
 	@RequestMapping("toaddsupplier")
