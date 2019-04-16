@@ -10,10 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.imsystem.domain.Salesorder;
 import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Stockrecord;
 import com.imsystem.domain.Store;
+import com.imsystem.mapper.SalesorderMapper;
 import com.imsystem.mapper.StockMapper;
 import com.imsystem.mapper.StockdetailsMapper;
 import com.imsystem.mapper.StockrecordMapper;
@@ -31,6 +33,9 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	
 	@Autowired
 	StockdetailsMapper stockDetail;
+	
+	@Autowired
+	SalesorderMapper salesorderMapper;
 	
 	@Override
 	public PageInfo<Stock> queryStock(String code,String time,String endTime,Integer currentPage,Integer pageSize,String order,Integer kucun) {
@@ -66,6 +71,23 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	public Vector<Stockdetails> queryDetails(String gvid) {
 		// TODO Auto-generated method stub
 		return stockDetail.queryDetails(gvid,"1");
+	}
+
+	@Override
+	public PageInfo<Salesorder> querySalesOrder(Salesorder sales) {
+		// TODO Auto-generated method stub
+		
+		if(sales.getColumn5() == null || sales.getColumn5() == "") {
+			
+			sales.setColumn5("1");
+			
+		}
+		
+		Page<Salesorder> page = PageHelper.startPage(Integer.parseInt(sales.getColumn5()),10, true);
+		
+		salesorderMapper.querySalesOrder(sales);
+		
+		return page.toPageInfo();
 	}
 
 	

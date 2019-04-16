@@ -4,6 +4,8 @@ import java.util.Date;
 
 import java.util.UUID;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class Stockdetails {
@@ -21,7 +23,10 @@ public class Stockdetails {
 
     private Double price;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date time;
+    
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date updatetime;
 
@@ -46,6 +51,16 @@ public class Stockdetails {
     private String column5;
     
     private Goods goods;
+    
+    private Goodsvalue goodsvalue;
+    
+    public Goodsvalue getGoodsvalue() {
+		return goodsvalue;
+	}
+    
+    public void setGoodsvalue(Goodsvalue goodsvalue) {
+		this.goodsvalue = goodsvalue;
+	}
     
     public void setGoods(Goods goods) {
 		this.goods = goods;
