@@ -75,21 +75,17 @@ body::-webkit-scrollbar-thumb {
 					<th>图片</th>
 					<th>名称</th>
 					<th>类型</th>
-					<th>时间</th>
 					<th>数量</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr v-for="item in list">
-					<td v-for="item2 in item.goods.goodsValues"><img
-						v-if="item2.column1 != null" class="shappingImg"
-						:src="item2.column1"> <img v-else class="shappingImg"
-						:src="item.goods.img"></td>
-					<td>{{item.goods.name}}</td>
-					<td v-for="item2 in item.goods.goodsValues">
-							{{item2.name}}
-					</td>
-					<td>{{item.updatetime}}</td>
+					<td><img
+						v-if="item.goodsvalue.column1 !='' && item.goodsvalue.column1 !=null"
+						:src="item.goodsvalue.column1"> <img v-else
+						:src="item.goodsvalue.goods.img"></td>
+					<td>{{item.goodsvalue.goods.name}}</td>
+					<td>{{item.goodsvalue.name}}</td>
 					<td>{{item.count}}</td>
 				</tr>
 			</tbody>
@@ -107,7 +103,7 @@ body::-webkit-scrollbar-thumb {
 				
 			});
 			
-			vue.list = [[${stockcored}]];
+			vue.list = [[${list}]];
 			
 		</script>
 	</div>

@@ -75,6 +75,7 @@ input {
 					<th>图片</th>
 					<th>名称</th>
 					<th>类型</th>
+					<th>时间</th>
 					<th>价格</th>
 					<th>数量</th>
 					<th>操作</th>
@@ -94,6 +95,7 @@ input {
 					</td>
 					<td >{{item.goods.name}}</td>
 					<td v-for="item1 in item.goods.goodsValues" >{{item1.name}}</td>
+					<td>{{item.updatetime}}</td>
 					<td>{{item.price}}</td>
 					<td><input class="shiliang" :value="item.column2"></td>
 					<td><span class="glyphicon glyphicon-remove"></span></td>
