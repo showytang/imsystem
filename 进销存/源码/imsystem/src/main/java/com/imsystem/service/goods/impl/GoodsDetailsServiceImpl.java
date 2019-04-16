@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.imsystem.domain.GoodsDetailVo;
 import com.imsystem.domain.GoodspriceExample;
+import com.imsystem.domain.Goodsvalue;
 import com.imsystem.domain.ImgExample;
 import com.imsystem.domain.ImgExample.Criteria;
 import com.imsystem.mapper.GoodspriceMapper;
@@ -37,12 +37,12 @@ public class GoodsDetailsServiceImpl implements GoodsDetailsService{
 	
 	
 	@Override
-	public GoodsDetailVo queryGoodsDetail(String id) {
+	public Goodsvalue queryGoodsDetail(String id) {
 		// TODO Auto-generated method stub
 		
-		GoodsDetailVo goodsDetailVo = goodsvalueMap.queryGoodsDetail(id);
+		Goodsvalue goodsvalue = goodsvalueMap.queryGoodsDetail(id);
 		
-		//商品图片查询
+	/*	//商品图片查询
 		ImgExample imgExample = new ImgExample();
 		
 		Criteria imgCriteria = imgExample.createCriteria();
@@ -57,8 +57,8 @@ public class GoodsDetailsServiceImpl implements GoodsDetailsService{
 		goodspriceExample.createCriteria().andGvidEqualTo(goodsDetailVo.getGoodsvalue().getId());
 		
 		goodsDetailVo.setGoodsprice(goodspriceMap.selectByExample(goodspriceExample));
-
-		return goodsDetailVo;
+*/
+		return goodsvalue;
 	}
 
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.imsystem.domain.Customertype;
+import com.imsystem.domain.Goods;
 import com.imsystem.domain.GoodsVO;
 import com.imsystem.domain.GoodsValueVo;
 import com.imsystem.domain.Goodsprice;
@@ -105,6 +106,7 @@ public class GoodsServiceImpl implements GoodsService {
 		String stockId = UUID.randomUUID().toString();
 
 		goodsVo.getGoods().setId(gid);
+		goodsVo.getGoods().setState(0);
 
 		int count = goodsMap.insertSelective(goodsVo.getGoods());
 
@@ -146,8 +148,10 @@ public class GoodsServiceImpl implements GoodsService {
 			sd.setSid(stockId);
 			sd.setGvid(goodsvID);
 			sd.setPrice(goodsVo.getGoods().getJprice());
+			sd.setState(0);
+			sd.setTime(new Date());
 			//默认15
-			sd.setCount(15);
+			sd.setCount(20);
 			
 			return stockDetailsMap.insertSelective(sd);
 		}
@@ -207,6 +211,8 @@ public class GoodsServiceImpl implements GoodsService {
 				gv.getStockDetails().setSid(stockId);
 				gv.getStockDetails().setSid(UUID.randomUUID().toString());
 				gv.getStockDetails().setGvid(gvid);
+				gv.getStockDetails().setState(0);
+				gv.getStockDetails().setTime(new Date());
 				stockDetailsMap.insertSelective(gv.getStockDetails());
 				
 				// 商品规格值实例添加
@@ -246,6 +252,16 @@ public class GoodsServiceImpl implements GoodsService {
 	public List<GoodsValueVo> queryAllGoods(String liketext,String [] svid,String tid) {
 		// TODO Auto-generated method stub
 		return goodsMap.queryAllGoods(liketext,svid,tid);
+	}
+
+
+	/**
+	 * 商品修改加载
+	 */
+	@Override
+	public Goods updateGoodsLoad(String id) {
+		// TODO Auto-generated method stub
+		return goodsMap.updateGoodsLoad(id);
 	}
 
 }
