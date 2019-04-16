@@ -34,38 +34,32 @@
 			body {
 				-webkit-user-select: none;
 			}
+			.update{
+				position: absolute;z-index: 55;height: 100%;width: 100%;opacity: 0;top:0;
+			}
+			.uptatesp{
+				position: absolute;z-index: 50;height: 100%;width: 100%;top:0;
+			}
+			.delimg {
+				position: absolute;
+				right: 2%;
+				color: #d96767;
+				top: -2%;
+				cursor: pointer;
+				display: none;
+				z-index:999;
+			}
 		</style>
 
 		<script type="text/javascript" th:src="@{/assets/js/jquery-1.8.2.js}"></script>
 		<script type="text/javascript" th:src="@{/assets/js/bootstrap.js}"></script>
-		<script>
+		<script th:line>
 			$(function() {
 
-				$(".upNow").click(function() {
-
-					$(".upqian").hide(200);
-					$(".upAfert").show(200);
-					$(".text-span").hide();
-					$(".inp").show();
-
-				});
-
-				$(".upAfert").click(function() {
-
-					$(".upqian").show(200);
-					$(".upAfert").hide(200);
-					$(".text-span").show();
-					$(".inp").hide();
-
-				});
 				
-/* 				$(".AllUp").click(function(){
-					
-					location = "/goods/updateGoodsLoad";
-					
-				}); */
-
 			});
+			
+			
 		</script>
 	</head>
 
@@ -82,11 +76,8 @@
 				<div class="panel-heading">
 					<h3 style="padding-right: 20px;background-color:#00AAFF ;color: #FFFFFF;height: 6vh;line-height: 6vh;letter-spacing:2px;text-indent: 20px;border-radius: 5px;" class="panel-title">
 						<span>商品详情</span>
-						<a th:href="@{/goods/updateGoodsLoad}"><span class="AllUp upqian" style="float: right;cursor: pointer;">更多</span></a>
-						<span class="upNow upqian" style="float: right;cursor: pointer;">编辑</span>
+						<a th:href="@{/goods/updateGoodsLoad(id=${gdv.id})}"><span class="AllUp upqian" style="float: right;cursor: pointer;">编辑</span></a>
 						
-						<span class="upAfert upOk" style="float: right;cursor: pointer;display: none;">完成</span>
-						<span class="upAfert upNo" style="float: right;cursor: pointer;display: none;">取消</span>
 					</h3>
 				</div>
 				<div class="panel-body">
@@ -95,12 +86,12 @@
 
 						<ul class="list-group">
 						
-							<li class="list-group-item list-group-item-heading">
+							<li th:if="${gdv.column1!=null}"  class="list-group-item list-group-item-heading"  >
 								<big>详情图片</big>
-								<div class="row">
-									<div class="col-xs-6 col-md-2">
+								<div class="row"  >
+									<div style="text-align: center;" class="col-xs-6 col-md-2">
 										<a href="#" class="thumbnail">
-											<img  th:src="${gdv.goodsvalue.column1}" alt="...">
+										<img id="goodsdetailimg"  th:src="${gdv.column1}" alt="..."> 
 										</a>
 									</div>
 								</div>
@@ -110,11 +101,11 @@
 								<big>商品图片</big>
 								<div class="row">
 									<div  class="col-xs-6 col-md-2">
-										<a href="#" class="thumbnail">
-											<img  id="goodstu" alt="...">
+										<a href="#"  class="thumbnail">
+											<img width="96%" id="goodstu" alt="...">
 										</a>
 									</div>
-									<div class="col-xs-6 col-md-2" th:each="item,index:${gdv.img}">
+									<div class="col-xs-6 col-md-2" th:each="item,index:${gdv.goods.imgs}">
 										<a href="#" class="thumbnail">
 											<img th:src="${item.url}" alt="...">
 										</a>
@@ -126,16 +117,19 @@
 								<big>商品名称：</big><span th:text="${gdv.goods.name}"></span>
 							</li>
 							<li class="list-group-item list-group-item-heading list-group-item-hover">
-								<big>商品类型：</big><span th:text="${gdv.goodsvalue.name}"></span>
+								<big>商品类型：</big><span th:text="${gdv.name}"></span>
 							</li>
 							<li class="list-group-item list-group-item-heading list-group-item-hover">
-								<big>进货价：￥</big><span th:text="${gdv.goodsvalue.jprice}" class="text-span"></span>
-								<input class="inp" th:value="${gdv.goodsvalue.jprice}" />
-
+								<big>初期库存：</big><span th:text="${gdv.count}"></span>
 							</li>
-							 <li th:each="item2,index:${gdv.goodsprice}" class="list-group-item list-group-item-heading list-group-item-hover">
+							<li class="list-group-item list-group-item-heading list-group-item-hover">
+								<big>商品总库存：</big><span th:text="${gdv.counts}"></span>
+							</li>
+							<li class="list-group-item list-group-item-heading list-group-item-hover">
+								<big>进货价：￥</big><span th:text="${gdv.jprice}" class="text-span"></span>
+							</li>
+							 <li th:each="item2,index:${gdv.goodsPrices}" class="list-group-item list-group-item-heading list-group-item-hover">
 								<big><span th:text="${item2.sufname}"></span>：￥</big><span th:text="${item2.price}" class="text-span"></span>
-								<input class="inp" th:value="${item2.price}" />
 							</li> 
 
 						</ul>
@@ -168,6 +162,9 @@
 		$("#goodstu").attr("src","data:image/png;base64,"+goods.img);
 	
 		$("#fuwenben").html(goods.detail);
+		
+		
+		
 		
 	</script>
 

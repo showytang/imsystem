@@ -23,8 +23,17 @@
 	</resultMap>
 
 
-	<resultMap type="com.imsystem.domain.GoodsDetailVo"
+	<resultMap type="com.imsystem.domain.Goodsvalue"
 		id="goodsDetailsVo">
+
+			<id column="gvid" property="id" jdbcType="VARCHAR" />
+			<result column="gvname" property="name" jdbcType="VARCHAR" />
+			<result column="gvgid" property="gid" jdbcType="VARCHAR" />
+			<result column="count" property="count" jdbcType="VARCHAR" />
+			<result column="counts" property="counts" jdbcType="VARCHAR" />
+			<result column="gvcolumn1" property="column1"
+				jdbcType="VARCHAR" />
+			<result column="gvjprice" property="jprice" jdbcType="DOUBLE" />
 
 		<association property="goods"
 			javaType="com.imsystem.domain.Goods">
@@ -33,58 +42,23 @@
 			<result column="gsdetail" property="detail" jdbcType="VARCHAR" />
 			<result column="gsimg" property="img" jdbcType="LONGVARBINARY" />
 
-		 <!-- 	<collection property="imgs"
-				ofType="com.imsystem.domain.Img" column="gsid" select="queryimg">
+		  	<collection property="imgs"
+				ofType="com.imsystem.domain.Img" >
 				<id column="imid" property="id" jdbcType="VARCHAR" />
 				<result column="imurl" property="url" jdbcType="VARCHAR" />
-			</collection>  -->
+			</collection>  
 
 		</association>
 
-		<association property="goodsvalue"
-			javaType="com.imsystem.domain.Goodsvalue">
-			<id column="gvid" property="id" jdbcType="VARCHAR" />
-			<result column="gvname" property="name" jdbcType="VARCHAR" />
-			<result column="gvgid" property="gid" jdbcType="VARCHAR" />
-			<result column="gvcolumn1" property="column1"
-				jdbcType="VARCHAR" />
-			<result column="gvjprice" property="jprice" jdbcType="DOUBLE" />
-
-			<!--  <collection property="goodsPrices"
-				ofType="com.imsystem.domain.Goodsprice" column="gvid"
-				select="querygoodsprice">
-				<id column="gpid" property="id" jdbcType="VARCHAR" />
-				<result column="gpsufname" property="sufname"
-					jdbcType="VARCHAR" />
-				<result column="gpprice" property="price" jdbcType="DOUBLE" />
-				<result column="gpgvid" property="gvid" jdbcType="VARCHAR" />
-			</collection>  -->
-
-		</association>
-
-		<association property="stockdetails"
-			javaType="com.imsystem.domain.Stockdetails">
-			<id column="sdid" property="id" jdbcType="VARCHAR" />
-			<result column="sdgvid" property="gvid" jdbcType="VARCHAR" />
-			<result column="sdcount" property="count" jdbcType="INTEGER" />
-		</association>
-
-
-	<!-- 	<collection property="goodsprice"
+		
+	  <collection property="goodsPrices"
 			ofType="com.imsystem.domain.Goodsprice" >
 			<id column="gpid" property="id" jdbcType="VARCHAR" />
 			<result column="gpsufname" property="sufname"
 				jdbcType="VARCHAR" />
 			<result column="gpprice" property="price" jdbcType="DOUBLE" />
 			<result column="gpgvid" property="gvid" jdbcType="VARCHAR" />
-		</collection>
-
-		<collection property="img"
-			ofType="com.imsystem.domain.Img" >
-			<id column="imid" property="id" jdbcType="VARCHAR" />
-			<result column="imurl" property="url" jdbcType="VARCHAR" />
-		</collection> -->
-
+		</collection>  
 
 
 	</resultMap>
@@ -95,51 +69,27 @@
 	<select id="queryGoodsDetail" resultMap="goodsDetailsVo">
 
 
-		
-		<!-- SELECT gs.`id` AS gsid,gs.`detail` AS gsdetail,gs.`name` AS gsname,gs.`img` AS gsimg,
-		gv.id AS gvid,gv.`name` AS gvname,gv.`gid` AS gvgid,gv.column1 AS gvcolumn1,
-		sd.id AS sdid,sd.`gvid` AS sdgvid,sd.`count` AS sdcount,
+		SELECT 
+		gs.`id` AS gsid,gs.`detail` AS gsdetail,gs.`name` AS gsname,gs.`img` AS gsimg,
+		gv.id AS gvid,gv.`name` AS gvname,gv.`gid` AS gvgid,gv.column1 AS gvcolumn1,gv.jprice as gvjprice,
+		sd.`count` AS `count`,
 		im.id AS imid,im.url AS imurl,
-		gp.id AS gpid,gp.sufname AS gpsufname,gp.price AS gpprice,gp.gvid AS gpgvid 
-		FROM `goods` AS gs 
-		INNER JOIN `goodsvalue` AS gv ON gs.`id` = gv.`gid` 
-		INNER JOIN img AS im ON im.`gid` = gs.`id` 
-		INNER JOIN `goodsprice` AS gp ON gp.gvid = gv.`id` 
-		INNER JOIN `stockdetails` AS sd ON gv.`id` = sd.`gvid` 
-		WHERE gv.`id` = #{id}
-		GROUP BY im.id -->
+		gp.id AS gpid,gp.sufname AS gpsufname,gp.price AS gpprice,gp.gvid AS gpgvid ,
+		(SELECT SUM(`count`) FROM `stockdetails` AS sk WHERE sk.`gvid` =  #{id}) AS counts
+		FROM `goodsvalue` AS gv
+		INNER JOIN `goods` AS gs
+		ON gv.`gid` = gs.`id`
+		INNER JOIN `img` AS im
+		ON gs.`id` = im.gid
+		INNER JOIN `goodsprice` AS gp
+		ON gv.`id` = gp.gvid
+		INNER JOIN `stockdetails` AS sd
+		ON gv.`id` = sd.`gvid`
+		WHERE sd.`state`= 0 AND gv.`id` = #{id}
+
 		
 
-
-		SELECT gs.`id` AS
-		gsid,gs.`detail` AS gsdetail,gs.`name` AS gsname,gs.`img` AS gsimg,
-		gv.id AS gvid,gv.`name` AS gvname,gv.`gid` AS gvgid,gv.column1 AS
-		gvcolumn1,gv.jprice as gvjprice,
-		sd.id AS sdid,sd.`gvid` AS sdgvid,sd.`count` AS sdcount
-		FROM
-		`goods` AS gs
-		INNER JOIN `goodsvalue` AS gv ON gs.`id` = gv.`gid`
-		INNER JOIN `stockdetails` AS sd ON gv.`id` = sd.`gvid`
-		WHERE gv.`id` = #{id} 
-
 	</select>
-
-
-	<!-- <select id="queryimg" resultMap="goodsDetailsVo">
-
-		SELECT im.id AS 'imid',im.url AS 'imurl' FROM img AS im 
-		WHERE im.`gid` = #{id}
-
-	</select>
-
-
-	<select id="querygoodsprice" resultMap="goodsDetailsVo">
-
-		SELECT gp.id AS 'gpid',gp.sufname AS 'gpsufname',gp.price AS 'gpprice',gp.gvid AS
-		'gpgvid' FROM `goodsprice` AS gp 
-		WHERE gp.`gvid` = #{id}
-
-	</select> -->
 
 
 	<!-- 商品模糊查询 -->
