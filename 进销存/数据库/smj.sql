@@ -182,21 +182,21 @@ CREATE TABLE `goods` (
   `jprice` DOUBLE DEFAULT NULL,
   `remark` VARCHAR(50) DEFAULT NULL,
   `uid` VARCHAR(20) DEFAULT NULL,
-  `minsecurity` int(4) DEFAULT NULL,
-  `maxsecurity` int(4) DEFAULT NULL,
-  `historygid` varchar(20) DEFAULT NULL,
-  `time` datetime DEFAULT NULL,
-  `updatetime` datetime DEFAULT NULL,
-  `detail` varchar(50) DEFAULT NULL,
-  `state` int(4) DEFAULT NULL,
-  `enname` varchar(50) DEFAULT NULL,
-  `column1` varchar(50) DEFAULT NULL,
-  `column2` varchar(50) DEFAULT NULL,
-  `column3` varchar(50) DEFAULT NULL,
-  `column4` varchar(50) DEFAULT NULL,
-  `column5` varchar(50) DEFAULT NULL,
+  `minsecurity` INT(4) DEFAULT NULL,
+  `maxsecurity` INT(4) DEFAULT NULL,
+  `historygid` VARCHAR(20) DEFAULT NULL,
+  `time` DATETIME DEFAULT NULL,
+  `updatetime` DATETIME DEFAULT NULL,
+  `detail` VARCHAR(5000) DEFAULT NULL,
+  `state` INT(4) DEFAULT NULL,
+  `enname` VARCHAR(50) DEFAULT NULL,
+  `column1` VARCHAR(50) DEFAULT NULL,
+  `column2` VARCHAR(50) DEFAULT NULL,
+  `column3` VARCHAR(50) DEFAULT NULL,
+  `column4` VARCHAR(50) DEFAULT NULL,
+  `column5` VARCHAR(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods` */
 
