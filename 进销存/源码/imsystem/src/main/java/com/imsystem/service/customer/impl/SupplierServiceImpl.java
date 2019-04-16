@@ -59,7 +59,7 @@ public class SupplierServiceImpl implements SupplierService{
 	@Override
 	public int deleteSupplier(String supId) {
 		// TODO Auto-generated method stub
-		return 0;
+		return sDao.deleteSupplier(supId);
 	}
 
 	/**
@@ -68,7 +68,16 @@ public class SupplierServiceImpl implements SupplierService{
 	@Override
 	public int updatSupplier(Supplier supObj) {
 		// TODO Auto-generated method stub
-		return 0;
+		Date time=new Date();
+		String address=supObj.getAddres();
+		String[] addr=address.split("/");
+		supObj.setUpdatetime(time);
+		supObj.setProvince(addr[0]);
+		supObj.setCity(addr[1]);
+		supObj.setDistrict(addr[2]);
+		supObj.setAddres(addr[3]);
+		int row=sDao.updateSupplier(supObj);
+		return row;
 	}
 
 	/**
@@ -77,7 +86,7 @@ public class SupplierServiceImpl implements SupplierService{
 	@Override
 	public Supplier querySupplierById(String supId) {
 		// TODO Auto-generated method stub
-		return null;
+		return sDao.selectByPrimaryKey(supId);
 	}
 
 	@Override

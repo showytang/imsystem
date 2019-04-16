@@ -31,6 +31,10 @@ public class SupplierController {
 	@ResponseBody
 	public PageInfo<Supplier> queryCustomerList(Double zero,String content,Integer curentPage) {
 		
+		if(curentPage == null || curentPage <= 0 ) {
+			curentPage = 1;
+		}
+		
 		return sService.querySupplierList(zero, content, curentPage);
 	}
 	
@@ -55,6 +59,30 @@ public class SupplierController {
 	@RequestMapping("addSupplier")
 	public String addSupplier(Supplier sObj) {
 		int row=sService.insertSupplier(sObj);
+		return "redirect:tosupplierlist";
+	}
+	
+	@RequestMapping("tosupplierdetail")
+	public String toSupplierDetail(String id,Model model) {
+		model.addAttribute("sid", id);
+		return "lxy/SupplierDetail";
+	}
+	
+	@RequestMapping("querysupplierbyid")
+	@ResponseBody
+	public Supplier querySupplierById(String id) {
+		return sService.querySupplierById(id);
+	}
+	
+	@RequestMapping("updatesupplier")
+	public String updateSupplier(Supplier sObj) {
+		int row=sService.updatSupplier(sObj);
+		return "redirect:tosupplierlist";
+	}
+	
+	@RequestMapping("deletesupplier")
+	public String deleteSupplier(String id) {
+		int row=sService.deleteSupplier(id);
 		return "redirect:tosupplierlist";
 	}
 

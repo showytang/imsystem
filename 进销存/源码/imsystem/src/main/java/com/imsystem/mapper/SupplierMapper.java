@@ -8,6 +8,10 @@ import org.apache.ibatis.annotations.Param;
 public interface SupplierMapper {
 	List<Supplier> querySupplierByPage(@Param("content") String content,@Param("zero") Double zero);
 	
+	int updateSupplier(Supplier sObj);
+	
+	int deleteSupplier(String id);
+	
     int countByExample(SupplierExample example);
 
     int deleteByExample(SupplierExample example);
