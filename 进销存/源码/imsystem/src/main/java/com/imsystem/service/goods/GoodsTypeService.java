@@ -9,7 +9,7 @@ public interface GoodsTypeService {
 
 	List<Goodstype> QueryGoodsTypeByPid(Integer id);
 	
-	List<Standard> queryStandradByid(Integer id);
+	List<Standard> queryStandradByid(String id);
 	
 	
 }

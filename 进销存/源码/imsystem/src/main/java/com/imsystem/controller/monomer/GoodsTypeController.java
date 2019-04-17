@@ -20,25 +20,6 @@ public class GoodsTypeController {
 	SpTypeService goods;
 	
 	
-	/*@RequestMapping("querygoods")
-	public String  querygoods(Model model,String tiaojian,Integer currentPage,Integer pageSize){
-		if("null".equals(tiaojian)) {
-			tiaojian  = null;
-		}
-		if(currentPage == null || currentPage<=1) {
-			currentPage = 1;
-		}
-		if(pageSize == null) {
-			pageSize = 5;
-		}
-		model.addAttribute("currentPage", currentPage);
-		model.addAttribute("tiaojian", tiaojian);
-		model.addAttribute("page", goods.queryByLikepage(tiaojian, currentPage, 5));
-		System.out.println(goods.queryByLikepage(tiaojian, currentPage, 5).getList());
-		return "spleixing";
-	}*/
-	
-	
 	@RequestMapping("querygoods")
 	public String querygoods() {
 		return "xl/spleixing";
@@ -59,5 +40,36 @@ public class GoodsTypeController {
 	
 	}
 	
+	@RequestMapping("/delete")
+	
+	public String delete(Integer id) {
+		System.err.println(id);
+		goods.deleteupdate(id);
+		return "redirect:/goods/querygoods";
+	}
+	
+	@RequestMapping("insert")
+	@ResponseBody
+	public int insert(Goodstype good) {
+		System.err.println("44444");
+		int r=goods.insertgoodstype(good);
+		
+		return r;
+	}
+	
+	@RequestMapping("update")
+	@ResponseBody
+	public Goodstype update(Integer id) {
+		Goodstype good=goods.querybyid(id);
+		return good;
+		
+	}
+	
+	@RequestMapping("toupdate")
+	@ResponseBody
+	public int toupdate(Goodstype good) {
+		int r=goods.toupdate(good);
+		return r;
+	}
 
 }

@@ -34,6 +34,38 @@ public class SpTypeServiceImpl implements SpTypeService{
 		List<Goodstype> list=ma.querygoodstype(tiaojian);
 		return page.toPageInfo();
 	}
+
+
+
+	@Override
+	public int deleteupdate(Integer id) {
+		
+		return ma.deleteupdate(id);
+	}
+
+
+
+	@Override
+	public int insertgoodstype(Goodstype good) {
+		
+		return ma.insertgoodstype(good);
+	}
+
+
+
+	@Override
+	public Goodstype querybyid(Integer id) {
+		
+		return ma.querybyid(id);
+	}
+
+
+
+	@Override
+	public int toupdate(Goodstype good) {
+		
+		return ma.toupdate(good);
+	}
 	
 
 	

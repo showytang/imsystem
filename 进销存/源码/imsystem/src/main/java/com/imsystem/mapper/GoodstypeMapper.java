@@ -27,6 +27,7 @@ public interface GoodstypeMapper {
     List<Goodstype> queryall();
     
     List<Goodstype> querygoodstype(@Param("tiaojian")String tiaojian);
+    
 
     List<Goodstype> selectByExample(GoodstypeExample example);
 
@@ -39,4 +40,12 @@ public interface GoodstypeMapper {
     int updateByPrimaryKeySelective(Goodstype record);
 
     int updateByPrimaryKey(Goodstype record);
+    
+    int deleteupdate(Integer id);
+    
+    int insertgoodstype(Goodstype good);
+    
+    Goodstype querybyid(Integer id);
+    
+    int toupdate(Goodstype good);
 }

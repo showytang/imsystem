@@ -184,7 +184,7 @@ public class GoodsController {
 	 */
 	@RequestMapping("/queryGoodsStandradByid")
 	@ResponseBody
-	protected List queryGoodsStandradByid(Integer id) {
+	protected List queryGoodsStandradByid(String id) {
 		
 		return goodsTypeSer.queryStandradByid(id);
 		

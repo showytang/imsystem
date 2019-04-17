@@ -20,15 +20,38 @@
     
   </resultMap>
   
-  
-  <select id="queryStandardById" resultMap="BaseResultMap">
-  
-  	SELECT * FROM `standard`
-	WHERE tid = #{id};
-  	
-  
+  <select id="queryStandard" resultMap="BaseResultMap">
+  	SELECT a.*, b.`name` AS gname  FROM `standard` AS a JOIN `goodstype` AS b ON a.`tid` = b.`id` 
+  	<where>
+  		a.state='0'
+  		<if test="tiaojian!=null">
+  				and a.id LIKE concat('%',#{tiaojian},'%') OR  a.NAME LIKE concat('%',#{tiaojian},'%') OR b.name LIKE concat('%',#{tiaojian},'%') OR a.uid LIKE concat('%',#{tiaojian},'%')
+  		</if>
+  	</where>
   </select>
   
+   <insert id="insertStandard" parameterType="com.imsystem.domain.Standard" >
+  	INSERT INTO standard(id,NAME,tid,TIME,updatetime,uid,state) VALUE(#{id},#{name},#{tid},NOW(),NOW(),#{uid},0)
+  </insert>
+  
+  <update id="updatedelete">
+  	UPDATE standard SET state=1 WHERE id=#{id}
+  </update>
+  
+  <select id="queryStandardById" resultMap="BaseResultMap">
+  	SELECT * FROM `standard`
+	WHERE id = #{id};
+  </select>
+  
+  <select id="StandardById" resultMap="BaseResultMap">
+  	SELECT * FROM `standard`
+	WHERE id = #{id};
+  	
+  </select>
+  
+ <update id="toupdate">
+ 	UPDATE standard SET NAME=#{name},tid=#{tid},updatetime=NOW() WHERE id=#{id} 	
+ </update>
   
   <sql id="Example_Where_Clause" >
     <where >
