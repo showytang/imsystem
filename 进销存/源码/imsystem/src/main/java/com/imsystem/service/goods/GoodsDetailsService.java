@@ -1,6 +1,6 @@
 package com.imsystem.service.goods;
 
-import com.imsystem.domain.GoodsDetailVo;
+import com.imsystem.domain.Goodsvalue;
 
 public interface GoodsDetailsService {
 
@@ -9,6 +9,6 @@ public interface GoodsDetailsService {
 	 * @param id 实例id
 	 * @return
 	 */
-	GoodsDetailVo queryGoodsDetail (String id);
+	Goodsvalue queryGoodsDetail (String id);
 	
 }

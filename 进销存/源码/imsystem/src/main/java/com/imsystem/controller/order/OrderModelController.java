@@ -47,4 +47,12 @@ public class OrderModelController {
 	public String yetOrder() {
 		return "wjh/yetOrderDetails";
 	}
+	
+	@RequestMapping("/salesOrderDetails")
+	public String salesOrderDetails(Model model,String id) {
+		
+		model.addAttribute("list",ordermodalservice.salesOrderDetails(id));
+		
+		return "wjh/salesOrderDetsils";
+	}
 }

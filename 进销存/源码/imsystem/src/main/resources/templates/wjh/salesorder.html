@@ -144,27 +144,27 @@
 					<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
 				</div>
 				<div class="selected row boss">
-					<div class="col-md-4 col-sm-6 col-xs-11 tj">
+					<div class="col-md-3 col-sm-6 col-xs-11 tj">
 						<div class="input-group">
 							<span class="input-group-addon">No</span> <input
 								@keyup.enter="code" v-model="no" id="no" class="form-control"
 								placeholder="订单编号" />
 						</div>
 					</div>
-					<!-- <div class="col-md-3 col-sm-6 col-xs-11 display tj">
+					<div class="col-md-3 col-sm-6 col-xs-11 display tj">
 						<div class="input-group">
-							<span class="input-group-addon">每页数</span> <select
-								class="form-control" v-model="pagesize"
+							<span class="input-group-addon">订单状态</span> <select
+								onchange="time(this)" class="form-control"
+								id="salesOrderProgress"
 								style="border-right: none; height: 100%;">
-								<option>1</option>
-								<option>5</option>
-								<option>20</option>
-								<option>50</option>
-								<option>100</option>
-							</select> 
+								<option value="">全部</option>
+								<option value="0">创建</option>
+								<option value="1">执行中</option>
+								<option value="2">完成</option>
+							</select>
 						</div>
-					</div> -->
-					<div class="col-md-5 col-sm-12 col-xs-11 display tj">
+					</div>
+					<div class="col-md-4 col-sm-12 col-xs-11 display tj">
 						<div class="input-group">
 							<span class="input-group-addon">Time</span> <input
 								class="form-control" onchange="time(this)" id="config-demo"
@@ -175,12 +175,15 @@
 							</span>
 						</div>
 					</div>
-					<div class="col-md-1 col-sm-12 col-xs-11 display tj">
+					<div class="col-md-2 col-sm-12 col-xs-11 display tj">
 						<div class="input-group">
-							<span class="input-group-addon">显示已售</span> <span
-								class="form-control"> <input type="checkbox"
-								onchange="check()" id="check">
-							</span>
+							<span class="input-group-addon">客户类型</span> <select
+								onchange="time(this)" class="form-control" id="cid"
+								style="border-right: none; height: 100%;">
+								<option value="">全部</option>
+								<option value="1">零售客户</option>
+								<option value="11">vip</option>
+							</select>
 						</div>
 					</div>
 					<div class="col-xs-1 xsoptions">
@@ -198,9 +201,13 @@
 						<thead>
 							<tr>
 								<th style="text-align: center;">订单编号</th>
+								<th style="text-align: center;">数量</th>
 								<th style="text-align: center;">时间</th>
 								<th style="text-align: center;">应付金额</th>
+								<th style="text-align: center;">定金</th>
 								<th style="text-align: center;">实付金额</th>
+								<th style="text-align: center;">客户名称</th>
+								<th style="text-align: center;">支付类型</th>
 								<th style="text-align: center;">操作</th>
 							</tr>
 						</thead>
@@ -211,18 +218,21 @@
 									<div v-if="item.state == 1" class="orderOver">调拨</div>
 									{{item.code}}
 								</td>
+								<td>{{item.count}}</td>
 								<td>{{item.updatetime}}</td>
-								<td>{{item.column1}}</td>
+								<td>{{item.paymoney}}</td>
+								<td>{{item.preprice}}</td>
+								<td>{{item.tainmoney}}</td>
+								<td>{{item.column3}}</td>
 								<td>{{item.column2}}</td>
 								<td>
 									<div :data="item.id" style="display: flex;">
 										<span style="margin: auto;" title="修改"
-											v-on:click="openModel(item.code)"
-											class="glyphicon glyphicon-edit"></span>
-									</div> <!-- &nbsp;&nbsp; <span
-											style="margin: auto;" title="调拨"
-											class="glyphicon glyphicon-check"
-											v-on:click="openAllotModel(item.code)"></span> -->
+											v-on:click="openModel(item.id)"
+											class="glyphicon glyphicon-edit"></span> <span
+											style="margin: auto;" title="确认订单"
+											class="glyphicon glyphicon-ok"></span>
+									</div> 
 								</td>
 							</tr>
 						</tbody>
@@ -277,11 +287,10 @@
 						query();
 					},
 					
-					openModel : function(code){
+					openModel : function(id){
+						$("iframe").attr("src",[[@{/orderModel/salesOrderDetails}]]+"?id="+id);
 						
-						$("iframe").attr("src",[[@{/orderModel/queryIndex}]]+"?code="+code);
-						
-						$("#myModalLabel").find("span").text(code);
+						$("#myModalLabel").find("span").text(id);
 						
 						$(".modal").modal("show");
 						
@@ -308,43 +317,35 @@
 				
 			}
 			
-			function check(){
-				
-				query();
-			}
-			
 			function query(){
 				var times = $("#config-demo").val();
 				
 				var time = times.substring(0,(times.indexOf('-')-1));
 				
 				var endTime = times.substring((times.indexOf('-')+2),times.length)
-				var kucun;
-				
-				if($("#check").prop("checked")){
-					kucun = 2;
-				}
 				
 				if(time){
 					time = timess(time);
 					endTime = timess(endTime) + " 23:59:59";
 				}
-				$.ajax({
-					url : [[@{/orderQueryController/query}]],
-					data : {
+				var sales = {
 						code : vue.no,
-						pageSize : vue.pagesize,
-						time : time,
-						kucun : kucun,
-						endTime : endTime,
-						order : $(".order").attr("data"),
-						currentPage : vue.pageIf.pageNum
-					},
+						column1 : time,
+						column2 : endTime,
+						progress : $("#salesOrderProgress").val(),
+						cid : $("#cid").val(),
+						column5 : vue.pageIf.pageNum
+				}
+				
+				$.ajax({
+					url : [[@{/orderQueryController/querySalesOrder}]],
+					data : sales,
 					type : "post",
 					dataType : "json",
 					success:function(result){
 						vue.pageIf = result;
 						page(vue);
+						console.log(result);
 					}
 				});
 			}
@@ -434,7 +435,7 @@
 							
 						});
 					
-					$.ajax({
+					/* $.ajax({
 						
 						url : [[@{/insertOrder/uploadInsertOrder}]],
 						
@@ -454,7 +455,7 @@
 							
 						}
 						
-					});
+					}); */
 					
 				});
 			});

@@ -123,14 +123,14 @@
 										<p style="color: #777070;">
 											<span>{{item.goods.column2}}&nbsp;</span><span>{{item.goodsValue.name}}</span> <span>￥: {{item.goods.price}}</span>
 										</p>
-										<p v-if="item.goods.column1 == null" style="color: #777070;">
+										<p v-if="item.goodsValue.counts == null" style="color: #777070;">
 											<span>库存：</span> <span >0</span>
 										</p>
-										<p v-else-if="item.goods.column1 < item.goods.minsecurity" style="color: #777070;">
-											<span>库存：</span> <span style="color: red;">{{item.goods.column1}}</span>
+										<p v-else-if="item.goodsValue.counts < item.goods.minsecurity" style="color: #777070;">
+											<span>库存：</span> <span style="color: red;">{{item.goodsValue.counts}}</span>
 										</p>
-										<p v-else-if="item.goods.column1 > item.goods.minsecurity" style="color: #777070;">
-											<span>库存：</span> <span >{{item.goods.column1}}</span>
+										<p v-else-if="item.goodsValue.counts > item.goods.minsecurity" style="color: #777070;">
+											<span>库存：</span> <span >{{item.goodsValue.counts}}</span>
 										</p>
 										
 										

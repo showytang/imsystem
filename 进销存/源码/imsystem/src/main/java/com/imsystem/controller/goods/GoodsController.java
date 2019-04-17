@@ -3,7 +3,6 @@ package com.imsystem.controller.goods;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,9 +20,9 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Goods;
-import com.imsystem.domain.GoodsDetailVo;
 import com.imsystem.domain.GoodsVO;
 import com.imsystem.domain.GoodsValueVo;
+import com.imsystem.domain.Goodsvalue;
 import com.imsystem.domain.Img;
 import com.imsystem.service.goods.GoodsDetailsService;
 import com.imsystem.service.goods.GoodsService;
@@ -72,10 +71,20 @@ public class GoodsController {
 	}
 	
 
+	/**
+	 * 商品查询
+	 * @param curPage 当前页
+	 * @param liketext 输入内容
+	 * @param svid 规格值id array
+	 * @param tid 类型id
+	 * @return
+	 */
 	@RequestMapping("/queryGoodsLikeAll")
 	@ResponseBody
 	protected PageInfo<GoodsValueVo> queryGoodsLikeAll(Integer curPage,String liketext,String [] svid,String tid) {
+		
 		svid = svid.length==0?null:svid;
+		
 		Page<GoodsValueVo> page = PageHelper.startPage(curPage, 8, true);
 		
 		PageInfo<GoodsValueVo> pageInfo = new PageInfo<>(goodsSer.queryAllGoods(liketext,svid,tid));
@@ -94,7 +103,7 @@ public class GoodsController {
 	@RequestMapping("/queryGoodsDetail")
 	protected String queryGoodsDetail(String id,Model model) {
 
-		GoodsDetailVo gdv = goodsDetailSer.queryGoodsDetail(id);
+		Goodsvalue gdv = goodsDetailSer.queryGoodsDetail(id);
 
 		model.addAttribute("gdv", gdv);
 		
@@ -122,8 +131,10 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/updateGoodsLoad")
-	protected String updateGoodsLoad(Integer id) {
+	protected String updateGoodsLoad(String id) {
 
+		Goods goods = goodsSer.updateGoodsLoad(id);
+		
 		return "dws/updateGoods";
 
 	}

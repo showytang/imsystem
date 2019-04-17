@@ -85,9 +85,14 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 	public int insertSalesorder(Salesorder salesorder) {
 		// TODO Auto-generated method stub
 		salesorder.setId(UUID.randomUUID().toString());
-
+		
 		int count = salesorderMapper.insertSelective(salesorder);
 
+		for(int i = 0; i < salesorder.getList().size(); i++) {
+			
+			 salesorder.getList().get(i).setId(UUID.randomUUID().toString());
+			
+		}
 		count += salesorderdetailsMapper.add(salesorder);
 
 		return count;
@@ -109,12 +114,9 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 		int count = 0;
 		
-		int s = 0;
 		for (Stockdetails item : stockde) {
 			
 			count += stockdetail.updateCount(item.getCode(), item.getCount(), item.getGvid());
-			
-			s += item.getCount();
 			
 			if(stockdetail.selectCount(item.getCode()) == 0) {
 				count += stockM.updateState(item.getCode());
@@ -139,21 +141,17 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 		
 		List<Stockdetails> list = new ArrayList<Stockdetails>();
 		
-		Stockdetails stod = new Stockdetails();
-		stod.setId(UUID.randomUUID().toString());
-		stod.setCount(s);
-		stod.setCode(stock.getCode());
-		stod.setScount(0);
-		stod.setPrice(stockde.get(0).getPrice());
-		stod.setGvid(stockde.get(0).getGvid());
-		stod.setStoreid(stockde.get(0).getColumn1());
-		list.add(stod);
-		
-		stock.setStockdetails(list);
-		
-		count += stockdetail.add(stock);
-		
 		for (Stockdetails item : stockde) {
+			Stockdetails stod = new Stockdetails();
+			stod.setId(UUID.randomUUID().toString());
+			stod.setCode(stock.getCode());
+			stod.setCount(item.getCount());
+			stod.setScount(0);
+			stod.setPrice(item.getPrice());
+			stod.setGvid(item.getGvid());
+			stod.setStoreid(item.getColumn1());
+			stod.setTime(item.getTime());
+			list.add(stod);
 			
 			Stockrecord stockcords = new Stockrecord();
 			stockcords.setId(UUID.randomUUID().toString());
@@ -164,6 +162,10 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 			
 			count += stockcord.insertSelective(stockcords);
 		}
+		
+		stock.setStockdetails(list);
+		
+		count += stockdetail.add(stock);
 		
 		return count;
 	}

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
+import com.imsystem.domain.Salesorder;
 import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Stockrecord;
@@ -110,6 +111,21 @@ public class OrderQueryController {
 		return orderquery.queryDetails(gvid);
 	}
 
+	
+	@RequestMapping("/querySalesOrder")
+	@ResponseBody
+	public PageInfo<Salesorder> querySalesOrder (Salesorder sales) {
+		
+		return orderquery.querySalesOrder(sales);
+	}
+	
+	@RequestMapping("/toSalesOrder")
+	public String toSalesOrder() {
+		
+		return "wjh/salesorder";
+	}
+	
+	
 	@RequestMapping("/yetQuery")
 	public String yetQuery() {
 		return "wjh/yetOrder";
