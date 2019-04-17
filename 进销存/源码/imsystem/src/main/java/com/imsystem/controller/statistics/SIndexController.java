@@ -42,4 +42,9 @@ public class SIndexController {
 	public String goQianKuan() {
 		return "yhb/qiankuan";
 	}
+	@RequestMapping("goShouZhang")
+	public String goShouZhang() {
+		return "yhb/shouzhang";
+	}	
+
 }

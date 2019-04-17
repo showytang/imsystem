@@ -2,6 +2,7 @@ package com.imsystem.controller.statistics;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,11 +14,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Goodsvalue;
 import com.imsystem.domain.Salesorder;
+import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Store;
 import com.imsystem.service.statistics.GoodsValueService;
 import com.imsystem.service.statistics.SalesorderService;
 import com.imsystem.service.statistics.StockDetailsService;
+import com.imsystem.service.statistics.StockService;
 import com.imsystem.service.statistics.StoreService;
 
 @Controller
@@ -31,6 +34,8 @@ public class AllController {
 	GoodsValueService gvs;
 	@Autowired
 	StockDetailsService stockDS;
+	@Autowired
+	StockService stocks;
 	
 	/**
 	 * index top 四方格
@@ -110,7 +115,12 @@ public class AllController {
 		}
 		return list;
 	}
-	
+	/***
+	 * 查询利润
+	 * @param year
+	 * @param storeId
+	 * @return
+	 */
 	@RequestMapping("queryThisYear")
 	@ResponseBody
 	public List<Salesorder> queryThisYear(String year,String storeId) {
@@ -125,6 +135,14 @@ public class AllController {
 		}
 		return list;
 	}
+	/***
+	 * 查询商品排名
+	 * @param time
+	 * @param startTime
+	 * @param endTime
+	 * @param storeId
+	 * @return
+	 */
 	@RequestMapping("queryGoodsRanking")
 	@ResponseBody
 	public List<Goodsvalue> queryGoodsRanking(String time,String startTime,String endTime,String storeId){
@@ -132,6 +150,16 @@ public class AllController {
 		return list;
 	}
 	
+	/***
+	 * 查询商品销售明细
+	 * @param currentPage
+	 * @param time
+	 * @param startTime
+	 * @param endTime
+	 * @param storeId
+	 * @param gid
+	 * @return
+	 */
 	@RequestMapping("queryGoodsDetail")
 	@ResponseBody
 	public PageInfo<Goodsvalue> queryGoodsDetail(Integer currentPage,String time,String startTime,String endTime,String storeId,String gid){
@@ -142,7 +170,14 @@ public class AllController {
 		List<Goodsvalue> list = gvs.queryGoodsByTime(time, startTime, endTime, storeId, gid);
 		return page.toPageInfo();
 	}
-	
+	/***
+	 * 进货查询
+	 * @param currentPage
+	 * @param startTime
+	 * @param endTime
+	 * @param cid
+	 * @return
+	 */
 	@RequestMapping("queryJinHuo")
 	@ResponseBody
 	public PageInfo<Stockdetails> queryJinHuo(Integer currentPage,String startTime,String endTime,String cid){
@@ -153,4 +188,46 @@ public class AllController {
 		List<Stockdetails> list = stockDS.queryJinHuo(startTime, endTime, cid);
 		return page.toPageInfo();
 	}
+	/***
+	 * 查询库存
+	 * @param currentPage
+	 * @param gid
+	 * @param storeId
+	 * @return
+	 */
+	@RequestMapping("queryStockByGidAndStoreId")
+	@ResponseBody
+	public PageInfo<Stockdetails> queryStockByGidAndStoreId(Integer currentPage,String gid,String storeId){
+		if (currentPage == null || currentPage == 0) {
+			currentPage = 1;
+		}
+		Page<Stockdetails> page = PageHelper.startPage(currentPage, 2, true);
+		List<Stockdetails> list = stockDS.queryStockByGidAndStoreId(gid, storeId);
+		return page.toPageInfo();
+	}
+	/***
+	 * 查询欠款
+	 * @param currentPage
+	 * @param startTime
+	 * @param endTime
+	 * @param sid
+	 * @return
+	 */
+	@RequestMapping("queryQianKuan")
+	@ResponseBody
+	public PageInfo<Stock> queryQianKuan(Integer currentPage,String startTime,String endTime,String sid){
+		if (currentPage == null || currentPage == 0) {
+			currentPage = 1;
+		}
+		Page<Stock> page = PageHelper.startPage(currentPage, 2, true);
+		List<Stock> list = stocks.queryQianKuan(startTime, endTime, sid);
+		return page.toPageInfo();
+	}
+	@RequestMapping("queryAllQianKuan")
+	@ResponseBody
+	public List<Stock> queryAllQianKuan(String startTime,String endTime,String sid){
+		List<Stock> list = stocks.queryQianKuan(startTime, endTime, sid);
+		return list;
+	}
+	
 }

@@ -1,124 +1,152 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<meta charset="UTF-8">
-		<title>BaoBiao - 1</title>
-		<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
-		<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
-		<link rel="stylesheet" th:href="@{/assets/css/style.css}">
-		<link rel="stylesheet" th:href="@{/assets/css/chartist-custom.css}">
-		<!-- MAIN CSS -->
-		<link rel="stylesheet" th:href="@{/assets/css/main.css}">
-		<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
-		<link rel="stylesheet" th:href="@{/assets/css/demo.css}">
-		<!-- GOOGLE FONTS -->
-		<link th:href="@{/assets/css/css.css}" rel="stylesheet">
-		<!-- ICONS -->
-		<link rel="stylesheet" th:href="@{/assets/css/myStyle.css}" />
-		<link rel="apple-touch-icon" sizes="76x76" th:href="@{/assets/img/apple-icon.png}">
-		<link rel="icon" type="image/png" sizes="96x96" th:href="@{/assets/img/favicon.png}">
-		<script type="text/javascript" th:src="@{/assets/js/jquery.min.js}" ></script>
-		<link rel="stylesheet" type="text/css" media="all" th:href="@{/assets/css/daterangepicker.css}" />
-		<link rel="stylesheet" type="text/css" th:href="@{/assets/css/htmleaf-demo.css}">
-		<script type="text/javascript" th:src="@{/assets/js/jquery.min.js}" ></script>
-		<script>window.jQuery || document.write('<script th:src="@{/assets/js/jquery-1.11.0.min.js}"><\/script>')</script>
-		<script type="text/javascript" th:src="@{/assets/js/moment.js}"></script>
-      	<script type="text/javascript" th:src="@{/assets/js/daterangepicker.js}"></script>
-		<script type="text/javascript" th:src="@{/assets/js/Mydate.js}"></script>
-		<script>
-			$(function(){
-				myDate();
-			});
-		</script>
-	</head>
-	<body>
-		<div class="main">
-			<div class="main-content">
-				<div class="container-fluid">
-					<div class="panel panel-headline">
-						<div class="panel-heading">
-							<h3 class="panel-title">应付欠款</h3>
-							<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
-						</div>
-						<div class="panel-body boss">
-							<div class="col-md-12 tj">
-								<div class="col-md-6 col-xs-12">
-									<span class="col-md-3 col-xs-12">选择区间</span>
-									<input class="col-md-9 col-xs-12"  type="text" id="config-demo">
-								</div>
-								<div class="col-md-6 col-xs-12">
-									<span class="col-md-3 col-xs-12">选择商品</span>
-									<select class="col-md-9 col-xs-12">
-										<option value="cheese">Cheese</option>
-										<option value="tomatoes">Tomatoes</option>
-										<option value="mozarella">Mozzarella</option>
-										<option value="mushrooms">Mushrooms</option>
-										<option value="pepperoni">Pepperoni</option>
-										<option value="onions">Onions</option>
-									</select>
-								</div>
-								</div>
-								<div class="panel-body">
-									<table class="table">
-										<thead>
-											<tr>
-												<th>往来单位</th>
-												<th>增加</th>
-												<th>支付</th>
-												<th>期末</th>
+<head>
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<meta charset="UTF-8">
+<title>BaoBiao - 1</title>
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
+<link rel="stylesheet" th:href="@{/assets/css/style.css}">
+<!-- MAIN CSS -->
+<link rel="stylesheet" th:href="@{/assets/css/main.css}">
+<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+<link rel="stylesheet" th:href="@{/assets/css/demo.css}">
+<!-- GOOGLE FONTS -->
+<link th:href="@{/assets/css/css.css}" rel="stylesheet">
+<!-- ICONS -->
+<link rel="stylesheet" th:href="@{/assets/css/myStyle.css}" />
+<link rel="apple-touch-icon" sizes="76x76"
+	th:href="@{/assets/img/apple-icon.png}">
+<link rel="icon" type="image/png" sizes="96x96"
+	th:href="@{/assets/img/favicon.png}">
+<link rel="stylesheet" th:href="@{/assets/css/animate.min.css}" />
 
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Steve</td>
-												<td>Jobs</td>
-												<td>@steve</td>
-
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>Steve</td>
-												<td>Jobs</td>
-												<td>@steve</td>
-
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>Steve</td>
-												<td>Jobs</td>
-												<td>@steve</td>
-
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Simon</td>
-												<td>Philips</td>
-												<td>@simon</td>
-
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Jane</td>
-												<td>Doe</td>
-												<td>@jane</td>
-
-											</tr>
-										</tbody>
-									</table>
-								</div>
+<script type="text/javascript" th:src="@{/assets/js/jquery.min.js}"></script>
+<link rel="stylesheet" type="text/css" media="all"
+	th:href="@{/assets/css/daterangepicker.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/css/htmleaf-demo.css}">
+<script type="text/javascript" th:src="@{/assets/js/jquery.min.js}"></script>
+<script>
+	window.jQuery
+			|| document
+					.write('<script th:src="@{/assets/js/jquery-1.11.0.min.js}"><\/script>')
+</script>
+<script type="text/javascript" th:src="@{/assets/js/moment.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/daterangepicker.js}"></script>
+<script th:src="@{/assets/js/statistics.js}"></script>
+<script th:src="@{/assets/js/pageNumber.js}"></script>
+<script th:src="@{/assets/js/vue.js}"></script>
+<script th:src="@{/assets/js/moment.js}"></script>
+<script th:src="@{/assets/js/Mydate.js}"></script>
+</head>
+<body>
+	<div class="main">
+		<div class="main-content">
+			<div class="container-fluid">
+				<div class="panel panel-headline">
+					<div class="panel-heading">
+						<h3 class="panel-title">应付欠款</h3>
+						<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
+					</div>
+					<div class="panel-body boss">
+						<div class="col-md-12 tj">
+							<div class="col-md-6 col-xs-12">
+								<span class="col-md-3 col-xs-12">选择区间</span> <input
+									class="col-md-9 col-xs-12" type="text" id="config-demo" name="config-demo">
+							</div>
+							<div class="col-md-6 col-xs-12">
+								<span class="col-md-3 col-xs-12">选择店铺</span> <select
+									class="col-md-9 col-xs-12">
+									<option value="cheese">Cheese</option>
+									<option value="tomatoes">Tomatoes</option>
+									<option value="mozarella">Mozzarella</option>
+									<option value="mushrooms">Mushrooms</option>
+									<option value="pepperoni">Pepperoni</option>
+									<option value="onions">Onions</option>
+								</select>
 							</div>
 						</div>
+						<div class="panel-body" id="table">
+							<table class="table animated fadeInUp delay-1s">
+								<thead>
+									<tr>
+										<th>往来单位</th>
+										<th>增加</th>
+										<th>已支付</th>
+										<th>期末支付</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="obj in page.list">
+										<td>{{obj.column3}}</td>
+										<td><span class="label label-success">￥{{obj.column1}}</span></td>
+										<td><span class="label label-success">￥{{obj.column2}}</span></td>
+										<td><span class="label label-success">￥{{obj.column1
+												- obj.column2}}</span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
+					<!-- <nav class="pageFy">
+						<ul class="pagination pagination-sm">
+							<li class="disabled"><span class="lar"> <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
+							</span></li>
+							<li class="active"><span>1 </span>
+							</li>
+							<li><span>2</span>
+							<li><span>3</span>
+							<li><span>4</span>
+							<li><span>5</span>
+							<li><span>6</span>
+							</li>
+							<li><span> <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
+							</span></li>
+						</ul>
+					</nav> -->
 				</div>
 			</div>
 		</div>
-		<div class="float">
-			<span class="col-md-3">初期合金：<b>388</b></span>
-			<span class="col-md-3">增加合计：￥<b>388</b></span>
-			<span class="col-md-3">支付合计：￥<b>388</b></span>
-			<span class="col-md-3">期末合计：￥<b>388</b></span>
-		</div>
-	</body>
+	</div>
+	<div class="float">
+		<span class="col-md-4">初期合计：￥<b id="chu">0</b></span> <span
+			class="col-md-4">支付合计：￥<b id="yzf">0</b></span> <span
+			class="col-md-4">期末合计：￥<b id="qm">0</b></span>
+	</div>
+</body>
+<script>
+	var vue = new Vue({
+		el : "#table",
+		data : {
+			page : {}
+		}
+	});
+	$(function() {
+		myDate();
+		vue.page = queryQianKuan("", "", "", "");
+		let chu = 0;
+		let yzf = 0;
+		let qm = 0;
+		const qk = queryAllQianKuan("", "", "");
+		$.each(qk, function(i, obj) {
+			chu += parseFloat(obj.column1);
+			yzf += parseFloat(obj.column2);
+			qm += parseFloat(obj.column1 - obj.column2);
+		});
+		$("#chu").text(chu);
+		$("#yzf").text(yzf);
+		$("#qm").text(qm);
+		$(".panel-headline").append(page(vue.page.pageNum,vue.page.prePage,vue.page.nextPage,vue.page.pages));
+		
+		$(document).on("click",".pageFy>ul li",function(){
+			var create = $(this).attr("pageNumber");
+			if(create != null && create != 0){
+				vue.page = queryQianKuan(create, "", "", "");
+				$(".panel-headline").append(page(create,vue.page.prePage,vue.page.nextPage,vue.page.pages));
+			}
+		});
+	});
+</script>
+</html>

@@ -56,8 +56,9 @@ var date = myDate.getDate();
 function getStartTime() {
 	return year + "-" + yue + "-" + date + " 00:00:00";
 }
-/***
+/*******************************************************************************
  * 获取Year
+ * 
  * @returns
  */
 function getThisYear() {
@@ -65,6 +66,7 @@ function getThisYear() {
 }
 /**
  * 获取当前月
+ * 
  * @returns
  */
 function getCurrentMonth() {
@@ -78,8 +80,9 @@ function getCurrentMonth() {
 function getEndTime() {
 	return year + "-" + yue + "-" + date + " 23:59:59";
 }
-/***
+/*******************************************************************************
  * 店铺排名查询
+ * 
  * @param startTime
  * @param endTime
  * @returns
@@ -105,8 +108,9 @@ function queryRanking(startTime,endTime){
 	});
 	return v;
 }
-/***
+/*******************************************************************************
  * 查询今年每月盈利额
+ * 
  * @param year
  * @param storeId
  * @returns
@@ -132,9 +136,11 @@ function queryThisYear(year,storeId){
 	});
 	return resp;
 }
-/***
+/*******************************************************************************
  * 查询商品排名
- * @param time 年月 : '2019-06'
+ * 
+ * @param time
+ *            年月 : '2019-06'
  * @param startTime
  * @param endTime
  * @param storeId
@@ -163,8 +169,9 @@ function queryGoodsRanking(time,startTime,endTime,storeId){
 	});
 	return value;
 }
-/***
+/*******************************************************************************
  * 查询明细
+ * 
  * @param currentPage
  * @param time
  * @param startTime
@@ -200,6 +207,7 @@ function queryGoodsDetail(currentPage,time,startTime,endTime,storeId,gid){
 
 /**
  * 进货统计
+ * 
  * @param currentPage
  * @param time
  * @param startTime
@@ -226,6 +234,88 @@ function queryJinHuo(currentPage,startTime,endTime,cid){
 		},
 		error:function(){
 			console.log("ERROR:'queryGoodsDetail'");
+		}
+	});
+	return v;
+}
+/*******************************************************************************
+ * 库存统计
+ * 
+ * @param currentPage
+ * @param gid
+ * @param storeId
+ * @returns
+ */
+function queryStockByGidAndStoreId(currentPage,gid,storeId){
+	var v;
+	$.ajax({
+		url:"/statistics/queryStockByGidAndStoreId",
+		type:"post",
+		data:{
+			currentPage:currentPage,
+			gid:gid,
+			storeId:storeId
+		},
+		dataType:"json",
+		async:false,
+		success:function(data){
+			v = data;
+		},
+		error:function(){
+			console.log("ERROR:'queryStockByGidAndStoreId'");
+		}
+	});
+	return v;
+}
+/*******************************************************************************
+ * 查询欠款
+ * 
+ * @param currentPage
+ * @param startTime
+ * @param endTime
+ * @param sid
+ * @returns
+ */
+function queryQianKuan(currentPage,startTime,endTime,sid){
+	var v;
+	$.ajax({
+		url:"/statistics/queryQianKuan",
+		type:"post",
+		data:{
+			currentPage:currentPage,
+			startTime:startTime,
+			endTime:endTime,
+			sid,sid
+		},
+		dataType:"json",
+		async:false,
+		success:function(data){
+			v = data;
+		},
+		error:function(){
+			console.log("ERROR:'queryQianKuan'");
+		}
+	});
+	return v;
+}
+
+function queryAllQianKuan(startTime,endTime,sid){
+	var v;
+	$.ajax({
+		url:"/statistics/queryAllQianKuan",
+		type:"post",
+		data:{
+			startTime:startTime,
+			endTime:endTime,
+			sid,sid
+		},
+		dataType:"json",
+		async:false,
+		success:function(data){
+			v = data;
+		},
+		error:function(){
+			console.log("ERROR:'queryAllQianKuan'");
 		}
 	});
 	return v;
