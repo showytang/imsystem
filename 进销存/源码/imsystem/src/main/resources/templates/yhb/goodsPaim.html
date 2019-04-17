@@ -41,8 +41,9 @@
 				var v = queryGoodsRanking("","2019-04-04","2019-04-04","");
 				if(v){
 					$.each(v,function(i,obj){
+						var img = obj.column2 != null && obj.column2 != '' ? obj.column2 : "../assets/img/404.png";
 						var bDiv = $("<div class='col-md-12 goods'></div>");
-						bDiv.append("<div class='good'><label>"+(i+1)+"</label><img class='col-md-2 col-xs-2 goodsImg' src='../assets/img/favicon.png' /><div class='col-md-9 col-xs-6 js'>"+
+						bDiv.append("<div class='good'><label>"+(i+1)+"</label><img class='col-md-2 col-xs-2 goodsImg' src='"+img+"' /><div class='col-md-9 col-xs-6 js'>"+
 									"<h3>"+obj.name+"["+obj.column1+"]</h3>"+
 									"<span class='s'>销售金额￥<b>"+obj.jprice+"</b></span>"+
 									"<span class='s'>销售数量￥<b>"+obj.column3+"</b></span>"+

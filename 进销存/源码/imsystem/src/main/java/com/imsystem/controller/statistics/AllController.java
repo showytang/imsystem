@@ -2,18 +2,25 @@ package com.imsystem.controller.statistics;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Goodsvalue;
 import com.imsystem.domain.Salesorder;
+import com.imsystem.domain.Stock;
+import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Store;
 import com.imsystem.service.statistics.GoodsValueService;
 import com.imsystem.service.statistics.SalesorderService;
+import com.imsystem.service.statistics.StockDetailsService;
+import com.imsystem.service.statistics.StockService;
 import com.imsystem.service.statistics.StoreService;
 
 @Controller
@@ -25,7 +32,15 @@ public class AllController {
 	StoreService storeS;
 	@Autowired
 	GoodsValueService gvs;
+	@Autowired
+	StockDetailsService stockDS;
+	@Autowired
+	StockService stocks;
 	
+	/**
+	 * index top 四方格
+	 * @return
+	 */
 	@RequestMapping("query")
 	@ResponseBody
 	public Salesorder query(String storeid, String code, String startTime, String endTime) {
@@ -63,11 +78,6 @@ public class AllController {
 		List<Goodsvalue> list = gvs.queryByCode(code);
 		return list;
 	}
-	/**
-	 * index top 四方格
-	 * @param storeid
-	 * @return
-	 */
 	@RequestMapping("queryDaysAgo")
 	@ResponseBody
 	public List<Salesorder> queryDaysAgo(String storeid){
@@ -105,14 +115,19 @@ public class AllController {
 		}
 		return list;
 	}
-	
+	/***
+	 * 查询利润
+	 * @param year
+	 * @param storeId
+	 * @return
+	 */
 	@RequestMapping("queryThisYear")
 	@ResponseBody
 	public List<Salesorder> queryThisYear(String year,String storeId) {
 		List<Salesorder> list = salesorderS.queryThisYear(year);
 		if (list.size()>0) {
 			for (Salesorder ss : list) {
-				List<Goodsvalue> gv = gvs.queryGoodsByTime(ss.getColumn3(),"","",storeId);
+				List<Goodsvalue> gv = gvs.queryGoodsByTime(ss.getColumn3(),"","",storeId,"");
 				if (gv.size()>0) {
 					ss.setList(gv);
 				}
@@ -120,11 +135,99 @@ public class AllController {
 		}
 		return list;
 	}
+	/***
+	 * 查询商品排名
+	 * @param time
+	 * @param startTime
+	 * @param endTime
+	 * @param storeId
+	 * @return
+	 */
 	@RequestMapping("queryGoodsRanking")
 	@ResponseBody
 	public List<Goodsvalue> queryGoodsRanking(String time,String startTime,String endTime,String storeId){
-		List<Goodsvalue> list = gvs.queryGoodsByTime(time, startTime, endTime, storeId);
-		System.out.println(list);
+		List<Goodsvalue> list = gvs.queryGoodsByTime(time, startTime, endTime, storeId,"");
 		return list;
 	}
+	
+	/***
+	 * 查询商品销售明细
+	 * @param currentPage
+	 * @param time
+	 * @param startTime
+	 * @param endTime
+	 * @param storeId
+	 * @param gid
+	 * @return
+	 */
+	@RequestMapping("queryGoodsDetail")
+	@ResponseBody
+	public PageInfo<Goodsvalue> queryGoodsDetail(Integer currentPage,String time,String startTime,String endTime,String storeId,String gid){
+		if (currentPage == null || currentPage == 0) {
+			currentPage = 1;
+		}
+		Page<Goodsvalue> page = PageHelper.startPage(currentPage, 2, true);
+		List<Goodsvalue> list = gvs.queryGoodsByTime(time, startTime, endTime, storeId, gid);
+		return page.toPageInfo();
+	}
+	/***
+	 * 进货查询
+	 * @param currentPage
+	 * @param startTime
+	 * @param endTime
+	 * @param cid
+	 * @return
+	 */
+	@RequestMapping("queryJinHuo")
+	@ResponseBody
+	public PageInfo<Stockdetails> queryJinHuo(Integer currentPage,String startTime,String endTime,String cid){
+		if (currentPage == null || currentPage == 0) {
+			currentPage = 1;
+		}
+		Page<Stockdetails> page = PageHelper.startPage(currentPage, 2, true);
+		List<Stockdetails> list = stockDS.queryJinHuo(startTime, endTime, cid);
+		return page.toPageInfo();
+	}
+	/***
+	 * 查询库存
+	 * @param currentPage
+	 * @param gid
+	 * @param storeId
+	 * @return
+	 */
+	@RequestMapping("queryStockByGidAndStoreId")
+	@ResponseBody
+	public PageInfo<Stockdetails> queryStockByGidAndStoreId(Integer currentPage,String gid,String storeId){
+		if (currentPage == null || currentPage == 0) {
+			currentPage = 1;
+		}
+		Page<Stockdetails> page = PageHelper.startPage(currentPage, 2, true);
+		List<Stockdetails> list = stockDS.queryStockByGidAndStoreId(gid, storeId);
+		return page.toPageInfo();
+	}
+	/***
+	 * 查询欠款
+	 * @param currentPage
+	 * @param startTime
+	 * @param endTime
+	 * @param sid
+	 * @return
+	 */
+	@RequestMapping("queryQianKuan")
+	@ResponseBody
+	public PageInfo<Stock> queryQianKuan(Integer currentPage,String startTime,String endTime,String sid){
+		if (currentPage == null || currentPage == 0) {
+			currentPage = 1;
+		}
+		Page<Stock> page = PageHelper.startPage(currentPage, 2, true);
+		List<Stock> list = stocks.queryQianKuan(startTime, endTime, sid);
+		return page.toPageInfo();
+	}
+	@RequestMapping("queryAllQianKuan")
+	@ResponseBody
+	public List<Stock> queryAllQianKuan(String startTime,String endTime,String sid){
+		List<Stock> list = stocks.queryQianKuan(startTime, endTime, sid);
+		return list;
+	}
+	
 }

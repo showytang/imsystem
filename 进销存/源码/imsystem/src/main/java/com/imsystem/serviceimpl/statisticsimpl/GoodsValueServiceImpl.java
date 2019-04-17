@@ -24,9 +24,9 @@ public class GoodsValueServiceImpl implements GoodsValueService{
 	}
 
 	@Override
-	public List<Goodsvalue> queryGoodsByTime(String time,String startTime,String endTime,String storeId) {
+	public List<Goodsvalue> queryGoodsByTime(String time,String startTime,String endTime,String storeId,String gid) {
 		// TODO Auto-generated method stub
-		return gvm.queryGoodsByTime(time,startTime,endTime,storeId);
+		return gvm.queryGoodsByTime(time,startTime,endTime,storeId,gid);
 	}
 
 }

@@ -1,109 +1,139 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<meta charset="UTF-8">
-		<title>BaoBiao - 1</title>
-		<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
-		<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
-		<link rel="stylesheet" th:href="@{/assets/css/style.css}">
-		<link rel="stylesheet" th:href="@{/assets/css/chartist-custom.css}">
-		<!-- MAIN CSS -->
-		<link rel="stylesheet" th:href="@{/assets/css/main.css}">
-		<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
-		<link rel="stylesheet" th:href="@{/assets/css/demo.css}">
-		<!-- GOOGLE FONTS -->
-		<link th:href="@{/assets/css/css.css}" rel="stylesheet">
-		<!-- ICONS -->
-		<link rel="stylesheet" th:href="@{/assets/css/myStyle.css}" />
-		<link rel="apple-touch-icon" sizes="76x76" th:href="@{/assets/img/apple-icon.png}">
-		<link rel="icon" type="image/png" sizes="96x96" th:href="@{/assets/img/favicon.png}">
-		<script type="text/javascript" th:src="@{/assets/js/jquery.min.js}" ></script>
-		<link rel="stylesheet" type="text/css" media="all" th:href="@{/assets/css/daterangepicker.css}" />
-		<link rel="stylesheet" type="text/css" th:href="@{/assets/css/htmleaf-demo.css}">
-		<script type="text/javascript" th:src="@{/assets/js/jquery.min.js}" ></script>
-		<script>window.jQuery || document.write('<script th:src="@{/assets/js/jquery-1.11.0.min.js}"><\/script>')</script>
-		<script type="text/javascript" th:src="@{/assets/js/moment.js}"></script>
-      	<script type="text/javascript" th:src="@{/assets/js/daterangepicker.js}"></script>
-		<script type="text/javascript" th:src="@{/assets/js/Mydate.js}"></script>
-		<script>
-			$(function(){
-				myDate();
-			});
-		</script>
-	</head>
-	<body>
-		<div class="main">
-			<div class="main-content">
-				<div class="container-fluid">
-					<div class="panel panel-headline">
-						<div class="panel-heading">
-							<h3 class="panel-title">库存统计</h3>
-							<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
-						</div>
-						<div class="panel-body boss">
-								<div class="row">
-									<div class="col-md-6">
-										<div class="metric">
-											<span class="icon"><i class="fa fa-shopping-bag"></i></span>
-											<p>
-												<span class="number">10</span>
-												<span class="title">已超出商品</span>
-											</p>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="metric">
-											<span class="icon"><i class="fa fa-eye"></i></span>
-											<p>
-												<span class="number">3</span>
-												<span class="title">库存紧急商品</span>
-											</p>
-										</div>
-									</div>
-								</div>
-								<div class="panel-body">
-									<table class="table">
-										<thead>
-											<tr>
-												<th>商品名称</th>
-												<th>库存数量</th>
-												<th>最低库存</th>
-												<th>超出</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Steve</td>
-												<td>Jobs</td>
-												<td>@steve</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Simon</td>
-												<td>Philips</td>
-												<td>@simon</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Jane</td>
-												<td>Doe</td>
-												<td>@jane</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Jane</td>
-												<td>Doe</td>
-												<td>@jane</td>
-											</tr>
-										</tbody>
-									</table>
+<head>
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<meta charset="UTF-8">
+<title>BaoBiao - 1</title>
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
+<link rel="stylesheet" th:href="@{/assets/css/style.css}">
+<!-- MAIN CSS -->
+<link rel="stylesheet" th:href="@{/assets/css/main.css}">
+<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+<link rel="stylesheet" th:href="@{/assets/css/demo.css}">
+<!-- GOOGLE FONTS -->
+<link th:href="@{/assets/css/css.css}" rel="stylesheet">
+<!-- ICONS -->
+<link rel="stylesheet" th:href="@{/assets/css/myStyle.css}" />
+<link rel="apple-touch-icon" sizes="76x76"
+	th:href="@{/assets/img/apple-icon.png}">
+<link rel="icon" type="image/png" sizes="96x96"
+	th:href="@{/assets/img/favicon.png}">
+<script type="text/javascript" th:src="@{/assets/js/jquery.min.js}"></script>
+<link rel="stylesheet" type="text/css" media="all"
+	th:href="@{/assets/css/daterangepicker.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/css/htmleaf-demo.css}">
+<script type="text/javascript" th:src="@{/assets/js/jquery.min.js}"></script>
+<script>
+	window.jQuery
+			|| document
+					.write('<script th:src="@{/assets/js/jquery-1.11.0.min.js}"><\/script>')
+</script>
+<script type="text/javascript" th:src="@{/assets/js/moment.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/daterangepicker.js}"></script>
+<script th:src="@{/assets/js/statistics.js}"></script>
+<script th:src="@{/assets/js/vue.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/Mydate.js}"></script>
+</head>
+<body>
+	<div class="main">
+		<div class="main-content">
+			<div class="container-fluid">
+				<div class="panel panel-headline">
+					<div class="panel-heading">
+						<h3 class="panel-title">库存统计</h3>
+						<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
+					</div>
+					<div class="panel-body boss">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="metric">
+									<span class="icon"><i class="fa fa-shopping-bag"></i></span>
+									<p>
+										<span class="number sumCount">10</span> <span class="title">库存总数</span>
+									</p>
 								</div>
 							</div>
+							<div class="col-md-6">
+								<div class="metric">
+									<span class="icon"><i class="fa fa-eye"></i></span>
+									<p>
+										<span class="number sumMoney">3</span> <span class="title">库存商品所值</span>
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="panel-body">
+							<div class="col-md-12 tj">
+								<div class="col-md-6 col-xs-12">
+									<span class="col-md-3 col-xs-12">选择商品</span> <select
+										class="col-md-9 col-xs-12">
+										<option value="cheese">Cheese</option>
+										<option value="tomatoes">Tomatoes</option>
+										<option value="mozarella">Mozzarella</option>
+										<option value="mushrooms">Mushrooms</option>
+										<option value="pepperoni">Pepperoni</option>
+										<option value="onions">Onions</option>
+									</select>
+								</div>
+								<div class="col-md-6 col-xs-12">
+									<span class="col-md-3 col-xs-12">选择店铺</span> <select
+										class="col-md-9 col-xs-12">
+										<option value="cheese">Cheese</option>
+										<option value="tomatoes">Tomatoes</option>
+										<option value="mozarella">Mozzarella</option>
+										<option value="mushrooms">Mushrooms</option>
+										<option value="pepperoni">Pepperoni</option>
+										<option value="onions">Onions</option>
+									</select>
+								</div>
+							</div>
+							<table class="table" id="table">
+								<thead>
+									<tr>
+										<th>商品名称</th>
+										<th>库存数量</th>
+										<th>最低库存</th>
+										<th>商品所值</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="obj in page.list">
+										<td>【{{obj.column2}}】{{obj.column3}}</td>
+										<td v-if="obj.count <= obj.column1" style="color:red;">{{obj.count}}</td>
+										<td v-else>{{obj.count}}</td>
+										<td>{{obj.column1}}</td>
+										<td><span class="label label-success">￥{{obj.column5}}</span></td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</body>
+	</div>
+</body>
+<script>
+	var vue = new Vue({
+		el : "#table",
+		data : {
+			page : {}
+		}
+	});
+	$(function() {
+		myDate();
+		vue.page = queryStockByGidAndStoreId(1,"","");
+		var count = 0;
+		var money = 0;
+		$.each(vue.page.list,function(i,obj){
+			count += parseInt(obj.count);
+			money += parseFloat(obj.column5);
+		});
+		$(".sumCount").text(count);
+		$(".sumMoney").text("￥"+money);
+	});
+</script>
+</html>

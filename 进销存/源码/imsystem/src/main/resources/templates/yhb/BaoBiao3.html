@@ -127,7 +127,6 @@
 	<script>
 		$(function(){
 			var img2 = queryRanking("","");
-			console.log(img2);
 			var options = myChart.getOption();
 			var name = [];
 			var tedayMoney = [];
@@ -139,7 +138,8 @@
 				var title = $("<div class='row panel-heading'><p class='panel-subtitle'>Shop："+obj.column3+"【"+obj.column4+"】</p></div>");
 				var g = $("<div class='row g'></div>");
 				$.each(obj.list,function(s,objs){
-					var goods = $("<div class='col-md-6 goods'><div class='good' gid='"+objs.id+"'><img class='col-md-3 col-xs-3 goodsImg' src='../assets/img/favicon.png' />"+
+					var img = objs.column2 != null && objs.column2 != '' ? objs.column2 : "../assets/img/404.png";
+					var goods = $("<div class='col-md-6 goods'><div class='good' gid='"+objs.id+"'><img class='col-md-3 col-xs-3 goodsImg' src='"+img+"' />"+
 					"<div class='col-md-9 col-xs-8 js'>"+
 						"<h3>"+objs.name+"<span class='guige'>["+objs.column1+"]</span></h3>"+
 						"<span class='s'>销售金额￥<b>"+objs.jprice+"</b></span> <span class='s'>销售数量<b>"+objs.column3+"</b></span>"+

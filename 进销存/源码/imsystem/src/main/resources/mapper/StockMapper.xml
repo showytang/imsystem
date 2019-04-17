@@ -420,4 +420,13 @@
       column5 = #{column5,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="queryQianKuan" resultMap="BaseResultMap">
+  	SELECT s.column1 AS column1, s.column2 AS column2, su.name AS column3, s.sid AS sid, s.id AS id, su.balance AS  column4 FROM stock AS s  JOIN supplier  AS su ON su.id = s.sid WHERE s.state = '0' AND su.balance &lt; 0 
+  	<if test="sid != null and sid != ''">
+	  	 AND s.sid = #{sid}
+  	</if>
+  	  <if test="startTime != null and startTime !='' and endTime != null and endTime != ''">
+  		AND s.TIME >= DATE_FORMAT(#{startTime},'%Y-%m-%d 00:00:00') AND s.TIME &lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d 23:59:59')
+  	</if>
+  </select>
 </mapper>

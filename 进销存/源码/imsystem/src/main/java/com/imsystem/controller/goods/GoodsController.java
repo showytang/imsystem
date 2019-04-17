@@ -214,7 +214,6 @@ public class GoodsController {
 	@RequestMapping("/insertGoods")
 	@ResponseBody
 	public int insertGoods(MultipartFile[] files,GoodsVO goodsVo,HttpServletRequest request) {
-
 		String url = "d:/img/" +"goods/";
 		
         File dest = new File(url);
@@ -274,7 +273,6 @@ public class GoodsController {
         }
         
 		return goodsSer.insertGoods(goodsVo,url);
-		
 
 	}
 

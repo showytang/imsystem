@@ -26,4 +26,25 @@ public class SIndexController {
 	public String goodsRanking() {
 		return "yhb/goodsPaim";
 	}
+	@RequestMapping("goJinHuo")
+	public String goJinHuo() {
+		return "yhb/jinhuo";
+	}
+	@RequestMapping("goKuCun")
+	public String goKuCun() {
+		return "yhb/Kucun";
+	}
+	@RequestMapping("goMingXi")
+	public String goMingXi() {
+		return "yhb/mingxi";
+	}
+	@RequestMapping("goQianKuan")
+	public String goQianKuan() {
+		return "yhb/qiankuan";
+	}
+	@RequestMapping("goShouZhang")
+	public String goShouZhang() {
+		return "yhb/shouzhang";
+	}	
+
 }

@@ -37,4 +37,6 @@ public interface StockMapper {
     int updateByPrimaryKeySelective(Stock record);
 
     int updateByPrimaryKey(Stock record);
+    
+    List<Stock> queryQianKuan(@Param("startTime") String startTime,@Param("endTime") String endTime,@Param("sid") String sid);
 }
