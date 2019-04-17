@@ -21,11 +21,29 @@
 		<result column="column4" property="column4" jdbcType="VARCHAR" />
 		<result column="column5" property="column5" jdbcType="VARCHAR" />
 	</resultMap>
+	<resultMap type="com.imsystem.domain.Salesorderdetails" id="salesOrderDetailsMap" extends="BaseResultMap">
+		<association property="goodsvalue" javaType="com.imsystem.domain.Goodsvalue">
+			<id property="id" column="gvid" />
+			<result property="column1" column="gvcolumn1" />
+			<result property="name" column="gvname" />
+			<association property="goods" javaType="com.imsystem.domain.Goods">
+				<id property="name" column="gname" />
+				<result property="img" column="img" />
+			</association>
+		</association>
+	</resultMap>
+	<select id="salesOrderDetails" resultMap="salesOrderDetailsMap">
+		SELECT .s.count,gv.name AS gvname,g.name AS gname,gv.id AS
+		gvid,s.id,gv.column1 AS gvcolumn1,g.img FROM `salesorderdetails` AS s
+		LEFT JOIN `goodsvalue` AS gv ON s.gvid = gv.id
+		INNER JOIN `goods` AS g ON gv.gid = g.id
+		where s.sid = #{id}
+	</select>
 	<insert id="add">
 		insert into
 		salesorderdetails(id,sid,gvid,time,updatetime,oldprice,price,count,state,uid,storeid)
 		values
-		<foreach collection="list" item="item" separator=",">
+		<foreach collection="list1" item="item" separator=",">
 			(#{item.id},#{id},#{item.gvid},#{time},#{time},#{item.oldprice},#{item.price},#{item.count},#{item.state},#{uid},#{storeid})
 		</foreach>
 	</insert>
@@ -44,7 +62,8 @@
 									and ${criterion.condition} #{criterion.value}
 								</when>
 								<when test="criterion.betweenValue">
-									and ${criterion.condition} #{criterion.value} and
+									and ${criterion.condition} #{criterion.value}
+									and
 									#{criterion.secondValue}
 								</when>
 								<when test="criterion.listValue">
@@ -76,7 +95,8 @@
 									and ${criterion.condition} #{criterion.value}
 								</when>
 								<when test="criterion.betweenValue">
-									and ${criterion.condition} #{criterion.value} and
+									and ${criterion.condition} #{criterion.value}
+									and
 									#{criterion.secondValue}
 								</when>
 								<when test="criterion.listValue">
@@ -94,7 +114,8 @@
 		</where>
 	</sql>
 	<sql id="Base_Column_List">
-		id, sid, gvid, oldprice, price, count, state, time, uid, updatetime,
+		id, sid, gvid, oldprice, price, count, state, time, uid,
+		updatetime,
 		storeid, column1,
 		column2, column3, column4, column5
 	</sql>
@@ -121,7 +142,8 @@
 		where id = #{id,jdbcType=VARCHAR}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-		delete from salesorderdetails
+		delete from
+		salesorderdetails
 		where id = #{id,jdbcType=VARCHAR}
 	</delete>
 	<delete id="deleteByExample"
@@ -134,18 +156,25 @@
 	<insert id="insert"
 		parameterType="com.imsystem.domain.Salesorderdetails">
 		insert into salesorderdetails (id, sid, gvid,
-		oldprice, price, count,
+		oldprice,
+		price, count,
 		state, time, uid,
 		updatetime, storeid, column1,
-		column2, column3, column4,
+		column2,
+		column3, column4,
 		column5)
-		values (#{id,jdbcType=VARCHAR}, #{sid,jdbcType=VARCHAR},
+		values (#{id,jdbcType=VARCHAR},
+		#{sid,jdbcType=VARCHAR},
 		#{gvid,jdbcType=VARCHAR},
-		#{oldprice,jdbcType=DOUBLE}, #{price,jdbcType=DOUBLE}, #{count,jdbcType=INTEGER},
-		#{state,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP},
+		#{oldprice,jdbcType=DOUBLE}, #{price,jdbcType=DOUBLE},
+		#{count,jdbcType=INTEGER},
+		#{state,jdbcType=INTEGER},
+		#{time,jdbcType=TIMESTAMP},
 		#{uid,jdbcType=VARCHAR},
-		#{updatetime,jdbcType=TIMESTAMP}, #{storeid,jdbcType=VARCHAR}, #{column1,jdbcType=VARCHAR},
-		#{column2,jdbcType=VARCHAR}, #{column3,jdbcType=VARCHAR},
+		#{updatetime,jdbcType=TIMESTAMP}, #{storeid,jdbcType=VARCHAR},
+		#{column1,jdbcType=VARCHAR},
+		#{column2,jdbcType=VARCHAR},
+		#{column3,jdbcType=VARCHAR},
 		#{column4,jdbcType=VARCHAR},
 		#{column5,jdbcType=VARCHAR})
 	</insert>
@@ -320,21 +349,34 @@
 	<update id="updateByExample" parameterType="map">
 		update salesorderdetails
 		set id = #{record.id,jdbcType=VARCHAR},
-		sid = #{record.sid,jdbcType=VARCHAR},
+		sid =
+		#{record.sid,jdbcType=VARCHAR},
 		gvid = #{record.gvid,jdbcType=VARCHAR},
 		oldprice = #{record.oldprice,jdbcType=DOUBLE},
-		price = #{record.price,jdbcType=DOUBLE},
-		count = #{record.count,jdbcType=INTEGER},
-		state = #{record.state,jdbcType=INTEGER},
-		time = #{record.time,jdbcType=TIMESTAMP},
-		uid = #{record.uid,jdbcType=VARCHAR},
-		updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
-		storeid = #{record.storeid,jdbcType=VARCHAR},
-		column1 = #{record.column1,jdbcType=VARCHAR},
-		column2 = #{record.column2,jdbcType=VARCHAR},
-		column3 = #{record.column3,jdbcType=VARCHAR},
-		column4 = #{record.column4,jdbcType=VARCHAR},
-		column5 = #{record.column5,jdbcType=VARCHAR}
+		price =
+		#{record.price,jdbcType=DOUBLE},
+		count =
+		#{record.count,jdbcType=INTEGER},
+		state =
+		#{record.state,jdbcType=INTEGER},
+		time =
+		#{record.time,jdbcType=TIMESTAMP},
+		uid =
+		#{record.uid,jdbcType=VARCHAR},
+		updatetime =
+		#{record.updatetime,jdbcType=TIMESTAMP},
+		storeid =
+		#{record.storeid,jdbcType=VARCHAR},
+		column1 =
+		#{record.column1,jdbcType=VARCHAR},
+		column2 =
+		#{record.column2,jdbcType=VARCHAR},
+		column3 =
+		#{record.column3,jdbcType=VARCHAR},
+		column4 =
+		#{record.column4,jdbcType=VARCHAR},
+		column5 =
+		#{record.column5,jdbcType=VARCHAR}
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
 		</if>
@@ -394,19 +436,26 @@
 	<update id="updateByPrimaryKey"
 		parameterType="com.imsystem.domain.Salesorderdetails">
 		update salesorderdetails
-		set sid = #{sid,jdbcType=VARCHAR},
+		set sid =
+		#{sid,jdbcType=VARCHAR},
 		gvid = #{gvid,jdbcType=VARCHAR},
-		oldprice = #{oldprice,jdbcType=DOUBLE},
+		oldprice =
+		#{oldprice,jdbcType=DOUBLE},
 		price = #{price,jdbcType=DOUBLE},
-		count = #{count,jdbcType=INTEGER},
+		count =
+		#{count,jdbcType=INTEGER},
 		state = #{state,jdbcType=INTEGER},
-		time = #{time,jdbcType=TIMESTAMP},
+		time =
+		#{time,jdbcType=TIMESTAMP},
 		uid = #{uid,jdbcType=VARCHAR},
-		updatetime = #{updatetime,jdbcType=TIMESTAMP},
-		storeid = #{storeid,jdbcType=VARCHAR},
+		updatetime =
+		#{updatetime,jdbcType=TIMESTAMP},
+		storeid =
+		#{storeid,jdbcType=VARCHAR},
 		column1 = #{column1,jdbcType=VARCHAR},
 		column2 = #{column2,jdbcType=VARCHAR},
-		column3 = #{column3,jdbcType=VARCHAR},
+		column3 =
+		#{column3,jdbcType=VARCHAR},
 		column4 = #{column4,jdbcType=VARCHAR},
 		column5 = #{column5,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=VARCHAR}

@@ -3,6 +3,7 @@ package com.imsystem.service.order;
 import java.util.Vector;
 
 import com.github.pagehelper.PageInfo;
+import com.imsystem.domain.Salesorder;
 import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Stockrecord;
@@ -18,5 +19,7 @@ public interface OrderQueryService {
 	Vector<Stockdetails> queryGoods(String name);
 	
 	Vector<Stockdetails> queryDetails(String gvid);
+	
+	PageInfo<Salesorder> querySalesOrder (Salesorder sales);
 	
 }

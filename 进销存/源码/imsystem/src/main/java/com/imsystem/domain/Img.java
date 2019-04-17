@@ -70,7 +70,7 @@ public class Img {
     }
 
     public Date getTime() {
-        return time;
+        return new Date();
     }
 
     public void setTime(Date time) {

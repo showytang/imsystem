@@ -29,6 +29,58 @@
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.imsystem.domain.Goods" extends="BaseResultMap" >
     <result column="img" property="img" jdbcType="LONGVARBINARY" />
+    
+    
+    <collection property="goodsValues" ofType="com.imsystem.domain.Goodsvalue">
+    	
+    	
+    	<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="gid" property="gid" jdbcType="VARCHAR" />
+		<result column="jprice" property="jprice" jdbcType="DOUBLE" />
+		<result column="column1" property="column1" jdbcType="VARCHAR" />
+		
+		
+		<association property="stockDetails" javaType="com.imsystem.domain.Stockdetails">
+		
+			<id column="id" property="id" jdbcType="VARCHAR" />
+		    <result column="gvid" property="gvid" jdbcType="VARCHAR" />
+		    <result column="count" property="count" jdbcType="INTEGER" />
+		
+		</association>
+		
+		
+		<collection property="goodsstandardvalues" ofType="com.imsystem.domain.Goodsstandardvalue">
+		
+			<id column="id" property="id" jdbcType="VARCHAR" />
+		    <result column="name" property="name" jdbcType="VARCHAR" />
+		    <result column="vid" property="vid" jdbcType="VARCHAR" />
+		    
+		</collection>
+		
+		
+		<collection property="goodsPrices" ofType="com.imsystem.domain.Goodsprice">
+			
+			    <id column="id" property="id" jdbcType="VARCHAR" />
+			    <result column="ctid" property="ctid" jdbcType="VARCHAR" />
+			    <result column="sufname" property="sufname" jdbcType="VARCHAR" />
+			    <result column="price" property="price" jdbcType="DOUBLE" />
+			    <result column="gvid" property="gvid" jdbcType="VARCHAR" />
+		
+		</collection>
+    	
+    </collection>
+    
+    <collection property="imgs" ofType="com.imsystem.domain.Img">
+
+    	<id column="id" property="id" jdbcType="VARCHAR" />
+	    <result column="name" property="name" jdbcType="VARCHAR" />
+	    <result column="oldname" property="oldname" jdbcType="VARCHAR" />
+	    <result column="url" property="url" jdbcType="VARCHAR" />
+	    <result column="gid" property="gid" jdbcType="VARCHAR" />
+	   
+    </collection>
+    
   </resultMap>
   
   <resultMap type="com.imsystem.domain.GoodsValueVo" id="GoodsValueVo" >
@@ -49,6 +101,7 @@
 	    <result column="gvname" property="name" jdbcType="VARCHAR" />
 	    <result column="id" property="gid" jdbcType="VARCHAR" />
 	    <result column="gvcol" property="column1" jdbcType="VARCHAR" />
+	    <result column="counts" property="counts" jdbcType="VARCHAR" />
   	</association>
   
   <!-- 	<association property="stockDetails" javaType="com.imsystem.domain.Stockdetails">
@@ -58,6 +111,40 @@
   </resultMap>
   
   
+  <select id="updateGoodsLoad" resultMap="ResultMapWithBLOBs">
+  
+  	SELECT 
+	gs.*,
+	<!-- im.`id` AS imid,im.name AS imname,im.`oldname` AS imoldname,im.`gid` AS imgid,im.`url` AS imurl, -->
+	gv.`id` AS gvid,gv.`name` AS gvname,gv.`gid` AS gvgid,gv.jprice AS gvjprice,gv.`column1` AS gvcolumn1
+	<!-- sd.`id` AS sdid,sd.`count` AS sdcount,sd.`gvid` AS sdgvid, -->
+	<!-- gdv.id AS gdvid,gdv.`name` AS gdvname,gdv.`vid` AS gdvvid,
+	gp.`id` AS gpid,gp.`sufname` AS gpsufname,gp.`ctid` AS gpctid,gp.`gvid` AS gpgvid,gp.`price` AS gpprice -->
+	FROM goods AS gs
+	INNER JOIN `goodsvalue` AS gv
+	ON gv.`gid` = gs.`id`
+	<!-- INNER JOIN `goodsstandardvalue` AS gdv
+	ON gdv.vid = gv.`id`
+	INNER JOIN `standardvalue` AS sv
+	ON gdv.`svid` = sv.`id`
+	INNER JOIN `standard` AS s
+	ON s.`id` = sv.`sid`
+	INNER JOIN `goodstype` AS gt
+	ON gt.`id` = s.`tid`
+	INNER JOIN `goodsprice` AS gp
+	ON gp.`gvid` = gv.`id`
+	INNER JOIN `img` AS im
+	ON gs.`id` = im.`gid` -->
+	<!-- INNER JOIN `stockdetails` AS sd
+	ON gv.`id` = sd.`gvid` -->
+	WHERE gs.`id` = (SELECT gid FROM `goodsvalue` WHERE id = #{id}) AND gv.`defaultvalue` = 0
+	  	
+  
+  </select>
+  
+  
+  
+  <!-- 商品查询 -->
   <select id="queryAllGoods" resultMap="GoodsValueVo">
 		SELECT 
 		gt.name AS column2,
@@ -66,7 +153,8 @@
 		gs.id ,gv.id AS gvid,
 		gs.name AS gname,
 		gv.`name` AS gvname,
-		gs.price,gs.img,gv.`column1` AS gvcol 
+		gs.price,gs.img,gv.`column1` AS gvcol ,
+		(SELECT SUM(`count`) FROM `stockdetails` AS sk WHERE sk.`gvid` = gv.`id`) AS counts
 		FROM `goods` AS gs 
 		
 		INNER JOIN `goodsvalue` gv
@@ -80,7 +168,7 @@
 	
 	 <where>
 	
-		CONCAT(gs.name,gv.`name`) LIKE CONCAT('%',#{liketext},'%')
+		gs.`state` = 0 AND CONCAT(gs.name,gv.`name`,gv.enname) LIKE CONCAT('%',#{liketext},'%')
 		
 		 <choose>
 			<when test="tid != null and tid != '' and tid != 0">

@@ -18,19 +18,10 @@
 		<result column="column4" property="column4" jdbcType="VARCHAR" />
 		<result column="column5" property="column5" jdbcType="VARCHAR" />
 	</resultMap>
-	<resultMap type="com.imsystem.domain.Stockrecord"
-		id="queryMap" extends="BaseResultMap">
-		<result property="column1" column="cname"  />
-		<result property="column2" column="jname" />
-		<association property="stockdetails" javaType="com.imsystem.domain.Stockdetails">
-			<id property="id" column="sid" />
-			<result property="updatetime" column="supdatetime" />
-			<result property="count" column="count" />
-		</association>
-	</resultMap>
 	
 	<resultMap type="com.imsystem.domain.Stockdetails" id="queryAllotDetailsMap">
 		<id property="count" column="count" />
+		<result column="stupdatetime" property="updatetime" />
 		<association property="goods" javaType="com.imsystem.domain.Goods">
 			<id property="img" column="img" />
 			<result property="name" column="gname" />
@@ -42,21 +33,33 @@
 	</resultMap>
 	
 	<select id="queryAllotDetails" resultMap="queryAllotDetailsMap">
-		SELECT st.count-st.scount AS COUNT,g.name AS gname,gv.name AS gvname,gv.column1 AS gvcolumn1,g.img FROM stockdetails AS st 
+		SELECT st.count-st.scount AS COUNT,st.updatetime as stupdatetime,g.name AS gname,gv.name AS gvname,gv.column1 AS gvcolumn1,g.img 
+		FROM stockdetails AS st 
 		LEFT JOIN goodsvalue AS gv ON gv.id = st.gvid
 		INNER JOIN goods AS g ON gv.gid = g.id
 		WHERE st.id = #{id} 
 	</select>
+	<resultMap type="com.imsystem.domain.Stockrecord"
+		id="queryMap" extends="BaseResultMap">
+		<result property="column1" column="cname"  />
+		<result property="column2" column="jname" />
+		<association property="stockdetails" javaType="com.imsystem.domain.Stockdetails">
+			<id property="id" column="sid" />
+			<result property="updatetime" column="supdatetime" />
+			<result property="count" column="count" />
+		</association>
+	</resultMap>
 	<select id="query" resultMap="queryMap">
 		SELECT SUM(s.count-s.scount) AS COUNT,
 		(SELECT NAME FROM `store` WHERE id = st.aftersid) AS cname,
 		(SELECT NAME FROM `store` WHERE id = st.beforesid) AS jname,
-		s.`updatetime` AS supdatetime,s.id AS sid
+		stck.`updatetime` AS supdatetime,s.id AS sid
 		FROM `stockrecord` AS st
 		LEFT JOIN `stockdetails` AS s ON st.beforesdid = s.`id`
+		inner join stock as stck on s.sid = stck.id
 		<where>
 			<if test="time != null and time != ''">
-				and s.`updatetime` >= #{time} AND s.`updatetime` &lt;= #{endTime}
+				and stck.`updatetime` >= #{time} AND stck.`updatetime` &lt;= #{endTime}
 			</if>
 			<if test="code != null and code != ''">
 				and st.aftersid = #{code}
@@ -65,6 +68,7 @@
 				and st.beforesid = #{jcode}
 			</if>
 		</where>
+		GROUP BY st.id
 	</select>
 
 	<sql id="Example_Where_Clause">

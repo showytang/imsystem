@@ -197,6 +197,7 @@ CREATE TABLE `goods` (
   `remark` VARCHAR(50) DEFAULT NULL,
   `uid` VARCHAR(20) DEFAULT NULL,
 <<<<<<< HEAD
+<<<<<<< HEAD
   `minsecurity` int(4) DEFAULT NULL,
   `maxsecurity` int(4) DEFAULT NULL,
   `historygid` varchar(20) DEFAULT NULL,
@@ -225,6 +226,21 @@ CREATE TABLE `goods` (
   `column4` VARCHAR(50) DEFAULT NULL,
   `column5` VARCHAR(50) DEFAULT NULL,
 >>>>>>> refs/heads/master
+=======
+  `minsecurity` INT(4) DEFAULT NULL,
+  `maxsecurity` INT(4) DEFAULT NULL,
+  `historygid` VARCHAR(20) DEFAULT NULL,
+  `time` DATETIME DEFAULT NULL,
+  `updatetime` DATETIME DEFAULT NULL,
+  `detail` VARCHAR(5000) DEFAULT NULL,
+  `state` INT(4) DEFAULT NULL,
+  `enname` VARCHAR(50) DEFAULT NULL,
+  `column1` VARCHAR(50) DEFAULT NULL,
+  `column2` VARCHAR(50) DEFAULT NULL,
+  `column3` VARCHAR(50) DEFAULT NULL,
+  `column4` VARCHAR(50) DEFAULT NULL,
+  `column5` VARCHAR(50) DEFAULT NULL,
+>>>>>>> refs/remotes/origin/dws
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 

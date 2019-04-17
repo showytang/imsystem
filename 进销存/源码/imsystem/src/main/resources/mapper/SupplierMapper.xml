@@ -35,6 +35,18 @@
   	</where>
   </select>
   
+  <update id="updateSupplier">
+  	UPDATE supplier 
+  	SET `name`=#{name},sid=#{sid},phone=#{phone},province=#{province},city=#{city},district=#{district},addres=#{addres},balance=#{balance},remark=#{remark},updatetime=#{updatetime} 
+  	WHERE id=#{id}
+  </update>
+  
+  <update id="deleteSupplier">
+  	UPDATE supplier
+  	SET state=1
+  	WHERE id=#{id}
+  </update>
+  
   
   <sql id="Example_Where_Clause" >
     <where >

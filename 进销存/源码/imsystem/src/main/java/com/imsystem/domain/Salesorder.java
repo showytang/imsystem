@@ -2,6 +2,11 @@ package com.imsystem.domain;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class Salesorder {
     private String id;
@@ -26,8 +31,12 @@ public class Salesorder {
 
     private Double tainmoney;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date time;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date updatetime;
 
     private Integer progress;
@@ -47,6 +56,16 @@ public class Salesorder {
     private String column5;
     
     private List<Goodsvalue> list;
+    
+    private Vector<Salesorderdetails> list1;
+    
+    public Vector<Salesorderdetails> getList1() {
+		return list1;
+	}
+    
+    public void setList1(Vector<Salesorderdetails> list1) {
+		this.list1 = list1;
+	}
 
     public List<Goodsvalue> getList() {
 		return list;
