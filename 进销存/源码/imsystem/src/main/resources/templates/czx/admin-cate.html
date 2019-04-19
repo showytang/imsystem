@@ -14,7 +14,57 @@
     <script type="text/javascript" th:src="@{/assets/SheZhi/lib/layui/layui.js}" charset="utf-8"></script>
     <script type="text/javascript" th:src="@{/assets/SheZhi/js/xadmin.js}"></script>
     <script type="text/javascript" th:src="@{/assets/SheZhi/js/cookie.js}"></script>
-    
+     <style type="text/css">
+    	
+    	[type="checkbox"] {
+				-webkit-appearance: none;
+				vertical-align: middle;
+				margin-top: 0;
+				background: #fff;
+				border: 1px solid gainsboro;
+				border-radius: 5px;
+				min-height: 20px;
+				min-width: 20px;
+				margin-left: 35px;
+			}
+			
+			[type="checkbox"]:checked {
+				background: gainsboro;
+			}
+			
+			.ck:checked::after {
+				content: '';
+				top: 22px;
+				left: 53px;
+				position: absolute;
+				background: transparent;
+				border: #fff solid 2px;
+				border-top: none;
+				border-right: none;
+				height: 6px;
+				width: 10px;
+				-moz-transform: rotate(-45deg);
+				-ms-transform: rotate(-45deg);
+				-webkit-transform: rotate(-45deg);
+				transform: rotate(-45deg);
+			}
+			.ckAll:checked::after {
+				content: '';
+				top: 15px;
+				left: 53px;
+				position: absolute;
+				background: transparent;
+				border: #fff solid 2px;
+				border-top: none;
+				border-right: none;
+				height: 6px;
+				width: 10px;
+				-moz-transform: rotate(-45deg);
+				-ms-transform: rotate(-45deg);
+				-webkit-transform: rotate(-45deg);
+				transform: rotate(-45deg);
+			}
+    </style>
    
   </head>
   
@@ -31,7 +81,7 @@
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
        
       </xblock>
-      <table class="layui-table">
+      <table class="layui-table x-admin">
         <thead>
           <tr>
             <th>

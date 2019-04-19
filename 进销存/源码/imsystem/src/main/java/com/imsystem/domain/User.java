@@ -11,7 +11,7 @@ public class User {
 
     private Integer storeid;
 
-    private Integer rid;
+    private String rid;
 
     private Date time;
 
@@ -31,15 +31,29 @@ public class User {
 
     private String column5;
 
-    public String getId() {
+    private Role role;
+    
+    
+    
+    public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    
 
-    public String getName() {
+    public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
         return name;
     }
 
@@ -63,11 +77,11 @@ public class User {
         this.storeid = storeid;
     }
 
-    public Integer getRid() {
+    public String getRid() {
         return rid;
     }
 
-    public void setRid(Integer rid) {
+    public void setRid(String rid) {
         this.rid = rid;
     }
 

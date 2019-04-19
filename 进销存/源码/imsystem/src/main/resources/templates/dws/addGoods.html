@@ -310,7 +310,7 @@ td input {
 					</div>
 					<br> <br>
 					<div class="panel">
-						<div class="panel-body"></div>
+						<div class="panel-bodytable"></div>
 					</div>
 					<br>
 
@@ -343,8 +343,6 @@ td input {
 			customerTypeList:""
 		}
 	});
-	//商品描述
-	var detail;
 
 	var E = window.wangEditor;
 	var editor = new E('#editor');
@@ -361,6 +359,8 @@ td input {
 
 	editor.create();
 
+	//商品描述
+	var detail;
 	document.getElementById('btn1').addEventListener('click', function() {
 		// 读取 html
 		detail = editor.txt.html();
@@ -538,9 +538,7 @@ function inserGoods(){
 	  
 	  
 	  
-	  
-	  
-		     $.ajax({
+		      $.ajax({
 			url:[[@{/goods/insertGoods}]],
  			data:formData,
  			dataType:"text",
@@ -844,7 +842,7 @@ function inserGoods(){
 		$("table").remove();
 		var table = $("<table class='table' >");
 
-		$(".panel-body").append(table);
+		$(".panel-bodytable").append(table);
 
 		var index = 1;
 		var tbody = $("<tbody>");

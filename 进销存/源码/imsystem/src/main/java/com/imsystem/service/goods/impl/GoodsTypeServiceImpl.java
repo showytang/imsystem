@@ -30,7 +30,7 @@ public class GoodsTypeServiceImpl implements GoodsTypeService {
 	 * 商品类型查询
 	 */
 	@Override
-	public List<Goodstype> QueryGoodsTypeByPid(Integer id) {
+	public List<Goodstype> QueryGoodsTypeByPid(String id) {
 		// TODO Auto-generated method stub
 		return goodstypeMap.QueryGoodsTypeByPid(id);
 	}
@@ -39,6 +39,12 @@ public class GoodsTypeServiceImpl implements GoodsTypeService {
 	public List<Standard> queryStandradByid(String id) {
 		// TODO Auto-generated method stub
 		return standardMap.queryStandardById(id);
+	}
+
+	@Override
+	public Goodstype queryGoodsTypeReverse(String id) {
+		// TODO Auto-generated method stub
+		return goodstypeMap.queryGoodsTypeReverse(id);
 	}
 	
 	

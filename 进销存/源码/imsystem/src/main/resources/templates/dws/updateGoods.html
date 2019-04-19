@@ -1,375 +1,364 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>商品修改</title>
-		<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
-		<!-- VENDOR CSS -->
-		<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
-		<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
-		<link rel="stylesheet" th:href="@{/assets/css/style.css}">
-		<link rel="stylesheet" th:href="@{/assets/css/chartist-custom.css}">
-		<!-- MAIN CSS -->
-		<link rel="stylesheet" th:href="@{/assets/css/main.css}">
-		<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
-		<link rel="stylesheet" th:href="@{/assets/css/demo.css}">
-		<!-- GOOGLE FONTS -->
-		<link rel="apple-touch-icon" sizes="76x76" th:href="@{/assets/img/apple-icon.png}">
-		<link rel="icon" type="image/png" sizes="96x96" th:href="@{/assets/img/favicon.png}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<title>商品修改</title>
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
+<!-- VENDOR CSS -->
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
+<link rel="stylesheet" th:href="@{/assets/css/style.css}">
+<link rel="stylesheet" th:href="@{/assets/css/toastr.css}">
+<!-- MAIN CSS -->
+<link rel="stylesheet" th:href="@{/assets/css/main.css}">
+<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+<link rel="stylesheet" th:href="@{/assets/css/demo.css}">
+<!-- GOOGLE FONTS -->
+<link rel="apple-touch-icon" sizes="76x76"
+	th:href="@{/assets/img/apple-icon.png}">
+<link rel="icon" type="image/png" sizes="96x96"
+	th:href="@{/assets/img/favicon.png}">
 
-		<link rel="stylesheet" th:href="@{/assets/css/typeDonghua.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/typeDonghua.css}" />
 
-		<script type="text/javascript" th:src="@{/assets/js/jquery-3.1.1.min.js}"></script>
-		<script th:src="@{/assets/js/bootstrap.js}"></script>
-		<script type="text/javascript" th:src="@{/assets/js/wangEditor.min.js}"></script>
-		<script type="text/javascript" th:src="@{/assets/js/jquery.color.js}"></script>
+<script type="text/javascript"
+	th:src="@{/assets/js/jquery-3.1.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/toastr.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/wangEditor.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/jquery.color.js}"></script>
 
-		<style>
-			td input {
-				width: 100%;
-				font-size: 20px;
-				border: none;
-				border-left: 1px solid #CCCCCC;
-				outline: none;
-			}
-			
-			.img-div {
-				width: 20vh;
-				height: 20vh;
-				margin-left: 3vh;
-				line-height: 23vh;
-				position: relative;
-			}
-			
-			.fileHide {
-				height: 20vh;
-				width: 20vh;
-				opacity: 0;
-				position: absolute;
-				z-index: 999;
-			}
-			
-			.delimg {
-				position: absolute;
-				right: -3%;
-				color: #d96767;
-				top: 2%;
-				cursor: pointer;
-			}
-			
-			.imgmaindiv {
-				position: relative;
-				width: 100%;
-				height: 100%;
-			}
-		</style>
-	</head>
+<style>
+td input {
+	width: 100%;
+	font-size: 20px;
+	border: none;
+	border-left: 1px solid #CCCCCC;
+	outline: none;
+}
 
-	<body>
-		<div class="main">
-			<div class="main-content">
-				<div class="container-fluid">
-					<div class="panel panel-headline">
-						<div class="panel-heading">
-							<h3 class="panel-title">报表 - 1</h3>
-							<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
-						</div>
-						<div class="panel-body">
+.img-div {
+	width: 20vh;
+	height: 20vh;
+	margin-left: 3vh;
+	line-height: 23vh;
+	position: relative;
+}
 
-							<div class="row">
+.fileHide {
+	height: 20vh;
+	width: 20vh;
+	opacity: 0;
+	position: absolute;
+	z-index: 999;
+}
 
-								<div class="col-lg-2 img-div pickImg text-center">
-									<input type="file" name="files" multiple="multiple" onchange="imgShow(this)" class="fileHide" />
-									<span class="glyphicon glyphicon-plus" style="font-size: 50px;"></span>
-								</div>
+.delimg {
+	position: absolute;
+	right: -3%;
+	color: #d96767;
+	top: 2%;
+	cursor: pointer;
+}
 
-							</div>
+.imgmaindiv {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
 
-							<br>
+.toast-top-right {
+	right: 50%;
+	top: 10%;
+}
 
-							<div class="input-group">
-								<span class="input-group-btn">
-							<button class="btn btn-primary" type="button">货品名称：</button>
-						</span>
-								<input class="form-control" type="text">
-							</div>
-							<br>
+.toast-top-center {
+	top: 5%;
+}
 
-							<div class="input-group">
-								<span class="input-group-btn">
-							<button class="btn btn-primary" type="button">货品编号：</button>
-						</span>
-								<input class="form-control" type="text">
-							</div>
-							<br>
+#toast-container {
+	position: fixed;
+}
+</style>
+</head>
 
-							<div class="input-group">
-								<span class="input-group-btn">
-							<button class="btn btn-primary" type="button">条形码：</button>
-						</span>
-								<input class="form-control" type="text">
-								<span class="input-group-btn">
-							<button class="btn btn-primary" type="button">扫一扫</button>
-						</span>
-							</div>
-							<br>
+<body>
+	<div class="main">
+		<div class="main-content">
+			<div class="container-fluid">
+				<div class="panel panel-headline">
+					<div class="panel-heading">
+						<h3 class="panel-title">报表 - 1</h3>
+						<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
+					</div>
+					<div class="panel-body">
 
-							<div class="row">
-								<div class="col-lg-4">
-									<div class="input-group">
-										<div class="input-group-btn">
-											<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">主单位<span class="caret"></span></button>
-											<ul class="dropdown-menu">
-												<li>
-													<a href="#">包</a>
-												</li>
-												<li>
-													<a href="#">箱</a>
-												</li>
-												<li>
-													<a href="#">车</a>
-												</li>
-												<li>
-													<a href="#">坨</a>
-												</li>
-												<li>
-													<a href="#">件</a>
-												</li>
-												<li>
-													<a href="#">个</a>
-												</li>
-												<li>
-													<a href="#">只</a>
-												</li>
-												<li>
-													<a href="#">双</a>
-												</li>
-											</ul>
-										</div>
-										<!-- /btn-group -->
-										<input type="text" class="form-control" aria-label="...">
-									</div>
-									<!-- /input-group -->
-								</div>
-								<div class="col-lg-4">
-									<div class="input-group">
-										<div class="input-group-btn">
-											<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">副单位<span class="caret"></span></button>
-											<ul class="dropdown-menu">
-												<li>
-													<a href="#">包</a>
-												</li>
-												<li>
-													<a href="#">箱</a>
-												</li>
-												<li>
-													<a href="#">车</a>
-												</li>
-												<li>
-													<a href="#">坨</a>
-												</li>
-												<li>
-													<a href="#">件</a>
-												</li>
-												<li>
-													<a href="#">个</a>
-												</li>
-												<li>
-													<a href="#">只</a>
-												</li>
-												<li>
-													<a href="#">双</a>
-												</li>
-											</ul>
-										</div>
-										<!-- /btn-group -->
-										<input type="text" class="form-control" aria-label="...">
-									</div>
-									<!-- /input-group -->
-								</div>
-								<div class="col-lg-4">
-									<div class="input-group">
-										<div class="input-group-btn">
-											<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">单位值 <span class="caret"></span></button>
-											<ul class="dropdown-menu">
-												<li>
-													<a href="#">包</a>
-												</li>
-												<li>
-													<a href="#">箱</a>
-												</li>
-												<li>
-													<a href="#">车</a>
-												</li>
-												<li>
-													<a href="#">坨</a>
-												</li>
-												<li>
-													<a href="#">件</a>
-												</li>
-												<li>
-													<a href="#">个</a>
-												</li>
-												<li>
-													<a href="#">只</a>
-												</li>
-												<li>
-													<a href="#">双</a>
-												</li>
-											</ul>
-										</div>
-										<!-- /btn-group -->
-										<input type="text" class="form-control" aria-label="...">
-									</div>
-									<!-- /input-group -->
-								</div>
+						<div class="row">
 
-							</div>
-							<!-- /.row -->
-
-							<br />
-
-							<div class="input-group">
-								<span class="input-group-btn">
-							<button class="btn btn-primary" type="button">库存：</button>
-						</span>
-								<input class="form-control" type="text">
-							</div>
-							<br>
-
-							<div class="input-group">
-								<span class="input-group-btn">
-							<button class="btn btn-primary" type="button">批发价：</button>
-						</span>
-								<input class="form-control" type="text">
-							</div>
-							<br>
-
-							<div class="input-group">
-								<span class="input-group-btn">
-							<button class="btn btn-primary" type="button">XX价：</button>
-						</span>
-								<input class="form-control" type="text">
-							</div>
-							<br>
-
-							<div class="row visible-lg-block visible-md-block" style="margin: 0 3vh;">
-
-								<div class="option-div option-top-div row">
-									<div class="col-lg-1 col-md-1 text-right option-rongqi">
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span>
-									</div>
-									<div class="col-lg-11 col-md-11 option-rongqi">
-										<span class="visible-lg-inline-block visible-md-inline-block visible-md-inline-block text-center activePosition option-span active1"></span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span activeColor" typeid="">上衣</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">裤子</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
-									</div>
-								</div>
-
-								<div class="option-div option-top-div row">
-									<div class="col-lg-1 col-md-1 text-right option-rongqi">
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span>
-									</div>
-									<div class="col-lg-11 col-md-11 option-rongqi">
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span " typeid="">上衣</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔裤</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">破洞裤</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">运动裤</span>
-									</div>
-								</div>
-								<div class="option-div option-top-div row">
-									<div class="col-lg-1 col-md-1 text-right option-rongqi">
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span>
-									</div>
-									<div class="col-lg-11 col-md-11 option-rongqi">
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span " typeid="">上衣</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔裤</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">破洞裤</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">运动裤</span>
-									</div>
-								</div>
-								<div class="option-div option-top-div row">
-									<div class="col-lg-1 col-md-1 text-right option-rongqi">
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span>
-									</div>
-									<div class="col-lg-11 col-md-11 option-rongqi">
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span " typeid="">上衣</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔裤</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">破洞裤</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">运动裤</span>
-									</div>
-								</div>
-
-								<div class="option-div option-type row">
-									<div class="col-lg-1 col-md-1 text-right option-rongqi">
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">尺码</span>
-									</div>
-									<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">
-										<!--<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #DC4E41;">不限</span>-->
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z active1" style="background-color: rgb(0, 170, 255); color: rgb(255, 255, 255);" sizeid="s">S</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="m">M</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="l">L</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z active1"  style="background-color: rgb(0, 170, 255); color: rgb(255, 255, 255);"  sizeid="xl">XL</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="xl">XL</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="xxl">XXL</span>
-									</div>
-								</div>
-
-								<div class="option-div option-type row">
-									<div class="col-lg-1 col-md-1 text-right option-rongqi">
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">颜色</span>
-									</div>
-									<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">
-										<!--<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #DC4E41;">不限</span>-->
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="f">浅粉色</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z active1"  style="background-color: rgb(0, 170, 255); color: rgb(255, 255, 255);" sizeid="k">卡其色</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="z">藏青色</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z active1"  style="background-color: rgb(0, 170, 255); color: rgb(255, 255, 255);" sizeid="o">藕色</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="s">杏色</span>
-										<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="l">绿棕色</span>
-									</div>
-								</div>
-
-							</div>
-							<br>
-							<br>
-							<div class="panel">
-								<div class="panel-body">
-
+							<div style='margin-bottom: 20px;'
+								class='img-div col-lg-2 text-center'>
+								<div class='imgmaindiv notchange'>
+									<span title='删除' onclick='delImg(this)'
+										class='glyphicon glyphicon-remove delimg'> </span> <img
+										:src="'data:image/png;base64,'+goods.img" width='100%'
+										height='100%' />
 								</div>
 							</div>
-							<br>
+
+							<div style='margin-bottom: 20px;'
+								v-for="(item,index) in goods.imgs"
+								class='img-div col-lg-2 text-center'>
+								<div class='imgmaindiv urlchange'>
+									<span title='删除' onclick='delImg(this)'
+										class='glyphicon glyphicon-remove delimg'> </span> <img
+										:src="item.url" :name="item.name" :oldname="item.oldname"
+										width='100%' height='100%' />
+								</div>
+							</div>
+
+							<div class="col-lg-2 img-div pickImg text-center">
+								<input type="file" name="files" multiple="multiple"
+									onchange="imgShow(this)" class="fileHide" /> <span
+									class="glyphicon glyphicon-plus" style="font-size: 50px;"></span>
+							</div>
 
 						</div>
+
+						<br>
+
+						<div class="input-group">
+							<span class="input-group-btn">
+								<button class="btn btn-primary" type="button">货品名称：</button>
+							</span> <input name="name" :ggid="goods.id" class="form-control" :value="goods.name"
+								type="text">
+						</div>
+						<br>
+
+						<div class="row">
+							<div class="col-lg-4">
+								<div class="input-group">
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-primary dropdown-toggle"
+											data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">
+											主单位<span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu">
+											<li onclick="dw(this)"><a>包</a></li>
+											<li onclick="dw(this)"><a>箱</a></li>
+											<li onclick="dw(this)"><a>车</a></li>
+											<li onclick="dw(this)"><a>坨</a></li>
+											<li onclick="dw(this)"><a>件</a></li>
+											<li onclick="dw(this)"><a>个</a></li>
+											<li onclick="dw(this)"><a>只</a></li>
+											<li onclick="dw(this)"><a>双</a></li>
+										</ul>
+									</div>
+									<!-- /btn-group -->
+									<input type="text" name="prevbit" :value="goods.prevbit"
+										class="form-control" aria-label="...">
+								</div>
+								<!-- /input-group -->
+							</div>
+							<div class="col-lg-4">
+								<div class="input-group">
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-primary dropdown-toggle"
+											data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">
+											副单位<span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu">
+											<li onclick="dw(this)"><a>包</a></li>
+											<li onclick="dw(this)"><a>箱</a></li>
+											<li onclick="dw(this)"><a>车</a></li>
+											<li onclick="dw(this)"><a>坨</a></li>
+											<li onclick="dw(this)"><a>件</a></li>
+											<li onclick="dw(this)"><a>个</a></li>
+											<li onclick="dw(this)"><a>只</a></li>
+											<li onclick="dw(this)"><a>双</a></li>
+										</ul>
+									</div>
+									<!-- /btn-group -->
+									<input type="text" name="sufbit" :value="goods.sufbit"
+										class="form-control" aria-label="...">
+								</div>
+								<!-- /input-group -->
+							</div>
+							<div class="col-lg-4">
+								<div class="input-group">
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-primary dropdown-toggle"
+											data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">
+											单位值 <span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu">
+											<li onclick="dw(this)"><a>包</a></li>
+											<li onclick="dw(this)"><a>箱</a></li>
+											<li onclick="dw(this)"><a>车</a></li>
+											<li onclick="dw(this)"><a>坨</a></li>
+											<li onclick="dw(this)"><a>件</a></li>
+											<li onclick="dw(this)"><a>个</a></li>
+											<li onclick="dw(this)"><a>只</a></li>
+											<li onclick="dw(this)"><a>双</a></li>
+										</ul>
+									</div>
+									<!-- /btn-group -->
+									<input type="text" name="bitval" :value="goods.bitval"
+										class="form-control" aria-label="...">
+								</div>
+								<!-- /input-group -->
+							</div>
+
+						</div>
+						<!-- /.row -->
+
+						<br />
+
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="input-group">
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-primary dropdown-toggle"
+											data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">
+											最大库存<span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu">
+											<li onclick="dw(this)"><a>800</a></li>
+											<li onclick="dw(this)"><a>700</a></li>
+											<li onclick="dw(this)"><a>600</a></li>
+											<li onclick="dw(this)"><a>500</a></li>
+											<li onclick="dw(this)"><a>400</a></li>
+											<li onclick="dw(this)"><a>300</a></li>
+											<li onclick="dw(this)"><a>200</a></li>
+											<li onclick="dw(this)"><a>100</a></li>
+										</ul>
+									</div>
+									<!-- /最大库存 -->
+									<input type="text" oninput="countChange(this)"
+										name="maxsecurity" :value="goods.maxsecurity"
+										class="form-control" aria-label="...">
+								</div>
+								<!-- /input-group -->
+							</div>
+							<div class="col-lg-6">
+								<div class="input-group">
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-primary dropdown-toggle"
+											data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">
+											最小库存<span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu">
+											<li onclick="dw(this)"><a>100</a></li>
+											<li onclick="dw(this)"><a>200</a></li>
+											<li onclick="dw(this)"><a>300</a></li>
+											<li onclick="dw(this)"><a>400</a></li>
+											<li onclick="dw(this)"><a>500</a></li>
+											<li onclick="dw(this)"><a>600</a></li>
+											<li onclick="dw(this)"><a>700</a></li>
+											<li onclick="dw(this)"><a>800</a></li>
+										</ul>
+									</div>
+									<!-- /最小库存 -->
+									<input type="text" oninput="countChange(this)"
+										name="minsecurity" :value="goods.minsecurity"
+										class="form-control" aria-label="...">
+								</div>
+								<!-- /input-group -->
+							</div>
+
+						</div>
+
+						<br>
+
+						<div class="input-group">
+							<span class="input-group-btn">
+								<button class="btn btn-primary" type="button">库存：</button>
+							</span> <input oninput='kcChange(this)' name="kc" value="20"
+								class="form-control" type="text">
+						</div>
+						<br />
+						<div class="input-group">
+							<span class="input-group-btn">
+								<button class="btn btn-danger" type="button">进货价：</button>
+							</span> <input oninput='jhChange(this)' name="jprice"
+								:value="goods.jprice" class="form-control" type="text">
+						</div>
+						<br>
+						<div class="input-group">
+							<span class="input-group-btn">
+								<button class="btn btn-danger" type="button">售价：</button>
+							</span> <input oninput='priceChange(this)' name="price"
+								class="form-control" :value="goods.price" type="text">
+						</div>
+						<br>
+						<div v-for="(item,index) in customerTypeList">
+							<div class="input-group">
+								<span class="input-group-btn">
+									<button class="btn btn-danger" type="button">{{item.viewname}}：</button>
+								</span> <input :name='"customerType"+index' :cid='item.id'
+									oninput='customerpriceChange(this)'
+									class="form-control customerpricemain" type="text">
+							</div>
+							<br>
+						</div>
+						<br>
+
+
+						<div class="row visible-lg-block visible-md-block"
+							style="margin: 0 3vh;">
+
+							<div id="goodstype"></div>
+
+							<div id="typeoption"></div>
+
+						</div>
+						<br> <br>
+						<div class="panel">
+							<div class="panel-bodytable"></div>
+						</div>
+						<br> <br /> <br />
+						<div class="panel">
+							<div class="panel-body"></div>
+						</div>
+						<br>
+
+
 					</div>
-
-					<button id="btn1">导出</button>
-
-					<!--富文本编辑器-->
-					<div id="editor">
-
-					</div>
-
 				</div>
+
+				<div class="text-center">
+					<button id="btn1" style="min-width: 200px" class="btn btn-success">确定修改</button>
+				</div>
+				<br />
+
+				<!--富文本编辑器-->
+				<div id="editor"></div>
+
 			</div>
 		</div>
-		</div>
+	</div>
+	</div>
 
-	</body>
+</body>
 
 </html>
 <script type="text/javascript" th:src="@{/assets/js/typeDonghua.js}"></script>
-<script type="text/javascript">
+<script type="text/javascript" th:src="@{/assets/js/vue.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/getAscii.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/xcConfirm.js}"></script>
+<script type="text/javascript" th:inline="javascript">
 	var E = window.wangEditor;
 	var editor = new E('#editor');
 	//	editor.customConfig.uploadImgShowBase64 = true;
 	//  editor.customConfig.uploadImgServer = '/upload';
-
+	
 	editor.customConfig.customUploadImg = function(files, insert) {
 		// files 是 input 中选中的文件列表
 		// insert 是获取图片 url 后，插入到编辑器的方法
@@ -378,13 +367,304 @@
 		insert(imgUrl)
 	}
 
+	
+	
 	editor.create();
 
+	//商品描述
+	var detail;
 	document.getElementById('btn1').addEventListener('click', function() {
 		// 读取 html
-		alert(editor.txt.html())
-	}, false)
+		detail = editor.txt.html();
+	}, false);
 
+	
+	
+	
+	var vue = new Vue({
+		
+		el:".main",
+		data:{
+			customerTypeList:"",
+			goods:"",
+			goodsType:""
+			
+		}
+		
+	});
+	
+	vue.goods = [[${goods}]];
+
+	
+	$("#editor p").parent().html(vue.goods.detail);
+	
+	console.log(vue.goods);
+	
+	
+	
+	$(function() {
+		
+		/*页面加载客户类型查询*/
+		$.ajax({
+			
+			url:[[@{/goods/queryCustomerType}]],
+			dataType:"json",
+			type:"post",
+			success:function(data){
+				
+				vue.customerTypeList = data;
+				
+			}
+			
+		});
+		/*类型逆向递归*/
+		$.ajax({
+			
+			url:[[@{/goods/queryGoodsTypeReverse}]],
+			dataType:"json",
+			data:{
+				'id':vue.goods.tid
+			},
+			type:"post",
+			
+			success:function(data){
+				
+				vue.goodsType = data;
+				/*逆向递归查询*/
+				dg(vue.goodsType);
+				
+				dataShow();
+				
+			}
+			
+		});
+		
+		
+		
+		$("#btn1").click(function(){
+			
+			updataGoods();
+			
+		});
+		
+		
+		
+
+	});
+	
+	
+	
+	/*
+		商品修改
+	*/
+	function updataGoods(){
+		
+		var ind = 0;
+		
+		var formData = new FormData();
+		
+		
+	
+		
+		//商品名称
+		formData.append("goods.name",$("[name=name]").val());
+		//商品id
+		formData.append("goods.id",$("[name=name]").attr("ggid"));
+		//单位前缀
+		formData.append("goods.prevbit",$("[name=prevbit]").val());
+		//单位后缀
+		formData.append("goods.sufbit",$("[name=sufbit]").val());
+		//单位值
+		formData.append("goods.bitval",$("[name=bitval]").val());
+		//商品进价
+		formData.append("goods.jprice",$("[name=jprice]").val());
+		//商品售价
+		formData.append("goods.price",$("[name=price]").val());
+		//最小库存
+		formData.append("goods.minsecurity",$("[name=minsecurity]").val());
+		//最大库存
+		formData.append("goods.maxsecurity",$("[name=maxsecurity]").val());
+		//描述
+		formData.append("goods.detail",detail);
+		//商品类型
+		formData.append("goods.tid",$("#goodstype .activeColor:last").attr("typeid"));
+		
+		
+		var iipp = 0;
+		 $(".imgmaindiv").each(function(index,obj){
+			 
+			 if(index == 0){
+				 
+				 if($(obj).hasClass("notchange")){
+					 
+					 formData.append("goods.img",vue.goods.img);
+					 
+				 }else if($(obj).hasClass("urlchange")){
+					 
+					 formData.append("goods.column5",$(obj).find("img").attr("src")); 		
+					 
+				 }else if($(obj).hasClass("change")){
+					 formData.append("goods.img",$(obj).find("img").attr("src").substring($(obj).find("img").attr("src").indexOf(",")+1));
+					 delImg($(obj).find("delimg"));
+				 }
+				 
+			 }else{
+				 
+				if($(obj).hasClass("urlchange")){
+					 
+					 formData.append("goodsImgs["+iipp+"].url", $(obj).find("img").attr("src"));		
+					 formData.append("goodsImgs["+iipp+"].name", $(obj).find("img").attr("name"));		
+					 formData.append("goodsImgs["+iipp+"].oldname", $(obj).find("img").attr("oldname"));		
+					 iipp++;
+				 }
+				 
+			 }
+			 
+			
+			 
+		 });
+		 
+		 
+		 
+	
+		
+		
+		$.each($("tr"),function(index,obj){
+			
+			
+			if($(this).html() != "" && $(this).attr("not")==null){
+				
+				
+				/*中文规格总名称*/
+				   var gcname = $(obj).find("[name=goodsType]").attr("tyname");
+				   
+				   formData.append("goodsValues["+(ind)+"].name",gcname);
+				   formData.append("goodsValues["+(ind)+"].jprice",$(obj).find("[name=detailprice]").val());
+				   formData.append("goodsValues["+(ind)+"].id",$(obj).find("[name=goodsType]").attr("gvid"));
+				   formData.append("goodsValues["+(ind)+"].enname",ConvertPinyin(gcname));
+				   if($(obj).find("[type=file]")[0].files.length > 0){
+					   
+					   formData.append("goodsValues["+(ind)+"].img",$(obj).find("[type=file]")[0].files[0]);
+				   
+				   }else{
+					   formData.append("goodsValues["+(ind)+"].column1",$(obj).find("img").attr("src"));
+				   }
+				   
+				   
+				   
+				   //实例库存
+				   formData.append("goodsValues["+(ind)+"].stockDetails.id",$(obj).find("[name=num]").attr("sdid"));
+				   formData.append("goodsValues["+(ind)+"].stockDetails.count",$(obj).find("[name=num]").val());
+				   formData.append("goodsValues["+(ind)+"].stockDetails.price",$(obj).find("[name=detailprice]").val());
+				   
+			
+				   
+				   /*商品实例规格添加*/
+				   var typeIds = $(obj).find("[name=goodsType]").val();
+				   var typeIdArr = typeIds.split(",");
+				   
+				   for(var n = 0;n < typeIdArr.length;n++){
+					   
+					formData.append("goodsValues["+(ind)+"].goodsstandardvalues["+n+"].name",gcname);
+					formData.append("goodsValues["+(ind)+"].goodsstandardvalues["+n+"].svids",typeIds);
+					formData.append("goodsValues["+(ind)+"].goodsstandardvalues["+n+"].svid",typeIdArr[n]);
+					formData.append("goodsValues["+(ind)+"].goodsstandardvalues["+n+"].enname",ConvertPinyin(gcname));
+					
+				   }
+				   
+					//商品客户价格添加
+					
+					$.each($(obj).find(".customerprick"),function(item,pojo){
+						
+						formData.append("goodsValues["+(ind)+"].goodsPrices["+item+"].id",$(pojo).attr("id"));
+						formData.append("goodsValues["+(ind)+"].goodsPrices["+item+"].ctid",$(pojo).attr("ctid"));
+						formData.append("goodsValues["+(ind)+"].goodsPrices["+item+"].sufname",$(pojo).attr("viewname"));
+						formData.append("goodsValues["+(ind)+"].goodsPrices["+item+"].price",$(pojo).val());
+						
+					});
+					
+					
+					ind++;
+				
+			}
+			
+		});
+		
+		
+		
+		for(var j = 0; j < fileArr.length;j++){
+			 
+			 formData.append("files",fileArr[j]);
+			 
+		}
+		
+	 	
+	 	  $.ajax({
+			url:[[@{/goods/updateGoods}]],
+			async:true,
+			data:formData,
+			type:'post',//HTTP请求类型
+			timeout:10000,//超时时间设置为10秒；
+			contentType:false,
+			processData:false,
+			success:function(data){
+				console.log(data)
+				if(data > 0){
+					alert("修改成功");
+				}else{
+					alert("修改失败！");
+				}
+				
+			},
+			error:function(xhr,type,errorThrown){
+				
+			}
+		});  
+		
+	}
+	
+	
+	
+	
+	function dw(obj) {
+
+		var dw = $(obj).find("a").text();
+		$(obj).parent().parent().parent().find("input").val(dw);
+	}
+	
+	
+	
+	
+	
+	var svids = [];
+	$.each(vue.goods.goodsValues,function(){
+		
+		$.each(this.goodsstandardvalues,function(){
+			
+			svids.push(this.svid);
+			
+		});
+		
+	});
+	
+	/*
+	去重
+	*/
+	function unique(arr){
+		 var res = [];
+		  
+		 for(var i=0; i<arr.length; i++){
+		  if( !res.includes(arr[i]) ){ // 如果res新数组包含当前循环item
+		   res.push(arr[i]);
+		  }
+		 }
+		 return res;
+	}
+	
+	svids = unique(svids);
+	
+	
+	
 	var fileArr = [];
 	var index = 0;
 	/**
@@ -407,10 +687,10 @@
 			freader.readAsDataURL(file);
 			freader.onload = function(e) {
 
-				var div = $("<div style='margin-bottom:20px;'  class='img-div col-lg-2 text-center'><div class='imgmaindiv'><span title='删除' index='" + index + "' onclick='delImg(this)' class='glyphicon glyphicon-remove delimg'></span><img id='img' src='" + e.target.result + "' width='100%' height='100%' /></div></div>")
-				index++;
-
+				var div = $("<div style='margin-bottom:20px;'  class='img-div col-lg-2 text-center'><div class='imgmaindiv change'><span title='删除' index='" + index + "' onclick='delImg(this)' class='glyphicon glyphicon-remove delimg'></span><img id='img' src='" + e.target.result + "' width='100%' height='100%' /></div></div>")
+ 
 				$(".pickImg").before(div);
+				index = $(".change").length;
 
 			}
 
@@ -419,9 +699,24 @@
 		//清空input file,否则将无法同一张图片只能pick一次
 		$(obj).val("");
 
-		console.log(fileArr);
 
 	}
+	 
+	 function delImg(obj) {
+
+			fileArr.splice($(obj).attr("index"), 1);
+
+			$(".change:gt('"+$(obj).attr("index")+"')").each(function(){
+				
+				$(this).find(".delimg").attr("index",($(this).find(".delimg").attr("index")-1));
+			});
+			
+			$(obj).parent().parent().remove();
+
+			
+
+	}
+	 
 
 	/**
 	 * 详细图片选择
@@ -444,73 +739,310 @@
 		}
 	}
 
-	function delImg(obj) {
+	
 
-		fileArr.splice($(obj).attr("index"), 1);
-
-		$(obj).parent().parent().remove();
-
-		console.log(fileArr);
-
-	}
-
-	$(function() {
+	var typeArr = new Array();
+	
+	/*类型递归*/
+	function dg(obj){
 		
-		checkedDl();
-
-		//		$(".fileHide").change(function(){
-		//			
-		//
-		//			
-		//		})
-
-		$(".activePosition").css("width", $(".activePosition").next().width());
-
-		//类型点击事件
-		$(".option-span").click(function() {
-			//动画
-			activeSpanStyle(this);
-
+		$.ajax({
+			
+			url:[[@{/goods/queryGoodsTypeByPid}]],
+			dataType:"json",
+			data:{"id":obj.pid},
+			type:"post",
+			async:false,
+			success:function(data){
+				
+				var typejopo = {
+						'goodstypes':data,
+						'goodstype':obj
+				};
+				
+				
+				typeArr.push(typejopo);
+			} 
+			
 		});
+		
+		if(obj.goodstype!=null){
+			
+			dg(obj.goodstype);
+			
+		}
+		
+	}
+	
+	
+	/*
+	*商品类型查询
+	*id 父级id
+	*/
+	function queryGoodsTypeByPid(obj,id,op){
+		var bool =  activeSpanStyle(obj,op);
+		
+		if(!bool){
+			
+			return;
+			
+		}
+		
+		$.ajax({
+			
+			url:[[@{/goods/queryGoodsTypeByPid}]],
+			dataType:"json",
+			data:{"id":id},
+			type:"post",
+			success:function(data){
+				
+			 	var ind = $(obj).parent().parent().index();
+				$(".option-top-div:gt("+ind+")").remove()
+				
+				if(data.length > 0){
+						
+					var div = $("<div class='option-div option-top-div row'>");
+					var divtitle = $('<div class="col-lg-1 col-md-1 text-right option-rongqi"><span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span></div>');
+					div.append(divtitle);
+					var divoption = $('<div class="col-lg-11 col-md-11 option-rongqi">');
+					div.append(divoption);
+					var activc = $('<span style="background-color:#fff;" class="visible-lg-inline-block visible-md-inline-block visible-md-inline-block text-center activePosition option-span active1">');
+					
+					divoption.append(activc);
+					$.each(data,function(){
+						
+						var option = $('<span onclick="queryGoodsTypeByPid(this,'+this.id+',false)" class="visible-lg-inline-block visible-md-inline-block text-center option-span" typeid="'+this.id+'">'+this.name+'</span>');
+						divoption.append(option);
+						
+					});
+					
+					$("#goodstype").append(div);
+				}
+				
+			} 
+			
+		});
+		
+		
+		$.ajax({
+			
+			url:[[@{/goods/queryGoodsStandradByid}]],
+			dataType:"json",
+			data:{"id":id},
+			type:"post",
+			success:function(data){
+			 	
+				$("#typeoption").html("");	
+				
+					$.each(data,function(index,obj){
+						
+						var div = $('<div class="option-div option-type row">');
+						$("#typeoption").append(div);
+						
+						var divtitle = $('<div class="col-lg-1 col-md-1 text-right option-rongqi"><span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">'+obj.name+'</span> </div>')
+						div.append(divtitle);
+						
+						var divmain = $('<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">');
+						div.append(divmain);
+						
+						$.each(obj.stabndardValueList,function(ind,item){
+							
+							
+							var span = $('<span onclick="addGoodsOption(this)" class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="'+item.id+'">'+item.name+'</span>')
+							divmain.append(span);
+							
+							if(svids.indexOf(item.id) >= 0){
+								
+								addGoodsOption(span);
+							}
+							
+							
+						})
+						
+					})
+					
+			}  
+			
+		});
+		
+	}
+	
+	/*
+		数据渲染，类型and规格值
+	*/
+	function dataShow(){
+		
+		
+		for(var i = typeArr.length-1;i >= 0;i--){
+			
+			/*类型渲染*/
+			var div = $("<div class='option-div option-top-div row'>");
+			var divtitle = $('<div class="col-lg-1 col-md-1 text-right option-rongqi"><span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span></div>');
+			div.append(divtitle);
+			var divoption = $('<div class="col-lg-11 col-md-11 option-rongqi">');
+			div.append(divoption);
+			var activc = $('<span style="background-color:#fff;" class="visible-lg-inline-block visible-md-inline-block visible-md-inline-block text-center activePosition option-span active1">');
+			
+			divoption.append(activc);
+				
+			for(var j = 0; j < typeArr[i].goodstypes.length; j++){
+				
+				var option = $('<span onclick="queryGoodsTypeByPid(this,'+typeArr[i].goodstypes[j].id+',false)" class="visible-lg-inline-block visible-md-inline-block text-center option-span" typeid="'+typeArr[i].goodstypes[j].id+'">'+typeArr[i].goodstypes[j].name+'</span>');
+				divoption.append(option);
+				
+				if(typeArr[i].goodstypes[j].id == typeArr[i].goodstype.id){
+				
+					activeSpanStyle(option,false);
+					
+				}
+				
+			}
+			
+			$("#goodstype").append(div);
+			
+			
+			
+			/*规格值渲染*/
+			
+			if(i == 0){
+				
+				$.ajax({
+					
+					url:[[@{/goods/queryGoodsStandradByid}]],
+					dataType:"json",
+					data:{"id":typeArr[i].goodstype.id},
+					type:"post",
+					success:function(data){
+					 	
+						$("#typeoption").html("");	
+						
+							$.each(data,function(index,obj){
+								
+								var div = $('<div class="option-div option-type row">');
+								$("#typeoption").append(div);
+								
+								var divtitle = $('<div class="col-lg-1 col-md-1 text-right option-rongqi"><span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">'+obj.name+'</span> </div>')
+								div.append(divtitle);
+								
+								var divmain = $('<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">');
+								div.append(divmain);
+								
+								$.each(obj.stabndardValueList,function(ind,item){
+									
+									
+									var span = $('<span onclick="addGoodsOption(this)" class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="'+item.id+'">'+item.name+'</span>')
+									divmain.append(span);
+									
+									if(svids.indexOf(item.id) >= 0){
+										
+										addGoodsOption(span);
+									}
+									
+									
+								})
+								
+							})
+							
+					}  
+					
+				});
+				
+			}
+			
+			
+		}
+		
+	}
+	
+	
+	var ii = true;
+	var addii = true;
+function addGoodsOption(obj){
+		
+		$(obj).parent().find(".option-span-all").removeClass("active1");
 
-		//详细类型点击事件
-		$(".option-span-z").click(function() {
+		$(obj).parent().find(".option-span-all").animate({
+			backgroundColor : "",
+			color : "#000000"
+		}, 300);
 
-			$(this).parent().find(".option-span-all").removeClass("active1");
+		if ($(obj).hasClass("active1")) {
 
-			$(this).parent().find(".option-span-all").animate({
-				backgroundColor: "",
-				color: "#000000"
+			$(obj).removeClass("active1");
+			$(obj).animate({
+				backgroundColor : "",
+				color : "#000000"
 			}, 300);
 
-			if($(this).hasClass("active1")) {
+		} else {
 
-				$(this).removeClass("active1");
-				$(this).animate({
-					backgroundColor: "",
-					color: "#000000"
-				}, 300);
+			$(obj).addClass("active1");
+			$(obj).animate({
+				backgroundColor : "#00AAFF",
+				color : "#ffffff"
+			}, 300);
+		}
 
-			} else {
+		if ($(".option-type").find(".active1").length != 0) {
 
-				$(this).addClass("active1");
-				$(this).animate({
-					backgroundColor: "#00AAFF",
-					color: "#ffffff"
-				}, 300);
-			}
-
-			if($(".option-type").find(".active1").length != 0) {
-
+			if(ii){
+			checkedDlUP();
+			}else{
+				if(addii){
+					$("#typeoption span").removeClass("active1");
+					$("#typeoption span").animate({
+						backgroundColor : "",
+						color : "#000000"
+					}, 300);
+					
+					$(obj).addClass("active1");
+					$(obj).animate({
+						backgroundColor : "#00AAFF",
+						color : "#ffffff"
+					}, 300);
+					
+					addii = false;
+				}
 				checkedDl();
-			} else {
-				$("table").remove();
 			}
+		}else{
+			$(".panel-bodytable table").remove();
+		} 
+		
+	}
 
-		});
 
+//客户价格联动
+function customerpriceChange(obj){
+	
+	priceChange(obj);
+	
+	var cid = $(obj).attr("cid");
+	var price = $(obj).val();
+	$(".panel-bodytable .customerprick").each(function(){
+		if(cid == $(this).attr("ctid")){
+			$(this).val(price);
+		}
+		
 	});
+	
+}
 
+//库存联动
+function kcChange(obj){
+	countChange(obj);
+	
+	$(".panel-bodytable [name=num]").val($(obj).val());
+	
+}
+//进货价联动
+function jhChange(obj){
+	countChange(obj);
+	
+	$(".panel-bodytable [name=detailprice]").val($(obj).val());
+	
+}
+	
 	//this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''
 
 	//输入判定
@@ -536,43 +1068,47 @@
 		let nowCount = $(Obj).val();
 
 	}
-
-	function checkedDl() {
+	
+	/*修改00*/
+	function checkedDlUP() {
 		var isCheckedDl = 0;
 		var isCheckedDlArray = [];
 		var allIndex = 1;
 		$(".option-type").each(function(i, e) {
 
 			var isChecked = $(this).find(".active1");
-			if(isChecked.length != 0) {
+			if (isChecked.length != 0) {
 				var checkedTag = [];
 				$.each(isChecked, function() {
 					checkedTag.push({
-						id: $(this).attr("sizeid"),
-						name: $(this).text()
+						id : $(this).attr("sizeid"),
+						name : $(this).text()
 					});
 				});
 
 				allIndex *= isChecked.length;
 				isCheckedDlArray[isCheckedDl] = {
-					num: allIndex / isChecked.length,
-					index: isCheckedDl,
-					checkedInput: isChecked.length,
-					tag: checkedTag,
-					thName: $(this).find(".option-span-title").html()
+					num : allIndex / isChecked.length,
+					index : isCheckedDl,
+					checkedInput : isChecked.length,
+					tag : checkedTag,
+					thName : $(this).find(".option-span-title").html()
 				};
 				isCheckedDl++;
 			}
 		});
 		var tagObject = {
-			allIndex: allIndex,
-			isCheckedDlArray: isCheckedDlArray
+			allIndex : allIndex,
+			isCheckedDlArray : isCheckedDlArray
 		}
-		eachCreate(tagObject);
+		eachCreateUP(tagObject);
 	}
 
-	function eachCreate(tagObject) {
-		$("table").remove();
+	function eachCreateUP(tagObject) {
+		
+		
+		
+		$(".panel-body table").remove();
 		var table = $("<table class='table' >");
 
 		$(".panel-body").append(table);
@@ -586,37 +1122,238 @@
 		ttile.append(thead);
 		var thNum = $("<th class='text-center'>库存</th>");
 		ttile.append(thNum);
-		var thPrice = $("<th class='text-center'>单价</th>");
-		ttile.append(thPrice);
-		var thNum2 = $("<th class='text-center'>库存预警</th>");
+		var thNum2 = $("<th class='text-center'>进货价</th>");
 		ttile.append(thNum2);
+		
+		//价格表头
+		$.each(vue.goods.goodsValues[0].goodsPrices,function(){
+			
+			var thprick = $("<th class='text-center'>"+this.sufname+"</th>");
+			ttile.append(thprick);
+		});
+		
 		var thimg = $("<th class='text-center'>图片</th>");
 		ttile.append(thimg);
 		table.append(thead);
-		for(var i = tagObject.isCheckedDlArray.length - 1; i >= 0; i--) {
-			var th = $("<th class='text-center'>").html(tagObject.isCheckedDlArray[i].thName);
+		
+		//价格联动
+		var jhprice = $("[name=jprice]").val();
+		var kc = $("[name=kc]").val();
+		if(kc <= 0){
+			kc = 20;
+		}
+		var ind = 0;
+		for (var i = tagObject.isCheckedDlArray.length - 1; i >= 0; i--) {
+			var th = $("<th class='text-center'>").html(
+					tagObject.isCheckedDlArray[i].thName);
 			ttile.prepend(th);
 			var indexRow = 1;
-			for(var x = 0; x < tagObject.isCheckedDlArray[i].num; x++) {
-				for(var j = 0; j < tagObject.isCheckedDlArray[i].tag.length; j++) {
-					var td = $("<td class='text-center' style='vertical-align: inherit;' v='" + tagObject.isCheckedDlArray[i].tag[j].id + "'>").html(tagObject.isCheckedDlArray[i].tag[j].name);
-					if(i == tagObject.isCheckedDlArray.length - 1) {
-
-						var td1 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' type='hidden' value='" + tagObject.isCheckedDlArray[i].tag[j].id + "'><input oninput='countChange(this)' class='text-center' value='50' type=text name='num' v=''></td>");
-						var td2 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' oninput='priceChange(this)' type=text name='price'></td>");
-						var td3 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' value='20' oninput='countChange(this)' type=text name='thNum2'></td>");
-						var tdimg = $("<td class='text-center' style='vertical-align: inherit;'><div style='position:relative;width: 76px;height: 76px;'><input type='file' style='position:absolute;top:0;z-index: 99;width: 100%;height: 100%;opacity: 0;cursor: pointer;' title='选择图片' onchange='pojoImg(this)' name='file[" + (index - 1) + "]' /><img src='../assets/img/apple-icon.png' style='width: 76px;height: 76px;' /></div></td>");
+			
+			for (var x = 0; x < tagObject.isCheckedDlArray[i].num; x++) {
+				
+				for (var j = 0; j < tagObject.isCheckedDlArray[i].tag.length; j++) {
+					
+					
+					var td = $(
+							"<td class='text-center' style='vertical-align: inherit;' m='" + tagObject.isCheckedDlArray[i].tag[j].name + "' v='" + tagObject.isCheckedDlArray[i].tag[j].id + "'>")
+							.html(tagObject.isCheckedDlArray[i].tag[j].name);
+					
+					if (i == tagObject.isCheckedDlArray.length - 1) {
+						console.log(index);
+						var hinp = $("<input gvid='"+vue.goods.goodsValues[index-1].id+"' class='text-center' type='hidden' name='goodsType' tyname='' vm='" + tagObject.isCheckedDlArray[i].tag[j].name + "' value='" + tagObject.isCheckedDlArray[i].tag[j].id + "'>");
+						
+						var td1 = $("<td class='text-center' style='vertical-align: inherit;'><input oninput='countChange(this)' class='text-center' readonly sdid='"+vue.goods.goodsValues[index-1].stockDetails.id+"' value='"+vue.goods.goodsValues[index-1].stockDetails.count+"' type=text name='num' v=''></td>");
+						td1.append(hinp);
+						
+						var td2 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' oninput='priceChange(this)' type=text value='"+jhprice+"' name='detailprice'></td>");
+						
+						var upgvimg = vue.goods.goodsValues[index-1].column1 == null ? "../assets/img/apple-icon.png":vue.goods.goodsValues[index-1].column1;
+						var tdimg = $("<td class='text-center' style='vertical-align: inherit;'><div style='position:relative;width: 76px;height: 76px;'><input type='file' style='position:absolute;top:0;z-index: 99;width: 100%;height: 100%;opacity: 0;cursor: pointer;' title='选择图片' onchange='pojoImg(this)' name='file["
+								+ (index - 1)
+								+ "]' /><img src='"+upgvimg+"' style='width: 76px;height: 76px;' /></div></td>");
 						var tr = $("<tr class='" + index + "'>");
-						index++;
 						tr.append(td);
-						tr.append(td1).append(td2).append(td3).append(tdimg);
+						tr.append(td1).append(td2);
+						
+						//价格input
+						$.each(vue.goods.goodsValues[index-1].goodsPrices,function(inx,obj){
+							var tdprick = $("<td class='text-center' style='vertical-align: inherit;'><input id='"+obj.id+"'  class='text-center customerprick' ctid='"+obj.ctid+"' value='"+obj.price+"' viewname='"+obj.sufname+"'  oninput='priceChange(this)' type=text name='price'></td>");
+							tr.append(tdprick);
+						});
+						
+						
+						tr.append(tdimg);
+						
 						tbody.append(tr);
+						index++;
+					 	if(vue.goods.goodsValues.length == index){
+							ii = false;
+						} 
+						
 					} else {
-						var rowspan = tagObject.allIndex / tagObject.isCheckedDlArray[i + 1].num;
-						td.attr("rowspan", tagObject.allIndex / tagObject.isCheckedDlArray[i + 1].num);
+						var rowspan = tagObject.allIndex
+								/ tagObject.isCheckedDlArray[i + 1].num;
+						td.attr("rowspan", tagObject.allIndex
+								/ tagObject.isCheckedDlArray[i + 1].num);
 						//								td.attr("sl",rowspan);
-						$("." + indexRow).prepend(td);
-						var x1 = tagObject.allIndex / (tagObject.isCheckedDlArray[i].tag.length * tagObject.isCheckedDlArray[i].num);
+						$(".panel-body ." + indexRow).prepend(td);
+						var x1 = tagObject.allIndex
+								/ (tagObject.isCheckedDlArray[i].tag.length * tagObject.isCheckedDlArray[i].num);
+						indexRow += x1;
+						appendIdUP(td);
+						
+					}
+				}
+			}
+		}
+	}
+
+	var uptypeids = [];
+	
+	function appendIdUP(t) {
+		var index = t.attr("rowspan") - 1;
+		var bb = t.parent().find("[type=hidden]").val();
+		var aa = t.parent().find("[type=hidden]").attr("vm");
+		t.parent().find("[type=hidden]").val(t.attr("v") + "," + bb);
+		t.parent().find("[type=hidden]").attr("tyname",t.attr("m") + "," + aa);
+		t.parent().find("[type=hidden]").attr("vm",t.attr("m") + "," + aa);
+		var tr = t.parent();
+		for (var i = 0; i < index; i++) {
+			tr = tr.next();
+			var v = tr.find("[type=hidden]").val();
+			var m = tr.find("[type=hidden]").attr("vm");
+			tr.find("[type=hidden]").val(t.attr("v") + "," + v);
+			tr.find("[type=hidden]").attr("tyname",t.attr("m") + "," + m);
+			tr.find("[type=hidden]").attr("vm",t.attr("m") + "," + m);
+			uptypeids.push(tr.find("[type=hidden]").val());
+		}
+		uptypeids.push(t.parent().find("[type=hidden]").val());
+		
+	}
+	
+	
+	/*新增*/
+	 function checkedDl() {
+		
+		 uptypeids = unique(uptypeids);
+		console.log(uptypeids);
+		
+		var isCheckedDl = 0;
+		var isCheckedDlArray = [];
+		var allIndex = 1;
+		$(".option-type").each(function(i, e) {
+
+			var isChecked = $(this).find(".active1");
+			if (isChecked.length != 0) {
+				var checkedTag = [];
+				$.each(isChecked, function() {
+					checkedTag.push({
+						id : $(this).attr("sizeid"),
+						name : $(this).text()
+					});
+				});
+
+				allIndex *= isChecked.length;
+				isCheckedDlArray[isCheckedDl] = {
+					num : allIndex / isChecked.length,
+					index : isCheckedDl,
+					checkedInput : isChecked.length,
+					tag : checkedTag,
+					thName : $(this).find(".option-span-title").html()
+				};
+				isCheckedDl++;
+			}
+		});
+		var tagObject = {
+			allIndex : allIndex,
+			isCheckedDlArray : isCheckedDlArray
+		}
+		eachCreate(tagObject);
+	}
+
+	function eachCreate(tagObject) {
+		
+		
+		
+		$(".panel-bodytable table").remove();
+		var table = $("<table class='table' >");
+
+		$(".panel-bodytable").append(table);
+
+		var index = 1;
+		var tbody = $("<tbody>");
+		table.append(tbody);
+		var ttile = $("<thead>");
+		table.append(ttile);
+		var thead = $("<tr>");
+		ttile.append(thead);
+		var thNum = $("<th class='text-center'>库存</th>");
+		ttile.append(thNum);
+		var thNum2 = $("<th class='text-center'>进货价</th>");
+		ttile.append(thNum2);
+		
+		//价格表头
+		$.each(vue.customerTypeList,function(){
+			
+			var thprick = $("<th class='text-center'>"+this.viewname+"</th>");
+			ttile.append(thprick);
+		});
+		
+		var thimg = $("<th class='text-center'>图片</th>");
+		ttile.append(thimg);
+		table.append(thead);
+		
+		//价格联动
+		var jhprice = $("[name=jprice]").val();
+		var kc = $("[name=kc]").val();
+		if(kc <= 0){
+			kc = 20;
+		}
+		var ind = 0;
+		for (var i = tagObject.isCheckedDlArray.length - 1; i >= 0; i--) {
+			var th = $("<th class='text-center'>").html(
+					tagObject.isCheckedDlArray[i].thName);
+			ttile.prepend(th);
+			var indexRow = 1;
+			
+			for (var x = 0; x < tagObject.isCheckedDlArray[i].num; x++) {
+				
+				for (var j = 0; j < tagObject.isCheckedDlArray[i].tag.length; j++) {
+					
+					var td = $(
+							"<td class='text-center' style='vertical-align: inherit;' m='" + tagObject.isCheckedDlArray[i].tag[j].name + "' v='" + tagObject.isCheckedDlArray[i].tag[j].id + "'>")
+							.html(tagObject.isCheckedDlArray[i].tag[j].name);
+					if (i == tagObject.isCheckedDlArray.length - 1) {
+						var td1 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' type='hidden' name='goodsType' tyname='" + tagObject.isCheckedDlArray[i].tag[j].name + "' value='" + tagObject.isCheckedDlArray[i].tag[j].id + "' vm='" + tagObject.isCheckedDlArray[i].tag[j].name + "' value='" + tagObject.isCheckedDlArray[i].tag[j].id + "'><input oninput='countChange(this)' class='text-center' value='"+kc+"' type=text name='num' v=''></td>");
+						var td2 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' oninput='priceChange(this)' type=text value='"+jhprice+"' name='detailprice'></td>");
+						var tdimg = $("<td class='text-center' style='vertical-align: inherit;'><div style='position:relative;width: 76px;height: 76px;'><input type='file' style='position:absolute;top:0;z-index: 99;width: 100%;height: 100%;opacity: 0;cursor: pointer;' title='选择图片' onchange='pojoImg(this)' name='file["
+								+ (index - 1)
+								+ "]' /><img src='../assets/img/apple-icon.png' style='width: 76px;height: 76px;' /></div></td>");
+						var tr = $("<tr class='" + index + "'>");
+						tr.append(td);
+						tr.append(td1).append(td2);
+						
+						//价格input
+						$.each(vue.customerTypeList,function(inx,obj){
+							var p = $('.customerpricemain:eq('+inx+')').val();
+							var tdprick = $("<td class='text-center' style='vertical-align: inherit;'><input  class='text-center customerprick' ctid='"+obj.id+"' value='"+p+"' viewname='"+obj.viewname+"'  oninput='priceChange(this)' type=text name='price'></td>");
+							tr.append(tdprick);
+						});
+						
+						
+						tr.append(tdimg);
+						
+						tbody.append(tr);
+						index++;
+					} else {
+						var rowspan = tagObject.allIndex
+								/ tagObject.isCheckedDlArray[i + 1].num;
+						td.attr("rowspan", tagObject.allIndex
+								/ tagObject.isCheckedDlArray[i + 1].num);
+						//								td.attr("sl",rowspan);
+						$(".panel-bodytable ." + indexRow).prepend(td);
+						var x1 = tagObject.allIndex
+								/ (tagObject.isCheckedDlArray[i].tag.length * tagObject.isCheckedDlArray[i].num);
 						indexRow += x1;
 						appendId(td);
 					}
@@ -628,12 +1365,60 @@
 	function appendId(t) {
 		var index = t.attr("rowspan") - 1;
 		var bb = t.parent().find("[type=hidden]").val();
+		var aa = t.parent().find("[type=hidden]").attr("vm");
 		t.parent().find("[type=hidden]").val(t.attr("v") + "," + bb);
+		t.parent().find("[type=hidden]").attr("tyname",t.attr("m") + "," + aa);
+		t.parent().find("[type=hidden]").attr("vm",t.attr("m") + "," + aa);
 		var tr = t.parent();
-		for(var i = 0; i < index; i++) {
+		for (var i = 0; i < index; i++) {
 			tr = tr.next();
 			var v = tr.find("[type=hidden]").val();
+			var m = tr.find("[type=hidden]").attr("vm");
 			tr.find("[type=hidden]").val(t.attr("v") + "," + v);
+			tr.find("[type=hidden]").attr("tyname",t.attr("m") + "," + m);
+			tr.find("[type=hidden]").attr("vm",t.attr("m") + "," + m);
+			
+			if(uptypeids.indexOf(tr.find("[type=hidden]").val()) >= 0){
+				tr.attr("title",'数据已存在');
+				tr.attr("not","not");
+				tr.find("input").attr("disabled","disabled");
+				alerts("数据已存在");
+			}
+			
 		}
+			if(uptypeids.indexOf(t.parent().find("[type=hidden]").val()) >= 0){
+				t.parent().attr("title",'数据已存在');
+				t.parent().find("input").attr("disabled","disabled");
+				t.parent().attr("not","not");
+				alerts("数据已存在");
+			}
 	}
+	
+	function alerts(str){
+		
+		toastr.options.timeOut = "false"
+		
+		toastr.options.closeButton = true;
+		
+		toastr['info']
+				(str);
+		
+		$positionClass = 'toast-top-center';
+		
+		toastr.remove();
+		
+		$context="error";
+		
+		toastr[$context](str, '', {
+			
+			positionClass : $positionClass
+			
+		});
+		
+		 setTimeout(function(){
+			$("#toast-container").fadeOut(1000);
+		},4000);
+	}
+	
+	 
 </script>
