@@ -40,35 +40,47 @@
 		update stockdetails set state = 1 where id = #{id}
 	</update>
 	<select id="queryDetails" resultMap="BaseResultMap">
-		select * from stockdetails as s where s.gvid = #{gvid} and s.storeid =
-		#{storeid} and s.state = '0'
+		select * from stockdetails
+		as s where s.gvid = #{gvid} and s.storeid =
+		#{storeid} and s.state =
+		'0'
 	</select>
 	<select id="queryGoods" resultMap="queryGoodsMap">
-		SELECT SUM(s.count-s.scount) AS 'COUNT',s.price as sprice,g.name as
-		gname,gv.name AS gvname,g.img,gv.column1 AS gvcolumn1,gv.id as gvid
-		FROM `stockdetails` AS s
+		SELECT SUM(s.count-s.scount)
+		AS 'COUNT',s.price as sprice,g.name as
+		gname,gv.name AS
+		gvname,g.img,gv.column1 AS gvcolumn1,gv.id as gvid
+		FROM `stockdetails`
+		AS s
 		INNER JOIN `goodsvalue` AS gv ON gv.id = s.gvid
-		INNER JOIN goods AS g ON gv.gid = g.id
+		INNER JOIN goods AS
+		g ON gv.gid = g.id
 		where g.name like concat('%',#{name},'%')
-		and s.storeid = #{storeid}
+		and
+		s.storeid = #{storeid}
 		GROUP BY s.gvid
 	</select>
 	<select id="queryCount" resultMap="BaseResultMap">
-		select s.count-s.scount as count,s.id,s.code from stockdetails as s 
+		select s.count-s.scount as
+		count,s.id,s.code from stockdetails as s
 		where gvid = #{gvid} and s.state = '0' and s.storeid = #{sid}
-		order by s.updatetime
+		order by
+		s.updatetime
 		limit 1
 	</select>
 	<select id="selectCount" resultType="Integer">
-		SELECT SUM(s.count-s.scount) FROM stockdetails AS s WHERE s.CODE = #{code} and s.storeid = #{sid}
+		SELECT SUM(s.count-s.scount)
+		FROM stockdetails AS s WHERE s.CODE = #{code} and s.storeid = #{sid}
 	</select>
 
 	<select id="count" parameterType="Integer">
-		select count from stockDetails where id = #{id} and gvid = #{gvid}
+		select count from stockDetails
+		where id = #{id} and gvid = #{gvid}
 	</select>
 
 	<update id="updateCount">
-		update stockdetails set scount=scount+#{count} where code = #{code} and gvid
+		update stockdetails set scount=scount+#{count} where
+		code = #{code} and gvid
 		= #{gvid}
 	</update>
 	<delete id="del">
@@ -105,7 +117,8 @@
 									and ${criterion.condition} #{criterion.value}
 								</when>
 								<when test="criterion.betweenValue">
-									and ${criterion.condition} #{criterion.value} and
+									and ${criterion.condition} #{criterion.value}
+									and
 									#{criterion.secondValue}
 								</when>
 								<when test="criterion.listValue">
@@ -137,7 +150,8 @@
 									and ${criterion.condition} #{criterion.value}
 								</when>
 								<when test="criterion.betweenValue">
-									and ${criterion.condition} #{criterion.value} and
+									and ${criterion.condition} #{criterion.value}
+									and
 									#{criterion.secondValue}
 								</when>
 								<when test="criterion.listValue">
@@ -155,9 +169,11 @@
 		</where>
 	</sql>
 	<sql id="Base_Column_List">
-		id, code, gvid, sid, count, scount, price, time, updatetime, uid, state,
+		id, code, gvid, sid, count, scount, price, time,
+		updatetime, uid, state,
 		storeid,
-		column1, column2, column3, column4, column5
+		column1, column2, column3, column4,
+		column5
 	</sql>
 	<select id="selectByExample" resultMap="BaseResultMap"
 		parameterType="com.imsystem.domain.StockdetailsExample">
@@ -182,7 +198,8 @@
 		where id = #{id,jdbcType=VARCHAR}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-		delete from stockdetails
+		delete from
+		stockdetails
 		where id = #{id,jdbcType=VARCHAR}
 	</delete>
 	<delete id="deleteByExample"
@@ -195,18 +212,25 @@
 	<insert id="insert"
 		parameterType="com.imsystem.domain.Stockdetails">
 		insert into stockdetails (id, code, gvid,
-		sid, count, scount,
+		sid, count,
+		scount,
 		price, time, updatetime,
 		uid, state, storeid,
-		column1, column2, column3,
+		column1, column2,
+		column3,
 		column4, column5)
-		values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
+		values (#{id,jdbcType=VARCHAR},
+		#{code,jdbcType=VARCHAR},
 		#{gvid,jdbcType=VARCHAR},
-		#{sid,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER}, #{scount,jdbcType=INTEGER},
-		#{price,jdbcType=DOUBLE}, #{time,jdbcType=TIMESTAMP},
+		#{sid,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER},
+		#{scount,jdbcType=INTEGER},
+		#{price,jdbcType=DOUBLE},
+		#{time,jdbcType=TIMESTAMP},
 		#{updatetime,jdbcType=TIMESTAMP},
-		#{uid,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{storeid,jdbcType=VARCHAR},
-		#{column1,jdbcType=VARCHAR}, #{column2,jdbcType=VARCHAR},
+		#{uid,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER},
+		#{storeid,jdbcType=VARCHAR},
+		#{column1,jdbcType=VARCHAR},
+		#{column2,jdbcType=VARCHAR},
 		#{column3,jdbcType=VARCHAR},
 		#{column4,jdbcType=VARCHAR}, #{column5,jdbcType=VARCHAR})
 	</insert>
@@ -390,22 +414,36 @@
 	<update id="updateByExample" parameterType="map">
 		update stockdetails
 		set id = #{record.id,jdbcType=VARCHAR},
-		code = #{record.code,jdbcType=VARCHAR},
-		gvid = #{record.gvid,jdbcType=VARCHAR},
+		code =
+		#{record.code,jdbcType=VARCHAR},
+		gvid =
+		#{record.gvid,jdbcType=VARCHAR},
 		sid = #{record.sid,jdbcType=VARCHAR},
 		count = #{record.count,jdbcType=INTEGER},
-		scount = #{record.scount,jdbcType=INTEGER},
-		price = #{record.price,jdbcType=DOUBLE},
-		time = #{record.time,jdbcType=TIMESTAMP},
-		updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
-		uid = #{record.uid,jdbcType=VARCHAR},
-		state = #{record.state,jdbcType=INTEGER},
-		storeid = #{record.storeid,jdbcType=VARCHAR},
-		column1 = #{record.column1,jdbcType=VARCHAR},
-		column2 = #{record.column2,jdbcType=VARCHAR},
-		column3 = #{record.column3,jdbcType=VARCHAR},
-		column4 = #{record.column4,jdbcType=VARCHAR},
-		column5 = #{record.column5,jdbcType=VARCHAR}
+		scount =
+		#{record.scount,jdbcType=INTEGER},
+		price =
+		#{record.price,jdbcType=DOUBLE},
+		time =
+		#{record.time,jdbcType=TIMESTAMP},
+		updatetime =
+		#{record.updatetime,jdbcType=TIMESTAMP},
+		uid =
+		#{record.uid,jdbcType=VARCHAR},
+		state =
+		#{record.state,jdbcType=INTEGER},
+		storeid =
+		#{record.storeid,jdbcType=VARCHAR},
+		column1 =
+		#{record.column1,jdbcType=VARCHAR},
+		column2 =
+		#{record.column2,jdbcType=VARCHAR},
+		column3 =
+		#{record.column3,jdbcType=VARCHAR},
+		column4 =
+		#{record.column4,jdbcType=VARCHAR},
+		column5 =
+		#{record.column5,jdbcType=VARCHAR}
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
 		</if>
@@ -471,19 +509,52 @@
 		set code = #{code,jdbcType=VARCHAR},
 		gvid = #{gvid,jdbcType=VARCHAR},
 		sid = #{sid,jdbcType=VARCHAR},
-		count = #{count,jdbcType=INTEGER},
+		count =
+		#{count,jdbcType=INTEGER},
 		scount = #{scount,jdbcType=INTEGER},
-		price = #{price,jdbcType=DOUBLE},
+		price =
+		#{price,jdbcType=DOUBLE},
 		time = #{time,jdbcType=TIMESTAMP},
-		updatetime = #{updatetime,jdbcType=TIMESTAMP},
+		updatetime
+		= #{updatetime,jdbcType=TIMESTAMP},
 		uid = #{uid,jdbcType=VARCHAR},
 		state = #{state,jdbcType=INTEGER},
-		storeid = #{storeid,jdbcType=VARCHAR},
+		storeid =
+		#{storeid,jdbcType=VARCHAR},
 		column1 = #{column1,jdbcType=VARCHAR},
 		column2 = #{column2,jdbcType=VARCHAR},
-		column3 = #{column3,jdbcType=VARCHAR},
+		column3 =
+		#{column3,jdbcType=VARCHAR},
 		column4 = #{column4,jdbcType=VARCHAR},
 		column5 = #{column5,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=VARCHAR}
 	</update>
+	<select id="queryJinHuo" resultMap="BaseResultMap">
+		SELECT sd.count AS `count`, sd.price AS price , g.name AS gvid ,
+		gv.name AS column4 , g.jprice AS column1, su.name AS column2 , s.time
+		AS TIME,s.updateTime AS column3 FROM stockdetails AS sd JOIN stock AS
+		s ON s.id = sd.sid JOIN supplier AS su ON su.id = s.sid JOIN
+		goodsvalue AS gv ON gv.id = sd.gvid JOIN goods AS g ON g.id = gv.gid
+		WHERE s.state = '0'
+		<if test="cid != null and cid != ''">
+			and s.cid = #{cid}
+		</if>
+		<if
+			test="startTime != null and startTime !='' and endTime != null and endTime != ''">
+			AND s.TIME >= DATE_FORMAT(#{startTime},'%Y-%m-%d 00:00:00') AND s.TIME
+			&lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d 23:59:59')
+		</if>
+	</select>
+	<select id="queryStockByGidAndStoreId" resultMap="BaseResultMap">
+		SELECT g.minsecurity AS column1, sd.count AS `count`, g.name AS
+		column2, gv.name AS column3,g.maxsecurity AS column4 , sd.count *
+		gv.jprice AS column5 FROM stockdetails AS sd JOIN goodsvalue AS gv ON
+		gv.id = sd.gvid JOIN goods AS g ON g.id = gv.gid WHERE sd.state = '0'
+		<if test="gid != null and gid != ''">
+			AND g.id = #{gid}
+		</if>
+		<if test="storeId != null and storeId != ''">
+			AND sd.storeid = #{storeId}
+		</if>
+	</select>
 </mapper>
