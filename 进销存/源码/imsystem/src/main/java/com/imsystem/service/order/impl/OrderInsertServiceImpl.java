@@ -326,6 +326,16 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 	@Override
 	public int inserorderDesc(Vector<Salesdetails> salesdetails) {
 		// TODO Auto-generated method stub
+		
+		for (Salesdetails item : salesdetails) {
+			
+			salesdetailsMapper.update(item.getId());
+			
+			
+			
+			
+		}
+		
 		return 0;
 	}
 

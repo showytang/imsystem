@@ -18,6 +18,8 @@ public interface SalesdetailsMapper {
 	
 	Vector<Salesdetails> queryBySid(String id);
 	
+	int update(String id);
+	
 	int add(Sales sales);
 	
     int countByExample(SalesdetailsExample example);
