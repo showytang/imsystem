@@ -1,12 +1,15 @@
 package com.imsystem.controller.goods;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +25,7 @@ import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Goods;
 import com.imsystem.domain.GoodsVO;
 import com.imsystem.domain.GoodsValueVo;
+import com.imsystem.domain.Goodstype;
 import com.imsystem.domain.Goodsvalue;
 import com.imsystem.domain.Img;
 import com.imsystem.service.goods.GoodsDetailsService;
@@ -131,13 +135,30 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/updateGoodsLoad")
-	protected String updateGoodsLoad(String id) {
+	protected String updateGoodsLoad(String id,Model model) {
 
 		Goods goods = goodsSer.updateGoodsLoad(id);
+		
+		model.addAttribute("goods", goods);
 		
 		return "dws/updateGoods";
 
 	}
+	
+	/**
+	 * 类型反向递归
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/queryGoodsTypeReverse")
+	@ResponseBody
+	protected Goodstype queryGoodsTypeReverse(String id) {
+		
+		return goodsTypeSer.queryGoodsTypeReverse(id);
+		
+	}
+	
+	
 
 	/**
 	 * 修改商品（修改某一商品属性以及所有实例）
@@ -146,9 +167,99 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/updateGoods")
-	protected String updateGoods(Goods goods) {
+	@ResponseBody
+	protected Integer updateGoods(MultipartFile[] files,GoodsVO goodsVo) {
+		
+		//1.图片上传
+		String url = "d:/img/" +"goods/";
+		
+        File dest = new File(url);
+        /*选择文件上传路径,如果没有则创建*/
+        if (!dest.exists()) {
+            dest.mkdirs();
+        }
+        try {
+        	List<Img> imgs = new ArrayList<Img>();
+            for (MultipartFile f : files) {
 
-		return "";
+            	//图片表对象
+            	Img img = new Img();
+            	
+                //唯一标示id
+                String uuid = UUID.randomUUID().toString();
+                //获取文件名
+                String name2 = f.getOriginalFilename();
+                //上传前名称
+                img.setOldname(name2);
+
+                if(name2 != "" && name2 != null){
+                    //获取文件后缀名
+                    String suffix = name2.substring(name2.lastIndexOf("."), name2.length());
+                    File fileImg = new File(url + uuid + suffix);
+                    //新名称
+                    img.setName(uuid + suffix);
+                    //图片路径
+                    img.setUrl("/goods/"+uuid + suffix);
+                    f.transferTo(fileImg);
+
+                }
+                if(goodsVo.getGoodsImgs()!=null) {
+                	
+                	goodsVo.getGoodsImgs().add(img);
+                }else {
+                	imgs.add(img);
+                }
+            }
+            
+            if(goodsVo.getGoodsImgs()==null) {
+            	goodsVo.setGoodsImgs(imgs);
+            }
+            
+        } catch (IllegalStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+		
+		
+        if(goodsVo.getGoods().getColumn5() != null) {
+        	
+		   File originalFile = new File("d:/img"+goodsVo.getGoods().getColumn5());//指定要读取的图片
+	        try {
+	        	/*
+	            FileInputStream in = new FileInputStream(originalFile);
+	            
+	            byte[] bb = new byte[1024];// 存储每次读取的内容
+	           goodsVo.getGoods().setImg(bb);
+	            in.close();*/
+	        	
+	        	//创建一个字节流 
+	        	InputStream inputStream = new FileInputStream(originalFile); 
+	        	//把本地文件 转化成byte[] 
+	        	ByteArrayOutputStream outStream = new ByteArrayOutputStream(); 
+	        	byte[] buffer = new byte[1024]; 
+	        	int len = 0; 
+	        	while( (len=inputStream.read(buffer)) != -1 ){ 
+	        	outStream.write(buffer, 0, len); 
+	        	} 
+	        	byte [] data = outStream.toByteArray();//转化成byte[] 网络上都是 byte [] data = new byte[inputStream.available()];这种方法不可取 
+	        	//关闭流 
+	        	goodsVo.getGoods().setImg(data);
+	        	outStream.close(); 
+	        	inputStream.close(); 
+	        	
+	        	
+	        } catch (FileNotFoundException e) {
+	            e.printStackTrace();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+
+        }
+		
+		return goodsSer.updateGoods(goodsVo, url);
 
 	}
 
@@ -182,7 +293,7 @@ public class GoodsController {
 	 */
 	@RequestMapping("/queryGoodsTypeByPid")
 	@ResponseBody
-	protected List queryGoodsTypeByPid(Integer id) {
+	protected List queryGoodsTypeByPid(String id) {
 		
 		return goodsTypeSer.QueryGoodsTypeByPid(id);
 		
@@ -195,7 +306,7 @@ public class GoodsController {
 	 */
 	@RequestMapping("/queryGoodsStandradByid")
 	@ResponseBody
-	protected List queryGoodsStandradByid(Integer id) {
+	protected List queryGoodsStandradByid(String id) {
 		
 		return goodsTypeSer.queryStandradByid(id);
 		
@@ -213,7 +324,7 @@ public class GoodsController {
 	 */
 	@RequestMapping("/insertGoods")
 	@ResponseBody
-	public int insertGoods(MultipartFile[] files,GoodsVO goodsVo,HttpServletRequest request) {
+	public int insertGoods(MultipartFile[] files,GoodsVO goodsVo) {
 
 		String url = "d:/img/" +"goods/";
 		

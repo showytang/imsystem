@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface StandardMapper {
 	
-	List<Standard> queryStandardById(Integer id);
+	List<Standard> queryStandardById(String id);
 	
     int countByExample(StandardExample example);
 

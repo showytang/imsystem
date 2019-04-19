@@ -7,12 +7,14 @@ import org.apache.ibatis.annotations.Param;
 
 public interface GoodstypeMapper {
 	
+	Goodstype queryGoodsTypeReverse(String id);
+	
 	/**
 	 * 商品类型查询
 	 * @param id 上级id
 	 * @return
 	 */
-	List<Goodstype> QueryGoodsTypeByPid(Integer id);
+	List<Goodstype> QueryGoodsTypeByPid(String id);
 	
     int countByExample(GoodstypeExample example);
 

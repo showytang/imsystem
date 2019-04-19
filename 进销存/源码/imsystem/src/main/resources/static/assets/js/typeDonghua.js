@@ -96,7 +96,7 @@ function activeSpanStyle(obj,op) {
 	//分开写直角转向
 	//添加动画
 	$(activeSpan).animate({
-		marginLeft: "+=" + (nowX - parX) + "px",
+		marginLeft: "+=" + (nowX - parX)+ "px",
 //		marginTop: "+=" + (nowY - parY) + "px"
 		
 	}, 500, function() {
