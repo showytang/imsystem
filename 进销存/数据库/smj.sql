@@ -95,6 +95,10 @@ CREATE TABLE `customer` (
 
 /*Table structure for table `customerlevel` */
 
+SELECT * FROM customer
+
+SELECT * FROM store WHERE state=0
+
 DROP TABLE IF EXISTS `customerlevel`;
 #客户级别
 CREATE TABLE `customerlevel` (
@@ -174,13 +178,10 @@ CREATE TABLE `customertype` (
 
 SELECT * FROM customertype
 
-<<<<<<< HEAD
-=======
 SELECT * FROM customertype c,`user` u
 WHERE c.state=0 AND c.uid=u.id
 AND (c.`name` LIKE '%霖%' OR c.viewname LIKE '%霖%' OR c.agio LIKE '%0%' OR u.name LIKE '%霖%')
 
->>>>>>> refs/heads/master
 DROP TABLE IF EXISTS `goods`;
 
 CREATE TABLE `goods` (
@@ -199,6 +200,7 @@ CREATE TABLE `goods` (
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   `minsecurity` int(4) DEFAULT NULL,
   `maxsecurity` int(4) DEFAULT NULL,
   `historygid` varchar(20) DEFAULT NULL,
@@ -213,6 +215,8 @@ CREATE TABLE `goods` (
   `column4` varchar(50) DEFAULT NULL,
   `column5` varchar(50) DEFAULT NULL,
 =======
+=======
+>>>>>>> refs/heads/lxy
   `minsecurity` INT(4) DEFAULT NULL,
   `maxsecurity` INT(4) DEFAULT NULL,
   `historygid` VARCHAR(20) DEFAULT NULL,
@@ -226,6 +230,7 @@ CREATE TABLE `goods` (
   `column3` VARCHAR(50) DEFAULT NULL,
   `column4` VARCHAR(50) DEFAULT NULL,
   `column5` VARCHAR(50) DEFAULT NULL,
+<<<<<<< HEAD
 >>>>>>> refs/heads/master
 =======
   `minsecurity` INT(4) DEFAULT NULL,
@@ -257,6 +262,8 @@ CREATE TABLE `goods` (
   `column4` VARCHAR(50) DEFAULT NULL,
   `column5` VARCHAR(50) DEFAULT NULL,
 >>>>>>> refs/heads/dws
+=======
+>>>>>>> refs/heads/lxy
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
@@ -872,6 +879,11 @@ CREATE TABLE `supplier` (
 
 /*Data for the table `supplier` */
 
+SELECT * FROM supplier
+
+SELECT s.* FROM supplier s,`user` u WHERE u.id=s.uid AND s.balance>=0 AND CONCAT(s.name,u.name) LIKE '%%'
+
+
 /*Table structure for table `ulrgoods` */
 
 DROP TABLE IF EXISTS `ulrgoods`;
@@ -918,6 +930,8 @@ CREATE TABLE `user` (
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Data for the table `user` */
+
+SELECT * FROM `user`
 
 /*Table structure for table `usercorrelation` */
 

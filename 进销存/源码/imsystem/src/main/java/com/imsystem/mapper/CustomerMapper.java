@@ -12,6 +12,10 @@ public interface CustomerMapper {
 	
 	int deleteCustomer(String id);
 	
+	List<Customer> selectAllCustomer();
+	
+	List<Customer> selectCustomerByStore(String sid);
+	
     int countByExample(CustomerExample example);
 
     int deleteByExample(CustomerExample example);

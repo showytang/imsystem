@@ -67,7 +67,6 @@ table {
 							<i class="layui-icon">&#xe605;</i>
 						</div>
 					</th>
-					<th>ID</th>
 					<th>角色名</th>
 					<th>拥有权限规则</th>
 					<th>描述</th>
@@ -81,9 +80,7 @@ table {
 							lay-skin="primary">
 							<i class="layui-icon">&#xe605;</i>
 						</div>
-
 					</td>
-					<td th:text="${item.id}">1111</td>
 					<td th:text="${item.name}">超级管理员</td>
 					<td class="td"><span th:each="item1 : ${item.moduleList}"
 						th:text="${item1.name}+'、'"></span></td>

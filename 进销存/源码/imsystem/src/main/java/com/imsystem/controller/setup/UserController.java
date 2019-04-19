@@ -20,8 +20,11 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.imsystem.domain.Role;
+import com.imsystem.domain.Store;
 import com.imsystem.domain.User;
 import com.imsystem.service.setup.RoleService;
+import com.imsystem.service.setup.StoreService_c;
 import com.imsystem.service.setup.UserService;
 
 @Controller
@@ -31,6 +34,9 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
+	
+	@Autowired
+	StoreService_c storeService_c;
 	
 	@Autowired
 	RoleService roleService;
@@ -83,6 +89,33 @@ public class UserController {
 
 	
 	
+	
+	
+	
+	
+	@RequestMapping("queryUserById")
+	public String queryUserById(String id,Model model) {
+		User u=userService.queryUserById(id);
+		System.out.println(JSON.toJSONString(u));
+		model.addAttribute("u", u);
+		List<Role> list=roleService.queryRoleAll();
+		model.addAttribute("list",list);
+		List<Store> listStore =storeService_c.queryStoreAll();
+		model.addAttribute("listStore", listStore);
+		return "czx/admin-update";
+	}
+
+	
+	@RequestMapping("updateUserById")
+	public String updateUserById(User user,HttpSession session) {
+		
+		System.out.println("来了");
+		User user1 = (User)session.getAttribute("user");
+		user.setUid(user1.getId());
+		userService.updateUserById(user);
+		
+		return "redirect:queryUserRole";
+	}
 	
 	
 	
@@ -145,7 +178,7 @@ public class UserController {
 			pageNum=1;
 		}
 		if (pageSize==null) {
-			pageSize=4;
+			pageSize=2;
 		}
 		
 		PageInfo<User> page= userService.queryByPage(user, pageNum, pageSize);
@@ -167,7 +200,7 @@ public class UserController {
 	@ResponseBody
 	public String queryByName(String name, String pwd,HttpSession session) {
 		 
-		System.out.println("进来了登录。。。。");
+		
 		 
 		 User user= userService.queryUserByName(name, pwd);
 		 

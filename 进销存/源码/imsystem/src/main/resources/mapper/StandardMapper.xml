@@ -21,11 +21,11 @@
   </resultMap>
   
   <select id="queryStandard" resultMap="BaseResultMap">
-  	SELECT a.*, b.`name` AS gname  FROM `standard` AS a JOIN `goodstype` AS b ON a.`tid` = b.`id` 
+  	SELECT * FROM paytype
   	<where>
-  		a.state='0'
+  		state=0
   		<if test="tiaojian!=null">
-  				and a.id LIKE concat('%',#{tiaojian},'%') OR  a.NAME LIKE concat('%',#{tiaojian},'%') OR b.name LIKE concat('%',#{tiaojian},'%') OR a.uid LIKE concat('%',#{tiaojian},'%')
+  				and (id LIKE concat('%',#{tiaojian},'%') OR  NAME LIKE concat('%',#{tiaojian},'%') OR  uid LIKE concat('%',#{tiaojian},'%'))
   		</if>
   	</where>
   </select>

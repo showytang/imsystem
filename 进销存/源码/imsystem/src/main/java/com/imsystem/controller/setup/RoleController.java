@@ -113,6 +113,21 @@ public class RoleController {
 	}
 	
 	
+	@RequestMapping("queryRoleAll2")
+	public String queryRoleAll2(Model model) {
+		
+		List<Role> list=roleService.queryRoleAll();
+		model.addAttribute("list",list);
+		List<Store> listStore =storeService_c.queryStoreAll();
+		model.addAttribute("listStore", listStore);
+		System.out.println(JSON.toJSONString(listStore));
+		return "czx/admin-update";
+	}
+	
+	
+	
+	
+	
 	
 	@RequestMapping("admin-cate")
 	public String XiTongedit() {

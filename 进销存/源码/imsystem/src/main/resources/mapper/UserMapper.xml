@@ -368,13 +368,13 @@
   <select id="queryUserAll" resultMap="BaseResultMap">
     
      SELECT * FROM `user` WHERE state =0
-    
+     
   </select>
   
   <!-- 根据ID查询用户 -->
    <select id="queryUserById" resultMap="BaseResultMap">
     
-     SELECT * FROM `user` WHERE id=#{id} AND state =0
+      SELECT * FROM `user` WHERE id=#{id} AND state IN(0,1) 
     
   </select>
  
@@ -405,20 +405,14 @@
  	
  	<!-- 根据ID修改用户 -->
   <update id="updateUserById">
-    UPDATE `user` SET `name` = #{name,jdbcType=VARCHAR},
-      pwd = #{pwd,jdbcType=VARCHAR},
-      storeid = #{storeid,jdbcType=INTEGER},
-      rid = #{rid,jdbcType=INTEGER},
-      `time` = #{time,jdbcType=TIMESTAMP},
-      updatetime = #{updatetime,jdbcType=TIMESTAMP},
-      state = #{state,jdbcType=INTEGER},
-      uid = #{uid,jdbcType=VARCHAR},
-      column1 = #{column1,jdbcType=VARCHAR},
-      column2 = #{column2,jdbcType=VARCHAR},
-      column3 = #{column3,jdbcType=VARCHAR},
-      column4 = #{column4,jdbcType=VARCHAR},
-      column5 = #{column5,jdbcType=VARCHAR}
-    WHERE id = #{id,jdbcType=VARCHAR}
+    UPDATE `user` SET `name` = #{name},
+      pwd = #{pwd},
+      storeid = #{storeid},
+      rid = #{rid},
+      updatetime = NOW(),
+      state = 0,
+      uid = #{uid}
+    WHERE id = #{id}
   </update>
  	
  	

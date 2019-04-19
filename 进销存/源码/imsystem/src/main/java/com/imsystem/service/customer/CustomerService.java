@@ -49,5 +49,11 @@ public interface CustomerService {
 	 * @return
 	 */
 	public int deleteCustomer(String id);
+	
+	/**
+	 * 根据门店查询客户
+	 * @return
+	 */
+	public List<Customer> queryCustomerByStore(String sid);
 
 }
