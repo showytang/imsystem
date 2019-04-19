@@ -3,6 +3,9 @@ package com.imsystem.mapper;
 import com.imsystem.domain.Module;
 import com.imsystem.domain.ModuleExample;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
 
 public interface ModuleMapper {
@@ -37,10 +40,12 @@ public interface ModuleMapper {
     
     int deleteModuleById(String id);
     
-    int updateModuleById(Module module) ;
+    int updateModuleById(Module module);
     
+    List<Module> queryMuLu(@Param("uid")String uid,@Param("parentid")Integer id);
     
-    
-    
+    @MapKey("url")
+    Map<String, Module> queryMap(String uid);
+   
     
 }
