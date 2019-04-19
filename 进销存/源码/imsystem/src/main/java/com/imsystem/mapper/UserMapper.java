@@ -32,7 +32,7 @@ public interface UserMapper {
     
     User queryUserByName(@Param("name") String name,@Param("pwd") String pwd);
     
-    User queryUserById(String id);
+    User queryUserById(@Param("id") String id);
     
     List<User> queryUserAll();
     

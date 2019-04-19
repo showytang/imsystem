@@ -392,7 +392,7 @@ function x_admin_show(title,url,w,h){
         },
         end:function(){
           //窗口销毁之后刷新frame
-          // location.replace(location.href);
+          location.replace(location.href);
         }
     });
 }
