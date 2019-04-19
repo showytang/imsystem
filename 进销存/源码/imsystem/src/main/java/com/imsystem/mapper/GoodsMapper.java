@@ -11,6 +11,7 @@ public interface GoodsMapper {
 	
 	List<GoodsValueVo> queryAllGoods(@Param("liketext") String liketext,@Param("svid") String [] svid,@Param("tid") String tid);
 	
+	
     int countByExample(GoodsExample example);
 
     int deleteByExample(GoodsExample example);
