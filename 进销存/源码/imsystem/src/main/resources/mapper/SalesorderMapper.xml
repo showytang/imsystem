@@ -28,11 +28,14 @@
 		<result column="column4" property="column4" jdbcType="VARCHAR" />
 		<result column="column5" property="column5" jdbcType="VARCHAR" />
 	</resultMap>
+	<update id="updatePregress">
+		update salesorder set progress = #{zhi} where id = #{id}
+	</update>
 	<select id="querySalesOrder" resultMap="BaseResultMap">
 		SELECT sales.`code`,(SELECT p.name FROM `paytype` AS p WHERE p.id =
 		sales.`paytype`) AS column2,(SELECT NAME FROM `customer` AS c WHERE
 		c.`id` = sales.cid ) AS
-		column3,sales.id,sales.`count`,sales.`updatetime`,sales.`paymoney`,sales.`tainmoney`,sales.preprice
+		column3,sales.progress,sales.id,sales.`count`,sales.`updatetime`,sales.`paymoney`,sales.`tainmoney`,sales.preprice
 		FROM `salesorder` AS sales
 		LEFT JOIN `salesorderdetails` AS s ON
 		s.`sid` = sales.`id`
@@ -40,7 +43,7 @@
 			<if test="code != '' and code != null">
 				and sales.code LIKE concat('%',#{code},'%')
 			</if>
-			<if test="progress != '' and  progress != null">
+			<if test="progress == 0 or progress == 1 or progress == 2 ">
 				and sales.progress = #{progress}
 			</if>
 			<if test="column1 != '' and column1 != null">

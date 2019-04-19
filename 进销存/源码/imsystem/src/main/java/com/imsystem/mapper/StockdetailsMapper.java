@@ -11,9 +11,11 @@ import org.apache.ibatis.annotations.Param;
 
 public interface StockdetailsMapper {
 	
-	int selectCount(String code);
+	Stockdetails queryCount(@Param("gvid") String gvid,@Param("sid") String sid);
 	
-	Vector<Stockdetails> queryGoods(String name);
+	int selectCount(@Param("code")String code,@Param("sid")String id);
+	
+	Vector<Stockdetails> queryGoods(@Param("name") String name, @Param("storeid")String storeid);
 	
 	int update(String id);
 	

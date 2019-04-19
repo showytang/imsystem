@@ -6,6 +6,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface CustomerMapper {
+	
+	int update(@Param("id")String id,@Param("money")Double money);
+	
     int countByExample(CustomerExample example);
 
     int deleteByExample(CustomerExample example);

@@ -457,15 +457,17 @@
 								count : $(".sumcount").text(),
 								cid : $(".client").val(),
 								state : 0,
-								progress : 0,
+								progress : 1,
 								storeid : 1,
 								uid : 1
 						};
 						if($("#priceName").text() == "定金"){
 							order.preprice = $(".sprice").val();
+							order.tainmoney = 0;
 						}
 						else{
 							order.tainmoney = $(".sprice").val();
+							order.preprice = 0;
 						}
 						order.time = eval('new Date(' + order.time.replace(/\d+(?=-[^-]+$)/,    
 								function (a) { return parseInt(a, 10) - 1; }).match(/\d+/g) + ')');  

@@ -1,7 +1,9 @@
 package com.imsystem.domain;
 
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Vector;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -31,12 +33,8 @@ public class Salesorder {
 
     private Double tainmoney;
 
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date time;
 
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date updatetime;
 
     private Integer progress;
@@ -156,6 +154,7 @@ public class Salesorder {
     }
 
     public Double getTainmoney() {
+    	
         return tainmoney;
     }
 
