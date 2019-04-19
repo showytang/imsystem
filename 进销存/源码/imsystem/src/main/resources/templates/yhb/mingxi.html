@@ -25,6 +25,7 @@
 	th:href="@{/assets/css/daterangepicker.css}" />
 <link rel="stylesheet" type="text/css"
 	th:href="@{/assets/css/htmleaf-demo.css}">
+<link rel="stylesheet" th:href="@{/assets/css/animate.min.css}" />
 <script type="text/javascript" th:src="@{/assets/js/jquery.min.js}"></script>
 <script>
 	window.jQuery
@@ -34,6 +35,7 @@
 <script type="text/javascript" th:src="@{/assets/js/moment.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/daterangepicker.js}"></script>
 <script th:src="@{/assets/js/statistics.js}"></script>
+<script th:src="@{/assets/js/pageNumber.js}"></script>
 <script th:src="@{/assets/js/vue.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/Mydate.js}"></script>
 
@@ -66,7 +68,7 @@
 							</div>
 						</div>
 						<div class="panel-body" id="table">
-							<table class="table">
+							<table class="table animated fadeInUp delay-1s">
 								<thead>
 									<tr>
 										<th>往来单位</th>
@@ -88,6 +90,9 @@
 										<td><span class="label label-success">￥{{item.jprice}}</span></td>
 										<td><button type="button" class="btn btn-primary btn-xs">销售明细</button></td>
 									</tr>
+									<tr class="valueNull" v-if="page.list == ''">
+										<td colspan="7">暂无数据</td>
+									</tr>
 								</tbody>
 							</table>
 						</div>
@@ -97,11 +102,17 @@
 		</div>
 	</div>
 	<div class="float">
-		<span class="col-md-4">合计数量：<b id="count">388</b></span> <span class="col-md-4">合计折扣额：￥<b id="zk">388</b></span>
-		<span class="col-md-4">合计金额：￥<b id="money">388</b></span>
+		<span class="col-md-4">合计数量：<b id="count">388</b></span> <span
+			class="col-md-4">合计折扣额：￥<b id="zk">388</b></span> <span
+			class="col-md-4">合计金额：￥<b id="money">388</b></span>
 	</div>
 </body>
 <script>
+	var startTime = "";
+	var endTime = "";
+	var id = "";
+	var storeid = "";
+	var gid = "";
 	var vue = new Vue({
 		el : "#table",
 		data : {
@@ -110,12 +121,30 @@
 	});
 	$(function() {
 		myDate();
-		var month = getThisYear()+"-"+(getCurrentMonth() >= 10 ? getCurrentMonth() : "0"+getCurrentMonth());
-		vue.page = queryGoodsDetail("1",month,"", "", "", "");
+		var month = getThisYear()
+				+ "-"
+				+ (getCurrentMonth() >= 10 ? getCurrentMonth() : "0"
+						+ getCurrentMonth());
+		vue.page = queryGoodsDetail("1", null, startTime, endTime, storeid, gid);
+		$(document).on(
+				"change",
+				"#config-demo",
+				function() {
+					if ($("#config-demo").val() != '请选择日期范围') {
+						var time = $("#config-demo").val().split("至");
+						startTime = time[0];
+						endTime = time[1];
+					}
+					vue.page = queryGoodsDetail("", null, startTime, endTime,
+							storeid, gid);
+					$(".panel-headline").append(
+							page(vue.page.pageNum, vue.page.prePage,
+									vue.page.nextPage, vue.page.pages));
+				});
 		var count = 0;
 		var zk = 0;
 		var sumMoney = 0;
-		$.each(vue.page.list,function(i,obj){
+		$.each(vue.page.list, function(i, obj) {
 			count += parseInt(obj.column3);
 			sumMoney += parseInt(obj.jprice);
 			zk += parseInt(obj.column5);
@@ -123,6 +152,23 @@
 		$("#count").text(count);
 		$("#zk").text(zk);
 		$("#money").text(sumMoney);
+		$(".panel-headline").append(
+				page(vue.page.pageNum, vue.page.prePage, vue.page.nextPage,
+						vue.page.pages));
+
+		$(document).on(
+				"click",
+				".pageFy>ul li",
+				function() {
+					var create = $(this).attr("pageNumber");
+					if (create != null && create != 0) {
+						vue.page = queryGoodsDetail(create, null, startTime,
+								endTime, storeid, gid);
+						$(".panel-headline").append(
+								page(create, vue.page.prePage,
+										vue.page.nextPage, vue.page.pages));
+					}
+				});
 	});
 </script>
 </html>

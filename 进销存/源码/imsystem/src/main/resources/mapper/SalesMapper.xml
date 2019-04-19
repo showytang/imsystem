@@ -444,4 +444,15 @@
       column5 = #{column5,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+  <select resultMap="BaseResultMap" id="queryShouZhang">
+  	SELECT c.name AS column1 , s.paymoney AS paymoney , s.tainmoney AS tainmoney , s.updatetime AS TIME , c.balance AS column2 FROM sales AS s JOIN customer AS c ON c.id = s.cid WHERE s.tainmoney &lt; s.paymoney AND s.state = '0' 
+  	<if test="cid != null and cid != ''">
+  		AND c.id = #{cid}
+  	</if> 
+  	<if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+  		AND s.TIME >= DATE_FORMAT(#{startTime},'%Y-%m-%d 00:00:00') AND s.TIME &lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d 23:59:59')
+  	</if>
+  
+  </select>
 </mapper>

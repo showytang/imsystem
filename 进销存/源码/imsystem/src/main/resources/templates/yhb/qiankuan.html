@@ -54,7 +54,8 @@
 						<div class="col-md-12 tj">
 							<div class="col-md-6 col-xs-12">
 								<span class="col-md-3 col-xs-12">选择区间</span> <input
-									class="col-md-9 col-xs-12" type="text" id="config-demo" name="config-demo">
+									class="col-md-9 col-xs-12" type="text" id="config-demo"
+									name="config-demo">
 							</div>
 							<div class="col-md-6 col-xs-12">
 								<span class="col-md-3 col-xs-12">选择店铺</span> <select
@@ -86,26 +87,13 @@
 										<td><span class="label label-success">￥{{obj.column1
 												- obj.column2}}</span></td>
 									</tr>
+									<tr class="valueNull" v-if="page.list == ''">
+										<td colspan="4">暂无数据</td>
+									</tr>
 								</tbody>
 							</table>
 						</div>
 					</div>
-					<!-- <nav class="pageFy">
-						<ul class="pagination pagination-sm">
-							<li class="disabled"><span class="lar"> <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
-							</span></li>
-							<li class="active"><span>1 </span>
-							</li>
-							<li><span>2</span>
-							<li><span>3</span>
-							<li><span>4</span>
-							<li><span>5</span>
-							<li><span>6</span>
-							</li>
-							<li><span> <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
-							</span></li>
-						</ul>
-					</nav> -->
 				</div>
 			</div>
 		</div>
@@ -117,6 +105,9 @@
 	</div>
 </body>
 <script>
+	var startTime = "";
+	var endTime = "";
+	var id = "";
 	var vue = new Vue({
 		el : "#table",
 		data : {
@@ -126,6 +117,20 @@
 	$(function() {
 		myDate();
 		vue.page = queryQianKuan("", "", "", "");
+		$(document).on(
+				"change",
+				"#config-demo",
+				function() {
+					if ($("#config-demo").val() != '请选择日期范围') {
+						var time = $("#config-demo").val().split("至");
+						startTime = time[0];
+						endTime = time[1];
+					}
+					vue.page = queryQianKuan(null, startTime, endTime, id);
+					$(".panel-headline").append(
+							page(vue.page.pageNum, vue.page.prePage,
+									vue.page.nextPage, vue.page.pages));
+				});
 		let chu = 0;
 		let yzf = 0;
 		let qm = 0;
@@ -138,15 +143,23 @@
 		$("#chu").text(chu);
 		$("#yzf").text(yzf);
 		$("#qm").text(qm);
-		$(".panel-headline").append(page(vue.page.pageNum,vue.page.prePage,vue.page.nextPage,vue.page.pages));
-		
-		$(document).on("click",".pageFy>ul li",function(){
-			var create = $(this).attr("pageNumber");
-			if(create != null && create != 0){
-				vue.page = queryQianKuan(create, "", "", "");
-				$(".panel-headline").append(page(create,vue.page.prePage,vue.page.nextPage,vue.page.pages));
-			}
-		});
+		$(".panel-headline").append(
+				page(vue.page.pageNum, vue.page.prePage, vue.page.nextPage,
+						vue.page.pages));
+
+		$(document).on(
+				"click",
+				".pageFy>ul li",
+				function() {
+					var create = $(this).attr("pageNumber");
+					if (create != null && create != 0) {
+						vue.page = queryQianKuan(create, "", "", "");
+						$(".panel-headline").append(
+								page(create, vue.page.prePage,
+										vue.page.nextPage, vue.page.pages));
+					}
+				});
+
 	});
 </script>
 </html>

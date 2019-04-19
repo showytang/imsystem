@@ -298,7 +298,12 @@ function queryQianKuan(currentPage,startTime,endTime,sid){
 	});
 	return v;
 }
-
+/**欠款（All）
+ * @param startTime
+ * @param endTime
+ * @param sid
+ * @returns
+ */
 function queryAllQianKuan(startTime,endTime,sid){
 	var v;
 	$.ajax({
@@ -316,6 +321,65 @@ function queryAllQianKuan(startTime,endTime,sid){
 		},
 		error:function(){
 			console.log("ERROR:'queryAllQianKuan'");
+		}
+	});
+	return v;
+}
+
+/***
+ * 收账查询
+ * @param currentPage
+ * @param startTime
+ * @param endTime
+ * @param sid
+ * @returns
+ */
+function queryShouZhang(currentPage,startTime,endTime,cid){
+	var v;
+	$.ajax({
+		url:"/statistics/queryShouZhang",
+		type:"post",
+		data:{
+			currentPage:currentPage,
+			startTime:startTime,
+			endTime:endTime,
+			cid,cid
+		},
+		dataType:"json",
+		async:false,
+		success:function(data){
+			v = data;
+		},
+		error:function(){
+			console.log("ERROR:'queryShouZhang'");
+		}
+	});
+	return v;
+}
+
+/**收賬（All）
+ * @param startTime
+ * @param endTime
+ * @param sid
+ * @returns
+ */
+function queryAllShouZhang(startTime,endTime,cid){
+	var v;
+	$.ajax({
+		url:"/statistics/queryAllShouZhang",
+		type:"post",
+		data:{
+			startTime:startTime,
+			endTime:endTime,
+			cid,cid
+		},
+		dataType:"json",
+		async:false,
+		success:function(data){
+			v = data;
+		},
+		error:function(){
+			console.log("ERROR:'queryAllShouZhang'");
 		}
 	});
 	return v;

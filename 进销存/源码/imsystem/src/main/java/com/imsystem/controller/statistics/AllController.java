@@ -13,11 +13,13 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Goodsvalue;
+import com.imsystem.domain.Sales;
 import com.imsystem.domain.Salesorder;
 import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Store;
 import com.imsystem.service.statistics.GoodsValueService;
+import com.imsystem.service.statistics.SalesService;
 import com.imsystem.service.statistics.SalesorderService;
 import com.imsystem.service.statistics.StockDetailsService;
 import com.imsystem.service.statistics.StockService;
@@ -36,11 +38,15 @@ public class AllController {
 	StockDetailsService stockDS;
 	@Autowired
 	StockService stocks;
+	@Autowired
+	SalesService ss;
 	
 	/**
 	 * index top 四方格
 	 * @return
 	 */
+	Integer pageSize = 2;
+	
 	@RequestMapping("query")
 	@ResponseBody
 	public Salesorder query(String storeid, String code, String startTime, String endTime) {
@@ -166,7 +172,7 @@ public class AllController {
 		if (currentPage == null || currentPage == 0) {
 			currentPage = 1;
 		}
-		Page<Goodsvalue> page = PageHelper.startPage(currentPage, 2, true);
+		Page<Goodsvalue> page = PageHelper.startPage(currentPage, pageSize, true);
 		List<Goodsvalue> list = gvs.queryGoodsByTime(time, startTime, endTime, storeId, gid);
 		return page.toPageInfo();
 	}
@@ -184,7 +190,7 @@ public class AllController {
 		if (currentPage == null || currentPage == 0) {
 			currentPage = 1;
 		}
-		Page<Stockdetails> page = PageHelper.startPage(currentPage, 2, true);
+		Page<Stockdetails> page = PageHelper.startPage(currentPage, pageSize, true);
 		List<Stockdetails> list = stockDS.queryJinHuo(startTime, endTime, cid);
 		return page.toPageInfo();
 	}
@@ -201,7 +207,7 @@ public class AllController {
 		if (currentPage == null || currentPage == 0) {
 			currentPage = 1;
 		}
-		Page<Stockdetails> page = PageHelper.startPage(currentPage, 2, true);
+		Page<Stockdetails> page = PageHelper.startPage(currentPage, pageSize, true);
 		List<Stockdetails> list = stockDS.queryStockByGidAndStoreId(gid, storeId);
 		return page.toPageInfo();
 	}
@@ -219,7 +225,7 @@ public class AllController {
 		if (currentPage == null || currentPage == 0) {
 			currentPage = 1;
 		}
-		Page<Stock> page = PageHelper.startPage(currentPage, 2, true);
+		Page<Stock> page = PageHelper.startPage(currentPage, pageSize, true);
 		List<Stock> list = stocks.queryQianKuan(startTime, endTime, sid);
 		return page.toPageInfo();
 	}
@@ -227,6 +233,31 @@ public class AllController {
 	@ResponseBody
 	public List<Stock> queryAllQianKuan(String startTime,String endTime,String sid){
 		List<Stock> list = stocks.queryQianKuan(startTime, endTime, sid);
+		return list;
+	}
+	/***
+	 *	收账
+	 * @param currentPage
+	 * @param startTime
+	 * @param endTime
+	 * @param cid
+	 * @return
+	 */
+	@RequestMapping("queryShouZhang")
+	@ResponseBody
+	public PageInfo<Sales> queryShouZhang(Integer currentPage,String startTime,String endTime,String cid){
+		if (currentPage == null || currentPage == 0) {
+			currentPage = 1;
+		}
+		Page<Sales> page = PageHelper.startPage(currentPage, pageSize, true);
+		List<Sales> list = ss.queryShouZhang(cid, startTime, endTime);
+		return page.toPageInfo();
+	}
+	
+	@RequestMapping("queryAllShouZhang")
+	@ResponseBody
+	public List<Sales> queryAllShouZhang(String startTime,String endTime,String cid){
+		List<Sales> list = ss.queryShouZhang(cid,startTime,endTime);
 		return list;
 	}
 	
