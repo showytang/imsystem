@@ -42,6 +42,12 @@
   	SELECT * FROM `standard`
 	WHERE id = #{id};
   </select>
+
+  <select id="dwsqueryStandardById" resultMap="BaseResultMap">
+  	SELECT * FROM `standard`
+	WHERE tid = #{id};
+  </select>
+
   
   <select id="StandardById" resultMap="BaseResultMap">
   	SELECT * FROM `standard`

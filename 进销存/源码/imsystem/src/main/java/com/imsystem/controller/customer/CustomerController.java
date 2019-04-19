@@ -2,6 +2,7 @@ package com.imsystem.controller.customer;
 
 import java.io.File;
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.PageInfo;
@@ -18,7 +20,9 @@ import com.imsystem.domain.Customer;
 import com.imsystem.domain.Customerlevel;
 import com.imsystem.domain.Customertype;
 import com.imsystem.domain.Store;
+
 import com.imsystem.domain.Supplier;
+
 import com.imsystem.domain.TypeLevelVO;
 import com.imsystem.service.customer.CustomerLevelService;
 import com.imsystem.service.customer.CustomerService;
@@ -36,6 +40,7 @@ public class CustomerController {
 	CustomerLevelService clService;
 	
 	@RequestMapping("tocustomerlist")
+
 	public String toCustomerList() {
 		return "lxy/Customer";
 	}
@@ -44,6 +49,9 @@ public class CustomerController {
 	public String toAddCustomer() {
 		return "lxy/AddCustomer";
 	}
+	
+	
+	
 	
 	@RequestMapping("querytypelevel")
 	@ResponseBody

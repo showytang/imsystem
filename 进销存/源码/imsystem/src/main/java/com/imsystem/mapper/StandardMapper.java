@@ -8,6 +8,12 @@ import org.apache.ibatis.annotations.Param;
 public interface StandardMapper {
 	
 	List<Standard> queryStandardById(String id);
+	/**
+	 * 戴文诗引用
+	 * @param id
+	 * @return
+	 */
+	List<Standard> dwsqueryStandardById(String id);
 	
     int countByExample(StandardExample example);
 

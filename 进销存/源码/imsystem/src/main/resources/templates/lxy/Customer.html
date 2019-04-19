@@ -131,8 +131,11 @@
                     					<span style="display: block;width: 60px;line-height: 38px;">零欠款</span>
                             	 	</div>
                             	 	<div class="input-group" style="margin-right: 15%;">
+
 										<input id="content" type="text" value="" class="form-control" placeholder="客户名称">
 										<span class="input-group-btn"><button type="button" id="searchLike" class="btn btn-primary">Go</button></span>
+
+										
 									</div>
                                 	<input type="button" class="btn btn-primary" id="add" value="新增客户"/>
                                 </h5>
@@ -154,12 +157,14 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+
                                             <tr v-for="(o,i) in pageIf.list">
                                                 <td>{{o.name}}</td>
                                                 <td>{{o.telephonename}}</td>
                                                 <td>{{o.telephone}}</td>
                                                 <td>{{o.balance}}</td>
                                                 <input type="hidden" :value="o.id" />
+
                                                 <td><a class="saleList">销售列表</a></td>
                                                 <td><a class="bill">应收对账单</a></td>
                                                 <td><a class="receive">收款</a></td>
@@ -173,16 +178,9 @@
                                 
                                 <!-- 分页 -->
                                 <div id="page">
-									<!-- <ul>
-										<li class="pagebtn pagePrev"><span class="glyphicon glyphicon-menu-left"></span></li>
-										<li class="pagebtn currentPage pageCurrent pageq">1</li>
-										<li class="pagebtn pageCurrent pageq">2</li>
-										<li class="pagebtn pageCurrent pageq">3</li>
-										<li class="pagebtn" id="pageDian" style="border: none;background: white;font-size: 20px;">...</li>
-										<li class="pagebtn pageCurrent pageDi">14</li>
-										<li class="pagebtn pageCurrent">15</li>
-										<li class="pagebtn pageNext"><span class="glyphicon glyphicon-menu-right"></span></li>
-									</ul> -->
+
+									
+
 								</div>
                             </div>
                         </div>
@@ -208,6 +206,7 @@
     <script th:src="@{/assets/js/page.js}"></script>
 	<script>
 	
+
 	var vue=new Vue({
 		el:".elDocument",
 		data:{
@@ -259,14 +258,15 @@
 	
 		$(function() {
 			queryCustomerByPage(0,"",1);
-			
-			
+		
+
 			/*新增用户*/
 			$("#add").click(function(){
 				$("#customerForm").attr("action","toaddcustomer");
 				$("#customerForm").submit();
 			});
 			
+
 			$(".zero").click(function(){
 				var zero=0;
 				if(this.checked){
@@ -274,8 +274,10 @@
 				}
 				var content=$("#content").val();
 				queryCustomerByPage(zero,content,1); 
-			});
+
 			
+			
+
 			$("#searchLike").click(function(){
 				var zero=0;
 				if($(".zero").is(':checked')){
@@ -284,6 +286,7 @@
 				var content=$("#content").val();
 				queryCustomerByPage(zero,content,1);
 			});
+		
 			
 		});
 	</script>

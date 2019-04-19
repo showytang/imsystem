@@ -905,7 +905,7 @@ td input {
 			/*规格值渲染*/
 			
 			if(i == 0){
-				
+				console.log(typeArr[i].goodstype.id)
 				$.ajax({
 					
 					url:[[@{/goods/queryGoodsStandradByid}]],
@@ -913,7 +913,7 @@ td input {
 					data:{"id":typeArr[i].goodstype.id},
 					type:"post",
 					success:function(data){
-					 	
+					 	console.log(data);
 						$("#typeoption").html("");	
 						
 							$.each(data,function(index,obj){
