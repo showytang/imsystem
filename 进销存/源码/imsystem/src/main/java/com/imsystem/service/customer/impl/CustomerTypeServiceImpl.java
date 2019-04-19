@@ -20,6 +20,7 @@ import com.imsystem.service.setup.UserService;
 @Transactional
 public class CustomerTypeServiceImpl implements CustomerTypeService{
 	
+	
 	@Autowired
 	CustomertypeMapper ctDao;
 	@Autowired
@@ -65,8 +66,9 @@ public class CustomerTypeServiceImpl implements CustomerTypeService{
 	@Override
 	public int deleteCustomerType(String ctId) {
 		// TODO Auto-generated method stub
-		
-		return 0;
+
+		int row=ctDao.deleteCustomerType(ctId);
+		return row;
 	}
 
 	/**
@@ -97,6 +99,7 @@ public class CustomerTypeServiceImpl implements CustomerTypeService{
 	public Customertype queryCustomerTypeById(String ctId) {
 		// TODO Auto-generated method stub
 		return ctDao.selectByPrimaryKey(ctId);
+
 	}
 
 	/**
@@ -120,6 +123,54 @@ public class CustomerTypeServiceImpl implements CustomerTypeService{
 			}
 		}
 		return ctListVO;
+
 	}
+
+	/**
+	 * 查询未删除的客户类型VO
+	 *//*
+	@Override
+	public List<QueryCustomerTypeVO> queryAllCustomerType() {
+		// TODO Auto-generated method stub
+		List<QueryCustomerTypeVO> ctListVO=new ArrayList<QueryCustomerTypeVO>();
+		List<Customertype> ctList=ctDao.queryCustomerType();
+		for(Customertype ctObj:ctList) {
+			QueryCustomerTypeVO ctvObj=new QueryCustomerTypeVO();
+			if(ctObj!=null) {
+				ctvObj.setCtObj(ctObj);
+				if(ctObj.getUid()!="" || ctObj.getUid()!=null) {
+					根据id查询用户对象
+					User uObj=uDao.queryUserById(ctObj.getUid());
+					ctvObj.setuObj(uObj);
+					ctListVO.add(ctvObj);
+				}
+			}
+		}
+		return ctListVO;
+	}*/
+
+	/**
+	 *根据条件 查询未删除的客户类型VO
+	 */
+	@Override
+	public List<QueryCustomerTypeVO> queryLikeCustomerType(String content) {
+		// TODO Auto-generated method stub
+		List<QueryCustomerTypeVO> ctListVO=new ArrayList<QueryCustomerTypeVO>();
+		List<Customertype> ctList=ctDao.queryLikeCustomerType(content);
+		for(Customertype ctObj:ctList) {
+			QueryCustomerTypeVO ctvObj=new QueryCustomerTypeVO();
+			if(ctObj!=null) {
+				ctvObj.setCtObj(ctObj);
+				if(ctObj.getUid()!="" || ctObj.getUid()!=null) {
+					/*根据id查询用户对象*/
+					User uObj=uDao.queryUserById(ctObj.getUid());
+					ctvObj.setuObj(uObj);
+					ctListVO.add(ctvObj);
+				}
+			}
+		}
+		return ctListVO;
+	}
+	
 
 }

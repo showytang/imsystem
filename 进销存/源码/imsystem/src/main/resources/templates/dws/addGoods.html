@@ -310,7 +310,7 @@ td input {
 					</div>
 					<br> <br>
 					<div class="panel">
-						<div class="panel-body"></div>
+						<div class="panel-bodytable"></div>
 					</div>
 					<br>
 
@@ -335,6 +335,7 @@ td input {
 </html>
 <script type="text/javascript" th:src="@{/assets/js/typeDonghua.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/vue.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/getAscii.js}"></script>
 <script type="text/javascript" th:inline="javascript">
 	var vuePojo = new Vue({
 		el:".main",
@@ -342,8 +343,6 @@ td input {
 			customerTypeList:""
 		}
 	});
-	//商品描述
-	var detail;
 
 	var E = window.wangEditor;
 	var editor = new E('#editor');
@@ -360,6 +359,8 @@ td input {
 
 	editor.create();
 
+	//商品描述
+	var detail;
 	document.getElementById('btn1').addEventListener('click', function() {
 		// 读取 html
 		detail = editor.txt.html();
@@ -512,8 +513,7 @@ function inserGoods(){
 				formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].name",gcname);
 				formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].svids",typeIds);
 				formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].svid",typeIdArr[n]);
-				
-				
+				formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].enname",ConvertPinyin(gcname));
 				
 			   }
 			   
@@ -538,9 +538,7 @@ function inserGoods(){
 	  
 	  
 	  
-	  
-	  
-		     $.ajax({
+		      $.ajax({
 			url:[[@{/goods/insertGoods}]],
  			data:formData,
  			dataType:"text",
@@ -629,7 +627,7 @@ function inserGoods(){
 			} 
 			
 		});
-		$.ajax({
+		 $.ajax({
 			
 			url:[[@{/goods/queryGoodsStandradByid}]],
 			dataType:"json",
@@ -844,7 +842,7 @@ function inserGoods(){
 		$("table").remove();
 		var table = $("<table class='table' >");
 
-		$(".panel-body").append(table);
+		$(".panel-bodytable").append(table);
 
 		var index = 1;
 		var tbody = $("<tbody>");

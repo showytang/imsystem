@@ -3,10 +3,21 @@ package com.imsystem.mapper;
 import com.imsystem.domain.Sales;
 import com.imsystem.domain.Salesdetails;
 import com.imsystem.domain.SalesdetailsExample;
+import com.imsystem.domain.Salesorder;
+
 import java.util.List;
+import java.util.Vector;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface SalesdetailsMapper {
+	
+	Vector<Salesdetails> queryDetails(String sid);
+	
+	int addcode(Sales sales);
+	
+	Vector<Salesdetails> queryBySid(String id);
+	
 	int add(Sales sales);
 	
     int countByExample(SalesdetailsExample example);

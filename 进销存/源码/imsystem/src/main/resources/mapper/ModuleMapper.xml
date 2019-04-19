@@ -1,425 +1,469 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.imsystem.mapper.ModuleMapper" >
-  <resultMap id="BaseResultMap" type="com.imsystem.domain.Module" >
-    <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="enname" property="enname" jdbcType="VARCHAR" />
-    <result column="catalog" property="catalog" jdbcType="INTEGER" />
-    <result column="url" property="url" jdbcType="VARCHAR" />
-    <result column="time" property="time" jdbcType="TIMESTAMP" />
-    <result column="parentid" property="parentid" jdbcType="INTEGER" />
-    <result column="state" property="state" jdbcType="INTEGER" />
-    <result column="uid" property="uid" jdbcType="VARCHAR" />
-    <result column="column1" property="column1" jdbcType="VARCHAR" />
-    <result column="column2" property="column2" jdbcType="VARCHAR" />
-    <result column="column3" property="column3" jdbcType="VARCHAR" />
-    <result column="column4" property="column4" jdbcType="VARCHAR" />
-    <result column="column5" property="column5" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List" >
-    id, name, enname, catalog, url, time, parentid, state, uid, column1, column2, column3, 
-    column4, column5
-  </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.imsystem.domain.ModuleExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from module
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from module
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from module
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.imsystem.domain.ModuleExample" >
-    delete from module
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.imsystem.domain.Module" >
-    insert into module (id, name, enname, 
-      catalog, url, time, 
-      parentid, state, uid, 
-      column1, column2, column3, 
-      column4, column5)
-    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{enname,jdbcType=VARCHAR}, 
-      #{catalog,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, 
-      #{parentid,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, 
-      #{column1,jdbcType=VARCHAR}, #{column2,jdbcType=VARCHAR}, #{column3,jdbcType=VARCHAR}, 
-      #{column4,jdbcType=VARCHAR}, #{column5,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.imsystem.domain.Module" >
-    insert into module
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="enname != null" >
-        enname,
-      </if>
-      <if test="catalog != null" >
-        catalog,
-      </if>
-      <if test="url != null" >
-        url,
-      </if>
-      <if test="time != null" >
-        time,
-      </if>
-      <if test="parentid != null" >
-        parentid,
-      </if>
-      <if test="state != null" >
-        state,
-      </if>
-      <if test="uid != null" >
-        uid,
-      </if>
-      <if test="column1 != null" >
-        column1,
-      </if>
-      <if test="column2 != null" >
-        column2,
-      </if>
-      <if test="column3 != null" >
-        column3,
-      </if>
-      <if test="column4 != null" >
-        column4,
-      </if>
-      <if test="column5 != null" >
-        column5,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="enname != null" >
-        #{enname,jdbcType=VARCHAR},
-      </if>
-      <if test="catalog != null" >
-        #{catalog,jdbcType=INTEGER},
-      </if>
-      <if test="url != null" >
-        #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="time != null" >
-        #{time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="parentid != null" >
-        #{parentid,jdbcType=INTEGER},
-      </if>
-      <if test="state != null" >
-        #{state,jdbcType=INTEGER},
-      </if>
-      <if test="uid != null" >
-        #{uid,jdbcType=VARCHAR},
-      </if>
-      <if test="column1 != null" >
-        #{column1,jdbcType=VARCHAR},
-      </if>
-      <if test="column2 != null" >
-        #{column2,jdbcType=VARCHAR},
-      </if>
-      <if test="column3 != null" >
-        #{column3,jdbcType=VARCHAR},
-      </if>
-      <if test="column4 != null" >
-        #{column4,jdbcType=VARCHAR},
-      </if>
-      <if test="column5 != null" >
-        #{column5,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.imsystem.domain.ModuleExample" resultType="java.lang.Integer" >
-    select count(*) from module
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map" >
-    update module
-    <set >
-      <if test="record.id != null" >
-        id = #{record.id,jdbcType=VARCHAR},
-      </if>
-      <if test="record.name != null" >
-        name = #{record.name,jdbcType=VARCHAR},
-      </if>
-      <if test="record.enname != null" >
-        enname = #{record.enname,jdbcType=VARCHAR},
-      </if>
-      <if test="record.catalog != null" >
-        catalog = #{record.catalog,jdbcType=INTEGER},
-      </if>
-      <if test="record.url != null" >
-        url = #{record.url,jdbcType=VARCHAR},
-      </if>
-      <if test="record.time != null" >
-        time = #{record.time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.parentid != null" >
-        parentid = #{record.parentid,jdbcType=INTEGER},
-      </if>
-      <if test="record.state != null" >
-        state = #{record.state,jdbcType=INTEGER},
-      </if>
-      <if test="record.uid != null" >
-        uid = #{record.uid,jdbcType=VARCHAR},
-      </if>
-      <if test="record.column1 != null" >
-        column1 = #{record.column1,jdbcType=VARCHAR},
-      </if>
-      <if test="record.column2 != null" >
-        column2 = #{record.column2,jdbcType=VARCHAR},
-      </if>
-      <if test="record.column3 != null" >
-        column3 = #{record.column3,jdbcType=VARCHAR},
-      </if>
-      <if test="record.column4 != null" >
-        column4 = #{record.column4,jdbcType=VARCHAR},
-      </if>
-      <if test="record.column5 != null" >
-        column5 = #{record.column5,jdbcType=VARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map" >
-    update module
-    set id = #{record.id,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
-      enname = #{record.enname,jdbcType=VARCHAR},
-      catalog = #{record.catalog,jdbcType=INTEGER},
-      url = #{record.url,jdbcType=VARCHAR},
-      time = #{record.time,jdbcType=TIMESTAMP},
-      parentid = #{record.parentid,jdbcType=INTEGER},
-      state = #{record.state,jdbcType=INTEGER},
-      uid = #{record.uid,jdbcType=VARCHAR},
-      column1 = #{record.column1,jdbcType=VARCHAR},
-      column2 = #{record.column2,jdbcType=VARCHAR},
-      column3 = #{record.column3,jdbcType=VARCHAR},
-      column4 = #{record.column4,jdbcType=VARCHAR},
-      column5 = #{record.column5,jdbcType=VARCHAR}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.imsystem.domain.Module" >
-    update module
-    <set >
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="enname != null" >
-        enname = #{enname,jdbcType=VARCHAR},
-      </if>
-      <if test="catalog != null" >
-        catalog = #{catalog,jdbcType=INTEGER},
-      </if>
-      <if test="url != null" >
-        url = #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="time != null" >
-        time = #{time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="parentid != null" >
-        parentid = #{parentid,jdbcType=INTEGER},
-      </if>
-      <if test="state != null" >
-        state = #{state,jdbcType=INTEGER},
-      </if>
-      <if test="uid != null" >
-        uid = #{uid,jdbcType=VARCHAR},
-      </if>
-      <if test="column1 != null" >
-        column1 = #{column1,jdbcType=VARCHAR},
-      </if>
-      <if test="column2 != null" >
-        column2 = #{column2,jdbcType=VARCHAR},
-      </if>
-      <if test="column3 != null" >
-        column3 = #{column3,jdbcType=VARCHAR},
-      </if>
-      <if test="column4 != null" >
-        column4 = #{column4,jdbcType=VARCHAR},
-      </if>
-      <if test="column5 != null" >
-        column5 = #{column5,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.imsystem.domain.Module" >
-    update module
-    set name = #{name,jdbcType=VARCHAR},
-      enname = #{enname,jdbcType=VARCHAR},
-      catalog = #{catalog,jdbcType=INTEGER},
-      url = #{url,jdbcType=VARCHAR},
-      time = #{time,jdbcType=TIMESTAMP},
-      parentid = #{parentid,jdbcType=INTEGER},
-      state = #{state,jdbcType=INTEGER},
-      uid = #{uid,jdbcType=VARCHAR},
-      column1 = #{column1,jdbcType=VARCHAR},
-      column2 = #{column2,jdbcType=VARCHAR},
-      column3 = #{column3,jdbcType=VARCHAR},
-      column4 = #{column4,jdbcType=VARCHAR},
-      column5 = #{column5,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  
-  
-  <!-- 查询所有功能权限 -->
-  <select id="queryModuleAll" resultMap="BaseResultMap">
-  
- 	SELECT * FROM `module` WHERE state=0
-  
-  </select>
-  
-  
-    
-  <!-- 根据ID查询功能权限 -->
-  <select id="queryModuleById" resultMap="BaseResultMap">
-  
- 	SELECT * FROM `module` WHERE id=#{id} AND state=0
-  
-  </select>
-  
-  
-  <!-- 新增功能权限 -->
- <insert id="insertModule">
-    INSERT INTO module (id, `name`, enname, 
-      catalog, url, `time`, 
-      parentid, state, uid, 
-      column1, column2, column3, 
-      column4, column5)
-    VALUES (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{enname,jdbcType=VARCHAR}, 
-      #{catalog,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, 
-      #{parentid,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, 
-      #{column1,jdbcType=VARCHAR}, #{column2,jdbcType=VARCHAR}, #{column3,jdbcType=VARCHAR}, 
-      #{column4,jdbcType=VARCHAR}, #{column5,jdbcType=VARCHAR})
-  </insert>
-  
-  
-  <!-- 根据ID删除功能权限 -->
-  <delete id="deleteModuleById">
-  
-  	 DELETE FROM `module`  WHERE id = #{id}	
-  
-  </delete>
-  
-  
-   
-  <!-- 根据ID修改功能权限 -->
-   <update id="updateModuleById">
- 	 UPDATE `module`  SET `name` = #{name},
-      enname = #{enname},
-      catalog = #{catalog},
-      url = #{url},
-      `time` = #{time},
-      parentid = #{parentid},
-      state = #{state},
-      uid = #{uid},
-      column1 = #{column1},
-      column2 = #{column2},
-      column3 = #{column3},
-      column4 = #{column4},
-      column5 = #{column5}
-   	 WHERE id = #{id}
-     </update>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+<mapper namespace="com.imsystem.mapper.ModuleMapper">
+	<resultMap id="BaseResultMap"
+		type="com.imsystem.domain.Module">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="enname" property="enname" jdbcType="VARCHAR" />
+		<result column="catalog" property="catalog" jdbcType="INTEGER" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="time" property="time" jdbcType="TIMESTAMP" />
+		<result column="parentid" property="parentid" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+		<result column="uid" property="uid" jdbcType="VARCHAR" />
+		<result column="column1" property="column1" jdbcType="VARCHAR" />
+		<result column="column2" property="column2" jdbcType="VARCHAR" />
+		<result column="column3" property="column3" jdbcType="VARCHAR" />
+		<result column="column4" property="column4" jdbcType="VARCHAR" />
+		<result column="column5" property="column5" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, name, enname, catalog, url, time, parentid, state, uid, column1,
+		column2, column3,
+		column4, column5
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.imsystem.domain.ModuleExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from module
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from module
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from module
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="com.imsystem.domain.ModuleExample">
+		delete from module
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.imsystem.domain.Module">
+		insert into module (id, name, enname,
+		catalog, url, time,
+		parentid, state, uid,
+		column1, column2, column3,
+		column4, column5)
+		values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+		#{enname,jdbcType=VARCHAR},
+		#{catalog,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP},
+		#{parentid,jdbcType=INTEGER}, #{state,jdbcType=INTEGER},
+		#{uid,jdbcType=VARCHAR},
+		#{column1,jdbcType=VARCHAR}, #{column2,jdbcType=VARCHAR}, #{column3,jdbcType=VARCHAR},
+		#{column4,jdbcType=VARCHAR}, #{column5,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.imsystem.domain.Module">
+		insert into module
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="enname != null">
+				enname,
+			</if>
+			<if test="catalog != null">
+				catalog,
+			</if>
+			<if test="url != null">
+				url,
+			</if>
+			<if test="time != null">
+				time,
+			</if>
+			<if test="parentid != null">
+				parentid,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+			<if test="uid != null">
+				uid,
+			</if>
+			<if test="column1 != null">
+				column1,
+			</if>
+			<if test="column2 != null">
+				column2,
+			</if>
+			<if test="column3 != null">
+				column3,
+			</if>
+			<if test="column4 != null">
+				column4,
+			</if>
+			<if test="column5 != null">
+				column5,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="enname != null">
+				#{enname,jdbcType=VARCHAR},
+			</if>
+			<if test="catalog != null">
+				#{catalog,jdbcType=INTEGER},
+			</if>
+			<if test="url != null">
+				#{url,jdbcType=VARCHAR},
+			</if>
+			<if test="time != null">
+				#{time,jdbcType=TIMESTAMP},
+			</if>
+			<if test="parentid != null">
+				#{parentid,jdbcType=INTEGER},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=INTEGER},
+			</if>
+			<if test="uid != null">
+				#{uid,jdbcType=VARCHAR},
+			</if>
+			<if test="column1 != null">
+				#{column1,jdbcType=VARCHAR},
+			</if>
+			<if test="column2 != null">
+				#{column2,jdbcType=VARCHAR},
+			</if>
+			<if test="column3 != null">
+				#{column3,jdbcType=VARCHAR},
+			</if>
+			<if test="column4 != null">
+				#{column4,jdbcType=VARCHAR},
+			</if>
+			<if test="column5 != null">
+				#{column5,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.imsystem.domain.ModuleExample"
+		resultType="java.lang.Integer">
+		select count(*) from module
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update module
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=VARCHAR},
+			</if>
+			<if test="record.name != null">
+				name = #{record.name,jdbcType=VARCHAR},
+			</if>
+			<if test="record.enname != null">
+				enname = #{record.enname,jdbcType=VARCHAR},
+			</if>
+			<if test="record.catalog != null">
+				catalog = #{record.catalog,jdbcType=INTEGER},
+			</if>
+			<if test="record.url != null">
+				url = #{record.url,jdbcType=VARCHAR},
+			</if>
+			<if test="record.time != null">
+				time = #{record.time,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.parentid != null">
+				parentid = #{record.parentid,jdbcType=INTEGER},
+			</if>
+			<if test="record.state != null">
+				state = #{record.state,jdbcType=INTEGER},
+			</if>
+			<if test="record.uid != null">
+				uid = #{record.uid,jdbcType=VARCHAR},
+			</if>
+			<if test="record.column1 != null">
+				column1 = #{record.column1,jdbcType=VARCHAR},
+			</if>
+			<if test="record.column2 != null">
+				column2 = #{record.column2,jdbcType=VARCHAR},
+			</if>
+			<if test="record.column3 != null">
+				column3 = #{record.column3,jdbcType=VARCHAR},
+			</if>
+			<if test="record.column4 != null">
+				column4 = #{record.column4,jdbcType=VARCHAR},
+			</if>
+			<if test="record.column5 != null">
+				column5 = #{record.column5,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update module
+		set id = #{record.id,jdbcType=VARCHAR},
+		name = #{record.name,jdbcType=VARCHAR},
+		enname = #{record.enname,jdbcType=VARCHAR},
+		catalog = #{record.catalog,jdbcType=INTEGER},
+		url = #{record.url,jdbcType=VARCHAR},
+		time = #{record.time,jdbcType=TIMESTAMP},
+		parentid = #{record.parentid,jdbcType=INTEGER},
+		state = #{record.state,jdbcType=INTEGER},
+		uid = #{record.uid,jdbcType=VARCHAR},
+		column1 = #{record.column1,jdbcType=VARCHAR},
+		column2 = #{record.column2,jdbcType=VARCHAR},
+		column3 = #{record.column3,jdbcType=VARCHAR},
+		column4 = #{record.column4,jdbcType=VARCHAR},
+		column5 = #{record.column5,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.imsystem.domain.Module">
+		update module
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="enname != null">
+				enname = #{enname,jdbcType=VARCHAR},
+			</if>
+			<if test="catalog != null">
+				catalog = #{catalog,jdbcType=INTEGER},
+			</if>
+			<if test="url != null">
+				url = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="time != null">
+				time = #{time,jdbcType=TIMESTAMP},
+			</if>
+			<if test="parentid != null">
+				parentid = #{parentid,jdbcType=INTEGER},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=INTEGER},
+			</if>
+			<if test="uid != null">
+				uid = #{uid,jdbcType=VARCHAR},
+			</if>
+			<if test="column1 != null">
+				column1 = #{column1,jdbcType=VARCHAR},
+			</if>
+			<if test="column2 != null">
+				column2 = #{column2,jdbcType=VARCHAR},
+			</if>
+			<if test="column3 != null">
+				column3 = #{column3,jdbcType=VARCHAR},
+			</if>
+			<if test="column4 != null">
+				column4 = #{column4,jdbcType=VARCHAR},
+			</if>
+			<if test="column5 != null">
+				column5 = #{column5,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.imsystem.domain.Module">
+		update module
+		set name = #{name,jdbcType=VARCHAR},
+		enname = #{enname,jdbcType=VARCHAR},
+		catalog = #{catalog,jdbcType=INTEGER},
+		url = #{url,jdbcType=VARCHAR},
+		time = #{time,jdbcType=TIMESTAMP},
+		parentid = #{parentid,jdbcType=INTEGER},
+		state = #{state,jdbcType=INTEGER},
+		uid = #{uid,jdbcType=VARCHAR},
+		column1 = #{column1,jdbcType=VARCHAR},
+		column2 = #{column2,jdbcType=VARCHAR},
+		column3 = #{column3,jdbcType=VARCHAR},
+		column4 = #{column4,jdbcType=VARCHAR},
+		column5 = #{column5,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+
+
+	<!-- 查询所有功能权限 -->
+	<select id="queryModuleAll" resultMap="BaseResultMap">
+
+		SELECT * FROM `module` WHERE state=0
+
+	</select>
+
+
+
+	<!-- 根据ID查询功能权限 -->
+	<select id="queryModuleById" resultMap="BaseResultMap">
+
+		SELECT * FROM `module` WHERE id=#{id} AND state=0
+
+	</select>
+
+
+	<!-- 新增功能权限 -->
+	<insert id="insertModule">
+		INSERT INTO module (id, `name`, enname,
+		catalog, url, `time`,
+		parentid, state, uid,
+		column1, column2, column3,
+		column4, column5)
+		VALUES (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+		#{enname,jdbcType=VARCHAR},
+		#{catalog,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP},
+		#{parentid,jdbcType=INTEGER}, #{state,jdbcType=INTEGER},
+		#{uid,jdbcType=VARCHAR},
+		#{column1,jdbcType=VARCHAR}, #{column2,jdbcType=VARCHAR}, #{column3,jdbcType=VARCHAR},
+		#{column4,jdbcType=VARCHAR}, #{column5,jdbcType=VARCHAR})
+	</insert>
+
+
+	<!-- 根据ID删除功能权限 -->
+	<delete id="deleteModuleById">
+
+		DELETE FROM `module` WHERE id = #{id}
+
+	</delete>
+
+
+
+	<!-- 根据ID修改功能权限 -->
+	<update id="updateModuleById">
+		UPDATE `module` SET `name` = #{name},
+		enname = #{enname},
+		catalog = #{catalog},
+		url = #{url},
+		`time` = #{time},
+		parentid = #{parentid},
+		state = #{state},
+		uid = #{uid},
+		column1 = #{column1},
+		column2 = #{column2},
+		column3 = #{column3},
+		column4 = #{column4},
+		column5 = #{column5}
+		WHERE id = #{id}
+	</update>
+
+
+	<resultMap type="com.imsystem.domain.Module" id="ResultMap_one" extends="BaseResultMap">
+
+		<collection property="mlist" column="{uid=uid,parentid=id}" ofType="ResultMap_one" select="queryMuLu">
+			
+		</collection>
+
+	</resultMap>
+
+
+	 <select id="queryMuLu" resultMap="ResultMap_one" >
+		
+		SELECT m.*,u.id as uid FROM module AS m
+		INNER JOIN rolemodule AS rm ON rm.mid=m.id
+		INNER JOIN role AS r ON r.id=rm.rid
+		INNER JOIN `user` AS u ON u.rid=r.id
+		where m.parentid=#{parentid} and u.id=#{uid}
+	</select> 
+
+	
+
+	<select id="queryMap" resultMap="BaseResultMap">
+
+		SELECT m.*,u.id as uid FROM module AS m
+		INNER JOIN rolemodule AS rm ON rm.mid=m.id
+		INNER JOIN role AS r ON r.id=rm.rid
+		INNER JOIN `user` AS u ON u.rid=r.id
+		where  u.id=#{uid}
+		
+	</select>
+
+
+
+
+
 </mapper>

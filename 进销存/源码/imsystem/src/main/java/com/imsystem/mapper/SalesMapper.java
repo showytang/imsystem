@@ -2,10 +2,15 @@ package com.imsystem.mapper;
 
 import com.imsystem.domain.Sales;
 import com.imsystem.domain.SalesExample;
+import com.imsystem.domain.Stock;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface SalesMapper {
+	
+	List<Sales> query(@Param("code") String code,@Param("time") String time,@Param("endTime") String endTime);
+	
     int countByExample(SalesExample example);
 
     int deleteByExample(SalesExample example);

@@ -32,15 +32,24 @@ public interface UserMapper {
     
     User queryUserByName(@Param("name") String name,@Param("pwd") String pwd);
     
-    User queryUserById(String id);
+    User queryUserById(@Param("id") String id);
     
     List<User> queryUserAll();
     
     int insertUser(User user);
     
-    int deleteUserById(String id);
+    int  deleteUserById(@Param("state") Integer state,@Param("id") String id);
     
     int updateUserById(User user);
+    
+    
+    List<User> queryUserRole(@Param("name") String name);
+    
+    
+    String queryUserMaxId();
+    
+    
+    int deleteAll(Integer [] ids);
     
     
 }

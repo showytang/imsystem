@@ -2,6 +2,7 @@ package com.imsystem.service.setup;
 
 import java.util.List;
 
+import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.User;
 
 public interface UserService {
@@ -14,8 +15,16 @@ public interface UserService {
     
 	public int insertUser(User user);
     
-	public int deleteUserById(String id);
+	public int  deleteUserById(Integer state,String id);
     
 	public int updateUserById(User user);
+	
+	PageInfo<User> queryByPage(User user,Integer pageNum,Integer pageSize);
+	
+	
+	 int deleteAll(Integer [] ids);
+	
+	String queryUserMaxId();
+
 	
 }

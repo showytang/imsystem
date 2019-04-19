@@ -1,6 +1,7 @@
 package com.imsystem.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -15,9 +16,9 @@ public class Stock {
 
     private String sid;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date time;
     
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date updatetime;
 
@@ -36,7 +37,17 @@ public class Stock {
     private String column4;
 
     private String column5;
+    
+    private List<Stockdetails> stockdetails;
+    
+    public List<Stockdetails> getStockdetails() {
+		return stockdetails;
+	}
 
+    public void setStockdetails(List<Stockdetails> stockdetails) {
+		this.stockdetails = stockdetails;
+	}
+    
     public String getId() {
         return id;
     }

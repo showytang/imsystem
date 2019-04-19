@@ -1,6 +1,7 @@
 package com.imsystem.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class Role {
     private String id;
@@ -23,7 +24,19 @@ public class Role {
 
     private String column5;
 
-    public String getId() {
+    private List<Module> moduleList;
+    
+	
+
+	public List<Module> getModuleList() {
+		return moduleList;
+	}
+
+	public void setModuleList(List<Module> moduleList) {
+		this.moduleList = moduleList;
+	}
+
+	public String getId() {
         return id;
     }
 

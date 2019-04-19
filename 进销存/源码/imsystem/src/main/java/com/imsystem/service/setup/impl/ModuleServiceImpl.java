@@ -1,6 +1,9 @@
 package com.imsystem.service.setup.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,6 +53,21 @@ public class ModuleServiceImpl implements ModuleService{
 	public int updateModuleById(Module module) {
 		
 		return moduleMapper.updateModuleById(module);
+	}
+
+	@Override
+	public List<Module>queryMuLu(String uid,Integer id) {
+		
+		return moduleMapper.queryMuLu(uid,id);
+		
+	}
+	
+
+
+	@Override
+	public Map<String, Module> queryMap(String uid) {
+		
+		return moduleMapper.queryMap(uid);
 	}
 
 }

@@ -7,7 +7,13 @@ import org.apache.ibatis.annotations.Param;
 
 public interface StandardMapper {
 	
-	List<Standard> queryStandardById(Integer id);
+	List<Standard> queryStandardById(String id);
+	/**
+	 * 戴文诗引用
+	 * @param id
+	 * @return
+	 */
+	List<Standard> dwsqueryStandardById(String id);
 	
     int countByExample(StandardExample example);
 
@@ -30,4 +36,14 @@ public interface StandardMapper {
     int updateByPrimaryKeySelective(Standard record);
 
     int updateByPrimaryKey(Standard record);
+    
+    List<Standard> queryStandard(@Param("tiaojian")String tiaojian);
+    
+    int updatedelete(String id);
+    
+    int insertStandard(Standard stan);
+    
+    int toupdate(Standard stan);
+    
+    Standard StandardById(String id);
 }

@@ -124,6 +124,15 @@
 		display: block;
 	}
 }
+
+.orderOver {
+	color: red;
+	margin-right: 10px;
+	font-size: 12px;
+	padding: 0px 3px;
+	border-radius: 15%;
+	border: 1px solid red;
+}
 </style>
 </head>
 <body>
@@ -161,8 +170,16 @@
 								class="form-control" onchange="time(this)" id="config-demo"
 								style="border: none; border-right: 1px solid #ddd; border-radius: 0px;"
 								placeholder="开始时间" /> <span class="input-group-addon">时间</span>
-							<span class="input-group-addon order" data="1"> <span
+							<span class="input-group-addon order" data="0"> <span
 								class="glyphicon glyphicon-triangle-bottom"></span>
+							</span>
+						</div>
+					</div>
+					<div class="col-md-1 col-sm-12 col-xs-11 display tj">
+						<div class="input-group">
+							<span class="input-group-addon">显示已售</span> <span
+								class="form-control"> <input type="checkbox"
+								onchange="check()" id="check">
 							</span>
 						</div>
 					</div>
@@ -189,7 +206,11 @@
 						</thead>
 						<tbody>
 							<tr v-for="item in pageIf.list">
-								<td>{{item.code}}</td>
+								<td style="display: flex">
+									<div v-if="item.state == 2" class="orderOver">已售完</div>
+									<div v-if="item.state == 1" class="orderOver">调拨</div>
+									{{item.code}}
+								</td>
 								<td>{{item.updatetime}}</td>
 								<td>{{item.column1}}</td>
 								<td>{{item.column2}}</td>
@@ -197,11 +218,11 @@
 									<div :data="item.id" style="display: flex;">
 										<span style="margin: auto;" title="修改"
 											v-on:click="openModel(item.code)"
-											class="glyphicon glyphicon-edit"></span> &nbsp;&nbsp; <span
+											class="glyphicon glyphicon-edit"></span>
+									</div> <!-- &nbsp;&nbsp; <span
 											style="margin: auto;" title="调拨"
 											class="glyphicon glyphicon-check"
-											v-on:click="openAllotModel(item.code)"></span>
-									</div>
+											v-on:click="openAllotModel(item.code)"></span> -->
 								</td>
 							</tr>
 						</tbody>
@@ -238,11 +259,6 @@
 			</div>
 		</div>
 	</div>
-	</div>
-	</div>
-	</div>
-	</div>
-	</div>
 	<script type="text/javascript"
 		th:src="@{/assets/js/bootstrap-datetimepicker.js}"></script>
 	<script type="text/javascript" th:inline="javascript">
@@ -269,16 +285,7 @@
 						
 						$(".modal").modal("show");
 						
-					},
-					openAllotModel : function(code){
-						
-						$("iframe").attr("src",[[@{/orderModel/queryIndexAllot}]]+"?code="+code);
-						
-						$("#myModalLabel").find("span").text(code);
-						
-						$(".modal").modal("show");
 					}
-					
 				},
 				watch : {
 				}
@@ -297,8 +304,14 @@
 			function  floatPage(){
 				
 				vue.pageIf.pageNum = $(".currentPage").text();
+				
 				query();
 				
+			}
+			
+			function check(){
+				
+				query();
 			}
 			
 			function query(){
@@ -307,6 +320,11 @@
 				var time = times.substring(0,(times.indexOf('-')-1));
 				
 				var endTime = times.substring((times.indexOf('-')+2),times.length)
+				var kucun;
+				
+				if($("#check").prop("checked")){
+					kucun = 2;
+				}
 				
 				if(time){
 					time = timess(time);
@@ -318,6 +336,7 @@
 						code : vue.no,
 						pageSize : vue.pagesize,
 						time : time,
+						kucun : kucun,
 						endTime : endTime,
 						order : $(".order").attr("data"),
 						currentPage : vue.pageIf.pageNum
@@ -380,11 +399,11 @@
 					if($(this).find("span").attr("class").indexOf("glyphicon-triangle-bottom") != -1) {
 						$(this).find("span").removeClass("glyphicon-triangle-bottom");
 						$(this).find("span").addClass("glyphicon-triangle-top");
-						$(this).attr("data","0");
+						$(this).attr("data","1");
 					} else {
 						$(this).find("span").addClass("glyphicon-triangle-bottom");
 						$(this).find("span").removeClass("glyphicon-triangle-top");
-						$(this).attr("data","1");
+						$(this).attr("data","0");
 					}
 					query();
 				});
@@ -393,79 +412,50 @@
 					
 					var shappingBody = iframe.find("#shappingTbody")
 					
-					if($("iframe").attr("src").indexOf('/orderModel/queryIndexAllot') != -1){
+					var stock = {
+							code : $("#myModalLabel").find("span").text(),
+							stockdetails : [],
+							column3 : iframe.find("select").val(),
+							id : shappingBody.attr("data")
+						};
 						
-						var stock = {
-								code : $("#myModalLabel").find("span").text(),
-								stockdetails : [],
-								column3 : iframe.find("select").val(),
-								id : shappingBody.attr("data")
-							};
-							
-							$(shappingBody.find("tr")).each(function(i,e){
-								var shuliang = parseInt($(e).find(".shiliang").val());
-								stockdetail = {
-										count : $(e).find("[name=count]").val(),
-										scount : (parseInt($(e).find("[name=count]").val())-shuliang),
-										price : $(e).find("[name=price]").val(),
-										state : $(e).find("[name=state]").val(),
-										uid : $(e).find("[name=uid]").val(),
-										storeid : $(e).find("[name=storeid]").val(),
-										gvid : $(e).find("img").attr("data")
-										
-								}
-								stock.stockdetails.push(stockdetail);
-								
-							});
-						
-						$.ajax({
-							
-							url : [[@{/insertOrder/allot}]],
-							
-							data : JSON.stringify(stock),
-							
-							type : "post",
-							
-							dataType : "json",
-							
-							contentType : "application/json; charset=UTF-8",
-							
-							processData: false,
-							
-							success : function(result){
-								
-								alert(result)
-								
+						$(shappingBody.find("tr")).each(function(i,e){
+							var shuliang = parseInt($(e).find(".shiliang").val());
+							stockdetail = {
+									count : $(e).find("[name=count]").val(),
+									scount : (parseInt($(e).find("[name=count]").val())-shuliang),
+									price : $(e).find("[name=price]").val(),
+									state : $(e).find("[name=state]").val(),
+									uid : $(e).find("[name=uid]").val(),
+									storeid : $(e).find("[name=storeid]").val(),
+									gvid : $(e).find("img").attr("data")
+									
 							}
+							stock.stockdetails.push(stockdetail);
 							
 						});
+					
+					$.ajax({
 						
-					}
-					else{
+						url : [[@{/insertOrder/uploadInsertOrder}]],
 						
-						$.ajax({
-							
-							url : [[@{/insertOrder/uploadInsertOrder}]],
-							
-							data : "",
-							
-							type : "post",
-							
-							dataType : "json",
-							
-							contentType : "application/json; charset=UTF-8",
-							
-							processData: false,
-							
-							success : function(result){
-								
-								alert(result)
-								
-							}
-							
-						});
+						data : JSON.stringify(stock),
 						
-					}
+						type : "post",
+						
+						dataType : "json",
+						
+						contentType : "application/json; charset=UTF-8",
+						
+						processData: false,
+						
+						success : function(result){
+							
+							alert(result)
+							
+						}
+						
+					});
 					
 				});
 			});

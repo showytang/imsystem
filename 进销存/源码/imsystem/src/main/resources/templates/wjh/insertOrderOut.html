@@ -6,7 +6,8 @@
 	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 <title>出货单</title>
 <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
-<script type="text/javascript" th:src="@{/assets/js/jquery-3.1.1.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{/assets/js/jquery-3.1.1.min.js}"></script>
 <link rel="stylesheet"
 	th:href="@{/assets/css/bootstrap-datetimepicker.min.css}" />
 <script type="text/javascript" th:src="@{/assets/js/bootstrap.min.js}"></script>
@@ -28,22 +29,27 @@
 .jiben>div {
 	margin-top: 10px;
 }
+
 .shappingImg {
 	width: 35px;
 	height: 35px;
 }
+
 .table>tbody>tr>td {
 	line-height: 35px;
 	white-space: nowrap;
 	text-align: center;
 }
+
 .container-fluid {
 	overflow-x: auto;
 }
+
 .table>thead>tr>th {
 	white-space: nowrap;
 	text-align: center;
 }
+
 .panel-body {
 	display: none;
 	height: 170px;
@@ -53,18 +59,22 @@
 	margin-top: -10px;
 	overflow-y: hidden;
 }
+
 .slimScrollDiv {
 	display: none;
 }
+
 .clientNames>li {
 	padding: 10px;
 	cursor: pointer;
 }
+
 .input-group-addon {
 	color: white;
 	background-color: rgb(2, 143, 208);
 	border-color: rgb(2, 143, 208);
 }
+
 @media ( max-width : 767px) {
 	.btnShapping {
 		width: 100%;
@@ -73,6 +83,7 @@
 		width: 33.33%;
 	}
 }
+
 .list-inline>li {
 	padding: 5px;
 	position: relative;
@@ -84,14 +95,17 @@
 	white-space: nowrap;
 	max-width: 100px;
 }
+
 .list-inline {
 	-webkit-user-select: none;
 }
+
 .backage {
 	background: rgb(2, 143, 208);
 	position: absolute;
 	z-index: 1;
 }
+
 .sprice {
 	max-width: 80px;
 	border: none;
@@ -107,7 +121,7 @@
 			<div class="container-fluid">
 				<div class="panel panel-headline" id="main">
 					<div class="panel-heading">
-						<h3 class="panel-title">添加退货订单</h3>
+						<h3 class="panel-title">添加销售订单</h3>
 						<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
 					</div>
 					<div class="row"
@@ -122,9 +136,9 @@
 									</div>
 									<div class="btn"
 										style="border: none; box-shadow: none; color: #e84242; font-size: 16px;">
-										<span style="color: white">实收：</span>$<input class="sprice"
-											placeholder="请输入">&nbsp;<span class="badge sumcount"
-											style="background: #e84242;">4</span>
+										<span style="color: white"><span id="priceName">应付金额</span>：</span>$<input
+											class="sprice" placeholder="请输入">&nbsp;<span
+											class="badge sumcount" style="background: #e84242;">4</span>
 									</div>
 									<div class="btn btn-primary" id="insertOrder"
 										style="border: none; box-shadow: none; font-size: 16px;">确定订单</div>
@@ -155,8 +169,8 @@
 								<div class="input-group">
 									<span class="input-group-addon">客户</span> <select
 										class="form-control client">
-										<option data="1">零售客户</option>
-										<option data="2">其他...</option>
+										<option value="1">零售客户</option>
+										<option value="#">其他...</option>
 									</select>
 								</div>
 							</div>
@@ -214,7 +228,9 @@
 											style="font-size: 14px; white-space: nowrap;">
 											<div style="font-size: 20px;">{{shappingItem.name}}</div>
 											<div>{{item.name}}</div>
-											<div>原价 ：￥ <span class="oldprice">{{item.defaultvalue}}</span></div>
+											<div>
+												原价 ：￥ <span class="oldprice">{{item.defaultvalue}}</span>
+											</div>
 											<div>
 												$<span class='jprice'>{{item.jprice}}</span>
 												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Count:&nbsp;<input
@@ -281,7 +297,7 @@
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default"
 										data-dismiss="modal">关闭</button>
-									<button type="button" class="btn btn-primary">确定</button>
+									<button type="button" id="clientOk" class="btn btn-primary">确定</button>
 								</div>
 							</div>
 						</div>
@@ -358,6 +374,19 @@
 				$("#time").val(time);
 				$("#No").val(myDate.getFullYear() + "" + dateTime(parseInt(myDate.getMonth()) + 1) + "" + dateTime(myDate.getDate()) + dateTime(myDate.getHours()) + "" + dateTime(myDate.getMinutes()) + "" + dateTime(myDate.getSeconds()));
 				posi(0,0);
+				$("#clientOk").click(function(){
+					
+					var name = $(".clientName").text();
+					var option = $("<option value='11'>"+name+"</option>")
+					$(".client").find("option:selected").before(option);
+					
+					$(".client").val("11");
+					
+					$(".fade").modal("hide");
+					
+					$("#priceName").text("定金");
+					
+				});
 				$(".glyphicon-th-list").click(function() {
 					if($(".coll").css("display") == "none") {
 						$(".coll").slideDown();
@@ -405,59 +434,74 @@
 					counts();
 	         	});
 				$(".client").change(function() {
-					if($(this).find("option:selected").attr("data") != 1) {
+					if($(this).val() == "#") {
 						$(".fade").modal("show");
+						$(".client").val("1")
+					}
+					else if($(this).val() == "1"){
+						$("#priceName").text("应付金额");
+					}
+					else{
+						$("#priceName").text("定金")
 					}
 				});
 				counts();
 				$("#insertOrder").click(function(){
-					var order = {
-							paymoney : $(".yprice").text(),
-							paytype  : vue.typeId,
-							code : $("#No").val(),
-							time : $("#time").val(),
-							list : [],
-							tainmoney : $(".sprice").val(),
-							count : $(".sumcount").text(),
-							cid : 0,
-							state : 0,
-							progress : 0,
-							storeid : 1,
-							uid : 1
-					};
-					
-					order.time = eval('new Date(' + order.time.replace(/\d+(?=-[^-]+$)/,    
-							function (a) { return parseInt(a, 10) - 1; }).match(/\d+/g) + ')');  
-					order.updatetime = order.time;
-					
-					//添加商品id
-					for(var i = 1 ; i < $(".panel-title").length ; i ++){
-						
-						var shapping = {
-								gvid : $(".panel-title:eq("+i+")").attr("data"),
-								count : $(".panel-title:eq("+i+")").next().next().text(),
-								scount : "0",
-								price : $(".jprice:eq("+(i-1)+")").text(),
-								oldprice : $(".oldprice:eq("+(i-1)+")").text(),
-								time : order.time,
-								state : 0
+					if($(".sprice").val()){
+						var order = {
+								paymoney : $(".yprice").text(),
+								paytype  : vue.typeId,
+								code : $("#No").val(),
+								time : $("#time").val(),
+								list1 : [],
+								count : $(".sumcount").text(),
+								cid : $(".client").val(),
+								state : 0,
+								progress : 1,
+								storeid : 1,
+								uid : 1
 						};
-						
-						order.list.push(shapping);
-						
-					}
-					$.ajax({
-						url : [[@{/insertOrder/insertSalesorder}]],
-						data : JSON.stringify(order),
-						type : "post",
-						dataType : "text",
-						contentType : "application/json",
-						processData : false,
-						success : function(result){
-							alert(result);
+						if($("#priceName").text() == "定金"){
+							order.preprice = $(".sprice").val();
+							order.tainmoney = 0;
 						}
+						else{
+							order.tainmoney = $(".sprice").val();
+							order.preprice = 0;
+						}
+						order.time = eval('new Date(' + order.time.replace(/\d+(?=-[^-]+$)/,    
+								function (a) { return parseInt(a, 10) - 1; }).match(/\d+/g) + ')');  
+						order.updatetime = order.time;
 						
-					});
+						//添加商品id
+						for(var i = 1 ; i < $(".panel-title").length ; i ++){
+							
+							var shapping = {
+									gvid : $(".panel-title:eq("+i+")").attr("data"),
+									count : $(".panel-title:eq("+i+")").next().next().text(),
+									scount : "0",
+									price : $(".jprice:eq("+(i-1)+")").text(),
+									oldprice : $(".oldprice:eq("+(i-1)+")").text(),
+									time : order.time,
+									state : 0
+							};
+							
+							order.list1.push(shapping);
+							
+						}
+						$.ajax({
+							url : [[@{/insertOrder/insertSalesorder}]],
+							data : JSON.stringify(order),
+							type : "post",
+							dataType : "text",
+							contentType : "application/json",
+							processData : false,
+							success : function(result){
+								alert(result);
+							}
+							
+						});
+					}
 				});
 			});
 			function dateTime(th) {
@@ -468,5 +512,4 @@
 			}
 		</script>
 </body>
-
 </html>

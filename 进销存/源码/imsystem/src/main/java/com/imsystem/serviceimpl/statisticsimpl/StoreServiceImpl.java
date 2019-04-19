@@ -10,14 +10,16 @@ import com.imsystem.service.statistics.StoreService;
 
 @Service
 @Transactional
-public class StoreServiceImpl implements StoreService{
+public class  StoreServiceImpl implements StoreService{
+
 	@Autowired
 	StoreMapper sm;
 	
 	@Override
 	public Store selectByPrimaryKey(String id) {
-		// TODO Auto-generated method stub
+		
 		return sm.selectByPrimaryKey(id);
 	}
-
+	
+	
 }

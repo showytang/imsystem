@@ -48,4 +48,12 @@ public interface CustomerTypeService {
 	 */
 	public List<QueryCustomerTypeVO> queryAllCustomerType();
 
+	
+	/**
+	 * 根据条件查询所有客户类型VO
+	 * @return
+	 */
+	public List<QueryCustomerTypeVO> queryLikeCustomerType(String content);
+
+
 }

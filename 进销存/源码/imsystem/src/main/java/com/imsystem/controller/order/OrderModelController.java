@@ -2,6 +2,7 @@ package com.imsystem.controller.order;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.imsystem.domain.Stock;
 import com.imsystem.service.order.OrderModalService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ public class OrderModelController {
 	@RequestMapping("/queryIndexAllot")
 	public String queryIndexAllot(String code,Model model) {
 		
+			
 		model.addAttribute("list",ordermodalservice.queryIndex(code));
 		
 		return "wjh/indexAllotDatail";
@@ -37,12 +39,23 @@ public class OrderModelController {
 	}
 	
 	@RequestMapping("/orderOver")
-	public String orderOver() {
+	public String orderOver(String id,Model model) {
+		
+		model.addAttribute("list",ordermodalservice.orderOver(id));
+		
 		return "wjh/orderOverDetails";
 	}
 	
 	@RequestMapping("/yetOrder")
 	public String yetOrder() {
 		return "wjh/yetOrderDetails";
+	}
+	
+	@RequestMapping("/salesOrderDetails")
+	public String salesOrderDetails(Model model,String id) {
+		
+		model.addAttribute("list",ordermodalservice.salesOrderDetails(id));
+		
+		return "wjh/salesOrderDetsils";
 	}
 }

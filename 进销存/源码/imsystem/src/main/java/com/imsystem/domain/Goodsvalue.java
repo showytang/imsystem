@@ -39,6 +39,16 @@ public class Goodsvalue {
 
     private String column5;
     
+    /**
+     * 初期库存
+     */
+    private String count;
+    
+    /**
+     *总库存
+     */
+    private String counts;
+    
     private MultipartFile img;
     
     /**
@@ -56,9 +66,35 @@ public class Goodsvalue {
 	private Stockdetails stockDetails;
 	
     
+	private Goods goods;
 	
 	
-    public Stockdetails getStockDetails() {
+	
+    public String getCount() {
+		return count;
+	}
+
+	public void setCount(String count) {
+		this.count = count;
+	}
+
+	public String getCounts() {
+		return counts;
+	}
+
+	public void setCounts(String counts) {
+		this.counts = counts;
+	}
+
+	public Goods getGoods() {
+		return goods;
+	}
+
+	public void setGoods(Goods goods) {
+		this.goods = goods;
+	}
+
+	public Stockdetails getStockDetails() {
 		return stockDetails;
 	}
 
@@ -124,7 +160,7 @@ public class Goodsvalue {
     }
 
     public Date getTime() {
-        return time;
+        return new Date();
     }
 
     public void setTime(Date time) {

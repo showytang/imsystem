@@ -1,5 +1,7 @@
 package com.imsystem.domain;
 
+import java.util.List;
+
 public class Rolemodule {
     private String id;
 
@@ -21,7 +23,19 @@ public class Rolemodule {
 
     private String column5;
 
-    public String getId() {
+    
+    private List<Module> listModule;
+    
+    
+    public List<Module> getListModule() {
+		return listModule;
+	}
+
+	public void setListModule(List<Module> listModule) {
+		this.listModule = listModule;
+	}
+
+	public String getId() {
         return id;
     }
 

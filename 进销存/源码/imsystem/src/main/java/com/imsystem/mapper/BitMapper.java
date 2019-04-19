@@ -6,6 +6,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface BitMapper {
+	
+	List<Bit> queryByLike(@Param("text")String text);
+	
     int countByExample(BitExample example);
 
     int deleteByExample(BitExample example);
@@ -18,6 +21,8 @@ public interface BitMapper {
 
     List<Bit> queryall();
     
+    Bit querybyid(String id);
+    
     int updatestate(int id);
 
     Bit selectByPrimaryKey(String id);
@@ -29,4 +34,6 @@ public interface BitMapper {
     int updateByPrimaryKeySelective(Bit record);
 
     int updateByPrimaryKey(Bit record);
+    
+    int toupdate(Bit bit);
 }

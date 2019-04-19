@@ -23,6 +23,20 @@
     <result column="column4" property="column4" jdbcType="VARCHAR" />
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
+  
+  <select id="query" resultMap="BaseResultMap" >
+  		SELECT * FROM sales AS s
+  		<where>
+  			<if test="code != null and code != '' ">
+  				and s.code like concat('%',#{code},'%')
+  			</if>
+  			<if test="time != null and time != ''">
+  				AND s.`updatetime` >= #{time} AND s.`updatetime` &lt;=
+				#{endTime}
+  			</if>
+  		</where>
+  </select>
+  
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >

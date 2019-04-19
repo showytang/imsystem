@@ -7,9 +7,9 @@ import com.imsystem.domain.Standard;
 
 public interface GoodsTypeService {
 
-	List<Goodstype> QueryGoodsTypeByPid(Integer id);
+	List<Goodstype> QueryGoodsTypeByPid(String id);
 	
-	List<Standard> queryStandradByid(Integer id);
+	List<Standard> queryStandradByid(String id);
 	
-	
+	Goodstype queryGoodsTypeReverse(String id);
 }

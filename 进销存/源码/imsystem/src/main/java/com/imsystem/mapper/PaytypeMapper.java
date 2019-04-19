@@ -2,6 +2,8 @@ package com.imsystem.mapper;
 
 import com.imsystem.domain.Paytype;
 import com.imsystem.domain.PaytypeExample;
+import com.imsystem.domain.Paytype;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,4 +29,17 @@ public interface PaytypeMapper {
     int updateByPrimaryKeySelective(Paytype record);
 
     int updateByPrimaryKey(Paytype record);
+    
+    
+    
+    List<Paytype> queryPaytype(@Param("tiaojian")String tiaojian);
+    
+    int updatedelete(String id);
+    
+    int insertPaytype(Paytype paytype);
+    
+    int toupdate(Paytype paytype);
+    
+    Paytype paytypeById(String id);
+    
 }

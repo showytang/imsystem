@@ -10,8 +10,6 @@
  * }
  * 
  css:
-
-
  .pagebtn{
  height: 28px;
  width: 25px;
@@ -37,23 +35,9 @@
  color: white;
  border: none;
  }
-
-
-
-
  * 
  * <div id="page">
- <ul>
- <li class="pagebtn pagePrev"><span class="glyphicon glyphicon-menu-left"></span></li>
- <li class="pagebtn currentPage pageCurrent pageq">1</li>
- <li class="pagebtn pageCurrent pageq">2</li>
- <li class="pagebtn pageCurrent pageq">3</li>
- <li class="pagebtn" id="pageDian" style="border: none;background: white;font-size: 20px;">...</li>
- <li class="pagebtn pageCurrent pageDi">14</li>
- <li class="pagebtn pageCurrent">15</li>
- <li class="pagebtn pageNext"><span class="glyphicon glyphicon-menu-right"></span></li>
- </ul>
- </div>
+				</div>
  * 
  * 
  * 
@@ -70,7 +54,14 @@ function pageJian(index) {
 function page(data) {
 
 	var pages = data.pageIf.pages;
-	var bool = pages > 6 ? false : true;
+	if(pages == 0){
+		$("#page").html("");
+		return;
+	}
+	
+	var pageNum = data.pageIf.pageNum;
+	
+	var bool = pages > 6 ? true : false;
 
 	var ul = $("<ul>"
 			+ "<li class=\"pagebtn pagePrev\" onclick=\"prevPage()\"><span"
@@ -85,122 +76,183 @@ function page(data) {
 			+ "<li onclick=\"currentPage(this)\" class=\"pagebtn pageCurrent\">16</li>"
 			+ "<li class=\"pagebtn pageNext\" onclick=\"nextPage()\"><span"
 			+ "class=\"glyphicon glyphicon-menu-right\"></span></li>" + "</ul>");
-	if (bool) {
-		ul.find(".pageCurrent:eq("+(data.pageIf.pageNum-1)+")").addClass("currentPage")
+
+	if (pages > 6) {
+
+		ul.find("#pageDian").show();
+
+	} else {
 		ul.find("#pageDian").hide();
-		if(pages == 0){
-			ul.find(".pageCurrent:gt(" + pages + ")").remove();
-		}
-		else{
-			ul.find(".pageCurrent:gt(" + (pages-1) + ")").remove();
+	}
+	
+	if(bool == false){
+		for(var i = 0; i < pages; i++ ){
+			
+			ul.find(".pageCurrent:eq(" + i + ")").text(i + 1);
+			
 		}
 		
-	} else {
-		$("#pageDian").show();
+		ul.find(".pageCurrent:gt(" + (pages-1) + ")").remove();
+		
+		ul.find(".pageCurrent:eq(" + (pageNum-1) + ")").addClass("currentPage");
+		
+		ul.find(".pageCurrent").removeClass("pageDi");
+		
+		ul.find(".pageCurrent:eq(" + (pages-1) + ")").addClass("pageDi");
+		
+		$("#page").html("");
+		
+		$("#page").append(ul);
+		
+		return;
 	}
-	$("#page").find("ul").remove();
 	
+	if (pageNum == 1) {
+		var s = 3;
+		for (var i = 0; i < pages; i++) {
 
-	for (var i = 0; i < pages; i++) {
+			if (bool) {
+				if (i >= pages - 3) {
 
-		if (i >= (pages - 4) && bool == false) {
-
-			if (bool == false) {
-				
-				ul.find(".pageCurrent:eq(" + i + ")").text((i + 2));
+					ul.find(".pageCurrent:eq(" + s + ")").text(i + 1);
+					s++;
+				}
+				if (i < 3) {
+					ul.find(".pageCurrent:eq(" + i + ")").text(i + 1);
+				}
+			} else {
+				ul.find(".pageCurrent:eq(" + i + ")").text(i + 1);
 			}
-		} else {
-			ul.find(".pageCurrent:eq(" + i + ")").text((i + 1));
-		}
 
+		}
+		
+		ul.find(".pageCurrent:eq(" + 0 + ")").addClass("currentPage");
+		
+	} else {
+		if (pageNum >= pages - 4) {
+			var s = 5;
+			var curr = 0;
+			for (var i = pages; i > pages - 6; i--) {
+				if(i == pageNum){
+					curr = s;
+				}
+				ul.find(".pageCurrent:eq(" + s + ")").text(i);
+				s--;
+			}
+			ul.find("#pageDian").hide();
+			ul.find(".pageCurrent:eq(" + curr + ")").addClass("currentPage");
+			ul.find(".pageCurrent:gt(" + s + ")").remove();
+
+		} else {
+
+			var s = 0;
+			
+			ul.find(".pageCurrent:eq(" + s + ")").text(pageNum-1);
+			
+			for(var i = pageNum ; i < pageNum+2; i++){
+				
+				s++;
+				
+				ul.find(".pageCurrent:eq(" + s + ")").text(i);
+				
+			}
+			
+			for(var i = 5 ; i > 2; i--){
+				
+				ul.find(".pageCurrent:eq(" + i + ")").text(pages--);
+				
+			}
+			
+			ul.find(".pageCurrent:eq(" + 1 + ")").addClass("currentPage");
+		}
 	}
+
+	$("#page").html("");
+
 	$("#page").append(ul);
 
 }
-				var s = 0;
-				function nextPage() {
-					var currentPage = $(".currentPage");
-					var index = $(".pageCurrent").index(currentPage);
-					if (index == 0) {
-						pageJia(index);
-						floatPage();
-						return;
-					}
-					if ($("#pageDian").css("display") != "none") {
-						$(".pageq").each(
-								function(index, e) {
-									if (index == $(".pageq").length - 1) {
-										$(e).text(parseInt($(e).text()) + 1);
-										return;
-									}
-									$(e).text(
-											$(".pageq:eq(" + (index + 1) + ")")
-													.text());
-								});
-					}
-					if (parseInt($(".pageCurrent:eq(" + (index + 1) + ")")
-							.text()) >= parseInt($(".pageDi").text()) - 1) {
-						if (s == 0) {
-							$("#pageDian").css("display", "none");
-							s++;
-						} else {
-							pageJia(index);
-						}
-						floatPage();
-						return;
-					}
-				};
+var s = 0;
+function nextPage() {
+	var currentPage = $(".currentPage");
+	var index = $(".pageCurrent").index(currentPage);
+	if($(".pageCurrent").length == 1){
+		return;
+	}
+	if (index == 0 || $(".pageCurrent").length < 6 || $("#pageDian").css("display") == "none") {
+		pageJia(index);
+		floatPage();
+		return;
+	}
+	if ($("#pageDian").css("display") != "none") {
+		$(".pageq").each(function(index, e) {
+			if (index == $(".pageq").length - 1) {
+				$(e).text(parseInt($(e).text()) + 1);
+				return;
+			}
+			$(e).text($(".pageq:eq(" + (index + 1) + ")").text());
+		});
+		floatPage();
+		return;
+	}
+	if (parseInt($(".pageCurrent:eq(" + (index + 1) + ")").text()) >= parseInt($(
+			".pageDi").text()) - 1) {
+		if (s == 0) {
+			$("#pageDian").css("display", "none");
+			s++;
+		} else {
+			pageJia(index);
+		}
+		floatPage();
+		return;
+	}
+};
 
-				function prevPage(th) {
-					var currentPage = $(".currentPage");
-					var index = $(".pageCurrent").index(currentPage);
-					if ($(".pageCurrent:eq(" + (index) + ")").text() == 1) {
-						return;
-					}
-					if ($(".pageCurrent:eq(" + (index) + ")").text() <= 2) {
-						pageJian(index);
-						floatPage();
-						return;
-					}
-					if (parseInt($(".pageCurrent:eq(" + (index) + ")").text()) == parseInt($(
-							".pageDi").text()) - 2) {
-						$("#pageDian").css("display", "block");
-						s = 0;
-					}
-					if (parseInt($(".pageCurrent:eq(" + (index) + ")").text()) > parseInt($(
-							".pageDi").text()) - 2) {
-						pageJian(index);
-						floatPage();
-						return;
-					} else {
-						$(".pageq")
-								.each(
-										function(index, e) {
-											if (index == 0) {
-												$(e)
-														.text(
-																parseInt($(e)
-																		.text()) - 1)
-												return;
-											}
-											$(e)
-													.text(
-															parseInt($(
-																	".pageq:eq("
-																			+ (index - 1)
-																			+ ")")
-																	.text()) + 1);
-										});
-						floatPage();
+function prevPage(th) {
+	var currentPage = $(".currentPage");
+	var index = $(".pageCurrent").index(currentPage);
+	if ($(".pageCurrent:eq(" + (index) + ")").text() == 1) {
+		return;
+	}
+	if ($(".pageCurrent:eq(" + (index) + ")").text() <= 2 || $("#pageDian").css("display") == "none") {
+		pageJian(index);
+		floatPage();
+		return;
+	}
+	if (parseInt($(".pageCurrent:eq(" + (index) + ")").text()) == parseInt($(
+			".pageDi").text()) - 2) {
+		$("#pageDian").css("display", "block");
+		s = 0;
+	}
+	if (parseInt($(".pageCurrent:eq(" + (index) + ")").text()) > parseInt($(
+			".pageDi").text()) - 2) {
+		pageJian(index);
+		floatPage();
+		return;
+	} else {
+		$(".pageq")
+				.each(
+						function(index, e) {
+							if (index == 0) {
+								$(e).text(parseInt($(e).text()) - 1)
+								return;
+							}
+							$(e)
+									.text(
+											parseInt($(
+													".pageq:eq(" + (index - 1)
+															+ ")").text()) + 1);
+						});
+		floatPage();
 
-					}
+	}
 
-				};
+};
 
 function currentPage(th) {
 
 	var index = $(".pageCurrent").index(th);
-	
+
 	var currentPage = $(".currentPage");
 
 	var currentIndex = $(".pageCurrent").index(currentPage);
@@ -211,7 +263,7 @@ function currentPage(th) {
 
 	var text = $(th).text();
 
-	if (text == "1") {
+	if (text == "1" || $(".pageCurrent").length < 6) {
 		$(".pageCurrent").removeClass("currentPage");
 		$(th).addClass("currentPage");
 		floatPage();
@@ -230,7 +282,7 @@ function currentPage(th) {
 			});
 			s = 1;
 		} else {
-			if ($(".pageCurrent").length > 5) {
+			if ($(".pageCurrent").length >= 5) {
 
 				$("#pageDian").css("display", "block");
 

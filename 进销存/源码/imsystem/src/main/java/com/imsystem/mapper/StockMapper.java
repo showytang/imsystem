@@ -1,5 +1,6 @@
 package com.imsystem.mapper;
 
+import com.imsystem.domain.Sales;
 import com.imsystem.domain.Stock;
 import com.imsystem.domain.StockExample;
 import java.util.List;
@@ -7,9 +8,13 @@ import org.apache.ibatis.annotations.Param;
 
 public interface StockMapper {
 	
+	int updateState(String code);
+	
 	Stock querydetails(String code);
 	
-	List<Stock> query(@Param("code") String code,@Param("time") String time,@Param("endTime") String endTime,@Param("order")String order);
+	int add(Sales sales);
+	
+	List<Stock> query(@Param("code") String code,@Param("time") String time,@Param("endTime") String endTime,@Param("order")String order,@Param("kucun")Integer kucun);
 	
     int countByExample(StockExample example);
 

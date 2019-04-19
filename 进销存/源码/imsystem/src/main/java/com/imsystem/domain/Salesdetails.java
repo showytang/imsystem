@@ -1,6 +1,7 @@
 package com.imsystem.domain;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class Salesdetails {
     private String id;
@@ -35,6 +36,16 @@ public class Salesdetails {
 
     private String column5;
 
+    private Goodsvalue goodsvalue;
+    
+    public Goodsvalue getGoodsvalue() {
+		return goodsvalue;
+	}
+    
+    public void setGoodsvalue(Goodsvalue goodsvalue) {
+		this.goodsvalue = goodsvalue;
+	}
+    
     public String getId() {
         return id;
     }

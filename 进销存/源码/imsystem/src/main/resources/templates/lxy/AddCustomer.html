@@ -58,6 +58,17 @@
 		border: none;
 		outline: none;
 	}
+	
+	/* 选择文件按钮样式 */
+	#chooseFileDiv,#chooseFileDiv input{
+		width: 100%;
+	}
+	#chooseFileDiv{
+		position: absolute;
+		right: 0px;
+		bottom: 2px;
+		opacity: 0.0;
+	}
 </style>
 </head>
 
@@ -66,23 +77,29 @@
 <!-- Body -->
 <body>
 	
-<div class="row" style="padding: 28px 20px;">
+<div class="row elDocument" style="padding: 28px 20px;">
+<<<<<<< HEAD
+		<input type="hidden" value="1" id="uid" name="uid"> 
+
                     <!-- Column -->
                     <div class="col-lg-4 col-xlg-3 col-md-5">
                         <div class="card">
                             <div class="card-block">
                                 <center class="m-t-30"> 
-                                	<img th:src="@{/assets/img/tmore.png}" class="img-circle" width="150">
+                                	<img id="img" th:src="@{/assets/img/tmore.png}" class="img-circle" width="150" height="145">
                                    
                                     <h4 class="card-title m-t-10"><input type="text" name="name" id="name" value="" placeholder="客户名称" /></h4>
-                                    <h6 class="card-subtitle">积分:<input type="text" name="integral" id="integral" value="" placeholder="0"/></h6>
+                                    <h6 class="card-subtitle">积分:<input type="text" name="integral" id="integral" value="0" /></h6>
                                     <div class="row text-center justify-content-md-center">
-                                        <div class="col-6">初始余额:<input type="text" name="" id="initialMoney" value="" placeholder="0"/></div>
-                                        <div class="col-6">余&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;额:<input type="text" name="" id="balance" value="" placeholder="0"/></div>
+                                        <div class="col-6">初始余额:<input type="text" name="" id="initialMoney" value="0" /></div>
+                                        <div class="col-6">余&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;额:<input type="text" name="" id="balance" value="0" /></div>
                                     </div>
                                 </center>
                             </div>
                             
+                            <div id="chooseFileDiv">
+                            	<input type="file" value="" onchange="imgShow(this)">
+                            </div>
                             <button class="btn btn-danger btn-block ">
                					选择头像
              				</button>
@@ -94,48 +111,67 @@
                     <div class="col-lg-8 col-xlg-9 col-md-7">
                         <div class="card">
                             <div class="card-block">
-                                <form class="form-horizontal form-material">
+                                <form id="addCustomerForm" class="form-horizontal form-material">
+                                
+
                                 	<div class="form-group">
                                         <label class="col-md-12">联系人名称</label>
                                         <div class="col-md-12">
-                                            <input type="text" value="" class="form-control form-control-line">
+                                            <input type="text" id="telephonename" value="" class="form-control form-control-line">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12">联系人电话</label>
                                         <div class="col-md-12">
-                                            <input type="text" value="" class="form-control form-control-line">
+                                            <input type="text" id="telephone" value="" class="form-control form-control-line">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12">收货地址</label>
                                         <div class="col-md-12">
-                                            <input type="text" value="" class="form-control form-control-line" placeholder="省/市/区/具体地址">
+                                            <input type="text" id="address" value="" class="form-control form-control-line" placeholder="省/市/区/具体地址">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-12">客户类型</label>
                                         <div class="col-sm-12">
-                                            <select class="form-control form-control-line">
-                                                <option>批发客户</option>
-                                                <option>零售客户</option>
+
+                                            <select class="form-control form-contr;ol-line" id="ct">
+                                                <option v-for="(o,i) in typeList" :value="o.ctObj.id"  :selected="o.ctObj.defaulttype == 0" >
+
+                                                {{o.ctObj.name}}
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-12">客户等级</label>
                                         <div class="col-sm-12">
-                                            <select class="form-control form-control-line">
-                                                <option>普通客户</option>
-                                                <option>会员用户</option>
-                                                <option>超级会员用户</option>
+
+                                            <select class="form-control form-control-line" id="cl">
+                                                <option v-for="(o,i) in levelList" :value="o.clObj.id">{{o.clObj.name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12">所属门店</label>
+                                        <div class="col-sm-12">
+                                            <select class="form-control form-control-line" id="sid">
+                                                <option v-for="(o,i) in storeList" :value="o.id">{{o.name}}</option>
+
+                                            
                                             </select>
                                         </div>
                                     </div>
                                     
+                                    
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <button class="btn btn-success">确认添加</button>
+
+                                            <button type="button" class="btn btn-success" id="addCustomer">确认添加</button>
+
+                                            <button class="btn btn-success" id="addCustomer">确认添加</button>
+
                                         </div>
                                     </div>
                                 </form>
@@ -143,7 +179,8 @@
                         </div>
                     </div>
                     <!-- Column -->
-                </div>
+                    
+     </div>
 	
 </body>
 <!-- //Body -->
@@ -162,10 +199,119 @@
     <script th:src="@{/assets/js/sticky-kit.min.js}"></script>
     <!--Custom JavaScript -->
     <script th:src="@{/assets/js/custom.min.js}"></script>
+    <script th:src="@{/assets/js/vue.js}"></script>
     
 	<script>
 	
+		var vue=new Vue({
+			el:".elDocument",
+			data:{
+				typeList:{},
+				levelList:{},
+				storeList:{}
+			}
+		});
+
+		
+		var formData=new FormData();
+	
+			
+
+		function imgShow(obj) {
+
+			var file = obj.files.item(0);
+			if(!(/^image\/.*$/i.test(file.type))) {
+				alert("不是图片文件！"); //不是图片 就跳出这一次循环  
+			}
+			formData.append("files",file);
+			var freader = new FileReader();
+			freader.readAsDataURL(file);
+			freader.onload = function(e) {
+
+				$("#img").attr("src",e.target.result);
+
+			}
+			
+
+			
+		}
+	
 		$(function() {
+			$.ajax({
+				url:"querytypelevel",
+				type:"post",
+				dataType:"json",
+				success:function(result){
+					vue.typeList=result.ctlist;
+					vue.levelList=result.cllist;
+					vue.storeList=result.slist;
+				}
+			});
+			
+			$("#addCustomer").click(function(){
+				
+				if($("#uid").val()==""){
+					alert("请先登录！");
+				}else{
+					if($("#name").val()==""){
+						alert("信息不完整！");
+					}else{
+						if($("#integral").val()==""){
+							alert("信息不完整！");
+						}else{
+							if($("#initialMoney").val()==""){
+								alert("信息不完整！");
+							}else{
+								if($("#balance").val()==""){
+									alert("信息不完整！");
+								}else{
+									if($("#telephone").val()==""){
+										alert("信息不完整！");
+									}else{
+										if($("#address").val()==""){
+											alert("信息不完整！");
+										}else{
+											var addr=/^[\u4e00-\u9fa5]+\/[\u4e00-\u9fa5]+\/[\u4e00-\u9fa5]+\/[\u4e00-\u9fa5_a-zA-Z0-9_-]+$/;
+											
+											if(addr.test($("#address").val())==false){
+												alert("地址输入格式不正确！");
+											}else{
+												formData.append("uid",$("#uid").val());
+												formData.append("name",$("#name").val());
+												formData.append("score",$("#integral").val());
+												formData.append("initbalance",$("#initialMoney").val());
+												formData.append("balance",$("#balance").val());
+												formData.append("telephone",$("#telephone").val());
+												formData.append("address",$("#address").val());
+												formData.append("telephonename",$("#telephonename").val());
+												formData.append("cid",$("#ct").val());
+												formData.append("lid",$("#cl").val());
+												formData.append("storeid",$("#sid").val());
+												$.ajax({
+													url:"addcustomer",
+													data:formData,
+													type:"post",
+													processData:false,
+													contentType:false,
+													success:function(result){
+														$("#addCustomerForm").attr("action","tocustomerlist");
+														$("#addCustomerForm").attr("method","post");
+														$("#addCustomerForm").submit();
+													}
+												}); 
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				
+				
+		}
+	
+		
 			
 		});
 	</script>

@@ -54,13 +54,35 @@ public class Goods {
 
     private byte[] img;
     
-    /**
+    private String byteImg;
+    
+    
+    public String getByteImg() {
+		return byteImg;
+	}
+
+	public void setByteImg(String byteImg) {
+		this.byteImg = byteImg;
+	}
+
+	/**
      * 商品实例集合
      */
     private List<Goodsvalue> goodsValues;
     
+    private List<Img> imgs;
+    
+    
    
-    public List<Goodsvalue> getGoodsValues() {
+    public List<Img> getImgs() {
+		return imgs;
+	}
+
+	public void setImgs(List<Img> imgs) {
+		this.imgs = imgs;
+	}
+
+	public List<Goodsvalue> getGoodsValues() {
 		return goodsValues;
 	}
 
@@ -181,7 +203,7 @@ public class Goods {
     }
 
     public Date getTime() {
-        return time;
+        return new Date();
     }
 
     public void setTime(Date time) {

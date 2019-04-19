@@ -15,6 +15,8 @@
     <link rel="apple-touch-icon" sizes="76x76" th:href="@{/assets/img/apple-icon.png}">
 	<link rel="icon" type="image/png" sizes="96x96" th:href="@{/assets/img/favicon.png}">
 	
+	<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}"> 
+    
     <link th:href="@{/assets/XiTong/css/bootstrap.min.css}" rel="stylesheet">
     <!-- Custom CSS -->
     <link th:href="@{/assets/XiTong/css/style.css}" rel="stylesheet">
@@ -30,6 +32,12 @@
 <style type="text/css">
 	*{
 		-webkit-user-select: none;
+	}
+	html{
+		font-size: 18px;
+	}
+	.input-group-btn>.btn{
+		width: 50px;
 	}
 	[type="checkbox"]:not(:checked), [type="checkbox"]:checked{
 		position: relative;
@@ -80,10 +88,37 @@
 	a:hover{
 		cursor: pointer;
 	}
+	
+	/* 分页样式 */
+	.pagebtn{
+		height: 28px;
+		width: 25px;
+		border: 1px solid #C0C0C0;
+		border-radius: 3px;
+		list-style: none;
+		text-align: center;
+		line-height: 28px;
+		cursor: pointer;
+	}
+	#page>ul{
+		display: flex;
+		justify-content: space-around;
+		padding: 0px;
+		font-size: 12px;
+	}
+	#page{
+		width: 300px;
+		margin: 20px auto ;
+	}
+	.currentPage{
+		background: #1094ce;
+		color: white;
+		border: none;
+	}
 </style>
 </head>
 	<body>
-		<div class="row"style="padding: 28px 20px;">
+		<div class="row elDocument" style="padding: 28px 20px;">
                     <!-- column -->
                     <div class="col-lg-12">
                         <div class="card">
@@ -95,22 +130,25 @@
                     					</label>
                     					<span style="display: block;width: 60px;line-height: 38px;">零欠款</span>
                             	 	</div>
-                            	 	<div class="input-group" style="margin-right: 10%;">
-										<input type="text" value="" class="form-control" placeholder="Search dashboard...">
-										<span class="input-group-btn"><button type="button" class="btn btn-primary">Go</button></span>
+                            	 	<div class="input-group" style="margin-right: 15%;">
+
+										<input id="content" type="text" value="" class="form-control" placeholder="客户名称">
+										<span class="input-group-btn"><button type="button" id="searchLike" class="btn btn-primary">Go</button></span>
+
+										
 									</div>
                                 	<input type="button" class="btn btn-primary" id="add" value="新增客户"/>
                                 </h5>
                                 <h4 class="card-title">客户</h4>
-                               
+                               <form id="customerForm" action="" method="post"></form>
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                            	<th>客户头像</th>
                                                 <th>客户名称</th>
                                                 <th>联系人名</th>
                                                 <th>联系电话</th>
+                                            	<th>客户余额</th>
                                                 <th>相关列表</th>
                                                 <th>相关账单</th>
                                                 <th>客户收款</th>
@@ -119,53 +157,31 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr th:each="item,state : ${clist}">
-                                                <td><img th:src="@{/assets/img/apple-icon.png}"/></td>
-                                                <td th:text="${item.name}"><!-- 紫女 --></td>
-                                                <td></td>
-                                                <td>15858585822</td>
+
+                                            <tr v-for="(o,i) in pageIf.list">
+                                                <td>{{o.name}}</td>
+                                                <td>{{o.telephonename}}</td>
+                                                <td>{{o.telephone}}</td>
+                                                <td>{{o.balance}}</td>
+                                                <input type="hidden" :value="o.id" />
+
                                                 <td><a class="saleList">销售列表</a></td>
                                                 <td><a class="bill">应收对账单</a></td>
                                                 <td><a class="receive">收款</a></td>
-                                                <td><a class="detail">查看详情</a></td>
-                                                <td><a class="del" style="color: red;">删除</a></td>
+                                                <td><a class="detail" onclick="todetail(this)">查看详情</a></td>
+                                                <td><a class="del" onclick="deleteCustomer(this)" style="color: red;">删除</a></td>
                                             </tr>
-                                            <tr>
-                                                <td><img th:src="@{/assets/img/apple-icon.png}"/></td>
-                                                <td>网仪店主</td>
-                                                <td>卫庄</td>
-                                                <td>15858585822</td>
-                                                <td><a class="saleList">销售列表</a></td>
-                                                <td><a class="bill">应收对账单</a></td>
-                                                <td><a class="receive">收款</a></td>
-                                                <td><a class="detail">查看详情</a></td>
-                                                <td><a class="del" style="color: red;">删除</a></td>                                                
-                                            </tr>
-                                            <tr>
-                                                <td><img th:src="@{/assets/img/apple-icon.png}"/></td>
-                                                <td>花店店主</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td><a class="saleList">销售列表</a></td>
-                                                <td><a class="bill">应收对账单</a></td>
-                                                <td><a class="receive">收款</a></td>
-                                                <td><a class="detail">查看详情</a></td>
-                                                <td><a class="del" style="color: red;">删除</a></td>                                               
-                                            </tr>
-                                            <tr>
-                                                <td><img th:src="@{/assets/img/apple-icon.png}"/></td>
-                                                <td>网仪店主</td>
-                                                <td>卫庄</td>
-                                                <td>15858585822</td>
-                                                <td><a class="saleList">销售列表</a></td>
-                                                <td><a class="bill">应收对账单</a></td>
-                                                <td><a class="receive">收款</a></td>
-                                                <td><a class="detail">查看详情</a></td>
-                                                <td><a class="del" style="color: red;">删除</a></td>                                               
-                                            </tr>
+                                            
                                         </tbody>
                                     </table>
                                 </div>
+                                
+                                <!-- 分页 -->
+                                <div id="page">
+
+									
+
+								</div>
                             </div>
                         </div>
                     </div>
@@ -186,24 +202,92 @@
     <script th:src="@{/assets/js/sticky-kit.min.js}"></script>
     <!--Custom JavaScript -->
     <script th:src="@{/assets/js/custom.min.js}"></script>
+    <script th:src="@{/assets/js/vue.js}"></script>
+    <script th:src="@{/assets/js/page.js}"></script>
 	<script>
 	
+
+	var vue=new Vue({
+		el:".elDocument",
+		data:{
+			pageIf:""
+		}
+	});
+	
+	/* 分页查询 */
+	function queryCustomerByPage(zero,content,curentPage){
+		$.ajax({
+			url:"querycustomerlist",
+			data:{
+				"zero":zero,
+				"content":content,
+				"curentPage":curentPage
+			},
+			type:"post",
+			dataType:"json",
+			success:function(result){
+				vue.pageIf = result;
+				page(vue);
+			}
+		});
+	}
+	
+	/* 分页点击 */
+	function floatPage(){
+		var zero=0;
+		if($(".zero").is(':checked')){
+			zero=1;
+		}
+		var content=$("#content").val();
+		queryCustomerByPage(zero,content,$('.currentPage').text());
+	}
+	
+	/*查看详情*/
+	function todetail(th){
+		var id=$(th).parent().prev().prev().prev().prev().val();
+		$("#customerForm").attr("action","tocustomerdetail?id="+id);
+		$("#customerForm").submit();
+	}
+	
+	/* 删除客户 */
+	function deleteCustomer(th){
+		var id=$(th).parent().prev().prev().prev().prev().prev().val();
+		$("#customerForm").attr("action","deletecustomer?id="+id);
+		$("#customerForm").submit();
+	}
+	
 		$(function() {
-			
-			
-			
-			/*查看详情*/
-			$(".detail").click(function(){
-				location="CustomerDetail.html";
-			});
-			
+			queryCustomerByPage(0,"",1);
+		
+
 			/*新增用户*/
 			$("#add").click(function(){
-				location="AddCustomer.html";
+				$("#customerForm").attr("action","toaddcustomer");
+				$("#customerForm").submit();
 			});
 			
+
+			$(".zero").click(function(){
+				var zero=0;
+				if(this.checked){
+					zero=1;
+				}
+				var content=$("#content").val();
+				queryCustomerByPage(zero,content,1); 
+
 			
-	
+			
+
+			$("#searchLike").click(function(){
+				var zero=0;
+				if($(".zero").is(':checked')){
+					zero=1;
+				}
+				var content=$("#content").val();
+				queryCustomerByPage(zero,content,1);
+			});
+		
+			
 		});
 	</script>
 </html>

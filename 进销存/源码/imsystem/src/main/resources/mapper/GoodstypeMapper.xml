@@ -14,9 +14,51 @@
     <result column="column3" property="column3" jdbcType="VARCHAR" />
     <result column="column4" property="column4" jdbcType="VARCHAR" />
     <result column="column5" property="column5" jdbcType="VARCHAR" />
+    
+    <association property="goodstype"  javaType="com.imsystem.domain.Goodstype" column="pid" select="queryGoodsTypeReverse">
+    	
+    </association>
+    
    
   </resultMap>
   
+ <select id="querygoodstype" resultMap="BaseResultMap">
+  	SELECT * FROM goodstype 
+  	<where>
+  		state=0
+  		<if test="tiaojian!=null">
+  				and (id LIKE concat('%',#{tiaojian},'%') OR  NAME LIKE concat('%',#{tiaojian},'%') OR pid LIKE concat('%',#{tiaojian},'%') OR uid LIKE concat('%',#{tiaojian},'%'))
+  		</if>
+  		
+  	</where>
+  </select>
+  
+  <delete id="deleteupdate">
+  	UPDATE goodstype SET state=1 WHERE id=#{id}
+  </delete>
+  
+  <insert id="insertgoodstype" parameterType="com.imsystem.domain.Bit" >
+  	INSERT INTO goodstype(id,NAME,pid,TIME,updatetime,uid,state) VALUE(#{id},#{name},#{pid},NOW(),NOW(),#{uid},0)
+  </insert>
+  
+  <select id="querybyid" resultMap="BaseResultMap">
+  	SELECT * FROM goodstype WHERE id=#{id}
+  </select>
+  
+  <update id="toupdate" parameterType="map" >
+  	UPDATE goodstype set NAME=#{name},pid=#{pid},updatetime=NOW() WHERE id=#{id}
+  </update>
+  
+  
+  <select id="queryGoodsTypeReverse" resultMap="BaseResultMap">
+  	SELECT * FROM `goodstype`
+	WHERE id = #{id}
+  </select>
+  
+  <select id="queryGoodsTypeReverseList" resultMap="BaseResultMap">
+	SELECT * FROM `goodstype`
+	WHERE pid = #{id}
+  </select>
   
   
   <select id="QueryGoodsTypeByPid" resultMap="BaseResultMap">
@@ -85,6 +127,11 @@
       </foreach>
     </where>
   </sql>
+  
+  <select id="queryall" resultMap="BaseResultMap" >
+   SELECT * FROM goodstype WHERE state=0
+  </select>
+  
   <sql id="Base_Column_List" >
     id, name, pid, time, updatetime, uid, state, column1, column2, column3, column4, 
     column5
@@ -113,13 +160,14 @@
     delete from goodstype
     where id = #{id,jdbcType=VARCHAR}
   </delete>
+  
   <delete id="deleteByExample" parameterType="com.imsystem.domain.GoodstypeExample" >
     delete from goodstype
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.imsystem.domain.Goodstype" >
+  <insert id="insertselete" parameterType="com.imsystem.domain.Goodstype" >
     insert into goodstype (id, name, pid, 
       time, updatetime, uid, 
       state, column1, column2, 
