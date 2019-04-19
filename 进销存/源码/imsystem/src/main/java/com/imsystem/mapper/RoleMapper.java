@@ -39,4 +39,13 @@ public interface RoleMapper {
     
     int updateRoleById(Role role);
     
+    
+    int deleteRoleAll(Integer [] ids);
+    
+    
+    
+    List<Role> queryRoleModule(@Param("name") String name);
+    
+    int deleteRole(@Param("state") Integer state,@Param("id") String id);
+    
 }

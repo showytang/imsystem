@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.imsystem.domain.Salesdetails;
+import com.imsystem.domain.Salesorderdetails;
 import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
 import com.imsystem.mapper.SalesdetailsMapper;
@@ -29,6 +30,9 @@ public class OrderModalServiceImpl implements OrderModalService {
 	@Autowired
 	SalesorderdetailsMapper salesdetailsmap;
 	
+	@Autowired
+	SalesdetailsMapper salesMap;
+	
 	@Override
 	public Stock queryIndex(String code) {
 		
@@ -36,10 +40,16 @@ public class OrderModalServiceImpl implements OrderModalService {
 	}
 
 	@Override
-	public Vector<Salesdetails> salesOrderDetails(String id) {
+	public Vector<Salesorderdetails> salesOrderDetails(String id) {
 		// TODO Auto-generated method stub
 		
 		return salesdetailsmap.salesOrderDetails(id);
+	}
+
+	@Override
+	public Vector<Salesdetails> orderOver(String id) {
+		// TODO Auto-generated method stub
+		return salesMap.queryDetails(id);
 	}
 
 }

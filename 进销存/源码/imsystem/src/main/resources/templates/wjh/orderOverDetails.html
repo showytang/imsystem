@@ -1,107 +1,115 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>订单详细信息</title>
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
+<link rel="stylesheet" th:href="@{/assets/css/main.css}">
+<link rel="stylesheet" th:href="@{/assets/css/myStyle.css}" />
+<link rel="icon" type="image/png" sizes="96x96"
+	th:href="@{/assets/img/favicon.png}">
+<link rel="stylesheet" type="text/css" media="all"
+	th:href="@{/assets/css/daterangepicker.css}" />
+<script type="text/javascript"
+	th:src="@{/assets/vendor/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/moment.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/daterangepicker.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/Mydate.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/page.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/vue.js}"></script>
+<style type="text/css">
+.shappingImg {
+	width: 35px;
+	height: 35px;
+}
 
-	<head>
-		<meta charset="UTF-8">
-		<title>订单详细信息</title>
-		<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
-		<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
-		<link rel="stylesheet" th:href="@{/assets/css/main.css}">
-		<link rel="stylesheet" th:href="@{/assets/css/myStyle.css}" />
-		<link rel="icon" type="image/png" sizes="96x96" th:href="@{/assets/img/favicon.png}">
-		<link rel="stylesheet" type="text/css" media="all" th:href="@{/assets/css/daterangepicker.css}" />
-		<script type="text/javascript" th:src="@{/assets/vendor/jquery/jquery.min.js}"></script>
-		<script type="text/javascript" th:src="@{/assets/js/moment.js}"></script>
-		<script type="text/javascript" th:src="@{/assets/js/daterangepicker.js}"></script>
-		<script type="text/javascript" th:src="@{/assets/js/Mydate.js}"></script>
-		<script type="text/javascript" th:src="@{/assets/js/page.js}"></script>
-		<script type="text/javascript" th:src="@{/assets/js/bootstrap.min.js}"></script>
-		<style type="text/css">
-			.shappingImg {
-				width: 35px;
-				height: 35px;
-			}
-			
-			.table>tbody>tr>td {
-				line-height: 35px;
-				white-space: nowrap;
-				text-align: center;
-			}
-			
-			.container-fluid {
-				overflow-x: auto;
-			}
-			
-			.table>thead>tr>th {
-				white-space: nowrap;
-				text-align: center;
-			}
-			
-			.table>thead>tr>th {
-				border-color: rgb(2, 143, 208);
-			}
-			
-			.table>tbody>tr>td {
-				border-color: rgb(2, 143, 208);
-			}
-			
-			.glyphicon {
-				color: rgb(2, 143, 208);
-			}
-			
-			body::-webkit-scrollbar {
-				width: 5px;
-				height: 2px;
-				background: white;
-				border-radius: 10px;
-			}
-			
-			body::-webkit-scrollbar-thumb {
-				display: block;
-				width: 6px;
-				margin: 0 auto;
-				border-radius: 10px;
-				background: rgb(2, 143, 208);
-			}
-		</style>
-	</head>
+.table>tbody>tr>td {
+	line-height: 35px;
+	white-space: nowrap;
+	text-align: center;
+}
 
-	<body style="background: white;">
-		<div class="container-fluid">
-			<table class="table" style="margin: 0px;">
-				<thead>
-					<tr>
-						<th>图片</th>
-						<th>名称</th>
-						<th>类型</th>
-						<th>价格</th>
-						<th>数量</th>
-						<th>总计</th>
-						<th>操作</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td><img class="shappingImg" src="../assets/img/login-bg.jpg"></td>
-						<td>vovi21x</td>
-						<td>耀光,8G*128G</td>
-						<td>2100.0</td>
-						<td>1</td>
-						<td>2100.0</td>
-						<td><span style="margin: auto;" title="退货" class="glyphicon glyphicon-backward"></span></td>
-					</tr>
-					<tr>
-						<td><img class="shappingImg" src="../assets/img/apple-icon.png"></td>
-						<td>矿泉水</td>
-						<td>纯净水</td>
-						<td>3.0</td>
-						<td>1</td>
-						<td>3.0</td>
-						<td><span style="margin: auto;" title="退货" class="glyphicon glyphicon-backward"></span></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</body>
+.container-fluid {
+	overflow-x: auto;
+}
 
+.table>thead>tr>th {
+	white-space: nowrap;
+	text-align: center;
+}
+
+.table>thead>tr>th {
+	border-color: rgb(2, 143, 208);
+}
+
+.table>tbody>tr>td {
+	border-color: rgb(2, 143, 208);
+}
+
+.glyphicon {
+	color: rgb(2, 143, 208);
+}
+
+body::-webkit-scrollbar {
+	width: 5px;
+	height: 2px;
+	background: white;
+	border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+	display: block;
+	width: 6px;
+	margin: 0 auto;
+	border-radius: 10px;
+	background: rgb(2, 143, 208);
+}
+</style>
+</head>
+<body style="background: white;">
+	<div class="container-fluid" id="indexMain">
+		<table class="table" style="margin: 0px;">
+			<thead>
+				<tr>
+					<th>图片</th>
+					<th>名称</th>
+					<th>类型</th>
+					<th>价格</th>
+					<th>数量</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="item in list" :data="item.id">
+					<td><img
+						v-if="item.goodsvalue.column1 !='' && item.goodsvalue.column1 !=null"
+						:src="item.goodsvalue.column1"> <img v-else
+						:src="item.goodsvalue.goods.img"></td>
+					<td>{{item.goodsvalue.goods.name}}</td>
+					<td>{{item.goodsvalue.name}}</td>
+					<td class="price">{{item.price}}</td>
+					<td class="count">{{item.count}}</td>
+					<td><input type="checkbox"></td>
+				</tr>
+			</tbody>
+		</table>
+		<script type="text/javascript" th:inline="javascript">
+			var vue = new Vue({
+
+				el : "#indexMain",
+
+				data : {
+
+					list : []
+
+				}
+
+			});
+			
+			vue.list = [[${list}]];
+		</script>
+	</div>
+</body>
 </html>

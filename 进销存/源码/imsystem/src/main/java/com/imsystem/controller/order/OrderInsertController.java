@@ -14,6 +14,7 @@ import com.imsystem.domain.Goods;
 import com.imsystem.domain.Goodsvalue;
 import com.imsystem.domain.Paytype;
 import com.imsystem.domain.Sales;
+import com.imsystem.domain.Salesdetails;
 import com.imsystem.domain.Salesorder;
 import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
@@ -97,7 +98,7 @@ public class OrderInsertController {
 		
 		goods1.setColumn2("2");
 		
-		goods1.setName("红色，L");
+		goods1.setName("黑色，L");
 		
 		goods1.setId("2");
 		
@@ -140,9 +141,9 @@ public class OrderInsertController {
 	
 	@RequestMapping("/insertOrderOut")
 	@ResponseBody
-	public String insertOrderOut(@RequestBody Sales sales) {
+	public String insertOrderOut(@RequestBody Salesorder sales) {
 		
-		return orderInsert.insertOut(sales)+"";
+		return orderInsert.insertOrderOut(sales)+"";
 	}
 	
 	@RequestMapping("/uploadInsertOrder")
@@ -177,5 +178,14 @@ public class OrderInsertController {
 				
 		return orderInsert.allot(stockdetail)+"";
 	}
+	
+	
+	@RequestMapping("/inserorderDesc")
+	@ResponseBody
+	public String inserorderDesc(@RequestBody Vector<Salesdetails> salesdetails) {
+				
+		return "";
+	}
+	
 	
 }

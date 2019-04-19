@@ -193,6 +193,7 @@ function nextPage() {
 			$(e).text($(".pageq:eq(" + (index + 1) + ")").text());
 		});
 		floatPage();
+		return;
 	}
 	if (parseInt($(".pageCurrent:eq(" + (index + 1) + ")").text()) >= parseInt($(
 			".pageDi").text()) - 1) {

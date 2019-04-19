@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
+import com.imsystem.domain.Sales;
 import com.imsystem.domain.Salesorder;
+import com.imsystem.domain.Salesorderdetails;
 import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Stockrecord;
@@ -126,19 +128,33 @@ public class OrderQueryController {
 	}
 	
 	
-	@RequestMapping("/yetQuery")
+	@RequestMapping("/toYetQuery")
 	public String yetQuery() {
 		return "wjh/yetOrder";
 	}
 
-	@RequestMapping("/orderOver")
-	public String orderOver() {
-		return "wjh/orderOver.html";
+	@RequestMapping("/toOrderOver")
+	public String toOrderOver() {
+		return "wjh/orderOver";
 	}
 
 	@RequestMapping("/orderDesc")
 	public String orderDesc() {
 		return "wjh/orderDesc";
+	}
+	
+	@RequestMapping("/salesOrderById")
+	@ResponseBody
+	public Salesorder salesOrderById(String id) {
+		
+		return orderquery.salesOrderById(id);
+	}
+	
+	@RequestMapping("/orderOver")
+	@ResponseBody
+	public PageInfo<Sales> OrderOver(String code,String endTime,String time,Integer currentPage) {
+		
+		return orderquery.OrderOver(code, endTime, time, currentPage);
 	}
 
 }

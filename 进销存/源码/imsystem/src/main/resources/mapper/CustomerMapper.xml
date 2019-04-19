@@ -26,6 +26,9 @@
     <result column="column4" property="column4" jdbcType="VARCHAR" />
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
+  <update id="update">
+  	update customer set balance = balance-#{money} where id = #{id}
+  </update>
   <resultMap id="ResultMapWithBLOBs" type="com.imsystem.domain.Customer" extends="BaseResultMap" >
     <result column="img" property="img" jdbcType="LONGVARBINARY" />
   </resultMap>
@@ -58,6 +61,14 @@
   	state=1 
   	WHERE id=#{id}
   </update>
+  
+  <select id="selectAllCustomer">
+  	SELECT * FROM customer WHERE state=0
+  </select>
+  
+  <select id="selectCustomerByStore">
+  	SELECT * FROM customer WHERE state=0 AND storeid=#{sid}
+  </select>
   
   
   <sql id="Example_Where_Clause" >

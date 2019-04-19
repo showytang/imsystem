@@ -47,6 +47,10 @@
   	WHERE id=#{id}
   </update>
   
+  <select id="selectAllSupplier">
+  	SELECT * FROM supplier WHERE state=0
+  </select>
+  
   
   <sql id="Example_Where_Clause" >
     <where >

@@ -28,7 +28,7 @@ public class CustomerServiceImpl implements CustomerService{
 	@Override
 	public List<Customer> queryCustomer() {
 		// TODO Auto-generated method stub
-		List<Customer> clist=customerDao.selectByExample(null);
+		List<Customer> clist=customerDao.selectAllCustomer();
 		return clist;
 	}
 
@@ -100,6 +100,15 @@ public class CustomerServiceImpl implements CustomerService{
 	public int deleteCustomer(String id) {
 		// TODO Auto-generated method stub
 		return customerDao.deleteCustomer(id);
+	}
+
+	/**
+	 * 根据门店查询客户
+	 */
+	@Override
+	public List<Customer> queryCustomerByStore(String sid) {
+		// TODO Auto-generated method stub
+		return customerDao.selectCustomerByStore(sid);
 	}
 
 }

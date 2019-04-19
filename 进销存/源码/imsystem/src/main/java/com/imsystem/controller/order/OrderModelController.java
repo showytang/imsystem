@@ -39,7 +39,10 @@ public class OrderModelController {
 	}
 	
 	@RequestMapping("/orderOver")
-	public String orderOver() {
+	public String orderOver(String id,Model model) {
+		
+		model.addAttribute("list",ordermodalservice.orderOver(id));
+		
 		return "wjh/orderOverDetails";
 	}
 	

@@ -429,7 +429,6 @@
 			$("#insertOrder").click(function(){
 				
 				if(vue.typeId){
-					alert($("#time").val())
 					var order = {
 							column1 : $(".yprice").text(),
 							sid : vue.givemeId,
@@ -446,7 +445,6 @@
 					order.time = eval('new Date(' + order.time.replace(/\d+(?=-[^-]+$)/,    
 							function (a) { return parseInt(a, 10) - 1; }).match(/\d+/g) + ')');  
 					
-					
 					//添加商品id
 					for(var i = 1 ; i < $(".panel-title").length ; i ++){
 						
@@ -454,7 +452,7 @@
 								gvid : $(".panel-title:eq("+i+")").attr("data"),
 								count : $(".panel-title:eq("+i+")").next().next().text(),
 								scount : "0",
-								time : $("#time").val(),
+								time : order.time,
 								price : $(".jprice:eq("+(i-1)+")").text()
 						};
 						
