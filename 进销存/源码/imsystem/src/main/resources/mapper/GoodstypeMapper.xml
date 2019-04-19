@@ -14,6 +14,11 @@
     <result column="column3" property="column3" jdbcType="VARCHAR" />
     <result column="column4" property="column4" jdbcType="VARCHAR" />
     <result column="column5" property="column5" jdbcType="VARCHAR" />
+    
+    <association property="goodstype"  javaType="com.imsystem.domain.Goodstype" column="pid" select="queryGoodsTypeReverse">
+    	
+    </association>
+    
    
   </resultMap>
   
@@ -44,6 +49,16 @@
   	UPDATE goodstype set NAME=#{name},pid=#{pid},updatetime=NOW() WHERE id=#{id}
   </update>
   
+  
+  <select id="queryGoodsTypeReverse" resultMap="BaseResultMap">
+  	SELECT * FROM `goodstype`
+	WHERE id = #{id}
+  </select>
+  
+  <select id="queryGoodsTypeReverseList" resultMap="BaseResultMap">
+	SELECT * FROM `goodstype`
+	WHERE pid = #{id}
+  </select>
   
   
   <select id="QueryGoodsTypeByPid" resultMap="BaseResultMap">

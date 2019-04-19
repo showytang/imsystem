@@ -28,9 +28,17 @@ public class Goodstype {
 
     private String column5;
     
-  
+    private Goodstype goodstype;
+    
+    public Goodstype getGoodstype() {
+		return goodstype;
+	}
 
-    public String getId() {
+	public void setGoodstype(Goodstype goodstype) {
+		this.goodstype = goodstype;
+	}
+
+	public String getId() {
         return id;
     }
 

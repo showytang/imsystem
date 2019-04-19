@@ -15,6 +15,14 @@ import com.imsystem.domain.GoodsValueVo;
 public interface GoodsService {
 
 	/**
+
+	 * 商品修改
+	 * @param goodsVo
+	 * @return
+	 */
+	Integer updateGoods(GoodsVO goodsVo,String url);
+	
+	/**
 	 * 商品修改加载
 	 * @param id
 	 * @return
@@ -36,5 +44,8 @@ public interface GoodsService {
 	 * @return
 	 */
 	List<GoodsValueVo> queryAllGoods(String liketext,String [] svid,String tid);
+	
+	
+	
 	
 }

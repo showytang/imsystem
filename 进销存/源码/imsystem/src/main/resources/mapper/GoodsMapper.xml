@@ -34,6 +34,7 @@
     <collection property="goodsValues" ofType="com.imsystem.domain.Goodsvalue">
     	
     	
+
     	<id column="id" property="id" jdbcType="VARCHAR" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
 		<result column="gid" property="gid" jdbcType="VARCHAR" />
@@ -78,6 +79,53 @@
 	    <result column="oldname" property="oldname" jdbcType="VARCHAR" />
 	    <result column="url" property="url" jdbcType="VARCHAR" />
 	    <result column="gid" property="gid" jdbcType="VARCHAR" />
+=======
+    	<id column="gvid" property="id" jdbcType="VARCHAR" />
+		<result column="gvname" property="name" jdbcType="VARCHAR" />
+		<result column="gvgid" property="gid" jdbcType="VARCHAR" />
+		<result column="gvjprice" property="jprice" jdbcType="DOUBLE" />
+		<result column="gvcolumn1" property="column1" jdbcType="VARCHAR" />
+		
+		
+		<association property="stockDetails" javaType="com.imsystem.domain.Stockdetails">
+		
+			<id column="sdid" property="id" jdbcType="VARCHAR" />
+		    <result column="sdgvid" property="gvid" jdbcType="VARCHAR" />
+		    <result column="sdcount" property="count" jdbcType="INTEGER" />
+		
+		</association>
+		
+		
+		<collection property="goodsstandardvalues" ofType="com.imsystem.domain.Goodsstandardvalue">
+		
+			<id column="gdvid" property="id" jdbcType="VARCHAR" />
+		    <result column="gdvname" property="name" jdbcType="VARCHAR" />
+		    <result column="gdvvid" property="vid" jdbcType="VARCHAR" />
+		    <result column="gdvsvid" property="svid" jdbcType="VARCHAR" />
+		    
+		</collection>
+		
+		
+		<collection property="goodsPrices" ofType="com.imsystem.domain.Goodsprice">
+			
+			    <id column="gpid" property="id" jdbcType="VARCHAR" />
+			    <result column="gpctid" property="ctid" jdbcType="VARCHAR" />
+			    <result column="gpsufname" property="sufname" jdbcType="VARCHAR" />
+			    <result column="gpprice" property="price" jdbcType="DOUBLE" />
+			    <result column="gpgvid" property="gvid" jdbcType="VARCHAR" />
+		
+		</collection>
+    	
+    </collection>
+    
+    <collection property="imgs" ofType="com.imsystem.domain.Img">
+
+    	<id column="imid" property="id" jdbcType="VARCHAR" />
+	    <result column="imname" property="name" jdbcType="VARCHAR" />
+	    <result column="imoldname" property="oldname" jdbcType="VARCHAR" />
+	    <result column="imurl" property="url" jdbcType="VARCHAR" />
+	    <result column="imgid" property="gid" jdbcType="VARCHAR" />
+
 	   
     </collection>
     
@@ -115,6 +163,7 @@
   
   	SELECT 
 	gs.*,
+<<<<<<< HEAD
 	<!-- im.`id` AS imid,im.name AS imname,im.`oldname` AS imoldname,im.`gid` AS imgid,im.`url` AS imurl, -->
 	gv.`id` AS gvid,gv.`name` AS gvname,gv.`gid` AS gvgid,gv.jprice AS gvjprice,gv.`column1` AS gvcolumn1
 	<!-- sd.`id` AS sdid,sd.`count` AS sdcount,sd.`gvid` AS sdgvid, -->
@@ -138,6 +187,31 @@
 	<!-- INNER JOIN `stockdetails` AS sd
 	ON gv.`id` = sd.`gvid` -->
 	WHERE gs.`id` = (SELECT gid FROM `goodsvalue` WHERE id = #{id}) AND gv.`defaultvalue` = 0
+=======
+	im.`id` AS imid,im.name AS imname,im.`oldname` AS imoldname,im.`gid` AS imgid,im.`url` AS imurl, 
+	gv.`id` AS gvid,gv.`name` AS gvname,gv.`gid` AS gvgid,gv.jprice AS gvjprice,gv.`column1` AS gvcolumn1,
+	sd.`id` AS sdid,IF(sd.`count`!= 'null',sd.`count`,0) AS sdcount,sd.`gvid` AS sdgvid,sd.`gvid` AS sdgvid,
+	gdv.id AS gdvid,gdv.`name` AS gdvname,gdv.`vid` AS gdvvid,gdv.svid AS gdvsvid,
+	gp.`id` AS gpid,gp.`sufname` AS gpsufname,gp.`ctid` AS gpctid,gp.`gvid` AS gpgvid,gp.`price` AS gpprice 
+	FROM goods AS gs
+	INNER JOIN `goodsvalue` AS gv
+	ON gv.`gid` = gs.`id`
+	INNER JOIN `goodsstandardvalue` AS gdv
+	ON gdv.vid = gv.`id`
+	INNER JOIN `standardvalue` AS sv
+	ON gdv.`svid` = sv.`id`
+	INNER JOIN `standard` AS s
+	ON s.`id` = sv.`sid`
+	INNER JOIN `goodstype` AS gt
+	ON gt.`id` = s.`tid`
+	INNER JOIN `goodsprice` AS gp
+	ON gp.`gvid` = gv.`id`
+	LEFT JOIN `img` AS im
+	ON gs.`id` = im.`gid` 
+	LEFT JOIN `stockdetails` AS sd
+	ON gv.`id` = sd.`gvid` 
+	WHERE gv.`gid` = (SELECT gid FROM `goodsvalue` WHERE id = #{id}) AND gv.`defaultvalue` = 0
+>>>>>>> refs/heads/dws
 	  	
   
   </select>
