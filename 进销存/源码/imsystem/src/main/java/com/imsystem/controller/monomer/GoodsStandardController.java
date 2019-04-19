@@ -66,7 +66,7 @@ public class GoodsStandardController {
 	@ResponseBody
 	public int toupdate(Standard stan) {
 		int r=service.toupdate(stan);
-		System.err.println(r);
+		
 		return r;
 	}
 	
