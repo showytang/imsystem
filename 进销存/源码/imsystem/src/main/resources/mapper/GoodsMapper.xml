@@ -32,41 +32,39 @@
     
     
     <collection property="goodsValues" ofType="com.imsystem.domain.Goodsvalue">
-    	
-    	
-    	<id column="gvid" property="id" jdbcType="VARCHAR" />
-		<result column="gvname" property="name" jdbcType="VARCHAR" />
-		<result column="gvgid" property="gid" jdbcType="VARCHAR" />
-		<result column="gvjprice" property="jprice" jdbcType="DOUBLE" />
-		<result column="gvcolumn1" property="column1" jdbcType="VARCHAR" />
+
+    	<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="gid" property="gid" jdbcType="VARCHAR" />
+		<result column="jprice" property="jprice" jdbcType="DOUBLE" />
+		<result column="column1" property="column1" jdbcType="VARCHAR" />
 		
 		
 		<association property="stockDetails" javaType="com.imsystem.domain.Stockdetails">
 		
-			<id column="sdid" property="id" jdbcType="VARCHAR" />
-		    <result column="sdgvid" property="gvid" jdbcType="VARCHAR" />
-		    <result column="sdcount" property="count" jdbcType="INTEGER" />
+			<id column="id" property="id" jdbcType="VARCHAR" />
+		    <result column="gvid" property="gvid" jdbcType="VARCHAR" />
+		    <result column="count" property="count" jdbcType="INTEGER" />
 		
 		</association>
 		
 		
 		<collection property="goodsstandardvalues" ofType="com.imsystem.domain.Goodsstandardvalue">
 		
-			<id column="gdvid" property="id" jdbcType="VARCHAR" />
-		    <result column="gdvname" property="name" jdbcType="VARCHAR" />
-		    <result column="gdvvid" property="vid" jdbcType="VARCHAR" />
-		    <result column="gdvsvid" property="svid" jdbcType="VARCHAR" />
+			<id column="id" property="id" jdbcType="VARCHAR" />
+		    <result column="name" property="name" jdbcType="VARCHAR" />
+		    <result column="vid" property="vid" jdbcType="VARCHAR" />
 		    
 		</collection>
 		
 		
 		<collection property="goodsPrices" ofType="com.imsystem.domain.Goodsprice">
 			
-			    <id column="gpid" property="id" jdbcType="VARCHAR" />
-			    <result column="gpctid" property="ctid" jdbcType="VARCHAR" />
-			    <result column="gpsufname" property="sufname" jdbcType="VARCHAR" />
-			    <result column="gpprice" property="price" jdbcType="DOUBLE" />
-			    <result column="gpgvid" property="gvid" jdbcType="VARCHAR" />
+			    <id column="id" property="id" jdbcType="VARCHAR" />
+			    <result column="ctid" property="ctid" jdbcType="VARCHAR" />
+			    <result column="sufname" property="sufname" jdbcType="VARCHAR" />
+			    <result column="price" property="price" jdbcType="DOUBLE" />
+			    <result column="gvid" property="gvid" jdbcType="VARCHAR" />
 		
 		</collection>
     	
@@ -79,7 +77,7 @@
 	    <result column="imoldname" property="oldname" jdbcType="VARCHAR" />
 	    <result column="imurl" property="url" jdbcType="VARCHAR" />
 	    <result column="imgid" property="gid" jdbcType="VARCHAR" />
-	   
+
     </collection>
     
   </resultMap>
