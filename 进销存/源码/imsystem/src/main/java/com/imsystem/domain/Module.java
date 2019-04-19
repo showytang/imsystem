@@ -1,6 +1,7 @@
 package com.imsystem.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class Module {
     private String id;
@@ -15,7 +16,7 @@ public class Module {
 
     private Date time;
 
-    private Integer parentid;
+    private String parentid;
 
     private Integer state;
 
@@ -31,7 +32,18 @@ public class Module {
 
     private String column5;
 
-    public String getId() {
+    private List<Module> mlist;
+    
+    
+    public List<Module> getMlist() {
+		return mlist;
+	}
+
+	public void setMlist(List<Module> mlist) {
+		this.mlist = mlist;
+	}
+
+	public String getId() {
         return id;
     }
 
@@ -79,11 +91,11 @@ public class Module {
         this.time = time;
     }
 
-    public Integer getParentid() {
+    public String getParentid() {
         return parentid;
     }
 
-    public void setParentid(Integer parentid) {
+    public void setParentid(String parentid) {
         this.parentid = parentid;
     }
 

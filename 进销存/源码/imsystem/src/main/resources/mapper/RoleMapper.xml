@@ -304,6 +304,22 @@
   </select>
   
   
+  
+   <update id="deleteRoleAll">
+   	
+	UPDATE `role` SET state=3 WHERE id IN
+	<foreach collection="array" item="i" open="("  separator="," close=")">
+		
+		#{i}
+		
+	</foreach>
+	
+	
+	
+  </update>
+  
+  
+  
   <!-- 新增角色 -->
   <insert id="insertRole">
   	
@@ -321,10 +337,10 @@
   
   
  <!--  根据ID删除角色 -->
-  <delete id="deleteRoleById">
+  <delete id="deleteRole">
   	
-    DELETE FROM role  WHERE id = #{id,jdbcType=VARCHAR}
-  
+   	    UPDATE `role` SET state=#{state} WHERE id=#{id}
+ 
   </delete>
   
   
@@ -342,6 +358,41 @@
     WHERE id = #{id,jdbcType=VARCHAR} 
   </update>
   
+   
+  
+  <resultMap type="com.imsystem.domain.Role" id="ResultMap" extends="BaseResultMap">
+		
+		 <collection property="moduleList" column="id" ofType="com.imsystem.domain.Module" select="queryRoleModuleAll">
+		 	     <id property="id" column="mid"/>
+		 		 <result property="name" column="mname"/>
+		 </collection>
+	</resultMap>
+  
+  
+  
+  
+  
+  <!-- 查询角色模块 -->
+   <select id="queryRoleModule" resultMap="ResultMap">
+    
+   	SELECT * FROM role 
+	 <where>
+	 	<if test="name!=null and name!=''">
+	 	AND name LIKE CONCAT ('%',#{name},'%') 
+	 	</if>
+	 	AND state IN(0,1)
+	 </where>
+	
+	 
+  </select>
+  
+  <select id="queryRoleModuleAll" resultType="com.imsystem.domain.Module">
+  	SELECT m.* FROM  `rolemodule` AS rm 
+	INNER JOIN module AS m
+	ON rm.mid=m.id 
+	WHERE rm.rid=#{id}
+	
+  </select>
   
   
   

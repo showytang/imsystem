@@ -10,23 +10,42 @@
     
     <link rel="stylesheet" th:href="@{/assets/SheZhi/css/font.css}">
     <link rel="stylesheet" th:href="@{/assets/SheZhi/css/xadmin.css}">
+   
     <script type="text/javascript" th:src="@{/assets/SheZhi/js/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/assets/SheZhi/lib/layui/layui.js}" charset="utf-8"></script>
     <script type="text/javascript" th:src="@{/assets/SheZhi/js/xadmin.js}"></script>
     <script type="text/javascript" th:src="@{/assets/SheZhi/js/cookie.js}"></script>
-    
+    <style type="text/css">
+    	
+		.btn { /* 按钮美化 */
+			width: 150px; /* 宽度 */
+			height: 40px; /* 高度 */
+			border-width: 0px; /* 边框宽度 */
+			border-radius: 3px; /* 边框半径 */
+			background: #1E90FF; /* 背景颜色 */
+			cursor: pointer; /* 鼠标移入按钮范围时出现手势 */
+			outline: none; /* 不显示轮廓线 */
+			font-family: Microsoft YaHei; /* 设置字体 */
+			color: white; /* 字体颜色 */
+			font-size: 17px; /* 字体大小 */
+		}
+		.btn:hover { /* 鼠标移入按钮范围时改变颜色 */
+			background: #5599FF;
+		}
+    	
+    </style>
     
   </head>
   
   <body>
     <div class="x-body">
-        <form class="layui-form">
+        <form class="layui-form" th:action="@{/user/insertUser}" method="post">
           <div class="layui-form-item">
               <label for="username" class="layui-form-label">
-                  <span class="x-red">*</span>登录名
+                  <span class="x-red">*</span>账户
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="username" name="username" required="" lay-verify="required"
+                  <input type="text" id="username" name="name" required="" 
                   autocomplete="off" class="layui-input">
               </div>
               <div class="layui-form-mid layui-word-aux">
@@ -35,73 +54,62 @@
           </div>
           <div class="layui-form-item">
               <label for="phone" class="layui-form-label">
-                  <span class="x-red">*</span>手机
+                  <span class="x-red">*</span>密码
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="phone" name="phone" required="" lay-verify="phone"
+                  <input type="text" id="phone" name="pwd" required="" 
                   autocomplete="off" class="layui-input">
               </div>
               <div class="layui-form-mid layui-word-aux">
                   <span class="x-red">*</span>将会成为您唯一的登入名
               </div>
           </div>
-          <div class="layui-form-item">
-              <label for="L_email" class="layui-form-label">
-                  <span class="x-red">*</span>邮箱
-              </label>
-              <div class="layui-input-inline">
-                  <input type="text" id="L_email" name="email" required="" lay-verify="email"
-                  autocomplete="off" class="layui-input">
-              </div>
-              <div class="layui-form-mid layui-word-aux">
-                  <span class="x-red">*</span>
-              </div>
-          </div>
+          
           <div class="layui-form-item">
               <label class="layui-form-label"><span class="x-red">*</span>角色</label>
-              <div class="layui-input-block">
-                <input type="checkbox" name="like1[write]" lay-skin="primary" title="超级管理员" checked="">
-                <input type="checkbox" name="like1[read]" lay-skin="primary" title="编辑人员">
-                <input type="checkbox" name="like1[write]" lay-skin="primary" title="宣传人员" checked="">
-              </div>
+             
+               <div class="layui-input-block">
+               	
+			      <input  th:if="${item.name}!='超级管理员' "  th:each="item :${list}" type="radio" th:rid="${item.id}" name="rid" th:value="${item.id}" th:title="${item.name}">
+			   	
+			    </div>
+			    
+			    <div class="dianpu" style="width: 200px;margin-left: 110px;margin-top: 10px;">
+				    <select name="storeid" lay-verify="">
+					  <option  value="">请选择一个门店</option>
+					  <option th:each="item : ${listStore}" th:value="${item.id}" th:text="${item.name}">北京</option>
+					</select> 
+				</div>   
+			    
           </div>
-          <div class="layui-form-item">
-              <label for="L_pass" class="layui-form-label">
-                  <span class="x-red">*</span>密码
-              </label>
-              <div class="layui-input-inline">
-                  <input type="password" id="L_pass" name="pass" required="" lay-verify="pass"
-                  autocomplete="off" class="layui-input">
-              </div>
-              <div class="layui-form-mid layui-word-aux">
-                  6到16个字符
-              </div>
-          </div>
-          <div class="layui-form-item">
-              <label for="L_repass" class="layui-form-label">
-                  <span class="x-red">*</span>确认密码
-              </label>
-              <div class="layui-input-inline">
-                  <input type="password" id="L_repass" name="repass" required="" lay-verify="repass"
-                  autocomplete="off" class="layui-input">
-              </div>
-          </div>
+          
+          
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
               </label>
-              <button  class="layui-btn layui-btn-normal" lay-filter="add" lay-submit="">
+            <!--  <input type="button" class="btn" value="增加"> -->
+              
+              <button type="submit"  class="layui-btn layui-btn-normal" lay-filter="add" lay-submit="">
                   增加
-              </button>
+              </button> 
           </div>
       </form>
     </div>
     <script>
+    	$(function(){
+    		
+    		
+    		
+    		
+    	});
+    	
+    	
         layui.use(['form','layer'], function(){
             $ = layui.jquery;
           var form = layui.form
           ,layer = layui.layer;
         
-          //自定义验证规则
+         /*  //自定义验证规则
           form.verify({
             nikename: function(value){
               if(value.length < 5){
@@ -114,10 +122,10 @@
                     return '两次密码不一致';
                 }
             }
-          });
+          }); */
 
           //监听提交
-          form.on('submit(add)', function(data){
+         /*  form.on('submit(add)', function(data){
             console.log(data);
             //发异步，把数据提交给php
             layer.alert("增加成功", {icon: 6},function () {
@@ -129,7 +137,7 @@
                 x_admin_father_reload();
             });
             return false;
-          });
+          }); */
           
           
         });
