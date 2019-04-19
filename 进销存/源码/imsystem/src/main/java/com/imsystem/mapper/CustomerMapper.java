@@ -6,6 +6,12 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface CustomerMapper {
+	List<Customer> queryCustomerByPage(@Param("zero") Double zero, @Param("content") String content);
+	
+	int updateCustomer(Customer cObj);
+	
+	int deleteCustomer(String id);
+	
     int countByExample(CustomerExample example);
 
     int deleteByExample(CustomerExample example);

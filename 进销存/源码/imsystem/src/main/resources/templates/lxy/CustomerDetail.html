@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html>
 <html>
 
@@ -58,6 +56,16 @@
 		border: none;
 		outline: none;
 	}
+	/* 选择文件按钮样式 */
+	#chooseFileDiv,#chooseFileDiv input{
+		width: 100%;
+	}
+	#chooseFileDiv{
+		position: absolute;
+		right: 0px;
+		bottom: 2px;
+		opacity: 0.0;
+	}
 </style>
 </head>
 
@@ -66,22 +74,30 @@
 <!-- Body -->
 <body>
 	
-<div class="row" style="padding: 28px 20px;">
+<div class="row elDocument" style="padding: 28px 20px;">
+
+		<input type="hidden" id="id" th:value="${cid}"/>
+        <input type="hidden" value="1" id="uid">
                     <!-- Column -->
                     <div class="col-lg-4 col-xlg-3 col-md-5">
                         <div class="card">
                             <div class="card-block">
-                                <center class="m-t-30"> <img th:src="@{/assets/img/one.jpg}" class="img-circle" width="150">
+                                <center class="m-t-30"> 
+                                	<img v-if="customer.img==null" th:src="@{/assets/img/tmore.png}" id="img" class="img-circle" width="150" height="145">
+                                   <img v-else :src="'data:image/png;base64,'+customer.img" id="img" class="img-circle" width="150" height="145">
                                    
-                                    <h4 class="card-title m-t-10"><input type="text" name="name" id="name" value="紫女" /></h4>
-                                    <h6 class="card-subtitle">积分:<input type="text" name="integral" id="integral" value="0" /></h6>
+                                    <h4 class="card-title m-t-10"><input type="text" name="name" id="name" :value="customer.name" /></h4>
+                                    <h6 class="card-subtitle">积分:<input type="text" name="integral" id="integral" :value="customer.score" /></h6>
                                     <div class="row text-center justify-content-md-center">
-                                        <div class="col-6">初始余额:<input type="text" name="" id="initialMoney" value="500" /></div>
-                                        <div class="col-6">余&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;额:<input type="text" name="" id="balance" value="300" /></div>
+                                        <div class="col-6">初始余额:<input type="text" name="" id="initialMoney" :value="customer.initbalance" /></div>
+                                        <div class="col-6">余&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;额:<input type="text" name="" id="balance" :value="customer.balance" /></div>
                                     </div>
                                 </center>
                             </div>
                             
+                            <div id="chooseFileDiv">
+                            	<input type="file" value="" onchange="imgShow(this)">
+                            </div>
                             <button class="btn btn-danger btn-block ">
                					更换头像
              				</button>
@@ -93,48 +109,59 @@
                     <div class="col-lg-8 col-xlg-9 col-md-7">
                         <div class="card">
                             <div class="card-block">
-                                <form class="form-horizontal form-material">
+                                <form id="updateCustomerForm" class="form-horizontal form-material">
                                 	<div class="form-group">
                                         <label class="col-md-12">联系人名称</label>
                                         <div class="col-md-12">
-                                            <input type="text" value="" class="form-control form-control-line">
+                                            <input type="text" id="telephonename" :value="customer.telephonename" class="form-control form-control-line">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12">联系人电话</label>
                                         <div class="col-md-12">
-                                            <input type="text" value="13548965412" class="form-control form-control-line">
+                                            <input type="text" id="telephone" :value="customer.telephone" class="form-control form-control-line">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12">收货地址</label>
                                         <div class="col-md-12">
-                                            <input type="text" value="田园区花竹市护额哦啊佩服你" class="form-control form-control-line">
+                                            <input type="text" id="address" :value="customer.pname+'/'+customer.cname+'/'+customer.aname+'/'+customer.address" class="form-control form-control-line">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-12">客户类型</label>
                                         <div class="col-sm-12">
-                                            <select class="form-control form-control-line">
-                                                <option>批发客户</option>
-                                                <option>零售客户</option>
+                                            <select id="ct" class="form-control form-control-line">
+                                                <option v-for="(o,i) in typeList" :value="o.ctObj.id"  :selected="o.ctObj.id == customer.cid" >
+                                                {{o.ctObj.name}}
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-12">客户等级</label>
                                         <div class="col-sm-12">
-                                            <select class="form-control form-control-line">
-                                                <option>普通客户</option>
-                                                <option>会员用户</option>
-                                                <option>超级会员用户</option>
+                                            <select id="cl" class="form-control form-control-line">
+                                                <option v-for="(o,i) in levelList" :value="o.clObj.id" :selected="o.clObj.id == customer.lid">
+                                                {{o.clObj.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12">所属门店</label>
+                                        <div class="col-sm-12">
+                                            <select id="sid" class="form-control form-control-line" >
+                                                <option v-for="(o,i) in storeList" :value="o.id" :selected="o.id == customer.storeid">
+                                                {{o.name}}
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
                                     
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <button class="btn btn-success">确认修改</button>
+                                            <button id="updateCustomer" type="button" class="btn btn-success">确认修改</button>
                                         </div>
                                     </div>
                                 </form>
@@ -161,10 +188,125 @@
     <script th:src="@{/assets/js/sticky-kit.min.js}"></script>
     <!--Custom JavaScript -->
     <script th:src="@{/assets/js/custom.min.js}"></script>
+    <script th:src="@{/assets/js/vue.js}"></script>
     
 	<script>
 	
+	var vue=new Vue({
+		el:".elDocument",
+		data:{
+			typeList:{},
+			levelList:{},
+			storeList:{},
+			customer:{}
+		}
+	});
+	
+	var formData=new FormData();
+	
+	function imgShow(obj) {
+
+		var file = obj.files.item(0);
+		if(!(/^image\/.*$/i.test(file.type))) {
+			alert("不是图片文件！"); //不是图片 就跳出这一次循环  
+			return;
+		}
+		formData.append("files",file); 
+		var freader = new FileReader();
+		freader.readAsDataURL(file);
+		freader.onload = function(e) {
+
+			$("#img").attr("src",e.target.result);
+
+		}
+		
+		
+	}
+	
 		$(function() {
+			
+			$.ajax({
+				url:"querytypelevel",
+				type:"post",
+				dataType:"json",
+				success:function(result){
+					vue.typeList=result.ctlist;
+					vue.levelList=result.cllist;
+					vue.storeList=result.slist;
+				}
+			});
+			var id=$("#id").val();
+			$.ajax({
+				url:"querylcustomerbyid",
+				data:"id="+id,
+				type:"post",
+				dataType:"json",
+				success:function(result){
+					vue.customer=result;
+				}
+			});
+			$("#updateCustomer").click(function(){
+
+				if($("#uid").val()==""){
+					alert("请先登录！");
+				}else{
+					if($("#name").val()==""){
+						alert("信息不完整！");
+					}else{
+						if($("#integral").val()==""){
+							alert("信息不完整！");
+						}else{
+							if($("#initialMoney").val()==""){
+								alert("信息不完整！");
+							}else{
+								if($("#balance").val()==""){
+									alert("信息不完整！");
+								}else{
+									if($("#telephone").val()==""){
+										alert("信息不完整！");
+									}else{
+										if($("#address").val()==""){
+											alert("信息不完整！");
+										}else{
+											var addr=/^[\u4e00-\u9fa5]+\/[\u4e00-\u9fa5]+\/[\u4e00-\u9fa5]+\/[\u4e00-\u9fa5_a-zA-Z0-9_-]+$/;
+											
+											if(addr.test($("#address").val())==false){
+												alert("地址输入格式不正确！");
+											}else{
+												formData.append("id",$("#id").val());
+												formData.append("name",$("#name").val());
+												formData.append("score",$("#integral").val());
+												formData.append("initbalance",$("#initialMoney").val());
+												formData.append("balance",$("#balance").val());
+												formData.append("telephone",$("#telephone").val());
+												formData.append("address",$("#address").val());
+												formData.append("telephonename",$("#telephonename").val());
+												formData.append("cid",$("#ct").val());
+												formData.append("lid",$("#cl").val());
+												formData.append("storeid",$("#sid").val());
+												$.ajax({
+													url:"updatecustomer",
+													data:formData,
+													type:"post",
+													processData:false,
+													contentType:false,
+													success:function(result){
+														$("#updateCustomerForm").attr("action","tocustomerlist");
+														$("#updateCustomerForm").attr("method","post");
+														$("#updateCustomerForm").submit();
+													}
+												}); 
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				
+			});
+			
 			
 		});
 	</script>
