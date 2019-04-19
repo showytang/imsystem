@@ -1,18 +1,24 @@
 package com.imsystem.controller.customer;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Customer;
 import com.imsystem.domain.Customerlevel;
 import com.imsystem.domain.Customertype;
 import com.imsystem.domain.Store;
+import com.imsystem.domain.Supplier;
 import com.imsystem.domain.TypeLevelVO;
 import com.imsystem.service.customer.CustomerLevelService;
 import com.imsystem.service.customer.CustomerService;
@@ -30,12 +36,7 @@ public class CustomerController {
 	CustomerLevelService clService;
 	
 	@RequestMapping("tocustomerlist")
-	public String toCustomerList(Model model) {
-		/*List<Customer> clist=cService.queryCustomer();
-		model.addAttribute("clist", clist);
-		for(Customer cobj:clist) {
-			System.out.println(cobj.getName());
-		}*/
+	public String toCustomerList() {
 		return "lxy/Customer";
 	}
 	
@@ -59,6 +60,68 @@ public class CustomerController {
 		return tlVO;
 	}
 	
+	@RequestMapping("addcustomer")
+	@ResponseBody
+	public int addCustomer(MultipartFile files,Customer cObj) {
+		
+	    try {
+	    	if(files!=null) {
+	    		cObj.setImg(files.getBytes());
+	    	}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+	    int row=cService.insertCustomer(cObj);
+        
+		return row;
+	}
+	
+	@RequestMapping("querycustomerlist")
+	@ResponseBody
+	public PageInfo<Customer> queryCustomerList(Double zero,String content,Integer curentPage){
+		if(curentPage == null || curentPage <= 0 ) {
+			curentPage = 1;
+		}
+		return cService.queryCustomerList(zero, content, curentPage);
+	}
+	
+	@RequestMapping("tocustomerdetail")
+	public String toCustomerDetail(String id,Model model) {
+		model.addAttribute("cid", id);
+		return "lxy/CustomerDetail";
+	}
+	
+	@RequestMapping("querylcustomerbyid")
+	@ResponseBody
+	public Customer queryCustomerById(String id) {
+		return cService.queryCustomerById(id);
+	}
+	
+	@RequestMapping("updatecustomer")
+	@ResponseBody
+	public int updateCustomer(MultipartFile files,Customer cObj) {
+		
+	    try {
+	    	if(files!=null) {
+	    		cObj.setImg(files.getBytes());
+	    	}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+	    int row=cService.updateCustomer(cObj);
+        
+		return row;
+	}
+	
+	@RequestMapping("deletecustomer")
+	public String deleteCustomer(String id) {
+		int row=cService.deleteCustomer(id);
+		return "redirect:tocustomerlist";
+	}
 	
 
 }

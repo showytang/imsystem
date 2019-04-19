@@ -29,6 +29,37 @@
   <resultMap id="ResultMapWithBLOBs" type="com.imsystem.domain.Customer" extends="BaseResultMap" >
     <result column="img" property="img" jdbcType="LONGVARBINARY" />
   </resultMap>
+  
+  <select id="queryCustomerByPage" resultMap="BaseResultMap">
+  	SELECT c.* FROM customer c,`user` u
+  	<where>
+  		u.id=c.uid AND c.state=0 AND CONCAT(c.name,u.name) LIKE CONCAT('%',#{content},'%')
+  		<choose>
+  			<when test="zero==1.0">
+  				AND c.balance &gt;= 0
+  			</when>
+  		</choose>
+  	</where>
+  </select>
+  
+  <update id="updateCustomer">
+  	UPDATE customer SET 
+  	<choose>
+  		<when test="img!=null">
+  				`img` =#{img}, 
+  		</when>
+  	</choose>
+  	`name` =#{name},telephonename=#{telephonename},telephone=#{telephone},pname=#{pname},cname=#{cname},aname=#{aname},address=#{address},balance=#{balance},initbalance=#{initbalance},score=#{score},cid=#{cid},lid=#{lid},updatetime=#{updatetime},storeid=#{storeid} 
+  	WHERE id=#{id}
+  </update>
+  
+  <update id="deleteCustomer">
+  	UPDATE customer SET 
+  	state=1 
+  	WHERE id=#{id}
+  </update>
+  
+  
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
