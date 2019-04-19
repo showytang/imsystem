@@ -12,6 +12,8 @@ public interface SupplierMapper {
 	
 	int deleteSupplier(String id);
 	
+	List<Supplier> selectAllSupplier();
+	
     int countByExample(SupplierExample example);
 
     int deleteByExample(SupplierExample example);

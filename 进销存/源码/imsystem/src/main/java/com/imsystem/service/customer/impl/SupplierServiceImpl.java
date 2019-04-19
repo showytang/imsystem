@@ -28,7 +28,7 @@ public class SupplierServiceImpl implements SupplierService{
 	@Override
 	public List<Supplier> querySupplier() {
 		// TODO Auto-generated method stub
-		return null;
+		return sDao.selectAllSupplier();
 	}
 
 	/**
