@@ -1,11 +1,16 @@
 package com.imsystem.service.customer.impl;
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Customer;
 import com.imsystem.mapper.CustomerMapper;
 import com.imsystem.service.customer.CustomerService;
@@ -33,7 +38,20 @@ public class CustomerServiceImpl implements CustomerService{
 	@Override
 	public int insertCustomer(Customer cusObj) {
 		// TODO Auto-generated method stub
-		return 0;
+		String rand=UUID.randomUUID().toString();
+		Date time=new Date();
+		String address=cusObj.getAddress();
+		String[] addr=address.split("/");
+		cusObj.setId(rand);
+		cusObj.setTime(time);
+		cusObj.setUpdatetime(time);
+		cusObj.setPname(addr[0]);
+		cusObj.setCname(addr[1]);
+		cusObj.setAname(addr[2]);
+		cusObj.setAddress(addr[3]);
+		cusObj.setState(0);
+		int row=customerDao.insert(cusObj);
+		return row;
 	}
 
 	/**
@@ -42,7 +60,16 @@ public class CustomerServiceImpl implements CustomerService{
 	@Override
 	public int updateCustomer(Customer cusObj) {
 		// TODO Auto-generated method stub
-		return 0;
+		Date time=new Date();
+		String address=cusObj.getAddress();
+		String[] addr=address.split("/");
+		cusObj.setUpdatetime(time);
+		cusObj.setPname(addr[0]);
+		cusObj.setCname(addr[1]);
+		cusObj.setAname(addr[2]);
+		cusObj.setAddress(addr[3]);
+		int row=customerDao.updateCustomer(cusObj);
+		return row;
 	}
 
 	/**
@@ -51,7 +78,28 @@ public class CustomerServiceImpl implements CustomerService{
 	@Override
 	public Customer queryCustomerById(String cusId) {
 		// TODO Auto-generated method stub
-		return null;
+		return customerDao.selectByPrimaryKey(cusId);
+	}
+
+	/**
+	 * 分页查询客户
+	 */
+	@Override
+	public PageInfo<Customer> queryCustomerList(Double zero, String content, Integer curentPage) {
+		// TODO Auto-generated method stub
+		Page<Customer> page=PageHelper.startPage(curentPage, 1, true);
+		customerDao.queryCustomerByPage(zero, content);
+		PageInfo<Customer> pages=page.toPageInfo();
+		return pages;
+	}
+
+	/**
+	 * 删除客户
+	 */
+	@Override
+	public int deleteCustomer(String id) {
+		// TODO Auto-generated method stub
+		return customerDao.deleteCustomer(id);
 	}
 
 }
