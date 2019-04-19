@@ -59,6 +59,14 @@
   	WHERE id=#{id}
   </update>
   
+  <select id="selectAllCustomer">
+  	SELECT * FROM customer WHERE state=0
+  </select>
+  
+  <select id="selectCustomerByStore">
+  	SELECT * FROM customer WHERE state=0 AND storeid=#{sid}
+  </select>
+  
   
   <sql id="Example_Where_Clause" >
     <where >
