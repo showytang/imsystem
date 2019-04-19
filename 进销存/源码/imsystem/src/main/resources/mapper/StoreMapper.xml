@@ -397,4 +397,13 @@
       column5 = #{column5,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+  <select id="queryStoreAll"  resultMap="BaseResultMap">
+  
+  	  SELECT * FROM `store` WHERE state=0
+  	  
+  </select>
+ 
+  
+  
 </mapper>

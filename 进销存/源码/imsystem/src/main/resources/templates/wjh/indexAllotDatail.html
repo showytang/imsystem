@@ -3,14 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <title>订单详细信息</title>
-<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
-<link rel="stylesheet"
-	th:href="@{/assets/css/font-awesome.min.css}">
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
+<link rel="stylesheet" th:href="@{/assets/css/main.css}">
+<link rel="stylesheet" th:href="@{/assets/css/myStyle.css}" />
+<link rel="icon" type="image/png" sizes="96x96"
+	th:href="@{/assets/img/favicon.png}">
 <link rel="stylesheet" type="text/css" media="all"
 	th:href="@{/assets/css/daterangepicker.css}" />
-<link rel="stylesheet" th:href="@{/assets/css/main.css}">
 <script type="text/javascript"
-	th:src="@{/assets/js/jquery-2.1.4.min.js}"></script>
+	th:src="@{/assets/vendor/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/moment.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/daterangepicker.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/Mydate.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/page.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/bootstrap.min.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/vue.js}"></script>
 <style type="text/css">
@@ -19,121 +25,298 @@
 	height: 35px;
 }
 
-.table>tbody>tr>td {
-	line-height: 35px;
-	white-space: nowrap;
-	text-align: center;
+.selected>div {
+	padding-top: 1vw;
+	padding-bottom: 1vw;
 }
 
-.container-fluid {
+.content {
 	overflow-x: auto;
+	padding-top: 15px;
+}
+
+.datetimepicker {
+	margin: 0px;
+}
+
+.pagebtn {
+	height: 28px;
+	width: 25px;
+	border: 1px solid #C0C0C0;
+	list-style: none;
+	text-align: center;
+	background: #DDDDDD;
+	line-height: 28px;
+	cursor: pointer;
+}
+
+#page>ul {
+	display: flex;
+	justify-content: space-around;
+	padding: 0px;
+	font-size: 12px;
+}
+
+#page {
+	width: 300px;
+	margin: 20px auto;
+}
+
+.currentPage {
+	background: rgb(2, 143, 208);
+	color: white;
+	border: none;
+}
+
+.table>tbody>tr {
+	cursor: pointer;
+}
+
+.table>tbody>tr>td {
+	white-space: nowrap;
+	padding: 8px 20px;
 }
 
 .table>thead>tr>th {
 	white-space: nowrap;
-	text-align: center;
+	padding: 8px 20px;
 }
 
-input {
-	border: none;
-	outline: none;
-	text-align: center;
+.xsoptions {
+	display: none;
 }
 
-.table>thead>tr>th {
-	border-color: rgb(2, 143, 208);
+#options {
+	display: none;
 }
 
-.table>tbody>tr>td {
-	border-color: rgb(2, 143, 208);
+.display {
+	display: block;
+}
+
+.boss, .tj {
+	margin-bottom: 0px;
 }
 
 .glyphicon {
 	color: rgb(2, 143, 208);
 }
-/*body::-webkit-scrollbar {
-				width: 5px;
-				height: 2px;
-				background: white;
-				border-radius: 10px;
-			}
-			
-			body::-webkit-scrollbar-thumb {
-				display: block;
-				width: 6px;
-				margin: 0 auto;
-				border-radius: 10px;
-				background: rgb(2, 143, 208);
-			}*/
+
+.page-title {
+	font-weight: bold;
+	color: rgb(2, 143, 208);
+	letter-spacing: 5px;
+}
+
+.tj span {
+	background: rgb(2, 143, 208);
+	border-color: rgb(2, 143, 208);
+	color: white;
+}
+
+.orderOver {
+	color: red;
+	margin-right: 10px;
+	font-size: 12px;
+	padding: 0px 3px;
+	border-radius: 15%;
+	border: 1px solid red;
+}
 </style>
 </head>
-<body style="background: white;">
-	<div class="container-fluid" id="indexMain">
-		<div class="row" style="margin-bottom: 15px;">
-			<div class="col-xs-8 col-xs-offset-2">
-				<div class="input-group">
-					 <span class="input-group-addon">调拨门店</span>
-					<select class="form-control">
-						<option value="11" >a</option>
-						<option value="22" >b</option>
-					</select>
+<body>
+	<div class="main">
+		<div class="main-content">
+			<div class="container-fluid" id="indexMain"
+				style="background: white;">
+				<div class="panel-heading">
+					<h3 class="panel-title">报表 - 1</h3>
+					<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
 				</div>
+				<div class="selected row boss">
+					<div class="col-md-4 col-sm-6 col-xs-11 tj">
+						<div class="input-group">
+							<span class="input-group-addon">名称</span> <input
+								@keyup.enter="code" id="no" class="form-control"
+								placeholder="订单编号" />
+						</div>
+					</div>
+				</div>
+				<div class="content text-center">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th style="text-align: center;">商品图片</th>
+								<th style="text-align: center;">商品名称</th>
+								<th style="text-align: center;">商品类型</th>
+								<th style="text-align: center;">商品库存</th>
+								<th style="text-align: center;">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="item in list">
+								<td :sid="item.goodsvalue.goods.column5" :data="item.goodsvalue.id">
+									<img v-if="item.goodsvalue.column1 != null" class="shappingImg" :data="item.goodsvalue.id"
+									:src="item.goodsvalue.column1"> 
+									<img v-else class="shappingImg"	:data="item.goodsvalue.id" :scr="item.goodsvalue.goods.img">
+								</td>
+								<td>{{item.goodsvalue.goods.name}}</td>
+								<td>{{item.goodsvalue.name}}</td>
+								<td>{{item.count}}</td>
+								<td>
+									<div style="display: flex;">
+										<span style="margin: auto;" title="修改"
+											v-on:click="openModel(item.goodsvalue.id)"
+											class="glyphicon glyphicon-edit"></span>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal fade bs-example-modal-lg" tabindex="-1"
+					role="dialog" aria-labelledby="myLargeModalLabel">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">
+									订单详情&nbsp;&nbsp;<span></span>
+								</h4>
+							</div>
+							<div class="modal-body">
+								<div class="input-group">
+									<span class="input-group-addon">门店</span> <select id="storid"
+										class="form-control">
+										<option v-for="item in li" :value="item.id">{{item.name}}</option>
+									</select>
+								</div>
+								<ul id="stockDeatails"
+									style="margin-top: 10px; list-style: none; line-height: 40px;">
+									<li v-for="item in stockDetails">
+										<div class="row">
+											<div class="col-xs-3 stockDetailsCode"
+												style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+												:data="item.id" :price="item.price"
+												:date = "item.updatetime" >{{item.code}}</div>
+											<div class="col-xs-3">{{item.updatetime}}</div>
+											<div class="col-xs-3">
+												剩余库存&nbsp;:&nbsp;<span>{{item.count-item.scount}}</span>
+											</div>
+											<div class="col-xs-3">
+												<input class="stockDetailsCount"
+													style="border: none; outline: none;"
+													placeholder="输入调拨库存,防止**操作">
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+							<div class="modal-footer">
+								<span style="font-size: 13px; color: #DDDDDD;">点击数量可修改</span>
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">关闭</button>
+								<button type="button" class="btn btn-primary"
+									v-on:click="insert" data-dismiss="modal">确定</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="page"></div>
+				<script type="text/javascript" th:inline="javascript">
+						var vue = new Vue({
+						el : "#indexMain",
+						data : {
+							list : [],
+							li : [],
+							stockDetails : [],
+							id : ""
+						},
+						methods : {
+							openModel : function(id){
+								vue.id = id;
+								$(".modal").modal("show");
+								$.ajax({
+									url : [[@{/orderQueryController/queryDetails}]],
+									data : {
+										gvid : id
+									},
+									type : "post",
+									dataType : "json",
+									success : function(result){
+										vue.stockDetails = result;
+									}
+								});
+							},
+							code : function (){
+								show();
+							},
+							insert : function(){
+								
+								var stockdetail = [];
+								
+								$("#stockDeatails>li").each(function(i,e){
+									if($(".stockDetailsCount:eq("+i+")").val()){
+										var stockdetails = {
+												code : $(".stockDetailsCode:eq("+i+")").text(),
+												id : $(".stockDetailsCode:eq("+i+")").attr("data"),
+												time : $(".stockDetailsCode:eq("+i+")").attr("date"),
+												gvid : vue.id,
+												price : $(".stockDetailsCode:eq("+i+")").attr("price"),
+												column1 : $("#storid").val(),
+												count : $(".stockDetailsCount:eq("+i+")").val()
+										};
+										stockdetails.time = eval('new Date(' + stockdetails.time.replace(/\d+(?=-[^-]+$)/,    
+												function (a) { return parseInt(a, 10) - 1; }).match(/\d+/g) + ')');  
+										
+										stockdetail.push(stockdetails);
+									}
+								});
+								$.ajax({
+									url : [[@{/insertOrder/allot}]],
+									data : JSON.stringify(stockdetail),
+									type : "post",
+									dataType : "json",
+									contentType : "application/json; charset=UTF-8",							
+								    processData: false,
+									success : function(result){
+										alert(result)
+									}
+								});
+							}
+						}
+						
+					});
+					
+					vue.li = [[${li}]];
+					
+					function show(){
+						$.ajax({
+							url : [[@{/orderQueryController/goodsAllot}]],
+							data : {
+								name : $("#no").val()
+							},
+							dataType : "json",
+							type : "post",
+							success : function(result){
+								vue.list = result;
+							}
+						});
+					}
+					show();
+					$(function(){
+						$(".glyphicon-remove").click(function(){
+							
+							$(this).parent().parent().remove();
+							
+						});
+					})
+				</script>
 			</div>
 		</div>
-		<table class="table" style="margin: 0px;">
-			<thead>
-				<tr>
-					<th>图片</th>
-					<th>名称</th>
-					<th>类型</th>
-					<th>价格</th>
-					<th>数量</th>
-					<th>操作</th>
-				</tr>
-			</thead>
-			<tbody id="shappingTbody" :data="list.id">
-				<tr v-for="item in list.stockdetails">
-					<td v-for="item1 in item.goods.goodsValues" :sid="item.goods.column5" :data="item1.id" >
-						<img v-if="item1 != ''" class="shappingImg":data="item1.id" :src="item1.column1">
-						<img  v-else class="shappingImg" :data="item1.id" :scr = "item.goods.img">
-						<input type="hidden" name="count" :value="item.count" >
-						<input type="hidden" name="scount" :value="item.scount" >
-						<input type="hidden" name="price" :value="item.price">
-						<input type="hidden" name="state" :value="item.state">
-						<input type="hidden" name="uid" :value="item.uid">
-						<input type="hidden" name="storeid" :value="item.storeid">
-					</td>
-					<td >{{item.goods.name}}</td>
-					<td v-for="item1 in item.goods.goodsValues" >{{item1.name}}</td>
-					<td>{{item.price}}</td>
-					<td><input class="shiliang" :value="item.column2"></td>
-					<td><input class="checkbox" type="checkbox" value="1" ></td>
-				</tr>
-			</tbody>
-		</table>
 	</div>
-	<script type="text/javascript" th:inline="javascript">
-			var vue = new Vue({
-				
-				el : "#indexMain",
-				
-				data : {
-					
-					list : {}
-					
-				}
-				
-			});
-			
-			vue.list = [[${list}]];
-			
-			$(function(){
-				$(".glyphicon-remove").click(function(){
-					
-					$(this).parent().parent().remove();
-					
-				});
-			})
-		</script>
 </body>
 </html>

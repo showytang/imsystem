@@ -269,6 +269,7 @@ public class GoodsServiceImpl implements GoodsService {
 		return goodsMap.updateGoodsLoad(id);
 	}
 
+
 	/**
 	 * 商品修改
 	 */

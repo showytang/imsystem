@@ -109,18 +109,24 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+  
+  
+  
   <insert id="insert" parameterType="com.imsystem.domain.User" >
-    insert into user (id, name, pwd, 
-      storeid, rid, time, 
+    INSERT INTO `USER` (id, `name`, pwd, 
+      storeid, rid, `time`, 
       updatetime, state, uid, 
       column1, column2, column3, 
       column4, column5)
-    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, 
+    VALUES (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, 
       #{storeid,jdbcType=INTEGER}, #{rid,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, 
       #{updatetime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, 
       #{column1,jdbcType=VARCHAR}, #{column2,jdbcType=VARCHAR}, #{column3,jdbcType=VARCHAR}, 
       #{column4,jdbcType=VARCHAR}, #{column5,jdbcType=VARCHAR})
   </insert>
+  
+  
+  
   <insert id="insertSelective" parameterType="com.imsystem.domain.User" >
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -372,25 +378,28 @@
     
   </select>
  
-	<!--  新增用户 -->
-  <insert id="insertUser">
- 	INSERT INTO `user` (id, `name`, pwd, 
-      storeid, rid, `time`, 
-      updatetime, state, uid, 
-      column1, column2, column3, 
-      column4, column5)
-    VALUES (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, 
-      #{storeid,jdbcType=INTEGER}, #{rid,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, 
-      #{updatetime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, 
-      #{column1,jdbcType=VARCHAR}, #{column2,jdbcType=VARCHAR}, #{column3,jdbcType=VARCHAR}, 
-      #{column4,jdbcType=VARCHAR}, #{column5,jdbcType=VARCHAR})
-  </insert>
+ <!-- 批量删除(假删除) -->
+   <update id="deleteAll">
+   	
+	UPDATE `user` SET state=3 WHERE id IN
+	<foreach collection="array" item="i" open="("  separator="," close=")">
+		
+		#{i}
+		
+	</foreach>
+	
+	
+	
+  </update>
+ 		
+ 		
+ 
+	
  	
- 	
- 	<!--  根据ID删除用户 -->
+ 	<!--  根据ID删除用户(假删除) -->
  	<delete id="deleteUserById">
  		
-   	  delete from `user`  where id = #{id,jdbcType=VARCHAR}
+   	     UPDATE `user` SET state=#{state} WHERE id=#{id}
  
  	</delete>
  	
@@ -413,6 +422,46 @@
   </update>
  	
  	
+ 	<!-- 查询最大的用户ID -->
+ 	<select id="queryUserMaxId" resultMap="BaseResultMap">
+    
+   		SELECT MAX(id) FROM `user` 
  	
+  	</select>
+ 	
+ 	<resultMap type="com.imsystem.domain.User" id="ResultMap" extends="BaseResultMap">
+		
+		 <association property="role"  javaType="com.imsystem.domain.Role">
+		 	<id property="id" column="id"/>
+		 	 <result property="name" column="rname"/>
+		 </association>
+	</resultMap>
+ 	
+ 	
+ 	<!-- 查询用户角色 -->
+   <select id="queryUserRole" resultMap="ResultMap">
+    
+     SELECT u.*,r.name AS rname FROM `user` AS u INNER JOIN `role` AS r
+	 ON u.rid=r.id
+	 <where>
+	 	<if test="name!=null and name!=''">
+	 	and	 u.`name` LIKE CONCAT ('%',#{name},'%')
+	 	</if>
+	 </where>
+	AND u.state IN (0,1)
+	 
+  </select>
+ 	
+  
+  <insert id="insertUser" parameterType="com.imsystem.domain.User" >
+  	
+   INSERT INTO `user` (`id`, `name`, `pwd`, `storeid`, `rid`, `time`, `updatetime`, `state`, `uid`, `column1`, `column2`, `column3`, `column4`, `column5`)
+    VALUES(#{id},#{name},#{pwd},#{storeid},#{rid},#{time},#{updatetime},#{state},#{uid},#{column1},#{column2},#{column3},#{column4},#{column5});
+   
+ 
+  </insert>
+  
+  
+  
   
 </mapper>

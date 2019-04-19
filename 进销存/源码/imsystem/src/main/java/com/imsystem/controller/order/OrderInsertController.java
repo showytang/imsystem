@@ -171,23 +171,11 @@ public class OrderInsertController {
 		return orderInsert.insertSalesorder(salesorder)+"";
 	}
 	
-	@RequestMapping("/uploadInsertOrderOut")
-	public String uploadInsertOrderOut() {
-		
-		return "wjh/yetOrder";
-	}
-	
-	
-
 	@RequestMapping("/allot")
 	@ResponseBody
-	public String allot(@RequestBody Sales sales) {
+	public String allot(@RequestBody Vector<Stockdetails> stockdetail) {
 				
-		return orderInsert.allot(sales)+"";
+		return orderInsert.allot(stockdetail)+"";
 	}
-	
-	
-	
-	
 	
 }

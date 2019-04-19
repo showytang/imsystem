@@ -45,5 +45,30 @@ public class CustomerTypeController {
 		int row=ctService.updateCustomerType(cusTypeObj);
 		return "redirect:tocustomertypelist";
 	}
+	
+	public Customertype queryCustomertTypeById(String ctId) {
+		Customertype ctObj=ctService.queryCustomerTypeById(ctId);
+		return ctObj;
+	}
+	
+	/*@RequestMapping("updatecustomertype")
+	public String updateCustomertype(Customertype cusTypeObj) {
+		int row=ctService.updateCustomerType(cusTypeObj);
+		return "redirect:tocustomertypelist";
+	}*/
+	
+	@RequestMapping("deletecustomertypebyid")
+	@ResponseBody
+	public int deleteCustomertTypeById(String ctId) {
+		int row=ctService.deleteCustomerType(ctId);
+		return row;
+	}
+	
+	@RequestMapping("querylikecustomertypelist")
+	public String queryLikeCustomerType(String content,Model model) {
+		List<QueryCustomerTypeVO> ctListVO=ctService.queryLikeCustomerType(content);
+		model.addAttribute("ctList", ctListVO);
+		return "lxy/kehuleixing";
+	}
 
 }

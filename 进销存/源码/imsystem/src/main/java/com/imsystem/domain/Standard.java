@@ -17,6 +17,8 @@ public class Standard {
     private String uid;
 
     private Integer state;
+    
+    private  String gname;
 
     private String column1;
 
@@ -135,4 +137,12 @@ public class Standard {
     public void setColumn5(String column5) {
         this.column5 = column5;
     }
+
+	public String getGname() {
+		return gname;
+	}
+
+	public void setGname(String gname) {
+		this.gname = gname;
+	}
 }

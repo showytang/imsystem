@@ -58,6 +58,17 @@
 		border: none;
 		outline: none;
 	}
+	
+	/* 选择文件按钮样式 */
+	#chooseFileDiv,#chooseFileDiv input{
+		width: 100%;
+	}
+	#chooseFileDiv{
+		position: absolute;
+		right: 0px;
+		bottom: 2px;
+		opacity: 0.0;
+	}
 </style>
 </head>
 
@@ -66,13 +77,14 @@
 <!-- Body -->
 <body>
 	
-<div class="row" style="padding: 28px 20px;">
+<div class="row elDocument" style="padding: 28px 20px;">
+		
                     <!-- Column -->
                     <div class="col-lg-4 col-xlg-3 col-md-5">
                         <div class="card">
                             <div class="card-block">
                                 <center class="m-t-30"> 
-                                	<img th:src="@{/assets/img/tmore.png}" class="img-circle" width="150">
+                                	<img id="img" th:src="@{/assets/img/tmore.png}" class="img-circle" width="150" height="145">
                                    
                                     <h4 class="card-title m-t-10"><input type="text" name="name" id="name" value="" placeholder="客户名称" /></h4>
                                     <h6 class="card-subtitle">积分:<input type="text" name="integral" id="integral" value="" placeholder="0"/></h6>
@@ -83,6 +95,9 @@
                                 </center>
                             </div>
                             
+                            <div id="chooseFileDiv">
+                            	<input type="file" value="" onchange="imgShow(this)">
+                            </div>
                             <button class="btn btn-danger btn-block ">
                					选择头像
              				</button>
@@ -94,7 +109,14 @@
                     <div class="col-lg-8 col-xlg-9 col-md-7">
                         <div class="card">
                             <div class="card-block">
-                                <form class="form-horizontal form-material">
+                                <form id="addCustomerForm" class="form-horizontal form-material">
+                                
+                                	<input type="hidden" value="" name="" id="name"/>
+                                	<input type="hidden" value="" name="" id="img"/>
+                                	<input type="hidden" value="" name="" id="initbalance"/>
+                                	<input type="hidden" value="" name="" id="balance"/>
+                                	<input type="hidden" value="" name="" id="score"/>
+                                
                                 	<div class="form-group">
                                         <label class="col-md-12">联系人名称</label>
                                         <div class="col-md-12">
@@ -116,26 +138,33 @@
                                     <div class="form-group">
                                         <label class="col-sm-12">客户类型</label>
                                         <div class="col-sm-12">
-                                            <select class="form-control form-control-line">
-                                                <option>批发客户</option>
-                                                <option>零售客户</option>
+                                            <select class="form-control form-contr;ol-line" >
+                                                <option v-for="(o,i) in typeList"   :selected="o.ctObj.defaulttype == 0" >
+                                                {{o.ctObj.name}}
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-12">客户等级</label>
                                         <div class="col-sm-12">
-                                            <select class="form-control form-control-line">
-                                                <option>普通客户</option>
-                                                <option>会员用户</option>
-                                                <option>超级会员用户</option>
+                                            <select class="form-control form-control-line" >
+                                                <option v-for="(o,i) in levelList">{{o.clObj.name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12">所属门店</label>
+                                        <div class="col-sm-12">
+                                            <select class="form-control form-control-line" >
+                                                <option v-for="(o,i) in storeList">{{o.name}}</option>
                                             </select>
                                         </div>
                                     </div>
                                     
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <button class="btn btn-success">确认添加</button>
+                                            <button class="btn btn-success" id="addCustomer">确认添加</button>
                                         </div>
                                     </div>
                                 </form>
@@ -143,7 +172,8 @@
                         </div>
                     </div>
                     <!-- Column -->
-                </div>
+                    
+     </div>
 	
 </body>
 <!-- //Body -->
@@ -162,11 +192,54 @@
     <script th:src="@{/assets/js/sticky-kit.min.js}"></script>
     <!--Custom JavaScript -->
     <script th:src="@{/assets/js/custom.min.js}"></script>
+    <script th:src="@{/assets/js/vue.js}"></script>
     
 	<script>
 	
-		$(function() {
+		var vue=new Vue({
+			el:".elDocument",
+			data:{
+				typeList:{},
+				levelList:{},
+				storeList:{}
+			}
+		});
+	
+		function imgShow(obj) {
+
+			var file = obj.files.item(0);
+			if(!(/^image\/.*$/i.test(file.type))) {
+				alert("不是图片文件！"); //不是图片 就跳出这一次循环  
+			}
+			var freader = new FileReader();
+			freader.readAsDataURL(file);
+			freader.onload = function(e) {
+
+				$("#img").attr("src",e.target.result);
+
+			}
 			
+			var val=obj.value;
+			alert(val);
+			
+		}
+	
+		$(function() {
+			$.ajax({
+				url:"querytypelevel",
+				type:"post",
+				dataType:"json",
+				success:function(result){
+					vue.typeList=result.ctlist;
+					vue.levelList=result.cllist;
+					vue.storeList=result.slist;
+				}
+			});
+			
+			$("#addCustomer").click(function(){
+				var src=$("#img").attr("src");
+				alert(src);
+			});
 		});
 	</script>
 

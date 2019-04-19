@@ -3,6 +3,7 @@ package com.imsystem.service.customer;
 import java.util.List;
 
 import com.imsystem.domain.Customerlevel;
+import com.imsystem.domain.QueryCustomerLevelVO;
 
 public interface CustomerLevelService {
 	
@@ -39,5 +40,18 @@ public interface CustomerLevelService {
 	 * @return
 	 */
 	public Customerlevel queryCustomerLevelById(String clId);
+
+	/**
+	 * 查询所有未删除的客户等级
+	 * @return
+	 */
+	public List<QueryCustomerLevelVO> queryAllCustomerLevel();
+	
+	/**
+	 * 根据条件查询未删除的客户等级
+	 * @return
+	 */
+	public List<QueryCustomerLevelVO> queryLikeCustomerLevel(String content);
+
 
 }

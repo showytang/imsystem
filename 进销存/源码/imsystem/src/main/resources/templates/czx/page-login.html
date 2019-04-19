@@ -73,7 +73,7 @@
 	      <div class='icon'>
 	        <img alt="" th:src='@{/assets/login/img/user_icon_copy.png}'>
 	      </div>
-	      <input name="login" placeholder='用户名' maxlength="16" type='text' autocomplete="off" value=""/>
+	      <input name="login" placeholder='用户名' maxlength="16" type='text' autocomplete="off" value="19976656005"/>
 	        <div class='validation'>
 	          <img alt="" th:src='@{/assets/login/img/tick.png}'>
 	        </div>
@@ -82,7 +82,7 @@
 	      <div class='icon'>
 	        <img alt="" th:src='@{/assets/login/img/lock_icon_copy.png}'>
 	      </div>
-	      <input name="pwd" placeholder='密码' maxlength="16" type='text' autocomplete="off">
+	      <input name="pwd" placeholder='密码' maxlength="16" type='text' autocomplete="off" value="123456">
 	      <div class='validation'>
 	        <img alt="" th:src='@{/assets/login/img/tick.png}'>
 	      </div>
@@ -93,10 +93,10 @@
 	      </div>
 	       <input name="code" placeholder='验证码' maxlength="4" type='text'  autocomplete="off">
 	      
-	      <label>
-				  <input type="checkbox" class="checkbox1" style="vertical-align:middle;" />
+	     	 <!-- <label>
+				  <input type="checkbox"  name="remember-me"  id="remember-me"  class="checkbox1"  style="vertical-align:middle;" />
 				 <span style="vertical-align:middle;margin-left: 3px;font-size: 11px;" >记住我</span>
-			 </label>
+			 </label> -->
 	      
 	       <div class='validation' style="opacity: 1; right: -5px;top: -3px;">
           <canvas class="J_codeimg" id="myCanvas" onclick="Code();">对不起，您的浏览器不支持canvas，请下载最新版浏览器!</canvas>
@@ -124,6 +124,7 @@
 	
     
 	<script type="text/javascript" th:src="@{/assets/login/js/jquery.min.js}"></script>
+	
 	<script type="text/javascript" th:src="@{/assets/login/js/jquery-ui.min.js}"></script>
 	<script type="text/javascript" th:src='@{/assets/login/js/stopExecutionOnTimeout.js?t=1}'></script>
     <script type="text/javascript" th:src="@{/assets/login/layui/layui.js}"></script>
@@ -140,6 +141,8 @@
 		 */
 		var CodeVal = 0;
 	    Code();
+	   
+	   
 	    function Code() {
 			if(canGetCookie == 1){
 				createCode("AdminCode");
@@ -164,6 +167,16 @@
 	            $('input[type="button"]').click();
 	        }
 	    });
+	    
+	  
+	    
+	   
+	
+	    
+	    
+	    
+	    
+	    
 	    //粒子背景特效
 	    $('body').particleground({
 	        dotColor: '#E8DFE8',
@@ -195,11 +208,7 @@
 	    var open = 0;
 	    layui.use('layer', function () {
 	    	
-			/*var msgalert = '默认账号:' + truelogin + '<br/> 默认密码:' + truepwd;
-    		var index = layer.alert(msgalert, { icon: 6, time: 4000, offset: 't', closeBtn: 0, title: '友情提示', btn: [], anim: 2, shade: 0 });  
-			layer.style(index, {
-				color: '#777'
-			}); */
+			
 			
 			
 	        //非空验证
@@ -280,6 +289,11 @@
          	                                            $('.success').fadeIn(1000);
          	                                            $('.success').html(data.Text);
         	                                            
+         	                                            location.href="/module/queryMuLu";
+         	                                            
+         	                                            
+         	                                            
+         	                                            
         												
         	                                        } else {
         	                                        	var index = layer.alert("登录失败", { icon: 6, time: 4000, offset: 't', closeBtn: 0, title: '友情提示', btn: [], anim: 2, shade: 0 }); 

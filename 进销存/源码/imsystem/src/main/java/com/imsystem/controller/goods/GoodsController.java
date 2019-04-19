@@ -138,9 +138,9 @@ public class GoodsController {
 	protected String updateGoodsLoad(String id,Model model) {
 
 		Goods goods = goodsSer.updateGoodsLoad(id);
-		
+
 		model.addAttribute("goods", goods);
-		
+
 		return "dws/updateGoods";
 
 	}

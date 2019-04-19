@@ -1,16 +1,26 @@
 package com.imsystem.service.customer.impl;
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Supplier;
+import com.imsystem.mapper.SupplierMapper;
 import com.imsystem.service.customer.SupplierService;
 
 @Service
 @Transactional
 public class SupplierServiceImpl implements SupplierService{
+	
+	@Autowired
+	SupplierMapper sDao;
 
 	/**
 	 *  查询所有供应商
@@ -27,7 +37,20 @@ public class SupplierServiceImpl implements SupplierService{
 	@Override
 	public int insertSupplier(Supplier supObj) {
 		// TODO Auto-generated method stub
-		return 0;
+		String rand=UUID.randomUUID().toString();
+		Date time=new Date();
+		String address=supObj.getAddres();
+		String[] addr=address.split("/");
+		supObj.setId(rand);
+		supObj.setTime(time);
+		supObj.setUpdatetime(time);
+		supObj.setProvince(addr[0]);
+		supObj.setCity(addr[1]);
+		supObj.setDistrict(addr[2]);
+		supObj.setAddres(addr[3]);
+		supObj.setState(0);
+		int row=sDao.insert(supObj);
+		return row;
 	}
 
 	/**
@@ -36,7 +59,7 @@ public class SupplierServiceImpl implements SupplierService{
 	@Override
 	public int deleteSupplier(String supId) {
 		// TODO Auto-generated method stub
-		return 0;
+		return sDao.deleteSupplier(supId);
 	}
 
 	/**
@@ -45,7 +68,16 @@ public class SupplierServiceImpl implements SupplierService{
 	@Override
 	public int updatSupplier(Supplier supObj) {
 		// TODO Auto-generated method stub
-		return 0;
+		Date time=new Date();
+		String address=supObj.getAddres();
+		String[] addr=address.split("/");
+		supObj.setUpdatetime(time);
+		supObj.setProvince(addr[0]);
+		supObj.setCity(addr[1]);
+		supObj.setDistrict(addr[2]);
+		supObj.setAddres(addr[3]);
+		int row=sDao.updateSupplier(supObj);
+		return row;
 	}
 
 	/**
@@ -54,7 +86,16 @@ public class SupplierServiceImpl implements SupplierService{
 	@Override
 	public Supplier querySupplierById(String supId) {
 		// TODO Auto-generated method stub
-		return null;
+		return sDao.selectByPrimaryKey(supId);
+	}
+
+	@Override
+	public PageInfo<Supplier> querySupplierList(Double zero, String content, Integer curentPage) {
+		// TODO Auto-generated method stub
+		Page<Supplier> page=PageHelper.startPage(curentPage,1,true);
+		sDao.querySupplierByPage(content, zero);
+		PageInfo<Supplier> pages=page.toPageInfo();
+		return pages;
 	}
 
 }

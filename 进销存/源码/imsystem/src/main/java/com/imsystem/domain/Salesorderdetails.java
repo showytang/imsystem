@@ -35,6 +35,16 @@ public class Salesorderdetails {
 
     private String column5;
 
+    private Goodsvalue goodsvalue;
+    
+    public Goodsvalue getGoodsvalue() {
+		return goodsvalue;
+	}
+    
+    public void setGoodsvalue(Goodsvalue goodsvalue) {
+		this.goodsvalue = goodsvalue;
+	}
+    
     public String getId() {
         return id;
     }

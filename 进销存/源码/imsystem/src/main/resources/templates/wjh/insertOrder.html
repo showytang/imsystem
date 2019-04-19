@@ -429,7 +429,7 @@
 			$("#insertOrder").click(function(){
 				
 				if(vue.typeId){
-					
+					alert($("#time").val())
 					var order = {
 							column1 : $(".yprice").text(),
 							sid : vue.givemeId,
@@ -454,6 +454,7 @@
 								gvid : $(".panel-title:eq("+i+")").attr("data"),
 								count : $(".panel-title:eq("+i+")").next().next().text(),
 								scount : "0",
+								time : $("#time").val(),
 								price : $(".jprice:eq("+(i-1)+")").text()
 						};
 						

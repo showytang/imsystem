@@ -86,7 +86,8 @@ public class WebMvcConfigruation extends WebMvcConfigurationSupport {
 		registry.addInterceptor(my).addPathPatterns("/**")
 		.excludePathPatterns("/assets/**")
 		.excludePathPatterns("/user/page-login")
-		.excludePathPatterns("/user/login");
+		.excludePathPatterns("/user/login")
+		.excludePathPatterns("/module/queryMuLu");
 		super.addInterceptors(registry);
 	}
 

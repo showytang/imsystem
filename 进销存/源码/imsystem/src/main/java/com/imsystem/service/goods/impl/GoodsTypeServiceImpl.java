@@ -38,7 +38,7 @@ public class GoodsTypeServiceImpl implements GoodsTypeService {
 	@Override
 	public List<Standard> queryStandradByid(String id) {
 		// TODO Auto-generated method stub
-		return standardMap.queryStandardById(id);
+		return standardMap.dwsqueryStandardById(id);
 	}
 
 	@Override

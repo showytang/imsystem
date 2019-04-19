@@ -40,57 +40,59 @@
 <!-- Body -->
 <body>
 	
-<div class="row" style="padding: 28px 20px;">
-                    
+<div class="row elDocument" style="padding: 28px 20px;">
+                 
                     <!-- Column -->
                     <!-- Column -->
                     <div class="col-lg-12 col-xlg-12 col-md-12">
                         <div class="card">
                             <div class="card-block">
-                                <form class="form-horizontal form-material">
+                                <form id="addSupplierForm" action="addSupplier" method="post" class="form-horizontal form-material">
+                                	
+                                	<input type="hidden" value="1" id="uid" name="uid"> 
+                                	
                                 	<div class="form-group">
                                         <label class="col-md-12">供应商名称</label>
                                         <div class="col-md-12">
-                                            <input type="text" value="" class="form-control form-control-line">
+                                            <input type="text" id="name" value="" name="name" class="form-control form-control-line">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12">门店编号</label>
-                                        <div class="col-sm-12">
-                                            <select class="form-control form-control-line">
-                                                <option>AT444444</option>
-                                                <option>AT555555</option>
+                                        <div class="col-sm-12"> 
+                                            <select class="form-control form-control-line" name="sid" id="sid">
+                                                <option :value="o.id" v-for="(o,i) in storeList">{{o.name}}</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12">联系电话</label>
                                         <div class="col-md-12">
-                                            <input type="text" value="" class="form-control form-control-line">
+                                            <input type="text" id="phone" value="" name="phone" class="form-control form-control-line">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12">发货地址</label>
                                         <div class="col-md-12">
-                                            <input type="text" value="" class="form-control form-control-line" placeholder="省/市/区/具体地址">
+                                            <input type="text" id="address" value="" name="addres" class="form-control form-control-line" placeholder="省/市/区/具体地址">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12">余额</label>
                                         <div class="col-md-12">
-                                            <input type="text" value="" placeholder="0" class="form-control form-control-line">
+                                            <input type="text" id="balance" value="0" name="balance" placeholder="0" class="form-control form-control-line">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12">备注</label>
                                         <div class="col-md-12">
-                                            <textarea rows="5" class="form-control form-control-line"></textarea>
+                                            <textarea rows="5" name="remark" class="form-control form-control-line"></textarea>
                                         </div>
                                     </div>
                                     
                                     <div class="form-group">
                                         <div class="col-xs-12">
-                                            <button class="btn btn-success">确认添加</button>
+                                            <button type="button" class="btn btn-success" id="addSupplier">确认添加</button>
                                         </div>
                                     </div>
                                 </form>
@@ -117,11 +119,78 @@
     <script th:src="@{/assets/js/sticky-kit.min.js}"></script>
     <!--Custom JavaScript -->
     <script th:src="@{/assets/js/custom.min.js}"></script>
+    <script th:src="@{/assets/js/vue.js}"></script>
     
 	<script>
 	
+	var vue=new Vue({
+		el:".elDocument",
+		data:{
+			storeList:{}
+		}
+	});
+	
 		$(function() {
+			/* $.ajax({
+				url:"querystoretoaddsupplier",
+				type:"post",
+				dataType;"json",
+				success:function(result){
+					vue.storeList=result.slist;
+				}
+			}); */
+			$.ajax({
+				url:"querystoretoaddsupplier",
+				type:"post",
+				dataType:"json",
+				success:function(result){
+					vue.storeList=result.slist;
+				}
+			});
 			
+			$("#addSupplier").click(function(){
+				var uid=$("#uid").val();
+				var name=$("#name").val();
+				var sid=$("#sid").val();
+				var phoen=$("#phone").val();
+				var address=$("#address").val();
+				var balance=$("#balance").val();
+				if(uid==""){
+					alert("请先登录！");
+				}else{
+					if(name==""){
+						alert("信息不完整！");
+					}else{
+						if(sid==""){
+							alert("门店不可为空！");
+						}else{
+							if(phoen==""){
+								alert("信息不完整！");
+							}else{
+								if(address==""){
+									alert("信息不完整！");
+								}else{
+									
+									var addr=/^[\u4e00-\u9fa5]+\/[\u4e00-\u9fa5]+\/[\u4e00-\u9fa5]+\/[\u4e00-\u9fa5_a-zA-Z0-9_-]+$/;
+									
+									if(addr.test(address)==false){
+										alert("地址输入格式不正确！");
+										
+									}else{
+										if(balance==""){
+											alert("信息不完整！");
+										}else{
+											$("#addSupplierForm").submit(); 
+										}
+									}
+									
+								}
+							}
+						}
+					}
+				}
+				
+			});
 		});
 	</script>
 

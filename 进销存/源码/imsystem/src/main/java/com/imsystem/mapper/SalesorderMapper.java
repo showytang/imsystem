@@ -3,9 +3,14 @@ package com.imsystem.mapper;
 import com.imsystem.domain.Salesorder;
 import com.imsystem.domain.SalesorderExample;
 import java.util.List;
+import java.util.Vector;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface SalesorderMapper {
+	
+	Vector<Salesorder> querySalesOrder (Salesorder sales);
+	
     int countByExample(SalesorderExample example);
 
     int deleteByExample(SalesorderExample example);

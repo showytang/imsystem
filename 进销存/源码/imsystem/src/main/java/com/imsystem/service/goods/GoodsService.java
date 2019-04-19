@@ -15,6 +15,7 @@ import com.imsystem.domain.GoodsValueVo;
 public interface GoodsService {
 
 	/**
+
 	 * 商品修改
 	 * @param goodsVo
 	 * @return
