@@ -4,13 +4,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,7 @@ import com.imsystem.domain.Img;
 import com.imsystem.service.goods.GoodsDetailsService;
 import com.imsystem.service.goods.GoodsService;
 import com.imsystem.service.goods.GoodsTypeService;
+
 
 @Controller
 @RequestMapping("/goods")
@@ -170,6 +172,12 @@ public class GoodsController {
 	@ResponseBody
 	protected Integer updateGoods(MultipartFile[] files,GoodsVO goodsVo) {
 		
+		if(goodsVo.getGoods().getByteImg() != null) {
+			//base64解码
+			byte[] buffer1 = new Base64().decodeBase64(goodsVo.getGoods().getByteImg().getBytes());   
+			goodsVo.getGoods().setImg(buffer1);   
+		}
+		
 		//1.图片上传
 		String url = "d:/img/" +"goods/";
 		
@@ -184,6 +192,14 @@ public class GoodsController {
 
             	//图片表对象
             	Img img = new Img();
+            	
+            	if(goodsVo.getGoods().getColumn5() == null && goodsVo.getGoods().getImg() == null) {
+            		
+            		goodsVo.getGoods().setImg(f.getBytes());
+            		//.
+            		continue;
+            		
+            	}
             	
                 //唯一标示id
                 String uuid = UUID.randomUUID().toString();
