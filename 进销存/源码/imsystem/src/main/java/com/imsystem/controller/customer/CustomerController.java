@@ -27,6 +27,7 @@ import com.imsystem.domain.TypeLevelVO;
 import com.imsystem.service.customer.CustomerLevelService;
 import com.imsystem.service.customer.CustomerService;
 import com.imsystem.service.customer.CustomerTypeService;
+import com.imsystem.service.setup.StoreService_c;
 
 @Controller
 @RequestMapping("customer")
@@ -38,6 +39,8 @@ public class CustomerController {
 	CustomerTypeService ctService;
 	@Autowired
 	CustomerLevelService clService;
+	@Autowired
+	StoreService_c sService;
 	
 	@RequestMapping("tocustomerlist")
 
@@ -59,12 +62,7 @@ public class CustomerController {
 		TypeLevelVO tlVO=new TypeLevelVO();
 		tlVO.setCtlist(ctService.queryAllCustomerType());
 		tlVO.setCllist(clService.queryAllCustomerLevel());
-		Store s1=new Store(); s1.setId("1"); s1.setName("门店1"); s1.setState(0);
-		Store s2=new Store(); s2.setId("2"); s2.setName("门店2"); s2.setState(0);
-		List list=new ArrayList<>();
-		list.add(s1);
-		list.add(s2);
-		tlVO.setSlist(list);
+		tlVO.setSlist(sService.queryStoreAll());
 		return tlVO;
 	}
 	
