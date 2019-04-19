@@ -356,7 +356,25 @@
 				
 				if(salesDetails.length > 0){
 					
-					
+					$.ajax({
+					    
+					    url : [[@{/insertOrder/}]],
+
+					    data : {
+
+					    },
+
+					    type : "post",
+
+					    dataType : "json",
+					    
+					    /*contentType : "application/json; charset=UTF-8",							
+					    processData: false,*/
+					    
+					    success:function(result){
+
+					    }
+					})
 					
 				}
 				
