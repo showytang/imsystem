@@ -497,16 +497,17 @@ td input {
 				 
 				 if($(obj).hasClass("notchange")){
 					 
-					 formData.append("goods.img",vue.goods.img);
+					 formData.append("goods.byteImg",vue.goods.img);
 					 
 				 }else if($(obj).hasClass("urlchange")){
 					 
 					 formData.append("goods.column5",$(obj).find("img").attr("src")); 		
 					 
-				 }else if($(obj).hasClass("change")){
+				 }
+				/*  else if($(obj).hasClass("change")){
 					 formData.append("goods.img",$(obj).find("img").attr("src").substring($(obj).find("img").attr("src").indexOf(",")+1));
 					 delImg($(obj).find("delimg"));
-				 }
+				 } */
 				 
 			 }else{
 				 

@@ -54,7 +54,18 @@ public class Goods {
 
     private byte[] img;
     
-    /**
+    private String byteImg;
+    
+    
+    public String getByteImg() {
+		return byteImg;
+	}
+
+	public void setByteImg(String byteImg) {
+		this.byteImg = byteImg;
+	}
+
+	/**
      * 商品实例集合
      */
     private List<Goodsvalue> goodsValues;
