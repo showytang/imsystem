@@ -268,7 +268,7 @@
 				data : {
 					pageIf : {},
 					no : "",
-					pagesize : "1",
+					pagesize : "10",
 					storeid : ""
 				},
 				methods : {
@@ -304,6 +304,7 @@
 			function  floatPage(){
 				
 				vue.pageIf.pageNum = $(".currentPage").text();
+				
 				query();
 				
 			}

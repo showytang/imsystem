@@ -2,6 +2,8 @@ package com.imsystem.domain;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Salesorderdetails {
     private String id;
 

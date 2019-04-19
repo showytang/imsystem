@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface SalesorderdetailsMapper {
 	
-	Vector<Salesdetails> salesOrderDetails(String id);
+	Vector<Salesorderdetails> salesOrderDetails(String id);
 	
 	int add(Salesorder salesOrder);
 

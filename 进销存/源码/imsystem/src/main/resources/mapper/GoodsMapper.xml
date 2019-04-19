@@ -1,775 +1,915 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.imsystem.mapper.GoodsMapper" >
-  <resultMap id="BaseResultMap" type="com.imsystem.domain.Goods" >
-    <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="tid" property="tid" jdbcType="VARCHAR" />
-    <result column="code" property="code" jdbcType="VARCHAR" />
-    <result column="prevbit" property="prevbit" jdbcType="VARCHAR" />
-    <result column="sufbit" property="sufbit" jdbcType="VARCHAR" />
-    <result column="bitval" property="bitval" jdbcType="VARCHAR" />
-    <result column="price" property="price" jdbcType="DOUBLE" />
-    <result column="jprice" property="jprice" jdbcType="DOUBLE" />
-    <result column="remark" property="remark" jdbcType="VARCHAR" />
-    <result column="uid" property="uid" jdbcType="VARCHAR" />
-    <result column="minsecurity" property="minsecurity" jdbcType="INTEGER" />
-    <result column="maxsecurity" property="maxsecurity" jdbcType="INTEGER" />
-    <result column="historygid" property="historygid" jdbcType="VARCHAR" />
-    <result column="time" property="time" jdbcType="TIMESTAMP" />
-    <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP" />
-    <result column="detail" property="detail" jdbcType="VARCHAR" />
-    <result column="state" property="state" jdbcType="INTEGER" />
-    <result column="enname" property="enname" jdbcType="VARCHAR" />
-    <result column="column1" property="column1" jdbcType="VARCHAR" />
-    <result column="column2" property="column2" jdbcType="VARCHAR" />
-    <result column="column3" property="column3" jdbcType="VARCHAR" />
-    <result column="column4" property="column4" jdbcType="VARCHAR" />
-    <result column="column5" property="column5" jdbcType="VARCHAR" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.imsystem.domain.Goods" extends="BaseResultMap" >
-    <result column="img" property="img" jdbcType="LONGVARBINARY" />
-    
-    
-    <collection property="goodsValues" ofType="com.imsystem.domain.Goodsvalue">
-    	
-    	
-
-    	<id column="id" property="id" jdbcType="VARCHAR" />
+<mapper namespace="com.imsystem.mapper.GoodsMapper">
+	<resultMap id="BaseResultMap"
+		type="com.imsystem.domain.Goods">
+		<id column="id" property="id" jdbcType="VARCHAR" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
-		<result column="gid" property="gid" jdbcType="VARCHAR" />
+		<result column="tid" property="tid" jdbcType="VARCHAR" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="prevbit" property="prevbit" jdbcType="VARCHAR" />
+		<result column="sufbit" property="sufbit" jdbcType="VARCHAR" />
+		<result column="bitval" property="bitval" jdbcType="VARCHAR" />
+		<result column="price" property="price" jdbcType="DOUBLE" />
 		<result column="jprice" property="jprice" jdbcType="DOUBLE" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="uid" property="uid" jdbcType="VARCHAR" />
+		<result column="minsecurity" property="minsecurity"
+			jdbcType="INTEGER" />
+		<result column="maxsecurity" property="maxsecurity"
+			jdbcType="INTEGER" />
+		<result column="historygid" property="historygid"
+			jdbcType="VARCHAR" />
+		<result column="time" property="time" jdbcType="TIMESTAMP" />
+		<result column="updatetime" property="updatetime"
+			jdbcType="TIMESTAMP" />
+		<result column="detail" property="detail" jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+		<result column="enname" property="enname" jdbcType="VARCHAR" />
 		<result column="column1" property="column1" jdbcType="VARCHAR" />
-		
-		
-		<association property="stockDetails" javaType="com.imsystem.domain.Stockdetails">
-		
+		<result column="column2" property="column2" jdbcType="VARCHAR" />
+		<result column="column3" property="column3" jdbcType="VARCHAR" />
+		<result column="column4" property="column4" jdbcType="VARCHAR" />
+		<result column="column5" property="column5" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs"
+		type="com.imsystem.domain.Goods" extends="BaseResultMap">
+		<result column="img" property="img" jdbcType="LONGVARBINARY" />
+
+
+		<collection property="goodsValues"
+			ofType="com.imsystem.domain.Goodsvalue">
+
+
+
 			<id column="id" property="id" jdbcType="VARCHAR" />
-		    <result column="gvid" property="gvid" jdbcType="VARCHAR" />
-		    <result column="count" property="count" jdbcType="INTEGER" />
-		
+			<result column="name" property="name" jdbcType="VARCHAR" />
+			<result column="gid" property="gid" jdbcType="VARCHAR" />
+			<result column="jprice" property="jprice" jdbcType="DOUBLE" />
+			<result column="column1" property="column1" jdbcType="VARCHAR" />
+
+
+			<association property="stockDetails"
+				javaType="com.imsystem.domain.Stockdetails">
+
+				<id column="id" property="id" jdbcType="VARCHAR" />
+				<result column="gvid" property="gvid" jdbcType="VARCHAR" />
+				<result column="count" property="count" jdbcType="INTEGER" />
+
+			</association>
+
+
+			<collection property="goodsstandardvalues"
+				ofType="com.imsystem.domain.Goodsstandardvalue">
+
+				<id column="id" property="id" jdbcType="VARCHAR" />
+				<result column="name" property="name" jdbcType="VARCHAR" />
+				<result column="vid" property="vid" jdbcType="VARCHAR" />
+
+			</collection>
+
+
+			<collection property="goodsPrices"
+				ofType="com.imsystem.domain.Goodsprice">
+
+				<id column="id" property="id" jdbcType="VARCHAR" />
+				<result column="ctid" property="ctid" jdbcType="VARCHAR" />
+				<result column="sufname" property="sufname"
+					jdbcType="VARCHAR" />
+				<result column="price" property="price" jdbcType="DOUBLE" />
+				<result column="gvid" property="gvid" jdbcType="VARCHAR" />
+
+			</collection>
+
+		</collection>
+
+
+		<collection property="imgs"
+			ofType="com.imsystem.domain.Img">
+
+			<id column="imid" property="id" jdbcType="VARCHAR" />
+			<result column="imname" property="name" jdbcType="VARCHAR" />
+			<result column="imoldname" property="oldname"
+				jdbcType="VARCHAR" />
+			<result column="imurl" property="url" jdbcType="VARCHAR" />
+			<result column="imgid" property="gid" jdbcType="VARCHAR" />
+
+		</collection>
+
+	</resultMap>
+
+	<resultMap type="com.imsystem.domain.GoodsValueVo"
+		id="GoodsValueVo">
+
+		<association property="goods"
+			javaType="com.imsystem.domain.Goods">
+			<id column="id" property="id" jdbcType="VARCHAR" />
+			<result column="gname" property="name" jdbcType="VARCHAR" />
+			<result column="column1" property="column1" jdbcType="VARCHAR" />
+			<result column="column2" property="column2" jdbcType="VARCHAR" />
+			<result column="img" property="img" jdbcType="LONGVARBINARY" />
+			<result column="price" property="price" jdbcType="DOUBLE" />
+			<result column="minsecurity" property="minsecurity"
+				jdbcType="INTEGER" />
+
 		</association>
-		
-		
-		<collection property="goodsstandardvalues" ofType="com.imsystem.domain.Goodsstandardvalue">
-		
-			<id column="id" property="id" jdbcType="VARCHAR" />
-		    <result column="name" property="name" jdbcType="VARCHAR" />
-		    <result column="vid" property="vid" jdbcType="VARCHAR" />
-		    
-		</collection>
-		
-		
-		<collection property="goodsPrices" ofType="com.imsystem.domain.Goodsprice">
-			
-			    <id column="id" property="id" jdbcType="VARCHAR" />
-			    <result column="ctid" property="ctid" jdbcType="VARCHAR" />
-			    <result column="sufname" property="sufname" jdbcType="VARCHAR" />
-			    <result column="price" property="price" jdbcType="DOUBLE" />
-			    <result column="gvid" property="gvid" jdbcType="VARCHAR" />
-		
-		</collection>
-    	
-    </collection>
-    
-    
-    <collection property="imgs" ofType="com.imsystem.domain.Img">
 
-    	<id column="imid" property="id" jdbcType="VARCHAR" />
-	    <result column="imname" property="name" jdbcType="VARCHAR" />
-	    <result column="imoldname" property="oldname" jdbcType="VARCHAR" />
-	    <result column="imurl" property="url" jdbcType="VARCHAR" />
-	    <result column="imgid" property="gid" jdbcType="VARCHAR" />
+		<association property="goodsValue"
+			javaType="com.imsystem.domain.Goodsvalue">
+			<id column="gvid" property="id" jdbcType="VARCHAR" />
+			<result column="gvname" property="name" jdbcType="VARCHAR" />
+			<result column="id" property="gid" jdbcType="VARCHAR" />
+			<result column="gvcol" property="column1" jdbcType="VARCHAR" />
+			<result column="counts" property="counts" jdbcType="VARCHAR" />
+		</association>
 
-    </collection>
-    
-  </resultMap>
-  
-  <resultMap type="com.imsystem.domain.GoodsValueVo" id="GoodsValueVo" >
-  
-  	<association  property="goods" javaType="com.imsystem.domain.Goods">
-  	 	<id column="id" property="id" jdbcType="VARCHAR" />
-    	<result column="gname" property="name" jdbcType="VARCHAR" />
-    	<result column="column1" property="column1" jdbcType="VARCHAR" />
-    	<result column="column2" property="column2" jdbcType="VARCHAR" />
-  		<result column="img" property="img" jdbcType="LONGVARBINARY" />
-  		<result column="price" property="price" jdbcType="DOUBLE" />
-  		<result column="minsecurity" property="minsecurity" jdbcType="INTEGER" />
-  		
-  	</association>
-  
-  	<association property="goodsValue" javaType="com.imsystem.domain.Goodsvalue">
-  		 <id column="gvid" property="id" jdbcType="VARCHAR" />
-	    <result column="gvname" property="name" jdbcType="VARCHAR" />
-	    <result column="id" property="gid" jdbcType="VARCHAR" />
-	    <result column="gvcol" property="column1" jdbcType="VARCHAR" />
-	    <result column="counts" property="counts" jdbcType="VARCHAR" />
-  	</association>
-  
-  <!-- 	<association property="stockDetails" javaType="com.imsystem.domain.Stockdetails">
-  	
-  	</association> -->
-  
-  </resultMap>
-  
-  
-  <select id="updateGoodsLoad" resultMap="ResultMapWithBLOBs">
-  
-  	SELECT 
-	gs.*,
-	im.`id` AS imid,im.name AS imname,im.`oldname` AS imoldname,im.`gid` AS imgid,im.`url` AS imurl, 
-	gv.`id` AS gvid,gv.`name` AS gvname,gv.`gid` AS gvgid,gv.jprice AS gvjprice,gv.`column1` AS gvcolumn1,
-	sd.`id` AS sdid,IF(sd.`count`!= 'null',sd.`count`,0) AS sdcount,sd.`gvid` AS sdgvid,sd.`gvid` AS sdgvid,
-	gdv.id AS gdvid,gdv.`name` AS gdvname,gdv.`vid` AS gdvvid,gdv.svid AS gdvsvid,
-	gp.`id` AS gpid,gp.`sufname` AS gpsufname,gp.`ctid` AS gpctid,gp.`gvid` AS gpgvid,gp.`price` AS gpprice 
-	FROM goods AS gs
-	INNER JOIN `goodsvalue` AS gv
-	ON gv.`gid` = gs.`id`
-	INNER JOIN `goodsstandardvalue` AS gdv
-	ON gdv.vid = gv.`id`
-	INNER JOIN `standardvalue` AS sv
-	ON gdv.`svid` = sv.`id`
-	INNER JOIN `standard` AS s
-	ON s.`id` = sv.`sid`
-	INNER JOIN `goodstype` AS gt
-	ON gt.`id` = s.`tid`
-	INNER JOIN `goodsprice` AS gp
-	ON gp.`gvid` = gv.`id`
-	LEFT JOIN `img` AS im
-	ON gs.`id` = im.`gid` 
-	LEFT JOIN `stockdetails` AS sd
-	ON gv.`id` = sd.`gvid` 
-	WHERE gv.`gid` = (SELECT gid FROM `goodsvalue` WHERE id = #{id}) AND gv.`defaultvalue` = 0
+		<!-- <association property="stockDetails" javaType="com.imsystem.domain.Stockdetails"> 
+			</association> -->
 
-  
-  </select>
-  
-  
-  
-  <!-- 商品查询 -->
-  <select id="queryAllGoods" resultMap="GoodsValueVo">
-		SELECT 
+	</resultMap>
+
+
+	<select id="updateGoodsLoad" resultMap="ResultMapWithBLOBs">
+
+		SELECT
+		gs.*,
+		im.`id` AS
+		imid,im.name AS imname,im.`oldname` AS imoldname,im.`gid` AS
+		imgid,im.`url` AS imurl,
+		gv.`id` AS gvid,gv.`name` AS gvname,gv.`gid`
+		AS gvgid,gv.jprice AS
+		gvjprice,gv.`column1` AS gvcolumn1,
+		sd.`id` AS
+		sdid,IF(sd.`count`!= 'null',sd.`count`,0) AS sdcount,sd.`gvid` AS
+		sdgvid,sd.`gvid` AS sdgvid,
+		gdv.id AS gdvid,gdv.`name` AS
+		gdvname,gdv.`vid` AS gdvvid,gdv.svid AS
+		gdvsvid,
+		gp.`id` AS
+		gpid,gp.`sufname` AS gpsufname,gp.`ctid` AS gpctid,gp.`gvid` AS
+		gpgvid,gp.`price` AS gpprice
+		FROM goods AS gs
+		INNER JOIN `goodsvalue` AS
+		gv
+		ON gv.`gid` = gs.`id`
+		INNER JOIN `goodsstandardvalue` AS gdv
+		ON
+		gdv.vid = gv.`id`
+		INNER JOIN `standardvalue` AS sv
+		ON gdv.`svid` =
+		sv.`id`
+		INNER JOIN `standard` AS s
+		ON s.`id` = sv.`sid`
+		INNER JOIN
+		`goodstype` AS gt
+		ON gt.`id` = s.`tid`
+		INNER JOIN `goodsprice` AS gp
+		ON
+		gp.`gvid` = gv.`id`
+		LEFT JOIN `img` AS im
+		ON gs.`id` = im.`gid`
+		LEFT JOIN
+		`stockdetails` AS sd
+		ON gv.`id` = sd.`gvid`
+		WHERE gv.`gid` = (SELECT gid
+		FROM `goodsvalue` WHERE id = #{id}) AND
+		gv.`defaultvalue` = 0
+
+
+	</select>
+
+
+
+	<!-- 商品查询 -->
+	<select id="queryAllGoods" resultMap="GoodsValueVo">
+		SELECT
 		gt.name AS column2,
 		gs.minsecurity,
 		sd.count AS column1,
-		gs.id ,gv.id AS gvid,
+		gs.id
+		,gv.id AS gvid,
 		gs.name AS gname,
 		gv.`name` AS gvname,
-		gs.price,gs.img,gv.`column1` AS gvcol ,
-		(SELECT SUM(`count`) FROM `stockdetails` AS sk WHERE sk.`gvid` = gv.`id`) AS counts
-		FROM `goods` AS gs 
-		
+		gs.price,gs.img,gv.`column1` AS
+		gvcol ,
+		(SELECT SUM(`count`) FROM
+		`stockdetails` AS sk WHERE sk.`gvid`
+		= gv.`id`) AS counts
+		FROM `goods`
+		AS gs
+
 		INNER JOIN `goodsvalue` gv
 		ON gs.id = gv.`gid`
-		
-		LEFT JOIN `stockdetails` AS sd
+
+		LEFT JOIN
+		`stockdetails` AS sd
 		ON gv.id = sd.gvid
-		
+
 		LEFT JOIN `goodstype` AS gt
-		ON gt.id = gs.tid
-	
-	 <where>
-	
-		gs.`state` = 0 AND CONCAT(gs.name,gv.`name`,gv.enname) LIKE CONCAT('%',#{liketext},'%')
-		
-		 <choose>
-			<when test="tid != null and tid != '' and tid != 0">
-				AND (gt.id = #{tid} OR gt.pid = #{tid})
-			</when>
-			<when test="svid != null">
-			
-				AND gv.`id` IN (
-				SELECT gdsv.vid FROM `goodsstandardvalue` AS gdsv
-				WHERE gdsv.svid IN
-				
-				<foreach item="item" collection="svid" separator="," open="(" close=")" >
-					#{item}
-				</foreach>
-				
-				) 
-			
-			</when>
-		</choose> 
-		
-	
-	</where>
-	
-  </select>
-  
-  
-  
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List" >
-    id, name, tid, code, prevbit, sufbit, bitval, price, jprice, remark, uid, minsecurity, 
-    maxsecurity, historygid, time, updatetime, detail, state, enname, column1, column2, 
-    column3, column4, column5
-  </sql>
-  <sql id="Blob_Column_List" >
-    img
-  </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.imsystem.domain.GoodsExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from goods
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.imsystem.domain.GoodsExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from goods
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from goods
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from goods
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.imsystem.domain.GoodsExample" >
-    delete from goods
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.imsystem.domain.Goods" >
-    insert into goods (id, name, tid, 
-      code, prevbit, sufbit, 
-      bitval, price, jprice, 
-      remark, uid, minsecurity, 
-      maxsecurity, historygid, time, 
-      updatetime, detail, state, 
-      enname, column1, column2, 
-      column3, column4, column5, 
-      img)
-    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{tid,jdbcType=VARCHAR}, 
-      #{code,jdbcType=VARCHAR}, #{prevbit,jdbcType=VARCHAR}, #{sufbit,jdbcType=VARCHAR}, 
-      #{bitval,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, #{jprice,jdbcType=DOUBLE}, 
-      #{remark,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, #{minsecurity,jdbcType=INTEGER}, 
-      #{maxsecurity,jdbcType=INTEGER}, #{historygid,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, 
-      #{updatetime,jdbcType=TIMESTAMP}, #{detail,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
-      #{enname,jdbcType=VARCHAR}, #{column1,jdbcType=VARCHAR}, #{column2,jdbcType=VARCHAR}, 
-      #{column3,jdbcType=VARCHAR}, #{column4,jdbcType=VARCHAR}, #{column5,jdbcType=VARCHAR}, 
-      #{img,jdbcType=LONGVARBINARY})
-  </insert>
-  <insert id="insertSelective" parameterType="com.imsystem.domain.Goods" >
-    insert into goods
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="tid != null" >
-        tid,
-      </if>
-      <if test="code != null" >
-        code,
-      </if>
-      <if test="prevbit != null" >
-        prevbit,
-      </if>
-      <if test="sufbit != null" >
-        sufbit,
-      </if>
-      <if test="bitval != null" >
-        bitval,
-      </if>
-      <if test="price != null" >
-        price,
-      </if>
-      <if test="jprice != null" >
-        jprice,
-      </if>
-      <if test="remark != null" >
-        remark,
-      </if>
-      <if test="uid != null" >
-        uid,
-      </if>
-      <if test="minsecurity != null" >
-        minsecurity,
-      </if>
-      <if test="maxsecurity != null" >
-        maxsecurity,
-      </if>
-      <if test="historygid != null" >
-        historygid,
-      </if>
-      <if test="time != null" >
-        time,
-      </if>
-      <if test="updatetime != null" >
-        updatetime,
-      </if>
-      <if test="detail != null" >
-        detail,
-      </if>
-      <if test="state != null" >
-        state,
-      </if>
-      <if test="enname != null" >
-        enname,
-      </if>
-      <if test="column1 != null" >
-        column1,
-      </if>
-      <if test="column2 != null" >
-        column2,
-      </if>
-      <if test="column3 != null" >
-        column3,
-      </if>
-      <if test="column4 != null" >
-        column4,
-      </if>
-      <if test="column5 != null" >
-        column5,
-      </if>
-      <if test="img != null" >
-        img,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="tid != null" >
-        #{tid,jdbcType=VARCHAR},
-      </if>
-      <if test="code != null" >
-        #{code,jdbcType=VARCHAR},
-      </if>
-      <if test="prevbit != null" >
-        #{prevbit,jdbcType=VARCHAR},
-      </if>
-      <if test="sufbit != null" >
-        #{sufbit,jdbcType=VARCHAR},
-      </if>
-      <if test="bitval != null" >
-        #{bitval,jdbcType=VARCHAR},
-      </if>
-      <if test="price != null" >
-        #{price,jdbcType=DOUBLE},
-      </if>
-      <if test="jprice != null" >
-        #{jprice,jdbcType=DOUBLE},
-      </if>
-      <if test="remark != null" >
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="uid != null" >
-        #{uid,jdbcType=VARCHAR},
-      </if>
-      <if test="minsecurity != null" >
-        #{minsecurity,jdbcType=INTEGER},
-      </if>
-      <if test="maxsecurity != null" >
-        #{maxsecurity,jdbcType=INTEGER},
-      </if>
-      <if test="historygid != null" >
-        #{historygid,jdbcType=VARCHAR},
-      </if>
-      <if test="time != null" >
-        #{time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatetime != null" >
-        #{updatetime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="detail != null" >
-        #{detail,jdbcType=VARCHAR},
-      </if>
-      <if test="state != null" >
-        #{state,jdbcType=INTEGER},
-      </if>
-      <if test="enname != null" >
-        #{enname,jdbcType=VARCHAR},
-      </if>
-      <if test="column1 != null" >
-        #{column1,jdbcType=VARCHAR},
-      </if>
-      <if test="column2 != null" >
-        #{column2,jdbcType=VARCHAR},
-      </if>
-      <if test="column3 != null" >
-        #{column3,jdbcType=VARCHAR},
-      </if>
-      <if test="column4 != null" >
-        #{column4,jdbcType=VARCHAR},
-      </if>
-      <if test="column5 != null" >
-        #{column5,jdbcType=VARCHAR},
-      </if>
-      <if test="img != null" >
-        #{img,jdbcType=LONGVARBINARY},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.imsystem.domain.GoodsExample" resultType="java.lang.Integer" >
-    select count(*) from goods
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map" >
-    update goods
-    <set >
-      <if test="record.id != null" >
-        id = #{record.id,jdbcType=VARCHAR},
-      </if>
-      <if test="record.name != null" >
-        name = #{record.name,jdbcType=VARCHAR},
-      </if>
-      <if test="record.tid != null" >
-        tid = #{record.tid,jdbcType=VARCHAR},
-      </if>
-      <if test="record.code != null" >
-        code = #{record.code,jdbcType=VARCHAR},
-      </if>
-      <if test="record.prevbit != null" >
-        prevbit = #{record.prevbit,jdbcType=VARCHAR},
-      </if>
-      <if test="record.sufbit != null" >
-        sufbit = #{record.sufbit,jdbcType=VARCHAR},
-      </if>
-      <if test="record.bitval != null" >
-        bitval = #{record.bitval,jdbcType=VARCHAR},
-      </if>
-      <if test="record.price != null" >
-        price = #{record.price,jdbcType=DOUBLE},
-      </if>
-      <if test="record.jprice != null" >
-        jprice = #{record.jprice,jdbcType=DOUBLE},
-      </if>
-      <if test="record.remark != null" >
-        remark = #{record.remark,jdbcType=VARCHAR},
-      </if>
-      <if test="record.uid != null" >
-        uid = #{record.uid,jdbcType=VARCHAR},
-      </if>
-      <if test="record.minsecurity != null" >
-        minsecurity = #{record.minsecurity,jdbcType=INTEGER},
-      </if>
-      <if test="record.maxsecurity != null" >
-        maxsecurity = #{record.maxsecurity,jdbcType=INTEGER},
-      </if>
-      <if test="record.historygid != null" >
-        historygid = #{record.historygid,jdbcType=VARCHAR},
-      </if>
-      <if test="record.time != null" >
-        time = #{record.time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.updatetime != null" >
-        updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.detail != null" >
-        detail = #{record.detail,jdbcType=VARCHAR},
-      </if>
-      <if test="record.state != null" >
-        state = #{record.state,jdbcType=INTEGER},
-      </if>
-      <if test="record.enname != null" >
-        enname = #{record.enname,jdbcType=VARCHAR},
-      </if>
-      <if test="record.column1 != null" >
-        column1 = #{record.column1,jdbcType=VARCHAR},
-      </if>
-      <if test="record.column2 != null" >
-        column2 = #{record.column2,jdbcType=VARCHAR},
-      </if>
-      <if test="record.column3 != null" >
-        column3 = #{record.column3,jdbcType=VARCHAR},
-      </if>
-      <if test="record.column4 != null" >
-        column4 = #{record.column4,jdbcType=VARCHAR},
-      </if>
-      <if test="record.column5 != null" >
-        column5 = #{record.column5,jdbcType=VARCHAR},
-      </if>
-      <if test="record.img != null" >
-        img = #{record.img,jdbcType=LONGVARBINARY},
-      </if>
-    </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update goods
-    set id = #{record.id,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
-      tid = #{record.tid,jdbcType=VARCHAR},
-      code = #{record.code,jdbcType=VARCHAR},
-      prevbit = #{record.prevbit,jdbcType=VARCHAR},
-      sufbit = #{record.sufbit,jdbcType=VARCHAR},
-      bitval = #{record.bitval,jdbcType=VARCHAR},
-      price = #{record.price,jdbcType=DOUBLE},
-      jprice = #{record.jprice,jdbcType=DOUBLE},
-      remark = #{record.remark,jdbcType=VARCHAR},
-      uid = #{record.uid,jdbcType=VARCHAR},
-      minsecurity = #{record.minsecurity,jdbcType=INTEGER},
-      maxsecurity = #{record.maxsecurity,jdbcType=INTEGER},
-      historygid = #{record.historygid,jdbcType=VARCHAR},
-      time = #{record.time,jdbcType=TIMESTAMP},
-      updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
-      detail = #{record.detail,jdbcType=VARCHAR},
-      state = #{record.state,jdbcType=INTEGER},
-      enname = #{record.enname,jdbcType=VARCHAR},
-      column1 = #{record.column1,jdbcType=VARCHAR},
-      column2 = #{record.column2,jdbcType=VARCHAR},
-      column3 = #{record.column3,jdbcType=VARCHAR},
-      column4 = #{record.column4,jdbcType=VARCHAR},
-      column5 = #{record.column5,jdbcType=VARCHAR},
-      img = #{record.img,jdbcType=LONGVARBINARY}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map" >
-    update goods
-    set id = #{record.id,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
-      tid = #{record.tid,jdbcType=VARCHAR},
-      code = #{record.code,jdbcType=VARCHAR},
-      prevbit = #{record.prevbit,jdbcType=VARCHAR},
-      sufbit = #{record.sufbit,jdbcType=VARCHAR},
-      bitval = #{record.bitval,jdbcType=VARCHAR},
-      price = #{record.price,jdbcType=DOUBLE},
-      jprice = #{record.jprice,jdbcType=DOUBLE},
-      remark = #{record.remark,jdbcType=VARCHAR},
-      uid = #{record.uid,jdbcType=VARCHAR},
-      minsecurity = #{record.minsecurity,jdbcType=INTEGER},
-      maxsecurity = #{record.maxsecurity,jdbcType=INTEGER},
-      historygid = #{record.historygid,jdbcType=VARCHAR},
-      time = #{record.time,jdbcType=TIMESTAMP},
-      updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
-      detail = #{record.detail,jdbcType=VARCHAR},
-      state = #{record.state,jdbcType=INTEGER},
-      enname = #{record.enname,jdbcType=VARCHAR},
-      column1 = #{record.column1,jdbcType=VARCHAR},
-      column2 = #{record.column2,jdbcType=VARCHAR},
-      column3 = #{record.column3,jdbcType=VARCHAR},
-      column4 = #{record.column4,jdbcType=VARCHAR},
-      column5 = #{record.column5,jdbcType=VARCHAR}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.imsystem.domain.Goods" >
-    update goods
-    <set >
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="tid != null" >
-        tid = #{tid,jdbcType=VARCHAR},
-      </if>
-      <if test="code != null" >
-        code = #{code,jdbcType=VARCHAR},
-      </if>
-      <if test="prevbit != null" >
-        prevbit = #{prevbit,jdbcType=VARCHAR},
-      </if>
-      <if test="sufbit != null" >
-        sufbit = #{sufbit,jdbcType=VARCHAR},
-      </if>
-      <if test="bitval != null" >
-        bitval = #{bitval,jdbcType=VARCHAR},
-      </if>
-      <if test="price != null" >
-        price = #{price,jdbcType=DOUBLE},
-      </if>
-      <if test="jprice != null" >
-        jprice = #{jprice,jdbcType=DOUBLE},
-      </if>
-      <if test="remark != null" >
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="uid != null" >
-        uid = #{uid,jdbcType=VARCHAR},
-      </if>
-      <if test="minsecurity != null" >
-        minsecurity = #{minsecurity,jdbcType=INTEGER},
-      </if>
-      <if test="maxsecurity != null" >
-        maxsecurity = #{maxsecurity,jdbcType=INTEGER},
-      </if>
-      <if test="historygid != null" >
-        historygid = #{historygid,jdbcType=VARCHAR},
-      </if>
-      <if test="time != null" >
-        time = #{time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatetime != null" >
-        updatetime = #{updatetime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="detail != null" >
-        detail = #{detail,jdbcType=VARCHAR},
-      </if>
-      <if test="state != null" >
-        state = #{state,jdbcType=INTEGER},
-      </if>
-      <if test="enname != null" >
-        enname = #{enname,jdbcType=VARCHAR},
-      </if>
-      <if test="column1 != null" >
-        column1 = #{column1,jdbcType=VARCHAR},
-      </if>
-      <if test="column2 != null" >
-        column2 = #{column2,jdbcType=VARCHAR},
-      </if>
-      <if test="column3 != null" >
-        column3 = #{column3,jdbcType=VARCHAR},
-      </if>
-      <if test="column4 != null" >
-        column4 = #{column4,jdbcType=VARCHAR},
-      </if>
-      <if test="column5 != null" >
-        column5 = #{column5,jdbcType=VARCHAR},
-      </if>
-      <if test="img != null" >
-        img = #{img,jdbcType=LONGVARBINARY},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.imsystem.domain.Goods" >
-    update goods
-    set name = #{name,jdbcType=VARCHAR},
-      tid = #{tid,jdbcType=VARCHAR},
-      code = #{code,jdbcType=VARCHAR},
-      prevbit = #{prevbit,jdbcType=VARCHAR},
-      sufbit = #{sufbit,jdbcType=VARCHAR},
-      bitval = #{bitval,jdbcType=VARCHAR},
-      price = #{price,jdbcType=DOUBLE},
-      jprice = #{jprice,jdbcType=DOUBLE},
-      remark = #{remark,jdbcType=VARCHAR},
-      uid = #{uid,jdbcType=VARCHAR},
-      minsecurity = #{minsecurity,jdbcType=INTEGER},
-      maxsecurity = #{maxsecurity,jdbcType=INTEGER},
-      historygid = #{historygid,jdbcType=VARCHAR},
-      time = #{time,jdbcType=TIMESTAMP},
-      updatetime = #{updatetime,jdbcType=TIMESTAMP},
-      detail = #{detail,jdbcType=VARCHAR},
-      state = #{state,jdbcType=INTEGER},
-      enname = #{enname,jdbcType=VARCHAR},
-      column1 = #{column1,jdbcType=VARCHAR},
-      column2 = #{column2,jdbcType=VARCHAR},
-      column3 = #{column3,jdbcType=VARCHAR},
-      column4 = #{column4,jdbcType=VARCHAR},
-      column5 = #{column5,jdbcType=VARCHAR},
-      img = #{img,jdbcType=LONGVARBINARY}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.imsystem.domain.Goods" >
-    update goods
-    set name = #{name,jdbcType=VARCHAR},
-      tid = #{tid,jdbcType=VARCHAR},
-      code = #{code,jdbcType=VARCHAR},
-      prevbit = #{prevbit,jdbcType=VARCHAR},
-      sufbit = #{sufbit,jdbcType=VARCHAR},
-      bitval = #{bitval,jdbcType=VARCHAR},
-      price = #{price,jdbcType=DOUBLE},
-      jprice = #{jprice,jdbcType=DOUBLE},
-      remark = #{remark,jdbcType=VARCHAR},
-      uid = #{uid,jdbcType=VARCHAR},
-      minsecurity = #{minsecurity,jdbcType=INTEGER},
-      maxsecurity = #{maxsecurity,jdbcType=INTEGER},
-      historygid = #{historygid,jdbcType=VARCHAR},
-      time = #{time,jdbcType=TIMESTAMP},
-      updatetime = #{updatetime,jdbcType=TIMESTAMP},
-      detail = #{detail,jdbcType=VARCHAR},
-      state = #{state,jdbcType=INTEGER},
-      enname = #{enname,jdbcType=VARCHAR},
-      column1 = #{column1,jdbcType=VARCHAR},
-      column2 = #{column2,jdbcType=VARCHAR},
-      column3 = #{column3,jdbcType=VARCHAR},
-      column4 = #{column4,jdbcType=VARCHAR},
-      column5 = #{column5,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+		ON
+		gt.id = gs.tid
+
+		<where>
+
+			gs.`state` = 0 AND CONCAT(gs.name,gv.`name`,gv.enname) LIKE
+			CONCAT('%',#{liketext},'%')
+
+			<choose>
+				<when test="tid != null and tid != '' and tid != 0">
+					AND (gt.id = #{tid} OR gt.pid = #{tid})
+				</when>
+				<when test="svid != null">
+
+					AND gv.`id` IN (
+					SELECT gdsv.vid FROM `goodsstandardvalue` AS gdsv
+					WHERE gdsv.svid IN
+
+					<foreach item="item" collection="svid" separator=","
+						open="(" close=")">
+						#{item}
+					</foreach>
+
+					)
+
+				</when>
+			</choose>
+
+
+		</where>
+
+	</select>
+
+
+
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, name, tid, code, prevbit, sufbit, bitval, price,
+		jprice, remark, uid,
+		minsecurity,
+		maxsecurity, historygid, time,
+		updatetime, detail, state, enname, column1,
+		column2,
+		column3, column4,
+		column5
+	</sql>
+	<sql id="Blob_Column_List">
+		img
+	</sql>
+	<select id="selectByExampleWithBLOBs"
+		resultMap="ResultMapWithBLOBs"
+		parameterType="com.imsystem.domain.GoodsExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from goods
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.imsystem.domain.GoodsExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from goods
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from goods
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from goods
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="com.imsystem.domain.GoodsExample">
+		delete from goods
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.imsystem.domain.Goods">
+		insert into goods (id, name,
+		tid,
+		code, prevbit, sufbit,
+		bitval, price, jprice,
+		remark, uid,
+		minsecurity,
+		maxsecurity, historygid, time,
+		updatetime, detail, state,
+		enname, column1, column2,
+		column3, column4, column5,
+		img)
+		values
+		(#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+		#{tid,jdbcType=VARCHAR},
+		#{code,jdbcType=VARCHAR},
+		#{prevbit,jdbcType=VARCHAR}, #{sufbit,jdbcType=VARCHAR},
+		#{bitval,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE},
+		#{jprice,jdbcType=DOUBLE},
+		#{remark,jdbcType=VARCHAR},
+		#{uid,jdbcType=VARCHAR}, #{minsecurity,jdbcType=INTEGER},
+		#{maxsecurity,jdbcType=INTEGER}, #{historygid,jdbcType=VARCHAR},
+		#{time,jdbcType=TIMESTAMP},
+		#{updatetime,jdbcType=TIMESTAMP},
+		#{detail,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER},
+		#{enname,jdbcType=VARCHAR}, #{column1,jdbcType=VARCHAR},
+		#{column2,jdbcType=VARCHAR},
+		#{column3,jdbcType=VARCHAR},
+		#{column4,jdbcType=VARCHAR}, #{column5,jdbcType=VARCHAR},
+		#{img,jdbcType=LONGVARBINARY})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.imsystem.domain.Goods">
+		insert into goods
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="tid != null">
+				tid,
+			</if>
+			<if test="code != null">
+				code,
+			</if>
+			<if test="prevbit != null">
+				prevbit,
+			</if>
+			<if test="sufbit != null">
+				sufbit,
+			</if>
+			<if test="bitval != null">
+				bitval,
+			</if>
+			<if test="price != null">
+				price,
+			</if>
+			<if test="jprice != null">
+				jprice,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="uid != null">
+				uid,
+			</if>
+			<if test="minsecurity != null">
+				minsecurity,
+			</if>
+			<if test="maxsecurity != null">
+				maxsecurity,
+			</if>
+			<if test="historygid != null">
+				historygid,
+			</if>
+			<if test="time != null">
+				time,
+			</if>
+			<if test="updatetime != null">
+				updatetime,
+			</if>
+			<if test="detail != null">
+				detail,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+			<if test="enname != null">
+				enname,
+			</if>
+			<if test="column1 != null">
+				column1,
+			</if>
+			<if test="column2 != null">
+				column2,
+			</if>
+			<if test="column3 != null">
+				column3,
+			</if>
+			<if test="column4 != null">
+				column4,
+			</if>
+			<if test="column5 != null">
+				column5,
+			</if>
+			<if test="img != null">
+				img,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="tid != null">
+				#{tid,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test="prevbit != null">
+				#{prevbit,jdbcType=VARCHAR},
+			</if>
+			<if test="sufbit != null">
+				#{sufbit,jdbcType=VARCHAR},
+			</if>
+			<if test="bitval != null">
+				#{bitval,jdbcType=VARCHAR},
+			</if>
+			<if test="price != null">
+				#{price,jdbcType=DOUBLE},
+			</if>
+			<if test="jprice != null">
+				#{jprice,jdbcType=DOUBLE},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="uid != null">
+				#{uid,jdbcType=VARCHAR},
+			</if>
+			<if test="minsecurity != null">
+				#{minsecurity,jdbcType=INTEGER},
+			</if>
+			<if test="maxsecurity != null">
+				#{maxsecurity,jdbcType=INTEGER},
+			</if>
+			<if test="historygid != null">
+				#{historygid,jdbcType=VARCHAR},
+			</if>
+			<if test="time != null">
+				#{time,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatetime != null">
+				#{updatetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="detail != null">
+				#{detail,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=INTEGER},
+			</if>
+			<if test="enname != null">
+				#{enname,jdbcType=VARCHAR},
+			</if>
+			<if test="column1 != null">
+				#{column1,jdbcType=VARCHAR},
+			</if>
+			<if test="column2 != null">
+				#{column2,jdbcType=VARCHAR},
+			</if>
+			<if test="column3 != null">
+				#{column3,jdbcType=VARCHAR},
+			</if>
+			<if test="column4 != null">
+				#{column4,jdbcType=VARCHAR},
+			</if>
+			<if test="column5 != null">
+				#{column5,jdbcType=VARCHAR},
+			</if>
+			<if test="img != null">
+				#{img,jdbcType=LONGVARBINARY},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.imsystem.domain.GoodsExample"
+		resultType="java.lang.Integer">
+		select count(*) from goods
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update goods
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=VARCHAR},
+			</if>
+			<if test="record.name != null">
+				name = #{record.name,jdbcType=VARCHAR},
+			</if>
+			<if test="record.tid != null">
+				tid = #{record.tid,jdbcType=VARCHAR},
+			</if>
+			<if test="record.code != null">
+				code = #{record.code,jdbcType=VARCHAR},
+			</if>
+			<if test="record.prevbit != null">
+				prevbit = #{record.prevbit,jdbcType=VARCHAR},
+			</if>
+			<if test="record.sufbit != null">
+				sufbit = #{record.sufbit,jdbcType=VARCHAR},
+			</if>
+			<if test="record.bitval != null">
+				bitval = #{record.bitval,jdbcType=VARCHAR},
+			</if>
+			<if test="record.price != null">
+				price = #{record.price,jdbcType=DOUBLE},
+			</if>
+			<if test="record.jprice != null">
+				jprice = #{record.jprice,jdbcType=DOUBLE},
+			</if>
+			<if test="record.remark != null">
+				remark = #{record.remark,jdbcType=VARCHAR},
+			</if>
+			<if test="record.uid != null">
+				uid = #{record.uid,jdbcType=VARCHAR},
+			</if>
+			<if test="record.minsecurity != null">
+				minsecurity = #{record.minsecurity,jdbcType=INTEGER},
+			</if>
+			<if test="record.maxsecurity != null">
+				maxsecurity = #{record.maxsecurity,jdbcType=INTEGER},
+			</if>
+			<if test="record.historygid != null">
+				historygid = #{record.historygid,jdbcType=VARCHAR},
+			</if>
+			<if test="record.time != null">
+				time = #{record.time,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.updatetime != null">
+				updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.detail != null">
+				detail = #{record.detail,jdbcType=VARCHAR},
+			</if>
+			<if test="record.state != null">
+				state = #{record.state,jdbcType=INTEGER},
+			</if>
+			<if test="record.enname != null">
+				enname = #{record.enname,jdbcType=VARCHAR},
+			</if>
+			<if test="record.column1 != null">
+				column1 = #{record.column1,jdbcType=VARCHAR},
+			</if>
+			<if test="record.column2 != null">
+				column2 = #{record.column2,jdbcType=VARCHAR},
+			</if>
+			<if test="record.column3 != null">
+				column3 = #{record.column3,jdbcType=VARCHAR},
+			</if>
+			<if test="record.column4 != null">
+				column4 = #{record.column4,jdbcType=VARCHAR},
+			</if>
+			<if test="record.column5 != null">
+				column5 = #{record.column5,jdbcType=VARCHAR},
+			</if>
+			<if test="record.img != null">
+				img = #{record.img,jdbcType=LONGVARBINARY},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExampleWithBLOBs" parameterType="map">
+		update goods
+		set id = #{record.id,jdbcType=VARCHAR},
+		name =
+		#{record.name,jdbcType=VARCHAR},
+		tid = #{record.tid,jdbcType=VARCHAR},
+		code = #{record.code,jdbcType=VARCHAR},
+		prevbit =
+		#{record.prevbit,jdbcType=VARCHAR},
+		sufbit =
+		#{record.sufbit,jdbcType=VARCHAR},
+		bitval =
+		#{record.bitval,jdbcType=VARCHAR},
+		price =
+		#{record.price,jdbcType=DOUBLE},
+		jprice =
+		#{record.jprice,jdbcType=DOUBLE},
+		remark =
+		#{record.remark,jdbcType=VARCHAR},
+		uid =
+		#{record.uid,jdbcType=VARCHAR},
+		minsecurity =
+		#{record.minsecurity,jdbcType=INTEGER},
+		maxsecurity =
+		#{record.maxsecurity,jdbcType=INTEGER},
+		historygid =
+		#{record.historygid,jdbcType=VARCHAR},
+		time =
+		#{record.time,jdbcType=TIMESTAMP},
+		updatetime =
+		#{record.updatetime,jdbcType=TIMESTAMP},
+		detail =
+		#{record.detail,jdbcType=VARCHAR},
+		state =
+		#{record.state,jdbcType=INTEGER},
+		enname =
+		#{record.enname,jdbcType=VARCHAR},
+		column1 =
+		#{record.column1,jdbcType=VARCHAR},
+		column2 =
+		#{record.column2,jdbcType=VARCHAR},
+		column3 =
+		#{record.column3,jdbcType=VARCHAR},
+		column4 =
+		#{record.column4,jdbcType=VARCHAR},
+		column5 =
+		#{record.column5,jdbcType=VARCHAR},
+		img =
+		#{record.img,jdbcType=LONGVARBINARY}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update goods
+		set id = #{record.id,jdbcType=VARCHAR},
+		name =
+		#{record.name,jdbcType=VARCHAR},
+		tid = #{record.tid,jdbcType=VARCHAR},
+		code = #{record.code,jdbcType=VARCHAR},
+		prevbit =
+		#{record.prevbit,jdbcType=VARCHAR},
+		sufbit =
+		#{record.sufbit,jdbcType=VARCHAR},
+		bitval =
+		#{record.bitval,jdbcType=VARCHAR},
+		price =
+		#{record.price,jdbcType=DOUBLE},
+		jprice =
+		#{record.jprice,jdbcType=DOUBLE},
+		remark =
+		#{record.remark,jdbcType=VARCHAR},
+		uid =
+		#{record.uid,jdbcType=VARCHAR},
+		minsecurity =
+		#{record.minsecurity,jdbcType=INTEGER},
+		maxsecurity =
+		#{record.maxsecurity,jdbcType=INTEGER},
+		historygid =
+		#{record.historygid,jdbcType=VARCHAR},
+		time =
+		#{record.time,jdbcType=TIMESTAMP},
+		updatetime =
+		#{record.updatetime,jdbcType=TIMESTAMP},
+		detail =
+		#{record.detail,jdbcType=VARCHAR},
+		state =
+		#{record.state,jdbcType=INTEGER},
+		enname =
+		#{record.enname,jdbcType=VARCHAR},
+		column1 =
+		#{record.column1,jdbcType=VARCHAR},
+		column2 =
+		#{record.column2,jdbcType=VARCHAR},
+		column3 =
+		#{record.column3,jdbcType=VARCHAR},
+		column4 =
+		#{record.column4,jdbcType=VARCHAR},
+		column5 =
+		#{record.column5,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.imsystem.domain.Goods">
+		update goods
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="tid != null">
+				tid = #{tid,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				code = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="prevbit != null">
+				prevbit = #{prevbit,jdbcType=VARCHAR},
+			</if>
+			<if test="sufbit != null">
+				sufbit = #{sufbit,jdbcType=VARCHAR},
+			</if>
+			<if test="bitval != null">
+				bitval = #{bitval,jdbcType=VARCHAR},
+			</if>
+			<if test="price != null">
+				price = #{price,jdbcType=DOUBLE},
+			</if>
+			<if test="jprice != null">
+				jprice = #{jprice,jdbcType=DOUBLE},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="uid != null">
+				uid = #{uid,jdbcType=VARCHAR},
+			</if>
+			<if test="minsecurity != null">
+				minsecurity = #{minsecurity,jdbcType=INTEGER},
+			</if>
+			<if test="maxsecurity != null">
+				maxsecurity = #{maxsecurity,jdbcType=INTEGER},
+			</if>
+			<if test="historygid != null">
+				historygid = #{historygid,jdbcType=VARCHAR},
+			</if>
+			<if test="time != null">
+				time = #{time,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatetime != null">
+				updatetime = #{updatetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="detail != null">
+				detail = #{detail,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=INTEGER},
+			</if>
+			<if test="enname != null">
+				enname = #{enname,jdbcType=VARCHAR},
+			</if>
+			<if test="column1 != null">
+				column1 = #{column1,jdbcType=VARCHAR},
+			</if>
+			<if test="column2 != null">
+				column2 = #{column2,jdbcType=VARCHAR},
+			</if>
+			<if test="column3 != null">
+				column3 = #{column3,jdbcType=VARCHAR},
+			</if>
+			<if test="column4 != null">
+				column4 = #{column4,jdbcType=VARCHAR},
+			</if>
+			<if test="column5 != null">
+				column5 = #{column5,jdbcType=VARCHAR},
+			</if>
+			<if test="img != null">
+				img = #{img,jdbcType=LONGVARBINARY},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs"
+		parameterType="com.imsystem.domain.Goods">
+		update goods
+		set name = #{name,jdbcType=VARCHAR},
+		tid =
+		#{tid,jdbcType=VARCHAR},
+		code = #{code,jdbcType=VARCHAR},
+		prevbit =
+		#{prevbit,jdbcType=VARCHAR},
+		sufbit = #{sufbit,jdbcType=VARCHAR},
+		bitval = #{bitval,jdbcType=VARCHAR},
+		price = #{price,jdbcType=DOUBLE},
+		jprice = #{jprice,jdbcType=DOUBLE},
+		remark =
+		#{remark,jdbcType=VARCHAR},
+		uid = #{uid,jdbcType=VARCHAR},
+		minsecurity =
+		#{minsecurity,jdbcType=INTEGER},
+		maxsecurity =
+		#{maxsecurity,jdbcType=INTEGER},
+		historygid =
+		#{historygid,jdbcType=VARCHAR},
+		time = #{time,jdbcType=TIMESTAMP},
+		updatetime = #{updatetime,jdbcType=TIMESTAMP},
+		detail =
+		#{detail,jdbcType=VARCHAR},
+		state = #{state,jdbcType=INTEGER},
+		enname =
+		#{enname,jdbcType=VARCHAR},
+		column1 = #{column1,jdbcType=VARCHAR},
+		column2 = #{column2,jdbcType=VARCHAR},
+		column3 =
+		#{column3,jdbcType=VARCHAR},
+		column4 = #{column4,jdbcType=VARCHAR},
+		column5 = #{column5,jdbcType=VARCHAR},
+		img =
+		#{img,jdbcType=LONGVARBINARY}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.imsystem.domain.Goods">
+		update goods
+		set name = #{name,jdbcType=VARCHAR},
+		tid =
+		#{tid,jdbcType=VARCHAR},
+		code = #{code,jdbcType=VARCHAR},
+		prevbit =
+		#{prevbit,jdbcType=VARCHAR},
+		sufbit = #{sufbit,jdbcType=VARCHAR},
+		bitval = #{bitval,jdbcType=VARCHAR},
+		price = #{price,jdbcType=DOUBLE},
+		jprice = #{jprice,jdbcType=DOUBLE},
+		remark =
+		#{remark,jdbcType=VARCHAR},
+		uid = #{uid,jdbcType=VARCHAR},
+		minsecurity =
+		#{minsecurity,jdbcType=INTEGER},
+		maxsecurity =
+		#{maxsecurity,jdbcType=INTEGER},
+		historygid =
+		#{historygid,jdbcType=VARCHAR},
+		time = #{time,jdbcType=TIMESTAMP},
+		updatetime = #{updatetime,jdbcType=TIMESTAMP},
+		detail =
+		#{detail,jdbcType=VARCHAR},
+		state = #{state,jdbcType=INTEGER},
+		enname =
+		#{enname,jdbcType=VARCHAR},
+		column1 = #{column1,jdbcType=VARCHAR},
+		column2 = #{column2,jdbcType=VARCHAR},
+		column3 =
+		#{column3,jdbcType=VARCHAR},
+		column4 = #{column4,jdbcType=VARCHAR},
+		column5 = #{column5,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
 </mapper>

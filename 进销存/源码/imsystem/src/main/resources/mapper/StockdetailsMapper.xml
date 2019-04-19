@@ -50,12 +50,17 @@
 		INNER JOIN `goodsvalue` AS gv ON gv.id = s.gvid
 		INNER JOIN goods AS g ON gv.gid = g.id
 		where g.name like concat('%',#{name},'%')
-		and s.storeid = 1
+		and s.storeid = #{storeid}
 		GROUP BY s.gvid
 	</select>
-
+	<select id="queryCount" resultMap="BaseResultMap">
+		select s.count-s.scount as count,s.id,s.code from stockdetails as s 
+		where gvid = #{gvid} and s.state = '0' and s.storeid = #{sid}
+		order by s.updatetime
+		limit 1
+	</select>
 	<select id="selectCount" resultType="Integer">
-		SELECT SUM(s.count-s.scount) FROM stockdetails AS s WHERE CODE = #{code}
+		SELECT SUM(s.count-s.scount) FROM stockdetails AS s WHERE s.CODE = #{code} and s.storeid = #{sid}
 	</select>
 
 	<select id="count" parameterType="Integer">
