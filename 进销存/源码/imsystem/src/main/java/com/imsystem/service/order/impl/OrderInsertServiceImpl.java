@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.imsystem.domain.Sales;
+import com.imsystem.domain.Salesback;
+import com.imsystem.domain.Salesbackdetails;
 import com.imsystem.domain.Salesdetails;
 import com.imsystem.domain.Salesorder;
 import com.imsystem.domain.Salesorderdetails;
@@ -21,6 +23,8 @@ import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Stockrecord;
 import com.imsystem.mapper.CustomerMapper;
 import com.imsystem.mapper.SalesMapper;
+import com.imsystem.mapper.SalesbackMapper;
+import com.imsystem.mapper.SalesbackdetailsMapper;
 import com.imsystem.mapper.SalesdetailsMapper;
 import com.imsystem.mapper.SalesorderMapper;
 import com.imsystem.mapper.SalesorderdetailsMapper;
@@ -60,6 +64,12 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 	@Autowired
 	SalesstockrecordMapper salesstockrecordmapper;
+	
+	@Autowired
+	SalesbackMapper salesbackMap;
+	
+	@Autowired
+	SalesbackdetailsMapper salesbackdetailsmapper;
 	
 	@Override
 	public int insert(Stock stock) {
@@ -327,14 +337,51 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 	public int inserorderDesc(Vector<Salesdetails> salesdetails) {
 		// TODO Auto-generated method stub
 		
+		Salesback sales = new Salesback();
+		
+		sales.setId(UUID.randomUUID().toString());
+		
+		sales.setTime(new Date());
+		
+		sales.setUid("1");
+		
+		sales.setStoreid("1");
+		
+		sales.setColumn1(salesdetails.get(0).getId());
+		
 		for (Salesdetails item : salesdetails) {
 			
 			salesdetailsMapper.update(item.getId());
 			
+			sales.setCount(sales.getCount() + item.getCount());
 			
+			Salesbackdetails salesbackdetails = new Salesbackdetails();
 			
+			salesbackdetails.setId(UUID.randomUUID().toString());
+			
+			salesbackdetails.setSid(sales.getId());
+			
+			salesbackdetails.setColumn1(item.getId());
+			
+			salesbackdetails.setUpdatime(sales.getTime());
+			
+			salesbackdetails.setUid("0");
+			
+			salesbackdetails.setStoreid("1");
+			
+			salesbackdetailsmapper.add(salesbackdetails);
+			
+			if(item.getColumn1() != "1") {
+				
+				
+				
+			}
 			
 		}
+		
+		salesbackMap.add(sales);
+		
+		
 		
 		return 0;
 	}
