@@ -3,6 +3,7 @@ package com.imsystem.controller.statistics;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.apache.xml.resolver.helpers.PublicId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,12 +13,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.imsystem.domain.Customer;
 import com.imsystem.domain.Goodsvalue;
 import com.imsystem.domain.Sales;
 import com.imsystem.domain.Salesorder;
 import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Store;
+import com.imsystem.service.customer.CustomerService;
 import com.imsystem.service.statistics.GoodsValueService;
 import com.imsystem.service.statistics.SalesService;
 import com.imsystem.service.statistics.SalesorderService;
@@ -40,6 +43,8 @@ public class AllController {
 	StockService stocks;
 	@Autowired
 	SalesService ss;
+	@Autowired
+	CustomerService cs;
 	
 	/**
 	 * index top 四方格
@@ -258,6 +263,13 @@ public class AllController {
 	@ResponseBody
 	public List<Sales> queryAllShouZhang(String startTime,String endTime,String cid){
 		List<Sales> list = ss.queryShouZhang(cid,startTime,endTime);
+		return list;
+	}
+	
+	@RequestMapping("queryCustomer")
+	@ResponseBody
+	public List<Customer> queryCustomer(String sid){
+		List<Customer> list = cs.queryCustomerByStore(sid);
 		return list;
 	}
 	
