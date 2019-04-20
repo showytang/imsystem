@@ -6,6 +6,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface SalesbackdetailsMapper {
+	
+	int add(Salesbackdetails sales);
+	
     int countByExample(SalesbackdetailsExample example);
 
     int deleteByExample(SalesbackdetailsExample example);

@@ -174,13 +174,12 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr v-for="item in pageIf.list" v-on:click="openModel(item.id)">
+									<tr v-for="item in pageIf.list" v-on:click="openModel(item.id,item.cid)">
 										<td>{{item.code}}</td>
 										<td>{{item.count}}</td>
 										<td>{{item.time}}</td>
 										<td>{{item.paymoney}}</td>
 									</tr>
-									
 								</tbody>
 							</table>
 						</div>
@@ -195,7 +194,7 @@
 										aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
-									<h4 class="modal-title" id="myModalLabel">订单详情</h4>
+									<h4 class="modal-title" id="myModalLabel">订单详情<span></span></h4>
 								</div>
 								<div class="modal-body">
 									<iframe width="100%" style="border: none;min-height:300px; overflow-x: auto;"
@@ -244,9 +243,12 @@
 					vue.pageIf.pageNum = "1";
 					query();
 				},
-				openModel : function (id){
+				openModel : function (id,cid){
 					
 					$("iframe").attr("src",[[@{/orderModel/orderOver}]]+"?id="+id)
+					
+					$("#myModalLabel").find("span").text(id);
+					$("#myModalLabel").find("span").attr("data",cid);
 					
 					$(".modal").modal("show");
 					
@@ -344,6 +346,8 @@
 								
 								count : $(e).find(".count").text(),
 								
+								cid : $("#myModalLabel").find("span").attr("data"),
+								
 								price : $(e).find(".price").text()
 								
 						};
@@ -360,16 +364,15 @@
 					    
 					    url : [[@{/insertOrder/}]],
 
-					    data : {
-
-					    },
+					    data : JSON.stringify(salesDetails),
 
 					    type : "post",
 
 					    dataType : "json",
 					    
-					    /*contentType : "application/json; charset=UTF-8",							
-					    processData: false,*/
+					    contentType : "application/json; charset=UTF-8",	
+					    
+					    processData: false,
 					    
 					    success:function(result){
 

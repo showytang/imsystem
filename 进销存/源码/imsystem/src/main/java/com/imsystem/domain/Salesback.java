@@ -1,6 +1,7 @@
 package com.imsystem.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class Salesback {
     private String id;
@@ -42,6 +43,8 @@ public class Salesback {
     private String column4;
 
     private String column5;
+    
+    private List<Salesbackdetails> list;
 
     public String getId() {
         return id;

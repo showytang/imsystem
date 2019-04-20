@@ -18,6 +18,10 @@
     <result column="column4" property="column4" jdbcType="VARCHAR" />
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
+  <insert id="add">
+  	insert into salesbackdetails
+  	select #{id},#{sid},s.gvid,#{uid},s.oldprice,s.price,s.count,0,#{time},#{storeid} from salesdetails as s where s.id = #{column1}
+  </insert>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
