@@ -71,7 +71,7 @@
   	SELECT * FROM customer WHERE state=0
   </select>
   
-  <select id="selectCustomerByStore">
+  <select id="selectCustomerByStore" resultMap="BaseResultMap">
   	SELECT * FROM customer WHERE state=0 
   	<choose>
   		<when test="sid!=null">
