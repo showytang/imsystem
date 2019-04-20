@@ -67,7 +67,12 @@
   </select>
   
   <select id="selectCustomerByStore">
-  	SELECT * FROM customer WHERE state=0 AND storeid=#{sid}
+  	SELECT * FROM customer WHERE state=0 
+  	<choose>
+  		<when test="sid!=null">
+  				AND storeid=#{sid}
+  		</when>
+  	</choose>
   </select>
   
   
