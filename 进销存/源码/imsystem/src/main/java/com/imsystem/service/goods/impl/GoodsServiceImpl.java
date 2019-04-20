@@ -69,25 +69,25 @@ public class GoodsServiceImpl implements GoodsService {
 	 */
 	@Autowired
 	private GoodsstandardvalueMapper goodsStandardMap;
-	
+
 	/**
 	 * 库存mapper
 	 */
 	@Autowired
 	private StockMapper stockMap;
-	
+
 	/**
 	 * 库存详表Map
 	 */
 	@Autowired
 	private StockdetailsMapper stockDetailsMap;
-	
+
 	/**
 	 * 客户类型查询
 	 */
 	@Autowired
 	private CustomertypeMapper customeTypeMap;
-	
+
 	/**
 	 * 客户类型查询
 	 */
@@ -96,8 +96,7 @@ public class GoodsServiceImpl implements GoodsService {
 		// TODO Auto-generated method stub
 		return customeTypeMap.queryCustomerType();
 	}
-	
-	
+
 	/**
 	 * 商品新增
 	 */
@@ -113,29 +112,29 @@ public class GoodsServiceImpl implements GoodsService {
 		int count = goodsMap.insertSelective(goodsVo.getGoods());
 
 		Stock stock = new Stock();
-		
+
 		stock.setId(stockId);
 		stock.setCid("0");
 		stock.setCode("0");
 		stock.setSid("0");
-		
+
 		stockMap.insertSelective(stock);
-		
+
 		for (Img img : goodsVo.getGoodsImgs()) {
-			
-			if(img != null) {
+
+			if (img != null) {
 				img.setId(UUID.randomUUID().toString());
-				
+
 				img.setGid(gid);
 				imgMapper.insertSelective(img);
-				
+
 			}
 
 		}
-		
-		//没有商品实例的时候
-		if(goodsVo.getGoodsValues() == null) {
-			
+
+		// 没有商品实例的时候
+		if (goodsVo.getGoodsValues() == null) {
+
 			Goodsvalue goodsValue = new Goodsvalue();
 			String goodsvID = UUID.randomUUID().toString();
 			goodsValue.setId(goodsvID);
@@ -143,8 +142,8 @@ public class GoodsServiceImpl implements GoodsService {
 			goodsValue.setGid(gid);
 			goodsValue.setDefaultvalue(1);
 			goodsValueMap.insertSelective(goodsValue);
-			
-			//添加库存
+
+			// 添加库存
 			Stockdetails sd = new Stockdetails();
 			sd.setId(UUID.randomUUID().toString());
 			sd.setSid(stockId);
@@ -152,96 +151,95 @@ public class GoodsServiceImpl implements GoodsService {
 			sd.setPrice(goodsVo.getGoods().getJprice());
 			sd.setState(0);
 			sd.setTime(new Date());
-			//默认15
+			// 默认15
 			sd.setCount(20);
-			
+
 			return stockDetailsMap.insertSelective(sd);
 		}
-		
 
 		for (Goodsvalue gv : goodsVo.getGoodsValues()) {
+			// 同步锁
+			synchronized (this) {
+				if (gv != null) {
 
-			if (gv != null) {
+					gv.setGid(gid);
 
-				gv.setGid(gid);
+					String gvid = new Date().getTime() + "";
+					gv.setId(gvid);
 
-				String gvid = UUID.randomUUID().toString();
-				gv.setId(gvid);
+					File dest = new File(url);
+					/* 选择文件上传路径,如果没有则创建 */
+					if (!dest.exists()) {
+						dest.mkdirs();
+					}
 
-				
+					if (gv.getImg() != null) {
 
-				File dest = new File(url);
-				/* 选择文件上传路径,如果没有则创建 */
-				if (!dest.exists()) {
-					dest.mkdirs();
-				}
+						try {
+							// 唯一标示id
+							String uuid = UUID.randomUUID().toString();
+							// 获取文件名
+							String name2 = gv.getImg().getOriginalFilename();
 
-				if (gv.getImg() != null) {
+							if (name2 != "" && name2 != null) {
+								// 获取文件后缀名
+								String suffix = name2.substring(name2.lastIndexOf("."), name2.length());
+								File fileImg = new File(url + uuid + suffix);
+								// 图片路径
+								gv.setColumn1("/goods/" + uuid + suffix);
 
-					try {
-						// 唯一标示id
-						String uuid = UUID.randomUUID().toString();
-						// 获取文件名
-						String name2 = gv.getImg().getOriginalFilename();
+								System.out.println("图片长度:" + gv.getColumn1().length());
 
-						if (name2 != "" && name2 != null) {
-							// 获取文件后缀名
-							String suffix = name2.substring(name2.lastIndexOf("."), name2.length());
-							File fileImg = new File(url + uuid + suffix);
-							// 图片路径
-							gv.setColumn1("/goods/" + uuid + suffix);
-							
-							System.out.println("图片长度:"+gv.getColumn1().length());
-							
-							gv.getImg().transferTo(fileImg);
-							gv.setDefaultvalue(0);
+								gv.getImg().transferTo(fileImg);
+								gv.setDefaultvalue(0);
+							}
+
+						} catch (IllegalStateException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
 
-					} catch (IllegalStateException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					}
+					// 商品实例添加
+					goodsValueMap.insertSelective(gv);
+					gv.getStockDetails().setId(UUID.randomUUID().toString());
+					// 库存详表添加
+					gv.getStockDetails().setSid(stockId);
+					gv.getStockDetails().setSid(UUID.randomUUID().toString());
+					gv.getStockDetails().setGvid(gvid);
+					gv.getStockDetails().setState(0);
+					gv.getStockDetails().setTime(new Date());
+					stockDetailsMap.insertSelective(gv.getStockDetails());
+
+					// 商品规格值实例添加
+					for (Goodsstandardvalue stv : gv.getGoodsstandardvalues()) {
+
+						if (stv != null) {
+
+							stv.setId(UUID.randomUUID().toString());
+
+							stv.setVid(gvid);
+							goodsStandardMap.insertSelective(stv);
+						}
+
 					}
 
-				}
-				// 商品实例添加
-				goodsValueMap.insertSelective(gv);
+					// 商品价格添加
+					for (Goodsprice gp : gv.getGoodsPrices()) {
 
-				//库存详表添加
-				gv.getStockDetails().setSid(stockId);
-				gv.getStockDetails().setSid(UUID.randomUUID().toString());
-				gv.getStockDetails().setGvid(gvid);
-				gv.getStockDetails().setState(0);
-				gv.getStockDetails().setTime(new Date());
-				stockDetailsMap.insertSelective(gv.getStockDetails());
-				
-				// 商品规格值实例添加
-				for (Goodsstandardvalue stv : gv.getGoodsstandardvalues()) {
+						if (gp != null) {
+							gp.setId(UUID.randomUUID().toString());
+							gp.setGvid(gvid);
+							goodsPriceMap.insertSelective(gp);
 
-					if (stv != null) {
-						
-						stv.setId(UUID.randomUUID().toString());
-						
-						stv.setVid(gvid);
-						goodsStandardMap.insertSelective(stv);
-					}
-
-				}
-
-				// 商品价格添加
-				for (Goodsprice gp : gv.getGoodsPrices()) {
-
-					if (gp != null) {
-						gp.setId(UUID.randomUUID().toString());
-						gp.setGvid(gvid);
-						goodsPriceMap.insertSelective(gp);
+						}
 
 					}
 
 				}
-
 			}
 
 		}
@@ -249,16 +247,14 @@ public class GoodsServiceImpl implements GoodsService {
 		return count;
 	}
 
-	
 	/**
 	 * 商品查询
 	 */
 	@Override
-	public List<GoodsValueVo> queryAllGoods(String liketext,String [] svid,String tid) {
+	public List<GoodsValueVo> queryAllGoods(String liketext, String[] svid, String tid) {
 		// TODO Auto-generated method stub
-		return goodsMap.queryAllGoods(liketext,svid,tid);
+		return goodsMap.queryAllGoods(liketext, svid, tid);
 	}
-
 
 	/**
 	 * 商品修改加载
@@ -269,66 +265,67 @@ public class GoodsServiceImpl implements GoodsService {
 		return goodsMap.updateGoodsLoad(id);
 	}
 
-
 	/**
 	 * 商品修改
 	 */
 	@Override
-	public Integer updateGoods(GoodsVO goodsVo,String url) {
-		
-		//1.商品主表删除
-		int p = goodsMap.deleteByPrimaryKey(goodsVo.getGoods().getId());
-		
+	public Integer updateGoods(GoodsVO goodsVo, String url) {
+
+		// 1.商品主表修改
+		Goods goodsupdate = new Goods();
+		goodsupdate.setId(goodsVo.getGoods().getId());
+		goodsupdate.setState(1);
+		goodsMap.updateByPrimaryKeySelective(goodsupdate);
+
 		String gid = UUID.randomUUID().toString();
 		String stockId = UUID.randomUUID().toString();
 
 		goodsVo.getGoods().setId(gid);
 		goodsVo.getGoods().setState(0);
-		//2.商品主表新增
+		//1.2 添加商品历史编号，
+		goodsVo.getGoods().setHistorygid(goodsVo.getGoods().getId());
+		// 2.商品主表新增
 		int count = goodsMap.insertSelective(goodsVo.getGoods());
-		
-		//3.图片表删除
-		if(goodsVo.getGoodsImgs() != null) {
-			
+
+		// 3.图片表删除
+		if (goodsVo.getGoodsImgs() != null) {
+
 			for (Img img : goodsVo.getGoodsImgs()) {
-				
-				if(img != null) {
-					if(img.getId() != null) {
+
+				if (img != null) {
+					if (img.getId() != null) {
 						imgMapper.deleteByPrimaryKey(img.getId());
 					}
-					
+
 				}
-				
+
 			}
 		}
-		//4.图片新增
+		// 4.图片新增 
 		for (Img img : goodsVo.getGoodsImgs()) {
-			
-			if(img != null) {
-				
+
+			if (img != null) {
+
 				img.setId(UUID.randomUUID().toString());
 				img.setGid(gid);
 				imgMapper.insertSelective(img);
-				
+
 			}
 
 		}
-		
-		
-		//5.进货新增		
+
+		// 5.进货新增
 		Stock stock = new Stock();
 		stock.setId(stockId);
 		stock.setCid("0");
 		stock.setCode("0");
 		stock.setSid("0");
-		
+
 		stockMap.insertSelective(stock);
-		
-		
 
 		for (Goodsvalue gv : goodsVo.getGoodsValues()) {
 
-			//6.0 商品图片上传
+			// 6.0 商品图片上传
 			gv.setDefaultvalue(0);
 			if (gv.getImg() != null) {
 				File dest = new File(url);
@@ -349,11 +346,9 @@ public class GoodsServiceImpl implements GoodsService {
 						File fileImg = new File(url + uuid + suffix);
 						// 图片路径
 						gv.setColumn1("/goods/" + uuid + suffix);
-						
-						System.out.println("图片长度:"+gv.getColumn1().length());
-						
+
 						gv.getImg().transferTo(fileImg);
-						
+
 					}
 
 				} catch (IllegalStateException e) {
@@ -365,60 +360,68 @@ public class GoodsServiceImpl implements GoodsService {
 				}
 
 			}
-			
-			
-			if(!gv.getId().equals("undefined")) {
-				//6.商品实例修改
+
+			if (!gv.getId().equals("undefined")) {
+				// 6.商品实例修改
 				gv.setGid(gid);
-				goodsValueMap.updateByPrimaryKeySelective(gv);
-				
-				//6.2商品客户价格修改
-				for (Goodsprice gp : gv.getGoodsPrices()) {
-				goodsPriceMap.updateByPrimaryKeySelective(gp);
+				//6.1.1 商品修改上次商品id
+				if(gv.getColumn4().equals("0")) {
+					gv.setColumn4(goodsVo.getGoods().getId());
 				}
-				
+				gv.setUpdatetime(new Date());
+				goodsValueMap.updateByPrimaryKeySelective(gv);
+
+				// 6.2商品客户价格修改
+				for (Goodsprice gp : gv.getGoodsPrices()) {
+					goodsPriceMap.updateByPrimaryKeySelective(gp);
+				}
+
 			}
-			
-			//7.商品实例新增
+
+			// 7.商品实例新增
 			if (gv.getId().equals("undefined")) {
 
-				gv.setGid(gid);
+				// 同步锁
+				synchronized (this) {
 
-				String gvid = UUID.randomUUID().toString();
-				gv.setId(gvid);
+					gv.setGid(gid);
 
-				
-				//8. 商品实例添加
-				goodsValueMap.insertSelective(gv);
+					String gvid = new Date().getTime() + "";
+					gv.setId(gvid);
 
-				//9.库存详表添加
-				gv.getStockDetails().setSid(stockId);
-				gv.getStockDetails().setSid(UUID.randomUUID().toString());
-				gv.getStockDetails().setGvid(gvid);
-				gv.getStockDetails().setState(0);
-				gv.getStockDetails().setTime(new Date());
-				stockDetailsMap.insertSelective(gv.getStockDetails());
-				
-				// 10.商品规格值实例添加
-				for (Goodsstandardvalue stv : gv.getGoodsstandardvalues()) {
+					// 8. 商品实例添加
+					goodsValueMap.insertSelective(gv);
 
-					if (stv != null) {
-						
-						stv.setId(UUID.randomUUID().toString());
-						
-						stv.setVid(gvid);
-						goodsStandardMap.insertSelective(stv);
+					// 9.库存详表添加
+					gv.getStockDetails().setSid(stockId);
+					gv.getStockDetails().setId(UUID.randomUUID().toString());
+					gv.getStockDetails().setGvid(gvid);
+					gv.getStockDetails().setState(0);
+					gv.getStockDetails().setTime(new Date());
+					stockDetailsMap.insertSelective(gv.getStockDetails());
+
+					// 10.商品规格值实例添加
+					for (Goodsstandardvalue stv : gv.getGoodsstandardvalues()) {
+
+						if (stv != null) {
+
+							stv.setId(UUID.randomUUID().toString());
+
+							stv.setVid(gvid);
+							goodsStandardMap.insertSelective(stv);
+						}
+
 					}
 
-				}
+					// 11.商品价格添加
+					for (Goodsprice gp : gv.getGoodsPrices()) {
 
-				// 11.商品价格添加
-				for (Goodsprice gp : gv.getGoodsPrices()) {
+						if (gp != null) {
+							gp.setId(UUID.randomUUID().toString());
+							gp.setGvid(gvid);
+							goodsPriceMap.insertSelective(gp);
 
-					if (gp != null) {
-						gp.setId(UUID.randomUUID().toString());
-						gp.setGvid(gvid);
-						goodsPriceMap.insertSelective(gp);
+						}
 
 					}
 
@@ -428,7 +431,6 @@ public class GoodsServiceImpl implements GoodsService {
 
 		}
 
-		
 		return count;
 	}
 
