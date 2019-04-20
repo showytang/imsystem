@@ -6,6 +6,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface SalesstockrecordMapper {
+	
+	List<Salesstockrecord> querystockdetails(String id);
+	
     int countByExample(SalesstockrecordExample example);
 
     int deleteByExample(SalesstockrecordExample example);

@@ -242,6 +242,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 			updateCount(item);
 
 		}
+		
 
 		return bool;
 	}
@@ -377,11 +378,17 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 				
 			}
 			
+			List<Salesstockrecord> list = salesstockrecordmapper.querystockdetails(item.getId());
+			
+			for (Salesstockrecord salesstockrecord : list) {
+				
+				stockdetail.updateScount(salesstockrecord.getStockdetailid(), salesstockrecord.getCount());
+				
+			}
+			
 		}
 		
 		salesbackMap.add(sales);
-		
-		
 		
 		return 0;
 	}
