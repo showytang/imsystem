@@ -14,7 +14,7 @@ public interface CustomerMapper {
 	
 	List<Customer> selectAllCustomer();
 	
-	List<Customer> selectCustomerByStore(String sid);
+	List<Customer> selectCustomerByStore(@Param("sid")String sid);
 	
 	int update(@Param("id")String id,@Param("money")Double money);
 	
