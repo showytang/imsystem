@@ -36,7 +36,6 @@
 		type="com.imsystem.domain.Goods" extends="BaseResultMap">
 		<result column="img" property="img" jdbcType="LONGVARBINARY" />
 
-
 		<collection property="goodsValues"
 			ofType="com.imsystem.domain.Goodsvalue">
 
@@ -161,6 +160,7 @@ SELECT
   
   <!-- 商品查询 -->
   <select id="queryAllGoods" resultMap="GoodsValueVo">
+  SELECT 
 		gt.name AS column2,
 		gs.minsecurity,
 		sd.count AS column1,
