@@ -33,38 +33,40 @@
     
     <collection property="goodsValues" ofType="com.imsystem.domain.Goodsvalue">
 
-    	<id column="id" property="id" jdbcType="VARCHAR" />
-		<result column="name" property="name" jdbcType="VARCHAR" />
-		<result column="gid" property="gid" jdbcType="VARCHAR" />
-		<result column="jprice" property="jprice" jdbcType="DOUBLE" />
-		<result column="column1" property="column1" jdbcType="VARCHAR" />
+    	<id column="gvid" property="id" jdbcType="VARCHAR" />
+		<result column="gvname" property="name" jdbcType="VARCHAR" />
+		<result column="gvgid" property="gid" jdbcType="VARCHAR" />
+		<result column="gvjprice" property="jprice" jdbcType="DOUBLE" />
+		<result column="gvcolumn1" property="column1" jdbcType="VARCHAR" />
+		<result column="gvcolumn4" property="column4" jdbcType="VARCHAR" />
 		
 		
 		<association property="stockDetails" javaType="com.imsystem.domain.Stockdetails">
 		
-			<id column="id" property="id" jdbcType="VARCHAR" />
-		    <result column="gvid" property="gvid" jdbcType="VARCHAR" />
-		    <result column="count" property="count" jdbcType="INTEGER" />
+			<id column="sdid" property="id" jdbcType="VARCHAR" />
+		    <result column="sdgvid" property="gvid" jdbcType="VARCHAR" />
+		    <result column="sdcount" property="count" jdbcType="INTEGER" />
 		
 		</association>
 		
 		
 		<collection property="goodsstandardvalues" ofType="com.imsystem.domain.Goodsstandardvalue">
 		
-			<id column="id" property="id" jdbcType="VARCHAR" />
-		    <result column="name" property="name" jdbcType="VARCHAR" />
-		    <result column="vid" property="vid" jdbcType="VARCHAR" />
+			<id column="gdvid" property="id" jdbcType="VARCHAR" />
+		    <result column="gdvname" property="name" jdbcType="VARCHAR" />
+		    <result column="gdvvid" property="vid" jdbcType="VARCHAR" />
+		    <result column="gdvsvid" property="svid" jdbcType="VARCHAR" />
 		    
 		</collection>
 		
 		
 		<collection property="goodsPrices" ofType="com.imsystem.domain.Goodsprice">
 			
-			    <id column="id" property="id" jdbcType="VARCHAR" />
-			    <result column="ctid" property="ctid" jdbcType="VARCHAR" />
-			    <result column="sufname" property="sufname" jdbcType="VARCHAR" />
-			    <result column="price" property="price" jdbcType="DOUBLE" />
-			    <result column="gvid" property="gvid" jdbcType="VARCHAR" />
+			    <id column="gpid" property="id" jdbcType="VARCHAR" />
+			    <result column="gpctid" property="ctid" jdbcType="VARCHAR" />
+			    <result column="gpsufname" property="sufname" jdbcType="VARCHAR" />
+			    <result column="gpprice" property="price" jdbcType="DOUBLE" />
+			    <result column="gpgvid" property="gvid" jdbcType="VARCHAR" />
 		
 		</collection>
     	
@@ -112,10 +114,10 @@
   
   <select id="updateGoodsLoad" resultMap="ResultMapWithBLOBs">
   
-  	SELECT 
+SELECT 
 	gs.*,
 	im.`id` AS imid,im.name AS imname,im.`oldname` AS imoldname,im.`gid` AS imgid,im.`url` AS imurl, 
-	gv.`id` AS gvid,gv.`name` AS gvname,gv.`gid` AS gvgid,gv.jprice AS gvjprice,gv.`column1` AS gvcolumn1,
+	gv.`id` AS gvid,gv.`name` AS gvname,gv.`gid` AS gvgid,gv.jprice AS gvjprice,gv.`column1` AS gvcolumn1,gv.`column4` AS gvcolumn4,
 	sd.`id` AS sdid,IF(sd.`count`!= 'null',sd.`count`,0) AS sdcount,sd.`gvid` AS sdgvid,sd.`gvid` AS sdgvid,
 	gdv.id AS gdvid,gdv.`name` AS gdvname,gdv.`vid` AS gdvvid,gdv.svid AS gdvsvid,
 	gp.`id` AS gpid,gp.`sufname` AS gpsufname,gp.`ctid` AS gpctid,gp.`gvid` AS gpgvid,gp.`price` AS gpprice 
@@ -136,7 +138,7 @@
 	ON gs.`id` = im.`gid` 
 	LEFT JOIN `stockdetails` AS sd
 	ON gv.`id` = sd.`gvid` 
-	WHERE gv.`gid` = (SELECT gid FROM `goodsvalue` WHERE id = #{id}) AND gv.`defaultvalue` = 0
+	WHERE gv.`gid` = (SELECT gid FROM `goodsvalue` WHERE id = #{id}) AND gv.`defaultvalue` = 0 AND gs.`state` = 0
 	  	
   
   </select>

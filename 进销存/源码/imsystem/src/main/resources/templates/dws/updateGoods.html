@@ -400,6 +400,15 @@ td input {
 	
 	console.log(vue.goods);
 	
+	var hisArr = [];
+	
+	$.each(vue.goods.goodsValues,function(){
+		
+		hisArr.push(this.column4);
+		
+	});
+	
+	hisArr = unique(hisArr);
 	
 	
 	$(function() {
@@ -433,7 +442,11 @@ td input {
 				/*逆向递归查询*/
 				dg(vue.goodsType);
 				
-				dataShow();
+				for(var oo = 0; oo < hisArr.length; oo++){
+					
+					getSvids(oo);
+					dataShow();
+				}
 				
 			}
 			
@@ -504,10 +517,6 @@ td input {
 					 formData.append("goods.column5",$(obj).find("img").attr("src")); 		
 					 
 				 }
-				/*  else if($(obj).hasClass("change")){
-					 formData.append("goods.img",$(obj).find("img").attr("src").substring($(obj).find("img").attr("src").indexOf(",")+1));
-					 delImg($(obj).find("delimg"));
-				 } */
 				 
 			 }else{
 				 
@@ -638,15 +647,24 @@ td input {
 	
 	
 	var svids = [];
-	$.each(vue.goods.goodsValues,function(){
-		
-		$.each(this.goodsstandardvalues,function(){
+
+	//分组查询规格
+	function getSvids(oo){
+		svids = [];
+		$.each(vue.goods.goodsValues,function(){
 			
-			svids.push(this.svid);
-			
+			if(hisArr[oo] == this.column4){
+				$.each(this.goodsstandardvalues,function(){
+					
+					svids.push(this.svid);
+					
+				});
+			}
 		});
-		
-	});
+		svids = unique(svids);
+	}
+	
+	
 	
 	/*
 	去重
@@ -662,7 +680,7 @@ td input {
 		 return res;
 	}
 	
-	svids = unique(svids);
+	
 	
 	
 	
@@ -776,104 +794,14 @@ td input {
 	}
 	
 	
-	/*
-	*商品类型查询
-	*id 父级id
-	*/
-	function queryGoodsTypeByPid(obj,id,op){
-		var bool =  activeSpanStyle(obj,op);
-		
-		if(!bool){
-			
-			return;
-			
-		}
-		
-		$.ajax({
-			
-			url:[[@{/goods/queryGoodsTypeByPid}]],
-			dataType:"json",
-			data:{"id":id},
-			type:"post",
-			success:function(data){
-				
-			 	var ind = $(obj).parent().parent().index();
-				$(".option-top-div:gt("+ind+")").remove()
-				
-				if(data.length > 0){
-						
-					var div = $("<div class='option-div option-top-div row'>");
-					var divtitle = $('<div class="col-lg-1 col-md-1 text-right option-rongqi"><span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span></div>');
-					div.append(divtitle);
-					var divoption = $('<div class="col-lg-11 col-md-11 option-rongqi">');
-					div.append(divoption);
-					var activc = $('<span style="background-color:#fff;" class="visible-lg-inline-block visible-md-inline-block visible-md-inline-block text-center activePosition option-span active1">');
-					
-					divoption.append(activc);
-					$.each(data,function(){
-						
-						var option = $('<span onclick="queryGoodsTypeByPid(this,'+this.id+',false)" class="visible-lg-inline-block visible-md-inline-block text-center option-span" typeid="'+this.id+'">'+this.name+'</span>');
-						divoption.append(option);
-						
-					});
-					
-					$("#goodstype").append(div);
-				}
-				
-			} 
-			
-		});
-		
-		
-		$.ajax({
-			
-			url:[[@{/goods/queryGoodsStandradByid}]],
-			dataType:"json",
-			data:{"id":id},
-			type:"post",
-			success:function(data){
-			 	
-				$("#typeoption").html("");	
-				
-					$.each(data,function(index,obj){
-						
-						var div = $('<div class="option-div option-type row">');
-						$("#typeoption").append(div);
-						
-						var divtitle = $('<div class="col-lg-1 col-md-1 text-right option-rongqi"><span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">'+obj.name+'</span> </div>')
-						div.append(divtitle);
-						
-						var divmain = $('<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">');
-						div.append(divmain);
-						
-						$.each(obj.stabndardValueList,function(ind,item){
-							
-							
-							var span = $('<span onclick="addGoodsOption(this)" class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="'+item.id+'">'+item.name+'</span>')
-							divmain.append(span);
-							
-							if(svids.indexOf(item.id) >= 0){
-								
-								addGoodsOption(span);
-							}
-							
-							
-						})
-						
-					})
-					
-			}  
-			
-		});
-		
-	}
+
 	
 	/*
 		数据渲染，类型and规格值
 	*/
 	function dataShow(){
 		
-		
+		$("#goodstype").html("");
 		for(var i = typeArr.length-1;i >= 0;i--){
 			
 			/*类型渲染*/
@@ -906,7 +834,6 @@ td input {
 			/*规格值渲染*/
 			
 			if(i == 0){
-				console.log(typeArr[i].goodstype.id)
 				$.ajax({
 					
 					url:[[@{/goods/queryGoodsStandradByid}]],
@@ -986,9 +913,11 @@ function addGoodsOption(obj){
 
 		if ($(".option-type").find(".active1").length != 0) {
 
-			if(ii){
+			
+			
+			/* if(ii){ */
 			checkedDlUP();
-			}else{
+			/* }else{
 				if(addii){
 					$("#typeoption span").removeClass("active1");
 					$("#typeoption span").animate({
@@ -1005,7 +934,7 @@ function addGoodsOption(obj){
 					addii = false;
 				}
 				checkedDl();
-			}
+			} */
 		}else{
 			$(".panel-bodytable table").remove();
 		} 
@@ -1115,6 +1044,7 @@ function jhChange(obj){
 		$(".panel-body").append(table);
 
 		var index = 1;
+		
 		var tbody = $("<tbody>");
 		table.append(tbody);
 		var ttile = $("<thead>");
@@ -1159,8 +1089,8 @@ function jhChange(obj){
 							"<td class='text-center' style='vertical-align: inherit;' m='" + tagObject.isCheckedDlArray[i].tag[j].name + "' v='" + tagObject.isCheckedDlArray[i].tag[j].id + "'>")
 							.html(tagObject.isCheckedDlArray[i].tag[j].name);
 					
+					
 					if (i == tagObject.isCheckedDlArray.length - 1) {
-						console.log(index);
 						var hinp = $("<input gvid='"+vue.goods.goodsValues[index-1].id+"' class='text-center' type='hidden' name='goodsType' tyname='' vm='" + tagObject.isCheckedDlArray[i].tag[j].name + "' value='" + tagObject.isCheckedDlArray[i].tag[j].id + "'>");
 						
 						var td1 = $("<td class='text-center' style='vertical-align: inherit;'><input oninput='countChange(this)' class='text-center' readonly sdid='"+vue.goods.goodsValues[index-1].stockDetails.id+"' value='"+vue.goods.goodsValues[index-1].stockDetails.count+"' type=text name='num' v=''></td>");
@@ -1183,6 +1113,7 @@ function jhChange(obj){
 						});
 						
 						
+						
 						tr.append(tdimg);
 						
 						tbody.append(tr);
@@ -1190,8 +1121,10 @@ function jhChange(obj){
 					 	if(vue.goods.goodsValues.length == index){
 							ii = false;
 						} 
+					 	
 						
 					} else {
+						
 						var rowspan = tagObject.allIndex
 								/ tagObject.isCheckedDlArray[i + 1].num;
 						td.attr("rowspan", tagObject.allIndex
@@ -1201,7 +1134,9 @@ function jhChange(obj){
 						var x1 = tagObject.allIndex
 								/ (tagObject.isCheckedDlArray[i].tag.length * tagObject.isCheckedDlArray[i].num);
 						indexRow += x1;
+						
 						appendIdUP(td);
+						
 						
 					}
 				}
@@ -1421,5 +1356,89 @@ function jhChange(obj){
 		},4000);
 	}
 	
+	
+	/*
+	*商品类型查询
+	*id 父级id
+	*/
+	function queryGoodsTypeByPid(obj,id,op){
+		var bool =  activeSpanStyle(obj,op);
+		
+		if(!bool){
+			
+			return;
+			
+		}
+		
+		$.ajax({
+			
+			url:[[@{/goods/queryGoodsTypeByPid}]],
+			dataType:"json",
+			data:{"id":id},
+			type:"post",
+			success:function(data){
+				
+			 	var ind = $(obj).parent().parent().index();
+				$(".option-top-div:gt("+ind+")").remove()
+				
+				if(data.length > 0){
+						
+					var div = $("<div class='option-div option-top-div row'>");
+					var divtitle = $('<div class="col-lg-1 col-md-1 text-right option-rongqi"><span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span></div>');
+					div.append(divtitle);
+					var divoption = $('<div class="col-lg-11 col-md-11 option-rongqi">');
+					div.append(divoption);
+					var activc = $('<span style="background-color:#fff;" class="visible-lg-inline-block visible-md-inline-block visible-md-inline-block text-center activePosition option-span active1">');
+					
+					divoption.append(activc);
+					$.each(data,function(){
+						
+						var option = $('<span onclick="queryGoodsTypeByPid(this,'+this.id+',false)" class="visible-lg-inline-block visible-md-inline-block text-center option-span" typeid="'+this.id+'">'+this.name+'</span>');
+						divoption.append(option);
+						
+					});
+					
+					$("#goodstype").append(div);
+				}
+				
+			} 
+			
+		});
+		 $.ajax({
+			
+			url:[[@{/goods/queryGoodsStandradByid}]],
+			dataType:"json",
+			data:{"id":id},
+			type:"post",
+			success:function(data){
+			 	
+				$("#typeoption").html("");	
+				
+					$.each(data,function(index,obj){
+						
+						var div = $('<div class="option-div option-type row">');
+						$("#typeoption").append(div);
+						
+						var divtitle = $('<div class="col-lg-1 col-md-1 text-right option-rongqi"><span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">'+obj.name+'</span> </div>')
+						div.append(divtitle);
+						
+						var divmain = $('<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">');
+						div.append(divmain);
+						
+						$.each(obj.stabndardValueList,function(ind,item){
+							
+							
+							var span = $('<span onclick="addGoodsOption(this)" class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="'+item.id+'">'+item.name+'</span>')
+							divmain.append(span);
+							
+						})
+						
+					})
+					
+			}  
+			
+		});
+		
+	}
 	 
 </script>

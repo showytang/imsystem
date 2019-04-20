@@ -272,7 +272,6 @@ public class GoodsController {
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
-
         }
 		
 		return goodsSer.updateGoods(goodsVo, url);

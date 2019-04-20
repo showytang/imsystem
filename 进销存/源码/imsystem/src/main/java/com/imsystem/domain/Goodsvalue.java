@@ -22,7 +22,7 @@ public class Goodsvalue {
 
     private Integer state;
 
-    private Integer defaultvalue;
+    private Integer defaultvalue = 0;
 
     private String enname;
     
@@ -35,7 +35,10 @@ public class Goodsvalue {
 
     private String column3;
 
-    private String column4;
+    /**
+     * 商品主表历史id
+     */
+    private String column4 = "0";
 
     private String column5;
     
