@@ -384,3 +384,29 @@ function queryAllShouZhang(startTime,endTime,cid){
 	});
 	return v;
 }
+
+/***
+ * 查詢客戶
+ * @param sid
+ * @returns
+ */
+function queryCustomer(sid){
+	var v;
+	$.ajax({
+		url:"/statistics/queryCustomer",
+		type:"post",
+		data:{
+			sid:sid
+		},
+		dataType:"json",
+		async:false,
+		success:function(data){
+			v = data;
+			console.log(v);
+		},
+		error:function(){
+			console.log("ERROR:'queryCustomer'");
+		}
+	});
+	return v;
+}

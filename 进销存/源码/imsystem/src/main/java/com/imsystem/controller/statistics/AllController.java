@@ -270,6 +270,7 @@ public class AllController {
 	@ResponseBody
 	public List<Customer> queryCustomer(String sid){
 		List<Customer> list = cs.queryCustomerByStore(sid);
+		System.out.println(sid);
 		return list;
 	}
 	

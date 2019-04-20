@@ -57,12 +57,7 @@
 							<div class="col-md-6 col-xs-12">
 								<span class="col-md-3 col-xs-12">选择客户</span> <select
 									class="col-md-9 col-xs-12">
-									<option value="cheese">Cheese</option>
-									<option value="tomatoes">Tomatoes</option>
-									<option value="mozarella">Mozzarella</option>
-									<option value="mushrooms">Mushrooms</option>
-									<option value="pepperoni">Pepperoni</option>
-									<option value="onions">Onions</option>
+									<option v-for="obj in customer" :value="obj.id">{{obj.name}}</option>
 								</select>
 							</div>
 						</div>
@@ -108,7 +103,8 @@
 		var vue = new Vue({
 			el : "#table",
 			data : {
-				page : {}
+				page : {},
+				customer : {}
 			}
 		});
 		vue.page = queryShouZhang(null, null, null, null);
@@ -164,6 +160,18 @@
 													vue.page.pages));
 								}
 							});
+/* 			var uid = "2";	
+			if (uid != "") {
+				var sid = "";
+				if (uid == "1") {
+					sid = "";
+				} else {
+					sid = "1";
+				}
+			}
+			*/
+			vue.customer = queryCustomer("1");
+			console.log(vue.customer);
 		});
 	</script>
 </body>
