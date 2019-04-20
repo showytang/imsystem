@@ -29,6 +29,11 @@
   <update id="update">
   	update customer set balance = balance-#{money} where id = #{id}
   </update>
+  
+  <update id="updateplug">
+  	update customer set balance = balance+#{money} where id = #{id}
+  </update>
+  
   <resultMap id="ResultMapWithBLOBs" type="com.imsystem.domain.Customer" extends="BaseResultMap" >
     <result column="img" property="img" jdbcType="LONGVARBINARY" />
   </resultMap>
