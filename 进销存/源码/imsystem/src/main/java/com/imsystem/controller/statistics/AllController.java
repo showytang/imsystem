@@ -205,12 +205,12 @@ public class AllController {
 	 */
 	@RequestMapping("queryJinHuo")
 	@ResponseBody
-	public PageInfo<Stockdetails> queryJinHuo(Integer currentPage,String startTime,String endTime,String cid){
+	public PageInfo<Stockdetails> queryJinHuo(Integer currentPage,String startTime,String endTime,String cid,String storeId){
 		if (currentPage == null || currentPage == 0) {
 			currentPage = 1;
 		}
 		Page<Stockdetails> page = PageHelper.startPage(currentPage, pageSize, true);
-		List<Stockdetails> list = stockDS.queryJinHuo(startTime, endTime, cid);
+		List<Stockdetails> list = stockDS.queryJinHuo(startTime, endTime, cid,storeId);
 		return page.toPageInfo();
 	}
 	/***

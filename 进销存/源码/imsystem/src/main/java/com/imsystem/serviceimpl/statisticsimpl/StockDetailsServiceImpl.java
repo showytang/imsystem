@@ -17,9 +17,9 @@ public class StockDetailsServiceImpl implements StockDetailsService{
 	@Autowired
 	StockdetailsMapper sm;
 	@Override
-	public List<Stockdetails> queryJinHuo(String startTime, String endTime, String cid) {
+	public List<Stockdetails> queryJinHuo(String startTime, String endTime, String cid,String storeId) {
 		// TODO Auto-generated method stub
-		return sm.queryJinHuo(startTime, endTime, cid);
+		return sm.queryJinHuo(startTime, endTime, cid ,storeId);
 	}
 	@Override
 	public List<Stockdetails> queryStockByGidAndStoreId(String gid, String storeId) {

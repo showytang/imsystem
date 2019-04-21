@@ -42,7 +42,7 @@
 <body>
 	<div class="main">
 		<div class="main-content">
-			<div class="container-fluid">
+			<div class="container-fluid" id="table">
 				<div class="panel panel-headline">
 					<div class="panel-heading">
 						<h3 class="panel-title">进货统计</h3>
@@ -56,17 +56,13 @@
 							</div>
 							<div class="col-md-6 col-xs-12">
 								<span class="col-md-3 col-xs-12">往来单位</span> <select
-									class="col-md-9 col-xs-12">
-									<option value="cheese">Cheese</option>
-									<option value="tomatoes">Tomatoes</option>
-									<option value="mozarella">Mozzarella</option>
-									<option value="mushrooms">Mushrooms</option>
-									<option value="pepperoni">Pepperoni</option>
-									<option value="onions">Onions</option>
+									class="col-md-9 col-xs-12 supplier">
+									<option value="">全部</option>
+									<option v-for="obj in supplier" :value="obj.id">{{obj.name}}</option>
 								</select>
 							</div>
 						</div>
-						<div class="panel-body" id="table">
+						<div class="panel-body">
 							<table class="table animated fadeInUp delay-1s">
 								<thead>
 									<tr>
@@ -109,15 +105,18 @@
 	var startTime = "";
 	var endTime = "";
 	var id = "";
+	var sid = getStoreId();
 	var vue = new Vue({
 		el : "#table",
 		data : {
-			page : {}
+			page : {},
+			supplier:[]
 		}
 	});
 	$(function() {
 		myDate();
-		vue.page = queryJinHuo("", startTime, endTime, id);
+		vue.supplier = querySupplier_yByStore(sid);
+		vue.page = queryJinHuo("", startTime, endTime, id,sid);
 		var count = 0;
 		var sumMoney = 0;
 		$.each(vue.page.list, function(i, obj) {
@@ -138,19 +137,25 @@
 						startTime = time[0];
 						endTime = time[1];
 					}
-					vue.page = queryJinHuo("", startTime, endTime, id);
+					vue.page = queryJinHuo("", startTime, endTime, id,sid);
 					$(".panel-headline").append(
 							page(vue.page.pageNum, vue.page.prePage,
 									vue.page.nextPage, vue.page.pages));
 				});
-
+		$(".supplier").change(function(){
+			id = $(this).val();
+			vue.page = queryJinHuo("", startTime, endTime, id,sid);
+			$(".panel-headline").append(
+					page(vue.page.pageNum, vue.page.prePage,
+							vue.page.nextPage, vue.page.pages));
+		});
 		$(document).on(
 				"click",
 				".pageFy>ul li",
 				function() {
 					var create = $(this).attr("pageNumber");
 					if (create != null && create != 0) {
-						vue.page = queryJinHuo(create, startTime, endTime, id);
+						vue.page = queryJinHuo(create, startTime, endTime, id,sid);
 						$(".panel-headline").append(
 								page(create, vue.page.prePage,
 										vue.page.nextPage, vue.page.pages));

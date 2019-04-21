@@ -216,7 +216,7 @@ function queryGoodsDetail(currentPage,time,startTime,endTime,storeId,gid){
  * @param cid
  * @returns
  */
-function queryJinHuo(currentPage,startTime,endTime,cid){
+function queryJinHuo(currentPage,startTime,endTime,cid,sid){
 	var v;
 	$.ajax({
 		url:"/statistics/queryJinHuo",
@@ -225,7 +225,8 @@ function queryJinHuo(currentPage,startTime,endTime,cid){
 			currentPage:currentPage,
 			startTime:startTime,
 			endTime:endTime,
-			cid:cid
+			cid:cid,
+			storeId:sid
 		},
 		dataType:"json",
 		async:false,
@@ -453,7 +454,11 @@ function queryGoods(){
 	return v;
 }
 
-//查询商品排名
+/***
+ * 查询商品排名
+ * @param storeId
+ * @returns
+ */
 function queryAllGoodsDetail(storeId){
 	var v;
 	$.ajax({
@@ -473,6 +478,32 @@ function queryAllGoodsDetail(storeId){
 	});
 	return v;
 }
+
+/***
+ * 查询供应商
+ * @param storeId
+ * @returns
+ */
+function querySupplier_yByStore(storeId){
+	var v;
+	$.ajax({
+		url:"/ther/querySupplier_yByStore",
+		type:"post",
+		data:{
+			sid:storeId
+		},
+		dataType:"json",
+		async:false,
+		success:function(data){
+			v = data;
+		},
+		error:function(){
+			console.log("ERROR:'querySupplier_yByStore'");
+		}
+	});
+	return v;
+}
+
 
 /***
  * 获取店铺id

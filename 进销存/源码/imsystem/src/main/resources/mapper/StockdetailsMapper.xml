@@ -538,12 +538,15 @@
 		goodsvalue AS gv ON gv.id = sd.gvid JOIN goods AS g ON g.id = gv.gid
 		WHERE s.state = '0'
 		<if test="cid != null and cid != ''">
-			and s.cid = #{cid}
+			and s.sid = #{cid}
 		</if>
 		<if
 			test="startTime != null and startTime !='' and endTime != null and endTime != ''">
 			AND s.TIME >= DATE_FORMAT(#{startTime},'%Y-%m-%d 00:00:00') AND s.TIME
 			&lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d 23:59:59')
+		</if>
+		<if test="storeId != null and storeId != ''">
+			s.storeid = #{storeId}
 		</if>
 	</select>
 	<select id="queryStockByGidAndStoreId" resultMap="BaseResultMap">
