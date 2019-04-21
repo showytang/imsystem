@@ -133,7 +133,7 @@
 	vue.sid = storeid;
 	$(function() {
 		myDate();
-		vue.page = queryStockByGidAndStoreId(null, storeid, gid);
+		vue.page = queryStockByGidAndStoreId(null, gid, storeid);
 		vue.store = queryStore();
 		$(".panel-headline").append(
 				page(vue.page.pageNum, vue.page.prePage, vue.page.nextPage,
@@ -154,7 +154,7 @@
 							var create = $(this).attr("pageNumber");
 							if (create != null && create != 0) {
 								vue.page = queryStockByGidAndStoreId(create,
-										storeid, gid);
+										gid, storeid);
 								$(".panel-headline").append(
 										page(create, vue.page.prePage,
 												vue.page.nextPage,
@@ -173,7 +173,7 @@
 		$(".store").change(function(){
 			storeid = $(this).val();
 			vue.page = queryStockByGidAndStoreId(null,
-					storeid, gid);
+					gid, storeid);
 			$(".panel-headline").append(
 					page(vue.page.pageNum, vue.page.prePage,
 							vue.page.nextPage, vue.page.pages));
@@ -189,7 +189,7 @@
 		$(".gv").change(function(){
 			gid = $(this).val();
 			vue.page = queryStockByGidAndStoreId(null,
-					storeid, gid);
+					gid, storeid);
 			$(".panel-headline").append(
 					page(vue.page.pageNum, vue.page.prePage,
 							vue.page.nextPage, vue.page.pages));
