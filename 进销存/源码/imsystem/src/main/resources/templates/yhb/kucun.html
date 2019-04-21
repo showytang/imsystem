@@ -67,32 +67,29 @@
 								</div>
 							</div>
 						</div>
-						<div class="panel-body">
+						<div class="panel-body"  id="table">
 							<div class="col-md-12 tj">
 								<div class="col-md-6 col-xs-12">
 									<span class="col-md-3 col-xs-12">选择商品</span> <select
-										class="col-md-9 col-xs-12">
-										<option value="cheese">Cheese</option>
-										<option value="tomatoes">Tomatoes</option>
-										<option value="mozarella">Mozzarella</option>
-										<option value="mushrooms">Mushrooms</option>
-										<option value="pepperoni">Pepperoni</option>
-										<option value="onions">Onions</option>
+										class="col-md-9 col-xs-12 gv">
+										<option value="">全部</option>
+										<option v-for="obj in goods" :value="obj.goodsValue.id">{{obj.goods.name}}[{{obj.goodsValue.name}}]</option>
 									</select>
 								</div>
-								<div class="col-md-6 col-xs-12">
-									<span class="col-md-3 col-xs-12">选择店铺</span> <select
-										class="col-md-9 col-xs-12">
-										<option value="cheese">Cheese</option>
-										<option value="tomatoes">Tomatoes</option>
-										<option value="mozarella">Mozzarella</option>
-										<option value="mushrooms">Mushrooms</option>
-										<option value="pepperoni">Pepperoni</option>
-										<option value="onions">Onions</option>
-									</select>
-								</div>
+								<div class="col-md-6 col-xs-12" v-if="sid == ''">
+								<span class="col-md-3 col-xs-12">选择店铺</span> <select
+									class="col-md-9 col-xs-12 store">
+									<option value="">全部</option>
+									<option  v-for="obj in store" :value="obj.id">{{obj.name}}[{{obj.sufname}}]</option>
+								</select>
 							</div>
-							<table class="table animated fadeInUp delay-1s" id="table">
+														<div class="col-md-6 col-xs-12" v-else >
+								<span class="col-md-3 col-xs-12">选择店铺</span>
+								<input
+									class="col-md-9 col-xs-12" type="text" disabled="disabled" value="当前店铺">
+							</div>
+							</div>
+							<table class="table animated fadeInUp delay-1s">
 								<thead>
 									<tr>
 										<th>商品名称</th>
@@ -122,17 +119,25 @@
 	</div>
 </body>
 <script>
-	var storeid = "";
+	var storeid = getStoreId();
 	var gid = "";
 	var vue = new Vue({
 		el : "#table",
 		data : {
-			page : {}
+			page : {},
+			goods:[],
+			store:[],
+			sid : ""
 		}
 	});
+	vue.sid = storeid;
 	$(function() {
 		myDate();
 		vue.page = queryStockByGidAndStoreId(null, storeid, gid);
+		vue.store = queryStore();
+		$(".panel-headline").append(
+				page(vue.page.pageNum, vue.page.prePage, vue.page.nextPage,
+						vue.page.pages));
 		var count = 0;
 		var money = 0;
 		$.each(vue.page.list, function(i, obj) {
@@ -141,10 +146,6 @@
 		});
 		$(".sumCount").text(count);
 		$(".sumMoney").text("￥" + money);
-		$(".panel-headline").append(
-				page(vue.page.pageNum, vue.page.prePage, vue.page.nextPage,
-						vue.page.pages));
-
 		$(document)
 				.on(
 						"click",
@@ -159,7 +160,48 @@
 												vue.page.nextPage,
 												vue.page.pages));
 							}
+							var count = 0;
+							var money = 0;
+							$.each(vue.page.list, function(i, obj) {
+								count += parseInt(obj.count);
+								money += parseFloat(obj.column5);
+							});
+							$(".sumCount").text(count);
+							$(".sumMoney").text("￥" + money);
 						});
+		vue.goods = queryGoods();
+		$(".store").change(function(){
+			storeid = $(this).val();
+			vue.page = queryStockByGidAndStoreId(null,
+					storeid, gid);
+			$(".panel-headline").append(
+					page(vue.page.pageNum, vue.page.prePage,
+							vue.page.nextPage, vue.page.pages));
+			var count = 0;
+			var money = 0;
+			$.each(vue.page.list, function(i, obj) {
+				count += parseInt(obj.count);
+				money += parseFloat(obj.column5);
+			});
+			$(".sumCount").text(count);
+			$(".sumMoney").text("￥" + money);
+		});
+		$(".gv").change(function(){
+			gid = $(this).val();
+			vue.page = queryStockByGidAndStoreId(null,
+					storeid, gid);
+			$(".panel-headline").append(
+					page(vue.page.pageNum, vue.page.prePage,
+							vue.page.nextPage, vue.page.pages));
+			var count = 0;
+			var money = 0;
+			$.each(vue.page.list, function(i, obj) {
+				count += parseInt(obj.count);
+				money += parseFloat(obj.column5);
+			});
+			$(".sumCount").text(count);
+			$(".sumMoney").text("￥" + money);
+		});
 	});
 </script>
 </html>

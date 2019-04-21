@@ -21,6 +21,7 @@ import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Store;
 import com.imsystem.service.customer.CustomerService;
+import com.imsystem.service.setup.StoreService_c;
 import com.imsystem.service.statistics.GoodsValueService;
 import com.imsystem.service.statistics.SalesService;
 import com.imsystem.service.statistics.SalesorderService;
@@ -45,6 +46,8 @@ public class AllController {
 	SalesService ss;
 	@Autowired
 	CustomerService cs;
+	@Autowired
+	StoreService_c ssc;
 	
 	/**
 	 * index top 四方格
@@ -182,6 +185,17 @@ public class AllController {
 		return page.toPageInfo();
 	}
 	/***
+	 * 查询店铺所有商品明细
+	 * @param storeId
+	 * @return
+	 */
+	@RequestMapping("queryAllGoodsDetail")
+	@ResponseBody
+	public List<Goodsvalue> queryAllGoodsDetail(String storeId){
+		List<Goodsvalue> list = gvs.queryGoodsByTime(null, null, null, storeId, null);
+		return list;
+	}
+	/***
 	 * 进货查询
 	 * @param currentPage
 	 * @param startTime
@@ -250,27 +264,37 @@ public class AllController {
 	 */
 	@RequestMapping("queryShouZhang")
 	@ResponseBody
-	public PageInfo<Sales> queryShouZhang(Integer currentPage,String startTime,String endTime,String cid){
+	public PageInfo<Sales> queryShouZhang(Integer currentPage,String startTime,String endTime,String cid,String storeid){
 		if (currentPage == null || currentPage == 0) {
 			currentPage = 1;
 		}
 		Page<Sales> page = PageHelper.startPage(currentPage, pageSize, true);
-		List<Sales> list = ss.queryShouZhang(cid, startTime, endTime);
+		List<Sales> list = ss.queryShouZhang(cid, startTime, endTime,storeid);
 		return page.toPageInfo();
 	}
 	
 	@RequestMapping("queryAllShouZhang")
 	@ResponseBody
-	public List<Sales> queryAllShouZhang(String startTime,String endTime,String cid){
-		List<Sales> list = ss.queryShouZhang(cid,startTime,endTime);
+	public List<Sales> queryAllShouZhang(String startTime,String endTime,String cid,String storeid){
+		List<Sales> list = ss.queryShouZhang(cid,startTime,endTime,storeid);
 		return list;
 	}
-	
+	/***
+	 * 查询客户
+	 * @param sid
+	 * @return
+	 */
 	@RequestMapping("queryCustomer")
 	@ResponseBody
 	public List<Customer> queryCustomer(String sid){
 		List<Customer> list = cs.queryCustomerByStore(sid);
-		System.out.println(sid);
+		return list;
+	}
+	
+	@RequestMapping("queryStore")
+	@ResponseBody
+	public List<Store> queryStore() {
+		List<Store> list = ssc.queryStoreAll();
 		return list;
 	}
 	

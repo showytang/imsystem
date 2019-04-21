@@ -334,7 +334,7 @@ function queryAllQianKuan(startTime,endTime,sid){
  * @param sid
  * @returns
  */
-function queryShouZhang(currentPage,startTime,endTime,cid){
+function queryShouZhang(currentPage,startTime,endTime,cid,storeid){
 	var v;
 	$.ajax({
 		url:"/statistics/queryShouZhang",
@@ -343,7 +343,8 @@ function queryShouZhang(currentPage,startTime,endTime,cid){
 			currentPage:currentPage,
 			startTime:startTime,
 			endTime:endTime,
-			cid,cid
+			cid,cid,
+			storeid:storeid
 		},
 		dataType:"json",
 		async:false,
@@ -363,7 +364,7 @@ function queryShouZhang(currentPage,startTime,endTime,cid){
  * @param sid
  * @returns
  */
-function queryAllShouZhang(startTime,endTime,cid){
+function queryAllShouZhang(startTime,endTime,cid,storeid){
 	var v;
 	$.ajax({
 		url:"/statistics/queryAllShouZhang",
@@ -371,7 +372,8 @@ function queryAllShouZhang(startTime,endTime,cid){
 		data:{
 			startTime:startTime,
 			endTime:endTime,
-			cid,cid
+			cid,cid,
+			storeid:storeid
 		},
 		dataType:"json",
 		async:false,
@@ -402,7 +404,6 @@ function queryCustomer(sid){
 		async:false,
 		success:function(data){
 			v = data;
-			console.log(v);
 		},
 		error:function(){
 			console.log("ERROR:'queryCustomer'");
@@ -410,3 +411,83 @@ function queryCustomer(sid){
 	});
 	return v;
 }
+/***
+ * 查询店铺
+ * @returns
+ */
+function queryStore(){
+	var v;
+	$.ajax({
+		url:"/statistics/queryStore",
+		type:"post",
+		dataType:"json",
+		async:false,
+		success:function(data){
+			v = data;
+		},
+		error:function(){
+			console.log("ERROR:'queryStore'");
+		}
+	});
+	return v;
+}
+
+/***
+ * 查询商品
+ * @returns
+ */
+function queryGoods(){
+	var v;
+	$.ajax({
+		url:"/ther/queryGoods",
+		type:"post",
+		dataType:"json",
+		async:false,
+		success:function(data){
+			v = data;
+		},
+		error:function(){
+			console.log("ERROR:'queryGoods'");
+		}
+	});
+	return v;
+}
+
+//查询商品排名
+function queryAllGoodsDetail(storeId){
+	var v;
+	$.ajax({
+		url:"/statistics/queryAllGoodsDetail",
+		type:"post",
+		data:{
+			storeId:storeId
+		},
+		dataType:"json",
+		async:false,
+		success:function(data){
+			v = data;
+		},
+		error:function(){
+			console.log("ERROR:'queryAllGoodsDetail'");
+		}
+	});
+	return v;
+}
+
+/***
+ * 获取店铺id
+ * @returns
+ */
+function getStoreId(){
+		var uid = "1";	
+		var sid = "";
+		if (uid != "") {
+			if (uid == "1") {
+				sid = "";
+			} else {
+				sid = "1";
+			}
+		}
+		return sid;
+}
+

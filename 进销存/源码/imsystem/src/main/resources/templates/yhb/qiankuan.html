@@ -45,31 +45,32 @@
 	<div class="main">
 		<div class="main-content">
 			<div class="container-fluid">
-				<div class="panel panel-headline">
+				<div class="panel panel-headline"  id="table">
 					<div class="panel-heading">
 						<h3 class="panel-title">应付欠款</h3>
 						<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
 					</div>
 					<div class="panel-body boss">
 						<div class="col-md-12 tj">
-							<div class="col-md-6 col-xs-12">
+							<div class="col-md-6 col-xs-12" >
 								<span class="col-md-3 col-xs-12">选择区间</span> <input
 									class="col-md-9 col-xs-12" type="text" id="config-demo"
 									name="config-demo">
 							</div>
-							<div class="col-md-6 col-xs-12">
+							<div class="col-md-6 col-xs-12" v-if="sid == ''">
 								<span class="col-md-3 col-xs-12">选择店铺</span> <select
-									class="col-md-9 col-xs-12">
-									<option value="cheese">Cheese</option>
-									<option value="tomatoes">Tomatoes</option>
-									<option value="mozarella">Mozzarella</option>
-									<option value="mushrooms">Mushrooms</option>
-									<option value="pepperoni">Pepperoni</option>
-									<option value="onions">Onions</option>
+									class="col-md-9 col-xs-12 store">
+									<option value="">全部</option>
+									<option  v-for="obj in store" :value="obj.id">{{obj.name}}[{{obj.sufname}}]</option>
 								</select>
 							</div>
+							<div class="col-md-6 col-xs-12" v-else >
+								<span class="col-md-3 col-xs-12">选择店铺</span>
+								<input
+									class="col-md-9 col-xs-12" type="text" disabled="disabled" value="当前店铺">
+							</div>
 						</div>
-						<div class="panel-body" id="table">
+						<div class="panel-body">
 							<table class="table animated fadeInUp delay-1s">
 								<thead>
 									<tr>
@@ -107,16 +108,23 @@
 <script>
 	var startTime = "";
 	var endTime = "";
-	var id = "";
+	var sid = getStoreId();
+	
 	var vue = new Vue({
 		el : "#table",
 		data : {
-			page : {}
+			page : {},
+			store:[],
+			sid : ""
 		}
 	});
+	vue.sid = sid;
 	$(function() {
 		myDate();
-		vue.page = queryQianKuan("", "", "", "");
+		vue.page = queryQianKuan("", "", "", sid);
+		if(sid == ""){
+			vue.store = queryStore();
+		}
 		$(document).on(
 				"change",
 				"#config-demo",
@@ -126,7 +134,7 @@
 						startTime = time[0];
 						endTime = time[1];
 					}
-					vue.page = queryQianKuan(null, startTime, endTime, id);
+					vue.page = queryQianKuan(null, startTime, endTime, sid);
 					$(".panel-headline").append(
 							page(vue.page.pageNum, vue.page.prePage,
 									vue.page.nextPage, vue.page.pages));
@@ -146,14 +154,21 @@
 		$(".panel-headline").append(
 				page(vue.page.pageNum, vue.page.prePage, vue.page.nextPage,
 						vue.page.pages));
-
+		$(".store").change(function(){
+			sid = $(this).val();
+			vue.page = queryQianKuan(null, startTime, endTime, sid);
+			$(".panel-headline").append(
+					page(vue.page.pageNum, vue.page.prePage,
+							vue.page.nextPage, vue.page.pages));
+		});
+		
 		$(document).on(
 				"click",
 				".pageFy>ul li",
 				function() {
 					var create = $(this).attr("pageNumber");
 					if (create != null && create != 0) {
-						vue.page = queryQianKuan(create, "", "", "");
+						vue.page = queryQianKuan(create, startTime, endTime, sid);
 						$(".panel-headline").append(
 								page(create, vue.page.prePage,
 										vue.page.nextPage, vue.page.pages));

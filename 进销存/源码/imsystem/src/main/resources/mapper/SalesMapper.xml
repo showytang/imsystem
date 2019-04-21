@@ -467,6 +467,9 @@
   	<if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
   		AND s.TIME >= DATE_FORMAT(#{startTime},'%Y-%m-%d 00:00:00') AND s.TIME &lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d 23:59:59')
   	</if>
+  	<if test="storeid != null and storeid != ''">
+  		and s.storeid = #{storeid}
+  	</if>
   
   </select>
 </mapper>

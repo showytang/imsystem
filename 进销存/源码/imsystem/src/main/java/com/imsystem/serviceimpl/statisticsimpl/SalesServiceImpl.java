@@ -19,9 +19,9 @@ public class SalesServiceImpl implements SalesService{
 	SalesMapper sm;
 	
 	@Override
-	public List<Sales> queryShouZhang(String cid, String startTime, String endTime) {
+	public List<Sales> queryShouZhang(String cid, String startTime, String endTime ,String storeid) {
 		// TODO Auto-generated method stub
-		return sm.queryShouZhang(cid, startTime, endTime);
+		return sm.queryShouZhang(cid, startTime, endTime,storeid);
 	}
 
 }

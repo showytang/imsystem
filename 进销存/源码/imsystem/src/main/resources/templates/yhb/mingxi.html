@@ -44,7 +44,7 @@
 	<div class="main">
 		<div class="main-content">
 			<div class="container-fluid">
-				<div class="panel panel-headline">
+				<div class="panel panel-headline" id="table">
 					<div class="panel-heading">
 						<h3 class="panel-title">销售统计</h3>
 						<p class="panel-subtitle">123456-123</p>
@@ -57,17 +57,13 @@
 							</div>
 							<div class="col-md-6 col-xs-12">
 								<span class="col-md-3 col-xs-12">选择商品</span> <select
-									class="col-md-9 col-xs-12">
-									<option value="cheese">Cheese</option>
-									<option value="tomatoes">Tomatoes</option>
-									<option value="mozarella">Mozzarella</option>
-									<option value="mushrooms">Mushrooms</option>
-									<option value="pepperoni">Pepperoni</option>
-									<option value="onions">Onions</option>
+									class="col-md-9 col-xs-12 goodsV">
+									<option value="">全部</option>
+									<option v-for="obj in goods" :value="obj.goodsValue.id">{{obj.goods.name}}[{{obj.goodsValue.name}}]</option>
 								</select>
 							</div>
 						</div>
-						<div class="panel-body" id="table">
+						<div class="panel-body">
 							<table class="table animated fadeInUp delay-1s">
 								<thead>
 									<tr>
@@ -102,25 +98,26 @@
 		</div>
 	</div>
 	<div class="float">
-		<span class="col-md-4">合计数量：<b id="count">388</b></span> <span
-			class="col-md-4">合计折扣额：￥<b id="zk">388</b></span> <span
-			class="col-md-4">合计金额：￥<b id="money">388</b></span>
+		<span class="col-md-4">合计数量：<b id="count">0</b></span> <span
+			class="col-md-4">合计折扣额：￥<b id="zk">0</b></span> <span
+			class="col-md-4">合计金额：￥<b id="money">0</b></span>
 	</div>
 </body>
 <script>
 	var startTime = "";
 	var endTime = "";
-	var id = "";
-	var storeid = "";
+	var storeid = getStoreId();
 	var gid = "";
 	var vue = new Vue({
 		el : "#table",
 		data : {
-			page : {}
+			page : {},
+			goods : []
 		}
 	});
 	$(function() {
 		myDate();
+		vue.goods = queryGoods();
 		var month = getThisYear()
 				+ "-"
 				+ (getCurrentMonth() >= 10 ? getCurrentMonth() : "0"
@@ -141,17 +138,15 @@
 							page(vue.page.pageNum, vue.page.prePage,
 									vue.page.nextPage, vue.page.pages));
 				});
-		var count = 0;
-		var zk = 0;
-		var sumMoney = 0;
-		$.each(vue.page.list, function(i, obj) {
-			count += parseInt(obj.column3);
-			sumMoney += parseInt(obj.jprice);
-			zk += parseInt(obj.column5);
+		
+		$(".goodsV").change(function(){
+			gid = $(this).val();
+			vue.page = queryGoodsDetail("", null, startTime, endTime,
+					storeid, gid);
+			$(".panel-headline").append(
+					page(vue.page.pageNum, vue.page.prePage,
+							vue.page.nextPage, vue.page.pages));
 		});
-		$("#count").text(count);
-		$("#zk").text(zk);
-		$("#money").text(sumMoney);
 		$(".panel-headline").append(
 				page(vue.page.pageNum, vue.page.prePage, vue.page.nextPage,
 						vue.page.pages));
@@ -169,6 +164,20 @@
 										vue.page.nextPage, vue.page.pages));
 					}
 				});
+		
+		var list = queryAllGoodsDetail(storeid);
+		console.log(list);
+		var count = 0;
+		var zk = 0;
+		var sumMoney = 0;
+		$.each(list,function(i,obj){
+			count += parseFloat(obj.column3);
+			zk += parseFloat(obj.column5);
+			sumMoney += parseFloat(obj.jprice);
+		});
+		$("#count").text(count);
+		$("#zk").text(zk);
+		$("#money").text(sumMoney);
 	});
 </script>
 </html>

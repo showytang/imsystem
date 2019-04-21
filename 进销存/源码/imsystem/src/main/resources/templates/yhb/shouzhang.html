@@ -43,7 +43,7 @@
 	<div class="main">
 		<div class="main-content">
 			<div class="container-fluid">
-				<div class="panel panel-headline">
+				<div class="panel panel-headline"  id="table">
 					<div class="panel-heading">
 						<h3 class="panel-title">应收对账单</h3>
 						<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
@@ -56,13 +56,14 @@
 							</div>
 							<div class="col-md-6 col-xs-12">
 								<span class="col-md-3 col-xs-12">选择客户</span> <select
-									class="col-md-9 col-xs-12">
+									class="col-md-9 col-xs-12 customer">
+									<option value="">全部</option>
 									<option v-for="obj in customer" :value="obj.id">{{obj.name}}</option>
 								</select>
 							</div>
 						</div>
 						<div class="panel-body">
-							<table class="table animated fadeInUp delay-1s" id="table">
+							<table class="table animated fadeInUp delay-1s">
 								<thead>
 									<tr>
 										<th>往来单位</th>
@@ -100,14 +101,15 @@
 		var startTime = "";
 		var endTime = "";
 		var id = "";
+		var sid = getStoreId() != "" ? getStoreId() : undefined;
 		var vue = new Vue({
 			el : "#table",
 			data : {
 				page : {},
-				customer : {}
+				customer : []
 			}
 		});
-		vue.page = queryShouZhang(null, null, null, null);
+		vue.page = queryShouZhang(null, null, null, null,sid);
 		$(function() {
 			myDate();
 			$(document)
@@ -122,7 +124,7 @@
 									endTime = time[1];
 								}
 								vue.page = queryShouZhang(null, startTime,
-										endTime, id);
+										endTime, id,sid);
 								$(".panel-headline").append(
 										page(vue.page.pageNum,
 												vue.page.prePage,
@@ -132,7 +134,7 @@
 			let chu = 0;
 			let yzf = 0;
 			let qm = 0;
-			const qk = queryAllShouZhang(startTime, endTime, id);
+			const qk = queryAllShouZhang(startTime, endTime, id,sid);
 			$.each(qk, function(i, obj) {
 				chu += parseFloat(obj.paymoney);
 				yzf += parseFloat(obj.tainmoney);
@@ -153,25 +155,24 @@
 								var create = $(this).attr("pageNumber");
 								if (create != null && create != 0) {
 									vue.page = queryShouZhang(create,
-											startTime, endTime, id);
+											startTime, endTime, id,sid);
 									$(".panel-headline").append(
 											page(create, vue.page.prePage,
 													vue.page.nextPage,
 													vue.page.pages));
 								}
 							});
-/* 			var uid = "2";	
-			if (uid != "") {
-				var sid = "";
-				if (uid == "1") {
-					sid = "";
-				} else {
-					sid = "1";
-				}
-			}
-			*/
-			vue.customer = queryCustomer("1");
-			console.log(vue.customer);
+			$(".customer").change(function(){
+				id = $(this).val();
+				vue.page = queryShouZhang(null, startTime,
+						endTime, id,sid);
+				$(".panel-headline").append(
+						page(vue.page.pageNum,
+								vue.page.prePage,
+								vue.page.nextPage,
+								vue.page.pages));
+			});
+			vue.customer = queryCustomer(sid);
 		});
 	</script>
 </body>
