@@ -36,7 +36,6 @@
 		type="com.imsystem.domain.Goods" extends="BaseResultMap">
 		<result column="img" property="img" jdbcType="LONGVARBINARY" />
 
-
 		<collection property="goodsValues"
 			ofType="com.imsystem.domain.Goodsvalue">
 
@@ -98,91 +97,70 @@
 
 	</resultMap>
 
-	<resultMap type="com.imsystem.domain.GoodsValueVo"
-		id="GoodsValueVo">
-
-		<association property="goods"
-			javaType="com.imsystem.domain.Goods">
-			<id column="id" property="id" jdbcType="VARCHAR" />
-			<result column="gname" property="name" jdbcType="VARCHAR" />
-			<result column="column1" property="column1" jdbcType="VARCHAR" />
-			<result column="column2" property="column2" jdbcType="VARCHAR" />
-			<result column="img" property="img" jdbcType="LONGVARBINARY" />
-			<result column="price" property="price" jdbcType="DOUBLE" />
-			<result column="minsecurity" property="minsecurity"
-				jdbcType="INTEGER" />
-
-		</association>
-
-		<association property="goodsValue"
-			javaType="com.imsystem.domain.Goodsvalue">
-			<id column="gvid" property="id" jdbcType="VARCHAR" />
-			<result column="gvname" property="name" jdbcType="VARCHAR" />
-			<result column="id" property="gid" jdbcType="VARCHAR" />
-			<result column="gvcol" property="column1" jdbcType="VARCHAR" />
-			<result column="counts" property="counts" jdbcType="VARCHAR" />
-		</association>
-
-		<!-- <association property="stockDetails" javaType="com.imsystem.domain.Stockdetails"> 
-			</association> -->
-
-	</resultMap>
-
-
-	<select id="updateGoodsLoad" resultMap="ResultMapWithBLOBs">
-
-		SELECT
-		gs.*,
-		im.`id` AS
-		imid,im.name AS imname,im.`oldname` AS imoldname,im.`gid` AS
-		imgid,im.`url` AS imurl,
-		gv.`id` AS gvid,gv.`name` AS gvname,gv.`gid`
-		AS gvgid,gv.jprice AS
-		gvjprice,gv.`column1` AS gvcolumn1,
-		sd.`id` AS
-		sdid,IF(sd.`count`!= 'null',sd.`count`,0) AS sdcount,sd.`gvid` AS
-		sdgvid,sd.`gvid` AS sdgvid,
-		gdv.id AS gdvid,gdv.`name` AS
-		gdvname,gdv.`vid` AS gdvvid,gdv.svid AS
-		gdvsvid,
-		gp.`id` AS
-		gpid,gp.`sufname` AS gpsufname,gp.`ctid` AS gpctid,gp.`gvid` AS
-		gpgvid,gp.`price` AS gpprice
-		FROM goods AS gs
-		INNER JOIN `goodsvalue` AS
-		gv
-		ON gv.`gid` = gs.`id`
-		INNER JOIN `goodsstandardvalue` AS gdv
-		ON
-		gdv.vid = gv.`id`
-		INNER JOIN `standardvalue` AS sv
-		ON gdv.`svid` =
-		sv.`id`
-		INNER JOIN `standard` AS s
-		ON s.`id` = sv.`sid`
-		INNER JOIN
-		`goodstype` AS gt
-		ON gt.`id` = s.`tid`
-		INNER JOIN `goodsprice` AS gp
-		ON
-		gp.`gvid` = gv.`id`
-		LEFT JOIN `img` AS im
-		ON gs.`id` = im.`gid`
-		LEFT JOIN
-		`stockdetails` AS sd
-		ON gv.`id` = sd.`gvid`
-		WHERE gv.`gid` = (SELECT gid
-		FROM `goodsvalue` WHERE id = #{id}) AND
-		gv.`defaultvalue` = 0
-
-
-	</select>
-
-
-
-	<!-- 商品查询 -->
-	<select id="queryAllGoods" resultMap="GoodsValueVo">
-		SELECT
+  <resultMap type="com.imsystem.domain.GoodsValueVo" id="GoodsValueVo" >
+  
+  	<association  property="goods" javaType="com.imsystem.domain.Goods">
+  	 	<id column="id" property="id" jdbcType="VARCHAR" />
+    	<result column="gname" property="name" jdbcType="VARCHAR" />
+    	<result column="column1" property="column1" jdbcType="VARCHAR" />
+    	<result column="column2" property="column2" jdbcType="VARCHAR" />
+  		<result column="img" property="img" jdbcType="LONGVARBINARY" />
+  		<result column="price" property="price" jdbcType="DOUBLE" />
+  		<result column="minsecurity" property="minsecurity" jdbcType="INTEGER" />
+  		
+  	</association>
+  
+  	<association property="goodsValue" javaType="com.imsystem.domain.Goodsvalue">
+  		 <id column="gvid" property="id" jdbcType="VARCHAR" />
+	    <result column="gvname" property="name" jdbcType="VARCHAR" />
+	    <result column="id" property="gid" jdbcType="VARCHAR" />
+	    <result column="gvcol" property="column1" jdbcType="VARCHAR" />
+	    <result column="counts" property="counts" jdbcType="VARCHAR" />
+  	</association>
+  
+  <!-- 	<association property="stockDetails" javaType="com.imsystem.domain.Stockdetails">
+  	
+  	</association> -->
+  
+  </resultMap>
+  
+  
+  <select id="updateGoodsLoad" resultMap="ResultMapWithBLOBs">
+  
+SELECT 
+	gs.*,
+	im.`id` AS imid,im.name AS imname,im.`oldname` AS imoldname,im.`gid` AS imgid,im.`url` AS imurl, 
+	gv.`id` AS gvid,gv.`name` AS gvname,gv.`gid` AS gvgid,gv.jprice AS gvjprice,gv.`column1` AS gvcolumn1,gv.`column4` AS gvcolumn4,
+	sd.`id` AS sdid,IF(sd.`count`!= 'null',sd.`count`,0) AS sdcount,sd.`gvid` AS sdgvid,sd.`gvid` AS sdgvid,
+	gdv.id AS gdvid,gdv.`name` AS gdvname,gdv.`vid` AS gdvvid,gdv.svid AS gdvsvid,
+	gp.`id` AS gpid,gp.`sufname` AS gpsufname,gp.`ctid` AS gpctid,gp.`gvid` AS gpgvid,gp.`price` AS gpprice 
+	FROM goods AS gs
+	INNER JOIN `goodsvalue` AS gv
+	ON gv.`gid` = gs.`id`
+	INNER JOIN `goodsstandardvalue` AS gdv
+	ON gdv.vid = gv.`id`
+	INNER JOIN `standardvalue` AS sv
+	ON gdv.`svid` = sv.`id`
+	INNER JOIN `standard` AS s
+	ON s.`id` = sv.`sid`
+	INNER JOIN `goodstype` AS gt
+	ON gt.`id` = s.`tid`
+	INNER JOIN `goodsprice` AS gp
+	ON gp.`gvid` = gv.`id`
+	LEFT JOIN `img` AS im
+	ON gs.`id` = im.`gid` 
+	LEFT JOIN `stockdetails` AS sd
+	ON gv.`id` = sd.`gvid` 
+	WHERE gv.`gid` = (SELECT gid FROM `goodsvalue` WHERE id = #{id}) AND gv.`defaultvalue` = 0 AND gs.`state` = 0
+	  	
+  
+  </select>
+  
+  
+  
+  <!-- 商品查询 -->
+  <select id="queryAllGoods" resultMap="GoodsValueVo">
+  SELECT 
 		gt.name AS column2,
 		gs.minsecurity,
 		sd.count AS column1,
