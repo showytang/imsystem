@@ -552,7 +552,7 @@
 		gv.jprice AS column5 FROM stockdetails AS sd JOIN goodsvalue AS gv ON
 		gv.id = sd.gvid JOIN goods AS g ON g.id = gv.gid WHERE sd.state = '0'
 		<if test="gid != null and gid != ''">
-			AND g.id = #{gid}
+			AND gv.id = #{gid}
 		</if>
 		<if test="storeId != null and storeId != ''">
 			AND sd.storeid = #{storeId}
