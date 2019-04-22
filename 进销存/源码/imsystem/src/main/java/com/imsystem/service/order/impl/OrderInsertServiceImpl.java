@@ -350,11 +350,20 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 		
 		sales.setColumn1(salesdetails.get(0).getId());
 		
+		sales.setCount(0);
+		sales.setPaymoney(0.00);
+		sales.setTainmoney(0.00);
+		
+		int count = 0;
 		for (Salesdetails item : salesdetails) {
 			
 			salesdetailsMapper.update(item.getId());
 			
 			sales.setCount(sales.getCount() + item.getCount());
+			
+			sales.setPaymoney(sales.getPaymoney()+sales.getCount()*item.getPrice());
+			
+			sales.setTainmoney(sales.getTainmoney()+sales.getCount()*item.getPrice());
 			
 			Salesbackdetails salesbackdetails = new Salesbackdetails();
 			
@@ -370,11 +379,11 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 			
 			salesbackdetails.setStoreid("1");
 			
-			salesbackdetailsmapper.add(salesbackdetails);
+			count += salesbackdetailsmapper.add(salesbackdetails);
 			
 			if(item.getColumn1() != "1") {
 				
-				
+				count += curtomer.updateplug(item.getColumn3(), item.getPrice()*item.getCount());
 				
 			}
 			
@@ -382,7 +391,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 			
 			for (Salesstockrecord salesstockrecord : list) {
 				
-				stockdetail.updateScount(salesstockrecord.getStockdetailid(), salesstockrecord.getCount());
+				count += stockdetail.updateScount(salesstockrecord.getStockdetailid(), salesstockrecord.getCount());
 				
 			}
 			
@@ -390,7 +399,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 		
 		salesbackMap.add(sales);
 		
-		return 0;
+		return count;
 	}
 
 }

@@ -289,7 +289,7 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 											v-on:click="openModel(item.id)"
 											class="glyphicon glyphicon-edit"></span> <span
 											v-on:click="showAlert(item.id)" style="margin: auto;"
-											title="确认订单" class="glyphicon glyphicon-ok"></span>
+											v-if="item.progress != 2" title="确认订单" class="glyphicon glyphicon-ok"></span>
 									</div>
 								</td>
 							</tr>
@@ -435,16 +435,13 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 			}
 			
 			function query(){
+				
 				var times = $("#config-demo").val();
 				
-				var time = times.substring(0,(times.indexOf('-')-1));
+				var time = times.substring(0,(times.indexOf('至')-1));
 				
-				var endTime = times.substring((times.indexOf('-')+2),times.length)
+				var endTime = times.substring((times.indexOf('至')+2),times.length) + " 23:59:59"
 				
-				if(time){
-					time = timess(time);
-					endTime = timess(endTime) + " 23:59:59";
-				}
 				var sales = {
 						code : vue.no,
 						column1 : time,
@@ -462,7 +459,6 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 					success:function(result){
 						vue.pageIf = result;
 						page(vue);
-						console.log(result);
 					}
 				});
 			}
