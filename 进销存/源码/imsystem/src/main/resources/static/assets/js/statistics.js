@@ -510,13 +510,13 @@ function querySupplier_yByStore(storeId){
  * @returns
  */
 function getStoreId(){
-		var uid = "[[${session.user.id}]]";	
+		var uid = "1";
 		var sid = "";
 		if (uid != "") {
 			if (uid == "1") {
 				sid = "";
 			} else {
-				sid = "[{{session.user.storeid}}]";
+				sid = "1";
 			}
 		}
 		return sid;
