@@ -447,7 +447,7 @@
 		INNER JOIN rolemodule AS rm ON rm.mid=m.id
 		INNER JOIN role AS r ON r.id=rm.rid
 		INNER JOIN `user` AS u ON u.rid=r.id
-		where m.parentid=#{parentid} and u.id=#{uid}
+		where m.parentid=#{parentid} and u.id=#{uid} AND m.catalog=0
 	</select> 
 
 	
@@ -462,7 +462,20 @@
 		
 	</select>
 
+   <resultMap type="com.imsystem.domain.Module" id="ResultMap_two" extends="BaseResultMap">
 
+		<collection property="modules" column="id" ofType="ResultMap_two" select="com.imsystem.mapper.ModuleMapper.selectModuleAll">
+			
+		</collection>
+
+	</resultMap>
+
+	<select id="selectModuleAll" resultMap="ResultMap_two">
+		
+		SELECT * FROM module WHERE parentid=#{parentid} 
+		
+		
+	</select>
 
 
 

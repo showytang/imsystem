@@ -15,7 +15,7 @@ import com.imsystem.service.monomer.GoodsStandardService;
 import com.imsystem.service.monomer.SpTypeService;
 
 @Controller
-@RequestMapping("standard")
+@RequestMapping("/standard")
 public class GoodsStandardController {
 	@Autowired
 	GoodsStandardService service;

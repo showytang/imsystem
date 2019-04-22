@@ -184,7 +184,7 @@ public class OrderInsertController {
 	@ResponseBody
 	public String inserorderDesc(@RequestBody Vector<Salesdetails> salesdetails) {
 				
-		return "";
+		return orderInsert.inserorderDesc(salesdetails)+"";
 	}
 	
 	

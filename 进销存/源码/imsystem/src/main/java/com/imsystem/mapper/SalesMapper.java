@@ -32,4 +32,6 @@ public interface SalesMapper {
     int updateByPrimaryKeySelective(Sales record);
 
     int updateByPrimaryKey(Sales record);
+    
+    List<Sales> queryShouZhang(@Param("cid") String cid, @Param("startTime") String startTime , @Param("endTime") String endTime,@Param("storeid") String storeid);
 }

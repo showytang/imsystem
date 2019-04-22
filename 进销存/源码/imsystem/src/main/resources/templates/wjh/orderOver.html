@@ -346,7 +346,7 @@
 								
 								count : $(e).find(".count").text(),
 								
-								cid : $("#myModalLabel").find("span").attr("data"),
+								column3 : $("#myModalLabel").find("span").attr("data"),
 								
 								price : $(e).find(".price").text()
 								
@@ -362,7 +362,7 @@
 					
 					$.ajax({
 					    
-					    url : [[@{/insertOrder/}]],
+					    url : [[@{/insertOrder/inserorderDesc}]],
 
 					    data : JSON.stringify(salesDetails),
 
@@ -375,7 +375,7 @@
 					    processData: false,
 					    
 					    success:function(result){
-
+							alert(result);
 					    }
 					})
 					

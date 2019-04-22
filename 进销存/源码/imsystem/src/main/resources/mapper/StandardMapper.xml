@@ -21,13 +21,13 @@
   </resultMap>
   
   <select id="queryStandard" resultMap="BaseResultMap">
-  	SELECT * FROM paytype
-  	<where>
-  		state=0
+  	SELECT s.*,g.name AS gname,u.`name` AS uname FROM `standard` AS s INNER JOIN goodstype AS g ON g.id=s.`tid` INNER JOIN USER AS u ON u.id=s.`uid`
+  	 <where>
+  		s.state=0
   		<if test="tiaojian!=null">
-  				and (id LIKE concat('%',#{tiaojian},'%') OR  NAME LIKE concat('%',#{tiaojian},'%') OR  uid LIKE concat('%',#{tiaojian},'%'))
+  				and (s.id LIKE concat('%',#{tiaojian},'%') OR  s.NAME LIKE concat('%',#{tiaojian},'%') OR g.NAME LIKE concat('%',#{tiaojian},'%') OR  u.name LIKE concat('%',#{tiaojian},'%'))
   		</if>
-  	</where>
+  	</where> 
   </select>
   
    <insert id="insertStandard" parameterType="com.imsystem.domain.Standard" >
@@ -56,7 +56,7 @@
   </select>
   
  <update id="toupdate">
- 	UPDATE standard SET NAME=#{name},tid=#{tid},updatetime=NOW() WHERE id=#{id} 	
+ 	UPDATE standard SET NAME=#{name},tid=#{tid},updatetime=NOW(),uid=#{uid} WHERE id=#{id} 	
  </update>
   
   <sql id="Example_Where_Clause" >

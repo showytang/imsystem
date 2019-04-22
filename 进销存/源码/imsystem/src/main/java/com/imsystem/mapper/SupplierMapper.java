@@ -35,4 +35,6 @@ public interface SupplierMapper {
     int updateByPrimaryKeySelective(Supplier record);
 
     int updateByPrimaryKey(Supplier record);
+
+	List<Supplier> querySupplier_yByStore(@Param("sid") String sid); 
 }

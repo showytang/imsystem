@@ -16,6 +16,9 @@ public class Standardvalue {
     private String uid;
 
     private Integer state;
+    
+    private String sname;
+    private String uname;
 
     private String column1;
 
@@ -122,4 +125,20 @@ public class Standardvalue {
     public void setColumn5(String column5) {
         this.column5 = column5;
     }
+
+	public String getSname() {
+		return sname;
+	}
+
+	public void setSname(String sname) {
+		this.sname = sname;
+	}
+
+	public String getUname() {
+		return uname;
+	}
+
+	public void setUname(String uname) {
+		this.uname = uname;
+	}
 }

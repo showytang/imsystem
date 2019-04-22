@@ -11,6 +11,8 @@ import org.apache.ibatis.annotations.Param;
 
 public interface StockdetailsMapper {
 	
+	int updateScount(@Param("id")String id,@Param("count")Integer count);
+	
 	Stockdetails queryCount(@Param("gvid") String gvid,@Param("sid") String sid);
 	
 	int selectCount(@Param("code")String code,@Param("sid")String id);
@@ -53,7 +55,7 @@ public interface StockdetailsMapper {
 
     int updateByPrimaryKey(Stockdetails record);
     
-    List<Stockdetails> queryJinHuo(@Param("startTime") String startTime,@Param("endTime") String endTime,@Param("cid") String cid);
+    List<Stockdetails> queryJinHuo(@Param("startTime") String startTime,@Param("endTime") String endTime,@Param("cid") String cid,@Param("storeId") String storeId);
     
     List<Stockdetails> queryStockByGidAndStoreId(@Param("gid") String gid,@Param("storeId") String storeId);
 }

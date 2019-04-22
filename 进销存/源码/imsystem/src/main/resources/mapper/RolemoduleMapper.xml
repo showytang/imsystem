@@ -290,7 +290,12 @@
   
  
   
-  
+  <insert id="insertRoleModule">
+  	 INSERT INTO `rolemodule` (`id`,`mid`,`rid`,`state`,`uid`)VALUES
+  	<foreach collection="rmlist" separator="," item="rm">
+  		(#{rm.id},#{rm.mid},#{rm.rid},0,#{rm.uid})
+  	</foreach>
+  </insert>
   
   
   

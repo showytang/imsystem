@@ -37,6 +37,9 @@
 			</association>
 		</association>
 	</resultMap>
+	<update id="updateScount">
+		update stockdetails set state = 0,scount = scount-#{count} where id = #{id};
+	</update>
 	<update id="update">
 		update stockdetails set state = 1 where id = #{id}
 	</update>
@@ -538,12 +541,15 @@
 		goodsvalue AS gv ON gv.id = sd.gvid JOIN goods AS g ON g.id = gv.gid
 		WHERE s.state = '0'
 		<if test="cid != null and cid != ''">
-			and s.cid = #{cid}
+			and s.sid = #{cid}
 		</if>
 		<if
 			test="startTime != null and startTime !='' and endTime != null and endTime != ''">
 			AND s.TIME >= DATE_FORMAT(#{startTime},'%Y-%m-%d 00:00:00') AND s.TIME
 			&lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d 23:59:59')
+		</if>
+		<if test="storeId != null and storeId != ''">
+			s.storeid = #{storeId}
 		</if>
 	</select>
 	<select id="queryStockByGidAndStoreId" resultMap="BaseResultMap">
@@ -552,7 +558,7 @@
 		gv.jprice AS column5 FROM stockdetails AS sd JOIN goodsvalue AS gv ON
 		gv.id = sd.gvid JOIN goods AS g ON g.id = gv.gid WHERE sd.state = '0'
 		<if test="gid != null and gid != ''">
-			AND g.id = #{gid}
+			AND gv.id = #{gid}
 		</if>
 		<if test="storeId != null and storeId != ''">
 			AND sd.storeid = #{storeId}

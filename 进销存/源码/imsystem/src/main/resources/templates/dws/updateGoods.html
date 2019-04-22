@@ -94,7 +94,7 @@ td input {
 						<h3 class="panel-title">报表 - 1</h3>
 						<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
 					</div>
-					<div class="panel-body">
+					<div class="panel-body qaq">
 
 						<div class="row">
 
@@ -323,11 +323,7 @@ td input {
 						<div class="panel">
 							<div class="panel-bodytable"></div>
 						</div>
-						<br> <br /> <br />
-						<div class="panel">
-							<div class="panel-body"></div>
-						</div>
-						<br>
+						<br> <br />
 
 
 					</div>
@@ -354,45 +350,42 @@ td input {
 <script type="text/javascript" th:src="@{/assets/js/getAscii.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/xcConfirm.js}"></script>
 <script type="text/javascript" th:inline="javascript">
-	var E = window.wangEditor;
-	var editor = new E('#editor');
-	//	editor.customConfig.uploadImgShowBase64 = true;
-	//  editor.customConfig.uploadImgServer = '/upload';
-	
-	editor.customConfig.customUploadImg = function(files, insert) {
-		// files 是 input 中选中的文件列表
-		// insert 是获取图片 url 后，插入到编辑器的方法
 
-		// 上传代码返回结果之后，将图片插入到编辑器中
-		insert(imgUrl)
-	}
-
-	
-	
-	editor.create();
-
-	//商品描述
-	var detail;
-	document.getElementById('btn1').addEventListener('click', function() {
-		// 读取 html
-		detail = editor.txt.html();
-	}, false);
-
-	
-	
-	
-	var vue = new Vue({
-		
-		el:".main",
-		data:{
-			customerTypeList:"",
-			goods:"",
-			goodsType:""
+		var vue = new Vue({
 			
+			el:".main",
+			data:{
+				customerTypeList:"",
+				goods:"",
+				goodsType:""
+				
+			}
+			
+		});
+
+		var E = window.wangEditor;
+		var editor = new E('#editor');
+		//	editor.customConfig.uploadImgShowBase64 = true;
+		//  editor.customConfig.uploadImgServer = '/upload';
+		
+		editor.customConfig.customUploadImg = function(files, insert) {
+			// files 是 input 中选中的文件列表
+			// insert 是获取图片 url 后，插入到编辑器的方法
+		
+			// 上传代码返回结果之后，将图片插入到编辑器中
+			insert(imgUrl)
 		}
 		
-	});
-	
+		
+		//商品描述
+		var detail;
+		document.getElementById('btn1').addEventListener('click', function() {
+			// 读取 html
+			detail = editor.txt.html();
+		}, false);
+		
+		editor.create();
+
 	vue.goods = [[${goods}]];
 
 	
@@ -443,9 +436,10 @@ td input {
 				dg(vue.goodsType);
 				
 				for(var oo = 0; oo < hisArr.length; oo++){
-					
-					getSvids(oo);
-					dataShow();
+					var  arr = getSvids(oo);
+					console.log(arr)
+					ttooind = oo;
+					dataShow(arr);
 				}
 				
 			}
@@ -476,11 +470,9 @@ td input {
 		
 		var formData = new FormData();
 		
-		
-	
-		
 		//商品名称
 		formData.append("goods.name",$("[name=name]").val());
+		formData.append("goods.enname",ConvertPinyin($("[name=name]").val()));
 		//商品id
 		formData.append("goods.id",$("[name=name]").attr("ggid"));
 		//单位前缀
@@ -609,7 +601,7 @@ td input {
 		}
 		
 	 	
-	 	  $.ajax({
+	 	   $.ajax({
 			url:[[@{/goods/updateGoods}]],
 			async:true,
 			data:formData,
@@ -629,7 +621,7 @@ td input {
 			error:function(xhr,type,errorThrown){
 				
 			}
-		});  
+		});   
 		
 	}
 	
@@ -647,9 +639,15 @@ td input {
 	
 	
 	var svids = [];
-
+	var ttooind = 0;
 	//分组查询规格
 	function getSvids(oo){
+		var div = $("<div class='tto"+oo+" pop'></div>");
+		var div2 = $('<div class="panel">');
+		div.append(div2);
+		var div3 = $('<div class="panel-body">');
+		div2.append(div3);
+		$(".qaq").append(div);
 		svids = [];
 		$.each(vue.goods.goodsValues,function(){
 			
@@ -662,6 +660,7 @@ td input {
 			}
 		});
 		svids = unique(svids);
+		return svids;
 	}
 	
 	
@@ -799,7 +798,7 @@ td input {
 	/*
 		数据渲染，类型and规格值
 	*/
-	function dataShow(){
+	function dataShow(arr){
 		
 		$("#goodstype").html("");
 		for(var i = typeArr.length-1;i >= 0;i--){
@@ -829,7 +828,7 @@ td input {
 			
 			$("#goodstype").append(div);
 			
-			
+		
 			
 			/*规格值渲染*/
 			
@@ -839,11 +838,12 @@ td input {
 					url:[[@{/goods/queryGoodsStandradByid}]],
 					dataType:"json",
 					data:{"id":typeArr[i].goodstype.id},
+					async:false,
 					type:"post",
 					success:function(data){
-					 	console.log(data);
-						$("#typeoption").html("");	
 						
+						$("#typeoption").html("");	
+					
 							$.each(data,function(index,obj){
 								
 								var div = $('<div class="option-div option-type row">');
@@ -860,10 +860,9 @@ td input {
 									
 									var span = $('<span onclick="addGoodsOption(this)" class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="'+item.id+'">'+item.name+'</span>')
 									divmain.append(span);
-									
-									if(svids.indexOf(item.id) >= 0){
+									if(arr.indexOf(item.id) >= 0){
 										
-										addGoodsOption(span);
+										addGoodsOptionup(span);
 									}
 									
 									
@@ -882,8 +881,34 @@ td input {
 		
 	}
 	
+function addGoodsOptionup(obj){
+		
+		$(obj).parent().find(".option-span-all").removeClass("active1");
+
+		$(obj).parent().find(".option-span-all").animate({
+			backgroundColor : "",
+			color : "#000000"
+		}, 300);
+
+		if ($(obj).hasClass("active1")) {
+
+			$(obj).removeClass("active1");
+			$(obj).animate({
+				backgroundColor : "",
+				color : "#000000"
+			}, 300);
+
+		} else {
+
+			$(obj).addClass("active1");
+			$(obj).animate({
+				backgroundColor : "#00AAFF",
+				color : "#ffffff"
+			}, 300);
+		}
+		checkedDlUP();
 	
-	var ii = true;
+}
 	var addii = true;
 function addGoodsOption(obj){
 		
@@ -913,11 +938,6 @@ function addGoodsOption(obj){
 
 		if ($(".option-type").find(".active1").length != 0) {
 
-			
-			
-			/* if(ii){ */
-			checkedDlUP();
-			/* }else{
 				if(addii){
 					$("#typeoption span").removeClass("active1");
 					$("#typeoption span").animate({
@@ -934,7 +954,7 @@ function addGoodsOption(obj){
 					addii = false;
 				}
 				checkedDl();
-			} */
+			 
 		}else{
 			$(".panel-bodytable table").remove();
 		} 
@@ -1005,7 +1025,7 @@ function jhChange(obj){
 		var isCheckedDlArray = [];
 		var allIndex = 1;
 		$(".option-type").each(function(i, e) {
-
+			
 			var isChecked = $(this).find(".active1");
 			if (isChecked.length != 0) {
 				var checkedTag = [];
@@ -1027,6 +1047,7 @@ function jhChange(obj){
 				isCheckedDl++;
 			}
 		});
+		
 		var tagObject = {
 			allIndex : allIndex,
 			isCheckedDlArray : isCheckedDlArray
@@ -1037,11 +1058,10 @@ function jhChange(obj){
 	function eachCreateUP(tagObject) {
 		
 		
-		
-		$(".panel-body table").remove();
+		$(".tto"+ttooind+"").find("table").remove();
 		var table = $("<table class='table' >");
 
-		$(".panel-body").append(table);
+		$(".tto"+ttooind+"").find(".panel-body").append(table);
 
 		var index = 1;
 		
@@ -1084,11 +1104,10 @@ function jhChange(obj){
 				
 				for (var j = 0; j < tagObject.isCheckedDlArray[i].tag.length; j++) {
 					
-					
-					var td = $(
-							"<td class='text-center' style='vertical-align: inherit;' m='" + tagObject.isCheckedDlArray[i].tag[j].name + "' v='" + tagObject.isCheckedDlArray[i].tag[j].id + "'>")
+						
+					 var td = $("<td class='text-center' style='vertical-align: inherit;' m='" + tagObject.isCheckedDlArray[i].tag[j].name + "' v='" + tagObject.isCheckedDlArray[i].tag[j].id + "'>")
 							.html(tagObject.isCheckedDlArray[i].tag[j].name);
-					
+					 
 					
 					if (i == tagObject.isCheckedDlArray.length - 1) {
 						var hinp = $("<input gvid='"+vue.goods.goodsValues[index-1].id+"' class='text-center' type='hidden' name='goodsType' tyname='' vm='" + tagObject.isCheckedDlArray[i].tag[j].name + "' value='" + tagObject.isCheckedDlArray[i].tag[j].id + "'>");
@@ -1098,13 +1117,14 @@ function jhChange(obj){
 						
 						var td2 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' oninput='priceChange(this)' type=text value='"+jhprice+"' name='detailprice'></td>");
 						
-						var upgvimg = vue.goods.goodsValues[index-1].column1 == null ? "../assets/img/apple-icon.png":vue.goods.goodsValues[index-1].column1;
+						var upgvimg = vue.goods.goodsValues[index-1].column1;
 						var tdimg = $("<td class='text-center' style='vertical-align: inherit;'><div style='position:relative;width: 76px;height: 76px;'><input type='file' style='position:absolute;top:0;z-index: 99;width: 100%;height: 100%;opacity: 0;cursor: pointer;' title='选择图片' onchange='pojoImg(this)' name='file["
 								+ (index - 1)
 								+ "]' /><img src='"+upgvimg+"' style='width: 76px;height: 76px;' /></div></td>");
 						var tr = $("<tr class='" + index + "'>");
 						tr.append(td);
-						tr.append(td1).append(td2);
+						tr.append(td1);
+						tr.append(td2);
 						
 						//价格input
 						$.each(vue.goods.goodsValues[index-1].goodsPrices,function(inx,obj){
@@ -1118,10 +1138,6 @@ function jhChange(obj){
 						
 						tbody.append(tr);
 						index++;
-					 	if(vue.goods.goodsValues.length == index){
-							ii = false;
-						} 
-					 	
 						
 					} else {
 						
@@ -1130,7 +1146,7 @@ function jhChange(obj){
 						td.attr("rowspan", tagObject.allIndex
 								/ tagObject.isCheckedDlArray[i + 1].num);
 						//								td.attr("sl",rowspan);
-						$(".panel-body ." + indexRow).prepend(td);
+						$(".tto"+ttooind+" .panel-body ." + indexRow).prepend(td);
 						var x1 = tagObject.allIndex
 								/ (tagObject.isCheckedDlArray[i].tag.length * tagObject.isCheckedDlArray[i].num);
 						indexRow += x1;
@@ -1164,6 +1180,7 @@ function jhChange(obj){
 			uptypeids.push(tr.find("[type=hidden]").val());
 		}
 		uptypeids.push(t.parent().find("[type=hidden]").val());
+		
 		
 	}
 	
@@ -1264,7 +1281,7 @@ function jhChange(obj){
 						var td2 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' oninput='priceChange(this)' type=text value='"+jhprice+"' name='detailprice'></td>");
 						var tdimg = $("<td class='text-center' style='vertical-align: inherit;'><div style='position:relative;width: 76px;height: 76px;'><input type='file' style='position:absolute;top:0;z-index: 99;width: 100%;height: 100%;opacity: 0;cursor: pointer;' title='选择图片' onchange='pojoImg(this)' name='file["
 								+ (index - 1)
-								+ "]' /><img src='../assets/img/apple-icon.png' style='width: 76px;height: 76px;' /></div></td>");
+								+ "]' /><img src='' style='width: 76px;height: 76px;' /></div></td>");
 						var tr = $("<tr class='" + index + "'>");
 						tr.append(td);
 						tr.append(td1).append(td2);

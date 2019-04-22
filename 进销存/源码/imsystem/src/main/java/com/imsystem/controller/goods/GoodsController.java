@@ -91,9 +91,11 @@ public class GoodsController {
 		
 		svid = svid.length==0?null:svid;
 		
+		curPage = curPage == null?1:curPage;
+		
 		Page<GoodsValueVo> page = PageHelper.startPage(curPage, 8, true);
 		
-		PageInfo<GoodsValueVo> pageInfo = new PageInfo<>(goodsSer.queryAllGoods(liketext,svid,tid));
+		PageInfo<GoodsValueVo> pageInfo = new PageInfo<GoodsValueVo>(goodsSer.queryAllGoods(liketext,svid,tid));
 		
 		
 		return pageInfo;
@@ -362,6 +364,7 @@ public class GoodsController {
             	
             	if(bool) {
             		goodsVo.getGoods().setImg(f.getBytes());
+            		bool = false;
             		continue;
             	}
             	

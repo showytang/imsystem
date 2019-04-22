@@ -103,7 +103,6 @@
 								<th>创建时间</th>
 								<th>最后修改时间</th>
 								<th>操作人编号</th>
-								
 								<th>操作</th>
 							</tr>
 							<tr v-for="(temp,index) in pageIf.list">
@@ -112,7 +111,7 @@
 								<td v-text="temp.gname"></td>
 								<td v-text="formatDate(temp.time)"></td>
 								<td v-text="formatDate(temp.updatetime)"></td> 
-								<td v-text="temp.uid"></td>
+								<td v-text="temp.uname"></td>
 								
 								<td style="padding-left: 0px; padding-right: 40px" >
 									<input type="button" value="修改"  id="open" class="an open" @click="open(temp.id)">
@@ -335,7 +334,7 @@
 	                            
 	                            $('#gid').attr("readonly","readonly");
 	                            $('#gtime').attr("readonly","readonly");
-	                            $('#guid').attr("readonly","readonly");
+	                            $('#guid').attr("readonly","readonly"); 
 					}
 				});
 				
@@ -399,12 +398,14 @@
 			 var id=$("#gid").val();
 			 var name=$("#gname").val();
 			 var tid=$("#gtid").val();
+			 var uid=$("#guid").val();
 			 $.ajax({
 				 url:"/standard/toupdate",
 				 data:{
 					 id:id,
 					 name:name,
-					 tid:tid
+					 tid:tid,
+					 uid:uid
 				 },
 				 type:"post",
 				 dataType:"json",

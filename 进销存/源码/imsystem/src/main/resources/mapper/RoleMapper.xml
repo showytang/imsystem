@@ -322,16 +322,8 @@
   
   <!-- 新增角色 -->
   <insert id="insertRole">
-  	
-    INSERT INTO role (id, `name`, `time`, 
-      state, uid, column1, 
-      column2, column3, column4, 
-      column5)
-    VALUES (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, 
-      #{state,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, #{column1,jdbcType=VARCHAR}, 
-      #{column2,jdbcType=VARCHAR}, #{column3,jdbcType=VARCHAR}, #{column4,jdbcType=VARCHAR}, 
-      #{column5,jdbcType=VARCHAR})
- 
+    INSERT INTO role (id, `name`, `time`, state, uid)
+    VALUES (#{id}, #{name}, now(),  0, #{uid})
   </insert>
   
   

@@ -27,6 +27,17 @@ public class Role {
     private List<Module> moduleList;
     
 	
+    private List<Rolemodule> rmlist;
+    
+    
+    
+	public List<Rolemodule> getRmlist() {
+		return rmlist;
+	}
+
+	public void setRmlist(List<Rolemodule> rmlist) {
+		this.rmlist = rmlist;
+	}
 
 	public List<Module> getModuleList() {
 		return moduleList;

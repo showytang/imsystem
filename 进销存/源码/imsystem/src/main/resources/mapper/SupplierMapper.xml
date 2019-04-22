@@ -459,4 +459,10 @@
       column5 = #{column5,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="querySupplier_yByStore" resultMap="BaseResultMap">
+  	SELECT * FROM supplier WHERE state = '0' 
+  	<if test="sid != null and sid != ''">
+  		AND sid = #{sid}
+  	</if>
+  </select>
 </mapper>

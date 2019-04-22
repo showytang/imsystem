@@ -1,5 +1,6 @@
 package com.imsystem.mapper;
 
+import com.imsystem.domain.Role;
 import com.imsystem.domain.Rolemodule;
 import com.imsystem.domain.RolemoduleExample;
 import java.util.List;
@@ -28,7 +29,7 @@ public interface RolemoduleMapper {
 
     int updateByPrimaryKey(Rolemodule record);
     
-    
+    int insertRoleModule(Role role);
     
     
     

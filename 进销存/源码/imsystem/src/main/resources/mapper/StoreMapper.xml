@@ -12,7 +12,7 @@
     <result column="time" property="time" jdbcType="TIMESTAMP" />
     <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP" />
     <result column="parented" property="parented" jdbcType="INTEGER" />
-    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
     <result column="uid" property="uid" jdbcType="VARCHAR" />
     <result column="column1" property="column1" jdbcType="VARCHAR" />
     <result column="column2" property="column2" jdbcType="VARCHAR" />
@@ -400,10 +400,103 @@
   
   <select id="queryStoreAll"  resultMap="BaseResultMap">
   
-  	  SELECT * FROM `store` WHERE state=0
-  	  
+  	 SELECT * FROM store WHERE state=0
+  	
   </select>
  
+ 
+ 
+ 
+ 
+ <insert id="insertStore">
+    INSERT INTO store (id, `name`, sufname, 
+      province, city, district, 
+      address, `time`, updatetime, 
+      parented, state, uid)
+    VALUES (#{id}, #{name}, #{sufname}, 
+      #{province}, #{city}, #{district}, 
+      #{address}, now(), #{updatetime}, 
+      #{parented}, 0, #{uid})
+  </insert>
+ 
+ 
+  <select id="SelectZongDian"  resultMap="BaseResultMap">
+ 
+  		SELECT * FROM store WHERE parented=0
+
+  </select> 
+   
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+   <resultMap type="com.imsystem.domain.Store" id="ResultMap" extends="BaseResultMap">
+		
+		 <association property="user"  javaType="com.imsystem.domain.User">
+		 	<id property="id" column="id"/>
+		 	 <result property="name" column="uname"/>
+		 </association>
+	</resultMap>
+ 
+ 
+  
+   <select id="SelectStoreAll"  resultMap="ResultMap">
+  		SELECT s.*,u.name as uname FROM `store` AS s 
+       INNER JOIN `user` AS u
+       ON s.id=u.storeid
+  	  <where>
+	 	<if test="name!=null and name!=''">
+	 	  AND  s.`name` LIKE CONCAT ('%',#{name},'%')
+	 	</if>
+	 	 and u.state IN(0,1)
+	 </where>
+  	 
+  	  
+  </select>
+  
+  
+  <!--  根据ID删除用户(假删除) -->
+ 	<delete id="deleteStoreById">
+ 		
+   	     UPDATE `store` SET state=#{state} WHERE id=#{id}
+ 
+ 	</delete>
+  
+  
+  <!-- 批量删除(假删除) -->
+   <update id="deleteAll">
+   	
+	UPDATE `store` SET state=3 WHERE id IN
+	<foreach collection="array" item="i" open="("  separator="," close=")">
+		
+		#{i}
+		
+	</foreach>
+	
+	
+	
+  </update>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
 </mapper>

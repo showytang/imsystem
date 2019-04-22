@@ -46,6 +46,34 @@
 			background-color: rgb(2, 143, 208);
 			color:white;
 		} 
+		#page>ul {
+			display: flex;
+			justify-content: space-around;
+			padding: 0px;
+			font-size: 12px;
+		}
+
+		#page {
+			width: 300px;
+			margin: 20px auto;
+		}
+		
+		.currentPage {
+			background: rgb(2, 143, 208);
+			color: white;
+			border: none;
+		}
+		
+		.pagebtn {
+			height: 28px;
+			width: 25px;
+			border: 1px solid #C0C0C0;
+			list-style: none;
+			text-align: center;
+			background: #DDDDDD;
+			line-height: 28px;
+			cursor: pointer;
+		}
 	</style>
 	</head>
 	<script th:src="@{/assets/js/jquery.min.js}"></script>
@@ -66,13 +94,13 @@
 							
 						</div>
 						<div class="ta">
-							<input class="col-md-2 col-md-offset-7 " type="text" placeholder="请输入搜索条件" /><input class="col-md-1 btn btn-primary btn-lg" type="button" value="GO" style="height: 27px;line-height: 5px;margin-bottom: 5px;" />
+							<input class="col-md-2 col-md-offset-7 tiaojian" type="text" placeholder="请输入搜索条件" /><input class="col-md-1 btn btn-primary btn-lg" type="button" value="GO" style="height: 27px;line-height: 5px;margin-bottom: 5px;"  @click="query()" />
 							<button type="button" value="新增" class="btn btn-primary btn-lg col-md-1" data-toggle="modal" data-target="#myModal" style="height: 30px;line-height: 5px; margin-bottom: 5px;margin-left: 25px;" >
 		  						新增
 							</button>
 							<table class="table table-striped">
 								<tr>
-									<!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+									<th>规格值ID</th>
 									<th>规格值名称</th>
 									<th>规格名称</th>
 									<th>创建时间</th>
@@ -81,41 +109,41 @@
 									
 									<th>操作</th>
 								</tr>
-								<tr>
-									<td>张三</td>
-									<td>李四</td>
-									<td>0.8</td>
-									<td>0.8</td>
-									<td>003号</td>
+								
+								<tr v-for="(temp,index) in pageIf.list">
+							 	<td v-text="temp.id"></td>
+								<td v-text="temp.name"></td>
+								<td v-text="temp.sname"></td>
+								<td v-text="formatDate(temp.time)"></td>
+								<td v-text="formatDate(temp.updatetime)"></td> 
+								<td v-text="temp.uname"></td>
+								
+								<td style="padding-left: 50px; padding-right: 40px" >
+									<input type="button" value="修改"  id="open" class="an open" @click="open(temp.id)">
+			  						
+									<a :href="dele(temp.id)"><input type="button" class="an" value="删除"/></a>
 									
-									<td>
-										<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal1" style="height: 30px;line-height: 5px;">
-				  						修改
-										</button>
-									</td>
-								</tr>
-								<tr>
-									<td>张三</td>
-									<td>李四</td>
-									<td>0.8</td>
-									<td>0.8</td>
-									<td>003号</td>
-									
-									<td>
-									<button type="button"  data-toggle="modal" data-target="#myModal1" class="an">
-			  						修改
-									</button>
-									<a href="#"><input type="button" class="an" value="删除"/></a>
-									</td>
-								</tr>
+								</td> 
+							</tr>
 
 							
 							</table>
-							<div class="col-md-3 col-md-offset-4">
-								<a href="#">上一页</a>
-								<a href="#">上一页</a>
-								<span>1 / 3 共 3 页</span>
-							</div>
+							<div id="page">
+								<ul>
+									<li class="pagebtn pagePrev"><span
+										class="glyphicon glyphicon-menu-left"></span></li>
+									<li class="pagebtn currentPage pageCurrent pageq">1</li>
+									<li class="pagebtn pageCurrent pageq">2</li>
+									<li class="pagebtn pageCurrent pageq">3</li>
+									<li class="pagebtn" id="pageDian"
+										style="border: none; display: block; background: #DDDDDD; font-size: 20px;">...</li>
+									<li class="pagebtn pageCurrent pageDi">14</li>
+									<li class="pagebtn pageCurrent">15</li>
+									<li class="pagebtn pageCurrent">16</li>
+									<li class="pagebtn pageNext"><span
+										class="glyphicon glyphicon-menu-right"></span></li>
+								</ul>
+							</div> 
 						</div>
 						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">		
 								<div class="modal-dialog" role="document">
@@ -127,36 +155,32 @@
 								      <div class="modal-body">
 								        	
 										<form class="form-horizontal">
+										
+											<div class="form-group">
+										    	<label for="InName" class="col-sm-3 control-label">规格值ID</label>
+											    <div class="col-sm-9">
+											      <input type="text" class="form-control" id="gid">
+											    </div>
+										  	</div>
 										  	<div class="form-group">
 										    	<label for="InSname" class="col-sm-3 control-label">规格值名称</label>
 											    <div class="col-sm-9">
-											    	<input type="text" class="form-control" id="InSname">
+											    	<input type="text" class="form-control" id="gname">
 											    </div>
 										  	</div>
 										  	<div class="form-group">
 										    	<label for="InName" class="col-sm-3 control-label">规格名称</label>
 											    <div class="col-sm-9">
-											      <input type="text" class="form-control" id="InName">
+											      <select id="gsid">
+											      		<option  th:each="item:${list}"  th:text="${item.name}" th:value="${item.id}"></option>
+											      </select>
 											    </div>
 										  	</div>
 										  	
-										  	<div class="form-group">
-										    	<label for="InName" class="col-sm-3 control-label">创建时间</label>
-											    <div class="col-sm-9">
-											      <input type="text" class="form-control" id="InName">
-											    </div>
-										  	</div>
-										  	
-										  	<div class="form-group">
-										    	<label for="inputPassword3" class="col-sm-3 control-label">最后修改时间</label>
-											    <div class="col-sm-9">
-											      <input type="text" class="form-control" id="inputPassword3">
-											    </div>
-										  	</div>
 										  	<div class="form-group">
 										    	<label for="inputEmail3" class="col-sm-3 control-label">操作人编号</label>
 											    <div class="col-sm-9">
-											    	<input type="text" class="form-control" id="inputEmail3">
+											    	<input type="text" class="form-control" id="guid">
 											    </div>
 										  	</div>
 										  	
@@ -183,36 +207,39 @@
 		      							</div>
 								      	<div class="modal-body">
 								      		<form class="form-horizontal">
+								      		<div class="form-group">
+										    	<label for="inputPassword3" class="col-sm-3 control-label">规格值ID</label>
+											    <div class="col-sm-9">
+											      <input type="text" class="form-control" id="ggid">
+											    </div>
+										  	</div>
 										  	<div class="form-group">
 										    	<label for="inputEmail3" class="col-sm-3 control-label">规格值名称</label>
 											    <div class="col-sm-9">
-											    	<input type="text" class="form-control" id="inputEmail3">
+											    	<input type="text" class="form-control" id="ggname">
 											    </div>
 										  	</div>
 										  	<div class="form-group">
 										    	<label for="inputPassword3" class="col-sm-3 control-label">规格名称</label>
 											    <div class="col-sm-9">
-											      <input type="text" class="form-control" id="inputPassword3">
+											      <select id="ggsid">
+											      		<option  th:each="item:${list}"  th:text="${item.name}" th:value="${item.id}"></option>
+											      </select>
 											    </div>
 										  	</div>
 										  	
 										  	<div class="form-group">
 										    	<label for="inputPassword3" class="col-sm-3 control-label">创建时间</label>
 											    <div class="col-sm-9">
-											      <input type="text" class="form-control" id="inputPassword3">
+											      <input type="text" class="form-control" id="ggtime">
 											    </div>
 										  	</div>
 										  	
-										  	<div class="form-group">
-										    	<label for="inputPassword3" class="col-sm-3 control-label">最后修改时间</label>
-											    <div class="col-sm-9">
-											      <input type="text" class="form-control" id="inputPassword3">
-											    </div>
-										  	</div>
+										  
 										  	<div class="form-group">
 										    	<label for="inputEmail3" class="col-sm-3 control-label">操作人编号</label>
 											    <div class="col-sm-9">
-											    	<input type="text" class="form-control" id="inputEmail3">
+											    	<input type="text" class="form-control" id="gguid">
 											    </div>
 										  	</div>
 										  	
@@ -223,7 +250,7 @@
 								      	</div>
 								      <div class="modal-footer">
 								        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-								        <button type="button" class="btn btn-primary">提交</button>
+								        <button type="button" class="btn btn-primary xiugai">修改</button>
 								      </div>
 		    						</div>
 		  						</div>
@@ -235,6 +262,153 @@
 			</div>
 		</div>
 		
+	<script th:src="@{/assets/js/jquery.min.js}"></script>
+	<script th:src="@{/assets/js/bootstrap.min.js}"></script>
+	<script th:src="@{/assets/js/jquery.slimscroll.min.js}"></script>
+	<script th:src="@{/assets/js/toastr.min.js}"></script>
+	<script th:src="@{/assets/js/klorofil-common.js}"></script>	
+	
+	<script th:src="@{/assets/js/page.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/js/bootstrap-datetimepicker.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/js/vue.js}"></script>
+	<script type="text/javascript"  th:inline="javascript" >
+	var vue = new Vue({
+		el : ".main",
+		data : {
+			pageIf : {},
+			
+		},
+		methods : {
+
+		 query:function(){
+				var tiaojian=$(".tiaojian").val();
+				
+				var currentpage = $(".currentPage").text();
+				
+				$.ajax({
+					url : "/StandardValue/querypage",
+					data : {
+						tiaojian:tiaojian,
+						currentPage : currentpage
+					},
+					type : "post",
+					dataType : "json",
+					success:function(result){
+						vue.pageIf = result;
+						page(vue);
+					}
+				});
+			},
+			dele:function(id){
+				return "/StandardValue/delete?id="+id;
+			},
+			open:function(id){
+				$('#myModal1').modal('toggle')
+				
+				$.ajax({
+					url:"/StandardValue/byid",
+					data:{
+						id:id
+						},
+					type:"post",
+					dataType:"json",
+					success:function(data){
+	                            //赋值
+	                            $('#ggid').val(data.id);
+	                            $('#ggname').val(data.name);
+	                            $('#ggsid').val(data.sid);
+	                            $('#ggtime').val(vue.formatDate(data.time));
+	                            $('#gguid').val(data.uid);
+	                            
+	                            
+	                            $('#ggid').attr("readonly","readonly");
+	                            $('#ggtime').attr("readonly","readonly");
+	                            $('#gguid').attr("readonly","readonly"); 
+					}
+				});
+				
+			},
+			
+			formatDate: function (value) {
+		        let date = new Date(value);
+		        let y = date.getFullYear();
+		        let MM = date.getMonth() + 1;
+		        MM = MM < 10 ? ('0' + MM) : MM;
+		        let d = date.getDate();
+		        d = d < 10 ? ('0' + d) : d;
+		        let h = date.getHours();
+		        h = h < 10 ? ('0' + h) : h;
+		        let m = date.getMinutes();
+		        m = m < 10 ? ('0' + m) : m;
+		        let s = date.getSeconds();
+		        s = s < 10 ? ('0' + s) : s;
+		        return y + '-' + MM + '-' + d + ' ' + h + ':' + m + ':' + s;
+		      }
+			
+			
+		},
+		created:function(){
+			this.query();
+		}
+	});
+	
+
+	function  floatPage(){
+		
+		vue.pageIf.pageNum = $(".currentPage").text();
+		
+		vue.query();
+		
+	};
+	
+	 $(function(){
+		 $("#tijiao").click(function(){
+				var id=$("#gid").val();
+				var name=$("#gname").val();
+				var sid=$("#gsid").val();
+				var uid=$("#guid").val();
+				alert(sid)
+				
+				$.ajax({
+					url:"/StandardValue/insert",
+					data:{
+						id:id,
+						name:name,
+						sid:sid,
+						uid:uid
+					},
+					type:"post",
+					dataType:"json",
+					success:function(result){
+						location.href ="/StandardValue/queryStandarvalue";
+					}
+				});
+		}); 
+		 
+		 $(".xiugai").click(function(){
+			 var id=$("#ggid").val();
+			 var name=$("#ggname").val();
+			 var sid=$("#ggsid").val();
+			 var uid=$("#gguid").val();
+			 $.ajax({
+				 url:"/StandardValue/toupdate",
+				 data:{
+					 id:id,
+					 name:name,
+					 sid:sid,
+					 uid:uid
+				 },
+				 type:"post",
+				 dataType:"json",
+				 success:function(result){
+					 location.href="/StandardValue/queryStandarvalue";
+				 }
+			 });
+		 })
+		 
+		 
+	 });
+	</script>
 		
 		
 </body>

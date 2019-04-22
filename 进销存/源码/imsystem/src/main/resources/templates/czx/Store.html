@@ -26,8 +26,8 @@
 	<div class="x-body">
 	
 		<div class="layui-row">
-			<form class="layui-form layui-col-md12 x-so"  th:action="@{/user/queryUserRole}" method="post">
-				 <input type="text" name="name" placeholder="请输入用户名"
+			<form class="layui-form layui-col-md12 x-so"  th:action="@{/store/queryStore}" method="post">
+				 <input type="text" name="name" placeholder="请输入门店"
 					autocomplete="off" class="layui-input">
 				<button class="layui-btn" lay-submit="" type="submit" lay-filter="sreach">
 					<i class="layui-icon">&#xe615;</i>
@@ -38,8 +38,7 @@
 		<button class="layui-btn layui-btn-danger" onclick="delAll()">
 			<i class="layui-icon"></i>批量删除
 		</button>
-		<button class="layui-btn layui-btn-normal"
-			onclick="x_admin_show('添加用户','/role/queryRoleAll')">
+		<button class="layui-btn layui-btn-normal"   onclick="x_admin_show('添加门店','toInsertStore')">
 			<i class="layui-icon "></i>添加
 		</button>
 
@@ -53,10 +52,13 @@
 							<i class="layui-icon">&#xe605;</i>
 						</div>
 					</th>
-					<th>账号</th>
-					<th>密码</th>
-					<th>角色</th>
-					<th>加入时间</th>
+					<th>门店</th>
+					<th>分别</th>
+					<th>省</th>
+					<th>市</th>
+					<th>区</th>
+					<th>具体位置</th>
+					<th>所属店长</th>
 					<th>状态</th>
 					<th>操作</th>
 			</thead>
@@ -68,29 +70,31 @@
 						</div>
 					</td>
 					<td th:text="${item.name}">admin</td>
-					<td th:text="${item.pwd}">18925139194</td>
-					<td th:text="${item.role.name}">超级管理员</td>
-					<td th:text="${#dates.format(item.time,'yyyy-MM-dd hh:mm:ss')}">2017-01-01
-						11:11:42</td>
+					<td th:text="${item.sufname}">18925139194</td>
+					<td th:text="${item.province}">超级管理员</td>
+					<td th:text="${item.city}">2017-01-0111:11:42</td>
+					<td th:text="${item.district}">2017-01-0111:11:42</td>
+					<td th:text="${item.address}">2017-01-0111:11:42</td>
+					<td th:text="${item.user.name}">2017-01-0111:11:42</td>
 					<td class="td-status"><span
 						class="layui-btn layui-btn-normal layui-btn-mini" th:text="${item.state==0}?'已启用':'已停用'"  th:class="${item.state==0 ?' layui-btn layui-btn-normal layui-btn-mini ':'layui-btn layui-btn-normal layui-btn-mini layui-btn-disabled'}" ></span></td>
 					<td class="td-manage"><a
 						th:onclick="member_stop(this,[[${item.id}]])" href="javascript:;"
 						th:title="${item.state==0 ?'已启用':'已停用'}"> <i class="layui-icon" th:text="${item.state==0}?'&#xe601':'&#xe62f'" >&#xe601;</i>
-					</a> <a title="编辑" th:onclick="x_admin_show('编辑','/user/queryUserById?id='+[[${item.id}]])"
+					</a> &nbsp;&nbsp;
+					<a title="编辑" th:onclick="x_admin_show('编辑','/user/queryUserById?id='+[[${item.id}]])"
 						href="javascript:;"> <i class="layui-icon">&#xe642;</i>
-					</a> <a title="删除" th:onclick="member_del(this,[[${item.id}]])"
-						href="javascript:;"> <i class="layui-icon">&#xe640;</i>
-					</a></td>
+					</a> 
+					</td>
 				</tr>
 			</tbody>
 		</table>
 		<div class="page">
 			<div>
-				<a class="prev" th:href="@{/user/queryUserRole?(pageNum=${page.prePage})}">&lt;&lt;</a> 
-				<a class="num" th:style="'background-color:'+@{(${page.pageNum==1} ? '#009688':'white')}"  th:href="@{/user/queryUserRole?pageNum=1}">1</a>
-				<a class="num"  th:style="'background-color:'+@{(${page.pageNum==2} ? '#009688':'white')}" th:href="@{/user/queryUserRole?pageNum=2}">2</a> 
-			    <a class="next" th:href="@{/user/queryUserRole?(pageNum=${page.nextPage})}">&gt;&gt;</a>
+				<a class="prev" th:href="@{/store/queryStore?(pageNum=${page.prePage})}">&lt;&lt;</a> 
+				<a class="num" th:style="'background-color:'+@{(${page.pageNum==1} ? '#009688':'white')}"  th:href="@{/store/queryStore?pageNum=1}">1</a>
+				<a class="num"  th:style="'background-color:'+@{(${page.pageNum==2} ? '#009688':'white')}" th:href="@{/store/queryStore?pageNum=2}">2</a> 
+			  <a class="next" th:href="@{/store/queryStore?(pageNum=${page.nextPage})}">&gt;&gt;</a>
 			</div>
 		</div>
 
@@ -117,7 +121,7 @@
 
               if($(obj).attr('title')=='已启用'){
 				
-            	  var url=[[@{/user/TingYongUser}]];
+            	  var url=[[@{/store/deleteStore}]];
             	  
             	  $.ajax({
             		 url:url,
@@ -139,7 +143,7 @@
                 layer.msg('已停用!',{icon: 5,time:1000});
 
               }else{
-					var url=[[@{/user/TingYongUser}]];
+					var url=[[@{/store/deleteStore}]];
             	  
             	  $.ajax({
             		 url:url,
@@ -168,22 +172,9 @@
       function member_del(obj,id){
           layer.confirm('确认要删除吗？',function(index){
               
-              var url=[[@{/user/deleteUserById}]];
+             
               
-        	  $.ajax({
-        		 url:url,
-        		 type:"post",
-        		 data:{
-        			 id:id,
-        			 state:2
-        		 },
-        		 success:function(result){
-        			 if(result){
-        				  $(obj).parents("tr").remove();
-        	              layer.msg('已删除!',{icon:1,time:1000});
-        			 }
-        		 }
-        	  }); 
+        	  
           });
       }
 
@@ -196,7 +187,7 @@
         layer.confirm('确认要删除吗？'+data,function(index){
            
         	
-          var url=[[@{/user/deleteAll}]];
+          var url=[[@{/store/deleteAll}]];
           
           
           
@@ -211,8 +202,8 @@
       		 }
       	  }); 
       	 
-				layer.msg('删除成功', {icon: 1});
-	            $(".layui-form-checked").not('.header').parents('tr').remove();
+			layer.msg('删除成功', {icon: 1});
+	        $(".layui-form-checked").not('.header').parents('tr').remove();
 			 
         	
             

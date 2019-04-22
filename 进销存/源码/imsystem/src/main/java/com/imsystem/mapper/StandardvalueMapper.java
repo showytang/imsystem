@@ -1,5 +1,6 @@
 package com.imsystem.mapper;
 
+import com.imsystem.domain.Standard;
 import com.imsystem.domain.Standardvalue;
 import com.imsystem.domain.StandardvalueExample;
 import java.util.List;
@@ -30,4 +31,16 @@ public interface StandardvalueMapper {
     int updateByPrimaryKeySelective(Standardvalue record);
 
     int updateByPrimaryKey(Standardvalue record);
+    
+    
+    List<Standardvalue> queryStandardvalue(@Param("tiaojian") String tiaojian);
+    
+    int updatedelete(String id);
+    
+    int insertStandardvalue(Standardvalue stan);
+    
+    int toupdate(Standardvalue stan);
+    
+    Standardvalue StandardvalueById(String id);
+    
 }

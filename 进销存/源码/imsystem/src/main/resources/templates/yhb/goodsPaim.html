@@ -1,100 +1,152 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<meta charset="UTF-8">
-		<title>BaoBiao - 1</title>
-		<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
-		<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
-		<link rel="stylesheet" th:href="@{/assets/css/style.css}">
-		<!-- MAIN CSS -->
-		<link rel="stylesheet" th:href="@{/assets/css/main.css}">
-		<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
-		<link rel="stylesheet" th:href="@{/assets/css/demo.css}">
-		<!-- GOOGLE FONTS -->
-		<link th:href="@{/assets/css/css.css}" rel="stylesheet">
-		<!-- ICONS -->
-		<link rel="stylesheet" th:href="@{/assets/css/myStyle.css}" />
-		<link rel="apple-touch-icon" sizes="76x76" th:href="@{/assets/img/apple-icon.png}">
-		<link rel="icon" type="image/png" sizes="96x96" th:href="@{/assets/img/favicon.png}">
-		<script type="text/javascript" th:src="@{/assets/js/jquery.min.js}" ></script>
-		<link rel="stylesheet" type="text/css" media="all" th:href="@{/assets/css/daterangepicker.css}" />
-		<link rel="stylesheet" type="text/css" th:href="@{/assets/css/htmleaf-demo.css}">
-		<script type="text/javascript" th:src="@{/assets/js/jquery.min.js}" ></script>
-		<script>window.jQuery || document.write('<script th:src="@{/assets/js/jquery-1.11.0.min.js}"><\/script>')</script>
-		<script type="text/javascript" th:src="@{/assets/js/moment.js}"></script>
-      	<script type="text/javascript" th:src="@{/assets/js/daterangepicker.js}"></script>
-		<script th:src="@{/assets/js/statistics.js}"></script>
-		<script type="text/javascript" th:src="@{/assets/js/Mydate.js}"></script>
-		<script>
-			$(function(){
-				myDate();
-				$(window).resize(function(){
-					var width = parseInt($(".good").width());
-					var span = $(".js").children("span");
-					if(width<540){
-						span.next().css({"margin-left":"0px","line-height":"2px"});
-					}else{
-						span.next().css({"margin-left":"10px","line-height":"30px"});
-					}
+<head>
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<meta charset="UTF-8">
+<title>BaoBiao - 1</title>
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
+<link rel="stylesheet" th:href="@{/assets/css/style.css}">
+<link rel="stylesheet" th:href="@{/assets/css/animate.min.css}" />
+<!-- MAIN CSS -->
+<link rel="stylesheet" th:href="@{/assets/css/main.css}">
+<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+<link rel="stylesheet" th:href="@{/assets/css/demo.css}">
+<!-- GOOGLE FONTS -->
+<link th:href="@{/assets/css/css.css}" rel="stylesheet">
+<!-- ICONS -->
+<link rel="stylesheet" th:href="@{/assets/css/myStyle.css}" />
+<link rel="apple-touch-icon" sizes="76x76"
+	th:href="@{/assets/img/apple-icon.png}">
+<link rel="icon" type="image/png" sizes="96x96"
+	th:href="@{/assets/img/favicon.png}">
+<script type="text/javascript" th:src="@{/assets/js/jquery.min.js}"></script>
+<link rel="stylesheet" type="text/css" media="all"
+	th:href="@{/assets/css/daterangepicker.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/css/htmleaf-demo.css}">
+<script type="text/javascript" th:src="@{/assets/js/jquery.min.js}"></script>
+<script>
+	window.jQuery
+			|| document
+					.write('<script th:src="@{/assets/js/jquery-1.11.0.min.js}"><\/script>')
+</script>
+<script type="text/javascript" th:src="@{/assets/js/moment.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/daterangepicker.js}"></script>
+<script th:src="@{/assets/js/statistics.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/Mydate.js}"></script>
+<script>
+	var sid = getStoreId();
+	var startTime = "";
+	var endTime = "";
+	$(function() {
+		myDate();
+		$(window).resize(function() {
+			var width = parseInt($(".good").width());
+			var span = $(".js").children("span");
+			if (width < 540) {
+				span.next().css({
+					"margin-left" : "0px",
+					"line-height" : "2px"
 				});
-				var v = queryGoodsRanking("","2019-04-04","2019-04-04","");
-				if(v){
-					$.each(v,function(i,obj){
-						var img = obj.column2 != null && obj.column2 != '' ? obj.column2 : "../assets/img/404.png";
-						var bDiv = $("<div class='col-md-12 goods'></div>");
-						bDiv.append("<div class='good'><label>"+(i+1)+"</label><img class='col-md-2 col-xs-2 goodsImg' src='"+img+"' /><div class='col-md-9 col-xs-6 js'>"+
-									"<h3>"+obj.name+"["+obj.column1+"]</h3>"+
-									"<span class='s'>销售金额￥<b>"+obj.jprice+"</b></span>"+
-									"<span class='s'>销售数量￥<b>"+obj.column3+"</b></span>"+
-								"</div>"+
-							"</div>");
-						if(i<3){
-							bDiv.addClass("gs");
-							if(i==0){
-								bDiv.append("<img class='top1' src='../assets/img/a6e86501339e44e090545e08022694de.png' />");
-							}
+			} else {
+				span.next().css({
+					"margin-left" : "10px",
+					"line-height" : "30px"
+				});
+			}
+		});
+		
+		var store = queryStore();
+		$.each(store,function(i,obj){
+			$(".store").append("<option value='"+obj.id+"'>"+obj.name+"["+obj.sufname+"]</option>");
+		});
+		
+		$(".store").change(function(){
+			sid = $(this).val();
+			v = queryGoodsRanking(time, startTime, endTime, sid);
+			ShowGoods(v);
+		});
+		
+		var time = getThisYear()
+				+ "-"
+				+ (getCurrentMonth() < 10 ? "0" + getCurrentMonth()
+						: getCurrentMonth());
+		var v = queryGoodsRanking(time, "", "", sid);
+		ShowGoods(v);
+		$(document).on("change", "#config-demo", function() {
+			if ($("#config-demo").val() != '请选择日期范围') {
+				var time = $("#config-demo").val().split("至");
+				startTime = time[0];
+				endTime = time[1];
+			}
+			v = queryGoodsRanking(null, startTime, endTime, sid);
+			ShowGoods(v);
+		});
+	});
+	function ShowGoods(v) {
+		$(".goodsBox > div").remove();
+		if (v != '') {
+			$.each(v,function(i, obj) {
+					var img = obj.column2 != null
+							&& obj.column2 != '' ? obj.column2
+							: "../assets/img/404.png";
+					var bDiv = $("<div class='col-md-12 goods animated bounceInLeft delay-1s'></div>");
+					bDiv
+							.append("<div class='good'><label>"
+									+ (i + 1)
+									+ "</label><img class='col-md-2 col-xs-2 goodsImg' src='"+img+"' /><div class='col-md-9 col-xs-6 js'>"
+									+ "<h3>" + obj.name + "["
+									+ obj.column1 + "]</h3>"
+									+ "<span class='s'>销售金额￥<b>"
+									+ obj.jprice + "</b></span>"
+									+ "<span class='s'>销售数量￥<b>"
+									+ obj.column3 + "</b></span>"
+									+ "</div>" + "</div>");
+					if (i < 3) {
+						bDiv.addClass("gs");
+						if (i == 0) {
+							bDiv
+									.append("<img class='top1' src='../assets/img/a6e86501339e44e090545e08022694de.png' />");
 						}
-						$(".goodsBox").append(bDiv);
-					});
-				}
-			});
-		</script>
-	</head>
-	<body>
-		<div class="main">
-			<div class="main-content">
-				<div class="container-fluid">
-					<div class="panel panel-headline">
-						<div class="panel-heading">
-							<h3 class="panel-title">商品销量排名</h3>
-							<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
-						</div>
-						<div class="panel-body boss">
-							<div class="col-md-12 tj">
-								<div class="col-md-6 col-xs-12">
-									<span class="col-md-3 col-xs-12">选择区间</span>
-									<input class="col-md-9 col-xs-12"  type="text" id="config-demo">
-								</div>
-								<div class="col-md-6 col-xs-12">
-									<span class="col-md-3 col-xs-12">选择商家</span>
-									<select class="col-md-9 col-xs-12">
-										<option value="cheese">Cheese</option>
-										<option value="tomatoes">Tomatoes</option>
-										<option value="mozarella">Mozzarella</option>
-										<option value="mushrooms">Mushrooms</option>
-										<option value="pepperoni">Pepperoni</option>
-										<option value="onions">Onions</option>
-									</select>
-								</div>
-								</div>
-								<div class="panel-body goodsBox">
-									
-								</div>
+					}
+					$(".goodsBox").append(bDiv);
+				});
+		} else {
+			$(".goodsBox")
+				.append("<div class='col-md-12 goods animated bounceInLeft delay-1s'><div class='good'><h3 style='text-align:center;line-height:70px;color:#C1E2B3;'>暂无数据~ ~</h3></div></div>");
+		}
+	}
+</script>
+</head>
+<body>
+	<div class="main">
+		<div class="main-content">
+			<div class="container-fluid">
+				<div class="panel panel-headline">
+					<div class="panel-heading">
+						<h3 class="panel-title">商品销量排名</h3>
+						<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
+					</div>
+					<div class="panel-body boss">
+						<div class="col-md-12 tj">
+							<div class="col-md-6 col-xs-12">
+								<span class="col-md-3 col-xs-12">选择区间</span> <input
+									class="col-md-9 col-xs-12" type="text" id="config-demo">
+							</div>
+							<div class="col-md-6 col-xs-12">
+								<span class="col-md-3 col-xs-12">选择商家</span> <select
+									class="col-md-9 col-xs-12 store">
+									<option value="">全部</option>
+								</select>
 							</div>
 						</div>
+						<div class="panel-body goodsBox"></div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</body>
+	</div>
+	</div>
+</body>

@@ -216,7 +216,7 @@ function queryGoodsDetail(currentPage,time,startTime,endTime,storeId,gid){
  * @param cid
  * @returns
  */
-function queryJinHuo(currentPage,startTime,endTime,cid){
+function queryJinHuo(currentPage,startTime,endTime,cid,sid){
 	var v;
 	$.ajax({
 		url:"/statistics/queryJinHuo",
@@ -225,7 +225,8 @@ function queryJinHuo(currentPage,startTime,endTime,cid){
 			currentPage:currentPage,
 			startTime:startTime,
 			endTime:endTime,
-			cid:cid
+			cid:cid,
+			storeId:sid
 		},
 		dataType:"json",
 		async:false,
@@ -298,7 +299,12 @@ function queryQianKuan(currentPage,startTime,endTime,sid){
 	});
 	return v;
 }
-
+/**欠款（All）
+ * @param startTime
+ * @param endTime
+ * @param sid
+ * @returns
+ */
 function queryAllQianKuan(startTime,endTime,sid){
 	var v;
 	$.ajax({
@@ -320,3 +326,199 @@ function queryAllQianKuan(startTime,endTime,sid){
 	});
 	return v;
 }
+
+/***
+ * 收账查询
+ * @param currentPage
+ * @param startTime
+ * @param endTime
+ * @param sid
+ * @returns
+ */
+function queryShouZhang(currentPage,startTime,endTime,cid,storeid){
+	var v;
+	$.ajax({
+		url:"/statistics/queryShouZhang",
+		type:"post",
+		data:{
+			currentPage:currentPage,
+			startTime:startTime,
+			endTime:endTime,
+			cid,cid,
+			storeid:storeid
+		},
+		dataType:"json",
+		async:false,
+		success:function(data){
+			v = data;
+		},
+		error:function(){
+			console.log("ERROR:'queryShouZhang'");
+		}
+	});
+	return v;
+}
+
+/**收賬（All）
+ * @param startTime
+ * @param endTime
+ * @param sid
+ * @returns
+ */
+function queryAllShouZhang(startTime,endTime,cid,storeid){
+	var v;
+	$.ajax({
+		url:"/statistics/queryAllShouZhang",
+		type:"post",
+		data:{
+			startTime:startTime,
+			endTime:endTime,
+			cid,cid,
+			storeid:storeid
+		},
+		dataType:"json",
+		async:false,
+		success:function(data){
+			v = data;
+		},
+		error:function(){
+			console.log("ERROR:'queryAllShouZhang'");
+		}
+	});
+	return v;
+}
+
+/***
+ * 查詢客戶
+ * @param sid
+ * @returns
+ */
+function queryCustomer(sid){
+	var v;
+	$.ajax({
+		url:"/statistics/queryCustomer",
+		type:"post",
+		data:{
+			sid:sid
+		},
+		dataType:"json",
+		async:false,
+		success:function(data){
+			v = data;
+		},
+		error:function(){
+			console.log("ERROR:'queryCustomer'");
+		}
+	});
+	return v;
+}
+/***
+ * 查询店铺
+ * @returns
+ */
+function queryStore(){
+	var v;
+	$.ajax({
+		url:"/statistics/queryStore",
+		type:"post",
+		dataType:"json",
+		async:false,
+		success:function(data){
+			v = data;
+		},
+		error:function(){
+			console.log("ERROR:'queryStore'");
+		}
+	});
+	return v;
+}
+
+/***
+ * 查询商品
+ * @returns
+ */
+function queryGoods(){
+	var v;
+	$.ajax({
+		url:"/ther/queryGoods",
+		type:"post",
+		dataType:"json",
+		async:false,
+		success:function(data){
+			v = data;
+		},
+		error:function(){
+			console.log("ERROR:'queryGoods'");
+		}
+	});
+	return v;
+}
+
+/***
+ * 查询商品排名
+ * @param storeId
+ * @returns
+ */
+function queryAllGoodsDetail(storeId){
+	var v;
+	$.ajax({
+		url:"/statistics/queryAllGoodsDetail",
+		type:"post",
+		data:{
+			storeId:storeId
+		},
+		dataType:"json",
+		async:false,
+		success:function(data){
+			v = data;
+		},
+		error:function(){
+			console.log("ERROR:'queryAllGoodsDetail'");
+		}
+	});
+	return v;
+}
+
+/***
+ * 查询供应商
+ * @param storeId
+ * @returns
+ */
+function querySupplier_yByStore(storeId){
+	var v;
+	$.ajax({
+		url:"/ther/querySupplier_yByStore",
+		type:"post",
+		data:{
+			sid:storeId
+		},
+		dataType:"json",
+		async:false,
+		success:function(data){
+			v = data;
+		},
+		error:function(){
+			console.log("ERROR:'querySupplier_yByStore'");
+		}
+	});
+	return v;
+}
+
+
+/***
+ * 获取店铺id
+ * @returns
+ */
+function getStoreId(){
+		var uid = "[[${session.user.id}]]";	
+		var sid = "";
+		if (uid != "") {
+			if (uid == "1") {
+				sid = "";
+			} else {
+				sid = "[{{session.user.storeid}}]";
+			}
+		}
+		return sid;
+}
+
