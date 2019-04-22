@@ -40,11 +40,7 @@ public class RoleController {
 	@Autowired
 	ModuleService moduleService;
 	
-	@RequestMapping("TianJiaRole")
-	public String TianJiaRole() {
-		
-		return "czx/role-add";
-	}
+	
 	
 	
 	

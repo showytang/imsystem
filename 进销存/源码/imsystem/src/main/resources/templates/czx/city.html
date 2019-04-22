@@ -72,7 +72,7 @@
                         <textarea placeholder="请输入具体地址" id="desc" name="address" class="layui-textarea"></textarea>
                     </div>
             </div>
-             <button type="submit"   class="layui-btn layui-btn-normal" lay-filter="add" lay-submit="">
+             <button type="submit"   class="layui-btn layui-btn-normal a"  lay-filter="add" lay-submit="">
                   增加
               </button> 
         </form>
@@ -89,6 +89,14 @@
         $('#x-city').xcity('湖南','株洲市','芦淞区');
 
       });
+      
+      $(".a").click(function(){
+    	 var index=parent.layer.getFrameIndex(window.name);
+    	 parent.layer.close(index);
+      });
+      
+      
+      
     </script>
     
   </body>
