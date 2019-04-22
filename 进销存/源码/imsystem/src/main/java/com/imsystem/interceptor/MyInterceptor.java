@@ -30,18 +30,13 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
 
 		System.out.println("你来了.....");
 
-//		User u=(User)request.getSession().getAttribute("user");
-//		if(u!=null) {
-//			return true;
-//		}
-//		String ctx=request.getContextPath();
-//		response.sendRedirect(ctx+"/user/page-login");
-//		return false;
-		
-//		uri = uri.replace(request.getContextPath() + "/", "");
-
-		User user = (User) request.getSession().getAttribute("user");
+		/*User user = (User) request.getSession().getAttribute("user");
+		if(user!=null) {
+			return true;
+		}
 		String uri = request.getRequestURI();
+		String ctx=request.getContextPath();
+		response.sendRedirect(ctx+"/user/page-login");
 		System.out.println(uri);
 		if (request.getSession().getAttribute("urlMap") == null) {
 			Map<String, Module> map = (Map<String, Module>) moduleService.queryMap(user.getId());
@@ -54,8 +49,36 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
 				return true;
 			}
 		}
-		return false;
-//		return true;
+		return false;*/
+		
+		
+		/*Map<String, Module> map = (Map<String, Module>) request.getSession().getAttribute("urlMap");
+				
+		if(map==null) {
+			User u = (User) request.getSession().getAttribute("user");
+			if(u!=null) {
+				 map = (Map<String, Module>) moduleService.queryMap(u.getId());
+				request.getSession().setAttribute("urlMap",map);
+			}else {
+				String ctx =request.getContextPath();
+				response.sendRedirect(ctx+"/user/page-login");
+				return false;
+			}
+			
+		}
+		String uri =request.getRequestURI();
+		
+		System.out.println(uri);
+		Object obj =map.get(uri);
+		if(obj!=null) {
+			return true;
+		}else {
+			
+			return false;
+		}*/
+		
+		return true;
+		
 		
 	}
 
