@@ -40,7 +40,7 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
 		
 //		uri = uri.replace(request.getContextPath() + "/", "");
 
-		User user = (User) request.getSession().getAttribute("user");
+	/*	User user = (User) request.getSession().getAttribute("user");
 		String uri = request.getRequestURI();
 		System.out.println(uri);
 		if (request.getSession().getAttribute("urlMap") == null) {
@@ -54,8 +54,8 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
 				return true;
 			}
 		}
-		return false;
-//		return true;
+		return false;*/
+		return true;
 		
 	}
 
