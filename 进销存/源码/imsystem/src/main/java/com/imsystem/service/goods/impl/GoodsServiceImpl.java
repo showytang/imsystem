@@ -288,7 +288,7 @@ public class GoodsServiceImpl implements GoodsService {
 		int count = goodsMap.insertSelective(goodsVo.getGoods());
 
 		// 3.图片表删除
-		if (goodsVo.getGoodsImgs() != null) {
+		/*if (goodsVo.getGoodsImgs() != null) {
 
 			for (Img img : goodsVo.getGoodsImgs()) {
 
@@ -300,7 +300,7 @@ public class GoodsServiceImpl implements GoodsService {
 				}
 
 			}
-		}
+		}*/
 		// 4.图片新增 
 		for (Img img : goodsVo.getGoodsImgs()) {
 

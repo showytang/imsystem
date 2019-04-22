@@ -80,8 +80,6 @@
 		INNER JOIN `goods` AS gs
 		ON gv.`gid` = gs.`id`
 
-		INNER JOIN `img` AS im
-
 		LEFT JOIN `img` AS im
 
 		ON gs.`id` = im.gid
