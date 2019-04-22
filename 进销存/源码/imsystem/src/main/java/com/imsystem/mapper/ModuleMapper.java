@@ -42,20 +42,15 @@ public interface ModuleMapper {
     
     int updateModuleById(Module module);
     
-    List<Module> queryMuLu(@Param("uid")String uid,@Param("parentid")Integer id);
+    List<Module> queryMuLu(@Param("uid")String uid,@Param("parentid")String id);
     
     @MapKey("url")
     Map<String, Module> queryMap(String uid);
     
+    List<Module>  selectModuleAll(@Param("parentid") String parentid);
     
     
-    List<Module>  selectModuleAll(@Param("parentid") Integer parentid);
+    List<Module> queryModuleByParentid(@Param("parentid") String parentid);
     
-    
-    
-    
-    
-    
-   
     
 }

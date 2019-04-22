@@ -60,7 +60,7 @@ public class ModuleServiceImpl implements ModuleService{
 	}
 
 	@Override
-	public List<Module>queryMuLu(String uid,Integer id) {
+	public List<Module>queryMuLu(String uid,String id) {
 		
 		return moduleMapper.queryMuLu(uid,id);
 		
@@ -75,7 +75,7 @@ public class ModuleServiceImpl implements ModuleService{
 	}
 	
 	@Override
-	public List<Module> selectModuleAll(Integer parentid) {
+	public List<Module> selectModuleAll(String parentid) {
 		return moduleMapper.selectModuleAll(parentid);
 	}
 
@@ -84,6 +84,12 @@ public class ModuleServiceImpl implements ModuleService{
 		Page<Module> page=PageHelper.startPage(pageNum, pageSize,true);
 		moduleMapper.queryModuleAll();
 		return page.toPageInfo();
+	}
+
+	@Override
+	public List<Module> queryModuleByParentid(String parentid) {
+		
+		return moduleMapper.queryModuleByParentid(parentid);
 	}
 
 }

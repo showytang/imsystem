@@ -391,16 +391,12 @@
 	<insert id="insertModule">
 		INSERT INTO module (id, `name`, enname,
 		catalog, url, `time`,
-		parentid, state, uid,
-		column1, column2, column3,
-		column4, column5)
-		VALUES (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
-		#{enname,jdbcType=VARCHAR},
-		#{catalog,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP},
-		#{parentid,jdbcType=INTEGER}, #{state,jdbcType=INTEGER},
-		#{uid,jdbcType=VARCHAR},
-		#{column1,jdbcType=VARCHAR}, #{column2,jdbcType=VARCHAR}, #{column3,jdbcType=VARCHAR},
-		#{column4,jdbcType=VARCHAR}, #{column5,jdbcType=VARCHAR})
+		parentid, state, uid)
+		VALUES (#{id}, #{name},
+		#{enname},
+		#{catalog}, #{url},now(),
+		#{parentid}, 0,
+		#{uid})
 	</insert>
 
 
@@ -475,6 +471,24 @@
 		
 		
 	</select>
+
+
+
+<select id="queryModuleByParentid" resultMap="BaseResultMap">
+	
+	SELECT * FROM module WHERE parentid=#{parentid} 
+	
+</select>
+
+
+
+
+
+
+
+
+
+
 
 
 

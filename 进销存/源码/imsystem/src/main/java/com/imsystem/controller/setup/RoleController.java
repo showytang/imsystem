@@ -158,8 +158,7 @@ public class RoleController {
 	@RequestMapping("selectModuleAll")
 	public String queryModuleAll(Model model){
 		
-		
-		List<Module> list=moduleService.selectModuleAll(0);
+		List<Module> list=moduleService.selectModuleAll(0+"");
 		
 		model.addAttribute("module", list);
 		
