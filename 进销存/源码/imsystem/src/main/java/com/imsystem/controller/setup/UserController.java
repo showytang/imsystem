@@ -100,15 +100,7 @@ public class UserController {
 	
 	
 	
-	@RequestMapping("loginOut")
-	public  String loginOut(HttpSession session) {
-		
-		System.out.println("销毁session。。。");
-		
-		session.invalidate();
-		System.out.println(session.getAttribute("user"));
-		return "redirect:user/page-login";
-	}
+	
 	
 	
 	
