@@ -37,6 +37,9 @@
 			</association>
 		</association>
 	</resultMap>
+	<update id="updateScount">
+		update stockdetails set state = 0,scount = scount-#{count} where id = #{id};
+	</update>
 	<update id="update">
 		update stockdetails set state = 1 where id = #{id}
 	</update>

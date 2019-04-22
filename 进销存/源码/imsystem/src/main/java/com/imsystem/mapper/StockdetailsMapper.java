@@ -11,6 +11,8 @@ import org.apache.ibatis.annotations.Param;
 
 public interface StockdetailsMapper {
 	
+	int updateScount(@Param("id")String id,@Param("count")Integer count);
+	
 	Stockdetails queryCount(@Param("gvid") String gvid,@Param("sid") String sid);
 	
 	int selectCount(@Param("code")String code,@Param("sid")String id);

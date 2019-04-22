@@ -24,8 +24,8 @@
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
   <insert id="add">
-  		insert into salesback
-  		select #{id},s.code,s.id,s.cid,#{uid},s.paytype,s.remark,#{count},s.price,s.paymoney,s.tainmoney,#{time},#{time},0,#{storeid} from sales as s where s.id = (select sa.sid from salesdetails as sa where sa.id = #{column1})
+  		insert into salesback(id,code,ssid,cid,uid,paytype,remark,count,price,paymoney,tainmoney,time,updatetime,state,storeid)
+  		select #{id},s.code,s.id,s.cid,#{uid},s.paytype,s.remark,#{count},s.price,#{paymoney},#{tainmoney},#{time},#{time},0,#{storeid} from sales as s where s.id = (select sa.sid from salesdetails as sa where sa.id = #{column1})
   </insert>
   <sql id="Example_Where_Clause" >
     <where >

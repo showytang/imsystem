@@ -35,6 +35,9 @@
 			</association>
 		</association>
 	</resultMap>
+	<update id="update">
+		update salesdetails set state = 1 where id = #{id}
+	</update>
 	<select id="queryBySid" resultMap="BaseResultMap">
 		select * from salesdetails
 		where sid = #{id}

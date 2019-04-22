@@ -66,6 +66,17 @@ body::-webkit-scrollbar-thumb {
 	border-radius: 10px;
 	background: rgb(2, 143, 208);
 }
+.orderOver {
+	color: red;
+	margin-left: 10px;
+	font-size: 12px;
+	padding: 0px 3px;
+	border-radius: 15%;
+	border: 1px solid red;
+	max-height:25px;
+	line-height : 25px;
+	max-width:50px;
+}
 </style>
 </head>
 <body style="background: white;">
@@ -86,12 +97,17 @@ body::-webkit-scrollbar-thumb {
 					<td><img
 						v-if="item.goodsvalue.column1 !='' && item.goodsvalue.column1 !=null"
 						:src="item.goodsvalue.column1"> <img v-else
-						:src="item.goodsvalue.goods.img"></td>
+						:src="item.goodsvalue.goods.img">
+						
+					</td>
 					<td>{{item.goodsvalue.goods.name}}</td>
 					<td>{{item.goodsvalue.name}}</td>
 					<td class="price">{{item.price}}</td>
 					<td class="count">{{item.count}}</td>
-					<td><input type="checkbox"></td>
+					<td>
+						<input  v-if="item.state != 1" type="checkbox">
+						<div v-if="item.state == 1" class="orderOver">已退货</div>
+					</td>
 				</tr>
 			</tbody>
 		</table>
