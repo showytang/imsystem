@@ -510,15 +510,16 @@ function querySupplier_yByStore(storeId){
  * @returns
  */
 function getStoreId(){
-		var uid = "[[${session.user.id}]]";	
+		var uid = window.localStorage.setItem("user",JSON.stringify(userSession).id);
 		var sid = "";
 		if (uid != "") {
 			if (uid == "1") {
 				sid = "";
 			} else {
-				sid = "[{{session.user.storeid}}]";
+				sid = JSON.stringify(userSession).storeid;
 			}
 		}
+		alert(sid);
 		return sid;
 }
 
