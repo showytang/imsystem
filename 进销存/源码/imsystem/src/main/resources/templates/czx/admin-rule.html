@@ -20,25 +20,33 @@
   <body>
     <div class="x-body">
       <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so layui-form-pane">
+        <form class="layui-form layui-col-md12 x-so layui-form-pane" th:action="@{/module/insertModule}" method="post">
           
+          <input class="layui-input" placeholder="权限名" name="name" >
+          <input class="layui-input" placeholder="英文名" name="enname" >
+          <input class="layui-input" placeholder="权限规格路径" name="url" >
           <div class="layui-input-inline">
-            <select name="contrller">
+            <select name="catalog">
               <option>左侧目录</option>
-              <option>是</option>
-              <option>否</option>
+              <option value="0">是</option>
+              <option value="1">否</option>
             </select>
           </div>
-          <div class="layui-input-inline">
-            <select name="action">
-              <option>请方法</option>
-              <option>add</option>
-              <option>login</option>
-              <option>checklogin</option>
+          
+          <div class="layui-input-inline one">
+            <select id="one" lay-filter="one" name="parentid">
+              <option value="0">上级</option>
+              <option th:each="item : ${list}"  th:value="${item.id}" th:text="${item.name}">a</option>
             </select>
           </div>
-          <input class="layui-input" placeholder="权限名" name="cate_name" >
-          <button class="layui-btn layui-btn-normal"  lay-submit="" lay-filter="sreach"><i class="layui-icon"></i>增加</button>
+          <div class="layui-input-inline two" style="display: none;">
+            <select id="two"  class="tt" lay-filter="two" name="parentid">
+              <option value="0">方法</option>
+              
+            </select>
+          </div>
+          
+          <button class="layui-btn layui-btn-normal" type="submit" lay-submit="" lay-filter="sreach"><i class="layui-icon"></i>增加</button>
         </form>
       </div>
       <xblock>
@@ -87,21 +95,82 @@
       </div>
 
     </div>
-    <script>
-      layui.use('laydate', function(){
-        var laydate = layui.laydate;
-
+    <script th:inline="javascript">
+    	
+    
+      layui.use('form', function(){
+        var form = layui.form;
+		
         
         
-        //执行一个laydate实例
-        laydate.render({
-          elem: '#start' //指定元素
-        });
+        form.on('select(one)', function(){
+        	
+        	var parentid=$("#one").find("option:selected").attr("value");
+        	
+        	if(parentid==0){
+        		$(".two").addClass("layui-hide");
+        	}
+        	if(parentid!=0){
+        		
+        		$(".two").removeClass("layui-hide");
+        		
+        		
+        		
+        		var url=[[@{/module/queryModuleByParentid_two}]];
+            	$.ajax({
+            		url:url,
+    				data:{
+    					parentid:parentid
+            		},
+            		type:"post",
+            		dataType:"json",
+            		success:function(result){
+            			$("#two").html(" ");
+            			
+            			
+            			if(result!=""){
+            				
+            				$(".two").show();
+            				
+            				$("#two").html(" ");
+            				var a=("<option value='0'>请选择</option>");
+            				 $("#two").append(a);
+            				 $.each(result,function(i,obj){
+            					
+            					var b=("<option value="+obj.id+">"+obj.name+"</option>");
+            					
+            					 $("#two").append(b);
+            		             form.render();
+            				});	
+            			}else {
+            				$(".tt").html(" ");
+            				$(".two").addClass("layui-hide");
+            			}
+            			
+            			
+            		}
+            		
+            		
+            		
+            		
+            		
+            	});
+        		
+        		
+        	}
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        		
+      	 
+        }); 
 
-        //执行一个laydate实例
-        laydate.render({
-          elem: '#end' //指定元素
-        });
+        
+       
       });
 
        /*用户-停用*/
@@ -149,13 +218,10 @@
             $(".layui-form-checked").not('.header').parents('tr').remove();
         });
       }
+      
+      
     </script>
-    <script>var _hmt = _hmt || []; (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-      })();</script>
+   
   </body>
 
 </html>

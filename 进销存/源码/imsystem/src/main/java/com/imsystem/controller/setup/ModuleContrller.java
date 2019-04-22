@@ -1,7 +1,9 @@
 package com.imsystem.controller.setup;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
@@ -42,16 +45,60 @@ public class ModuleContrller {
 		
 		PageInfo<Module> page= moduleService.queryByPage(module, pageNum, pageSize);
 		
+		
+		List<Module> list= moduleService.queryModuleByParentid(0+"");
+		
 		model.addAttribute("page",page);
 		
+		model.addAttribute("list", list);
 		
 		return "czx/admin-rule";
 	}
 	
+	@RequestMapping("queryModuleByParentid_two")
+	@ResponseBody
+	public List<Module> queryModuleByParentid(String parentid){
+		
+		System.out.println("come。。。。。。。");
+		
+		List<Module> list=moduleService.queryModuleByParentid(parentid+"");
+		
+		
+		return list;
+		
+	}
 	
 	
-	
-	
+	@RequestMapping("insertModule")
+	public String insertModule(Module module,HttpSession session) {
+		
+		User user=(User) session.getAttribute("user");
+		
+		String id = "" ;
+		String trandNo = String.valueOf((Math.random() * 9 + 1) * 1000000);
+		String sdf = new SimpleDateFormat("yyyyMMddss").format(new Date());
+		id = trandNo.toString().substring(0, 4); 
+		id = id + sdf ;
+		module.setId(id);
+		
+		module.setUid(user.getId());
+		
+		
+		
+		
+		System.out.println("大耳朵图图");
+		
+		
+		
+		String parentid = module.getParentid().substring(module.getParentid().indexOf(",") + 1);
+		
+		
+		int i=moduleService.insertModule(module);
+		
+		
+		
+		return "redirect:queryModuleAll";
+	}
 	
 	
 	
@@ -66,7 +113,7 @@ public class ModuleContrller {
 			
 		User user=(User) session.getAttribute("user");
 		
-		List<Module> list=moduleService.queryMuLu(user.getId(),0);
+		List<Module> list=moduleService.queryMuLu(user.getId(),0+"");
 		
 		model.addAttribute("list", list);
 		
@@ -80,12 +127,18 @@ public class ModuleContrller {
 	
 	
 	
+	
+	
+	
+	
+	
+	
 	@RequestMapping("query")
 	public void query(HttpServletRequest req,HttpServletResponse resp) {
 		resp.setContentType("utf-8");
 		resp.setCharacterEncoding("utf-8");
 		User u=(User)req.getSession().getAttribute("user");
-		List<Module> list=moduleService.queryMuLu(u.getId(), 0);
+		List<Module> list=moduleService.queryMuLu(u.getId(), 0+"");
 		try {
 			resp.getWriter().println(JSON.toJSONString(list));
 		} catch (IOException e) {

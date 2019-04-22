@@ -26,10 +26,13 @@ public interface ModuleService {
 	    PageInfo<Module> queryByPage(Module module,Integer pageNum,Integer pageSize);
 	    
 	    
-	    List<Module> queryMuLu(String uid,Integer id);
+	    List<Module> queryMuLu(String uid,String id);
 	    
 	    Map<String, Module>queryMap(String uid);
 	    
 	    
-	    List<Module>  selectModuleAll(@Param("parentid") Integer parentid);
+	    List<Module>  selectModuleAll(@Param("parentid") String parentid);
+	    
+	    
+	    List<Module> queryModuleByParentid(@Param("parentid") String parentid);
 }
