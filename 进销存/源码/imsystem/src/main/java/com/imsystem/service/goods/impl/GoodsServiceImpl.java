@@ -377,7 +377,6 @@ public class GoodsServiceImpl implements GoodsService {
 				}
 
 			}
-
 			// 7.商品实例新增
 			if (gv.getId().equals("undefined")) {
 

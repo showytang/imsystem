@@ -362,6 +362,7 @@ public class GoodsController {
             	
             	if(bool) {
             		goodsVo.getGoods().setImg(f.getBytes());
+            		bool = false;
             		continue;
             	}
             	
