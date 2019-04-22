@@ -18,24 +18,15 @@
   </head>
   
   <body>
-   
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so layui-form-pane">
-          <div class="layui-input-inline">
-            <select name="cateid">
-              <option>规则分类</option>
-              <option>文章</option>
-              <option>会员</option>
-              <option>权限</option>
-            </select>
-          </div>
+          
           <div class="layui-input-inline">
             <select name="contrller">
-              <option>请控制器</option>
-              <option>Index</option>
-              <option>Goods</option>
-              <option>Cate</option>
+              <option>左侧目录</option>
+              <option>是</option>
+              <option>否</option>
             </select>
           </div>
           <div class="layui-input-inline">
@@ -60,21 +51,21 @@
             <th>
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
-            <th>ID</th>
-            <th>权限规则</th>
             <th>权限名称</th>
+            <th>英文名称</th>
+            <th>权限规则</th>
             <th>所属分类</th>
             <th>操作</th>
         </thead>
         <tbody>
-          <tr>
+          <tr th:each="item : ${page.list}">
             <td>
               <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
             </td>
-            <td>1</td>
-            <td>admin/user/userlist</td>
-            <td>会员列表</td>
-            <td>会员相关</td>
+            <td th:text="${item.name}"></td>
+            <td th:text="${item.enname}"></td>
+            <td th:text="${item.url}"></td>
+            <td th:text="${item.catalog==0}?'左侧目录':'非左侧目录'" ></td>
             <td class="td-manage">
               <a title="编辑"  onclick="x_admin_show('编辑','xxx.html')" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
@@ -88,13 +79,11 @@
       </table>
       <div class="page">
         <div>
-          <a class="prev" href="">&lt;&lt;</a>
-          <a class="num" href="">1</a>
-          <span class="current">2</span>
-          <a class="num" href="">3</a>
-          <a class="num" href="">489</a>
-          <a class="next" href="">&gt;&gt;</a>
-        </div>
+				<a class="prev" th:href="@{/module/queryModuleAll?(pageNum=${page.prePage})}">&lt;&lt;</a> 
+				<a class="num" th:style="'background-color:'+@{(${page.pageNum==1} ? '#009688':'white')}"  th:href="@{/module/queryModuleAll?pageNum=1}">1</a>
+				<a class="num"  th:style="'background-color:'+@{(${page.pageNum==2} ? '#009688':'white')}" th:href="@{/module/queryModuleAll?pageNum=2}">2</a> 
+			    <a class="next" th:href="@{/module/queryModuleAll?(pageNum=${page.nextPage})}">&gt;&gt;</a>
+			</div>
       </div>
 
     </div>

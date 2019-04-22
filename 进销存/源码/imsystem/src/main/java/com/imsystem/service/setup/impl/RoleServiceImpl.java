@@ -12,6 +12,7 @@ import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Role;
 import com.imsystem.domain.User;
 import com.imsystem.mapper.RoleMapper;
+import com.imsystem.mapper.RolemoduleMapper;
 import com.imsystem.service.setup.RoleService;
 
 
@@ -21,6 +22,9 @@ public class RoleServiceImpl implements RoleService{
 
 	@Autowired
 	RoleMapper roleMapper;
+	
+	@Autowired
+	RolemoduleMapper rolemoduleMapper;
 	
 	
 	@Override
@@ -37,8 +41,11 @@ public class RoleServiceImpl implements RoleService{
 
 	@Override
 	public int insertRole(Role role) {
-		
-		return roleMapper.insertRole(role);
+		 
+		 roleMapper.insertRole(role);
+		 rolemoduleMapper.insertRoleModule(role);
+		 
+		 return 0;
 	}
 
 	@Override

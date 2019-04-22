@@ -96,7 +96,7 @@ public class UserController {
 	@RequestMapping("queryUserById")
 	public String queryUserById(String id,Model model) {
 		User u=userService.queryUserById(id);
-		System.out.println(JSON.toJSONString(u));
+		
 		model.addAttribute("u", u);
 		List<Role> list=roleService.queryRoleAll();
 		model.addAttribute("list",list);
@@ -109,7 +109,7 @@ public class UserController {
 	@RequestMapping("updateUserById")
 	public String updateUserById(User user,HttpSession session) {
 		
-		System.out.println("来了");
+		
 		User user1 = (User)session.getAttribute("user");
 		user.setUid(user1.getId());
 		userService.updateUserById(user);
@@ -182,7 +182,7 @@ public class UserController {
 		}
 		
 		PageInfo<User> page= userService.queryByPage(user, pageNum, pageSize);
-		System.out.println(JSON.toJSONString(page.getList()));
+		
 		model.addAttribute("page",page);
 		
 		
@@ -206,7 +206,6 @@ public class UserController {
 		 
 		 if (user!=null) {
 			   session.setAttribute("user", user);
-			   session.setMaxInactiveInterval(30);
 			   return "1";
 		  }else {	  
 			  return null;

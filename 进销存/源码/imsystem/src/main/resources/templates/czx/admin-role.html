@@ -38,12 +38,10 @@ table {
 
 	<div class="x-body">
 		<div class="layui-row">
-			<form class="layui-form layui-col-md12 x-so">
-				<input class="layui-input" placeholder="开始日" name="start" id="start">
-				<input class="layui-input" placeholder="截止日" name="end" id="end">
-				<input type="text" name="username" placeholder="请输入用户名"
+			<form class="layui-form layui-col-md12 x-so" th:action="@{/role/queryRoleModule}" method="post">
+				<input type="text" name="name" placeholder="请输入角色名"
 					autocomplete="off" class="layui-input">
-				<button class="layui-btn" lay-submit="" lay-filter="sreach">
+				<button class="layui-btn" lay-submit="" type="submit" lay-filter="sreach">
 					<i class="layui-icon">&#xe615;</i>
 				</button>
 			</form>
@@ -53,7 +51,7 @@ table {
 			<i class="layui-icon"></i>批量删除
 		</button>
 		<button class="layui-btn layui-btn-normal"
-			onclick="x_admin_show('添加用户','/role/TianJiaRole')">
+			onclick="x_admin_show('添加用户','/role/selectModuleAll')">
 			<i class="layui-icon"></i>添加
 		</button>
 		<!--<span class="x-right" style="line-height:40px">共有数据：88 条</span>-->
@@ -69,7 +67,7 @@ table {
 					</th>
 					<th>角色名</th>
 					<th>拥有权限规则</th>
-					<th>描述</th>
+					<th>创建时间</th>
 					<th>状态</th>
 					<th>操作</th>
 			</thead>
@@ -84,9 +82,9 @@ table {
 					<td th:text="${item.name}">超级管理员</td>
 					<td class="td"><span th:each="item1 : ${item.moduleList}"
 						th:text="${item1.name}+'、'"></span></td>
-					<td th:if=" ${item.id} eq '1'">具有至高无上的权利</td>
-					<td th:if=" ${item.id} eq '2'">具有部分权利</td>
-					<td th:if=" ${item.id} eq '3'">无权利</td>
+					<td th:text="${#dates.format(item.time,'yyyy-MM-dd hh:mm:ss')}">2017-01-01
+						11:11:42</td>
+					
 					<td class="td-status"><span
 						class="layui-btn layui-btn-normal layui-btn-mini"
 						th:text="${item.state==0}?'已启用':'已停用'"

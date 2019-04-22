@@ -21,7 +21,7 @@ public class Store {
 
     private Date updatetime;
 
-    private Integer parented;
+    private String  parented;
 
     private Integer state;
 
@@ -37,7 +37,19 @@ public class Store {
 
     private String column5;
 
-    public String getId() {
+    
+    private User user;
+    
+    
+    public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public String getId() {
         return id;
     }
 
@@ -109,11 +121,11 @@ public class Store {
         this.updatetime = updatetime;
     }
 
-    public Integer getParented() {
+    public String getParented() {
         return parented;
     }
 
-    public void setParented(Integer parented) {
+    public void setParented(String  parented) {
         this.parented = parented;
     }
 

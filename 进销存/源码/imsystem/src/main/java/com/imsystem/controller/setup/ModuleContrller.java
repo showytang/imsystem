@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Module;
 import com.imsystem.domain.User;
 import com.imsystem.service.setup.ModuleService;
@@ -25,6 +26,38 @@ public class ModuleContrller {
 
 	@Autowired
 	ModuleService moduleService;
+	
+	
+	
+	
+	
+	@RequestMapping("queryModuleAll")
+	public String queryUserRole(Model model,Module module, Integer pageNum, Integer pageSize) {
+		if (pageNum==null || pageNum==0) {
+			pageNum=1;
+		}
+		if (pageSize==null) {
+			pageSize=4;
+		}
+		
+		PageInfo<Module> page= moduleService.queryByPage(module, pageNum, pageSize);
+		
+		model.addAttribute("page",page);
+		
+		
+		return "czx/admin-rule";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

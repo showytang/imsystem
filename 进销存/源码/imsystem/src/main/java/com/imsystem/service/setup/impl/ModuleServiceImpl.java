@@ -9,7 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Module;
+import com.imsystem.domain.User;
 import com.imsystem.mapper.ModuleMapper;
 import com.imsystem.service.setup.ModuleService;
 
@@ -68,6 +72,18 @@ public class ModuleServiceImpl implements ModuleService{
 	public Map<String, Module> queryMap(String uid) {
 		
 		return moduleMapper.queryMap(uid);
+	}
+	
+	@Override
+	public List<Module> selectModuleAll(Integer parentid) {
+		return moduleMapper.selectModuleAll(parentid);
+	}
+
+	@Override
+	public PageInfo<Module> queryByPage(Module module, Integer pageNum, Integer pageSize) {
+		Page<Module> page=PageHelper.startPage(pageNum, pageSize,true);
+		moduleMapper.queryModuleAll();
+		return page.toPageInfo();
 	}
 
 }
