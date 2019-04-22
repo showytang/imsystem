@@ -211,7 +211,7 @@ html, body, #wrapper, .main, .main-content, .right {
 <script th:src="@{/assets/js/jquery.slimscroll.min.js}"></script>
 <script th:src="@{/assets/js/jquery.easypiechart.min.js}"></script>
 <script th:src="@{/assets/js/klorofil-common.js}"></script>
-<script>
+<script th:inline="javascript">
 	$(function() {
 		$(".nav li a").attr("aria-expanded", "false");
 		$(".nav li a").click(function() {
