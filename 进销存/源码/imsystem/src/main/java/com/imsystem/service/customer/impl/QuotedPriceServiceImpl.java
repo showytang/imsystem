@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.github.pagehelper.PageInfo;
+import com.imsystem.domain.QuoteVO;
 import com.imsystem.domain.Quotedprice;
 import com.imsystem.service.customer.QuotedPriceService;
 
@@ -53,6 +55,15 @@ public class QuotedPriceServiceImpl implements QuotedPriceService{
 	 */
 	@Override
 	public List<Quotedprice> queryQuotedPriceByMoney(int price1, int price2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * 报价分页查询
+	 */
+	@Override
+	public PageInfo<QuoteVO> queryQuoteByPage(String zero, String content, Integer curentPage) {
 		// TODO Auto-generated method stub
 		return null;
 	}

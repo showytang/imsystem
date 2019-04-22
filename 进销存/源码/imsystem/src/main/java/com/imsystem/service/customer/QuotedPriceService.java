@@ -2,6 +2,8 @@ package com.imsystem.service.customer;
 
 import java.util.List;
 
+import com.github.pagehelper.PageInfo;
+import com.imsystem.domain.QuoteVO;
 import com.imsystem.domain.Quotedprice;
 
 public interface QuotedPriceService {
@@ -40,5 +42,7 @@ public interface QuotedPriceService {
 	 * @return
 	 */
 	public List<Quotedprice> queryQuotedPriceByMoney(int price1,int price2);
+	
+	public PageInfo<QuoteVO> queryQuoteByPage(String zero,String content,Integer curentPage);
 
 }
