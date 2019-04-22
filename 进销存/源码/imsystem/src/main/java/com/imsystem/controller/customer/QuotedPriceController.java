@@ -11,5 +11,10 @@ public class QuotedPriceController {
 	public String toQuotedPrice() {
 		return "lxy/Quote";
 	}
+	
+	@RequestMapping("toaddquote")
+	public String toAddQuote() {
+		return "lxy/AddQuote";
+	}
 
 }
