@@ -52,7 +52,7 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
 		return false;*/
 		
 		
-		/*Map<String, Module> map = (Map<String, Module>) request.getSession().getAttribute("urlMap");
+		Map<String, Module> map = (Map<String, Module>) request.getSession().getAttribute("urlMap");
 				
 		if(map==null) {
 			User u = (User) request.getSession().getAttribute("user");
@@ -76,11 +76,13 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
 			
 			return false;
 		}
-		*/
+		
 
-		return true;
+//		return true;
 		
 	}
+	
+	
 
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
