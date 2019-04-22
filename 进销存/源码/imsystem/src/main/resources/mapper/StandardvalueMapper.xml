@@ -16,11 +16,46 @@
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
   
+  <select id="queryStandardvalue" resultMap="BaseResultMap">
+  	SELECT va.*,s.`name` AS sname,u.`name` AS uname FROM `standardvalue` AS va INNER JOIN standard AS s ON s.id=va.sid INNER JOIN USER AS u ON u.`id`=va.`uid`
+  	<where>
+  		va.state=0
+  		<if test="tiaojian!=null">
+  				and (va.id LIKE concat('%',#{tiaojian},'%') OR va.NAME LIKE concat('%',#{tiaojian},'%') OR s.NAME LIKE concat('%',#{tiaojian},'%') OR  u.name LIKE concat('%',#{tiaojian},'%'))
+  		</if>
+  	</where>
+  </select>
+  
+  <insert id="insertStandardvalue" parameterType="com.imsystem.domain.Standardvalue" >
+  	INSERT INTO standardvalue(id,NAME,sid,TIME,updatetime,uid,state) VALUE(#{id},#{name},#{sid},NOW(),NOW(),#{uid},0)
+  </insert>
+  
+  <update id="updatedelete">
+  	UPDATE standardvalue SET state=1 WHERE id=#{id}
+  </update>
+  
+  <select id="StandardvalueById" resultMap="BaseResultMap">
+  	SELECT * FROM `standardvalue`
+	WHERE id = #{id};
+  </select>
+  
+  
+  
+ <update id="toupdate">
+ 	UPDATE standardvalue SET NAME=#{name},sid=#{sid},updatetime=NOW(),uid=#{uid} WHERE id=#{id} 	
+ </update>
+  
+  
+  
+  
   <select id="queryStandardvalueByid" resultMap="BaseResultMap">
   
   	SELECT * FROM `standardvalue`
 	WHERE sid = #{id};
   </select>
+  
+  
+  
   
   <sql id="Example_Where_Clause" >
     <where >
