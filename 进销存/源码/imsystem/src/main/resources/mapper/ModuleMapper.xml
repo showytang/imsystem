@@ -447,7 +447,7 @@
 		INNER JOIN rolemodule AS rm ON rm.mid=m.id
 		INNER JOIN role AS r ON r.id=rm.rid
 		INNER JOIN `user` AS u ON u.rid=r.id
-		where m.parentid=#{parentid} and u.id=#{uid}
+		where m.parentid=#{parentid} and u.id=#{uid} AND m.catalog=0
 	</select> 
 
 	
