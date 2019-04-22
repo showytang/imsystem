@@ -350,45 +350,42 @@ td input {
 <script type="text/javascript" th:src="@{/assets/js/getAscii.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/xcConfirm.js}"></script>
 <script type="text/javascript" th:inline="javascript">
-	var E = window.wangEditor;
-	var editor = new E('#editor');
-	//	editor.customConfig.uploadImgShowBase64 = true;
-	//  editor.customConfig.uploadImgServer = '/upload';
-	
-	editor.customConfig.customUploadImg = function(files, insert) {
-		// files 是 input 中选中的文件列表
-		// insert 是获取图片 url 后，插入到编辑器的方法
 
-		// 上传代码返回结果之后，将图片插入到编辑器中
-		insert(imgUrl)
-	}
-
-	
-	
-	editor.create();
-
-	//商品描述
-	var detail;
-	document.getElementById('btn1').addEventListener('click', function() {
-		// 读取 html
-		detail = editor.txt.html();
-	}, false);
-
-	
-	
-	
-	var vue = new Vue({
-		
-		el:".main",
-		data:{
-			customerTypeList:"",
-			goods:"",
-			goodsType:""
+		var vue = new Vue({
 			
+			el:".main",
+			data:{
+				customerTypeList:"",
+				goods:"",
+				goodsType:""
+				
+			}
+			
+		});
+
+		var E = window.wangEditor;
+		var editor = new E('#editor');
+		//	editor.customConfig.uploadImgShowBase64 = true;
+		//  editor.customConfig.uploadImgServer = '/upload';
+		
+		editor.customConfig.customUploadImg = function(files, insert) {
+			// files 是 input 中选中的文件列表
+			// insert 是获取图片 url 后，插入到编辑器的方法
+		
+			// 上传代码返回结果之后，将图片插入到编辑器中
+			insert(imgUrl)
 		}
 		
-	});
-	
+		
+		//商品描述
+		var detail;
+		document.getElementById('btn1').addEventListener('click', function() {
+			// 读取 html
+			detail = editor.txt.html();
+		}, false);
+		
+		editor.create();
+
 	vue.goods = [[${goods}]];
 
 	
@@ -473,11 +470,9 @@ td input {
 		
 		var formData = new FormData();
 		
-		
-	
-		
 		//商品名称
 		formData.append("goods.name",$("[name=name]").val());
+		formData.append("goods.enname",ConvertPinyin($("[name=name]").val()));
 		//商品id
 		formData.append("goods.id",$("[name=name]").attr("ggid"));
 		//单位前缀
@@ -606,7 +601,7 @@ td input {
 		}
 		
 	 	
-	 	  $.ajax({
+	 	   $.ajax({
 			url:[[@{/goods/updateGoods}]],
 			async:true,
 			data:formData,
@@ -626,7 +621,7 @@ td input {
 			error:function(xhr,type,errorThrown){
 				
 			}
-		});  
+		});   
 		
 	}
 	

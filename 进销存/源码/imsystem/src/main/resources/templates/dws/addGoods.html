@@ -463,6 +463,7 @@ function inserGoods(){
 		
 		//商品名称
 		formData.append("goods.name",$("[name=name]").val());
+		formData.append("goods.enname",ConvertPinyin($("[name=name]").val()));
 		//单位前缀
 		formData.append("goods.prevbit",$("[name=prevbit]").val());
 		//单位后缀
@@ -490,6 +491,7 @@ function inserGoods(){
 			   var gcname = $(obj).find("[name=goodsType]").attr("tyname");
 			   
 			   formData.append("goodsValues["+(index-1)+"].name",gcname);
+			   formData.append("goodsValues["+(index-1)+"].enname",ConvertPinyin(gcname));
 			   formData.append("goodsValues["+(index-1)+"].jprice",$(obj).find("[name=detailprice]").val());
 			 
 			   //实例库存
