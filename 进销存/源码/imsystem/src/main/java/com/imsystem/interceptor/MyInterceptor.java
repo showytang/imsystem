@@ -30,29 +30,9 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
 
 		System.out.println("你来了.....");
 
-		/*User user = (User) request.getSession().getAttribute("user");
-		if(user!=null) {
-			return true;
-		}
-		String uri = request.getRequestURI();
-		String ctx=request.getContextPath();
-		response.sendRedirect(ctx+"/user/page-login");
-		System.out.println(uri);
-		if (request.getSession().getAttribute("urlMap") == null) {
-			Map<String, Module> map = (Map<String, Module>) moduleService.queryMap(user.getId());
-			request.getSession().setAttribute("urlMap", map);
-		}
-		Object map = request.getSession().getAttribute("urlMap");
-	if (map != null) {
-			Map<String, Module> maps = (Map<String, Module>) request.getSession().getAttribute("urlMap");
-			if (maps.get(uri) != null) {
-				return true;
-			}
-		}
-		return false;*/
+
 		
-		
-		/*Map<String, Module> map = (Map<String, Module>) request.getSession().getAttribute("urlMap");
+		Map<String, Module> map = (Map<String, Module>) request.getSession().getAttribute("urlMap");
 				
 		if(map==null) {
 			User u = (User) request.getSession().getAttribute("user");
@@ -75,10 +55,9 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
 		}else {
 			
 			return false;
-		}*/
+		}
 		
-		return true;
-		
+		//return true;
 		
 	}
 

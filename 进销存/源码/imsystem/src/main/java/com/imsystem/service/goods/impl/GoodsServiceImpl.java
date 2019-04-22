@@ -271,6 +271,8 @@ public class GoodsServiceImpl implements GoodsService {
 	@Override
 	public Integer updateGoods(GoodsVO goodsVo, String url) {
 
+		String Historygid = goodsVo.getGoods().getId();
+		
 		// 1.商品主表修改
 		Goods goodsupdate = new Goods();
 		goodsupdate.setId(goodsVo.getGoods().getId());
@@ -280,10 +282,12 @@ public class GoodsServiceImpl implements GoodsService {
 		String gid = UUID.randomUUID().toString();
 		String stockId = UUID.randomUUID().toString();
 
+		
+		//1.2 添加商品历史编号，
+		goodsVo.getGoods().setHistorygid(Historygid);
+		//1.3使用新商品id
 		goodsVo.getGoods().setId(gid);
 		goodsVo.getGoods().setState(0);
-		//1.2 添加商品历史编号，
-		goodsVo.getGoods().setHistorygid(goodsVo.getGoods().getId());
 		// 2.商品主表新增
 		int count = goodsMap.insertSelective(goodsVo.getGoods());
 
@@ -369,6 +373,8 @@ public class GoodsServiceImpl implements GoodsService {
 					gv.setColumn4(goodsVo.getGoods().getId());
 				}
 				gv.setUpdatetime(new Date());
+				System.out.println("修改"+gv.getName());
+				System.out.println("修改"+gv.getGid());
 				goodsValueMap.updateByPrimaryKeySelective(gv);
 
 				// 6.2商品客户价格修改
@@ -387,7 +393,8 @@ public class GoodsServiceImpl implements GoodsService {
 
 					String gvid = new Date().getTime() + "";
 					gv.setId(gvid);
-
+					System.out.println("新增"+gv.getName());
+					System.out.println("新增"+gv.getGid());
 					// 8. 商品实例添加
 					goodsValueMap.insertSelective(gv);
 
@@ -396,6 +403,7 @@ public class GoodsServiceImpl implements GoodsService {
 					gv.getStockDetails().setId(UUID.randomUUID().toString());
 					gv.getStockDetails().setGvid(gvid);
 					gv.getStockDetails().setState(0);
+					gv.getStockDetails().setColumn4("0");
 					gv.getStockDetails().setTime(new Date());
 					stockDetailsMap.insertSelective(gv.getStockDetails());
 
