@@ -451,7 +451,6 @@
 	</select> 
 
 	
-
 	<select id="queryMap" resultMap="BaseResultMap">
 
 		SELECT m.*,u.id as uid FROM module AS m

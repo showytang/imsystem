@@ -52,13 +52,13 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
 		return false;*/
 		
 		
-		/*Map<String, Module> map = (Map<String, Module>) request.getSession().getAttribute("urlMap");
+		Map<String, Module> map = (Map<String, Module>) request.getSession().getAttribute("urlMap");
 				
 		if(map==null) {
 			User u = (User) request.getSession().getAttribute("user");
 			if(u!=null) {
 				 map = (Map<String, Module>) moduleService.queryMap(u.getId());
-				request.getSession().setAttribute("urlMap",map);
+//				 request.getSession().setAttribute("urlMap",map);
 			}else {
 				String ctx =request.getContextPath();
 				response.sendRedirect(ctx+"/user/page-login");
@@ -75,9 +75,9 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
 		}else {
 			
 			return false;
-		}*/
+		}
 		
-		return true;
+
 		
 		
 	}
