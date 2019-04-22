@@ -1,10 +1,15 @@
 package com.imsystem.controller.setup;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -14,8 +19,10 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Module;
 import com.imsystem.domain.Role;
+import com.imsystem.domain.Rolemodule;
 import com.imsystem.domain.Store;
 import com.imsystem.domain.User;
+import com.imsystem.service.setup.ModuleService;
 import com.imsystem.service.setup.RoleService;
 import com.imsystem.service.setup.StoreService_c;
 
@@ -29,6 +36,9 @@ public class RoleController {
 	@Autowired
 	StoreService_c storeService_c;
 	
+	
+	@Autowired
+	ModuleService moduleService;
 	
 	@RequestMapping("TianJiaRole")
 	public String TianJiaRole() {
@@ -98,32 +108,73 @@ public class RoleController {
 	}
 	
 	
+	@RequestMapping("insertRole")
+	@ResponseBody
+	public int insertRole(@RequestBody Role role,HttpSession session) {
+		 
+		
+		 User user1 = (User)session.getAttribute("user");
+		String id = "" ;
+		String trandNo = String.valueOf((Math.random() * 9 + 1) * 1000000);
+		String sdf = new SimpleDateFormat("yyyyMMddss").format(new Date());
+		id = trandNo.toString().substring(0, 4); 
+		id = id + sdf ;
+		role.setId(id);
+		role.setUid(user1.getId());
+		 System.out.println("进来了 新增角色");
+		
+		 for (Rolemodule r : role.getRmlist()) {
+				String id2 = "" ;
+				String trandNo2 = String.valueOf((Math.random() * 9 + 1) * 1000000);
+				String sdf2 = new SimpleDateFormat("yyyyMMddss").format(new Date());
+				id2 = trandNo2.toString().substring(0, 4); 
+				id2 = id2 + sdf2 ;
+				r.setId(id2);
+				r.setRid(id);
+				r.setUid(user1.getId());
+		}
+		 roleService.insertRole(role);
+		 return 0;
+	}
+	
 	
 	
 	@RequestMapping("queryRoleAll")
 	public String XiTongadd(Model model) {
 		
+		
+		
 		List<Role> list=roleService.queryRoleAll();
 		model.addAttribute("list",list);
 		List<Store> listStore =storeService_c.queryStoreAll();
 		model.addAttribute("listStore", listStore);
 		
-		System.out.println(JSON.toJSONString(listStore));
 		return "czx/admin-add";
 	}
 	
 	
-	@RequestMapping("queryRoleAll2")
-	public String queryRoleAll2(Model model) {
+	
+	
+	
+	
+	
+	
+	@RequestMapping("selectModuleAll")
+	public String queryModuleAll(Model model){
 		
-		List<Role> list=roleService.queryRoleAll();
-		model.addAttribute("list",list);
-		List<Store> listStore =storeService_c.queryStoreAll();
-		model.addAttribute("listStore", listStore);
-		System.out.println(JSON.toJSONString(listStore));
-		return "czx/admin-update";
+		
+		List<Module> list=moduleService.selectModuleAll(0);
+		
+		model.addAttribute("module", list);
+		
+		return "czx/role-add";
+		
 	}
 	
+	
+	
+	
+
 	
 	
 	

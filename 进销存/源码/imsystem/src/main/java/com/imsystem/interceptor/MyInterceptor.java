@@ -37,23 +37,25 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
 //		String ctx=request.getContextPath();
 //		response.sendRedirect(ctx+"/user/page-login");
 //		return false;
+		
+//		uri = uri.replace(request.getContextPath() + "/", "");
 
-		/*User user = (User) request.getSession().getAttribute("user");
+		User user = (User) request.getSession().getAttribute("user");
 		String uri = request.getRequestURI();
-		uri = uri.replace(request.getContextPath() + "/", "");
+		System.out.println(uri);
 		if (request.getSession().getAttribute("urlMap") == null) {
 			Map<String, Module> map = (Map<String, Module>) moduleService.queryMap(user.getId());
 			request.getSession().setAttribute("urlMap", map);
 		}
 		Object map = request.getSession().getAttribute("urlMap");
-		if (map != null) {
+	if (map != null) {
 			Map<String, Module> maps = (Map<String, Module>) request.getSession().getAttribute("urlMap");
 			if (maps.get(uri) != null) {
 				return true;
 			}
 		}
-		return false;*/
-		return true;
+		return false;
+//		return true;
 		
 	}
 

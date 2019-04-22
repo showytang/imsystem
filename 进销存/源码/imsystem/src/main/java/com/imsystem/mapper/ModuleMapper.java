@@ -46,6 +46,16 @@ public interface ModuleMapper {
     
     @MapKey("url")
     Map<String, Module> queryMap(String uid);
+    
+    
+    
+    List<Module>  selectModuleAll(@Param("parentid") Integer parentid);
+    
+    
+    
+    
+    
+    
    
     
 }

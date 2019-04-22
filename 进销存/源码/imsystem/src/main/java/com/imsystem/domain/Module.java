@@ -35,7 +35,19 @@ public class Module {
     private List<Module> mlist;
     
     
-    public List<Module> getMlist() {
+    
+    private List<Module> modules;
+    
+    
+    public List<Module> getModules() {
+		return modules;
+	}
+
+	public void setModules(List<Module> modules) {
+		this.modules = modules;
+	}
+
+	public List<Module> getMlist() {
 		return mlist;
 	}
 

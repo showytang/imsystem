@@ -462,7 +462,20 @@
 		
 	</select>
 
+   <resultMap type="com.imsystem.domain.Module" id="ResultMap_two" extends="BaseResultMap">
 
+		<collection property="modules" column="id" ofType="ResultMap_two" select="com.imsystem.mapper.ModuleMapper.selectModuleAll">
+			
+		</collection>
+
+	</resultMap>
+
+	<select id="selectModuleAll" resultMap="ResultMap_two">
+		
+		SELECT * FROM module WHERE parentid=#{parentid} 
+		
+		
+	</select>
 
 
 
