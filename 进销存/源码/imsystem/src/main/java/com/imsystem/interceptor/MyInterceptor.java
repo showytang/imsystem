@@ -32,7 +32,7 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
 
 
 
-		Map<String, Module> map = (Map<String, Module>) request.getSession().getAttribute("urlMap");
+/*		Map<String, Module> map = (Map<String, Module>) request.getSession().getAttribute("urlMap");
 				
 		if(map==null) {
 			User u = (User) request.getSession().getAttribute("user");
@@ -56,10 +56,10 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
 			
 			return false;
 		}
+*/
 
 
-
-
+return true;
 
 
 		
