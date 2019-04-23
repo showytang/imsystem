@@ -373,8 +373,7 @@ public class GoodsServiceImpl implements GoodsService {
 					gv.setColumn4(goodsVo.getGoods().getId());
 				}
 				gv.setUpdatetime(new Date());
-				System.out.println("修改"+gv.getName());
-				System.out.println("修改"+gv.getGid());
+	
 				goodsValueMap.updateByPrimaryKeySelective(gv);
 
 				// 6.2商品客户价格修改
