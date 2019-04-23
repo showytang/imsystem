@@ -1143,19 +1143,43 @@ function jhChange(obj){
 			for (var x = 0; x < tagObject.isCheckedDlArray[i].num; x++) {
 				
 				for (var j = 0; j < tagObject.isCheckedDlArray[i].tag.length; j++) {
-					 var td = $("<td class='text-center' style='vertical-align: inherit;' m='" + tagObject.isCheckedDlArray[i].tag[j].name + "' v='" + tagObject.isCheckedDlArray[i].tag[j].id + "'>")
+					 var td = $("<td class='text-center nn' style='vertical-align: inherit;' m='" + tagObject.isCheckedDlArray[i].tag[j].name + "' v='" + tagObject.isCheckedDlArray[i].tag[j].id + "'>")
 							.html(tagObject.isCheckedDlArray[i].tag[j].name);
 					 
 					
 					if (i == tagObject.isCheckedDlArray.length - 1) {
-						var hinp = $("<input gvid='' class='text-center' type='hidden' column4='' name='goodsType' tyname='' vm='" + tagObject.isCheckedDlArray[i].tag[j].name + "' value='" + tagObject.isCheckedDlArray[i].tag[j].id + "'>");
+						var tr = $("<tr class='" + index + "' >");
+						
+						var hinp = $("<input gvid='' class='text-center hinp' type='hidden' column4='' name='goodsType' tyname='' vm='" + tagObject.isCheckedDlArray[i].tag[j].name + "' value='" + tagObject.isCheckedDlArray[i].tag[j].id + "'>");
 						
 						var td1 = $("<td class='text-center' style='vertical-align: inherit;'></td>");
 						var cou = $("<input oninput='countChange(this)' class='text-center cou' readonly sdid='' value='' type=text name='num' v=''>");
 						td1.append(hinp);
 						td1.append(cou);
-						var tr = $("<tr class='" + index + "' >");
 						
+						
+						var td2 = $("<td class='text-center' style='vertical-align: inherit;'></td>");
+						
+						var td2$inpu = $("<input class='text-center detailprice' oninput='priceChange(this)' type=text value='' name='detailprice'>");
+						td2.append(td2$inpu);
+						
+					   	var tdimg = $("<td class='text-center tdimg' style='vertical-align: inherit;'></td>");
+					   	var $divimg = $("<div style='position:relative;width: 76px;height: 76px;'><input type='file' style='position:absolute;top:0;z-index: 99;width: 100%;height: 100%;opacity: 0;cursor: pointer;' title='选择图片' onchange='pojoImg(this)' name='file["
+								+ (index - 1)
+								+ "]' /></div>");
+						tdimg.append($divimg);
+						var tdimg$input = $("<img src='' class='tdimginput' style='width: 76px;height: 76px;' />");
+						$divimg.append(tdimg$input);
+						
+						tr.append(td);
+						tr.append(td1);
+						tr.append(td2);
+						
+						//价格input
+						$.each(svids[0].gv.goodsPrices,function(inx,obj){
+							var tdprick = $("<td class='text-center' style='vertical-align: inherit;'><input id=''  class='text-center customerprick' ctid='' value='' viewname=''  oninput='priceChange(this)' type=text name='price'></td>");
+							tr.append(tdprick);
+						});
 						
 						for(var pk = 0;pk < svids.length;pk++){
 							
@@ -1167,29 +1191,22 @@ function jhChange(obj){
 								cou.attr("sdid",svids[pk].gv.stockDetails.id);
 								cou.val(svids[pk].gv.stockDetails.count);
 								
-								var td2 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' oninput='priceChange(this)' type=text value='"+svids[pk].gv.jprice+"' name='detailprice'></td>");
-								
-								var upgvimg = svids[pk].gv.column1;
-							   var tdimg = $("<td class='text-center' style='vertical-align: inherit;'><div style='position:relative;width: 76px;height: 76px;'><input type='file' style='position:absolute;top:0;z-index: 99;width: 100%;height: 100%;opacity: 0;cursor: pointer;' title='选择图片' onchange='pojoImg(this)' name='file["
-										+ (index - 1)
-										+ "]' /><img src='"+upgvimg+"' style='width: 76px;height: 76px;' /></div></td>");
-								
-								tr.append(td);
-								tr.append(td1);
-								tr.append(td2);
+								td2$inpu.val(svids[pk].gv.jprice);
+								tdimg$input.attr("src",svids[pk].gv.column1);
 								
 								
 								//价格input
 								$.each(svids[pk].gv.goodsPrices,function(inx,obj){
-									var tdprick = $("<td class='text-center' style='vertical-align: inherit;'><input id=''  class='text-center customerprick' ctid='' value='"+obj.price+"' viewname=''  oninput='priceChange(this)' type=text name='price'></td>");
-									tr.append(tdprick);
+									tr.find(".customerprick").attr("ctid",obj.id);
+									tr.find(".customerprick").attr("viewname",obj.sufname);
+									tr.find(".customerprick").val(obj.price);
 								});
-								tr.append(tdimg);
+								
 								
 							}
 						}
 						
-						
+						tr.append(tdimg); 
 						tbody.append(tr);
 						index++;
 						
@@ -1205,7 +1222,31 @@ function jhChange(obj){
 								/ (tagObject.isCheckedDlArray[i].tag.length * tagObject.isCheckedDlArray[i].num);
 						indexRow += x1;
 						appendIdUP(td);
+						var tr = td.parent();
 						
+						for(var pk = 0;pk < svids.length;pk++){
+							if(svids[pk].svid == tr.find("[type=hidden]").val()){
+								
+								tr.find(".hinp").attr("gvid",svids[pk].gv.id);
+								tr.find(".hinp").attr("column4",svids[pk].gv.column4);
+								
+								tr.find(".cou").attr("sdid",svids[pk].gv.stockDetails.id);
+								tr.find(".cou").val(svids[pk].gv.stockDetails.count);
+								
+								tr.find(".tdimginput").attr("src",svids[pk].gv.column1);
+								tr.find(".detailprice").val(svids[pk].gv.jprice); 
+								
+								//价格input
+								$.each(svids[pk].gv.goodsPrices,function(inx,obj){
+									tr.find(".customerprick").attr("ctid",obj.id);
+									tr.find(".customerprick").attr("viewname",obj.sufname);
+									tr.find(".customerprick").val(obj.price);
+									
+								});
+								
+							}
+							
+						}
 						
 					}
 				}
@@ -1232,7 +1273,29 @@ function jhChange(obj){
 			tr.find("[type=hidden]").attr("vm",t.attr("m") + "," + m);
 			
 		}
-	
+		
+		for(var pk = 0;pk < svids.length;pk++){
+			if(svids[pk].svid == tr.find("[type=hidden]").val()){
+				
+				tr.find(".hinp").attr("gvid",svids[pk].gv.id);
+				tr.find(".hinp").attr("column4",svids[pk].gv.column4);
+				
+				tr.find(".cou").attr("sdid",svids[pk].gv.stockDetails.id);
+				tr.find(".cou").val(svids[pk].gv.stockDetails.count);
+				
+				tr.find(".tdimginput").attr("src",svids[pk].gv.column1);
+				tr.find(".detailprice").val(svids[pk].gv.jprice); 
+				
+				//价格input
+				$.each(svids[pk].gv.goodsPrices,function(inx,obj){
+					tr.find(".customerprick").attr("ctid",obj.id);
+					tr.find(".customerprick").attr("viewname",obj.sufname);
+					tr.find(".customerprick").val(obj.price);
+				});
+				
+			}
+			
+		}
 		
 		
 	}
