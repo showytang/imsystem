@@ -414,6 +414,7 @@ td input {
 			});
 			
 		});	
+	
 	uptypeids =unique(uptypeids);
 	$(function() {
 		
@@ -448,6 +449,7 @@ td input {
 				
 				for(var oo = 0; oo < hisArr.length; oo++){
 					var  arr = getSvids(oo);
+					console.log(arr);
 					ttooind = oo;
 					dataShow(arr);
 				}
@@ -548,7 +550,7 @@ td input {
 				
 				
 				/*中文规格总名称*/
-				   var gcname = $(obj).find("[name=goodsType]").attr("tyname");
+				   var gcname = $(obj).find("[name=goodsType]").attr("vm");
 				   
 				   formData.append("goodsValues["+(ind)+"].name",gcname);
 				   formData.append("goodsValues["+(ind)+"].jprice",$(obj).find("[name=detailprice]").val());
@@ -659,17 +661,34 @@ td input {
 		div2.append(div3);
 		$(".qaq").append(div);
 		svids = [];
-		$.each(vue.goods.goodsValues,function(){
+		$.each(vue.goods.goodsValues,function(index,obj){
 			
-			if(hisArr[oo] == this.column4){
+			if(hisArr[oo] == obj.column4){
 				$.each(this.goodsstandardvalues,function(){
 					
-					svids.push(this.svid);
+					var gdv = {
+								"svid":this.svids,
+								"gvid":obj.id,
+								"gv":obj,
+								"sid":this.svid
+					}
+					
+					svids.push(gdv);
 					
 				});
 			}
 		});
-		svids = unique(svids);
+		
+		 var result = [];
+		     var obj = {};
+		    for(var i =0; i<svids.length; i++){
+		        if(!obj[svids[i].sid]){
+		           result.push(svids[i]);
+		           obj[svids[i].sid] = true;
+		        }
+		     }		
+		svids = result;
+		
 		return svids;
 	}
 	
@@ -870,10 +889,17 @@ td input {
 									
 									var span = $('<span onclick="addGoodsOption(this)" class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="'+item.id+'">'+item.name+'</span>')
 									divmain.append(span);
-									if(arr.indexOf(item.id) >= 0){
+									
+									/* if(arr.indexOf(item.id) >= 0){
 										
 										addGoodsOptionup(span);
-									}
+									} */
+									
+									arr.some(item2=>{
+										if(item2.sid == item.id){
+											addGoodsOptionup(span,item2);
+										}
+									})
 									
 									
 								})
@@ -891,7 +917,7 @@ td input {
 		
 	}
 	
-function addGoodsOptionup(obj){
+function addGoodsOptionup(obj,item2){
 		
 		$(obj).parent().find(".option-span-all").removeClass("active1");
 
@@ -916,7 +942,7 @@ function addGoodsOptionup(obj){
 				color : "#ffffff"
 			}, 300);
 		}
-		checkedDlUP();
+		checkedDlUP(item2);
 	
 }
 	var addii = true;
@@ -1030,7 +1056,7 @@ function jhChange(obj){
 	}
 	
 	/*修改00*/
-	function checkedDlUP() {
+	function checkedDlUP(item2) {
 		var isCheckedDl = 0;
 		var isCheckedDlArray = [];
 		var allIndex = 1;
@@ -1062,18 +1088,21 @@ function jhChange(obj){
 			allIndex : allIndex,
 			isCheckedDlArray : isCheckedDlArray
 		}
-		eachCreateUP(tagObject);
+		eachCreateUP(tagObject,item2);
 	}
 
-	var trIndex = $(".trIndex").length;
+	var trIndex = 0;
 	
-	function eachCreateUP(tagObject) {
+	function eachCreateUP(tagObject,item2) {
+		
+		var gvIndex = vue.goods.goodsValues.map(gvitem=>gvitem.id)
+											.indexOf(item2.gvid);
 		
 		$(".tto"+ttooind+"").find("table").remove();
 		var table = $("<table class='table' >");
 
 		$(".tto"+ttooind+"").find(".panel-body").append(table);
-
+		
 		var index = 1;
 		
 		var tbody = $("<tbody>");
@@ -1119,35 +1148,50 @@ function jhChange(obj){
 					 
 					
 					if (i == tagObject.isCheckedDlArray.length - 1) {
-						var hinp = $("<input gvid='"+vue.goods.goodsValues[trIndex].id+"' class='text-center' type='hidden' column4='"+vue.goods.goodsValues[trIndex].column4+"' name='goodsType' tyname='' vm='" + tagObject.isCheckedDlArray[i].tag[j].name + "' value='" + tagObject.isCheckedDlArray[i].tag[j].id + "'>");
+						var hinp = $("<input gvid='' class='text-center' type='hidden' column4='' name='goodsType' tyname='' vm='" + tagObject.isCheckedDlArray[i].tag[j].name + "' value='" + tagObject.isCheckedDlArray[i].tag[j].id + "'>");
 						
-						var td1 = $("<td class='text-center' style='vertical-align: inherit;'><input oninput='countChange(this)' class='text-center' readonly sdid='"+vue.goods.goodsValues[trIndex].stockDetails.id+"' value='"+vue.goods.goodsValues[trIndex].stockDetails.count+"' type=text name='num' v=''></td>");
+						var td1 = $("<td class='text-center' style='vertical-align: inherit;'></td>");
+						var cou = $("<input oninput='countChange(this)' class='text-center cou' readonly sdid='' value='' type=text name='num' v=''>");
 						td1.append(hinp);
-						
-						var td2 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' oninput='priceChange(this)' type=text value='"+jhprice+"' name='detailprice'></td>");
-						
-						var upgvimg = vue.goods.goodsValues[trIndex].column1;
-						var tdimg = $("<td class='text-center' style='vertical-align: inherit;'><div style='position:relative;width: 76px;height: 76px;'><input type='file' style='position:absolute;top:0;z-index: 99;width: 100%;height: 100%;opacity: 0;cursor: pointer;' title='选择图片' onchange='pojoImg(this)' name='file["
-								+ (index - 1)
-								+ "]' /><img src='"+upgvimg+"' style='width: 76px;height: 76px;' /></div></td>");
-						var tr = $("<tr class='" + index + " trIndex'>");
-						tr.append(td);
-						tr.append(td1);
-						tr.append(td2);
-						
-						//价格input
-						$.each(vue.goods.goodsValues[trIndex].goodsPrices,function(inx,obj){
-							var tdprick = $("<td class='text-center' style='vertical-align: inherit;'><input id='"+obj.id+"'  class='text-center customerprick' ctid='"+obj.ctid+"' value='"+obj.price+"' viewname='"+obj.sufname+"'  oninput='priceChange(this)' type=text name='price'></td>");
-							tr.append(tdprick);
-						});
+						td1.append(cou);
+						var tr = $("<tr class='" + index + "' >");
 						
 						
+						for(var pk = 0;pk < svids.length;pk++){
+							
+							if(svids[pk].svid == tagObject.isCheckedDlArray[i].tag[j].id){
+								
+								hinp.attr("gvid",svids[pk].gv.id);
+								hinp.attr("column4",svids[pk].gv.column4);
+								
+								cou.attr("sdid",svids[pk].gv.stockDetails.id);
+								cou.val(svids[pk].gv.stockDetails.count);
+								
+								var td2 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' oninput='priceChange(this)' type=text value='"+svids[pk].gv.jprice+"' name='detailprice'></td>");
+								
+								var upgvimg = svids[pk].gv.column1;
+							   var tdimg = $("<td class='text-center' style='vertical-align: inherit;'><div style='position:relative;width: 76px;height: 76px;'><input type='file' style='position:absolute;top:0;z-index: 99;width: 100%;height: 100%;opacity: 0;cursor: pointer;' title='选择图片' onchange='pojoImg(this)' name='file["
+										+ (index - 1)
+										+ "]' /><img src='"+upgvimg+"' style='width: 76px;height: 76px;' /></div></td>");
+								
+								tr.append(td);
+								tr.append(td1);
+								tr.append(td2);
+								
+								
+								//价格input
+								$.each(svids[pk].gv.goodsPrices,function(inx,obj){
+									var tdprick = $("<td class='text-center' style='vertical-align: inherit;'><input id=''  class='text-center customerprick' ctid='' value='"+obj.price+"' viewname=''  oninput='priceChange(this)' type=text name='price'></td>");
+									tr.append(tdprick);
+								});
+								tr.append(tdimg);
+								
+							}
+						}
 						
-						tr.append(tdimg);
 						
 						tbody.append(tr);
 						index++;
-						trIndex = $(".trIndex").length-1;
 						
 					} else {
 						
@@ -1160,7 +1204,6 @@ function jhChange(obj){
 						var x1 = tagObject.allIndex
 								/ (tagObject.isCheckedDlArray[i].tag.length * tagObject.isCheckedDlArray[i].num);
 						indexRow += x1;
-						
 						appendIdUP(td);
 						
 						
@@ -1189,6 +1232,8 @@ function jhChange(obj){
 			tr.find("[type=hidden]").attr("vm",t.attr("m") + "," + m);
 			
 		}
+	
+		
 		
 	}
 	
