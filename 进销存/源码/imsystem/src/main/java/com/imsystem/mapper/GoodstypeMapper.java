@@ -48,4 +48,6 @@ public interface GoodstypeMapper {
     Goodstype querybyid(Integer id);
     
     int toupdate(Goodstype good);
+    
+    List<Goodstype> querybypid();
 }

@@ -18,11 +18,11 @@
   </resultMap>
   
  <select id="querygoodstype" resultMap="BaseResultMap">
-  	SELECT * FROM goodstype 
+  	SELECT g.*,u.name AS uname FROM goodstype AS g INNER JOIN USER AS u ON g.uid=u.`id`
   	<where>
-  		state=0
+  		g.state=0
   		<if test="tiaojian!=null">
-  				and (id LIKE concat('%',#{tiaojian},'%') OR  NAME LIKE concat('%',#{tiaojian},'%') OR pid LIKE concat('%',#{tiaojian},'%') OR uid LIKE concat('%',#{tiaojian},'%'))
+  				and (g.id LIKE concat('%',#{tiaojian},'%') OR  g.NAME LIKE concat('%',#{tiaojian},'%') OR g.pid LIKE concat('%',#{tiaojian},'%') OR u.name LIKE concat('%',#{tiaojian},'%'))
   		</if>
   		
   	</where>
@@ -51,6 +51,10 @@
   	SELECT * FROM `goodstype`
 	WHERE pid = #{id}
   
+  </select>
+  
+  <select id="querybypid" resultMap="BaseResultMap">
+  	select * from goodstype where pid=0
   </select>
   
   

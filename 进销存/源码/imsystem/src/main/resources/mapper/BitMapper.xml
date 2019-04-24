@@ -15,11 +15,11 @@
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
   <select id="queryByLike" resultMap="BaseResultMap">
-  	SELECT * FROM BIT 
+  	SELECT b.*,u.`name` AS uname FROM BIT AS b INNER JOIN USER AS u ON b.`uid`=u.`id`
   	<where>
-  		state=0 
+  		b.state=0 
   		<if test="text!=null">
-  				and id LIKE concat('%',#{text}) OR  NAME LIKE concat('%',#{text}) OR uid LIKE concat('%',#{text})
+  				and b.id LIKE concat('%',#{text}) OR  b.NAME LIKE concat('%',#{text}) OR u.name LIKE concat('%',#{text})
   		</if>
   	</where>
   </select>
