@@ -6,6 +6,11 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface SupplierMapper {
+	
+	int updateBalanceJia(Supplier supper);
+	
+	int updateBalancejian(Supplier supper);
+	
 	List<Supplier> querySupplierByPage(@Param("content") String content,@Param("zero") Double zero);
 	
 	int updateSupplier(Supplier sObj);

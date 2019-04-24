@@ -28,6 +28,13 @@
 		<result column="column4" property="column4" jdbcType="VARCHAR" />
 		<result column="column5" property="column5" jdbcType="VARCHAR" />
 	</resultMap>
+	
+	<update id="updateCount">
+		update salesorder set count = (SELECT SUM(s.count) FROM `salesorderdetails` AS s WHERE s.`sid` = #{id}) ,
+		paymoney = (SELECT SUM(s.count * s.price) FROM `salesorderdetails` AS s WHERE s.`sid` = #{id})
+		where id = #{id}
+	</update>
+	
 	<update id="updatePregress">
 		update salesorder set progress = #{zhi} where id = #{id}
 	</update>
@@ -54,9 +61,8 @@
 				AND sales.cid = #{cid}
 			</if>
 		</where>
-
-
 		GROUP BY sales.id
+		order by sales.`updatetime` desc
 	</select>
 	<sql id="Example_Where_Clause">
 		<where>

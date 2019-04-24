@@ -23,6 +23,18 @@
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
   
+  <update id="updateBalanceJia">
+  
+  	update supplier set balance = balance + #{balance} where id = #{id}
+  	
+  </update>
+  
+  <update id="updateBalancejian">
+  
+  	update supplier set balance = balance - #{balance} where id = #{id}
+  	
+  </update>
+  
   <select id="querySupplierByPage" resultMap="BaseResultMap">
   	SELECT s.* FROM supplier s,`user` u
   	<where>

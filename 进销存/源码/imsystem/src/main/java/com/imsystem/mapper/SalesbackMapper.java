@@ -1,11 +1,14 @@
 package com.imsystem.mapper;
 
+import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Salesback;
 import com.imsystem.domain.SalesbackExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface SalesbackMapper {
+	
+	List<Salesback> orderDescQuery(Salesback back);
 	
 	int add(Salesback sales);
 	

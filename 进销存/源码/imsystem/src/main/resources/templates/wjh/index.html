@@ -9,6 +9,7 @@
 <link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
 <link rel="stylesheet" th:href="@{/assets/css/main.css}">
 <link rel="stylesheet" th:href="@{/assets/css/myStyle.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/toastr.css}">
 <link rel="icon" type="image/png" sizes="96x96"
 	th:href="@{/assets/img/favicon.png}">
 <link rel="stylesheet" type="text/css" media="all"
@@ -18,9 +19,10 @@
 <script type="text/javascript" th:src="@{/assets/js/moment.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/daterangepicker.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/Mydate.js}"></script>
-<script type="text/javascript" th:src="@{/assets/js/page.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/page.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/vue.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/toastr.min.js}"></script>
 <style type="text/css">
 .selected>div {
 	padding-top: 1vw;
@@ -317,19 +319,16 @@
 			function query(){
 				var times = $("#config-demo").val();
 				
-				var time = times.substring(0,(times.indexOf('-')-1));
+				var time = times.substring(0,(times.indexOf('至')-1));
 				
-				var endTime = times.substring((times.indexOf('-')+2),times.length)
+				var endTime = times.substring((times.indexOf('至')+2),times.length) + " 23:59:59"
+
 				var kucun;
 				
 				if($("#check").prop("checked")){
 					kucun = 2;
 				}
 				
-				if(time){
-					time = timess(time);
-					endTime = timess(endTime) + " 23:59:59";
-				}
 				$.ajax({
 					url : [[@{/orderQueryController/query}]],
 					data : {
@@ -349,16 +348,10 @@
 					}
 				});
 			}
-			function timess(time){
-				
-				time = time.substring(6,time.length)+"-"+time.substring(0,2)+"-"+time.substring(3,5);
-				
-				return time;
-			}
 			
 			$(function() {
-				query();
 				myDate();
+				query();
 				$(window).resize(function() {
 
 					var width = parseInt($(window).width());
@@ -415,26 +408,21 @@
 					var stock = {
 							code : $("#myModalLabel").find("span").text(),
 							stockdetails : [],
-							column3 : iframe.find("select").val(),
-							id : shappingBody.attr("data")
+							id : shappingBody.attr("data"),
+							sid : shappingBody.attr("cid"),
+							column1 : shappingBody.attr("price")
 						};
 						
 						$(shappingBody.find("tr")).each(function(i,e){
 							var shuliang = parseInt($(e).find(".shiliang").val());
 							stockdetail = {
-									count : $(e).find("[name=count]").val(),
-									scount : (parseInt($(e).find("[name=count]").val())-shuliang),
-									price : $(e).find("[name=price]").val(),
-									state : $(e).find("[name=state]").val(),
-									uid : $(e).find("[name=uid]").val(),
-									storeid : $(e).find("[name=storeid]").val(),
-									gvid : $(e).find("img").attr("data")
-									
+									id : $(e).find(".id").attr("data"),
+									count : $(e).find("input").val(),
+									scount :  $(e).find("input").attr("data")
 							}
 							stock.stockdetails.push(stockdetail);
 							
 						});
-					
 					$.ajax({
 						
 						url : [[@{/insertOrder/uploadInsertOrder}]],
@@ -451,7 +439,7 @@
 						
 						success : function(result){
 							
-							alert(result)
+							alerts("修改成功")
 							
 						}
 						
@@ -459,6 +447,33 @@
 					
 				});
 			});
+			
+		function alerts(str){
+				
+				toastr.options.timeOut = "false"
+				
+				toastr.options.closeButton = true;
+				
+				toastr['info']
+						(str);
+				
+				$positionClass = 'toast-top-center';
+				
+				toastr.remove();
+				
+				$context="info";
+				
+				toastr[$context](str, '', {
+					
+					positionClass : $positionClass
+					
+				});
+				
+				setTimeout(function(){
+					$("#toast-container").fadeOut(1000);
+				},4000)
+			}
+			
 			
 		</script>
 </body>

@@ -28,8 +28,14 @@ public class Stock {
 
     private String storeid;
 
+    /**
+     * 应付
+     */
     private String column1;
 
+    /**
+     * 实付
+     */
     private String column2;
 
     private String column3;
