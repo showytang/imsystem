@@ -180,12 +180,12 @@
 								      <div class="modal-body">
 								        	
 										<form class="form-horizontal">
-											<div class="form-group">
+											<!-- <div class="form-group">
 										    	<label for="InSname" class="col-sm-3 control-label">类型ID</label>
 											    <div class="col-sm-9">
 											    	<input type="text" class="form-control" id="Inid">
 											    </div>
-										  	</div>
+										  	</div> -->
 										
 										  	<div class="form-group">
 										    	<label for="InSname" class="col-sm-3 control-label">类型名称</label>
@@ -396,7 +396,7 @@
 	
 	  $(function(){
 		 $("#tijiao").click(function(){
-			var id=$("#Inid").val();
+			
 			var name=$("#Inname").val();
 			var pid=$("#Inpid").val();;
 			var uid=$("#Inuid").val();
@@ -404,7 +404,7 @@
 			$.ajax({
 				url:"/goods/insert",
 				data:{
-					id:id,
+					
 					name:name,
 					pid:pid,
 					uid:uid
