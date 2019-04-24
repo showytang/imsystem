@@ -23,6 +23,18 @@
 		<result column="column4" property="column4" jdbcType="VARCHAR" />
 		<result column="column5" property="column5" jdbcType="VARCHAR" />
 	</resultMap>
+	
+	<select id="querydetailsSumPrice" resultType="Double">
+		
+		SELECT SUM(s)  FROM (SELECT SUM(s.count-s.scount)*s.price AS s FROM stockdetails AS s WHERE s.sid = #{id} GROUP BY id) AS ss
+	
+	</select>
+	
+	<update id="updateDetails">
+		
+		update stockdetails set scount = #{scount} - #{count} where id = #{id}
+		
+	</update>
 	<resultMap type="com.imsystem.domain.Stockdetails"
 		id="queryGoodsMap" extends="BaseResultMap">
 		<association property="goodsvalue"

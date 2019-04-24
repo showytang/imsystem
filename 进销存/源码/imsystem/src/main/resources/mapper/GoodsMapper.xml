@@ -66,6 +66,7 @@
 				<result column="gdvname" property="name" jdbcType="VARCHAR" />
 				<result column="gdvvid" property="vid" jdbcType="VARCHAR" />
 				<result column="gdvsvid" property="svid" jdbcType="VARCHAR" />
+				<result column="gdvsvids" property="svids" jdbcType="VARCHAR" />
 			</collection>
 
 
@@ -133,7 +134,7 @@ SELECT
 	im.`id` AS imid,im.name AS imname,im.`oldname` AS imoldname,im.`gid` AS imgid,im.`url` AS imurl, 
 	gv.`id` AS gvid,gv.`name` AS gvname,gv.`gid` AS gvgid,gv.jprice AS gvjprice,gv.`column1` AS gvcolumn1,gv.`column4` AS gvcolumn4,
 	sd.`id` AS sdid,IF(sd.`count`!= 'null',sd.`count`,0) AS sdcount,sd.`gvid` AS sdgvid,sd.`gvid` AS sdgvid,
-	gdv.id AS gdvid,gdv.`name` AS gdvname,gdv.`vid` AS gdvvid,gdv.svid AS gdvsvid,
+	gdv.id AS gdvid,gdv.`name` AS gdvname,gdv.`vid` AS gdvvid,gdv.svid AS gdvsvid,gdv.svids AS gdvsvids,
 	gp.`id` AS gpid,gp.`sufname` AS gpsufname,gp.`ctid` AS gpctid,gp.`gvid` AS gpgvid,gp.`price` AS gpprice 
 	FROM goods AS gs
 	INNER JOIN `goodsvalue` AS gv
@@ -190,7 +191,7 @@ SELECT
 
 		<where>
 
-			gs.`state` = 0 AND CONCAT(gs.name,gv.`name`,gv.enname) LIKE
+			gs.`state` = 0 AND CONCAT(gs.enname,gs.name,gv.`name`,gv.enname) LIKE
 			CONCAT('%',#{liketext},'%')
 
 			<choose>

@@ -136,11 +136,18 @@ public class GoodsServiceImpl implements GoodsService {
 		if (goodsVo.getGoodsValues() == null) {
 
 			Goodsvalue goodsValue = new Goodsvalue();
-			String goodsvID = UUID.randomUUID().toString();
+			String goodsvID = new Date().getTime() + "";
 			goodsValue.setId(goodsvID);
 			goodsValue.setName("");
 			goodsValue.setGid(gid);
 			goodsValue.setDefaultvalue(1);
+			goodsValue.setEnname("");
+			goodsValue.setJprice(goodsVo.getGoods().getJprice());
+			goodsValue.setColumn1("");
+			goodsValue.setColumn2("");
+			goodsValue.setColumn3("");
+			goodsValue.setColumn4("");
+			goodsValue.setColumn5("");
 			goodsValueMap.insertSelective(goodsValue);
 
 			// 添加库存
@@ -373,8 +380,7 @@ public class GoodsServiceImpl implements GoodsService {
 					gv.setColumn4(goodsVo.getGoods().getId());
 				}
 				gv.setUpdatetime(new Date());
-				System.out.println("修改"+gv.getName());
-				System.out.println("修改"+gv.getGid());
+	
 				goodsValueMap.updateByPrimaryKeySelective(gv);
 
 				// 6.2商品客户价格修改

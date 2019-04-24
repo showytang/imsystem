@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Param;
 
 public interface StockMapper {
 	
+	int updatePrice(String id);
+	
 	int updateState(String code);
 	
 	Stock querydetails(String code);

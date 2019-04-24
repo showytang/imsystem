@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.UUID;
 
 import org.apache.ibatis.io.ResolverUtil.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,13 +56,14 @@ public class BitController {
 	
 	@RequestMapping("/insert")
 	@ResponseBody
-	public int insert(String id,String name,String uid) {
+	public int insert(String name,String uid) {
 		
+		String id=UUID.randomUUID().toString();
 		Bit bi=new Bit();
 		bi.setId(id);
 		bi.setName(name);
 		bi.setUid(uid);
-		System.out.println(bi);
+		
 		int r=ser.insertSelective(bi);
 		return r;
 	}

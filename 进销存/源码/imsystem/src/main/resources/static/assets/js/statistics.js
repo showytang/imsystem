@@ -26,14 +26,16 @@ function queryTop(storeid, code, startTime, endTime) {
 /**
  * 销售额、利润、订单数 统计图
  */
-function queryDaysAgo(storeid) {
+function queryDaysAgo(storeid,startTime,endTime) {
 	var data;
 	$.ajax({
 		url : "/statistics/queryDaysAgo",
 		type : "post",
 		async : false,
 		data : {
-			storeid : storeid
+			storeid : storeid,
+			startTime:startTime,
+			endTime:endTime
 		},
 		dataType : "json",
 		success : function(result) {
@@ -87,7 +89,7 @@ function getEndTime() {
  * @param endTime
  * @returns
  */
-function queryRanking(startTime,endTime){
+function queryRanking(startTime,endTime,storeId){
 	var v;
 	$.ajax({
 		url:"/statistics/queryRanking",
@@ -95,7 +97,8 @@ function queryRanking(startTime,endTime){
 		async : false,
 		data:{
 			startTime:startTime,
-			endTime:endTime
+			endTime:endTime,
+			storeId:storeId
 		},
 		dataType:"json",
 		success:function(data){
@@ -510,13 +513,13 @@ function querySupplier_yByStore(storeId){
  * @returns
  */
 function getStoreId(){
-		var uid = "[[${session.user.id}]]";	
+		var uid = JSON.stringify(window.localStorage.getItem("user")).id;
 		var sid = "";
 		if (uid != "") {
 			if (uid == "1") {
 				sid = "";
 			} else {
-				sid = "[{{session.user.storeid}}]";
+				sid = JSON.stringify(window.localStorage.getItem("user")).storeid;
 			}
 		}
 		return sid;

@@ -1,5 +1,6 @@
 package com.imsystem.service.order.impl;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +22,7 @@ import com.imsystem.domain.Salesstockrecord;
 import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Stockrecord;
+import com.imsystem.domain.Supplier;
 import com.imsystem.mapper.CustomerMapper;
 import com.imsystem.mapper.SalesMapper;
 import com.imsystem.mapper.SalesbackMapper;
@@ -32,6 +34,7 @@ import com.imsystem.mapper.SalesstockrecordMapper;
 import com.imsystem.mapper.StockMapper;
 import com.imsystem.mapper.StockdetailsMapper;
 import com.imsystem.mapper.StockrecordMapper;
+import com.imsystem.mapper.SupplierMapper;
 import com.imsystem.service.order.OrderInsertService;
 
 @Service
@@ -64,13 +67,16 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 	@Autowired
 	SalesstockrecordMapper salesstockrecordmapper;
-	
+
 	@Autowired
 	SalesbackMapper salesbackMap;
-	
+
 	@Autowired
 	SalesbackdetailsMapper salesbackdetailsmapper;
-	
+
+	@Autowired
+	SupplierMapper supperMap;
+
 	@Override
 	public int insert(Stock stock) {
 
@@ -78,6 +84,37 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 		for (int i = 0; i < stock.getStockdetails().size(); i++) {
 			stock.getStockdetails().get(i).setId(UUID.randomUUID().toString());
+		}
+
+		Supplier supp = new Supplier();
+
+		supp.setId(stock.getSid());
+
+		if (Double.parseDouble(stock.getColumn1()) > Double.parseDouble(stock.getColumn2())) {
+
+			supp.setBalance(Double.parseDouble(stock.getColumn1()) - Double.parseDouble(stock.getColumn2()));
+
+			NumberFormat number = NumberFormat.getNumberInstance();
+
+			number.setMaximumFractionDigits(2);
+
+			supp.setBalance(Double.parseDouble(number.format(supp.getBalance())));
+
+			supperMap.updateBalanceJia(supp);
+
+		}
+		if (Double.parseDouble(stock.getColumn1()) < Double.parseDouble(stock.getColumn2())) {
+
+			supp.setBalance(Double.parseDouble(stock.getColumn2()) - Double.parseDouble(stock.getColumn1()));
+
+			NumberFormat number = NumberFormat.getNumberInstance();
+
+			number.setMaximumFractionDigits(2);
+
+			supp.setBalance(Double.parseDouble(number.format(supp.getBalance())));
+
+			supperMap.updateBalancejian(supp);
+
 		}
 
 		int count = stockM.insertSelective(stock);
@@ -120,11 +157,48 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 	public int updateInsertOrder(Stock stock) {
 		// TODO Auto-generated method stub
 
-		int count = stockdetail.del(stock.getCode());
+		for (Stockdetails item : stock.getStockdetails()) {
 
-		count += stockdetail.add(stock);
+			stockdetail.updateDetails(item);
 
-		return count;
+		}
+
+		if (stockdetail.selectCount(stock.getCode(), "1") <= 0) {
+
+			stockM.updateState(stock.getCode());
+
+		}
+
+		stockM.updatePrice(stock.getId());
+
+		Supplier sup = new Supplier();
+
+		NumberFormat number = NumberFormat.getNumberInstance();
+
+		number.setMaximumFractionDigits(2);
+
+		sup.setId(stock.getSid());
+
+		double price = stockdetail.querydetailsSumPrice(stock.getId());
+		
+		if (price > Double.parseDouble(stock.getColumn1())) {
+
+			sup.setBalance(price - Double.parseDouble(stock.getColumn1()));
+
+			sup.setBalance(Double.parseDouble(number.format(sup.getBalance())));
+
+			supperMap.updateBalanceJia(sup);
+		}
+		if (price < Double.parseDouble(stock.getColumn1())) {
+
+			sup.setBalance(Double.parseDouble(stock.getColumn1()) - price);
+
+			sup.setBalance(Double.parseDouble(number.format(sup.getBalance())));
+
+			supperMap.updateBalancejian(sup);
+		}
+
+		return 0;
 	}
 
 	@Override
@@ -136,7 +210,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 			count += stockdetail.updateCount(item.getCode(), item.getCount(), item.getGvid());
 
-			if (stockdetail.selectCount(item.getCode(),"1") == 0) {
+			if (stockdetail.selectCount(item.getCode(), "1") == 0) {
 				count += stockM.updateState(item.getCode());
 				count += stockdetail.update(item.getId());
 			}
@@ -189,7 +263,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 	}
 
 	Boolean bool = true;
-	
+
 	@Override
 	public Boolean insertOrderOut(Salesorder salesorder) {
 		// TODO Auto-generated method stub
@@ -242,32 +316,31 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 			updateCount(item);
 
 		}
-		
 
 		return bool;
 	}
 
 	/**
 	 * 递归的去减库存
+	 * 
 	 * @Description:GoodsSupperMan
 	 * @param item 销售订单详情对象
 	 */
 	public void updateCount(Salesdetails item) {
-		
-		Stockdetails goodsCount = stockdetail.queryCount(item.getGvid(),"1");
 
-		if(goodsCount == null) {
-			
+		Stockdetails goodsCount = stockdetail.queryCount(item.getGvid(), "1");
+
+		if (goodsCount == null) {
+
 			bool = false;
-			
+
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-			
+
 			return;
 		}
 
-		
 		Salesstockrecord salesstockrecord = new Salesstockrecord();
-		
+
 		salesstockrecord.setId(UUID.randomUUID().toString());
 
 		salesstockrecord.setGvid(item.getGvid());
@@ -285,19 +358,19 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 		salesstockrecord.setState(0);
 
 		salesstockrecord.setStoreid("1");
-		
+
 		if (goodsCount.getCount() < item.getCount()) {
 
 			stockdetail.updateCount(goodsCount.getCode(), goodsCount.getCount(), item.getGvid());
 
-			if (stockdetail.selectCount(goodsCount.getCode(),"1") == 0) {
+			if (stockdetail.selectCount(goodsCount.getCode(), "1") == 0) {
 
 				stockM.updateState(goodsCount.getCode());
 
 			}
 
 			stockdetail.update(goodsCount.getId());
-			
+
 			salesstockrecord.setCount(goodsCount.getCount());
 
 			salesstockrecord.setPrice(goodsCount.getCount() * item.getPrice());
@@ -314,7 +387,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 			if (goodsCount.getCount() == item.getCount()) {
 
-				if (stockdetail.selectCount(goodsCount.getCode(),"1") == 0) {
+				if (stockdetail.selectCount(goodsCount.getCode(), "1") == 0) {
 
 					stockM.updateState(goodsCount.getCode());
 
@@ -331,74 +404,88 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 			salesstockrecordmapper.insertSelective(salesstockrecord);
 
 		}
-		
+
 	}
 
 	@Override
 	public int inserorderDesc(Vector<Salesdetails> salesdetails) {
 		// TODO Auto-generated method stub
-		
+
 		Salesback sales = new Salesback();
-		
+
 		sales.setId(UUID.randomUUID().toString());
-		
+
 		sales.setTime(new Date());
-		
+
 		sales.setUid("1");
-		
+
 		sales.setStoreid("1");
-		
+
 		sales.setColumn1(salesdetails.get(0).getId());
-		
+
 		sales.setCount(0);
 		sales.setPaymoney(0.00);
 		sales.setTainmoney(0.00);
-		
+
 		int count = 0;
 		for (Salesdetails item : salesdetails) {
-			
+
 			salesdetailsMapper.update(item.getId());
-			
+
 			sales.setCount(sales.getCount() + item.getCount());
-			
-			sales.setPaymoney(sales.getPaymoney()+sales.getCount()*item.getPrice());
-			
-			sales.setTainmoney(sales.getTainmoney()+sales.getCount()*item.getPrice());
-			
+
+			sales.setPaymoney(sales.getPaymoney() + sales.getCount() * item.getPrice());
+
+			sales.setTainmoney(sales.getTainmoney() + sales.getCount() * item.getPrice());
+
 			Salesbackdetails salesbackdetails = new Salesbackdetails();
-			
+
 			salesbackdetails.setId(UUID.randomUUID().toString());
-			
+
 			salesbackdetails.setSid(sales.getId());
-			
+
 			salesbackdetails.setColumn1(item.getId());
-			
+
 			salesbackdetails.setUpdatime(sales.getTime());
-			
+
 			salesbackdetails.setUid("0");
-			
+
 			salesbackdetails.setStoreid("1");
-			
+
 			count += salesbackdetailsmapper.add(salesbackdetails);
-			
-			if(item.getColumn1() != "1") {
-				
-				count += curtomer.updateplug(item.getColumn3(), item.getPrice()*item.getCount());
-				
+
+			if (item.getColumn1() != "1") {
+
+				count += curtomer.updateplug(item.getColumn3(), item.getPrice() * item.getCount());
+
 			}
-			
+
 			List<Salesstockrecord> list = salesstockrecordmapper.querystockdetails(item.getId());
-			
+
 			for (Salesstockrecord salesstockrecord : list) {
-				
+
 				count += stockdetail.updateScount(salesstockrecord.getStockdetailid(), salesstockrecord.getCount());
-				
+
 			}
-			
+
 		}
-		
+
 		salesbackMap.add(sales);
-		
+
+		return count;
+	}
+
+	@Override
+	public int UpdateSalesOrder(Salesorder sales) {
+
+		for (Salesorderdetails item : sales.getList1()) {
+
+			salesorderdetailsMapper.updateCount(item);
+
+		}
+
+		int count = salesorderMapper.updateCount(sales.getId());
+
 		return count;
 	}
 

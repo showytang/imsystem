@@ -32,6 +32,9 @@
 			</association>
 		</association>
 	</resultMap>
+	<update id="updateCount">
+		update salesorderdetails set count = #{count} where id = #{id}
+	</update>
 	<select id="salesOrderDetails" resultMap="salesOrderDetailsMap">
 		SELECT .s.count,gv.name AS gvname,g.name AS gname,gv.id AS
 		gvid,s.id,gv.column1 AS gvcolumn1,g.img FROM `salesorderdetails` AS s

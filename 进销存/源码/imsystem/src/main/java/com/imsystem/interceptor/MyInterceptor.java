@@ -31,35 +31,34 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
 		System.out.println("你来了.....");
 
 
-		
-		Map<String, Module> map = (Map<String, Module>) request.getSession().getAttribute("urlMap");
-				
-		if(map==null) {
-			User u = (User) request.getSession().getAttribute("user");
-			if(u!=null) {
-				 map = (Map<String, Module>) moduleService.queryMap(u.getId());
-				request.getSession().setAttribute("urlMap",map);
-			}else {
-				String ctx =request.getContextPath();
-				response.sendRedirect(ctx+"/user/page-login");
-				return false;
-			}
-			
-		}
-		String uri =request.getRequestURI();
-		
-		System.out.println(uri);
-		Object obj =map.get(uri);
-		if(obj!=null) {
+		User user = (User) request.getSession().getAttribute("user");
+		if(user!=null) {
 			return true;
-		}else {
-			
-			return false;
 		}
+		String uri = request.getRequestURI();
+		String ctx=request.getContextPath();
+		response.sendRedirect(ctx+"/user/page-login");
+		System.out.println(uri);
+		if (request.getSession().getAttribute("urlMap") == null) {
+			Map<String, Module> map = (Map<String, Module>) moduleService.queryMap(user.getId());
+			request.getSession().setAttribute("urlMap", map);
+		}
+		Object map = request.getSession().getAttribute("urlMap");
+	if (map != null) {
+			Map<String, Module> maps = (Map<String, Module>) request.getSession().getAttribute("urlMap");
+			if (maps.get(uri) != null) {
+				return true;
+			}
+		}
+		return false;
 		
+		
+
 		//return true;
 		
 	}
+	
+	
 
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,

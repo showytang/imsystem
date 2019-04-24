@@ -28,14 +28,14 @@ public class SalesorderServiceImpl implements SalesorderService{
 		return sm.queryFirst(storeid, code, startTime, endTime);
 	}
 	@Override
-	public List<Salesorder> queryDaysAgo(String storeid) {
+	public List<Salesorder> queryDaysAgo(String storeid,String startTime,String endTime) {
 		// TODO Auto-generated method stub
-		return sm.queryDaysAgo(storeid);
+		return sm.queryDaysAgo(storeid,startTime,endTime);
 	}
 	@Override
-	public List<Salesorder> queryRanking(String startTime, String endTime) {
+	public List<Salesorder> queryRanking(String startTime, String endTime,String storeId) {
 		// TODO Auto-generated method stub
-		return sm.queryRanking(startTime, endTime);
+		return sm.queryRanking(startTime, endTime,storeId);
 	}
 	@Override
 	public Integer queryTedayMoney(String store) {

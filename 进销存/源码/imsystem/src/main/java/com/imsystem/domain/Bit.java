@@ -15,6 +15,8 @@ public class Bit {
     private Date updatetime;
 
     private String uid;
+    
+    private String uname;
 
     private Integer state;
 
@@ -115,4 +117,12 @@ public class Bit {
     public void setColumn5(String column5) {
         this.column5 = column5;
     }
+
+	public String getUname() {
+		return uname;
+	}
+
+	public void setUname(String uname) {
+		this.uname = uname;
+	}
 }

@@ -126,37 +126,70 @@
     <script type="text/javascript" th:src="@{/assets/echarts/echarts/extension/bmap.min.js}"></script>
     <script type="text/javascript" th:src="@{/assets/echarts/simplex.js}"></script>
 	<script>
+		var storeid = getStoreId();
+		var startTime = "";
+		var endTime = "";
 		$(function(){
-			var img2 = queryRanking("","");
+			var img2 = queryRanking("","",storeid);
+			showView(img2);
+			
+			$(document).on(
+					"change",
+					"#config-demo",
+					function() {
+						if ($("#config-demo").val() != '请选择日期范围') {
+							var time = $("#config-demo").val().split("至");
+							startTime = time[0];
+							endTime = time[1];
+						}
+						img2 = queryRanking(startTime,endTime,storeid);
+						showView(img2);
+					});
+		});
+		function showView(img2){
 			var options = myChart.getOption();
 			var name = [];
 			var tedayMoney = [];
 			var sumMoney = [];
-			$.each(img2,function(ss,obj){
-				name.push(obj.column3+"["+obj.column4+"]");
-				tedayMoney.push(obj.column5);
-				sumMoney.push(obj.column2);
-				var title = $("<div class='row panel-heading'><p class='panel-subtitle'>Shop："+obj.column3+"【"+obj.column4+"】</p></div>");
-				var g = $("<div class='row g'></div>");
-				$.each(obj.list,function(s,objs){
-					var img = objs.column2 != null && objs.column2 != '' ? objs.column2 : "../assets/img/404.png";
-					var goods = $("<div class='col-md-6 goods'><div class='good' gid='"+objs.id+"'><img class='col-md-3 col-xs-3 goodsImg' src='"+img+"' />"+
-					"<div class='col-md-9 col-xs-8 js'>"+
-						"<h3>"+objs.name+"<span class='guige'>["+objs.column1+"]</span></h3>"+
-						"<span class='s'>销售金额￥<b>"+objs.jprice+"</b></span> <span class='s'>销售数量<b>"+objs.column3+"</b></span>"+
-							"</div>"+
-						"</div>"+
-					"</div>");
-					g.append(goods);
+			$(".panel-body > .g").remove();
+			$(".panel-body > .t").remove();
+			$(".panel-body > .notValue").remove();
+			if(img2 != ''){
+				$.each(img2,function(ss,obj){
+					name.push(obj.column3+"["+obj.column4+"]");
+					tedayMoney.push(obj.column5);
+					sumMoney.push(obj.column2);
+					var title = $("<div class='row panel-heading t'><p class='panel-subtitle'>Shop："+obj.column3+"【"+obj.column4+"】</p></div>");
+					var g = $("<div class='row g'></div>");
+					if(obj.list!= ''){
+						$.each(obj.list,function(s,objs){
+							var img = objs.column2 != null && objs.column2 != '' ? objs.column2 : "../assets/img/404.png";
+							var goods = $("<div class='col-md-6 goods  animated bounceInDown delay-1s'><div class='good' gid='"+objs.id+"'><img class='col-md-3 col-xs-3 goodsImg' src='"+img+"' />"+
+							"<div class='col-md-9 col-xs-8 js'>"+
+								"<h3>"+objs.name+"<span class='guige'>["+objs.column1+"]</span></h3>"+
+								"<span class='s'>销售金额￥<b>"+objs.jprice+"</b></span> <span class='s'>销售数量<b>"+objs.column3+"</b></span>"+
+									"</div>"+
+								"</div>"+
+							"</div>");
+							g.append(goods);
+						});
+					}else{
+						$(".panel-body")
+						.append("<div class='col-md-12 goods animated bounceInLeft delay-1s notValue'><div class='good'><h3 style='text-align:center;line-height:70px;color:#C1E2B3;'>暂无数据~ ~</h3></div></div>");
+					}
+					$(".panel-body").append(title);
+					$(".panel-body").append(g);
 				});
-				$(".panel-body").append(title);
-				$(".panel-body").append(g);
-			});
+			}else{
+				$(".panel-body")
+				.append("<div class='col-md-12 goods animated bounceInLeft delay-1s notValue'><div class='good'><h3 style='text-align:center;line-height:70px;color:#C1E2B3;'>暂无数据~ ~</h3></div></div>");
+			}
+			
 			options.series[1].data=sumMoney;
 			options.series[0].data=tedayMoney;
 			options.yAxis[0].data = name;
 			myChart.setOption(options);
-		});
+		}
 		/**
 		 * 盈利亏损图
 		 */
