@@ -20,6 +20,7 @@ import com.imsystem.domain.Salesorder;
 import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Supplier;
+import com.imsystem.service.monomer.paytypeService;
 import com.imsystem.service.order.OrderInsertService;
 
 @RequestMapping("/insertOrder")
@@ -29,20 +30,8 @@ public class OrderInsertController {
 	@Autowired
 	OrderInsertService orderInsert;
 	
-	public List<Paytype> paytypeList(){
-		
-		List<Paytype> list = new Vector<Paytype>();
-		
-		Paytype pay = new Paytype();
-		
-		pay.setName("微信");
-		
-		pay.setId("1");
-		
-		list.add(pay);
-		
-		return list;
-	}
+	@Autowired
+	paytypeService paytype;
 	
 	public List<Supplier> supplierlist(){
 		
@@ -124,7 +113,7 @@ public class OrderInsertController {
 	@RequestMapping("/query")
 	public String query(Model model) {
 		
-		model.addAttribute("paytypeList", paytypeList());
+		model.addAttribute("paytypeList", paytype.queryPaytype(null));
 		
 		model.addAttribute("supplierlist", supplierlist());
 		
@@ -157,7 +146,7 @@ public class OrderInsertController {
 	@RequestMapping("/toInsertOrderOut")
 	public String toInsertOrderOut(Model model) {
 		
-		model.addAttribute("paytypeList", paytypeList());
+		model.addAttribute("paytypeList", paytype.queryPaytype(null));
 		
 		model.addAttribute("supplierlist", supplierlist());
 		
