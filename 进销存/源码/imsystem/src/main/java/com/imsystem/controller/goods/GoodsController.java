@@ -438,7 +438,7 @@ public class GoodsController {
 	@RequestMapping("/orderPickGoods")
 	public String orderOptionGoods() {
 
-		return "dws/orderOptionGoods.html";
+		return "dws/orderOptionGoods";
 
 	}
 
