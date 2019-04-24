@@ -18,4 +18,6 @@ public interface SpTypeService {
 	public Goodstype querybyid(Integer id);
 	    
 	public int toupdate(Goodstype good);
+	
+	public List<Goodstype> querybypid();
 }

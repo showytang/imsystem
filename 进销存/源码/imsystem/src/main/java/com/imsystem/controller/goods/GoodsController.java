@@ -7,7 +7,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -197,8 +199,16 @@ public class GoodsController {
             	
             	if(goodsVo.getGoods().getColumn5() == null && goodsVo.getGoods().getImg() == null) {
             		
-            		goodsVo.getGoods().setImg(f.getBytes());
-            		//.
+            		//获取输入流
+    	            InputStream ins = f.getInputStream();
+    	            File toFile = new File(f.getOriginalFilename());
+    	            // MultipartFile 转 file
+    	            ImgCompress.inputStreamToFile(ins, toFile);
+            	    ImgCompress imgCom = new ImgCompress(toFile);  
+            	    //压缩图片 返回byte[]
+                    goodsVo.getGoods().setImg(imgCom.resizeFix(400, 400));
+                    
+                    ins.close();
             		continue;
             		
             	}
@@ -264,7 +274,11 @@ public class GoodsController {
 	        	} 
 	        	byte [] data = outStream.toByteArray();//转化成byte[] 网络上都是 byte [] data = new byte[inputStream.available()];这种方法不可取 
 	        	//关闭流 
-	        	goodsVo.getGoods().setImg(data);
+	        	
+        	    ImgCompress imgCom = new ImgCompress(originalFile);  
+        	    //压缩图片 返回byte[]
+                goodsVo.getGoods().setImg(imgCom.resizeFix(400, 400));
+                
 	        	outStream.close(); 
 	        	inputStream.close(); 
 	        	
@@ -363,8 +377,18 @@ public class GoodsController {
             	Img img = new Img();
             	
             	if(bool) {
-            		goodsVo.getGoods().setImg(f.getBytes());
             		bool = false;
+            		
+            		//获取输入流
+    	            InputStream ins = f.getInputStream();
+    	            File toFile = new File(f.getOriginalFilename());
+    	            // MultipartFile 转 file
+    	            ImgCompress.inputStreamToFile(ins, toFile);
+            	    ImgCompress imgCom = new ImgCompress(toFile);  
+            	    //压缩图片 返回byte[]
+                    goodsVo.getGoods().setImg(imgCom.resizeFix(400, 400));
+                    
+                    ins.close();
             		continue;
             	}
             	
@@ -429,4 +453,7 @@ public class GoodsController {
 		return "dws/customerPickGoods";
 	}
 
+	
+	
+	
 }

@@ -275,14 +275,9 @@
 			function query(){
 				var times = $("#config-demo").val();
 				
-				var time = times.substring(0,(times.indexOf('-')-1));
+				var time = times.substring(0,(times.indexOf('至')-1));
 				
-				var endTime = times.substring((times.indexOf('-')+2),times.length)
-				
-				if(time){
-					time = timess(time);
-					endTime = timess(endTime) + " 23:59:59";
-				}
+				var endTime = times.substring((times.indexOf('至')+2),times.length) + " 23:59:59"
 				
 				var code = $(".backage:eq(0)").attr("data");
 				

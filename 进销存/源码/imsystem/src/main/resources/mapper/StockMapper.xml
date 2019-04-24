@@ -17,6 +17,14 @@
     <result column="column4" property="column4" jdbcType="VARCHAR" />
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
+  <update id="updatePrice">
+  		UPDATE stock AS a
+		SET a.`column1` = (SELECT SUM(s) FROM (
+		SELECT SUM(s.count-s.scount)*s.price AS s FROM stockdetails AS s
+		WHERE s.sid = #{id}
+		GROUP BY id)
+		AS ss) WHERE a.id = #{id}
+  </update>
   <insert id="add">
   	insert into stock(id,code,time,updatetime,uid,state,storeid,column1,column2)
   	values(#{id},#{code},#{time},#{time},#{uid},1,#{column1},0,0)

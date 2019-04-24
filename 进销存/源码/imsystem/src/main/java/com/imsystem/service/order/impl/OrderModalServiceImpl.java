@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.imsystem.domain.Salesback;
+import com.imsystem.domain.Salesbackdetails;
 import com.imsystem.domain.Salesdetails;
 import com.imsystem.domain.Salesorderdetails;
 import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
+import com.imsystem.mapper.SalesbackdetailsMapper;
 import com.imsystem.mapper.SalesdetailsMapper;
 import com.imsystem.mapper.SalesorderdetailsMapper;
 import com.imsystem.mapper.StockMapper;
@@ -33,6 +36,9 @@ public class OrderModalServiceImpl implements OrderModalService {
 	@Autowired
 	SalesdetailsMapper salesMap;
 	
+	@Autowired
+	SalesbackdetailsMapper salesbackMap;
+	
 	@Override
 	public Stock queryIndex(String code) {
 		
@@ -50,6 +56,12 @@ public class OrderModalServiceImpl implements OrderModalService {
 	public Vector<Salesdetails> orderOver(String id) {
 		// TODO Auto-generated method stub
 		return salesMap.queryDetails(id);
+	}
+
+	@Override
+	public List<Salesbackdetails> orderDescQuery(String id) {
+		// TODO Auto-generated method stub
+		return salesbackMap.query(id);
 	}
 
 }

@@ -81,23 +81,17 @@ input {
 					<th>操作</th>
 				</tr>
 			</thead>
-			<tbody id="shappingTbody" :data="list.id">
+			<tbody id="shappingTbody" :data="list.id" :cid="list.sid" :price="list.column1">
 				<tr v-for="item in list.stockdetails">
-					<td v-for="item1 in item.goods.goodsValues" :sid="item.goods.column5" :data="item1.id" >
-						<img v-if="item1 != ''" class="shappingImg":data="item1.id" :src="item1.column1">
-						<img  v-else class="shappingImg" :data="item1.id" :scr = "item.goods.img">
-						<input type="hidden" name="count" :value="item.count" >
-						<input type="hidden" name="scount" :value="item.scount" >
-						<input type="hidden" name="price" :value="item.price">
-						<input type="hidden" name="state" :value="item.state">
-						<input type="hidden" name="uid" :value="item.uid">
-						<input type="hidden" name="storeid" :value="item.storeid">
+					<td v-for="item1 in item.goods.goodsValues" >
+						<img v-if="item1 != ''" class="shappingImg" :src="item1.column1">
+						<img  v-else class="shappingImg" :scr = "item.goods.img">
 					</td>
-					<td >{{item.goods.name}}</td>
+					<td class="id" :data="item.id">{{item.goods.name}}</td>
 					<td v-for="item1 in item.goods.goodsValues" >{{item1.name}}</td>
 					<td>{{item.updatetime}}</td>
 					<td>{{item.price}}</td>
-					<td><input class="shiliang" :value="item.column2"></td>
+					<td><input class="shiliang" :data="item.count" :value="item.column2"></td>
 					<td><span class="glyphicon glyphicon-remove"></span></td>
 				</tr>
 			</tbody>
