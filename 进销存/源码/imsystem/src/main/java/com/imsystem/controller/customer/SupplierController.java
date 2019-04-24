@@ -14,6 +14,7 @@ import com.imsystem.domain.Store;
 import com.imsystem.domain.Supplier;
 import com.imsystem.domain.TypeLevelVO;
 import com.imsystem.service.customer.SupplierService;
+import com.imsystem.service.setup.StoreService_c;
 
 @Controller
 @RequestMapping("supplier")
@@ -21,6 +22,8 @@ public class SupplierController {
 	
 	@Autowired
 	SupplierService sService;
+	@Autowired
+	StoreService_c scService;
 	
 	@RequestMapping("tosupplierlist")
 	public String toCustomerList() {
@@ -47,12 +50,7 @@ public class SupplierController {
 	@ResponseBody
 	public TypeLevelVO queryStore() {
 		TypeLevelVO tlVO=new TypeLevelVO();
-		Store s1=new Store(); s1.setId("1"); s1.setName("门店1"); s1.setState(0);
-		Store s2=new Store(); s2.setId("2"); s2.setName("门店2"); s2.setState(0);
-		List list=new ArrayList<>();
-		list.add(s1);
-		list.add(s2);
-		tlVO.setSlist(list);
+		tlVO.setSlist(scService.queryStoreAll());
 		return tlVO;
 	}
 	

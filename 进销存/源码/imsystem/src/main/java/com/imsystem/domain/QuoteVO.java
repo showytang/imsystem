@@ -4,6 +4,16 @@ public class QuoteVO {
 	
 	private Goodsvalue gvobj;
 	
+	private Goods gobj;
+	
+	public Goods getGobj() {
+		return gobj;
+	}
+
+	public void setGobj(Goods gobj) {
+		this.gobj = gobj;
+	}
+
 	private Customer cobj;
 	
 	private Quotedprice qpobj;
