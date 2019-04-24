@@ -403,7 +403,19 @@ td input {
 	
 	hisArr = unique(hisArr);
 	
+	var uptypeids = [];
+	/*查询所有规格组合*/
+	$.each(vue.goods.goodsValues,function(){
+			
+			$.each(this.goodsstandardvalues,function(){
+				
+				uptypeids.push(this.svids);
+				
+			});
+			
+		});	
 	
+	uptypeids =unique(uptypeids);
 	$(function() {
 		
 		/*页面加载客户类型查询*/
@@ -437,7 +449,7 @@ td input {
 				
 				for(var oo = 0; oo < hisArr.length; oo++){
 					var  arr = getSvids(oo);
-					console.log(arr)
+					console.log(arr);
 					ttooind = oo;
 					dataShow(arr);
 				}
@@ -538,12 +550,13 @@ td input {
 				
 				
 				/*中文规格总名称*/
-				   var gcname = $(obj).find("[name=goodsType]").attr("tyname");
+				   var gcname = $(obj).find("[name=goodsType]").attr("vm");
 				   
 				   formData.append("goodsValues["+(ind)+"].name",gcname);
 				   formData.append("goodsValues["+(ind)+"].jprice",$(obj).find("[name=detailprice]").val());
 				   formData.append("goodsValues["+(ind)+"].id",$(obj).find("[name=goodsType]").attr("gvid"));
 				   formData.append("goodsValues["+(ind)+"].enname",ConvertPinyin(gcname));
+				   formData.append("goodsValues["+(ind)+"].column4",$(obj).find("[name=goodsType]").attr("column4"));
 				   if($(obj).find("[type=file]")[0].files.length > 0){
 					   
 					   formData.append("goodsValues["+(ind)+"].img",$(obj).find("[type=file]")[0].files[0]);
@@ -610,7 +623,6 @@ td input {
 			contentType:false,
 			processData:false,
 			success:function(data){
-				console.log(data)
 				if(data > 0){
 					alert("修改成功");
 				}else{
@@ -649,17 +661,34 @@ td input {
 		div2.append(div3);
 		$(".qaq").append(div);
 		svids = [];
-		$.each(vue.goods.goodsValues,function(){
+		$.each(vue.goods.goodsValues,function(index,obj){
 			
-			if(hisArr[oo] == this.column4){
+			if(hisArr[oo] == obj.column4){
 				$.each(this.goodsstandardvalues,function(){
 					
-					svids.push(this.svid);
+					var gdv = {
+								"svid":this.svids,
+								"gvid":obj.id,
+								"gv":obj,
+								"sid":this.svid
+					}
+					
+					svids.push(gdv);
 					
 				});
 			}
 		});
-		svids = unique(svids);
+		
+		 var result = [];
+		     var obj = {};
+		    for(var i =0; i<svids.length; i++){
+		        if(!obj[svids[i].sid]){
+		           result.push(svids[i]);
+		           obj[svids[i].sid] = true;
+		        }
+		     }		
+		svids = result;
+		
 		return svids;
 	}
 	
@@ -860,10 +889,17 @@ td input {
 									
 									var span = $('<span onclick="addGoodsOption(this)" class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="'+item.id+'">'+item.name+'</span>')
 									divmain.append(span);
-									if(arr.indexOf(item.id) >= 0){
+									
+									/* if(arr.indexOf(item.id) >= 0){
 										
 										addGoodsOptionup(span);
-									}
+									} */
+									
+									arr.some(item2=>{
+										if(item2.sid == item.id){
+											addGoodsOptionup(span,item2);
+										}
+									})
 									
 									
 								})
@@ -881,7 +917,7 @@ td input {
 		
 	}
 	
-function addGoodsOptionup(obj){
+function addGoodsOptionup(obj,item2){
 		
 		$(obj).parent().find(".option-span-all").removeClass("active1");
 
@@ -906,7 +942,7 @@ function addGoodsOptionup(obj){
 				color : "#ffffff"
 			}, 300);
 		}
-		checkedDlUP();
+		checkedDlUP(item2);
 	
 }
 	var addii = true;
@@ -1020,7 +1056,7 @@ function jhChange(obj){
 	}
 	
 	/*修改00*/
-	function checkedDlUP() {
+	function checkedDlUP(item2) {
 		var isCheckedDl = 0;
 		var isCheckedDlArray = [];
 		var allIndex = 1;
@@ -1052,17 +1088,21 @@ function jhChange(obj){
 			allIndex : allIndex,
 			isCheckedDlArray : isCheckedDlArray
 		}
-		eachCreateUP(tagObject);
+		eachCreateUP(tagObject,item2);
 	}
 
-	function eachCreateUP(tagObject) {
+	var trIndex = 0;
+	
+	function eachCreateUP(tagObject,item2) {
 		
+		var gvIndex = vue.goods.goodsValues.map(gvitem=>gvitem.id)
+											.indexOf(item2.gvid);
 		
 		$(".tto"+ttooind+"").find("table").remove();
 		var table = $("<table class='table' >");
 
 		$(".tto"+ttooind+"").find(".panel-body").append(table);
-
+		
 		var index = 1;
 		
 		var tbody = $("<tbody>");
@@ -1103,39 +1143,70 @@ function jhChange(obj){
 			for (var x = 0; x < tagObject.isCheckedDlArray[i].num; x++) {
 				
 				for (var j = 0; j < tagObject.isCheckedDlArray[i].tag.length; j++) {
-					
-						
-					 var td = $("<td class='text-center' style='vertical-align: inherit;' m='" + tagObject.isCheckedDlArray[i].tag[j].name + "' v='" + tagObject.isCheckedDlArray[i].tag[j].id + "'>")
+					 var td = $("<td class='text-center nn' style='vertical-align: inherit;' m='" + tagObject.isCheckedDlArray[i].tag[j].name + "' v='" + tagObject.isCheckedDlArray[i].tag[j].id + "'>")
 							.html(tagObject.isCheckedDlArray[i].tag[j].name);
 					 
 					
 					if (i == tagObject.isCheckedDlArray.length - 1) {
-						var hinp = $("<input gvid='"+vue.goods.goodsValues[index-1].id+"' class='text-center' type='hidden' name='goodsType' tyname='' vm='" + tagObject.isCheckedDlArray[i].tag[j].name + "' value='" + tagObject.isCheckedDlArray[i].tag[j].id + "'>");
+						var tr = $("<tr class='" + index + "' >");
 						
-						var td1 = $("<td class='text-center' style='vertical-align: inherit;'><input oninput='countChange(this)' class='text-center' readonly sdid='"+vue.goods.goodsValues[index-1].stockDetails.id+"' value='"+vue.goods.goodsValues[index-1].stockDetails.count+"' type=text name='num' v=''></td>");
+						var hinp = $("<input gvid='' class='text-center hinp' type='hidden' column4='' name='goodsType' tyname='' vm='" + tagObject.isCheckedDlArray[i].tag[j].name + "' value='" + tagObject.isCheckedDlArray[i].tag[j].id + "'>");
+						
+						var td1 = $("<td class='text-center' style='vertical-align: inherit;'></td>");
+						var cou = $("<input oninput='countChange(this)' class='text-center cou' readonly sdid='' value='' type=text name='num' v=''>");
 						td1.append(hinp);
+						td1.append(cou);
 						
-						var td2 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' oninput='priceChange(this)' type=text value='"+jhprice+"' name='detailprice'></td>");
 						
-						var upgvimg = vue.goods.goodsValues[index-1].column1;
-						var tdimg = $("<td class='text-center' style='vertical-align: inherit;'><div style='position:relative;width: 76px;height: 76px;'><input type='file' style='position:absolute;top:0;z-index: 99;width: 100%;height: 100%;opacity: 0;cursor: pointer;' title='选择图片' onchange='pojoImg(this)' name='file["
+						var td2 = $("<td class='text-center' style='vertical-align: inherit;'></td>");
+						
+						var td2$inpu = $("<input class='text-center detailprice' oninput='priceChange(this)' type=text value='' name='detailprice'>");
+						td2.append(td2$inpu);
+						
+					   	var tdimg = $("<td class='text-center tdimg' style='vertical-align: inherit;'></td>");
+					   	var $divimg = $("<div style='position:relative;width: 76px;height: 76px;'><input type='file' style='position:absolute;top:0;z-index: 99;width: 100%;height: 100%;opacity: 0;cursor: pointer;' title='选择图片' onchange='pojoImg(this)' name='file["
 								+ (index - 1)
-								+ "]' /><img src='"+upgvimg+"' style='width: 76px;height: 76px;' /></div></td>");
-						var tr = $("<tr class='" + index + "'>");
+								+ "]' /></div>");
+						tdimg.append($divimg);
+						var tdimg$input = $("<img src='' class='tdimginput' style='width: 76px;height: 76px;' />");
+						$divimg.append(tdimg$input);
+						
 						tr.append(td);
 						tr.append(td1);
 						tr.append(td2);
 						
 						//价格input
-						$.each(vue.goods.goodsValues[index-1].goodsPrices,function(inx,obj){
-							var tdprick = $("<td class='text-center' style='vertical-align: inherit;'><input id='"+obj.id+"'  class='text-center customerprick' ctid='"+obj.ctid+"' value='"+obj.price+"' viewname='"+obj.sufname+"'  oninput='priceChange(this)' type=text name='price'></td>");
+						$.each(svids[0].gv.goodsPrices,function(inx,obj){
+							var tdprick = $("<td class='text-center' style='vertical-align: inherit;'><input id=''  class='text-center customerprick' ctid='' value='' viewname=''  oninput='priceChange(this)' type=text name='price'></td>");
 							tr.append(tdprick);
 						});
 						
+						for(var pk = 0;pk < svids.length;pk++){
+							
+							if(svids[pk].svid == tagObject.isCheckedDlArray[i].tag[j].id){
+								
+								hinp.attr("gvid",svids[pk].gv.id);
+								hinp.attr("column4",svids[pk].gv.column4);
+								
+								cou.attr("sdid",svids[pk].gv.stockDetails.id);
+								cou.val(svids[pk].gv.stockDetails.count);
+								
+								td2$inpu.val(svids[pk].gv.jprice);
+								tdimg$input.attr("src",svids[pk].gv.column1);
+								
+								
+								//价格input
+								$.each(svids[pk].gv.goodsPrices,function(inx,obj){
+									tr.find(".customerprick").attr("ctid",obj.id);
+									tr.find(".customerprick").attr("viewname",obj.sufname);
+									tr.find(".customerprick").val(obj.price);
+								});
+								
+								
+							}
+						}
 						
-						
-						tr.append(tdimg);
-						
+						tr.append(tdimg); 
 						tbody.append(tr);
 						index++;
 						
@@ -1150,9 +1221,32 @@ function jhChange(obj){
 						var x1 = tagObject.allIndex
 								/ (tagObject.isCheckedDlArray[i].tag.length * tagObject.isCheckedDlArray[i].num);
 						indexRow += x1;
-						
 						appendIdUP(td);
+						var tr = td.parent();
 						
+						for(var pk = 0;pk < svids.length;pk++){
+							if(svids[pk].svid == tr.find("[type=hidden]").val()){
+								
+								tr.find(".hinp").attr("gvid",svids[pk].gv.id);
+								tr.find(".hinp").attr("column4",svids[pk].gv.column4);
+								
+								tr.find(".cou").attr("sdid",svids[pk].gv.stockDetails.id);
+								tr.find(".cou").val(svids[pk].gv.stockDetails.count);
+								
+								tr.find(".tdimginput").attr("src",svids[pk].gv.column1);
+								tr.find(".detailprice").val(svids[pk].gv.jprice); 
+								
+								//价格input
+								$.each(svids[pk].gv.goodsPrices,function(inx,obj){
+									tr.find(".customerprick").attr("ctid",obj.id);
+									tr.find(".customerprick").attr("viewname",obj.sufname);
+									tr.find(".customerprick").val(obj.price);
+									
+								});
+								
+							}
+							
+						}
 						
 					}
 				}
@@ -1160,7 +1254,7 @@ function jhChange(obj){
 		}
 	}
 
-	var uptypeids = [];
+	
 	
 	function appendIdUP(t) {
 		var index = t.attr("rowspan") - 1;
@@ -1177,12 +1271,37 @@ function jhChange(obj){
 			tr.find("[type=hidden]").val(t.attr("v") + "," + v);
 			tr.find("[type=hidden]").attr("tyname",t.attr("m") + "," + m);
 			tr.find("[type=hidden]").attr("vm",t.attr("m") + "," + m);
-			uptypeids.push(tr.find("[type=hidden]").val());
+			
 		}
-		uptypeids.push(t.parent().find("[type=hidden]").val());
+		
+		for(var pk = 0;pk < svids.length;pk++){
+			if(svids[pk].svid == tr.find("[type=hidden]").val()){
+				
+				tr.find(".hinp").attr("gvid",svids[pk].gv.id);
+				tr.find(".hinp").attr("column4",svids[pk].gv.column4);
+				
+				tr.find(".cou").attr("sdid",svids[pk].gv.stockDetails.id);
+				tr.find(".cou").val(svids[pk].gv.stockDetails.count);
+				
+				tr.find(".tdimginput").attr("src",svids[pk].gv.column1);
+				tr.find(".detailprice").val(svids[pk].gv.jprice); 
+				
+				//价格input
+				$.each(svids[pk].gv.goodsPrices,function(inx,obj){
+					tr.find(".customerprick").attr("ctid",obj.id);
+					tr.find(".customerprick").attr("viewname",obj.sufname);
+					tr.find(".customerprick").val(obj.price);
+				});
+				
+			}
+			
+		}
 		
 		
 	}
+	
+	
+
 	
 	
 	/*新增*/
@@ -1277,7 +1396,7 @@ function jhChange(obj){
 							"<td class='text-center' style='vertical-align: inherit;' m='" + tagObject.isCheckedDlArray[i].tag[j].name + "' v='" + tagObject.isCheckedDlArray[i].tag[j].id + "'>")
 							.html(tagObject.isCheckedDlArray[i].tag[j].name);
 					if (i == tagObject.isCheckedDlArray.length - 1) {
-						var td1 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' type='hidden' name='goodsType' tyname='" + tagObject.isCheckedDlArray[i].tag[j].name + "' value='" + tagObject.isCheckedDlArray[i].tag[j].id + "' vm='" + tagObject.isCheckedDlArray[i].tag[j].name + "' value='" + tagObject.isCheckedDlArray[i].tag[j].id + "'><input oninput='countChange(this)' class='text-center' value='"+kc+"' type=text name='num' v=''></td>");
+						var td1 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' type='hidden' name='goodsType' column4='0' tyname='" + tagObject.isCheckedDlArray[i].tag[j].name + "' value='" + tagObject.isCheckedDlArray[i].tag[j].id + "' vm='" + tagObject.isCheckedDlArray[i].tag[j].name + "' value='" + tagObject.isCheckedDlArray[i].tag[j].id + "'><input oninput='countChange(this)' class='text-center' value='"+kc+"' type=text name='num' v=''></td>");
 						var td2 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' oninput='priceChange(this)' type=text value='"+jhprice+"' name='detailprice'></td>");
 						var tdimg = $("<td class='text-center' style='vertical-align: inherit;'><div style='position:relative;width: 76px;height: 76px;'><input type='file' style='position:absolute;top:0;z-index: 99;width: 100%;height: 100%;opacity: 0;cursor: pointer;' title='选择图片' onchange='pojoImg(this)' name='file["
 								+ (index - 1)
@@ -1298,6 +1417,14 @@ function jhChange(obj){
 						
 						tbody.append(tr);
 						index++;
+						
+						if(uptypeids.indexOf(tagObject.isCheckedDlArray[i].tag[j].id) >= 0){
+							tr.attr("title",'数据存在重复');
+							tr.find("input").attr("disabled","disabled");
+							tr.attr("not","not");
+							alerts("数据存在重复");
+						}
+						
 					} else {
 						var rowspan = tagObject.allIndex
 								/ tagObject.isCheckedDlArray[i + 1].num;
@@ -1332,18 +1459,17 @@ function jhChange(obj){
 			tr.find("[type=hidden]").attr("vm",t.attr("m") + "," + m);
 			
 			if(uptypeids.indexOf(tr.find("[type=hidden]").val()) >= 0){
-				tr.attr("title",'数据已存在');
+				tr.attr("title",'数据存在重复');
 				tr.attr("not","not");
 				tr.find("input").attr("disabled","disabled");
-				alerts("数据已存在");
+				alerts("数据存在重复");
 			}
-			
 		}
 			if(uptypeids.indexOf(t.parent().find("[type=hidden]").val()) >= 0){
-				t.parent().attr("title",'数据已存在');
+				t.parent().attr("title",'数据存在重复');
 				t.parent().find("input").attr("disabled","disabled");
 				t.parent().attr("not","not");
-				alerts("数据已存在");
+				alerts("数据存在重复");
 			}
 	}
 	

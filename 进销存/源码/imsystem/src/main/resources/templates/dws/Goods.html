@@ -113,7 +113,7 @@
 							<div v-for="(item,index) in pageIf.list" class="col-sm-6 col-md-3	">
 								<div class="thumbnail">
 								
-									<img v-if="item.goodsValue.column1 == null" style="max-height: 20vh; min-height: 20vh;"
+									<img v-if="item.goodsValue.column1 == null || item.goodsValue.column1==''" style="max-height: 20vh; min-height: 20vh;"
 										:src="'data:image/png;base64,'+item.goods.img" alt="...">
 									<img v-else style="max-height: 20vh; min-height: 20vh;"
 										:src="item.goodsValue.column1" alt="...">
@@ -146,21 +146,9 @@
 							
 
 						</div>
-
+						<!-- 分页容器 -->
 						<div id="page">
-							<!-- <ul>
-								<li class="pagebtn pagePrev"><span
-									class="glyphicon glyphicon-menu-left"></span></li>
-								<li class="pagebtn currentPage pageCurrent pageq">1</li>
-								<li class="pagebtn pageCurrent pageq">2</li>
-								<li class="pagebtn" id="pageDian"
-									style="border: none; background: white; font-size: 20px;">...</li>
-								<li class="pagebtn pageCurrent pageDi">13</li>
-								<li class="pagebtn pageCurrent">14</li>
-								<li class="pagebtn pageCurrent">15</li>
-								<li class="pagebtn pageNext"><span
-									class="glyphicon glyphicon-menu-right"></span></li>
-							</ul> -->
+							
 						</div>
 
 					</div>

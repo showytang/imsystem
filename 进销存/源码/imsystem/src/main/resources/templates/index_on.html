@@ -154,7 +154,7 @@ html, body, #wrapper, .main, .main-content, .right {
 								</li>
 								<li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a>
 								</li>
-								<li><a href="#"><i class="lnr lnr-exit"></i> <span>Logout</span></a>
+								<li><a th:href="@{/user/loginOut}"><i class="lnr lnr-exit"></i> <span>Logout</span></a>
 								</li>
 							</ul></li>
 						<!-- <li>
@@ -212,6 +212,12 @@ html, body, #wrapper, .main, .main-content, .right {
 <script th:src="@{/assets/js/jquery.easypiechart.min.js}"></script>
 <script th:src="@{/assets/js/klorofil-common.js}"></script>
 <script th:inline="javascript">
+
+		var userSession=[[${session.user}]];
+		if(userSession){
+			window.localStorage.setItem("user",JSON.stringify(userSession));
+		}
+
 	$(function() {
 		$(".nav li a").attr("aria-expanded", "false");
 		$(".nav li a").click(function() {
@@ -225,14 +231,6 @@ html, body, #wrapper, .main, .main-content, .right {
 			$(this).css("border-left-color", "#F0F8FF");
 			$(this).css("background-color", "#393D49");
 		});
-		
-		
-		var userSession=[[${session.user}]];
-		if(userSession){
-			window.localStorage.setItem("user",JSON.stringify(userSession));
-		}
-		
-		
 		
 	});
 </script>
