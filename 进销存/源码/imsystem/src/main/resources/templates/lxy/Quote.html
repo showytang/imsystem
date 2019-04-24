@@ -51,9 +51,9 @@
 		border-color: rgb(2,143,208);
 	}
 	td img{
-		width: 40%;
-		height: 55%;
-		border-radius: 50%;
+		width: 57px;
+		height: 55px;
+		/* border-radius: 50%; */
 	}
 	td input{
 		width: 30%;
@@ -61,27 +61,54 @@
 	a:hover{
 		cursor: pointer;
 	}
+	
+	/* 分页样式 */
+	.pagebtn{
+		height: 28px;
+		width: 25px;
+		border: 1px solid #C0C0C0;
+		border-radius: 3px;
+		list-style: none;
+		text-align: center;
+		line-height: 28px;
+		cursor: pointer;
+	}
+	#page>ul{
+		display: flex;
+		justify-content: space-around;
+		padding: 0px;
+		font-size: 12px;
+	}
+	#page{
+		width: 300px;
+		margin: 20px auto ;
+	}
+	.currentPage{
+		background: #1094ce;
+		color: white;
+		border: none;
+	}
 </style>
 </head>
 	<body>
-		<div class="row"style="padding: 28px 20px;">
+		<div class="row elDocument"style="padding: 28px 20px;">
                     <!-- column -->
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-block">
                             	 <h5 class="card-subtitle " style="float: right;display: flex;flex-direction: row;">
                             	 	<div class="input-group" style="margin-right: 10%;">
-										<input type="text" value="" class="form-control" placeholder="根据客户查询">
-										<span class="input-group-btn"><button type="button" class="btn btn-primary">Go</button></span>
+										<input id="customerName" type="text" value="" class="form-control" placeholder="客户名称">
+										<span class="input-group-btn"><button id="searchByCustomerName" type="button" class="btn btn-primary">Go</button></span>
 									</div>
                             	 	<div class="input-group" style="margin-right: 10%;">
-										<input type="text" value="" class="form-control" placeholder="根据商品名称或编号查询">
-										<span class="input-group-btn"><button type="button" class="btn btn-primary">Go</button></span>
+										<input id="goodsName" type="text" value="" class="form-control" placeholder="商品名称">
+										<span class="input-group-btn"><button id="searchByGoodsName" type="button" class="btn btn-primary">Go</button></span>
 									</div>
                                 	<input type="button" class="btn btn-primary" id="add" value="新增客户报价"/>
                                 </h5>
                                 <h4 class="card-title">客户报价</h4>
-                               
+                               <form id="quoteForm" action="" method="post"></form>
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
@@ -97,64 +124,31 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td><img th:src="@{/assets/img/apple-icon.png}"/></td>
-                                                <td>鸭舌帽</td>
-                                                <td>紫女</td>
-                                                <td>22</td>
-                                                <td>顶</td>
-                                                <td>2016-10-13 00:00:00</td>
+                                            <tr v-for="(o,i) in pageIf.list">
                                                 <td>
-													<label>报价：</label>
-                                                	<input type="text" vul="25" name="" class="" value="25" />
-                                                	<a class="upd">修改</a>
+                                                <img v-if="o.gvobj.column1==null" :src="'data:image/png;base64,'+o.gvobj.goods.img"/>
+                                                <img v-else :src="o.gvobj.column1"/>
                                                 </td>
-                                                <td><a class="del" style="color: red;">删除</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td><img th:src="@{/assets/img/apple-icon.png}"/></td>
-                                                <td>鸭舌帽</td>
-                                                <td>紫女</td>
-                                                <td>22</td>
-                                                <td>顶</td>
-                                                <td>2016-10-13 00:00:00</td>
+                                                <td>{{o.gvobj.goods.name}}</td>
+                                                <td>{{o.cobj.name}}</td>
+                                                <td>{{o.qpobj.price}}</td>
+                                                <td>{{o.gobj.bitval}}</td>
+                                                <td>{{o.qpobj.time}}</td>
+                                                <input type="hidden" :value="o.qpobj.id" />
                                                 <td>
 													<label>报价：</label>
-                                                	<input type="text" vul="25" name="" class="" value="25" />
-                                                	<a class="upd">修改</a>
-                                                </td>
-                                                <td><a class="del" style="color: red;">删除</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td><img th:src="@{/assets/img/apple-icon.png}"/></td>
-                                                <td>鸭舌帽</td>
-                                                <td>紫女</td>
-                                                <td>22</td>
-                                                <td>顶</td>
-                                                <td>2016-10-13 00:00:00</td>
-                                                <td>
-													<label>报价：</label>
-                                                	<input type="text" vul="25" name="" class="" value="25" />
-                                                	<a class="upd">修改</a>
-                                                </td>
-                                                <td><a class="del" style="color: red;">删除</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td><img th:src="@{/assets/img/apple-icon.png}"/></td>
-                                                <td>鸭舌帽</td>
-                                                <td>紫女</td>
-                                                <td>22</td>
-                                                <td>顶</td>
-                                                <td>2016-10-13 00:00:00</td>
-                                                <td>
-													<label>报价：</label>
-                                                	<input type="text" vul="25" name="" class="" value="25" />
-                                                	<a class="upd">修改</a>
+                                                	<input type="text" :vul="o.qpobj.price" name="" class="" :value="o.qpobj.price" />
+                                                	<a class="upd" onclick="update(this)">修改</a>
                                                 </td>
                                                 <td><a class="del" style="color: red;">删除</a></td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                </div>
+                                
+                                <!-- 分页 -->
+                                <div id="page">
+                                
                                 </div>
                             </div>
                         </div>
@@ -176,26 +170,80 @@
     <script th:src="@{/assets/js/sticky-kit.min.js}"></script>
     <!--Custom JavaScript -->
     <script th:src="@{/assets/js/custom.min.js}"></script>
+    <script th:src="@{/assets/js/vue.js}"></script>
+    <script th:src="@{/assets/js/page.js}"></script>
+    
 	<script>
+	
+	var vue=new Vue({
+		el:".elDocument",
+		data:{
+			pageIf:""
+		}
+	});
+	
+	/* 修改报价 */
+	function update(th){
+		var id=$(th).parent().prev().val();
+		var price=$(th).prev().val(); 
+		var iniprice=$(th).prev().attr("vul");
+		if(price==""){
+			$(th).prev().val(iniprice);
+			alert("报价不能为空！");
+		}else{
+			$(th).prev().val(price);
+			$("#quoteForm").attr("action","updatequotedprice?qid="+id+"&price="+price);
+			$("#quoteForm").submit();
+		}
+	}
+	
+	/* 分页查询 */
+	function queryQuoteByPage(cname,gname,curentPage){
+		
+		$.ajax({
+			url:"queryquoteprice",
+			data:{
+				"cname":cname,
+				"gname":gname,
+				"curentPage":curentPage
+			},
+			type:"post",
+			dataType:"json",
+			success:function(result){
+				vue.pageIf = result;
+				page(vue);
+				console.log(result);
+			}
+		});
+	}
+	
+	/* 分页点击 */
+	function floatPage(){
+		var cname=$("#customerName").val();
+		var gname=$("#goodsName").val();
+		queryQuoteByPage(cname,gname,$('.currentPage').text());
+	}
 	
 		$(function() {
 			
-			/*修改报价*/
-			$(".upd").click(function(){
-				var price=$(this).prev().val();
-				var iniprice=$(this).prev().attr("vul");
-				if(price==""){
-					$(this).prev().val(iniprice);
-					alert("请报价不能为空！");
-				}else{
-					$(this).prev().val(price);
-					alert("修改成功！");
-				}
+			queryQuoteByPage("","",1);
+			
+			$("#searchByCustomerName").click(function(){
+				var cname=$("#customerName").val();
+				var gname=$("#goodsName").val();
+				queryQuoteByPage(cname,gname,1);
 			});
 			
-			/*新增供货商*/
+			$("#searchByGoodsName").click(function(){
+				var cname=$("#customerName").val();
+				var gname=$("#goodsName").val();
+				queryQuoteByPage(cname,gname,1);
+			});
+			
+			/*新增客户报价*/
 			$("#add").click(function(){
-				location="AddQuote.html";
+				$("#quoteForm").attr("action","toaddquote");
+				$("#quoteForm").submit();
 			});
 			
 			

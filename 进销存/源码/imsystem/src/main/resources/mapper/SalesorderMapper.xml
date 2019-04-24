@@ -558,10 +558,17 @@
 		SELECT t.* FROM (SELECT SUM(paymoney) paymoney,COUNT(*)
 		`count`,SUM(paymoney) - SUM(column1)
 		column2,DATE_FORMAT(`time`,'%Y-%m-%d') column3,`id` FROM salesorder
-		WHERE DATE_SUB(CURDATE(), INTERVAL 6 DAY) &lt;= DATE(`time`)
+		<where>
+			<if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+				`TIME` >= DATE_FORMAT(#{startTime},'%Y-%m-%d 00:00:00') AND `TIME` &lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d 23:59:59')
+			</if>
+			<if test="startTime == null or startTime == '' or endTime == null or endTime == ''">
+				DATE_SUB(CURDATE(), INTERVAL 6 DAY) &lt;= DATE(`time`)
+			</if>
 		<if test="storeid != null and storeid != ''">
 			AND storeid=#{storeid}
 		</if>
+		</where>
 		GROUP BY DATE_FORMAT(TIME,'%Y-%m-%d') ORDER BY TIME) AS t
 	</select>
 	<select id="queryRanking" resultMap="BaseResultMap">
@@ -576,6 +583,9 @@
 		</if>
 		GROUP BY storeid) t JOIN store AS ss ON ss.id = t.storeid WHERE
 		t.progress = '2' AND t.state = '0' ORDER BY t.s asc
+		<if test="storeId != null and storeId != ''">
+			t.storeid = #{storeId}
+		</if>
 		<if test="startTime == null || startTime == ''">
 			LIMIT 6
 		</if>

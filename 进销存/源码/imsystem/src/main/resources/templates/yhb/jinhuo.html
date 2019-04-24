@@ -115,6 +115,7 @@
 	});
 	$(function() {
 		myDate();
+		$(".panel-subtitle").text("Period: "+$("#config-demo").val());
 		vue.supplier = querySupplier_yByStore(sid);
 		vue.page = queryJinHuo("", startTime, endTime, id,sid);
 		var count = 0;

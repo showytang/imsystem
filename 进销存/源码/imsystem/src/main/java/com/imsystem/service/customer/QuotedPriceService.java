@@ -2,6 +2,8 @@ package com.imsystem.service.customer;
 
 import java.util.List;
 
+import com.github.pagehelper.PageInfo;
+import com.imsystem.domain.QuoteVO;
 import com.imsystem.domain.Quotedprice;
 
 public interface QuotedPriceService {
@@ -40,5 +42,21 @@ public interface QuotedPriceService {
 	 * @return
 	 */
 	public List<Quotedprice> queryQuotedPriceByMoney(int price1,int price2);
+	
+	/**
+	 * 分页查询客户报价
+	 * @param cname 客户名称
+	 * @param gname  商品名称
+	 * @param curentPage  当前页
+	 * @return
+	 */
+	public List<QuoteVO> queryQuoteByPage(String cname,String gname,Integer curentPage);
 
+	/**
+	 * 修改报价价格
+	 * @param qid  报价id
+	 * @param price  报价价格
+	 * @return
+	 */
+	public int updatePrice(String qid,Double price);
 }

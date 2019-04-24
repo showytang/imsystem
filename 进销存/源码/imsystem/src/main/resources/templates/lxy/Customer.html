@@ -165,8 +165,8 @@
                                                 <td>{{o.balance}}</td>
                                                 <input type="hidden" :value="o.id" />
 
-                                                <td><a class="saleList">销售列表</a></td>
-                                                <td><a class="bill">应收对账单</a></td>
+                                                <td><a class="saleList" onclick="tosales(this)">销售列表</a></td>
+                                                <td><a class="bill" onclick="toincome(this)">应收对账单</a></td>
                                                 <td><a class="receive">收款</a></td>
                                                 <td><a class="detail" onclick="todetail(this)">查看详情</a></td>
                                                 <td><a class="del" onclick="deleteCustomer(this)" style="color: red;">删除</a></td>
@@ -178,8 +178,6 @@
                                 
                                 <!-- 分页 -->
                                 <div id="page">
-
-									
 
 								</div>
                             </div>
@@ -253,6 +251,20 @@
 	function deleteCustomer(th){
 		var id=$(th).parent().prev().prev().prev().prev().prev().val();
 		$("#customerForm").attr("action","deletecustomer?id="+id);
+		$("#customerForm").submit();
+	}
+	
+	/* 查看客户销售列表 */
+	function tosales(th){
+		var id=$(th).parent().prev().val();
+		$("#customerForm").attr("action","tocustomersalelist?id="+id);
+		$("#customerForm").submit();
+	}
+	
+	/* 查看客户应收对账单 */
+	function toincome(th){
+		var id=$(th).parent().prev().prev().val();
+		$("#customerForm").attr("action","tocustomerincome?id="+id);
 		$("#customerForm").submit();
 	}
 	

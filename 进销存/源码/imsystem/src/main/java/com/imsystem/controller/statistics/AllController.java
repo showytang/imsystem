@@ -94,8 +94,8 @@ public class AllController {
 	}
 	@RequestMapping("queryDaysAgo")
 	@ResponseBody
-	public List<Salesorder> queryDaysAgo(String storeid){
-		List<Salesorder> list = salesorderS.queryDaysAgo(storeid);
+	public List<Salesorder> queryDaysAgo(String storeid,String startTime,String endTime){
+		List<Salesorder> list = salesorderS.queryDaysAgo(storeid,startTime,endTime);
 		if (list.size()>0) {
 			for (Salesorder s : list) {
 				s.setList(gvs.queryByCode(s.getId()));
@@ -111,8 +111,8 @@ public class AllController {
 	 */
 	@RequestMapping("queryRanking")
 	@ResponseBody
-	public List<Salesorder> queryRanking(String startTime, String endTime){
-		List<Salesorder> list = salesorderS.queryRanking(startTime, endTime);
+	public List<Salesorder> queryRanking(String startTime, String endTime,String storeId){
+		List<Salesorder> list = salesorderS.queryRanking(startTime, endTime,storeId);
 		if (list.size()>0) {
 			for (Salesorder ss : list) {
 				Integer tedayMoney = salesorderS.queryTedayMoney(ss.getStoreid());

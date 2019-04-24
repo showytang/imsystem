@@ -129,5 +129,17 @@ public class CustomerController {
 		return "redirect:tocustomerlist";
 	}
 	
+	@RequestMapping("tocustomersalelist")
+	public String toCustomerSaleList(String id,Model model) {
+		model.addAttribute("cid", id);
+		return "wjh/salesorder";
+	}
+	
+	@RequestMapping("tocustomerincome")
+	public String toCustomerIncome(String id,Model model) {
+		model.addAttribute("cid", id);
+		return "yhb/shouzhang";
+	}
+	
 
 }
