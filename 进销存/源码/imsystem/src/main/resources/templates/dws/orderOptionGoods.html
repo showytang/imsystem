@@ -33,7 +33,7 @@
 			
 			#page {
 				width: 300px;
-				margin: 20px auto;
+				margin: 0px auto;
 			}
 			
 			.currentPage {
@@ -128,81 +128,13 @@
 				border-radius: 10px;
 			}
 		</style>
-		<script type="text/javascript" th:src="@{/assets/js/jquery-1.8.2.js}"></script>
+		<script type="text/javascript" th:src="@{/assets/js/jquery-1.8.3.js}"></script>
 		<script type="text/javascript" th:src="@{/assets/js/jquery.color.js}"></script>
 		<script type="text/javascript" th:src="@{/assets/js/page.js}"></script>
 		<script type="text/javascript" th:src="@{/assets/js/typeDonghua.js}"></script>
 		<script th:src="@{/assets/js/bootstrap.js}"></script>
+		<script th:src="@{/assets/js/vue.js}"></script>
 		<script type="text/javascript">
-			$(function() {
-				$(".activePosition").css("width", $(".activePosition").next().width());
-				//类型点击事件
-				$(".option-span").click(function() {
-					//动画
-					activeSpanStyle(this);
-
-				});
-
-				//详细类型点击事件
-				$(".option-span-z").click(function() {
-					optionAddStyle(this);
-					if($(this).parent().find(".active1").length == $(this).parent().find(".option-span-z").length) {
-
-						$(this).parent().find(".option-span-z").removeClass("active1");
-						$(this).parent().find(".option-span-z").animate({
-							backgroundColor: "",
-							color: "#000000"
-						}, 300);
-
-						$(this).parent().find(".option-span-all").addClass("active1");
-						$(this).parent().find(".option-span-all").animate({
-							backgroundColor: "#00AAFF",
-							color: "#ffffff"
-						}, 300);
-
-					}
-				});
-
-				$(".option-span-all").click(function() {
-					optionAllStyle(this);
-				});
-
-				//商品数量添加
-				$(".add").click(function() {
-
-					addSum(this);
-
-				});
-
-				//商品数量添加
-				$(".subtract").click(function() {
-
-					subtractSum(this);
-
-				});
-
-				//查看选中的商品
-				$(".ppp").toggle(function() {
-
-					$(this).parents(".panel").find(".option-body").slideDown(300);
-					$(this).removeClass("glyphicon-chevron-up");
-					$(this).addClass("glyphicon-chevron-down");
-
-				}, function() {
-
-					$(this).parents(".panel").find(".option-body").slideUp(300);
-					$(this).removeClass("glyphicon-chevron-down");
-					$(this).addClass("glyphicon-chevron-up");
-				});
-
-				//添加动画
-				$(".addgwc").click(function() {
-
-					//					addGwcDonghua(this);
-
-				});
-
-			});
 
 			//			function addGwcDonghua(Obj) {
 			//
@@ -290,7 +222,7 @@
 								<div class="col-xs-11 col-lg-12 col-md-12">
 									<div class="input-group">
 										<label class="input-group-addon">搜索:</label>
-										<input type="text" class="form-control" placeholder="请输入关键字">
+										<input type="text" id="liketext" class="form-control" placeholder="请输入关键字">
 
 										<span class="input-group-btn lg-md-span">
 					        <button class="btn btn-primary" type="button">确 定</button>
@@ -315,72 +247,10 @@
 
 						<!--大，中屏幕的样式-->
 						<div class="row visible-lg-block visible-md-block" style="margin: 0 3vh;">
-							<div class="option-div option-top-div row">
-								<div class="col-lg-1 col-md-1 text-right option-rongqi">
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型:</span>
-								</div>
-								<div class="col-lg-11 col-md-11 option-rongqi">
-									<span class="visible-lg-inline-block visible-md-inline-block visible-md-inline-block text-center activePosition option-span active1"></span>
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span activeColor">全部</span>
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span" typeid="">上衣</span>
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">裤子</span>
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔</span>
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">裙子</span>
-								</div>
-							</div>
-							<div class="option-div option-top-div row">
-								<div class="col-lg-1 col-md-1 text-right option-rongqi">
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型:</span>
-								</div>
-								<div class="col-lg-11 col-md-11 option-rongqi">
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span " typeid="">上衣</span>
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔裤</span>
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">破洞裤</span>
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">运动裤</span>
-								</div>
-							</div>
-							<div class="option-div option-top-div row">
-								<div class="col-lg-1 col-md-1 text-right option-rongqi">
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型:</span>
-								</div>
-								<div class="col-lg-11 col-md-11 option-rongqi">
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span " typeid="">上衣</span>
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">牛仔裤</span>
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">破洞裤</span>
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span">运动裤</span>
-								</div>
-							</div>
+							
+							<div id="goodstype"></div>
 
-							<div class="option-div row">
-								<div class="col-lg-1 col-md-1 text-right option-rongqi">
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">尺码:</span>
-								</div>
-								<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #00AAFF;">不限</span>
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">S</span>
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">M</span>
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">L</span>
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">XL</span>
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">XL</span>
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">XXL</span>
-								</div>
-							</div>
-
-							<div class="option-div row">
-								<div class="col-lg-1 col-md-1 text-right option-rongqi">
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">颜色:</span>
-								</div>
-								<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #00AAFF;">不限</span>
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">浅粉色</span>
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">卡其色</span>
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">藏青色</span>
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">藕色</span>
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">杏色</span>
-									<span class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="">绿棕色</span>
-								</div>
-							</div>
+							<div id="typeoption"></div>
 
 						</div>
 
@@ -391,22 +261,32 @@
 
 							<div class="row">
 
-								<div class="col-sm-6 col-md-3">
+								<div  v-for="(item,index) in pageIf.list" class="col-sm-6 col-md-3">
 									<div class="thumbnail">
-										<img style="max-height: 20vh;min-height: 20vh;" src="../assets/img/login-bg.jpg" alt="...">
+									<img v-if="item.goodsValue.column1 == null || item.goodsValue.column1==''" style="max-height: 20vh; min-height: 20vh;"
+										:src="'data:image/png;base64,'+item.goods.img" alt="...">
+									<img v-else style="max-height: 20vh; min-height: 20vh;"
+										:src="item.goodsValue.column1" alt="...">
+										
 										<div class="caption text-center">
-											<h4>这是上衣啊</h4>
+											<h4>{{item.goods.name}}</h4>
+										<p style="color: #777070;">
+											<span>{{item.goods.column2}}&nbsp;</span><span>{{item.goodsValue.name}}</span> <span>￥: {{item.goods.price}}</span>
+										</p>
+										<p v-if="item.goods.column1 == null" style="color: #777070;">
+											<span>库存：</span> <span >0</span>
+										</p>
+										<p v-else-if="item.goods.column1 < item.goods.minsecurity" style="color: #777070;">
+											<span>库存：</span> <span style="color: red;">{{item.goods.column1}}</span>
+										</p>
+										<p v-else-if="item.goods.column1 > item.goods.minsecurity" style="color: #777070;">
+											<span>库存：</span> <span >{{item.goods.column1}}</span>
+										</p>
 											<p style="color: #777070;">
-												<span>红色,L</span> <span>￥：1800</span>
-											</p>
-											<p style="color: #777070;">
-												<span>库存:</span> <span>100</span>
-											</p>
-											<p style="color: #777070;">
-												<div class="input-group">
-													<label class="add btn btn-default btn-xs" style="margin-right: 5px;">+</label>
+												<div class="input-group" style="margin: 0 auto;">
+													<label class="add btn btn-default btn-xs" onclick="addSum(this)" style="margin-right: 5px;">+</label>
 													<input type="text" value="1" maxlength="3" oninput="countChange(this)" class="text-center sum">
-													<label style="margin-left: 5px;" class="subtract btn btn-default btn-xs">-</label>
+													<label style="margin-left: 5px;"  onclick="subtractSum(this)" class="subtract btn btn-default btn-xs">-</label>
 												</div>
 											</p>
 											<p>
@@ -418,18 +298,10 @@
 
 							</div>
 
-							<div id="page" style="margin-bottom: 45px;">
-								<ul>
-									<li class="pagebtn pagePrev"><span class="glyphicon glyphicon-menu-left"></span></li>
-									<li class="pagebtn currentPage pageCurrent pageq">1</li>
-									<li class="pagebtn pageCurrent pageq">2</li>
-									<li class="pagebtn pageCurrent pageq">3</li>
-									<li class="pagebtn" id="pageDian" style="border: none;background: white;font-size: 20px;">...</li>
-									<li class="pagebtn pageCurrent pageDi">14</li>
-									<li class="pagebtn pageCurrent">15</li>
-									<li class="pagebtn pageCurrent">16</li>
-									<li class="pagebtn pageNext"><span class="glyphicon glyphicon-menu-right"></span></li>
-								</ul>
+							<div id="page" style="margin-bottom: 60px;">
+							
+							
+							
 							</div>
 
 						</div>
@@ -488,6 +360,297 @@
 				</div>
 			</div>
 		</div>
+		
+		<script type="text/javascript"  th:inline="javascript">
+
+var vue = new Vue({
+	
+	el:".main",
+	data:{
+		
+		pageIf:""
+		
+	}
+	
+});
+
+/**
+ * 类型全选
+ */
+function typeAll(obj){
+	
+	activeSpanStyle(obj);
+	var ind = $(obj).parent().parent().index();
+	$(".option-top-div:gt("+ind+")").remove();
+	$("#typeoption").html("");
+	
+	var tid = $(obj).attr("id");
+	
+	queryGoods(1,[],tid);
+	
+}
+
+/*
+*商品类型查询
+*id 父级id
+*/
+function queryGoodsTypeByPid(obj,id,op){
+	var bool =  activeSpanStyle(obj,op);
+	
+	if(!bool){
+		
+		return;
+		
+	}
+	
+	$.ajax({
+		
+		url:[[@{/goods/queryGoodsTypeByPid}]],
+		dataType:"json",
+		data:{"id":id},
+		type:"post",
+		success:function(data){
+			
+		 	var ind = $(obj).parent().parent().index();
+			$(".option-top-div:gt("+ind+")").remove()
+			
+			if(data.length > 0){
+					
+				
+				var div = $('<div class="option-div option-top-div row">');
+				var divtitle = $('<div class="col-lg-1 col-md-1 text-right option-rongqi"><span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">类型</span></div>');
+				div.append(divtitle);
+				var divoption = $('<div class="col-lg-11 col-md-11 option-rongqi">');
+				div.append(divoption);
+				
+				var activc = $('<span class="visible-lg-inline-block visible-md-inline-block visible-md-inline-block text-center activePosition option-span active1">');
+				divoption.append(activc);
+				
+				var all = $('<span onclick="typeAll(this)"  class="visible-lg-inline-block visible-md-inline-block text-center option-span activeColor">全部</span>');
+				divoption.append(all);
+				
+				$.each(data,function(){
+					all.attr("id",this.pid);
+					var option = $('<span onclick="queryGoodsTypeByPid(this,'+this.id+',false,)" class="visible-lg-inline-block visible-md-inline-block text-center option-span" id="'+this.id+'">'+this.name+'</span>');
+					divoption.append(option);
+					
+				});
+				
+				$("#goodstype").append(div);
+			}
+			
+		} 
+		
+	});
+	 $.ajax({
+		
+		url:[[@{/goods/queryGoodsStandradByid}]],
+		dataType:"json",
+		data:{"id":id},
+		type:"post",
+		success:function(data){
+		 	
+			$("#typeoption").html("");	
+			
+				$.each(data,function(index,obj){
+					
+					var div = $('<div class="option-div option-type row">');
+					$("#typeoption").append(div);
+					
+					var divtitle = $('<div class="col-lg-1 col-md-1 text-right option-rongqi"><span class="visible-lg-inline-block visible-md-inline-block text-center option-span-title">'+obj.name+'</span> </div>')
+					div.append(divtitle);
+					
+					var divmain = $('<div class="col-lg-11 col-md-11 col-md-11 option-rongqi">');
+					div.append(divmain);
+					
+					var spanall = $('<span onclick="typePojo(this)" class="visible-lg-inline-block visible-md-inline-block text-center option-span-all activeColor" style="background-color: #00AAFF;">不限</span>')
+					divmain.append(spanall);
+					$.each(obj.stabndardValueList,function(ind,item){
+						
+						var span = $('<span onclick="optionCheck(this)" class="visible-lg-inline-block visible-md-inline-block text-center option-span-z" sizeid="'+item.id+'">'+item.name+'</span>')
+						divmain.append(span);
+						
+					})
+					
+				})
+				
+		}  
+		
+	}); 
+	 
+	 queryGoods(1,[],id);
+	 
+	
+}
+
+function typePojo(obj){
+	
+	optionAllStyle(obj);
+	pojolike();
+	
+}
+
+/**
+ * 分页点击事件
+ */
+function floatPage(){
+	
+	queryGoods($('.currentPage').text(),[],0);
+	
+}
+
+
+function optionCheck(obj){
+	
+	optionAddStyle(obj);
+	
+	pojolike();
+	
+	if ($(obj).parent().find(".active1").length == $(obj)
+			.parent().find(".option-span-z").length) {
+
+		$(obj).parent().find(".option-span-z").removeClass(
+				"active1");
+		$(obj).parent().find(".option-span-z").animate({
+			backgroundColor : "",
+			color : "#000000"
+		}, 300);
+
+		$(obj).parent().find(".option-span-all").addClass(
+				"active1");
+		$(obj).parent().find(".option-span-all").animate({
+			backgroundColor : "#00AAFF",
+			color : "#ffffff"
+		}, 300);
+
+	}
+
+	
+}
+
+
+
+	function queryGoods(curPage,svid,tid){
+		
+		var liketext = $("#liketext").val();
+		$.ajax({
+			url:[[@{/goods/queryGoodsLikeAll}]],
+			type:"post",
+			data:{
+				"curPage":curPage,
+				"liketext":liketext,
+				"svid":svid.join(','),
+				"tid":tid
+			},
+			dataType:"json",
+			success:function(data){
+				
+				vue.pageIf = data;
+				
+				page(vue);
+				console.log(vue.pageIf);
+				
+			}
+		});
+		
+	}
+	
+	//搜索框联动
+	function textlike(obj){
+		
+		var tid = $("#goodstype .option-div:last").find(".activeColor").attr('id');
+		
+		var svid = 0;
+		
+		 queryGoods(1,[],tid);
+		
+	}
+	
+	
+	//类型值联动
+	function pojolike(){
+		
+		var svid = [];
+		
+		$("#typeoption .option-type").each(function(index,item){
+		
+			console.log($(item).find(".option-span-all").hasClass("active1"))
+			
+			if($(item).find(".option-span-all").hasClass("active1")){
+			
+				$(item).find('span').each(function(){
+					
+				svid.push($(this).attr('sizeid'));
+					
+				});
+				
+				console.log(svid)
+				
+			}else{
+				
+				$(item).find('.active1').each(function(){
+					
+					svid.push($(this).attr('sizeid'));
+					
+				});
+				
+				
+			}
+			
+		});
+		
+		queryGoods(1,svid,0);
+		
+	}
+	
+
+
+	$(function() {
+		
+		queryGoodsTypeByPid(null,0,true);
+		
+		 queryGoods(1,[],0);
+		
+
+			//商品数量添加
+			$(".add").click(function() {
+
+				addSum(this);
+
+			});
+
+			//商品数量减少
+			$(".subtract").click(function() {
+
+				subtractSum(this);
+
+			});
+
+			//查看选中的商品
+			$(".ppp").toggle(function() {
+
+				$(this).parents(".panel").find(".option-body").slideDown(300);
+				$(this).removeClass("glyphicon-chevron-up");
+				$(this).addClass("glyphicon-chevron-down");
+
+			}, function() {
+
+				$(this).parents(".panel").find(".option-body").slideUp(300);
+				$(this).removeClass("glyphicon-chevron-down");
+				$(this).addClass("glyphicon-chevron-up");
+			});
+
+			//添加动画
+			$(".addgwc").click(function() {
+
+				//					addGwcDonghua(this);
+
+			});
+
+		 
+	});
+</script>
+		
 	</body>
 
 </html>
