@@ -243,29 +243,14 @@
 											<div class="col-xs-8">
 												<div class="input-group">
 													<span class="input-group-addon" id="basic-addon1">姓名</span>
-													<input type="text" class="form-control"
-														placeholder="Username" aria-describedby="basic-addon1">
+													<input type="text" class="form-control" @keyup.enter="code"
+														placeholder="Username" id="supplierName" aria-describedby="basic-addon1">
 												</div>
 											</div>
 										</div>
 										<div>
 											<ul class="model-list">
-												<li>laowangsss</li>
-												<li>laowangsss</li>
-												<li>laowangsss</li>
-												<li>laowangsss</li>
-												<li>laowangsss</li>
-												<li>laowangsss</li>
-												<li>laowangsss</li>
-												<li>laowangsss</li>
-												<li>laowangsssasdfasdf</li>
-												<li>laowangsss</li>
-												<li>laowangsss</li>
-												<li>laowangsss</li>
-												<li>laowangsss</li>
-												<li>laowangsss</li>
-												<li>laowangsss</li>
-												<li>laowangsss</li>
+												<li v-for="item in supplierList" :data="item.id">{{item.name}}</li>
 											</ul>
 										</div>
 									</div>
@@ -345,11 +330,17 @@
 				
 				shappinglist : [],
 				
+				supplierList : [],
+				
 				givemeId:"",
 				
 				typeId:""
 			},
 			methods:{
+				
+				code : function(){
+					supplier();
+				}
 				
 			}
 			
@@ -360,6 +351,26 @@
 		vue.supplierlist = [[${supplierlist}]];
 		
 		vue.shappinglist = [[${shappinglist}]];
+
+		function supplier(){
+			
+			$.ajax({
+				
+				url : [[@{/orderQueryController/querySupper}]],
+				
+				data : {
+					name : $("#supplierName").val()
+				},
+				type : "post",
+				dataType : "json",
+				success:function(result){
+					vue.supplierList = result;
+				}
+				
+			});
+			
+		}
+		
 		function posi(index, index1) {
 			var height = $(
 					".list-inline:eq(" + index1 + ")>li:eq(" + index + ")")
@@ -588,6 +599,7 @@
 		}
 		function giveme(){
 			$(".fade").modal("show");
+			supplier();
 		}
 	</script>
 	

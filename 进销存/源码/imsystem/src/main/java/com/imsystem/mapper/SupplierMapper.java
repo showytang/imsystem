@@ -7,6 +7,10 @@ import org.apache.ibatis.annotations.Param;
 
 public interface SupplierMapper {
 	
+	public List<Supplier> queryDealOrderSupplier(String storeid);
+	
+	List<Supplier> queryByName(String name);
+	
 	int updateBalanceJia(Supplier supper);
 	
 	int updateBalancejian(Supplier supper);

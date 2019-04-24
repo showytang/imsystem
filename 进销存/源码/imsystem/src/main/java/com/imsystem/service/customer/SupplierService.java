@@ -53,5 +53,21 @@ public interface SupplierService {
 	 */
 	public PageInfo<Supplier> querySupplierList(Double zero,String content,Integer curentPage);
 
+	/**
+	 * 查询最经交易的供应商
+	 * @Description:TODO 王军辉
+	 * @param storeid 门店id
+	 * @return
+	 */
+	public List<Supplier> queryDealOrderSupplier(String storeid);
+	
+	/**
+	 * 根据name模糊查
+	 * @Description:TODO 王军辉
+	 * @param name 名称
+	 * @return
+	 */
+	public List<Supplier> queryByName(String name);
+	
 
 }
