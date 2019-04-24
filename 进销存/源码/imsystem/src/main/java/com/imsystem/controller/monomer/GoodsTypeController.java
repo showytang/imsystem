@@ -1,5 +1,7 @@
 package com.imsystem.controller.monomer;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.web.PageableArgumentResolver;
 import org.springframework.stereotype.Controller;
@@ -21,7 +23,9 @@ public class GoodsTypeController {
 	
 	
 	@RequestMapping("querygoods")
-	public String querygoods() {
+	public String querygoods(Model model) {
+		List<Goodstype> list=goods.querybypid();
+		model.addAttribute("list", list);
 		return "xl/spleixing";
 	}
 	

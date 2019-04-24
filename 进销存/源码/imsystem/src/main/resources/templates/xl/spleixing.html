@@ -107,12 +107,14 @@
 							<tr v-for="(temp,index) in pageIf.list">
 							 	<td v-text="temp.id"></td>
 								<td v-text="temp.name"></td>
+								 <!-- <td v-text="temp.pid"></td> -->
 								
-								<td v-text="temp.pid"></td>
+								 <td v-for="(te,index) in pageIf.list2" v-if="te.pid==temp.pid" v-text="te.name"></td>  
+								
 								
 								<td v-text="formatDate(temp.time)"></td>
 								<td v-text="formatDate(temp.updatetime)"></td> 
-								<td v-text="temp.uid"></td>
+								<td v-text="temp.uname"></td>
 								
 								<td style="padding-left: 0px; padding-right: 40px" >
 									<input type="button" value="修改"  id="open" class="an open" @click="open(temp.id)">
@@ -193,8 +195,13 @@
 										  	</div>
 										  	<div class="form-group">
 										    	<label for="InName" class="col-sm-3 control-label">上层类型编号</label>
-											    <div class="col-sm-9">
+											    <!-- <div class="col-sm-9">
 											      <input type="text" class="form-control" id="Inpid">
+											    </div> -->
+											    <div class="col-sm-9">
+											      <select id="Inpid">
+											      		<option  th:each="item:${list}"  th:text="${item.name}" th:value="${item.id}"></option>
+											      </select>
 											    </div>
 										  	</div>
 										  	
@@ -240,8 +247,13 @@
 										  	</div>
 										  	<div class="form-group">
 										    	<label for="inputPassword3" class="col-sm-3 control-label">上层类型编号</label>
-											    <div class="col-sm-9">
+											   <!--  <div class="col-sm-9">
 											      <input type="text" class="form-control up3" id="inputPassword3">
+											    </div> -->
+											    <div class="col-sm-9">
+											      <select class="up3">
+											      		<option  th:each="item:${list}"  th:text="${item.name}" th:value="${item.id}"></option>
+											      </select>
 											    </div>
 										  	</div>
 										  	
