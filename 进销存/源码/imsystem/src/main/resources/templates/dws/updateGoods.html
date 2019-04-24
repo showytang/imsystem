@@ -678,16 +678,19 @@ td input {
 				});
 			}
 		});
-		
-		 var result = [];
-		     var obj = {};
+		// 大于3 表示可能有重复
+		if(svids.length > 2){
+			
+		 	var result = [];
+		    var obj = {};
 		    for(var i =0; i<svids.length; i++){
-		        if(!obj[svids[i].sid]){
+		        if(!obj[svids[i].gvid]){
 		           result.push(svids[i]);
-		           obj[svids[i].sid] = true;
+		           obj[svids[i].gvid] = true;
 		        }
 		     }		
-		svids = result;
+			svids = result;
+		}
 		
 		return svids;
 	}
@@ -1197,7 +1200,8 @@ function jhChange(obj){
 								
 								//价格input
 								$.each(svids[pk].gv.goodsPrices,function(inx,obj){
-									tr.find(".customerprick").attr("ctid",obj.id);
+									tr.find(".customerprick").attr("id",obj.id);
+									tr.find(".customerprick").attr("ctid",obj.ctid);
 									tr.find(".customerprick").attr("viewname",obj.sufname);
 									tr.find(".customerprick").val(obj.price);
 								});
@@ -1223,7 +1227,6 @@ function jhChange(obj){
 						indexRow += x1;
 						appendIdUP(td);
 						var tr = td.parent();
-						
 						for(var pk = 0;pk < svids.length;pk++){
 							if(svids[pk].svid == tr.find("[type=hidden]").val()){
 								
@@ -1238,7 +1241,8 @@ function jhChange(obj){
 								
 								//价格input
 								$.each(svids[pk].gv.goodsPrices,function(inx,obj){
-									tr.find(".customerprick").attr("ctid",obj.id);
+									tr.find(".customerprick").attr("id",obj.id);
+									tr.find(".customerprick").attr("ctid",obj.ctid);
 									tr.find(".customerprick").attr("viewname",obj.sufname);
 									tr.find(".customerprick").val(obj.price);
 									
@@ -1273,8 +1277,7 @@ function jhChange(obj){
 			tr.find("[type=hidden]").attr("vm",t.attr("m") + "," + m);
 			
 		}
-		
-		for(var pk = 0;pk < svids.length;pk++){
+		 for(var pk = 0;pk < svids.length;pk++){
 			if(svids[pk].svid == tr.find("[type=hidden]").val()){
 				
 				tr.find(".hinp").attr("gvid",svids[pk].gv.id);
@@ -1288,14 +1291,15 @@ function jhChange(obj){
 				
 				//价格input
 				$.each(svids[pk].gv.goodsPrices,function(inx,obj){
-					tr.find(".customerprick").attr("ctid",obj.id);
+					tr.find(".customerprick").attr("id",obj.id);
+					tr.find(".customerprick").attr("ctid",obj.ctid);
 					tr.find(".customerprick").attr("viewname",obj.sufname);
 					tr.find(".customerprick").val(obj.price);
 				});
 				
 			}
 			
-		}
+		} 
 		
 		
 	}

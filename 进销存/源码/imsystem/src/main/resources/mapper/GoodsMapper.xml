@@ -139,21 +139,21 @@ SELECT
 	FROM goods AS gs
 	INNER JOIN `goodsvalue` AS gv
 	ON gv.`gid` = gs.`id`
-	INNER JOIN `goodsstandardvalue` AS gdv
+	LEFT JOIN `goodsstandardvalue` AS gdv
 	ON gdv.vid = gv.`id`
-	INNER JOIN `standardvalue` AS sv
+	LEFT JOIN `standardvalue` AS sv
 	ON gdv.`svid` = sv.`id`
-	INNER JOIN `standard` AS s
+	LEFT JOIN `standard` AS s
 	ON s.`id` = sv.`sid`
-	INNER JOIN `goodstype` AS gt
+	LEFT JOIN `goodstype` AS gt
 	ON gt.`id` = s.`tid`
-	INNER JOIN `goodsprice` AS gp
+	LEFT JOIN `goodsprice` AS gp
 	ON gp.`gvid` = gv.`id`
 	LEFT JOIN `img` AS im
 	ON gs.`id` = im.`gid` 
 	LEFT JOIN `stockdetails` AS sd
 	ON gv.`id` = sd.`gvid` 
-	WHERE gv.`gid` = (SELECT gid FROM `goodsvalue` WHERE id = #{id}) AND gv.`defaultvalue` = 0 AND gs.`state` = 0
+	WHERE gv.`gid` = (SELECT gid FROM `goodsvalue` WHERE id = #{id}) AND gs.`state` = 0
 	  	
   
   </select>
