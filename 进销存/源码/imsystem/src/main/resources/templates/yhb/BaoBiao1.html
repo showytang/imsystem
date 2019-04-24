@@ -159,7 +159,6 @@
 	var storeId = getStoreId();
 	 $(function(){
 		 var img1 = queryDaysAgo(storeId,startTime_,endTime_);
-		 console.log(img1);
 			showView(img1);
 			
 			$(document).on(
@@ -204,7 +203,7 @@
 							g.append(goods);
 						});
 					}else{
-						$(".panel-body")
+						g
 						.append("<div class='col-md-12 goods animated bounceInLeft delay-1s notValue'><div class='good'><h3 style='text-align:center;line-height:70px;color:#C1E2B3;'>暂无数据~ ~</h3></div></div>");
 					}
 					$(".panel-body").append(title);
