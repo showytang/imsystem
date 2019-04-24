@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 
 public interface SalesbackdetailsMapper {
 	
+	List<Salesbackdetails> query(String id);
+	
 	int add(Salesbackdetails sales);
 	
     int countByExample(SalesbackdetailsExample example);

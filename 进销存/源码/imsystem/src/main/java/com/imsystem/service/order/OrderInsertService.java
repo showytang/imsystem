@@ -27,4 +27,6 @@ public interface OrderInsertService {
 	
 	int inserorderDesc(Vector<Salesdetails> salesdetails);
 	
+	int UpdateSalesOrder(@RequestBody Salesorder sales);
+	
 }

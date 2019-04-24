@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Sales;
+import com.imsystem.domain.Salesback;
 import com.imsystem.domain.Salesorder;
 import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
@@ -26,5 +27,7 @@ public interface OrderQueryService {
 	Salesorder salesOrderById(String id);
 	
 	PageInfo<Sales> OrderOver(String code,String endTime,String time,Integer currentPage);
+
+	PageInfo<Salesback> orderDescQuery(Salesback back);
 	
 }

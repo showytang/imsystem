@@ -289,7 +289,8 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 											v-on:click="openModel(item.id)"
 											class="glyphicon glyphicon-edit"></span> <span
 											v-on:click="showAlert(item.id)" style="margin: auto;"
-											v-if="item.progress != 2" title="确认订单" class="glyphicon glyphicon-ok"></span>
+											v-if="item.progress != 2" title="确认订单"
+											class="glyphicon glyphicon-ok"></span>
 									</div>
 								</td>
 							</tr>
@@ -317,8 +318,8 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 								<span style="font-size: 13px; color: #DDDDDD;">点击数量可修改</span>
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal">关闭</button>
-								<button type="button" class="btn btn-primary" id="insertOk"
-									data-dismiss="modal">确定</button>
+								<button type="button" class="btn btn-primary"
+									v-on:click="updateSalesOrder" data-dismiss="modal">确定</button>
 							</div>
 						</div>
 					</div>
@@ -411,9 +412,50 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 						
 						$("#alertOk").show();
 						
+					},
+					updateSalesOrder : function(){
+						
+						var iframe = $("iframe").contents();
+						
+						var shappingBody = iframe.find("#shappingTbody");
+						
+						var salesOrder = {
+								id : $("#myModalLabel").find("span").text(),
+								list1 : []
+								
+						};
+						
+						$(shappingBody.find("tr")).each(function(i,e){
+							var salesOrderDetails = {
+									id : $(e).find(".salesOrderId").attr("data"),
+									count : $(e).find("input").val(),
+							}
+							
+							salesOrder.list1.push(salesOrderDetails);
+						});
+						
+						$.ajax({
+						    
+						    url : [[@{/insertOrder/updateSalesOrder}]],
+
+						    data : JSON.stringify(salesOrder),
+
+						    type : "post",
+
+						    dataType : "json",
+						    
+						   	contentType : "application/json; charset=UTF-8",							
+						    processData: false,
+						    
+						    success:function(result){
+								alerts("修改成功")
+						    }
+						})
+						
 					}
 				},
 				watch : {
+					
 				}
 			});
 			
