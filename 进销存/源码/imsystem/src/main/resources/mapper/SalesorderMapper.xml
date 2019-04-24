@@ -562,7 +562,7 @@
 			<if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
 				`TIME` >= DATE_FORMAT(#{startTime},'%Y-%m-%d 00:00:00') AND `TIME` &lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d 23:59:59')
 			</if>
-			<if test="startTime == null and startTime == '' and endTime == null and endTime == ''">
+			<if test="startTime == null or startTime == '' or endTime == null or endTime == ''">
 				DATE_SUB(CURDATE(), INTERVAL 6 DAY) &lt;= DATE(`time`)
 			</if>
 		<if test="storeid != null and storeid != ''">

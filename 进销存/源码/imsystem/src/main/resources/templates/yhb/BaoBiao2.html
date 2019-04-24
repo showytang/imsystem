@@ -48,7 +48,7 @@
 				<div class="container-fluid">
 					<div class="panel panel-headline">
 						<div class="panel-heading">
-							<h3 class="panel-title">报表 - 1</h3>
+							<h3 class="panel-title">利润报表</h3>
 							<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
 						</div>
 						<div class="panel-body">
@@ -125,6 +125,7 @@
 		var storeId = getStoreId();
 		 $(function(){
 			 $("#year").attr("value",getThisYear());
+				$(".panel-subtitle").text("Period: "+$("#year").val()+" 年");
 			 var img3 = queryThisYear(getThisYear(),storeId);
 			 showView(img3);
 			 $("#year").change(function(){
@@ -161,7 +162,7 @@
 								g.append(goods);
 						});
 					}else{
-						$(".panel-body")
+						g
 						.append("<div class='col-md-12 goods animated bounceInLeft delay-1s notValue'><div class='good'><h3 style='text-align:center;line-height:70px;color:#C1E2B3;'>暂无数据~ ~</h3></div></div>");
 					}
 					$(".panel-body").append(title);
