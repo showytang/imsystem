@@ -30,6 +30,7 @@
 		<script>
 			$(function(){
 				myDate();
+				$(".panel-subtitle").text("Period: "+$("#config-demo").val());
 				$(window).resize(function(){
 					var width = parseInt($(".good").width());
 					var span = $(".js").children("span");

@@ -121,6 +121,7 @@
 	vue.sid = sid;
 	$(function() {
 		myDate();
+		$(".panel-subtitle").text("Period: "+$("#config-demo").val());
 		vue.page = queryQianKuan("", "", "", sid);
 		if(sid == ""){
 			vue.store = queryStore();

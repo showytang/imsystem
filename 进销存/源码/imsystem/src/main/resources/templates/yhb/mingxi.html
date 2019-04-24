@@ -116,6 +116,7 @@
 	
 	$(function() {
 		myDate();
+		$(".panel-subtitle").text("Period: "+$("#config-demo").val());
 		vue.goods = queryGoods();
 		var month = getThisYear()
 				+ "-"
