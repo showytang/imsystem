@@ -12,6 +12,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Sales;
+import com.imsystem.domain.Salesback;
 import com.imsystem.domain.Salesorder;
 import com.imsystem.domain.SalesorderExample;
 import com.imsystem.domain.SalesorderExample.Criteria;
@@ -20,6 +21,7 @@ import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Stockrecord;
 import com.imsystem.domain.Store;
 import com.imsystem.mapper.SalesMapper;
+import com.imsystem.mapper.SalesbackMapper;
 import com.imsystem.mapper.SalesorderMapper;
 import com.imsystem.mapper.StockMapper;
 import com.imsystem.mapper.StockdetailsMapper;
@@ -44,6 +46,9 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	
 	@Autowired
 	SalesMapper salesMapper;
+	
+	@Autowired
+	SalesbackMapper backMap;
 	
 	@Override
 	public PageInfo<Stock> queryStock(String code,String time,String endTime,Integer currentPage,Integer pageSize,String order,Integer kucun) {
@@ -120,6 +125,21 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		Page<Sales> page = PageHelper.startPage(currentPage, 10, true);
 		
 		salesMapper.query(code, time, endTime);
+		
+		return page.toPageInfo();
+	}
+
+	@Override
+	public PageInfo<Salesback> orderDescQuery(Salesback back) {
+		// TODO Auto-generated method stub
+		
+		if(back.getColumn1() == null || back.getColumn1() == "" ) {
+			back.setColumn1("1");
+		}
+		
+		Page<Salesback> page = PageHelper.startPage(Integer.parseInt(back.getColumn1()), 10, true);
+
+		backMap.orderDescQuery(back);
 		
 		return page.toPageInfo();
 	}

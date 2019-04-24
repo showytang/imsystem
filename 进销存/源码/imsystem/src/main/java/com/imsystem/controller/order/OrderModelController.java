@@ -58,4 +58,11 @@ public class OrderModelController {
 		
 		return "wjh/salesOrderDetsils";
 	}
+	@RequestMapping("/orderDescModel")
+	public String orderDescModel(Model model,String id) {
+		
+		model.addAttribute("list", ordermodalservice.orderDescQuery(id));
+		
+		return "wjh/orderDescDetails";
+	}
 }

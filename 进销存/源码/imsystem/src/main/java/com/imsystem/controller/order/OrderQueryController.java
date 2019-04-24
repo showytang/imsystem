@@ -5,11 +5,14 @@ import java.util.Vector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Sales;
+import com.imsystem.domain.Salesback;
 import com.imsystem.domain.Salesorder;
 import com.imsystem.domain.Salesorderdetails;
 import com.imsystem.domain.Stock;
@@ -156,5 +159,10 @@ public class OrderQueryController {
 		
 		return orderquery.OrderOver(code, endTime, time, currentPage);
 	}
-
+	
+	@RequestMapping("/toderDescQuery")
+	@ResponseBody
+	public PageInfo<Salesback> orderDescQuery(@RequestBody Salesback back){
+		return orderquery.orderDescQuery(back);
+	}
 }

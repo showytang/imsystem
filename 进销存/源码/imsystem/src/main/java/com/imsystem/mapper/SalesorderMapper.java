@@ -9,6 +9,8 @@ import org.apache.ibatis.annotations.Param;
 
 public interface SalesorderMapper {
 	
+	int updateCount(String id); 
+	
 	int updatePregress(@Param("id") String id,@Param("zhi") String zhi);
 	
 	Vector<Salesorder> querySalesOrder (Salesorder sales);

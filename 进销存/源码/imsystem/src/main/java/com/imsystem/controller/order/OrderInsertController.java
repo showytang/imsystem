@@ -6,6 +6,7 @@ import java.util.Vector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -185,6 +186,13 @@ public class OrderInsertController {
 	public String inserorderDesc(@RequestBody Vector<Salesdetails> salesdetails) {
 				
 		return orderInsert.inserorderDesc(salesdetails)+"";
+	}
+	
+	@RequestMapping("/updateSalesOrder")
+	@ResponseBody
+	public String UpdateSalesOrder(@RequestBody Salesorder sales) {
+		
+		return orderInsert.UpdateSalesOrder(sales)+"";
 	}
 	
 	

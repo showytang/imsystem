@@ -101,11 +101,11 @@
 						<table class="table table-striped">
 						<thead>
 							<tr>
-								<th>单位ID</th>
+								
 								<th>单位名称</th>
 								<th>创建时间</th>
 								<th>最后修改时间</th>
-								<th>操作人编号</th>
+								<th>操作人</th>
 								
 								<th style="padding-left: 0px; padding-right: 40px">操作</th>
 							</tr>
@@ -128,11 +128,11 @@
 							</tr> -->
 							
 							<tr v-for="(temp,index) in pageIf.list">
-							 	<td v-text="temp.id"></td>
+							 	
 								<td v-text="temp.name"></td>
 								<td v-text="temp.time"></td>
 								<td v-text="formatDate(temp.updatetime)"></td>
-								<td v-text="temp.uid"></td>
+								<td v-text="temp.uname"></td>
 								
 								<td style="padding-left: 0px; padding-right: 40px" >
 									<a v-on:click="open(temp.id)"><input type="button" value="修改"  id="open" class="an open"></a>
@@ -171,12 +171,7 @@
 								        	
 										<form class="form-horizontal">
 											
-											<div class="form-group">
-										    	<label for="InSname" class="col-sm-3 control-label">单位id</label>
-											    <div class="col-sm-9">
-											    	<input type="text" class="form-control" id="dwid">
-											    </div>
-										  	</div>
+											
 										  	<div class="form-group">
 										    	<label for="InSname" class="col-sm-3 control-label">单位名称</label>
 											    <div class="col-sm-9">
@@ -357,14 +352,12 @@
 	$(function(){
 		
 		 $("#tijiao").click(function(){
-			var id=$("#dwid").val();
 			var name=$("#dwmc").val();
 			var uid=$("#bianhao").val();
-
 			$.ajax({
 				url:"/bit/insert",
 				data:{
-					id:id,
+					
 					name:name,
 					uid:uid
 					},

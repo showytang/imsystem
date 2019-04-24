@@ -64,8 +64,8 @@ function page(data) {
 	var bool = pages > 6 ? true : false;
 
 	var ul = $("<ul>"
-			+ "<li class=\"pagebtn pagePrev\" onclick=\"prevPage()\"><span"
-			+ "class=\"glyphicon glyphicon-menu-left\"></span></li>"
+			+ "<li class=\"pagebtn pagePrev glyphicon glyphicon-menu-left\" onclick=\"prevPage()\"><span"
+			+ "></span></li>"
 			+ "<li onclick=\"currentPage(this)\" class=\"pagebtn  pageCurrent pageq\">1</li>"
 			+ "<li onclick=\"currentPage(this)\" class=\"pagebtn pageCurrent pageq\">2</li>"
 			+ "<li onclick=\"currentPage(this)\" class=\"pagebtn pageCurrent pageq\">3</li>"
@@ -74,8 +74,8 @@ function page(data) {
 			+ "<li onclick=\"currentPage(this)\" class=\"pagebtn pageCurrent pageDi\">14</li>"
 			+ "<li onclick=\"currentPage(this)\" class=\"pagebtn pageCurrent\">15</li>"
 			+ "<li onclick=\"currentPage(this)\" class=\"pagebtn pageCurrent\">16</li>"
-			+ "<li class=\"pagebtn pageNext\" onclick=\"nextPage()\"><span"
-			+ "class=\"glyphicon glyphicon-menu-right\"></span></li>" + "</ul>");
+			+ "<li class=\"pagebtn pageNext glyphicon glyphicon-menu-right\" onclick=\"nextPage()\"><span"
+			+ "></span></li>" + "</ul>");
 
 	if (pages > 6) {
 
