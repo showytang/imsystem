@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
+import com.imsystem.domain.Customer;
 import com.imsystem.domain.Sales;
 import com.imsystem.domain.Salesback;
 import com.imsystem.domain.Salesorder;
@@ -21,8 +22,10 @@ import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Stockrecord;
 import com.imsystem.domain.Store;
 import com.imsystem.domain.Supplier;
+import com.imsystem.service.customer.CustomerService;
 import com.imsystem.service.customer.SupplierService;
 import com.imsystem.service.order.OrderQueryService;
+import com.imsystem.service.setup.StoreService_c;
 
 @Controller
 @RequestMapping("/orderQueryController")
@@ -33,33 +36,17 @@ public class OrderQueryController {
 	
 	@Autowired
 	SupplierService supplier;
+	
+	@Autowired
+	CustomerService curstomerservice;
 
+	@Autowired
+	StoreService_c store;
+	
 	@RequestMapping("/toQuery")
 	public String toQuery() {
 
 		return "wjh/index";
-	}
-
-	public Vector<Store> store() {
-
-		Vector<Store> store = new Vector<Store>();
-
-		Store sto = new Store();
-
-		sto.setId("1");
-
-		sto.setName("株洲百货");
-
-		Store sto1 = new Store();
-
-		sto1.setId("11");
-
-		sto1.setName("百货");
-
-		store.add(sto1);
-		store.add(sto);
-
-		return store;
 	}
 
 	@RequestMapping("/query")
@@ -79,7 +66,7 @@ public class OrderQueryController {
 	@RequestMapping("/toQueryAllot")
 	public String toQueryAllot(Model model) {
 
-		model.addAttribute("clientList",store());
+		model.addAttribute("clientList",store.queryStoreAll());
 		
 		return "wjh/allot";
 	}
@@ -104,7 +91,7 @@ public class OrderQueryController {
 	@RequestMapping("/toGoodsAllot")
 	public String toGoodsAllot(Model model) {
 		
-		model.addAttribute("li", store());
+		model.addAttribute("li", store.queryStoreAll());
 		
 		return "wjh/indexAllotDatail";
 	}
@@ -178,4 +165,15 @@ public class OrderQueryController {
 		
 		return supplier.queryByName(name);
 	}
+	
+	@RequestMapping("/queryCustomer")
+	@ResponseBody
+	public List<Customer> queryCustomer(){
+		
+		return curstomerservice.queryCustomerByStore("1");
+	}
+	
+	
+	
+	
 }
