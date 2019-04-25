@@ -203,11 +203,15 @@ var vue = new Vue({
 	el:".main",
 	data:{
 		
-		pageIf:""
+		pageIf:"",
+		idCountMap:""
 		
 	}
 	
 });
+
+
+
 
 /**
  * 类型全选
@@ -408,7 +412,6 @@ function optionCheck(obj){
 		
 		$("#typeoption .option-type").each(function(index,item){
 		
-			console.log($(item).find(".option-span-all").hasClass("active1"))
 			
 			if($(item).find(".option-span-all").hasClass("active1")){
 			
@@ -418,7 +421,6 @@ function optionCheck(obj){
 					
 				});
 				
-				console.log(svid)
 				
 			}else{
 				
