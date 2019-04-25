@@ -116,6 +116,7 @@
   		 <id column="gvid" property="id" jdbcType="VARCHAR" />
 	    <result column="gvname" property="name" jdbcType="VARCHAR" />
 	    <result column="id" property="gid" jdbcType="VARCHAR" />
+	    <result column="gvjprice" property="jprice" jdbcType="DOUBLE" />
 	    <result column="gvcol" property="column1" jdbcType="VARCHAR" />
 	    <result column="counts" property="counts" jdbcType="VARCHAR" />
   	</association>
@@ -168,6 +169,7 @@ SELECT
 		sd.count AS column1,
 		gs.id
 		,gv.id AS gvid,
+		gv.jprice AS gvjprice,
 		gs.name AS gname,
 		gv.`name` AS gvname,
 		gs.price,gs.img,gv.`column1` AS
