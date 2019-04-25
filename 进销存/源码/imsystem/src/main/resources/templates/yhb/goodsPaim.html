@@ -42,6 +42,7 @@
 	var endTime = "";
 	$(function() {
 		myDate();
+		$(".panel-subtitle").text("Period: "+$("#config-demo").val());
 		$(window).resize(function() {
 			var width = parseInt($(".good").width());
 			var span = $(".js").children("span");
@@ -148,5 +149,5 @@
 			</div>
 		</div>
 	</div>
-	</div>
 </body>
+</html>

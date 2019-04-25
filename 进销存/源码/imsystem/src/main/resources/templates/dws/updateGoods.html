@@ -651,6 +651,7 @@ td input {
 	
 	
 	var svids = [];
+	var gvs;
 	var ttooind = 0;
 	//分组查询规格
 	function getSvids(oo){
@@ -678,16 +679,20 @@ td input {
 				});
 			}
 		});
-		
-		 var result = [];
-		     var obj = {};
+		gvs = svids;
+		// 大于3 表示可能有重复
+		 if(svids.length > 2){
+			
+		 	var result = [];
+		    var obj = {};
 		    for(var i =0; i<svids.length; i++){
-		        if(!obj[svids[i].sid]){
+		        if(!obj[svids[i].sid] ){
 		           result.push(svids[i]);
 		           obj[svids[i].sid] = true;
 		        }
 		     }		
-		svids = result;
+			svids = result;
+		} 
 		
 		return svids;
 	}
@@ -1181,23 +1186,24 @@ function jhChange(obj){
 							tr.append(tdprick);
 						});
 						
-						for(var pk = 0;pk < svids.length;pk++){
+						for(var pk = 0;pk < gvs.length;pk++){
 							
-							if(svids[pk].svid == tagObject.isCheckedDlArray[i].tag[j].id){
+							if(gvs[pk].svid == tagObject.isCheckedDlArray[i].tag[j].id){
 								
-								hinp.attr("gvid",svids[pk].gv.id);
-								hinp.attr("column4",svids[pk].gv.column4);
+								hinp.attr("gvid",gvs[pk].gv.id);
+								hinp.attr("column4",gvs[pk].gv.column4);
 								
-								cou.attr("sdid",svids[pk].gv.stockDetails.id);
-								cou.val(svids[pk].gv.stockDetails.count);
+								cou.attr("sdid",gvs[pk].gv.stockDetails.id);
+								cou.val(gvs[pk].gv.stockDetails.count);
 								
-								td2$inpu.val(svids[pk].gv.jprice);
-								tdimg$input.attr("src",svids[pk].gv.column1);
+								td2$inpu.val(gvs[pk].gv.jprice);
+								tdimg$input.attr("src",gvs[pk].gv.column1);
 								
 								
 								//价格input
-								$.each(svids[pk].gv.goodsPrices,function(inx,obj){
-									tr.find(".customerprick").attr("ctid",obj.id);
+								$.each(gvs[pk].gv.goodsPrices,function(inx,obj){
+									tr.find(".customerprick").attr("id",obj.id);
+									tr.find(".customerprick").attr("ctid",obj.ctid);
 									tr.find(".customerprick").attr("viewname",obj.sufname);
 									tr.find(".customerprick").val(obj.price);
 								});
@@ -1223,22 +1229,22 @@ function jhChange(obj){
 						indexRow += x1;
 						appendIdUP(td);
 						var tr = td.parent();
-						
-						for(var pk = 0;pk < svids.length;pk++){
-							if(svids[pk].svid == tr.find("[type=hidden]").val()){
+						for(var pk = 0;pk < gvs.length;pk++){
+							if(gvs[pk].svid == tr.find("[type=hidden]").val()){
 								
-								tr.find(".hinp").attr("gvid",svids[pk].gv.id);
-								tr.find(".hinp").attr("column4",svids[pk].gv.column4);
+								tr.find(".hinp").attr("gvid",gvs[pk].gv.id);
+								tr.find(".hinp").attr("column4",gvs[pk].gv.column4);
 								
-								tr.find(".cou").attr("sdid",svids[pk].gv.stockDetails.id);
-								tr.find(".cou").val(svids[pk].gv.stockDetails.count);
+								tr.find(".cou").attr("sdid",gvs[pk].gv.stockDetails.id);
+								tr.find(".cou").val(gvs[pk].gv.stockDetails.count);
 								
-								tr.find(".tdimginput").attr("src",svids[pk].gv.column1);
-								tr.find(".detailprice").val(svids[pk].gv.jprice); 
+								tr.find(".tdimginput").attr("src",gvs[pk].gv.column1);
+								tr.find(".detailprice").val(gvs[pk].gv.jprice); 
 								
 								//价格input
-								$.each(svids[pk].gv.goodsPrices,function(inx,obj){
-									tr.find(".customerprick").attr("ctid",obj.id);
+								$.each(gvs[pk].gv.goodsPrices,function(inx,obj){
+									tr.find(".customerprick").attr("id",obj.id);
+									tr.find(".customerprick").attr("ctid",obj.ctid);
 									tr.find(".customerprick").attr("viewname",obj.sufname);
 									tr.find(".customerprick").val(obj.price);
 									
@@ -1273,29 +1279,29 @@ function jhChange(obj){
 			tr.find("[type=hidden]").attr("vm",t.attr("m") + "," + m);
 			
 		}
-		
-		for(var pk = 0;pk < svids.length;pk++){
-			if(svids[pk].svid == tr.find("[type=hidden]").val()){
+		 for(var pk = 0;pk < gvs.length;pk++){
+			if(gvs[pk].svid == tr.find("[type=hidden]").val()){
 				
-				tr.find(".hinp").attr("gvid",svids[pk].gv.id);
-				tr.find(".hinp").attr("column4",svids[pk].gv.column4);
+				tr.find(".hinp").attr("gvid",gvs[pk].gv.id);
+				tr.find(".hinp").attr("column4",gvs[pk].gv.column4);
 				
-				tr.find(".cou").attr("sdid",svids[pk].gv.stockDetails.id);
-				tr.find(".cou").val(svids[pk].gv.stockDetails.count);
+				tr.find(".cou").attr("sdid",gvs[pk].gv.stockDetails.id);
+				tr.find(".cou").val(gvs[pk].gv.stockDetails.count);
 				
-				tr.find(".tdimginput").attr("src",svids[pk].gv.column1);
-				tr.find(".detailprice").val(svids[pk].gv.jprice); 
+				tr.find(".tdimginput").attr("src",gvs[pk].gv.column1);
+				tr.find(".detailprice").val(gvs[pk].gv.jprice); 
 				
 				//价格input
-				$.each(svids[pk].gv.goodsPrices,function(inx,obj){
-					tr.find(".customerprick").attr("ctid",obj.id);
+				$.each(gvs[pk].gv.goodsPrices,function(inx,obj){
+					tr.find(".customerprick").attr("id",obj.id);
+					tr.find(".customerprick").attr("ctid",obj.ctid);
 					tr.find(".customerprick").attr("viewname",obj.sufname);
 					tr.find(".customerprick").val(obj.price);
 				});
 				
 			}
 			
-		}
+		} 
 		
 		
 	}

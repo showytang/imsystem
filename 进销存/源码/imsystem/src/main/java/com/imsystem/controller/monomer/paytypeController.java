@@ -1,5 +1,7 @@
 package com.imsystem.controller.monomer;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -58,6 +60,8 @@ public class paytypeController {
 	@RequestMapping("/insert")
 	@ResponseBody
 	public int insert(Paytype paytype) {
+		String id=UUID.randomUUID().toString();
+		paytype.setId(id);
 		int r=service.insertPaytype(paytype);
 		return r;
 	}

@@ -12,6 +12,8 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Supplier;
+import com.imsystem.domain.SupplierExample;
+import com.imsystem.domain.SupplierExample.Criteria;
 import com.imsystem.mapper.SupplierMapper;
 import com.imsystem.service.customer.SupplierService;
 
@@ -102,6 +104,18 @@ public class SupplierServiceImpl implements SupplierService{
 	public List<Supplier> queryRecentDealSupplier(String storeid) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public List<Supplier> queryDealOrderSupplier(String storeid) {
+		// TODO Auto-generated method stub
+		return sDao.queryDealOrderSupplier(storeid);
+	}
+
+	@Override
+	public List<Supplier> queryByName(String name) {
+		// TODO Auto-generated method stub
+		
+		return sDao.queryByName(name);
 	}
 
 }

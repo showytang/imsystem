@@ -57,7 +57,7 @@
 									class="col-md-9 col-xs-12" type="text" id="config-demo"
 									name="config-demo">
 							</div>
-							<div class="col-md-6 col-xs-12" v-if="sid == ''">
+							<div class="col-md-6 col-xs-12" v-if="sid == undefined || sid == null">
 								<span class="col-md-3 col-xs-12">选择店铺</span> <select
 									class="col-md-9 col-xs-12 store">
 									<option value="">全部</option>
@@ -121,8 +121,9 @@
 	vue.sid = sid;
 	$(function() {
 		myDate();
+		$(".panel-subtitle").text("Period: "+$("#config-demo").val());
 		vue.page = queryQianKuan("", "", "", sid);
-		if(sid == ""){
+		if(sid == "" || sid == undefined || sid == null){
 			vue.store = queryStore();
 		}
 		$(document).on(

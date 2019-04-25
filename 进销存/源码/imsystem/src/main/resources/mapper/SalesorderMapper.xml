@@ -562,7 +562,7 @@
 			<if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
 				`TIME` >= DATE_FORMAT(#{startTime},'%Y-%m-%d 00:00:00') AND `TIME` &lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d 23:59:59')
 			</if>
-			<if test="startTime == null and startTime == '' and endTime == null and endTime == ''">
+			<if test="startTime == null or startTime == '' or endTime == null or endTime == ''">
 				DATE_SUB(CURDATE(), INTERVAL 6 DAY) &lt;= DATE(`time`)
 			</if>
 		<if test="storeid != null and storeid != ''">
@@ -576,17 +576,17 @@
 		column4,t.s AS column5 FROM (SELECT *,SUM(paymoney) AS s FROM
 		salesorder WHERE
 		<if test="startTime != null and startTime != ''">
-			`time` >= #{startTime} AND `time` &lt;= #{endTime}
+			`time` >= DATE_FORMAT(#{startTime}, '%Y-%m-%d 00:00:00') AND `time` &lt;= DATE_FORMAT(#{endTime}, '%Y-%m-%d 23:59:59')
 		</if>
-		<if test="startTime == null || startTime == ''">
-			DATE_FORMAT( TIME, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+		<if test="startTime == null or startTime == ''">
+			DATE_FORMAT( TIME, '%Y-%m' ) = DATE_FORMAT( CURDATE( ) , '%Y-%m' )
 		</if>
 		GROUP BY storeid) t JOIN store AS ss ON ss.id = t.storeid WHERE
 		t.progress = '2' AND t.state = '0' ORDER BY t.s asc
 		<if test="storeId != null and storeId != ''">
 			t.storeid = #{storeId}
 		</if>
-		<if test="startTime == null || startTime == ''">
+		<if test="startTime == null or startTime == ''">
 			LIMIT 6
 		</if>
 	</select>

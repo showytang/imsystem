@@ -10,6 +10,8 @@ public class Paytype {
     private Date time;
 
     private String uid;
+    
+   private String uname;
 
     private Date updatetime;
 
@@ -112,4 +114,12 @@ public class Paytype {
     public void setColumn5(String column5) {
         this.column5 = column5;
     }
+
+	public String getUname() {
+		return uname;
+	}
+
+	public void setUname(String uname) {
+		this.uname = uname;
+	}
 }

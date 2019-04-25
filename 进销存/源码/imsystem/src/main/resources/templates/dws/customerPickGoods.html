@@ -118,7 +118,7 @@
 							<div v-for="(item,index) in pageIf.list" class="col-sm-6 col-md-3	">
 								<div class="thumbnail">
 								
-									<img v-if="item.goodsValue.column1 == null" style="max-height: 20vh; min-height: 20vh;"
+									<img v-if="item.goodsValue.column1 == null || item.goodsValue.column1==''" style="max-height: 20vh; min-height: 20vh;"
 										:src="'data:image/png;base64,'+item.goods.img" alt="...">
 									<img v-else style="max-height: 20vh; min-height: 20vh;"
 										:src="item.goodsValue.column1" alt="...">

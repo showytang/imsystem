@@ -83,7 +83,7 @@
 		LEFT JOIN `img` AS im
 
 		ON gs.`id` = im.gid
-		INNER JOIN `goodsprice` AS gp
+		LEFT JOIN `goodsprice` AS gp
 		ON gv.`id` = gp.gvid
 		INNER JOIN `stockdetails` AS sd
 		ON gv.`id` = sd.`gvid`

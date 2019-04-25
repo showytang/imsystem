@@ -1,5 +1,6 @@
 package com.imsystem.controller.order;
 
+import java.util.List;
 import java.util.Vector;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Stockrecord;
 import com.imsystem.domain.Store;
+import com.imsystem.domain.Supplier;
+import com.imsystem.service.customer.SupplierService;
 import com.imsystem.service.order.OrderQueryService;
 
 @Controller
@@ -27,6 +30,9 @@ public class OrderQueryController {
 
 	@Autowired
 	OrderQueryService orderquery;
+	
+	@Autowired
+	SupplierService supplier;
 
 	@RequestMapping("/toQuery")
 	public String toQuery() {
@@ -164,5 +170,12 @@ public class OrderQueryController {
 	@ResponseBody
 	public PageInfo<Salesback> orderDescQuery(@RequestBody Salesback back){
 		return orderquery.orderDescQuery(back);
+	}
+	
+	@RequestMapping("/querySupper")
+	@ResponseBody
+	public List<Supplier> querySupper(String name){
+		
+		return supplier.queryByName(name);
 	}
 }

@@ -169,10 +169,10 @@
 									<div class="btn btn-primary" id="insertOrder"
 										style="border: none; box-shadow: none; font-size: 16px;">确定订单</div>
 								</div>
-								<div class="visible-md-block visible-lg-block visible-sm-block"
+								<!-- <div class="visible-md-block visible-lg-block visible-sm-block"
 									style="float: left;">
 									<span class="btn" style="color: white; box-shadow: none;">温馨提示：商品千万件，质量第一件。商品不规范，顾客两行泪</span>
-								</div>
+								</div> -->
 							</div>
 						</div>
 					</div>
@@ -243,29 +243,14 @@
 											<div class="col-xs-8">
 												<div class="input-group">
 													<span class="input-group-addon" id="basic-addon1">姓名</span>
-													<input type="text" class="form-control"
-														placeholder="Username" aria-describedby="basic-addon1">
+													<input type="text" class="form-control" @keyup.enter="code"
+														placeholder="Username" id="supplierName" aria-describedby="basic-addon1">
 												</div>
 											</div>
 										</div>
 										<div>
 											<ul class="model-list">
-												<li>laowangsss</li>
-												<li>laowangsss</li>
-												<li>laowangsss</li>
-												<li>laowangsss</li>
-												<li>laowangsss</li>
-												<li>laowangsss</li>
-												<li>laowangsss</li>
-												<li>laowangsss</li>
-												<li>laowangsssasdfasdf</li>
-												<li>laowangsss</li>
-												<li>laowangsss</li>
-												<li>laowangsss</li>
-												<li>laowangsss</li>
-												<li>laowangsss</li>
-												<li>laowangsss</li>
-												<li>laowangsss</li>
+												<li v-for="item in supplierList" :data="item.id">{{item.name}}</li>
 											</ul>
 										</div>
 									</div>
@@ -345,11 +330,17 @@
 				
 				shappinglist : [],
 				
+				supplierList : [],
+				
 				givemeId:"",
 				
 				typeId:""
 			},
 			methods:{
+				
+				code : function(){
+					supplier();
+				}
 				
 			}
 			
@@ -360,6 +351,26 @@
 		vue.supplierlist = [[${supplierlist}]];
 		
 		vue.shappinglist = [[${shappinglist}]];
+
+		function supplier(){
+			
+			$.ajax({
+				
+				url : [[@{/orderQueryController/querySupper}]],
+				
+				data : {
+					name : $("#supplierName").val()
+				},
+				type : "post",
+				dataType : "json",
+				success:function(result){
+					vue.supplierList = result;
+				}
+				
+			});
+			
+		}
+		
 		function posi(index, index1) {
 			var height = $(
 					".list-inline:eq(" + index1 + ")>li:eq(" + index + ")")
@@ -588,6 +599,7 @@
 		}
 		function giveme(){
 			$(".fade").modal("show");
+			supplier();
 		}
 	</script>
 	

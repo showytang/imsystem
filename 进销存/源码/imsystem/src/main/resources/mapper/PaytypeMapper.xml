@@ -16,11 +16,11 @@
   </resultMap>
   
   <select id="queryPaytype" resultMap="BaseResultMap">
-  		SELECT * FROM `paytype`
+  		SELECT p.*,u.`name` AS uname FROM paytype AS p INNER JOIN USER AS u ON p.`uid`=u.`id`
   	<where>
-  		state=0 
+  		P.state=0 
   		<if test="tiaojian!=null">
-  				and (id LIKE concat('%',#{tiaojian},'%') OR  NAME LIKE concat('%',#{tiaojian},'%') OR uid LIKE concat('%',#{tiaojian},'%'))
+  				and ( p.NAME LIKE concat('%',#{tiaojian},'%') OR u.name LIKE concat('%',#{tiaojian},'%'))
   		</if>
   	</where>
   </select>
@@ -45,7 +45,7 @@
   </select>
   
  <update id="toupdate">
- 	UPDATE paytype SET NAME=#{name},updatetime=NOW() WHERE id=#{id} 	
+ 	UPDATE paytype SET NAME=#{name},updatetime=NOW(),uid=#{uid} WHERE id=#{id} 	
  </update>
   
   

@@ -257,7 +257,7 @@
   </update>
   
   <update id="toupdate" parameterType="map" >
-  	UPDATE BIT set NAME=#{name},updatetime=NOW() WHERE id=#{id}
+  	UPDATE BIT set NAME=#{name},updatetime=NOW(),uid=#{uid} WHERE id=#{id}
   </update>
   
   
@@ -280,7 +280,7 @@
   </update>
   
   
-  <update id="updatestate" parameterType="int" >
+  <update id="updatestate" parameterType="String" >
    		UPDATE BIT SET state=1 WHERE id=#{id}
   </update>
   
