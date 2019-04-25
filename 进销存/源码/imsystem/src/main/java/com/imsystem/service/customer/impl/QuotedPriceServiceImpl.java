@@ -56,7 +56,8 @@ public class QuotedPriceServiceImpl implements QuotedPriceService{
 	@Override
 	public int deleteQuotedPrice(String quoteId) {
 		// TODO Auto-generated method stub
-		return 0;
+		int row=qDao.deleteQuote(quoteId);
+		return row;
 	}
 
 	/**
@@ -109,10 +110,72 @@ public class QuotedPriceServiceImpl implements QuotedPriceService{
 		return qvoList;
 	}
 
+	/**
+	 * 修改报价价格
+	 */
 	@Override
 	public int updatePrice(String qid, Double price) {
 		// TODO Auto-generated method stub
 		return qDao.updatePrice(qid, price);
+	}
+
+	/**
+	 * 根据客户id查询报价
+	 */
+	@Override
+	public List<QuoteVO> queryQuoteByCustomerId(String cid) {
+		// TODO Auto-generated method stub
+		List<QuoteVO> qvoList=new ArrayList<QuoteVO>();
+		List<Quotedprice> qlist=qDao.queryQuoteByCustomerId(cid);
+		for(Quotedprice qObj:qlist) {
+			if(qObj!=null) {
+				QuoteVO qvoObj=new QuoteVO();
+				qvoObj.setQpobj(qObj);
+				if(qObj.getCid()!=null || qObj.getCid()!="") {
+					qvoObj.setCobj(cDao.selectByPrimaryKey(qObj.getCid()));
+				}
+				if(qObj.getSvid()!=null || qObj.getSvid()!="") {
+					Goodsvalue goodsvalue = goodsvalueMap.queryGoodsDetail(qObj.getSvid());
+					if(goodsvalue!=null) {
+						qvoObj.setGvobj(goodsvalue);
+						if(goodsvalue.getGid()!=null || goodsvalue.getGid()!="") {
+							qvoObj.setGobj(qDao.selectGoodsById(goodsvalue.getGid()));
+						}
+					}
+					
+				}
+				qvoList.add(qvoObj);
+			}
+		}
+		return qvoList;
+	}
+
+	@Override
+	public List<QuoteVO> queryQuoteByGoodsValueId(String gid) {
+		// TODO Auto-generated method stub
+		List<QuoteVO> qvoList=new ArrayList<QuoteVO>();
+		List<Quotedprice> qlist=qDao.queryQuoteByGoodsValueId(gid);
+		for(Quotedprice qObj:qlist) {
+			if(qObj!=null) {
+				QuoteVO qvoObj=new QuoteVO();
+				qvoObj.setQpobj(qObj);
+				if(qObj.getCid()!=null || qObj.getCid()!="") {
+					qvoObj.setCobj(cDao.selectByPrimaryKey(qObj.getCid()));
+				}
+				if(qObj.getSvid()!=null || qObj.getSvid()!="") {
+					Goodsvalue goodsvalue = goodsvalueMap.queryGoodsDetail(qObj.getSvid());
+					if(goodsvalue!=null) {
+						qvoObj.setGvobj(goodsvalue);
+						if(goodsvalue.getGid()!=null || goodsvalue.getGid()!="") {
+							qvoObj.setGobj(qDao.selectGoodsById(goodsvalue.getGid()));
+						}
+					}
+					
+				}
+				qvoList.add(qvoObj);
+			}
+		}
+		return qvoList;
 	}
 
 }

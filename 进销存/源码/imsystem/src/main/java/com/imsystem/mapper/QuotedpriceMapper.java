@@ -11,7 +11,13 @@ public interface QuotedpriceMapper {
 	
 	Goods selectGoodsById(@Param("id") String id);
 	
+	List<Quotedprice> queryQuoteByCustomerId(@Param("cid") String cid);
+	
+	List<Quotedprice> queryQuoteByGoodsValueId(@Param("gid") String gid);
+	
 	int updatePrice(@Param("qid") String qid,@Param("price") Double price);
+	
+	int deleteQuote(@Param("qid") String qid);
 	
     int countByExample(QuotedpriceExample example);
 

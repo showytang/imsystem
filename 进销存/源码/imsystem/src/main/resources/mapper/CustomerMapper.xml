@@ -67,7 +67,7 @@
   	WHERE id=#{id}
   </update>
   
-  <select id="selectAllCustomer">
+  <select id="selectAllCustomer" resultMap="BaseResultMap">
   	SELECT * FROM customer WHERE state=0
   </select>
   

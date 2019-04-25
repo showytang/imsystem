@@ -90,7 +90,11 @@
 </style>
 </head>
 	<body>
-		<div class="row"style="padding: 28px 20px;">
+	<input id="cc" type="hidden" th:value="${cc}">
+	<input id="cv" type="hidden" th:value="${cv}">
+	<input id="gc" type="hidden" th:value="${gc}">
+	<input id="gid" type="hidden" th:value="${gid}">
+		<div class="row elDocument"style="padding: 28px 20px;">
                     <!-- column -->
                     <div class="col-lg-12">
                         <div class="card">
@@ -110,10 +114,9 @@
                                 	<div class="form-group">
                                         <label class="col-md-12">客&nbsp;&nbsp;户&nbsp;&nbsp;名&nbsp;&nbsp;称</label>
                                         <div class="col-sm-12">
-                                            <select class="form-control form-control-line first-select" id="customerName">
-                                                <option></option>
-                                                <option>AT444444</option>
-                                                <option>AT555555</option>
+                                            <select class="form-control form-control-line first-select" id="customerName" value="0">
+                                                <option value="0"></option>
+                                                <option v-for="(o,i) in customerList" :value="o.id">{{o.name}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -122,36 +125,27 @@
                                         <div class="col-sm-12 numdiv">
                                             <select class="form-control form-control-line" id="chooseGoods">
                                             </select>
-                                            <i id="goodsNum" class="numCss">8</i>
+                                            <i id="goodsNum" class="numCss" v-if="customerQuoteList.length!=0">{{customerQuoteList.length}}</i>
                                         </div>
                                         <div class="col-sm-12 uldiv" id="culdiv">
-                                            <ul>
-                                            	<li>
-                                            		<span class="goodsName name">华为手机</span>
-                                            		<span class="salebybulk">批发价：￥<span class="bulkPrirce">22</span> </span>
-                                            		<span class="retail">零售价：￥<span class="retailPrirce">32</span> </span>
-                                            		<span class="quote">报价：￥<span class="quotePrirce">28</span> </span>
+                                            <ul v-if="customerQuoteList.length!=0">
+                                            
+                                            	<li v-for="(o,i) in customerQuoteList">
+                                            		<span class="goodsName name">{{o.gvobj.goods.name}}</span>
+                                            		<span class="salebybulk"  v-for="(o1,i1) in o.gvobj.goodsPrices">
+                                            		{{o1.sufname}}：￥<span class="bulkPrirce">{{o1.price}}</span> 
+                                            		</span>
+                                            		<span class="quote">报价：￥<span class="quotePrirce">{{o.qpobj.price}}</span> </span>
                                             	</li>
-                                            	<li>
-                                            		<span class="goodsName name">华为手机</span>
-                                            		<span class="salebybulk">批发价：￥<span class="bulkPrirce">22</span> </span>
-                                            		<span class="retail">零售价：￥<span class="retailPrirce">32</span> </span>
-                                            		<span class="quote">报价：￥<span class="quotePrirce">28</span> </span>
-                                            	</li>
-                                            	<li>
-                                            		<span class="goodsName name">华为手机</span>
-                                            		<span class="salebybulk">批发价：￥<span class="bulkPrirce">22</span> </span>
-                                            		<span class="retail">零售价：￥<span class="retailPrirce">32</span> </span>
-                                            		<span class="quote">报价：￥<span class="quotePrirce">28</span> </span>
-                                            	</li>
+                                            	
                                             </ul>
                                         </div>
                                     </div>
                                 </form>
                                 
-                                <form class="form-horizontal form-material" id="goodsAdd">
+                                <form class="form-horizontal form-material" id="goodsAdd" method="post" action="">
                                 	<div class="form-group">
-                                        <label class="col-md-12">货&nbsp;&nbsp;品&nbsp;&nbsp;名&nbsp;&nbsp;称</label>
+                                        <label class="col-md-12">货&nbsp;&nbsp;品&nbsp;&nbsp;实&nbsp;&nbsp;例</label>
                                         <div class="col-sm-12">
                                             <select class="form-control form-control-line first-select" value="" id="goodsName">
                                             </select>
@@ -162,22 +156,16 @@
                                         <div class="col-sm-12 numdiv">
                                             <select class="form-control form-control-line" id="chooseCustomer">
                                             </select>
-                                            <i id="customerNum" class="numCss">2</i>
+                                            <i id="customerNum" class="numCss" v-if="goodsQuoteList.length!=0">{{goodsQuoteList.length}}</i>
                                         </div>
                                         <div class="col-sm-12 uldiv" id="guldiv">
-                                            <ul>
-                                            	<li>
-                                            		<span class="customerName name">紫女</span>
-                                            		<span class="quote">报价：￥<span class="quotePrirce">28</span> </span>
+                                            <ul v-if="goodsQuoteList.length!=0">
+                                            
+                                            	<li v-for="(o,i) in goodsQuoteList">
+                                            		<span class="customerName name">{{o.cobj.name}}</span>
+                                            		<span class="quote">报价：￥<span class="quotePrirce">{{o.qpobj.price}}</span> </span>
                                             	</li>
-                                            	<li>
-                                            		<span class="customerName name">紫女</span>
-                                            		<span class="quote">报价：￥<span class="quotePrirce">28</span> </span>
-                                            	</li>
-                                            	<li>
-                                            		<span class="customerName name">紫女</span>
-                                            		<span class="quote">报价：￥<span class="quotePrirce">28</span> </span>
-                                            	</li>
+                                            	
                                             </ul>
                                         </div>
                                     </div>
@@ -202,39 +190,111 @@
     <script th:src="@{/assets/js/sticky-kit.min.js}"></script>
     <!--Custom JavaScript -->
     <script th:src="@{/assets/js/custom.min.js}"></script>
+    <script th:src="@{/assets/js/vue.js}"></script>
+    
 	<script>
 	
+	var vue=new Vue({
+		el:".elDocument",
+		data:{
+			customerList:{},
+			customerQuoteList:{},
+			goodsQuoteList:{}
+		}
+	});
+	
 		function judge(){
+			
 			var cval=$("#customerChoose").attr("class");
 			var gval=$("#goodsChoose").attr("class");
-			var cname=$("#customerName").val();
+			var cname=$("#customerName").attr("value");
+			$("#customerName option").each(function(){
+				var cn=$(this).attr("value");
+				if(cn==cname){
+					$(this).attr("selected","selected");
+				}
+			});
 			var gname=$("#goodsName").attr("value");
+			
 			if(cval=="check"){
 				$("#goodsAdd").hide();
 				$("#customerAdd").show();
-				if(cname==""){
+				if(cname=="0"){
 					$("#culdiv").hide();
-					$("#goodsNum").html("");
 				}else{
 					$("#culdiv").show();
-					$("#goodsNum").html("8");
+
+					$.ajax({
+						url:"queryquotebycustomerid",
+						data:"cid="+cname,
+						type:"post",
+						dataType:"json",
+						success:function(result){
+							vue.customerQuoteList=result;
+						}
+					});
+					
 				}
 			}else if(gval=="check"){
 				$("#goodsAdd").show();
 				$("#customerAdd").hide();
 				if(gname==""){
 					$("#guldiv").hide();
-					$("#customerNum").html("");
 				}else{
 					$("#guldiv").show();
-					$("#customerNum").html("2");
+
+					$.ajax({
+						url:"queryquotebygoodsvalueid",
+						data:"gid="+gname,
+						type:"post",
+						dataType:"json",
+						success:function(result){
+							vue.goodsQuoteList=result;
+							console.log(vue.goodsQuoteList);
+						}
+					});
+					
 				}
 			}
+			
 		}
 		
 		$(function() {
 			
+			var cc=$("#cc").val();
+			var cv=$("#cv").val();
+			var gc=$("#gc").val();
+			var gid=$("#gid").val();
+			if(cc=="not"){
+				$("#customerChoose").attr("class","");
+			}else{
+				$("#customerChoose").attr("class","check");
+			}
+			if(cv!=""){
+				$("#customerName").attr("value",cv);
+			}
+			if(gc=="yes"){
+				$("#goodsChoose").attr("class","check");
+			}else{
+				$("#goodsChoose").attr("class","");
+			}
+			if(gid!=""){
+				$("#goodsName").attr("value",gid);
+				$("#goodsName").append("<option value='"+gid+"' selected='selected'>"+gid+"</option>");
+				
+			}
+		
+			
 			judge();
+			
+			$.ajax({
+				url:"querycustomers",
+				type:"post",
+				dataType:"json",
+				success:function(result){
+					vue.customerList=result;
+				}
+			});
 			
 			$("#customerChoose").click(function(){
 				$(this).attr("class","check");
@@ -246,16 +306,31 @@
 				$("#customerChoose").attr("class","");
 				judge();
 			});
-			$(".first-select").change(function(){
+			
+			/* 客户或商品变化 */
+			$("#customerName").change(function(){
+				var cv=$("#customerName").val();
+				var cname=$("#customerName").attr("value",cv);
+				judge();
+			});
+			$("#goodsName").click(function(){
+				var customerName=$("#customerName").val();
+				$("#goodsAdd").attr("action","tochoseonegoodsvalue?cc=not&cname="+customerName+"&gc=yes");
+				$("#goodsAdd").submit();
+			});
+			$("#goodsName").change(function(){
 				judge();
 			});
 			
+			/* 选择商品或客户 */
 			$("#chooseGoods").click(function(){
-				var cname=$("#customerName").val();
-				if(cname==""){
+				var cname=$("#customerName").attr("value");
+				var gname=$("#goodsName").attr("value");
+				if(cname=="0"){
 					
 				}else{
-					location="ChooseGoods";
+					$("#customerAdd").attr("action","tochosecustomers?cc=yes&cv="+cname+"&gc=not&gv="+gname);
+					$("#customerAdd").submit();
 				}
 			});
 			

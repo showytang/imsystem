@@ -133,14 +133,14 @@
                                                 <td>{{o.cobj.name}}</td>
                                                 <td>{{o.qpobj.price}}</td>
                                                 <td>{{o.gobj.bitval}}</td>
-                                                <td>{{o.qpobj.time}}</td>
+                                                <td>{{dada(o.qpobj.time)}}</td>
                                                 <input type="hidden" :value="o.qpobj.id" />
                                                 <td>
 													<label>报价：</label>
                                                 	<input type="text" :vul="o.qpobj.price" name="" class="" :value="o.qpobj.price" />
                                                 	<a class="upd" onclick="update(this)">修改</a>
                                                 </td>
-                                                <td><a class="del" style="color: red;">删除</a></td>
+                                                <td><a class="del" style="color: red;" onclick="qdelete(this)">删除</a></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -179,6 +179,24 @@
 		el:".elDocument",
 		data:{
 			pageIf:""
+		},
+		methods:{
+			dada:function(inputTime){
+				 var date = new Date(inputTime);
+				    var y = date.getFullYear();
+				    var m = date.getMonth() + 1;
+				    m = m < 10 ? ('0' + m) : m;
+				    var d = date.getDate();
+				    d = d < 10 ? ('0' + d) : d;
+				    var h = date.getHours();
+				    h = h < 10 ? ('0' + h) : h;
+				    var minute = date.getMinutes();
+				    var second = date.getSeconds();
+				    minute = minute < 10 ? ('0' + minute) : minute;
+				    second = second < 10 ? ('0' + second) : second;
+				    return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
+
+			}
 		}
 	});
 	
@@ -195,6 +213,13 @@
 			$("#quoteForm").attr("action","updatequotedprice?qid="+id+"&price="+price);
 			$("#quoteForm").submit();
 		}
+	}
+	
+	/* 删除报价 */
+	function qdelete(th){
+		var id=$(th).parent().prev().prev().val();
+		$("#quoteForm").attr("action","deletequote?qid="+id);
+		$("#quoteForm").submit();
 	}
 	
 	/* 分页查询 */
@@ -223,6 +248,8 @@
 		var gname=$("#goodsName").val();
 		queryQuoteByPage(cname,gname,$('.currentPage').text());
 	}
+	
+	
 	
 		$(function() {
 			

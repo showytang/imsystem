@@ -31,12 +31,32 @@
   	
   </select>
   
+  <select id="queryQuoteByCustomerId" resultMap="BaseResultMap">
+  	SELECT q.* FROM quotedprice q,customer c,goodsvalue g ,goods gs 
+  	
+  	WHERE q.state=0 AND q.`cid`=c.`id` AND q.`svid`=g.`id` AND g.`gid`=gs.`id` 
+  		  	
+  	AND c.`id`=#{cid}
+  </select>
+  
+  <select id="queryQuoteByGoodsValueId" resultMap="BaseResultMap">
+  	SELECT q.* FROM quotedprice q,customer c,goodsvalue g ,goods gs 
+  	
+  	WHERE q.state=0 AND q.`cid`=c.`id` AND q.`svid`=g.`id` AND g.`gid`=gs.`id` 
+  		  	
+  	AND g.`id`=#{gid}
+  </select>
+  
   <select id="selectGoodsById" resultType="com.imsystem.domain.Goods">
   	SELECT * FROM `goods` WHERE id=#{id}
   </select>
   
   <update id="updatePrice">
   	UPDATE quotedprice SET price=#{price} WHERE id=#{qid}
+  </update>
+  
+  <update id="deleteQuote">
+  	UPDATE quotedprice SET state=1 WHERE id=#{qid}
   </update>
   
   <sql id="Example_Where_Clause" >

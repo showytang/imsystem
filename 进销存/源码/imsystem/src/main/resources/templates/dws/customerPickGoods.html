@@ -54,6 +54,10 @@
 </head>
 
 <body>
+<form action="" method="post" id="chooseGoods"></form>
+<input type="hidden" id="cc" th:value="${customerChoose}"/>
+<input type="hidden" id="cv" th:value="${customerName}"/>
+<input type="hidden" id="gc" th:value="${goodsChoose}"/>
 	<div class="main">
 		<div class="main-content">
 			<div class="container-fluid">
@@ -104,6 +108,7 @@
 						
 					</div>
 
+			
 					<!--主体-->
 					<div id="body"
 						style="margin: 8vh 3vh 0 3vh; min-height: 60vh; background-color: #eae2e21f;">
@@ -135,7 +140,7 @@
 										
 										
 										<p>
-												<a href="#" class="btn btn-primary" role="button">确定</a>
+												<a :val="item.goodsValue.id" onclick="add(this)" class="btn btn-primary" role="button">确定</a>
 											</p>
 									</div>
 								</div>
@@ -209,6 +214,15 @@ var vue = new Vue({
 	
 });
 
+function add(th){
+	var id=$(th).attr("val");
+	var cc=$("#cc").val();
+	var cv=$("#cv").val();
+	var gc=$("#gc").val();
+	$("#chooseGoods").attr("action","choseonegoodsvalue?gid="+id+"&cc="+cc+"&cv="+cv+"&gc="+gc);
+	$("#chooseGoods").submit();
+}
+
 /**
  * 类型全选
  */
@@ -222,6 +236,8 @@ function typeAll(obj){
 	var tid = $(obj).attr("id");
 	
 	queryGoods(1,[],tid);
+	
+	
 	
 }
 

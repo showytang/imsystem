@@ -98,4 +98,10 @@ public class SupplierServiceImpl implements SupplierService{
 		return pages;
 	}
 
+	@Override
+	public List<Supplier> queryRecentDealSupplier(String storeid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -59,4 +59,18 @@ public interface QuotedPriceService {
 	 * @return
 	 */
 	public int updatePrice(String qid,Double price);
+	
+	/**
+	 * 根据客户id查报价
+	 * @param cid 客户id
+	 * @return
+	 */
+	public List<QuoteVO> queryQuoteByCustomerId(String cid);
+	
+	/**
+	 * 根据商品实例id查报价
+	 * @param gid  商品实例id
+	 * @return
+	 */
+	public List<QuoteVO> queryQuoteByGoodsValueId(String gid);
 }

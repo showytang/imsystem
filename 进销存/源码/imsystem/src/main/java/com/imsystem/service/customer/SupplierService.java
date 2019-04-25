@@ -53,5 +53,7 @@ public interface SupplierService {
 	 */
 	public PageInfo<Supplier> querySupplierList(Double zero,String content,Integer curentPage);
 
+	
+	public List<Supplier> queryRecentDealSupplier(String storeid);
 
 }

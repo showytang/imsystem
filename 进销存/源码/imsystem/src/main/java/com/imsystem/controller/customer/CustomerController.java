@@ -2,7 +2,7 @@ package com.imsystem.controller.customer;
 
 import java.io.File;
 import java.io.IOException;
-
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.PageInfo;
+import com.imsystem.controller.goods.ImgCompress;
 import com.imsystem.domain.Customer;
 import com.imsystem.domain.Customerlevel;
 import com.imsystem.domain.Customertype;
@@ -72,7 +73,12 @@ public class CustomerController {
 		
 	    try {
 	    	if(files!=null) {
-	    		cObj.setImg(files.getBytes());
+	    		InputStream inp = files.getInputStream();
+	    		File file = new File(files.getOriginalFilename());
+	    		ImgCompress.inputStreamToFile(inp, file);
+	    		ImgCompress imgc = new ImgCompress(file);
+	    		
+	    		cObj.setImg(imgc.resizeFix(400, 400));
 	    	}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -111,7 +117,13 @@ public class CustomerController {
 		
 	    try {
 	    	if(files!=null) {
-	    		cObj.setImg(files.getBytes());
+	    		
+	    		InputStream inp = files.getInputStream();
+	    		File file = new File(files.getOriginalFilename());
+	    		ImgCompress.inputStreamToFile(inp, file);
+	    		ImgCompress imgc = new ImgCompress(file);
+	    		
+	    		cObj.setImg(imgc.resizeFix(400, 400));
 	    	}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
