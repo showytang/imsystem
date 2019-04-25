@@ -147,10 +147,6 @@
 									<div class="btn btn-primary" id="insertOrder"
 										style="border: none; box-shadow: none; font-size: 16px;">确定订单</div>
 								</div>
-								<div class="visible-md-block visible-lg-block visible-sm-block"
-									style="float: left;">
-									<span class="btn" style="color: white; box-shadow: none;">温馨提示：商品千万件，质量第一件。商品不规范，顾客两行泪</span>
-								</div>
 							</div>
 						</div>
 					</div>
@@ -204,7 +200,7 @@
 							</div>
 						</div>
 						<div class="row" style="margin-top: 10px;">
-							<div v-for="shappingItem in shappinglist"
+							<div v-for="(shappingItem,index) in shappinglist"
 								class="col-md-4 col-sm-6 col-xs-12">
 								<div v-for="item in shappingItem.goodsValues"
 									id="panel-scrolling-demo" class="panel">
@@ -217,7 +213,7 @@
 										<div class="col-md-1 col-xs-1">
 											<span class="badge badgecount" style="background: #e84242;">{{item.column2}}</span>
 										</div>
-										<div class="right" style="right: 25px;">
+										<div class="right" style="right: 25px;"  v-on:click="spliceList(index)">
 											<button type="button">
 												<i>x</i>
 											</button>
@@ -283,18 +279,7 @@
 									<div style="margin-top: 20px;">
 										<ul class="clientNames"
 											style="display: flex; list-style: none; flex-wrap: wrap;">
-											<li>laowang</li>
-											<li>laowang</li>
-											<li>laowang</li>
-											<li>laowang</li>
-											<li>laowang</li>
-											<li>hhhhhhh</li>
-											<li>hhhhhhh</li>
-											<li>hhhhhhh</li>
-											<li>hhhhhhh</li>
-											<li>hhhhhhh</li>
-											<li>hhhhhhh</li>
-											<li>hhhhhhh</li>
+											<li v-on:click="clientNames($event)" v-for="item in customerlist" :data="item.id">{{item.name}}</li>
 										</ul>
 									</div>
 								</div>
@@ -319,12 +304,28 @@
 				el:"#main",
 				data:{
 					paytypeList : [],
+					
 					supplierlist : [],
+					
 					shappinglist : [],
+					
+					customerlist : [],
+					
 					typeId:""
 				},
 				methods:{
-					
+					clientNames : function (element){
+						var element = event.currentTarget;
+						$(".clientName").text($(element).text());
+						$(".clientName").attr("data",$(element).attr("data"));
+					},
+					spliceList : function (index){
+						vue.shappinglist.splice(index,1);
+						setTimeout(() => {
+							counts();
+						},100)
+						
+					}
 				}
 			});
 			
@@ -370,6 +371,7 @@
 				});
 				
 				$(".yprice").text(sum);
+				$(".sprice").val(sum);
 			}
 			$(function() {
 				var myDate = new Date();
@@ -381,15 +383,14 @@
 				$("#clientOk").click(function(){
 					
 					var name = $(".clientName").text();
-					var option = $("<option value='11'>"+name+"</option>")
+					var data = $('.clientName').attr('data');
+					var option = $("<option value='"+data+"'>"+name+"</option>")
 					$(".client").find("option:selected").before(option);
-					
-					$(".client").val("11");
-					
+					$(".client").val(data);
 					$(".fade").modal("hide");
-					
-					$("#priceName").text("定金");
-					
+					if(data != "1"){
+						$("#priceName").text("定金");
+					}
 				});
 				$(".glyphicon-th-list").click(function() {
 					if($(".coll").css("display") == "none") {
@@ -397,9 +398,6 @@
 					} else {
 						$(".coll").slideUp();
 					}
-				});
-				$(".clientNames>li").click(function() {
-					$(".clientName").text($(this).text());
 				});
 				
 				$(".list-inline>li").click(function(){
@@ -439,6 +437,7 @@
 	         	});
 				$("#moling").click(function(){
 					$(".yprice").text(parseInt($(".yprice").text()));
+					$(".sprice").val(parseInt($(".yprice").text()));
 				});
 				$("#mozheng").click(function(){
 					if($(".yprice").text().indexOf(".") !="-1"){
@@ -451,10 +450,25 @@
 					}
 					
 					$(".yprice").text($(".yprice").text()+"0");
+					$(".sprice").val(parseInt($(".yprice").text()));
 					
 				});
 				$(".client").change(function() {
 					if($(this).val() == "#") {
+						$.ajax({
+						    
+						    url : [[@{/orderQueryController/queryCustomer}]],
+
+						    type : "post",
+
+						    dataType : "json",
+						    
+						    success:function(result){
+						    	
+						    	vue.customerlist = result;
+								
+						    }
+						})
 						$(".fade").modal("show");
 						$(".client").val("1")
 					}
@@ -519,7 +533,6 @@
 							success : function(result){
 								alert(result);
 							}
-							
 						});
 					}
 				});
