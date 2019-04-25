@@ -32,7 +32,7 @@ public class SpTypeServiceImpl implements SpTypeService{
 	public PageInfo<Goodstype> queryByLikepage(String tiaojian, Integer currentPage, Integer pageSize) {
 		Page<Goodstype> page = PageHelper.startPage(currentPage, pageSize, true);
 		List<Goodstype> list=ma.querygoodstype(tiaojian);
-		List<Goodstype> list2=ma.querybypid();
+		
 		return page.toPageInfo();
 	}
 

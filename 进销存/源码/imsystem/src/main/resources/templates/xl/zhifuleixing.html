@@ -98,7 +98,7 @@
 						<table class="table table-striped">
 							<tr>
 								<!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-								<th>类型ID</th>
+								
 								<th>类型名称</th>
 								<th>创建时间</th>
 								<th>最后修改时间</th>
@@ -107,11 +107,11 @@
 							</tr>
 							
 							<tr v-for="(temp,index) in pageIf.list">
-							 	<td v-text="temp.id"></td>
+							 	
 								<td v-text="temp.name"></td>
 								<td v-text="formatDate(temp.time)"></td>
 								<td v-text="formatDate(temp.updatetime)"></td> 
-								<td v-text="temp.uid"></td>
+								<td v-text="temp.uname"></td>
 								
 								<td style="padding-left: 30px; padding-right: 20px" >
 									<input type="button" value="修改"  id="open" class="an open" @click="open(temp.id)">
@@ -165,12 +165,7 @@
 								      
 								        	
 										<form class="form-horizontal">
-											<div class="form-group">
-										    	<label for="InSname" class="col-sm-3 control-label">类型ID</label>
-											    <div class="col-sm-9">
-											    	<input type="text" class="form-control" id="ssid">
-											    </div>
-										 	</div>
+											
 										
 										  	<div class="form-group">
 										    	<label for="InSname" class="col-sm-3 control-label">类型名称</label>
@@ -182,7 +177,7 @@
 										  	<div class="form-group">
 										    	<label for="inputEmail3" class="col-sm-3 control-label">操作人编号</label>
 											    <div class="col-sm-9">
-											    	<input type="text" class="form-control" id="ssuid">
+											    	<input type="text" class="form-control" id="ssuid" :value="us.name" >
 											    </div>
 										  	</div>
 										  	
@@ -231,9 +226,9 @@
 										  	</div>
 										  
 										  	<div class="form-group">
-										    	<label for="inputEmail3" class="col-sm-3 control-label">操作人编号</label>
+										    	<label for="inputEmail3" class="col-sm-3 control-label">操作人</label>
 											    <div class="col-sm-9">
-											    	<input type="text" class="form-control" id="suid">
+											    	<input type="text" class="form-control" id="suid" :value="us.name">
 											    </div>
 										  	</div>
 										  	
@@ -271,6 +266,7 @@
 		el : ".main",
 		data : {
 			pageIf : {},
+			us : {}
 			
 		},
 		methods : {
@@ -312,7 +308,7 @@
 	                            $('#sid').val(data.id);
 	                            $('#sname').val(data.name);
 	                            $('#stime').val(vue.formatDate(data.time));
-	                            $('#suid').val(data.uid);
+	                            
 	                            
 	                            
 	                            $('#sid').attr("readonly","readonly");
@@ -355,15 +351,16 @@
 	};
 	
 	$(function(){
+		vue.us = JSON.parse(window.localStorage.getItem("user"));
 		 $("#tijiao").click(function(){
-				var id=$("#ssid").val();
+				
 				var name=$("#ssname").val();
-				var uid=$("#ssuid").val();
+				var uid = vue.us.id;
+				
 				
 				$.ajax({
 					url:"/paytype/insert",
 					data:{
-						id:id,
 						name:name,
 						uid:uid
 					},
@@ -378,12 +375,13 @@
 		 $(".xiugai").click(function(){
 			 var id=$("#sid").val();
 			 var name=$("#sname").val();
-			 
+			 var uid = vue.us.id;
 			 $.ajax({
 				 url:"/paytype/toupdate",
 				 data:{
 					 id:id,
 					 name:name,
+					 uid:uid
 					
 				 },
 				 type:"post",

@@ -46,7 +46,7 @@ public class BitServiceImpl implements BitService {
 	}
 
 	@Override
-	public int updatestate(int id) {
+	public int updatestate(String id) {
 		
 		return ma.updatestate(id);
 	}

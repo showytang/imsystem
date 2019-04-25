@@ -96,7 +96,7 @@
 						</button>
 						<table class="table table-striped">
 							<tr>
-								<th>类型ID</th>
+								
 								<th>类型名称</th>
 								<th>上层类型编号</th>
 								<th>创建时间</th>
@@ -105,13 +105,9 @@
 								<th>操作</th>
 							</tr>
 							<tr v-for="(temp,index) in pageIf.list">
-							 	<td v-text="temp.id"></td>
+							 	
 								<td v-text="temp.name"></td>
-								 <!-- <td v-text="temp.pid"></td> -->
-								
-								 <td v-for="(te,index) in pageIf.list2" v-if="te.pid==temp.pid" v-text="te.name"></td>  
-								
-								
+								<td v-text="temp.pname"></td> 
 								<td v-text="formatDate(temp.time)"></td>
 								<td v-text="formatDate(temp.updatetime)"></td> 
 								<td v-text="temp.uname"></td>
@@ -207,9 +203,9 @@
 										  	
 										  
 										  	<div class="form-group">
-										    	<label for="inputEmail3" class="col-sm-3 control-label">操作人编号</label>
+										    	<label for="inputEmail3" class="col-sm-3 control-label">操作人</label>
 											    <div class="col-sm-9">
-											    	<input type="text" class="form-control" id="Inuid">
+											    	<input type="text" class="form-control" id="Inuid" :value="us.name">
 											    </div>
 										  	</div>
 										</form>
@@ -266,9 +262,9 @@
 										  	
 										  	
 										  	<div class="form-group">
-										    	<label for="inputEmail3" class="col-sm-3 control-label">操作人编号</label>
+										    	<label for="inputEmail3" class="col-sm-3 control-label">操作人</label>
 											    <div class="col-sm-9">
-											    	<input type="text" class="form-control up5" id="inputEmail3">
+											    	<input type="text" class="form-control up5" id="inputEmail3" :value="us.name">
 											    </div>
 										  	</div>
 										  	
@@ -307,6 +303,7 @@
 		el : ".main",
 		data : {
 			pageIf : {},
+			us: {}
 			
 		},
 		methods : {
@@ -349,7 +346,7 @@
 	                            $('.up2').val(data.name);
 	                            $('.up3').val(data.pid);
 	                            $('.up4').val(vue.formatDate(data.time));
-	                            $('.up5').val(data.uid);
+	                          
 	                            
 	                            
 	                            $('.up1').attr("readonly","readonly");
@@ -395,16 +392,16 @@
 	
 	
 	  $(function(){
+		  vue.us = JSON.parse(window.localStorage.getItem("user"));
+		  $('#Inuid').attr("readonly","readonly");
 		 $("#tijiao").click(function(){
-			
 			var name=$("#Inname").val();
 			var pid=$("#Inpid").val();;
-			var uid=$("#Inuid").val();
+			var uid=vue.us.id
 			
 			$.ajax({
 				url:"/goods/insert",
 				data:{
-					
 					name:name,
 					pid:pid,
 					uid:uid
@@ -421,13 +418,16 @@
 			 var id=$(".up1").val();
 			 var name=$(".up2").val();
 			 var pid=$(".up3").val();
+			 alert(pid);
+			 var uid=vue.us.id
 			
 			 $.ajax({
 					url:"/goods/toupdate",
 					data:{
 						id:id,
 						name:name,
-						pid:pid
+						pid:pid,
+						uid:uid
 						},
 					type:"post",
 					dataType:"json",

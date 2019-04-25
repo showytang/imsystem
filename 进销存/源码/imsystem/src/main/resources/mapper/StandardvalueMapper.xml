@@ -21,7 +21,7 @@
   	<where>
   		va.state=0
   		<if test="tiaojian!=null">
-  				and (va.id LIKE concat('%',#{tiaojian},'%') OR va.NAME LIKE concat('%',#{tiaojian},'%') OR s.NAME LIKE concat('%',#{tiaojian},'%') OR  u.name LIKE concat('%',#{tiaojian},'%'))
+  				and (va.NAME LIKE concat('%',#{tiaojian},'%') OR s.NAME LIKE concat('%',#{tiaojian},'%') OR  u.name LIKE concat('%',#{tiaojian},'%'))
   		</if>
   	</where>
   </select>

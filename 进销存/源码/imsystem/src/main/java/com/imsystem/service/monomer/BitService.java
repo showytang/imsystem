@@ -9,7 +9,7 @@ import com.imsystem.domain.Bit;
 public interface BitService {
 	
 	 public int deleteByPrimaryKey(String id);
-	 public int updatestate(int id);
+	 public int updatestate(String id);
 	 public int insert(Bit record);
 	 public List<Bit> queryall();
 	 public int updateByPrimaryKey(Bit record);
