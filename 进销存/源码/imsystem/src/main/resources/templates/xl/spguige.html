@@ -75,6 +75,7 @@
 			background: #DDDDDD;
 			line-height: 28px;
 			cursor: pointer;
+			
 		}
 	</style>
 	</head>
@@ -97,7 +98,7 @@
 						</button>
 						<table class="table table-striped">
 							<tr>
-								<th>规格ID</th>
+								
 								<th>规格名称</th>
 								<th>商品类型</th>
 								<th>创建时间</th>
@@ -106,18 +107,16 @@
 								<th>操作</th>
 							</tr>
 							<tr v-for="(temp,index) in pageIf.list">
-							 	<td v-text="temp.id"></td>
+							 	
 								<td v-text="temp.name"></td>
 								<td v-text="temp.gname"></td>
 								<td v-text="formatDate(temp.time)"></td>
 								<td v-text="formatDate(temp.updatetime)"></td> 
 								<td v-text="temp.uname"></td>
 								
-								<td style="padding-left: 0px; padding-right: 40px" >
+								<td style="padding-left: 10px; padding-right: 20px" >
 									<input type="button" value="修改"  id="open" class="an open" @click="open(temp.id)">
-			  						
 									<a :href="dele(temp.id)"><input type="button" class="an" value="删除"/></a>
-									
 								</td> 
 							</tr>
 							<!--<tr>
@@ -164,13 +163,6 @@
 								        	
 										<form class="form-horizontal">
 										
-												<div class="form-group">
-										    	<label for="InName" class="col-sm-3 control-label">规格ID</label>
-											    <div class="col-sm-9">
-											      <input type="text" class="form-control" id="ggid">
-											    </div>
-										  	</div>
-											
 										  	<div class="form-group">
 										    	<label for="InSname" class="col-sm-3 control-label">规格名称</label>
 											    <div class="col-sm-9">
@@ -186,9 +178,9 @@
 											    </div>
 										  	</div>
 										  	<div class="form-group">
-										    	<label for="inputEmail3" class="col-sm-3 control-label">操作人编号</label>
+										    	<label for="inputEmail3" class="col-sm-3 control-label">操作人</label>
 											    <div class="col-sm-9">
-											    	<input type="text" class="form-control" id="gguid" value="ffdh">
+											    	<input type="text" class="form-control" id="gguid" :value="us.name">
 											    </div>
 										  	</div>
 										  	
@@ -215,7 +207,7 @@
 		      							</div>
 								      	<div class="modal-body">
 								      		<form class="form-horizontal">
-								      		<div class="form-group">
+								      		<div class="form-group" style="display: none;" >
 										    	<label for="inputEmail3" class="col-sm-3 control-label">规格ID</label>
 											    <div class="col-sm-9">
 											    	<input type="text" class="form-control" id="gid">
@@ -246,9 +238,9 @@
 										  	</div>
 										  	
 										  	<div class="form-group">
-										    	<label for="inputEmail3" class="col-sm-3 control-label">操作人编号</label>
+										    	<label for="inputEmail3" class="col-sm-3 control-label">操作人</label>
 											    <div class="col-sm-9">
-											    	<input type="text" class="form-control" id="guid">
+											    	<input type="text" class="form-control" id="guid" :value="us.name">
 											    </div>
 										  	</div>
 										  	
@@ -287,7 +279,7 @@
 		el : ".main",
 		data : {
 			pageIf : {},
-			
+			us : {}
 		},
 		methods : {
 
@@ -329,8 +321,7 @@
 	                            $('#gname').val(data.name);
 	                            $('#gtid').val(data.tid);
 	                            $('#gtime').val(vue.formatDate(data.time));
-	                            $('#guid').val(data.uid);
-	                            
+	                           
 	                            
 	                            $('#gid').attr("readonly","readonly");
 	                            $('#gtime').attr("readonly","readonly");
@@ -372,16 +363,18 @@
 	}
 	
 	 $(function(){
+		 vue.us = JSON.parse(window.localStorage.getItem("user"));
+		 $('#gguid').attr("readonly","readonly");
 		 $("#tijiao").click(function(){
-				var id=$("#ggid").val();
+			 
 				var name=$("#ggname").val();
 				var tid=$("#sele").val();
-				var uid=$("#gguid").val();
+				var uid=vue.us.id;
 				
 				$.ajax({
 					url:"/standard/insert",
 					data:{
-						id:id,
+						
 						name:name,
 						tid:tid,
 						uid:uid
@@ -396,9 +389,10 @@
 		 
 		 $(".xiugai").click(function(){
 			 var id=$("#gid").val();
+			
 			 var name=$("#gname").val();
 			 var tid=$("#gtid").val();
-			 var uid=$("#guid").val();
+			 var uid=vue.us.id;
 			 $.ajax({
 				 url:"/standard/toupdate",
 				 data:{

@@ -15,19 +15,23 @@
     <result column="column4" property="column4" jdbcType="VARCHAR" />
     <result column="column5" property="column5" jdbcType="VARCHAR" />
     
+  </resultMap>
+  
+  
+  <resultMap type="com.imsystem.domain.Goodstype" id="BaseResultMap2" extends="BaseResultMap">
+  
     <association property="goodstype"  javaType="com.imsystem.domain.Goodstype" column="pid" select="queryGoodsTypeReverse">
     	
     </association>
-    
-   
+  
   </resultMap>
   
  <select id="querygoodstype" resultMap="BaseResultMap">
-  	SELECT g.*,u.name AS uname FROM goodstype AS g INNER JOIN USER AS u ON g.uid=u.`id`
+  	SELECT g1.*,g2.name AS pname,u.`name` AS uname FROM `goodstype` AS g1 LEFT JOIN `goodstype` AS g2 ON g1.`pid` = g2.id INNER JOIN USER AS u ON g1.uid=u.`id`
   	<where>
-  		g.state=0
+  		g1.state=0
   		<if test="tiaojian!=null">
-  				and (g.id LIKE concat('%',#{tiaojian},'%') OR  g.NAME LIKE concat('%',#{tiaojian},'%') OR g.pid LIKE concat('%',#{tiaojian},'%') OR u.name LIKE concat('%',#{tiaojian},'%'))
+  				and ( g1.NAME LIKE concat('%',#{tiaojian},'%') OR g2.name LIKE concat('%',#{tiaojian},'%') OR u.name LIKE concat('%',#{tiaojian},'%'))
   		</if>
   		
   	</where>
@@ -45,32 +49,34 @@
   	SELECT * FROM goodstype WHERE id=#{id}
   </select>
   
+  <select id="querybypid" resultMap="BaseResultMap">
+  	SELECT * FROM goodstype WHERE pid=0
+  </select>
+  
   <update id="toupdate" parameterType="map" >
-  	UPDATE goodstype set NAME=#{name},pid=#{pid},updatetime=NOW() WHERE id=#{id}
+  	UPDATE goodstype set NAME=#{name},pid=#{pid},updatetime=NOW(),uid=#{uid} WHERE id=#{id}
   </update>
   
   
-  <select id="queryGoodsTypeReverse" resultMap="BaseResultMap">
+  <select id="queryGoodsTypeReverse" resultMap="BaseResultMap2">
   	SELECT * FROM `goodstype`
 	WHERE id = #{id}
   </select>
   
-  <select id="queryGoodsTypeReverseList" resultMap="BaseResultMap">
+  <select id="queryGoodsTypeReverseList" resultMap="BaseResultMap2">
 	SELECT * FROM `goodstype`
 	WHERE pid = #{id}
   </select>
   
   
-  <select id="QueryGoodsTypeByPid" resultMap="BaseResultMap">
+  <select id="QueryGoodsTypeByPid" resultMap="BaseResultMap2">
   <!-- 商品类型查询 -->
   	SELECT * FROM `goodstype`
 	WHERE pid = #{id}
   
   </select>
   
-  <select id="querybypid" resultMap="BaseResultMap">
-  	select * from goodstype where pid=0
-  </select>
+  
   
   
   <sql id="Example_Where_Clause" >

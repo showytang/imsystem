@@ -23,7 +23,7 @@ public interface BitMapper {
     
     Bit querybyid(String id);
     
-    int updatestate(int id);
+    int updatestate(String id);
 
     Bit selectByPrimaryKey(String id);
 

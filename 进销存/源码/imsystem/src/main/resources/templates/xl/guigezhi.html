@@ -51,6 +51,7 @@
 			justify-content: space-around;
 			padding: 0px;
 			font-size: 12px;
+			
 		}
 
 		#page {
@@ -100,7 +101,7 @@
 							</button>
 							<table class="table table-striped">
 								<tr>
-									<th>规格值ID</th>
+									
 									<th>规格值名称</th>
 									<th>规格名称</th>
 									<th>创建时间</th>
@@ -111,7 +112,7 @@
 								</tr>
 								
 								<tr v-for="(temp,index) in pageIf.list">
-							 	<td v-text="temp.id"></td>
+							 	
 								<td v-text="temp.name"></td>
 								<td v-text="temp.sname"></td>
 								<td v-text="formatDate(temp.time)"></td>
@@ -156,12 +157,7 @@
 								        	
 										<form class="form-horizontal">
 										
-											<div class="form-group">
-										    	<label for="InName" class="col-sm-3 control-label">规格值ID</label>
-											    <div class="col-sm-9">
-											      <input type="text" class="form-control" id="gid">
-											    </div>
-										  	</div>
+											
 										  	<div class="form-group">
 										    	<label for="InSname" class="col-sm-3 control-label">规格值名称</label>
 											    <div class="col-sm-9">
@@ -180,7 +176,7 @@
 										  	<div class="form-group">
 										    	<label for="inputEmail3" class="col-sm-3 control-label">操作人编号</label>
 											    <div class="col-sm-9">
-											    	<input type="text" class="form-control" id="guid">
+											    	<input type="text" class="form-control" id="guid" :value="us.name">
 											    </div>
 										  	</div>
 										  	
@@ -207,7 +203,7 @@
 		      							</div>
 								      	<div class="modal-body">
 								      		<form class="form-horizontal">
-								      		<div class="form-group">
+								      		<div class="form-group" style="display: none;">
 										    	<label for="inputPassword3" class="col-sm-3 control-label">规格值ID</label>
 											    <div class="col-sm-9">
 											      <input type="text" class="form-control" id="ggid">
@@ -237,9 +233,9 @@
 										  	
 										  
 										  	<div class="form-group">
-										    	<label for="inputEmail3" class="col-sm-3 control-label">操作人编号</label>
+										    	<label for="inputEmail3" class="col-sm-3 control-label">操作人</label>
 											    <div class="col-sm-9">
-											    	<input type="text" class="form-control" id="gguid">
+											    	<input type="text" class="form-control" id="gguid" :value="us.name">
 											    </div>
 										  	</div>
 										  	
@@ -276,6 +272,7 @@
 		el : ".main",
 		data : {
 			pageIf : {},
+			us : {}
 			
 		},
 		methods : {
@@ -318,7 +315,7 @@
 	                            $('#ggname').val(data.name);
 	                            $('#ggsid').val(data.sid);
 	                            $('#ggtime').val(vue.formatDate(data.time));
-	                            $('#gguid').val(data.uid);
+	                            
 	                            
 	                            
 	                            $('#ggid').attr("readonly","readonly");
@@ -362,17 +359,20 @@
 	};
 	
 	 $(function(){
+		 
+		 vue.us = JSON.parse(window.localStorage.getItem("user"));
+		 $('#guid').attr("readonly","readonly");
 		 $("#tijiao").click(function(){
-				var id=$("#gid").val();
+				
 				var name=$("#gname").val();
 				var sid=$("#gsid").val();
-				var uid=$("#guid").val();
+				var uid=vue.us.id;
 				alert(sid)
 				
 				$.ajax({
 					url:"/StandardValue/insert",
 					data:{
-						id:id,
+						
 						name:name,
 						sid:sid,
 						uid:uid
@@ -389,7 +389,7 @@
 			 var id=$("#ggid").val();
 			 var name=$("#ggname").val();
 			 var sid=$("#ggsid").val();
-			 var uid=$("#gguid").val();
+			 var uid=vue.us.id;
 			 $.ajax({
 				 url:"/StandardValue/toupdate",
 				 data:{

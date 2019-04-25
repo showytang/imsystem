@@ -1,6 +1,7 @@
 package com.imsystem.controller.monomer;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,6 +54,8 @@ public class GoodsStandardValueController {
 	@RequestMapping("/insert")
 	@ResponseBody
 	public int insert(Standardvalue stan) {
+		String id=UUID.randomUUID().toString();
+		stan.setId(id);
 		int r=service.insertStandardvalue(stan);
 		return r;
 	}

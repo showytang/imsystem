@@ -3,6 +3,8 @@ package com.imsystem.domain;
 import java.util.Date;
 import java.util.List;
 
+import org.thymeleaf.standard.processor.StandardInliningCDATASectionProcessor;
+
 public class Goodstype {
     private String id;
 
@@ -17,6 +19,8 @@ public class Goodstype {
     private String uid;
     
     private String uname;
+    
+    private String pname; 
 
     private Integer state;
 
@@ -142,5 +146,13 @@ public class Goodstype {
 
 	public void setUname(String uname) {
 		this.uname = uname;
+	}
+
+	public String getPname() {
+		return pname;
+	}
+
+	public void setPname(String pname) {
+		this.pname = pname;
 	}
 }
