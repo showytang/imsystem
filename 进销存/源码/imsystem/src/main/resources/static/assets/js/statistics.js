@@ -93,7 +93,7 @@ function queryRanking(startTime,endTime,storeId){
 	var v;
 	$.ajax({
 		url:"/statistics/queryRanking",
-		type:"opst",
+		type:"post",
 		async : false,
 		data:{
 			startTime:startTime,
