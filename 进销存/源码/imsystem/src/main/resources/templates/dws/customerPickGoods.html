@@ -208,11 +208,13 @@ var vue = new Vue({
 	el:".main",
 	data:{
 		
-		pageIf:""
+		pageIf:"",
+		idCountMap:""
 		
 	}
 	
 });
+
 
 function add(th){
 	var id=$(th).attr("val");
@@ -222,6 +224,7 @@ function add(th){
 	$("#chooseGoods").attr("action","choseonegoodsvalue?gid="+id+"&cc="+cc+"&cv="+cv+"&gc="+gc);
 	$("#chooseGoods").submit();
 }
+
 
 /**
  * 类型全选
@@ -424,7 +427,6 @@ function optionCheck(obj){
 		
 		$("#typeoption .option-type").each(function(index,item){
 		
-			console.log($(item).find(".option-span-all").hasClass("active1"))
 			
 			if($(item).find(".option-span-all").hasClass("active1")){
 			
@@ -434,7 +436,6 @@ function optionCheck(obj){
 					
 				});
 				
-				console.log(svid)
 				
 			}else{
 				
