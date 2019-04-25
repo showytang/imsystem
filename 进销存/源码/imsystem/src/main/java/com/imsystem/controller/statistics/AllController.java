@@ -295,6 +295,7 @@ public class AllController {
 	@ResponseBody
 	public List<Store> queryStore() {
 		List<Store> list = ssc.queryStoreAll();
+		System.out.println(list);
 		return list;
 	}
 	
