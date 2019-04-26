@@ -338,16 +338,11 @@
   
   <!-- 根据ID修改角色 -->
   <update id="updateRoleById">
-    UPDATE role SET `name` = #{name,jdbcType=VARCHAR},
-      `time` = #{time,jdbcType=TIMESTAMP},
-      state = #{state,jdbcType=INTEGER},
-      uid = #{uid,jdbcType=VARCHAR},
-      column1 = #{column1,jdbcType=VARCHAR},
-      column2 = #{column2,jdbcType=VARCHAR},
-      column3 = #{column3,jdbcType=VARCHAR},
-      column4 = #{column4,jdbcType=VARCHAR},
-      column5 = #{column5,jdbcType=VARCHAR}
-    WHERE id = #{id,jdbcType=VARCHAR} 
+     UPDATE role SET `name` = #{name},
+      `time` = NOW(),
+      state = 0,
+      uid = #{uid}
+    WHERE id = #{id} 
   </update>
   
    

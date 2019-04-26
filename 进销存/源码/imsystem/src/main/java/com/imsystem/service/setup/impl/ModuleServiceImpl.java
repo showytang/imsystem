@@ -91,5 +91,27 @@ public class ModuleServiceImpl implements ModuleService{
 		
 		return moduleMapper.queryModuleByParentid(parentid);
 	}
+	
+	
+	
+	@Override
+	public List<Module> queryRoleNoModule(String rid) {
+		
+		return moduleMapper.queryRoleNoModule(rid);
+	}
+
+	@Override
+	public int deleteModuleById_two(Integer state, String id) {
+		
+		return moduleMapper.deleteModuleById_two(state, id);
+		
+	}
+
+	@Override
+	public int deleteModuleAll(Integer[] ids) {
+		
+		return moduleMapper.deleteModuleAll(ids);
+		
+	}
 
 }

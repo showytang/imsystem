@@ -32,6 +32,10 @@ public interface RolemoduleMapper {
     int insertRoleModule(Role role);
     
     
+    int insertRoleModule_two(Rolemodule rolemodule);
+    
+    int deleteRoleModuleByRid(String id);
+    
     
     
 }

@@ -39,7 +39,7 @@
   
   <body>
     <div class="x-body">
-        <form class="layui-form" th:action="@{/user/updateUserById(id=${u.id})}" method="post">
+        <form class="layui-form" th:action="@{/user/updateUserById?id=${u.id}}" method="post">
           <div class="layui-form-item">
               <label for="username" class="layui-form-label">
                   <span class="x-red">*</span>账户
@@ -70,7 +70,7 @@
              
                <div class="layui-input-block">
                	
-			      <input  th:if="${item.name}!='超级管理员' "  th:each="item : ${list}" type="radio" name="rid"  th:value="${item.id}" th:title="${item.name}">
+			      <input  th:if="${item.name}!='超级管理员' "  th:each="item : ${list}" type="radio" name="rid"    th:value="${item.id}" th:title="${item.name}">
 			   	
 			    </div>
 			    

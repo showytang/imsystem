@@ -24,10 +24,21 @@ public class Rolemodule {
     private String column5;
 
     
+    private List<Rolemodule> listRM;
+    
+    
+    public List<Rolemodule> getListRM() {
+		return listRM;
+	}
+
+	public void setListRM(List<Rolemodule> listRM) {
+		this.listRM = listRM;
+	}
+
+	private List<Module> listModule;
     
     
     
-    private List<Module> listModule;
     
     
     public List<Module> getListModule() {

@@ -381,7 +381,7 @@
  <!-- 批量删除(假删除) -->
    <update id="deleteAll">
    	
-	UPDATE `user` SET state=3 WHERE id IN
+	UPDATE `user` SET state=2 WHERE id IN
 	<foreach collection="array" item="i" open="("  separator="," close=")">
 		
 		#{i}

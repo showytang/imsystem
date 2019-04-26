@@ -408,6 +408,13 @@
 	</delete>
 
 
+	<delete id="deleteModuleById_two">
+ 		
+   	     UPDATE `module` SET state=#{state} WHERE id=#{id}
+ 
+ 	</delete>
+
+
 
 	<!-- 根据ID修改功能权限 -->
 	<update id="updateModuleById">
@@ -483,7 +490,24 @@
 
 
 
+<select id="queryRoleNoModule" resultMap="BaseResultMap">
+		SELECT * FROM `module` AS `mo` WHERE `mo`.`id`  NOT IN 
+		     ((SELECT `mid` FROM `rolemodule` WHERE rid=#{rid}))
+</select>
 
+
+ <update id="deleteModuleAll">
+   	
+	UPDATE `module` SET state=2 WHERE id IN
+	<foreach collection="array" item="i" open="("  separator="," close=")">
+		
+		#{i}
+		
+	</foreach>
+	
+	
+	
+  </update>
 
 
 

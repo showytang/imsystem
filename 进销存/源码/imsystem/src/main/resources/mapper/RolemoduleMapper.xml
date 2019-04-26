@@ -298,11 +298,22 @@
   </insert>
   
   
+   
   
   
   
   
+  <insert id="insertRoleModule_two">
+  	 INSERT INTO `rolemodule` (`id`,`mid`,`rid`,`state`,`uid`)VALUES
+  		(#{id},#{mid},#{rid},0,#{uid})
+  </insert>
   
+  
+  <delete id="deleteRoleModuleByRid">
+  		
+  		DELETE FROM rolemodule WHERE rid=#{rid}
+  		
+  </delete>
   
   
   
