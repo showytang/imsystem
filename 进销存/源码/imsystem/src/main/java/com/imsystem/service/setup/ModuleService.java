@@ -41,4 +41,8 @@ public interface ModuleService {
 	    int deleteModuleById_two(@Param("state") Integer state,@Param("id") String id);
 	    
 	    int deleteModuleAll(Integer [] ids);
+	    
+	    int  updateModuleById_two(@Param("url") String url,@Param("id") String id);
+	    
+	    Module selectByPrimaryKey(String id);
 }

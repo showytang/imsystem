@@ -65,7 +65,7 @@
             </th>
             <th>权限名称</th>
             <th>英文名称</th>
-            <th>权限规则</th>
+            <th>权限规则路径</th>
             <th>所属分类</th>
             <th>操作</th>
         </thead>
@@ -82,7 +82,7 @@
             
             <td th:text="${item.catalog==0}?'左侧目录':'非左侧目录'" ></td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('编辑','xxx.html')" href="javascript:;">
+              <a title="编辑"  th:onclick="x_admin_show('编辑','/module/toModuleupdate?id='+[[${item.id}]])"   href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
               <a title="删除" th:onclick="member_del(this,[[${item.id}]])" href="javascript:;">
@@ -140,7 +140,7 @@
             				$(".two").show();
             				
             				$("#two").html(" ");
-            				var a=("<option value='0'>请选择</option>");
+            				var a=("<option value=''>请选择</option><option value='0'>无选择</option>");
             				 $("#two").append(a);
             				 $.each(result,function(i,obj){
             					
