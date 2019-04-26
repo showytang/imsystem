@@ -44,6 +44,7 @@ public interface ModuleMapper {
     
     List<Module> queryMuLu(@Param("uid")String uid,@Param("parentid")String id);
     
+    
     @MapKey("url")
     Map<String, Module> queryMap(String uid);
     
@@ -53,4 +54,11 @@ public interface ModuleMapper {
     List<Module> queryModuleByParentid(@Param("parentid") String parentid);
     
     
+    List<Module> queryRoleNoModule(String rid);
+    
+   int deleteModuleById_two(@Param("state") Integer state,@Param("id") String id);
+    
+   int deleteModuleAll(Integer [] ids);
+   
+   
 }

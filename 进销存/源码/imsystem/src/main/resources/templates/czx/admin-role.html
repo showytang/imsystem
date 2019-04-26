@@ -93,7 +93,7 @@ table {
 						th:onclick="member_stop(this,[[${item.id}]])" href="javascript:;"
 						th:title="${item.state==0 ?'已启用':'已停用'}"> <i
 							class="layui-icon" th:text="${item.state==0}?'&#xe601':'&#xe62f'">&#xe601;</i>
-					</a> <a title="编辑" onclick="x_admin_show('编辑','role-add.html')"
+					</a> <a class="bj" title="编辑" th:rid="${item.id}" 
 						href="javascript:;"> <i class="layui-icon">&#xe642;</i>
 					</a> <a title="删除" th:onclick="member_del(this,[[${item.id}]])"
 						href="javascript:;"> <i class="layui-icon">&#xe640;</i>
@@ -112,6 +112,12 @@ table {
 		
 	</div>
 	<script th:inline="javascript">
+	$(function(){
+		$(".bj").click(function(){
+			
+			x_admin_show("编辑","/role/queryRoleById?id="+$(this).attr("rid"));
+		});
+	});
       layui.use('laydate', function(){
         var laydate = layui.laydate;
         
@@ -244,12 +250,7 @@ table {
         });
       }
     </script>
-	<script>var _hmt = _hmt || []; (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-      })();</script>
+	
 </body>
 
 </html>

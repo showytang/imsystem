@@ -14,7 +14,7 @@
     <script type="text/javascript" th:src="@{/assets/SheZhi/js/xadmin.js}"></script>
     <script type="text/javascript" th:src="@{/assets/SheZhi/js/cookie.js}"></script>
     
-   
+   	
   </head>
   
   <body>
@@ -51,9 +51,13 @@
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
+        <button class="layui-btn layui-btn-normal"
+			onclick="x_admin_show('添加角色模块','/module/queryModuleAll_two')">
+			<i class="layui-icon "></i>添加
+		</button>
       <!-- <span class="x-right" style="line-height:40px">共有数据：88 条</span>-->
       </xblock>
-      <table class="layui-table">
+      <table class="layui-table x-admin" >
         <thead>
           <tr>
             <th>
@@ -68,17 +72,20 @@
         <tbody>
           <tr th:each="item : ${page.list}">
             <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
+              <div th:data-id="${item.id}"  class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
             </td>
             <td th:text="${item.name}"></td>
             <td th:text="${item.enname}"></td>
-            <td th:text="${item.url}"></td>
+        	
+            <td th:text="${item.url}!=null?${item.url}:'无规格'" ></td>
+            
+            
             <td th:text="${item.catalog==0}?'左侧目录':'非左侧目录'" ></td>
             <td class="td-manage">
               <a title="编辑"  onclick="x_admin_show('编辑','xxx.html')" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-              <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
+              <a title="删除" th:onclick="member_del(this,[[${item.id}]])" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
@@ -197,12 +204,28 @@
           });
       }
 
-      /*用户-删除*/
+      /*模块-删除*/
       function member_del(obj,id){
           layer.confirm('确认要删除吗？',function(index){
               //发异步删除数据
-              $(obj).parents("tr").remove();
-              layer.msg('已删除!',{icon:1,time:1000});
+              var url=[[@{/module/deleteModuleById_two}]];
+              $.ajax({
+        		 url:url,
+        		 type:"post",
+        		 data:{
+        			 id:id,
+        			 state:2
+        		 },
+        		 success:function(result){
+        			 
+
+        				 $(obj).parents("tr").remove();
+        	              layer.msg('已删除!',{icon:5,time:1000});
+        			 
+        		 }
+        	  });
+              
+              
           });
       }
 
@@ -214,6 +237,22 @@
   
         layer.confirm('确认要删除吗？'+data,function(index){
             //捉到所有被选中的，发异步进行删除
+            
+            
+          var url=[[@{/module/deleteModuleAll}]];
+          
+      	  $.ajax({
+      		 url:url,
+      		 type:"post",
+      		 data:{
+      			 ids:data+""
+      		 },
+      		 success:function(result){
+      			
+      		 }
+      	  }); 
+            
+            
             layer.msg('删除成功', {icon: 1});
             $(".layui-form-checked").not('.header').parents('tr').remove();
         });
