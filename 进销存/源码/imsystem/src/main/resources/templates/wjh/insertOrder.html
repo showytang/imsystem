@@ -533,9 +533,17 @@
 					});
 			$("#queryShapping").click(function() {
 				
-				setCookie("list",JSON.stringify(vue.shappinglist),30);
+				var map = new Map();
 				
-				location.href = [[@{/insertOrder/test}]];
+ 				 vue.shappinglist.forEach((item) => {
+					
+ 					map.set(item.id,item.count);
+					
+ 				});
+ 				
+ 				localStorage.map = JSON.stringify(Array.from(map.entries()));
+ 				 
+				location.href = [[@{/goods/orderPickGoods}]];
 				
 			});
 			$("#moling").click(function(){
@@ -715,6 +723,7 @@
 			$(".fade").modal("show");
 			supplier();
 		}
+		
 	</script>
 </body>
 </html>

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -170,11 +171,20 @@ public class OrderInsertController {
 		return orderInsert.UpdateSalesOrder(sales)+"";
 	}
 	@RequestMapping("/test")
-	public void test(Cookie cook) {
+	public void test(HttpServletRequest request) {
 
-		System.out.println(cook.getName());
+		Cookie [] cookie =  request.getCookies();
+		
+		for (Cookie item : cookie) {
+			
+			if(item.getName().equals("list")) {
+				
+				System.out.println(item.getValue());
+			
+			}
+			
+		}
 		
 	}
-	
 	
 }

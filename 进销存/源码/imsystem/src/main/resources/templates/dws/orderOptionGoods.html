@@ -466,7 +466,7 @@ var vue = new Vue({
 	
 });
 
-vue.idCountMap = [[${idCountMap}]];
+vue.idCountMap = new Map(JSON.parse(localStorage.map));
 vue.list = [[${list}]];
 
 
