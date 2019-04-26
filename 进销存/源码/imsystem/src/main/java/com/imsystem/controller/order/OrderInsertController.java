@@ -1,7 +1,11 @@
 package com.imsystem.controller.order;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,23 +42,24 @@ public class OrderInsertController {
 	SupplierService supplierService;
 	
 	
-	public List<Goods> shappinglist(){
+	public List<Goodsvalue> shappinglist(){
 		
-		List<Goods> list = new Vector<Goods>();
 		
-		Goods pay = new Goods();
-		
-		List<Goodsvalue> goodsList =  new Vector<Goodsvalue>();
+		List<Goodsvalue> goodsList =  new ArrayList<Goodsvalue>();
 		
 		Goodsvalue goods = new Goodsvalue();
 		
 		goods.setColumn1("assetc/img/one.jpg");
 		
-		goods.setColumn2("2");
+		goods.setColumn2("断袖");
+		
+		goods.setCount("2");
 		
 		goods.setDefaultvalue(199);
 		
 		goods.setId("1");
+		
+		
 		
 		goods.setName("红色，L");
 		
@@ -62,21 +67,17 @@ public class OrderInsertController {
 		
 		goods.setColumn3("399.98");
 		
+		goods.setColumn5("小太阳");
+		
 		goodsList.add(goods);
-		
-		pay.setGoodsValues(goodsList);
-		
-		pay.setName("老王");
-		
-		Goods pay1 = new Goods();
-		
-		List<Goodsvalue> goodsList1 =  new Vector<Goodsvalue>();
 		
 		Goodsvalue goods1 = new Goodsvalue();
 		
 		goods1.setColumn1("assetc/img/one.jpg");
 		
-		goods1.setColumn2("2");
+		goods1.setColumn2("长袖");
+		
+		goods1.setCount("2");
 		
 		goods1.setName("黑色，L");
 		
@@ -88,16 +89,11 @@ public class OrderInsertController {
 		
 		goods1.setColumn3("399.98");
 		
-		goodsList1.add(goods1);
+		goods1.setColumn5("大太阳");
 		
-		pay1.setGoodsValues(goodsList1);
+		goodsList.add(goods1);
 		
-		pay1.setName("老王");
-		
-		list.add(pay);
-		list.add(pay1);
-		
-		return list;
+		return goodsList;
 	}
 	
 	@RequestMapping("/query")
@@ -172,6 +168,12 @@ public class OrderInsertController {
 	public String UpdateSalesOrder(@RequestBody Salesorder sales) {
 		
 		return orderInsert.UpdateSalesOrder(sales)+"";
+	}
+	@RequestMapping("/test")
+	public void test(Cookie cook) {
+
+		System.out.println(cook.getName());
+		
 	}
 	
 	

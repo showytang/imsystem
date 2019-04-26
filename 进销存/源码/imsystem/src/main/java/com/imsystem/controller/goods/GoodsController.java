@@ -449,7 +449,6 @@ public class GoodsController {
 		model.addAttribute("list", goodsSer.queryAllGoods("",null,"0"));
 		
 		return "dws/orderOptionGoods";
-
 	}
 
 	/**
