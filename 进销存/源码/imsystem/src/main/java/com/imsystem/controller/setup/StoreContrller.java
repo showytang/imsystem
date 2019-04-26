@@ -80,6 +80,34 @@ public class StoreContrller {
 	}
 	
 	
+	@RequestMapping("queryStoreById")
+	public String selectByPrimaryKey(String id,Model model) {
+		
+		Store store= storeService_c.selectByPrimaryKey(id);
+		
+		model.addAttribute("st", store);
+		
+		return "czx/store-update";
+	}
+	
+	
+	@RequestMapping("updateStore")
+	public String updateByPrimaryKey(Store store,HttpSession session) {
+		 
+		 User user=(User) session.getAttribute("user");
+		 
+		 store.setUid(user.getId());
+		 
+		 storeService_c.updateByPrimaryKey(store);
+		 
+		 
+		 return "redirect:queryStore";
+	}
+	
+	
+	
+	
+	
 	
 	
 	

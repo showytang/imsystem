@@ -114,4 +114,16 @@ public class ModuleServiceImpl implements ModuleService{
 		
 	}
 
+	@Override
+	public int updateModuleById_two(String url, String id) {
+		// TODO Auto-generated method stub
+		return moduleMapper.updateModuleById_two(url, id);
+	}
+
+	@Override
+	public Module selectByPrimaryKey(String id) {
+		
+		return moduleMapper.selectByPrimaryKey(id);
+	}
+
 }

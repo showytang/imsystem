@@ -63,6 +63,20 @@ public class StoreServiceImpl_c implements StoreService_c{
 	public Store SelectZongDian() {
 		return storeMapper.SelectZongDian();
 	}
+
+
+	@Override
+	public int updateByPrimaryKey(Store record) {
+		// TODO Auto-generated method stub
+		return storeMapper.updateByPrimaryKey(record);
+	}
+
+
+	@Override
+	public Store selectByPrimaryKey(String id) {
+		// TODO Auto-generated method stub
+		return storeMapper.selectByPrimaryKey(id);
+	}
 	
 		
 

@@ -107,6 +107,8 @@ public class UserController {
 	public String queryUserById(String id,Model model) {
 		User u=userService.queryUserById(id);
 		
+		
+		
 		model.addAttribute("u", u);
 		List<Role> list=roleService.queryRoleAll();
 		model.addAttribute("list",list);
@@ -118,7 +120,6 @@ public class UserController {
 	
 	@RequestMapping("updateUserById")
 	public String updateUserById(User user,HttpSession session) {
-		
 		
 		System.out.println("用户修改进来");
 		

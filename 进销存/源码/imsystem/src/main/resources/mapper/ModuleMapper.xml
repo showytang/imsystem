@@ -414,6 +414,10 @@
  
  	</delete>
 
+	<update id="updateModuleById_two">
+		UPDATE `module` SET  `url`=#{url} WHERE id=#{id}
+	</update>
+
 
 
 	<!-- 根据ID修改功能权限 -->
