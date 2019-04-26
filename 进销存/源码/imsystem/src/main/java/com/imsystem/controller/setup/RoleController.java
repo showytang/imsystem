@@ -23,6 +23,7 @@ import com.imsystem.domain.Rolemodule;
 import com.imsystem.domain.Store;
 import com.imsystem.domain.User;
 import com.imsystem.service.setup.ModuleService;
+import com.imsystem.service.setup.RoleModuleService;
 import com.imsystem.service.setup.RoleService;
 import com.imsystem.service.setup.StoreService_c;
 
@@ -36,6 +37,9 @@ public class RoleController {
 	@Autowired
 	StoreService_c storeService_c;
 	
+	
+	@Autowired
+	RoleModuleService roleModuleService;
 	
 	@Autowired
 	ModuleService moduleService;
@@ -104,6 +108,34 @@ public class RoleController {
 	}
 	
 	
+	
+	@RequestMapping("queryRoleById")
+	public String queryRoleById(String id,Model model) {
+		
+		
+		
+		
+		Role r=roleService.queryRoleById(id);
+		
+		System.out.println(JSON.toJSONString(r));
+		model.addAttribute("r", r);
+		
+		List<Module> list=moduleService.selectModuleAll(0+"");
+		
+		model.addAttribute("module", list);
+		
+		return "czx/role-update";
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@RequestMapping("insertRole")
 	@ResponseBody
 	public int insertRole(@RequestBody Role role,HttpSession session) {
@@ -117,7 +149,7 @@ public class RoleController {
 		id = id + sdf ;
 		role.setId(id);
 		role.setUid(user1.getId());
-		 System.out.println("进来了 新增角色");
+		 
 		
 		 for (Rolemodule r : role.getRmlist()) {
 				String id2 = "" ;
@@ -149,6 +181,34 @@ public class RoleController {
 	}
 	
 	
+	
+	@RequestMapping("updateRoleById")
+	@ResponseBody
+	public int updateRoleById(@RequestBody Role role,HttpSession session) {
+		User user1 = (User)session.getAttribute("user");
+		
+		System.out.println("兄弟 进来了");
+		
+		System.out.println(role.getId());
+		
+		System.out.println(role.getName());
+		
+		role.setName(role.getName());
+		
+		role.setUid(user1.getId());
+		
+		roleService.updateRoleById(role);
+		
+//		roleModuleService.deleteRoleModuleByRid(role.getId());
+		
+		
+		
+		
+		
+		return 0;
+		
+		
+	}
 	
 	
 	

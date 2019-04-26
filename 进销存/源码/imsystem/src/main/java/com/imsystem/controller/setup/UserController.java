@@ -120,6 +120,10 @@ public class UserController {
 	public String updateUserById(User user,HttpSession session) {
 		
 		
+		System.out.println("用户修改进来");
+		
+		System.out.println(user.getId());
+		
 		User user1 = (User)session.getAttribute("user");
 		user.setUid(user1.getId());
 		userService.updateUserById(user);

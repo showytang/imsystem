@@ -35,4 +35,10 @@ public interface ModuleService {
 	    
 	    
 	    List<Module> queryModuleByParentid(@Param("parentid") String parentid);
+
+	    List<Module> queryRoleNoModule(String rid);
+	    
+	    int deleteModuleById_two(@Param("state") Integer state,@Param("id") String id);
+	    
+	    int deleteModuleAll(Integer [] ids);
 }

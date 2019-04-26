@@ -14,14 +14,19 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Module;
+import com.imsystem.domain.Role;
+import com.imsystem.domain.Rolemodule;
 import com.imsystem.domain.User;
 import com.imsystem.service.setup.ModuleService;
+import com.imsystem.service.setup.RoleModuleService;
+import com.imsystem.service.setup.RoleService;
 
 @Controller
 @RequestMapping("/module")
@@ -31,8 +36,12 @@ public class ModuleContrller {
 	ModuleService moduleService;
 	
 	
+	@Autowired
+	RoleService roleService;
 	
 	
+	@Autowired
+	RoleModuleService roleModuleService;
 	
 	@RequestMapping("queryModuleAll")
 	public String queryUserRole(Model model,Module module, Integer pageNum, Integer pageSize) {
@@ -59,7 +68,7 @@ public class ModuleContrller {
 	@ResponseBody
 	public List<Module> queryModuleByParentid(String parentid){
 		
-		System.out.println("come。。。。。。。");
+		
 		
 		List<Module> list=moduleService.queryModuleByParentid(parentid+"");
 		
@@ -86,12 +95,13 @@ public class ModuleContrller {
 		
 		
 		
-		System.out.println("大耳朵图图");
+		
 		
 		
 		
 		String parentid = module.getParentid().substring(module.getParentid().indexOf(",") + 1);
 		
+		module.setParentid(parentid);
 		
 		int i=moduleService.insertModule(module);
 		
@@ -102,6 +112,89 @@ public class ModuleContrller {
 	
 	
 	
+	
+	
+	@RequestMapping("queryModuleAll_two")
+	public String queryModuleAll(Model model){
+		
+		List<Module> list=moduleService.selectModuleAll(0+"");
+		
+		
+		
+		List<Role> list2=roleService.queryRoleAll();
+		
+		model.addAttribute("role", list2);
+		
+		model.addAttribute("module", list);
+		
+		return "czx/RoleModule";
+		
+	}
+	
+	
+	@RequestMapping("queryRoleNoModule")
+	@ResponseBody
+	public List<Module> queryRoleNoModule(String rid) {
+		
+		
+		List<Module> list=moduleService.queryRoleNoModule(rid);
+		 
+		return list;
+	}
+	
+	@RequestMapping("deleteModuleById_two")
+	@ResponseBody
+	public int deleteModuleById_two(Integer state, String id) {
+		
+		
+		 
+		 moduleService.deleteModuleById_two(state, id);
+		 
+		 return 0;
+	}
+	
+	@RequestMapping("deleteModuleAll")
+	@ResponseBody
+	public int deleteModuleAll(Integer[] ids) {
+		
+		
+		
+		
+		System.out.println(ids);
+		
+		 moduleService.deleteModuleAll(ids);
+		 
+		 return 0;
+	}
+	
+	
+	
+	
+	@RequestMapping("insertRoleModule_two")
+	@ResponseBody
+	public int insertRoleModule_two(@RequestBody Rolemodule rolemodule,String rid,String uid,HttpSession session) {
+		
+		User user1 = (User)session.getAttribute("user");
+		
+		
+		
+		System.out.println("图图进来了");
+		
+		
+		
+		
+		rolemodule.setUid(user1.getId());
+		
+		
+		
+		System.out.println("rid-------"+JSON.toJSONString(rolemodule));
+		int i=roleModuleService.insertRoleModule_two(rolemodule,rid,uid);
+		
+		
+		
+		return 0;
+		
+	}
 	
 	
 	
