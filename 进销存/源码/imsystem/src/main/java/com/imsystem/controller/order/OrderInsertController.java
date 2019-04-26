@@ -42,69 +42,12 @@ public class OrderInsertController {
 	@Autowired
 	SupplierService supplierService;
 	
-	
-	public List<Goodsvalue> shappinglist(){
-		
-		
-		List<Goodsvalue> goodsList =  new ArrayList<Goodsvalue>();
-		
-		Goodsvalue goods = new Goodsvalue();
-		
-		goods.setColumn1("assetc/img/one.jpg");
-		
-		goods.setColumn2("断袖");
-		
-		goods.setCount("2");
-		
-		goods.setDefaultvalue(199);
-		
-		goods.setId("1");
-		
-		
-		
-		goods.setName("红色，L");
-		
-		goods.setJprice(199.99);
-		
-		goods.setColumn3("399.98");
-		
-		goods.setColumn5("小太阳");
-		
-		goodsList.add(goods);
-		
-		Goodsvalue goods1 = new Goodsvalue();
-		
-		goods1.setColumn1("assetc/img/one.jpg");
-		
-		goods1.setColumn2("长袖");
-		
-		goods1.setCount("2");
-		
-		goods1.setName("黑色，L");
-		
-		goods1.setId("2");
-		
-		goods1.setJprice(199.99);
-		
-		goods1.setDefaultvalue(198);
-		
-		goods1.setColumn3("399.98");
-		
-		goods1.setColumn5("大太阳");
-		
-		goodsList.add(goods1);
-		
-		return goodsList;
-	}
-	
 	@RequestMapping("/query")
 	public String query(Model model) {
 		
 		model.addAttribute("paytypeList", paytype.queryPaytype(null));
 		
 		model.addAttribute("supplierlist", supplierService.queryDealOrderSupplier("1"));
-		
-		model.addAttribute("shappinglist", shappinglist());
 		
 		return "wjh/insertOrder";
 	}
@@ -136,8 +79,6 @@ public class OrderInsertController {
 		model.addAttribute("paytypeList", paytype.queryPaytype(null));
 		
 		model.addAttribute("supplierlist", supplierService.queryDealOrderSupplier("1"));
-		
-		model.addAttribute("shappinglist", shappinglist());
 		
 		return "wjh/insertOrderOut";
 	}

@@ -439,13 +439,7 @@ public class GoodsController {
 	@RequestMapping("/orderPickGoods")
 	public String orderOptionGoods(Model model) {
 
-		HashMap<String, String> idCountMap = new HashMap<String, String>();
 		
-		idCountMap.put("1556072162885","6");
-		idCountMap.put("1556072184458","8");
-		idCountMap.put("1556072220819","10");
-		
-		model.addAttribute("idCountMap", idCountMap);
 		model.addAttribute("list", goodsSer.queryAllGoods("",null,"0"));
 		
 		return "dws/orderOptionGoods";
