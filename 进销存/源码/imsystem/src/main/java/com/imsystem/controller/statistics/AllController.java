@@ -141,7 +141,7 @@ public class AllController {
 		List<Salesorder> list = salesorderS.queryThisYear(year);
 		if (list.size()>0) {
 			for (Salesorder ss : list) {
-				List<Goodsvalue> gv = gvs.queryGoodsByTime(ss.getColumn3(),"","",storeId,"");
+				List<Goodsvalue> gv = gvs.queryGoodsByTime(ss.getColumn3(),"","",storeId,"","");
 				if (gv.size()>0) {
 					ss.setList(gv);
 				}
@@ -160,7 +160,7 @@ public class AllController {
 	@RequestMapping("queryGoodsRanking")
 	@ResponseBody
 	public List<Goodsvalue> queryGoodsRanking(String time,String startTime,String endTime,String storeId){
-		List<Goodsvalue> list = gvs.queryGoodsByTime(time, startTime, endTime, storeId,"");
+		List<Goodsvalue> list = gvs.queryGoodsByTime(time, startTime, endTime, storeId,"","");
 		return list;
 	}
 	
@@ -176,12 +176,12 @@ public class AllController {
 	 */
 	@RequestMapping("queryGoodsDetail")
 	@ResponseBody
-	public PageInfo<Goodsvalue> queryGoodsDetail(Integer currentPage,String time,String startTime,String endTime,String storeId,String gid){
+	public PageInfo<Goodsvalue> queryGoodsDetail(Integer currentPage,String time,String startTime,String endTime,String storeId,String gid,String name){
 		if (currentPage == null || currentPage == 0) {
 			currentPage = 1;
 		}
 		Page<Goodsvalue> page = PageHelper.startPage(currentPage, pageSize, true);
-		List<Goodsvalue> list = gvs.queryGoodsByTime(time, startTime, endTime, storeId, gid);
+		List<Goodsvalue> list = gvs.queryGoodsByTime(time, startTime, endTime, storeId, gid,name);
 		return page.toPageInfo();
 	}
 	/***
@@ -192,7 +192,7 @@ public class AllController {
 	@RequestMapping("queryAllGoodsDetail")
 	@ResponseBody
 	public List<Goodsvalue> queryAllGoodsDetail(String storeId){
-		List<Goodsvalue> list = gvs.queryGoodsByTime(null, null, null, storeId, null);
+		List<Goodsvalue> list = gvs.queryGoodsByTime(null, null, null, storeId, null,"");
 		return list;
 	}
 	/***
@@ -222,12 +222,12 @@ public class AllController {
 	 */
 	@RequestMapping("queryStockByGidAndStoreId")
 	@ResponseBody
-	public PageInfo<Stockdetails> queryStockByGidAndStoreId(Integer currentPage,String gid,String storeId){
+	public PageInfo<Stockdetails> queryStockByGidAndStoreId(Integer currentPage,String gid,String storeId,String name){
 		if (currentPage == null || currentPage == 0) {
 			currentPage = 1;
 		}
 		Page<Stockdetails> page = PageHelper.startPage(currentPage, pageSize, true);
-		List<Stockdetails> list = stockDS.queryStockByGidAndStoreId(gid, storeId);
+		List<Stockdetails> list = stockDS.queryStockByGidAndStoreId(gid, storeId,name);
 		return page.toPageInfo();
 	}
 	/***

@@ -14,5 +14,5 @@ public interface GoodsValueService {
 	 */
     List<Goodsvalue> queryByCode(@Param("code") String code);
     
-    List<Goodsvalue> queryGoodsByTime(@Param("time") String time,@Param("startTime") String startTime,@Param("endTime") String endTime,@Param("storeId") String storeId,@Param("gid") String gid);
+    List<Goodsvalue> queryGoodsByTime(@Param("time") String time,@Param("startTime") String startTime,@Param("endTime") String endTime,@Param("storeId") String storeId,@Param("gid") String gid,@Param("name") String name);
 }

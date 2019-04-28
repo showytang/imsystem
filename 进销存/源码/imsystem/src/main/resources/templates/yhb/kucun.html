@@ -113,6 +113,10 @@
 							</table>
 						</div>
 					</div>
+					<div class="input-group qBn col-md-3 col-xs-11 " style="float:left;margin:20px 20px 0px 4.5%;">
+					    <input type="text" class="form-control" id="inputGroupSuccess1" placeholder="请输入商品名称" aria-describedby="inputGroupSuccess1Status">
+					    <span class="input-group-addon glyphicon glyphicon-search"></span>
+					  </div>
 				</div>
 			</div>
 		</div>
@@ -135,7 +139,7 @@
 	vue.sid = storeid;
 	$(function() {
 		myDate();
-		vue.page = queryStockByGidAndStoreId(null, gid, storeid);
+		vue.page = queryStockByGidAndStoreId(null, gid, storeid,null);
 		vue.store = queryStore();
 		$(".panel-headline").append(
 				page(vue.page.pageNum, vue.page.prePage, vue.page.nextPage,
@@ -153,10 +157,11 @@
 						"click",
 						".pageFy>ul li",
 						function() {
+							var name = $("#inputGroupSuccess1").val();
 							var create = $(this).attr("pageNumber");
 							if (create != null && create != 0) {
 								vue.page = queryStockByGidAndStoreId(create,
-										gid, storeid);
+										gid, storeid,name);
 								$(".panel-headline").append(
 										page(create, vue.page.prePage,
 												vue.page.nextPage,
@@ -171,11 +176,22 @@
 							$(".sumCount").text(count);
 							$(".sumMoney").text("￥" + money);
 						});
+		$(".input-group-addon").click(function(){
+			var name = $("#inputGroupSuccess1").val();
+			gid = null;
+			vue.page = queryStockByGidAndStoreId(null,
+					null, storeid,name);
+			
+			console.log(vue.page);
+			$(".panel-headline").append(
+					page(vue.page.pageNum, vue.page.prePage,
+							vue.page.nextPage, vue.page.pages));
+		});
 		vue.goods = queryGoods();
 		$(".store").change(function(){
 			storeid = $(this).val();
 			vue.page = queryStockByGidAndStoreId(null,
-					gid, storeid);
+					gid, storeid,null);
 			$(".panel-headline").append(
 					page(vue.page.pageNum, vue.page.prePage,
 							vue.page.nextPage, vue.page.pages));
@@ -191,7 +207,7 @@
 		$(".gv").change(function(){
 			gid = $(this).val();
 			vue.page = queryStockByGidAndStoreId(null,
-					gid, storeid);
+					gid, storeid,null);
 			$(".panel-headline").append(
 					page(vue.page.pageNum, vue.page.prePage,
 							vue.page.nextPage, vue.page.pages));

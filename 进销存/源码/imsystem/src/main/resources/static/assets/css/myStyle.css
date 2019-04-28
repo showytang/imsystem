@@ -167,3 +167,15 @@
 				text-align:center;
 				background:#F4F3F3;
 			}
+			.qBn{
+				-webkit-box-shadow: 0px 0px 8px #cfcfcf !important;
+    			box-shadow: 0px 0px 8px #cfcfcf !important;
+			}
+			.qBn input,input:focus{
+				border: none !important;
+				box-shadow: 0px 0px 10 #cfcfcf !important;
+			}
+			.input-group-addon{
+				background:rgb(2, 143, 208);
+				color:#fff;
+			}

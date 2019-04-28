@@ -183,7 +183,7 @@ function queryGoodsRanking(time,startTime,endTime,storeId){
  * @param gid
  * @returns
  */
-function queryGoodsDetail(currentPage,time,startTime,endTime,storeId,gid){
+function queryGoodsDetail(currentPage,time,startTime,endTime,storeId,gid,name){
 	var v;
 	$.ajax({
 		url:"/statistics/queryGoodsDetail",
@@ -194,7 +194,8 @@ function queryGoodsDetail(currentPage,time,startTime,endTime,storeId,gid){
 			startTime:startTime,
 			endTime:endTime,
 			storeId:storeId,
-			gid:gid
+			gid:gid,
+			name:name
 		},
 		dataType:"json",
 		async:false,
@@ -250,7 +251,7 @@ function queryJinHuo(currentPage,startTime,endTime,cid,sid){
  * @param storeId
  * @returns
  */
-function queryStockByGidAndStoreId(currentPage,gid,storeId){
+function queryStockByGidAndStoreId(currentPage,gid,storeId,name){
 	var v;
 	$.ajax({
 		url:"/statistics/queryStockByGidAndStoreId",
@@ -258,7 +259,8 @@ function queryStockByGidAndStoreId(currentPage,gid,storeId){
 		data:{
 			currentPage:currentPage,
 			gid:gid,
-			storeId:storeId
+			storeId:storeId,
+			name:name
 		},
 		dataType:"json",
 		async:false,

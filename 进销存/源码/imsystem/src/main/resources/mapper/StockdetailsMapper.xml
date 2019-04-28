@@ -575,5 +575,8 @@
 		<if test="storeId != null and storeId != ''">
 			AND sd.storeid = #{storeId}
 		</if>
+		<if test="name != null and name != ''">
+			AND gv.name LIKE concat('%',#{name},'%') OR g.name LIKE concat('%',#{name},'%')
+		</if>
 	</select>
 </mapper>
