@@ -97,7 +97,7 @@
 	<!-- 商品模糊查询 -->
 	<select id="queryByCode" resultMap="BaseResultMap">
 		SELECT g.id AS id,g.name AS `name`,g.id AS gid,sd.time AS TIME,gv.gid
-		AS gvid,sd.sid AS sid, gv.name AS column1,g.img AS
+		AS gvid,sd.sid AS sid, gv.name AS column1,gv.column2 AS
 		column2,SUM(sd.price*sd.count) AS jprice,SUM(sd.count) AS column3 FROM
 		salesdetails AS sd JOIN goodsvalue AS gv ON sd.gvid = gv.id JOIN goods
 		AS g ON g.id = gv.gid WHERE sd.state = '0'
@@ -124,7 +124,10 @@
 		<if test="gid != null and gid != ''">
 			and sd.gvid = #{gid}
 		</if>
-		GROUP BY gv.gid ORDER BY gv.jprice DESC
+		<if test="name != null and name != ''">
+			AND gv.name LIKE concat('%',#{name},'%') OR g.name LIKE concat('%',#{name},'%')
+		</if>
+		GROUP BY gv.gid ORDER BY column3 DESC
 
 	</select>
 	<sql id="Example_Where_Clause">

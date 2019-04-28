@@ -523,7 +523,7 @@
 		where id = #{id,jdbcType=VARCHAR}
 	</update>
 	<select id="query" resultMap="BaseResultMap">
-		SELECT * FROM `salesorder` WHERE `progress` = '2' AND `state` = '0'
+		SELECT * FROM `sales` WHERE  `state` = '0'
 		<if test="startTime != null and startTime != ''">
 			AND `time` >= #{startTime}
 		</if>
@@ -538,8 +538,8 @@
 		</if>
 	</select>
 	<select id="queryFirst" resultMap="BaseResultMap">
-		SELECT * FROM (SELECT *,SUM(paymoney) AS s FROM salesorder GROUP BY
-		storeid) t WHERE progress = '2' AND `state` = '0'
+		SELECT * FROM (SELECT *,SUM(paymoney) AS s FROM sales GROUP BY
+		storeid) t WHERE  `state` = '0'
 		<if test="startTime != null and startTime != ''">
 			AND `time` >= #{startTime}
 		</if>
@@ -557,7 +557,7 @@
 	<select id="queryDaysAgo" resultMap="BaseResultMap">
 		SELECT t.* FROM (SELECT SUM(paymoney) paymoney,COUNT(*)
 		`count`,SUM(paymoney) - SUM(column1)
-		column2,DATE_FORMAT(`time`,'%Y-%m-%d') column3,`id` FROM salesorder
+		column2,DATE_FORMAT(`time`,'%Y-%m-%d') column3,`id` FROM sales
 		<where>
 			<if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
 				`TIME` >= DATE_FORMAT(#{startTime},'%Y-%m-%d 00:00:00') AND `TIME` &lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d 23:59:59')
@@ -574,7 +574,7 @@
 	<select id="queryRanking" resultMap="BaseResultMap">
 		SELECT t.id AS id,ss.id AS storeid,ss.name AS column3,ss.sufname AS
 		column4,t.s AS column5 FROM (SELECT *,SUM(paymoney) AS s FROM
-		salesorder WHERE
+		sales WHERE
 		<if test="startTime != null and startTime != ''">
 			`time` >= DATE_FORMAT(#{startTime}, '%Y-%m-%d 00:00:00') AND `time` &lt;= DATE_FORMAT(#{endTime}, '%Y-%m-%d 23:59:59')
 		</if>
@@ -582,7 +582,7 @@
 			DATE_FORMAT( TIME, '%Y-%m' ) = DATE_FORMAT( CURDATE( ) , '%Y-%m' )
 		</if>
 		GROUP BY storeid) t JOIN store AS ss ON ss.id = t.storeid WHERE
-		t.progress = '2' AND t.state = '0' ORDER BY t.s asc
+		t.state = '0' ORDER BY t.s asc
 		<if test="storeId != null and storeId != ''">
 			t.storeid = #{storeId}
 		</if>
@@ -591,7 +591,7 @@
 		</if>
 	</select>
 	<select id="queryTedayMoney" resultType="java.lang.Integer">
-		SELECT SUM(paymoney) FROM salesorder WHERE TO_DAYS(TIME) =
+		SELECT SUM(paymoney) FROM sales WHERE TO_DAYS(TIME) =
 		TO_DAYS(NOW())
 		<if test="store != null and store != ''">
 			AND storeid = #{store}
@@ -599,7 +599,7 @@
 	</select>
 	<select resultMap="BaseResultMap" id="queryThisYear">
 		SELECT t.* FROM (SELECT SUM(paymoney) - SUM(column1)
-		column2,DATE_FORMAT(`time`,'%Y-%m') AS column3 FROM salesorder WHERE
+		column2,DATE_FORMAT(`time`,'%Y-%m') AS column3 FROM sales WHERE
 		TIME LIKE CONCAT(#{year},'%') GROUP BY DATE_FORMAT(TIME,'%Y-%m')) AS t
 
 	</select>
