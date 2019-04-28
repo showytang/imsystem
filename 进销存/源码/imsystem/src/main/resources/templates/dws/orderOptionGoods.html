@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport"
@@ -12,7 +11,6 @@
 <link rel="stylesheet" th:href="@{/assets/css/Animzte.css}" />
 <link rel="stylesheet" th:href="@{/assets/css/typeDonghua.css}" />
 <!--88888-->
-
 <style>
 .pagebtn {
 	height: 28px;
@@ -201,9 +199,7 @@
 			}
 		</script>
 </head>
-
 <body>
-
 	<div class="main">
 		<div class="main-content">
 			<div class="container-fluid">
@@ -214,22 +210,19 @@
 					</div>
 					<!--小屏幕-->
 					<div class="row" style="margin: 2vh 3vh;">
-
 						<div class="row">
-
 							<div class="col-xs-11 col-lg-12 col-md-12">
 								<div class="input-group">
 									<label class="input-group-addon">搜索:</label> <input type="text"
-										id="liketext" class="form-control" placeholder="请输入关键字">
-
-									<span class="input-group-btn lg-md-span">
+										id="liketext" oninput="textlike(this)" class="form-control"
+										placeholder="请输入关键字"> <span
+										class="input-group-btn lg-md-span">
 										<button class="btn btn-primary" type="button">确 定</button>
 									</span> <span class="input-group-btn lg-md-span">
 										<button class="btn btn-primary" type="button">扫一扫</button>
 									</span>
 								</div>
 							</div>
-
 							<div class="col-xs-1">
 								<div class="input-group">
 									<span class="input-group-btn xs-span">
@@ -237,29 +230,19 @@
 									</span>
 								</div>
 							</div>
-
 						</div>
-
 					</div>
-
 					<!--大，中屏幕的样式-->
 					<div class="row visible-lg-block visible-md-block"
 						style="margin: 0 3vh;">
-
 						<div id="goodstype"></div>
-
 						<div id="typeoption"></div>
-
 					</div>
-
 					<!--主体-->
 					<div id="body"
 						style="margin: 1vh 3vh 0 3vh; min-height: 60vh; background-color: #eae2e21f;">
-
 						<hr />
-
 						<div class="row">
-
 							<div v-for="(item,index) in pageIf.list"
 								class="col-sm-6 col-md-3">
 								<div class="thumbnail">
@@ -269,7 +252,6 @@
 										:src="'data:image/png;base64,'+item.goods.img" alt="...">
 									<img v-else style="max-height: 20vh; min-height: 20vh;"
 										:src="item.goodsValue.column1" alt="...">
-
 									<div class="caption text-center">
 										<h4>{{item.goods.name}}</h4>
 										<p style="color: #777070;">
@@ -287,7 +269,6 @@
 											style="color: #777070;">
 											<span>库存：</span> <span>{{item.goods.column1}}</span>
 										</p>
-
 										<div class="input-group" style="margin: 0 auto;">
 											<label class="add btn btn-default btn-xs"
 												onclick="addSum(this)" style="margin-right: 5px;">+</label>
@@ -297,31 +278,22 @@
 											<label style="margin-left: 5px;" onclick="subtractSum(this)"
 												class="subtract btn btn-default btn-xs">-</label>
 										</div>
-
-
-
 										<p>
-											<a @click='addIdCountMap(item.goodsValue.id,$event)' class="btn btn-primary addgwc" role="button">加入</a>
+											<a @click='addIdCountMap(item.goodsValue.id,$event)'
+												class="btn btn-primary addgwc" role="button">加入</a>
 										</p>
 									</div>
 								</div>
 							</div>
-
 						</div>
-
 						<div id="page" style="margin-bottom: 60px;"></div>
-
 					</div>
-
 					<div class="row shoppingCart">
 						<div class="panel">
-
 							<div class="option-body hideDiv">
-
 								<div class="panel-body">
-
-
-									<div v-for="(item,index) in pickList()" :gvid="item.goodsValue.id"  style="height: 400px"
+									<div v-for="(item,index) in pickList()"
+										:gvid="item.goodsValue.id" style="height: 400px"
 										class="col-sm-3 col-md-2 pickgoods">
 										<div class="thumbnail" style="height: 390px">
 											<span class="glyphicon glyphicon-remove shoppingDel"
@@ -331,7 +303,6 @@
 												:src="'data:image/png;base64,'+item.goods.img" alt="...">
 											<img v-else style="max-height: 20vh; min-height: 20vh;"
 												:src="item.goodsValue.column1" alt="...">
-
 											<div class="caption text-center">
 												<h4>{{item.goods.name}}</h4>
 												<p style="color: #777070;">
@@ -346,13 +317,8 @@
 											</div>
 										</div>
 									</div>
-
-
-
 								</div>
-
 							</div>
-
 							<div class="row titleDiv">
 								<div class="col-lg-6">
 									<h3 class="panel-title">
@@ -363,22 +329,20 @@
 											<!-- <font
 											style="vertical-align: inherit;">总件数:</font><span
 											id="shoppingCount">20</span> -->
-											</font>
+										</font>
 									</h3>
 								</div>
-								<div  class="text-right col-lg-6">
-									<span @click="orderOk" class="btn" style="margin-right: 3vw;">确认订单</span> <i
+								<div class="text-right col-lg-6">
+									<span @click="orderOk" class="btn" style="margin-right: 3vw;">确认订单</span><i
 										class="glyphicon glyphicon-chevron-up ppp"></i>
 								</div>
 							</div>
-
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
 	<script type="text/javascript" th:inline="javascript">
 		
 var vue = new Vue({
@@ -396,11 +360,12 @@ var vue = new Vue({
 			
 			let count = 1;
 			
-			for(var key in vue.idCountMap){
-				if(gvid == key){
-					count = vue.idCountMap[key];
-				}
-				
+			if(this.idCountMap){
+				this.idCountMap.forEach((item,key,curr) => {
+					if(gvid == key){
+						count = vue.idCountMap.get(key);
+					}
+				});
 			}
 			
 			return count;
@@ -408,14 +373,20 @@ var vue = new Vue({
 		},pickList:function(){
 			if(this.list != ""){
 				var pklist = [];
-				vue.list.filter(function(item){
+				
+				vue.list.filter((item) => {
 					
-					for(var key in vue.idCountMap){
-						if(item.goodsValue.id == key){
-							pklist.push(item);
-						}
-						
+					if(vue.idCountMap){
+						vue.idCountMap.forEach((item1,key,curr) => {
+							
+							if(item.goodsValue.id == key){
+								
+								pklist.push(item);
+								
+							}
+						});
 					}
+					
 					
 				});
 				
@@ -428,10 +399,9 @@ var vue = new Vue({
 			
 			this.idCountMap = {};
 			
-			map[id] = $(element.currentTarget).parent().prev().find("[type=text]").val();
+			map.set(id,$(element.currentTarget).parent().prev().find("[type=text]").val());
 			
 			this.idCountMap = map;
-			
 			
 		},orderOk:function(){
 			
@@ -458,17 +428,18 @@ var vue = new Vue({
 				});
 			
 			});
-			console.log(goodsList);
-			
+			localStorage.setItem("list",JSON.stringify(goodsList))
 			/*王军辉写这里*/
 			
-			
+			location = [[@{/insertOrder/query}]]			
 		}
 	}
 	
 });
+if(localStorage.map){
+	vue.idCountMap = new Map(JSON.parse(localStorage.map));
+}
 
-vue.idCountMap = [[${idCountMap}]];
 vue.list = [[${list}]];
 
 
@@ -747,7 +718,5 @@ function optionCheck(obj){
 		 
 	});
 </script>
-
 </body>
-
 </html>

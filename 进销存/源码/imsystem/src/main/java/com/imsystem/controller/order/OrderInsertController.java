@@ -1,25 +1,19 @@
 package com.imsystem.controller.order;
 
-import java.util.List;
 import java.util.Vector;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.imsystem.domain.Goods;
-import com.imsystem.domain.Goodsvalue;
-import com.imsystem.domain.Paytype;
-import com.imsystem.domain.Sales;
 import com.imsystem.domain.Salesdetails;
 import com.imsystem.domain.Salesorder;
 import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
-import com.imsystem.domain.Supplier;
 import com.imsystem.service.customer.SupplierService;
 import com.imsystem.service.monomer.paytypeService;
 import com.imsystem.service.order.OrderInsertService;
@@ -37,77 +31,12 @@ public class OrderInsertController {
 	@Autowired
 	SupplierService supplierService;
 	
-	
-	public List<Goods> shappinglist(){
-		
-		List<Goods> list = new Vector<Goods>();
-		
-		Goods pay = new Goods();
-		
-		List<Goodsvalue> goodsList =  new Vector<Goodsvalue>();
-		
-		Goodsvalue goods = new Goodsvalue();
-		
-		goods.setColumn1("assetc/img/one.jpg");
-		
-		goods.setColumn2("2");
-		
-		goods.setDefaultvalue(199);
-		
-		goods.setId("1");
-		
-		goods.setName("红色，L");
-		
-		goods.setJprice(199.99);
-		
-		goods.setColumn3("399.98");
-		
-		goodsList.add(goods);
-		
-		pay.setGoodsValues(goodsList);
-		
-		pay.setName("老王");
-		
-		Goods pay1 = new Goods();
-		
-		List<Goodsvalue> goodsList1 =  new Vector<Goodsvalue>();
-		
-		Goodsvalue goods1 = new Goodsvalue();
-		
-		goods1.setColumn1("assetc/img/one.jpg");
-		
-		goods1.setColumn2("2");
-		
-		goods1.setName("黑色，L");
-		
-		goods1.setId("2");
-		
-		goods1.setJprice(199.99);
-		
-		goods1.setDefaultvalue(198);
-		
-		goods1.setColumn3("399.98");
-		
-		goodsList1.add(goods1);
-		
-		pay1.setGoodsValues(goodsList1);
-		
-		pay1.setName("老王");
-		
-		list.add(pay);
-		list.add(pay1);
-		
-		return list;
-	}
-	
 	@RequestMapping("/query")
 	public String query(Model model) {
 		
 		model.addAttribute("paytypeList", paytype.queryPaytype(null));
 		
 		model.addAttribute("supplierlist", supplierService.queryDealOrderSupplier("1"));
-		
-		model.addAttribute("shappinglist", shappinglist());
 		
 		return "wjh/insertOrder";
 	}
@@ -140,8 +69,6 @@ public class OrderInsertController {
 		
 		model.addAttribute("supplierlist", supplierService.queryDealOrderSupplier("1"));
 		
-		model.addAttribute("shappinglist", shappinglist());
-		
 		return "wjh/insertOrderOut";
 	}
 	
@@ -173,6 +100,5 @@ public class OrderInsertController {
 		
 		return orderInsert.UpdateSalesOrder(sales)+"";
 	}
-	
 	
 }

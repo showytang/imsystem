@@ -200,12 +200,11 @@
 							</div>
 						</div>
 						<div class="row" style="margin-top: 10px;">
-							<div v-for="(shappingItem,index) in shappinglist"
+							<div v-for="(item,index) in shappinglist"
 								class="col-md-4 col-sm-6 col-xs-12">
-								<div v-for="item in shappingItem.goodsValues"
-									id="panel-scrolling-demo" class="panel">
+								<div id="panel-scrolling-demo" class="panel">
 									<div class="panel-heading row btn-next">
-										<h3 class="panel-title col-md-4 col-xs-4" :data="item.id">{{shappingItem.name}}</h3>
+										<h3 class="panel-title col-md-4 col-xs-4" :data="item.id">{{item.column5}}</h3>
 										<div class="col-md-5 col-xs-5"
 											style="overflow-x: hidden; font-size: 14px; color: #ACB0B5;">
 											<span>{{item.name}}</span>
@@ -213,7 +212,8 @@
 										<div class="col-md-1 col-xs-1">
 											<span class="badge badgecount" style="background: #e84242;">{{item.column2}}</span>
 										</div>
-										<div class="right" style="right: 25px;"  v-on:click="spliceList(index)">
+										<div class="right" v-on:click="spliceList(index)"
+											style="right: 25px;">
 											<button type="button">
 												<i>x</i>
 											</button>
@@ -226,11 +226,8 @@
 										</div>
 										<div class="col-md-8"
 											style="font-size: 14px; white-space: nowrap;">
-											<div style="font-size: 20px;">{{shappingItem.name}}</div>
+											<div style="font-size: 20px;">{{item.column5}}</div>
 											<div>{{item.name}}</div>
-											<div>
-												原价 ：￥ <span class="oldprice">{{item.defaultvalue}}</span>
-											</div>
 											<div>
 												$<span class='jprice'>{{item.jprice}}</span>
 												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Count:&nbsp;<input
@@ -279,7 +276,8 @@
 									<div style="margin-top: 20px;">
 										<ul class="clientNames"
 											style="display: flex; list-style: none; flex-wrap: wrap;">
-											<li v-on:click="clientNames($event)" v-for="item in customerlist" :data="item.id">{{item.name}}</li>
+											<li v-on:click="clientNames($event)"
+												v-for="item in customerlist" :data="item.id">{{item.name}}</li>
 										</ul>
 									</div>
 								</div>
