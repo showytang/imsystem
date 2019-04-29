@@ -26,8 +26,26 @@
 		<result column="column4" property="column4" jdbcType="VARCHAR" />
 		<result column="column5" property="column5" jdbcType="VARCHAR" />
 	</resultMap>
-	<select id="orderDescQuery"
-		resultMap="BaseResultMap">
+
+	<select id="shappingprice" resultType="Double">
+
+		select
+		<if test="cid == 1">
+			g.price from goodsvalue as gv
+			inner join goods as g on
+			gv.gid = g.id
+			where gv.id = #{id}
+		</if>
+		<if test="cid != 1">
+			IF(gp.price != '',gp.price,g.price) AS price FROM `goodsprice` AS gp
+			INNER JOIN goodsvalue AS gv ON gp.gvid = gv.id
+			INNER JOIN goods AS g ON gv.gid = g.id
+			WHERE gv.id = #{id} AND gp.ctid = #{cid}
+		</if>
+
+	</select>
+
+	<select id="orderDescQuery" resultMap="BaseResultMap">
 		SELECT
 		sb.id,sb.code,sb.cid,sb.uid,sb.paytype,sb.remark,sb.count,sb.price,sb.paymoney,sb.tainmoney,sb.time,sb.updatetime,sb.state,sb.storeid,
 		(SELECT c.name FROM `customer` AS c WHERE c.id = sb.cid ) AS column1,
@@ -35,17 +53,19 @@
 		FROM `salesback` AS sb
 		<where>
 			<if test="true">
-  				AND sb.`updatetime` >= #{time} AND sb.`updatetime` &lt;=
+				AND sb.`updatetime` >= #{time} AND sb.`updatetime` &lt;=
 				#{updatetime}
-  			</if>
-  			<if test="code != null and code != '' ">
-  				and sb.code like concat('%',#{code},'%')
-  			</if>
-  			
-  			<if test="column2 != null and column2 != ''">
-  				and sb.cid in ((select c.id FROM `customer` AS c WHERE c.name like concat('%',#{column2},'%') ))
-  			</if>
-  		</where>
+			</if>
+			<if test="code != null and code != '' ">
+				and sb.code like concat('%',#{code},'%')
+			</if>
+
+			<if test="column2 != null and column2 != ''">
+				and sb.cid in ((select c.id FROM `customer` AS c WHERE
+				c.name like
+				concat('%',#{column2},'%') ))
+			</if>
+		</where>
 	</select>
 	<insert id="add">
 		insert into
@@ -70,7 +90,8 @@
 									and ${criterion.condition} #{criterion.value}
 								</when>
 								<when test="criterion.betweenValue">
-									and ${criterion.condition} #{criterion.value} and
+									and ${criterion.condition} #{criterion.value}
+									and
 									#{criterion.secondValue}
 								</when>
 								<when test="criterion.listValue">
@@ -102,7 +123,8 @@
 									and ${criterion.condition} #{criterion.value}
 								</when>
 								<when test="criterion.betweenValue">
-									and ${criterion.condition} #{criterion.value} and
+									and ${criterion.condition} #{criterion.value}
+									and
 									#{criterion.secondValue}
 								</when>
 								<when test="criterion.listValue">
@@ -120,9 +142,11 @@
 		</where>
 	</sql>
 	<sql id="Base_Column_List">
-		id, code, ssid, cid, uid, paytype, remark, count, price, paymoney,
+		id, code, ssid, cid, uid, paytype, remark, count, price,
+		paymoney,
 		tainmoney, time,
-		updatetime, state, storeid, column1, column2, column3, column4, column5
+		updatetime, state, storeid, column1, column2,
+		column3, column4, column5
 	</sql>
 	<select id="selectByExample" resultMap="BaseResultMap"
 		parameterType="com.imsystem.domain.SalesbackExample">
@@ -147,7 +171,8 @@
 		where id = #{id,jdbcType=VARCHAR}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-		delete from salesback
+		delete from
+		salesback
 		where id = #{id,jdbcType=VARCHAR}
 	</delete>
 	<delete id="deleteByExample"
@@ -163,18 +188,23 @@
 		cid, uid, paytype,
 		remark, count, price,
 		paymoney, tainmoney, time,
-		updatetime, state, storeid,
+		updatetime, state,
+		storeid,
 		column1, column2, column3,
 		column4, column5)
-		values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
+		values
+		(#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
 		#{ssid,jdbcType=VARCHAR},
-		#{cid,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, #{paytype,jdbcType=VARCHAR},
+		#{cid,jdbcType=VARCHAR},
+		#{uid,jdbcType=VARCHAR}, #{paytype,jdbcType=VARCHAR},
 		#{remark,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER},
 		#{price,jdbcType=DOUBLE},
-		#{paymoney,jdbcType=DOUBLE}, #{tainmoney,jdbcType=DOUBLE}, #{time,jdbcType=TIMESTAMP},
+		#{paymoney,jdbcType=DOUBLE},
+		#{tainmoney,jdbcType=DOUBLE}, #{time,jdbcType=TIMESTAMP},
 		#{updatetime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER},
 		#{storeid,jdbcType=VARCHAR},
-		#{column1,jdbcType=VARCHAR}, #{column2,jdbcType=VARCHAR}, #{column3,jdbcType=VARCHAR},
+		#{column1,jdbcType=VARCHAR},
+		#{column2,jdbcType=VARCHAR}, #{column3,jdbcType=VARCHAR},
 		#{column4,jdbcType=VARCHAR}, #{column5,jdbcType=VARCHAR})
 	</insert>
 	<insert id="insertSelective"
@@ -384,25 +414,42 @@
 	<update id="updateByExample" parameterType="map">
 		update salesback
 		set id = #{record.id,jdbcType=VARCHAR},
-		code = #{record.code,jdbcType=VARCHAR},
-		ssid = #{record.ssid,jdbcType=VARCHAR},
+		code =
+		#{record.code,jdbcType=VARCHAR},
+		ssid =
+		#{record.ssid,jdbcType=VARCHAR},
 		cid = #{record.cid,jdbcType=VARCHAR},
 		uid = #{record.uid,jdbcType=VARCHAR},
-		paytype = #{record.paytype,jdbcType=VARCHAR},
-		remark = #{record.remark,jdbcType=VARCHAR},
-		count = #{record.count,jdbcType=INTEGER},
-		price = #{record.price,jdbcType=DOUBLE},
-		paymoney = #{record.paymoney,jdbcType=DOUBLE},
-		tainmoney = #{record.tainmoney,jdbcType=DOUBLE},
-		time = #{record.time,jdbcType=TIMESTAMP},
-		updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
-		state = #{record.state,jdbcType=INTEGER},
-		storeid = #{record.storeid,jdbcType=VARCHAR},
-		column1 = #{record.column1,jdbcType=VARCHAR},
-		column2 = #{record.column2,jdbcType=VARCHAR},
-		column3 = #{record.column3,jdbcType=VARCHAR},
-		column4 = #{record.column4,jdbcType=VARCHAR},
-		column5 = #{record.column5,jdbcType=VARCHAR}
+		paytype =
+		#{record.paytype,jdbcType=VARCHAR},
+		remark =
+		#{record.remark,jdbcType=VARCHAR},
+		count =
+		#{record.count,jdbcType=INTEGER},
+		price =
+		#{record.price,jdbcType=DOUBLE},
+		paymoney =
+		#{record.paymoney,jdbcType=DOUBLE},
+		tainmoney =
+		#{record.tainmoney,jdbcType=DOUBLE},
+		time =
+		#{record.time,jdbcType=TIMESTAMP},
+		updatetime =
+		#{record.updatetime,jdbcType=TIMESTAMP},
+		state =
+		#{record.state,jdbcType=INTEGER},
+		storeid =
+		#{record.storeid,jdbcType=VARCHAR},
+		column1 =
+		#{record.column1,jdbcType=VARCHAR},
+		column2 =
+		#{record.column2,jdbcType=VARCHAR},
+		column3 =
+		#{record.column3,jdbcType=VARCHAR},
+		column4 =
+		#{record.column4,jdbcType=VARCHAR},
+		column5 =
+		#{record.column5,jdbcType=VARCHAR}
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
 		</if>
@@ -477,21 +524,28 @@
 		set code = #{code,jdbcType=VARCHAR},
 		ssid = #{ssid,jdbcType=VARCHAR},
 		cid = #{cid,jdbcType=VARCHAR},
-		uid = #{uid,jdbcType=VARCHAR},
+		uid =
+		#{uid,jdbcType=VARCHAR},
 		paytype = #{paytype,jdbcType=VARCHAR},
-		remark = #{remark,jdbcType=VARCHAR},
+		remark =
+		#{remark,jdbcType=VARCHAR},
 		count = #{count,jdbcType=INTEGER},
-		price = #{price,jdbcType=DOUBLE},
+		price =
+		#{price,jdbcType=DOUBLE},
 		paymoney = #{paymoney,jdbcType=DOUBLE},
 		tainmoney = #{tainmoney,jdbcType=DOUBLE},
-		time = #{time,jdbcType=TIMESTAMP},
-		updatetime = #{updatetime,jdbcType=TIMESTAMP},
+		time =
+		#{time,jdbcType=TIMESTAMP},
+		updatetime =
+		#{updatetime,jdbcType=TIMESTAMP},
 		state = #{state,jdbcType=INTEGER},
 		storeid = #{storeid,jdbcType=VARCHAR},
-		column1 = #{column1,jdbcType=VARCHAR},
+		column1 =
+		#{column1,jdbcType=VARCHAR},
 		column2 = #{column2,jdbcType=VARCHAR},
 		column3 = #{column3,jdbcType=VARCHAR},
-		column4 = #{column4,jdbcType=VARCHAR},
+		column4 =
+		#{column4,jdbcType=VARCHAR},
 		column5 = #{column5,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=VARCHAR}
 	</update>

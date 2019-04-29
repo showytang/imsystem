@@ -446,6 +446,20 @@ public class GoodsController {
 	}
 
 	/**
+	 * 出货单调用选择商品页面
+	 * @Description:TODO 王军辉
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/queryShappingOption")
+	public String queryShappingOption(Model model) {
+		
+		model.addAttribute("list", goodsSer.queryAllGoods("",null,"0"));
+		
+		return "dws/orderOptionGoods1";
+	}
+	
+	/**
 	 * 客户报价商品查询(LXY使用)
 	 * 
 	 * @return

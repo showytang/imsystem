@@ -452,8 +452,9 @@
 		
 		vue.supplierlist = [[${supplierlist}]];
 		
-		vue.shappinglist = JSON.parse(localStorage.getItem("list"));
-
+		if(localStorage.getItem("list"))
+			vue.shappinglist = JSON.parse(localStorage.getItem("list"));
+		
 		function supplier(){
 			
 			$.ajax({
@@ -636,7 +637,7 @@
 			$(".count").bind("input propertyChange",function(){
 				
 				var count = $(this).val();
-				
+				vue.shappinglist[$(this).attr("data")].count = count;
 				var price = $(this).parent().prev().text();
 				
 				var index = $(".count").index(this);
@@ -734,6 +735,7 @@
 			
 			$(".yprice").text(sum.toFixed(2));
 			$(".sprice").val(sum.toFixed(2));
+			goodsList();
 		}
 		function dateTime(th) {
 			if (th < 10) {

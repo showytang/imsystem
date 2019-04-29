@@ -6,21 +6,19 @@ import java.util.Vector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Customer;
+import com.imsystem.domain.Goodsvalue;
 import com.imsystem.domain.Sales;
 import com.imsystem.domain.Salesback;
 import com.imsystem.domain.Salesorder;
-import com.imsystem.domain.Salesorderdetails;
 import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Stockrecord;
-import com.imsystem.domain.Store;
 import com.imsystem.domain.Supplier;
 import com.imsystem.service.customer.CustomerService;
 import com.imsystem.service.customer.SupplierService;
@@ -173,7 +171,17 @@ public class OrderQueryController {
 		return curstomerservice.queryCustomerByStore("1");
 	}
 	
-	
-	
+	@RequestMapping("/foreachshappingPrice")
+	@ResponseBody
+	public List<Goodsvalue> foreachshappingPrice(@RequestBody List<Goodsvalue> list){
+		
+		for(int i = 0; i < list.size(); i++) {
+			
+			list.get(i).setJprice(orderquery.shappingprice(list.get(i).getId(),list.get(0).getColumn3()));
+			
+		}
+		
+		return list;
+	}
 	
 }
