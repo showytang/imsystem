@@ -30,4 +30,6 @@ public interface OrderQueryService {
 
 	PageInfo<Salesback> orderDescQuery(Salesback back);
 	
+	Double shappingprice(String id,String cid);
+	
 }

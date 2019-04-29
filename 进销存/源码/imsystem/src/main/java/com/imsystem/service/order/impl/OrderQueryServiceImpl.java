@@ -132,7 +132,6 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	@Override
 	public PageInfo<Salesback> orderDescQuery(Salesback back) {
 		// TODO Auto-generated method stub
-		
 		if(back.getColumn1() == null || back.getColumn1() == "" ) {
 			back.setColumn1("1");
 		}
@@ -142,6 +141,12 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		backMap.orderDescQuery(back);
 		
 		return page.toPageInfo();
+	}
+
+	@Override
+	public Double shappingprice(String id,String cid) {
+		// TODO Auto-generated method stub
+		return backMap.shappingprice(id, cid);
 	}
 
 	
