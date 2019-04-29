@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface SalesMapper {
 	
-	List<Sales> query(@Param("code") String code,@Param("time") String time,@Param("endTime") String endTime);
+	List<Sales> query(@Param("code") String code,@Param("time") String time,@Param("endTime") String endTime,@Param("shappingname")String shappingname);
 	
     int countByExample(SalesExample example);
 

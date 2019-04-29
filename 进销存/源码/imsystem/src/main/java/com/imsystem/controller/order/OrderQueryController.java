@@ -50,13 +50,13 @@ public class OrderQueryController {
 	@RequestMapping("/query")
 	@ResponseBody
 	public PageInfo<Stock> query(String code, String time, String endTime, Integer currentPage, Integer pageSize,
-			String order, Integer kucun) {
+			String order, Integer kucun,String shappingname) {
 
 		if (currentPage == null || currentPage <= 0) {
 			currentPage = 1;
 		}
 
-		PageInfo<Stock> page = orderquery.queryStock(code, time, endTime, currentPage, pageSize, order, kucun);
+		PageInfo<Stock> page = orderquery.queryStock(code, time, endTime, currentPage, pageSize, order, kucun,shappingname);
 
 		return page;
 	}
@@ -146,9 +146,9 @@ public class OrderQueryController {
 	
 	@RequestMapping("/orderOver")
 	@ResponseBody
-	public PageInfo<Sales> OrderOver(String code,String endTime,String time,Integer currentPage) {
+	public PageInfo<Sales> OrderOver(String code,String endTime,String time,Integer currentPage,String shappingname) {
 		
-		return orderquery.OrderOver(code, endTime, time, currentPage);
+		return orderquery.OrderOver(code, endTime, time, currentPage,shappingname);
 	}
 	
 	@RequestMapping("/toderDescQuery")

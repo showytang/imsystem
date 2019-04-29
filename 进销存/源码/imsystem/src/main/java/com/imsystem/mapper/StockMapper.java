@@ -16,7 +16,7 @@ public interface StockMapper {
 	
 	int add(Sales sales);
 	
-	List<Stock> query(@Param("code") String code,@Param("time") String time,@Param("endTime") String endTime,@Param("order")String order,@Param("kucun")Integer kucun);
+	List<Stock> query(@Param("code") String code,@Param("time") String time,@Param("endTime") String endTime,@Param("order")String order,@Param("kucun")Integer kucun,@Param("shappingname")String shappingname);
 	
     int countByExample(StockExample example);
 

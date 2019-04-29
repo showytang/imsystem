@@ -37,10 +37,12 @@
 			where gv.id = #{id}
 		</if>
 		<if test="cid != 1">
-			IF(gp.price != '',gp.price,g.price) AS price FROM `goodsprice` AS gp
+			IF(gp.price != '',gp.price,g.price) AS price FROM
+			`goodsprice` AS gp
 			INNER JOIN goodsvalue AS gv ON gp.gvid = gv.id
 			INNER JOIN goods AS g ON gv.gid = g.id
-			WHERE gv.id = #{id} AND gp.ctid = #{cid}
+			WHERE gv.id = #{id} AND gp.ctid
+			= #{cid}
 		</if>
 
 	</select>
@@ -51,6 +53,11 @@
 		(SELECT c.name FROM `customer` AS c WHERE c.id = sb.cid ) AS column1,
 		(SELECT p.name FROM `paytype` AS p WHERE sb.paytype = p.id) AS column2
 		FROM `salesback` AS sb
+		inner join salesbackdetails as sk on sk.sid =
+		sb.id
+		inner join goodsvalue as gv on gv.id = sk.gvid
+		inner join goods as
+		g on g.id = gv.gid
 		<where>
 			<if test="true">
 				AND sb.`updatetime` >= #{time} AND sb.`updatetime` &lt;=
@@ -59,13 +66,16 @@
 			<if test="code != null and code != '' ">
 				and sb.code like concat('%',#{code},'%')
 			</if>
-
+			<if test="column3 != null">
+				and g.name like concat('%',#{column3},'%')
+			</if>
 			<if test="column2 != null and column2 != ''">
 				and sb.cid in ((select c.id FROM `customer` AS c WHERE
 				c.name like
 				concat('%',#{column2},'%') ))
 			</if>
 		</where>
+		group by sb.id
 	</select>
 	<insert id="add">
 		insert into

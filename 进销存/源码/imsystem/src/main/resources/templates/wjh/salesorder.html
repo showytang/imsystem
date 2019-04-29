@@ -207,12 +207,19 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 				<div class="selected row boss">
 					<div class="col-md-3 col-sm-6 col-xs-11 tj">
 						<div class="input-group">
-							<span class="input-group-addon">No</span> <input
+							<span class="input-group-addon">编号</span> <input
 								@keyup.enter="code" v-model="no" id="no" class="form-control"
 								placeholder="订单编号" />
 						</div>
 					</div>
-					<div class="col-md-3 col-sm-6 col-xs-11 display tj">
+					<div class="col-md-2 col-sm-6 col-xs-11 tj">
+						<div class="input-group">
+							<span class="input-group-addon">商品名称</span> <input
+								@keyup.enter="code" v-model="shappingname"  class="form-control"
+								placeholder="订单编号" />
+						</div>
+					</div>
+					<div class="col-md-2 col-sm-6 col-xs-11 display tj">
 						<div class="input-group">
 							<span class="input-group-addon">订单状态</span> <select
 								onchange="time(this)" class="form-control"
@@ -225,7 +232,7 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 							</select>
 						</div>
 					</div>
-					<div class="col-md-4 col-sm-12 col-xs-11 display tj">
+					<div class="col-md-3 col-sm-12 col-xs-11 display tj">
 						<div class="input-group">
 							<span class="input-group-addon">Time</span> <input
 								class="form-control" onchange="time(this)" id="config-demo"
@@ -375,7 +382,8 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 					no : "",
 					pagesize : "1",
 					storeid : "",
-					salesorder : {}
+					salesorder : {},
+					shappingname : ""
 				},
 				methods : {
 					code : function(){
@@ -488,6 +496,7 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 						code : vue.no,
 						column1 : time,
 						column2 : endTime,
+						column3 : vue.shappingname,
 						progress : $("#salesOrderProgress").val(),
 						cid : $("#cid").val(),
 						column5 : vue.pageIf.pageNum

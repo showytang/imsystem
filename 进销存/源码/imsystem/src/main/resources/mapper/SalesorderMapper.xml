@@ -46,9 +46,14 @@
 		FROM `salesorder` AS sales
 		LEFT JOIN `salesorderdetails` AS s ON
 		s.`sid` = sales.`id`
+		inner join goodsvalue as gv on gv.id = s.gvid
+		inner join goods as g on g.id = gv.gid
 		<where>
 			<if test="code != '' and code != null">
 				and sales.code LIKE concat('%',#{code},'%')
+			</if>
+			<if test="column3 != null">
+				and g.name LIKE concat('%',#{column3},'%')
 			</if>
 			<if test="progress == 0 or progress == 1 or progress == 2 ">
 				and sales.progress = #{progress}

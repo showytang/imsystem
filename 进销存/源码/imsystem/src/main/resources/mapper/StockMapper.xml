@@ -71,10 +71,16 @@
   </select>
   
   <select id="query" resultMap="BaseResultMap">
-  	SELECT * FROM stock AS s
+  	SELECT s.* FROM stock AS s
+  	inner join stockdetails as sk on s.id = sk.sid
+  	inner join goodsvalue as gv on gv.id = sk.gvid
+  	inner join goods as g on g.id = gv.gid
   	<where>
 	  	<if test="code != null">
 	  		and s.code like concat('%',#{code},'%')
+	  	</if>
+	  	<if test="shappingname != null">
+	  		and g.name like concat('%',#{shappingname},'%')
 	  	</if>
 	  	<if test="time != null and time != ''">
 	  		and s.`updatetime` >= #{time} AND s.`updatetime` &lt;= #{endTime}
@@ -86,6 +92,7 @@
   			and s.state != 2
   		</if>
   	</where>
+  	group by s.id
   	<if test="order == 0">
   		order by s.`updatetime`
   	</if>

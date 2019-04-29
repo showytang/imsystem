@@ -34,36 +34,37 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 
 	@Autowired
 	StockMapper stockMapper;
-	
+
 	@Autowired
 	StockrecordMapper stockrecord;
-	
+
 	@Autowired
 	StockdetailsMapper stockDetail;
-	
+
 	@Autowired
 	SalesorderMapper salesorderMapper;
-	
+
 	@Autowired
 	SalesMapper salesMapper;
-	
+
 	@Autowired
 	SalesbackMapper backMap;
-	
+
 	@Override
-	public PageInfo<Stock> queryStock(String code,String time,String endTime,Integer currentPage,Integer pageSize,String order,Integer kucun) {
+	public PageInfo<Stock> queryStock(String code, String time, String endTime, Integer currentPage, Integer pageSize,
+			String order, Integer kucun, String shappingname) {
 		// TODO Auto-generated method stub
-		
+
 		Page<Stock> page = PageHelper.startPage(currentPage, pageSize, true);
-		
-		stockMapper.query(code, time, endTime,order,kucun);
-		
+
+		stockMapper.query(code, time, endTime, order, kucun,shappingname);
+
 		return page.toPageInfo();
-		
+
 	}
 
 	@Override
-	public Vector<Stockrecord> queryAllot(String time,String endTime,String code,String jcode) {
+	public Vector<Stockrecord> queryAllot(String time, String endTime, String code, String jcode) {
 		// TODO Auto-generated method stub
 		return stockrecord.query(time, endTime, code, jcode);
 	}
@@ -77,77 +78,78 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	@Override
 	public Vector<Stockdetails> queryGoods(String name) {
 		// TODO Auto-generated method stub
-		return stockDetail.queryGoods(name,"1");
+		return stockDetail.queryGoods(name, "1");
 	}
 
 	@Override
 	public Vector<Stockdetails> queryDetails(String gvid) {
 		// TODO Auto-generated method stub
-		return stockDetail.queryDetails(gvid,"1");
+		return stockDetail.queryDetails(gvid, "1");
 	}
 
 	@Override
 	public PageInfo<Salesorder> querySalesOrder(Salesorder sales) {
 		// TODO Auto-generated method stub
-		
-		if(sales.getColumn5() == null || sales.getColumn5() == "") {
-			
+
+		if (sales.getColumn5() == null || sales.getColumn5() == "") {
+
 			sales.setColumn5("1");
-			
+
 		}
-		
-		Page<Salesorder> page = PageHelper.startPage(Integer.parseInt(sales.getColumn5()),10, true);
-		
+
+		Page<Salesorder> page = PageHelper.startPage(Integer.parseInt(sales.getColumn5()), 10, true);
+
 		salesorderMapper.querySalesOrder(sales);
-		
+
 		return page.toPageInfo();
 	}
 
 	@Override
 	public Salesorder salesOrderById(String id) {
 		// TODO Auto-generated method stub
-		/*SalesorderExample example = new SalesorderExample();
-		
-		Criteria cir = example.createCriteria();
-		
-		cir.andIdEqualTo(id);*/
-		
+		/*
+		 * SalesorderExample example = new SalesorderExample();
+		 * 
+		 * Criteria cir = example.createCriteria();
+		 * 
+		 * cir.andIdEqualTo(id);
+		 */
+
 		return salesorderMapper.selectByPrimaryKey(id);
 	}
 
 	@Override
-	public PageInfo<Sales> OrderOver(String code, String endTime, String time, Integer currentPage) {
+	public PageInfo<Sales> OrderOver(String code, String endTime, String time, Integer currentPage,String shappingname) {
 		// TODO Auto-generated method stub
-		if(currentPage == null || currentPage <= 0 ) {
+		if (currentPage == null || currentPage <= 0) {
 			currentPage = 1;
 		}
-		
+
 		Page<Sales> page = PageHelper.startPage(currentPage, 10, true);
-		
-		salesMapper.query(code, time, endTime);
-		
+
+		salesMapper.query(code, time, endTime,shappingname);
+
 		return page.toPageInfo();
 	}
 
 	@Override
 	public PageInfo<Salesback> orderDescQuery(Salesback back) {
 		// TODO Auto-generated method stub
-		if(back.getColumn1() == null || back.getColumn1() == "" ) {
+		if (back.getColumn1() == null || back.getColumn1() == "") {
 			back.setColumn1("1");
 		}
-		
+
 		Page<Salesback> page = PageHelper.startPage(Integer.parseInt(back.getColumn1()), 10, true);
 
 		backMap.orderDescQuery(back);
-		
+
 		return page.toPageInfo();
 	}
 
 	@Override
-	public Double shappingprice(String id,String cid) {
+	public Double shappingprice(String id, String cid) {
 		// TODO Auto-generated method stub
 		return backMap.shappingprice(id, cid);
 	}
 
-	
 }

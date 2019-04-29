@@ -144,12 +144,19 @@
 							</div>
 							<div class="col-md-3 col-sm-6 col-xs-11 tj">
 								<div class="input-group">
+									<span class="input-group-addon">商品名称</span> <input
+										@keyup.enter="code" v-model="shappingname" class="form-control"
+										placeholder="订单编号" />
+								</div>
+							</div>
+							<div class="col-md-3 col-sm-6 col-xs-11 tj">
+								<div class="input-group">
 									<span class="input-group-addon">客户名称</span> <input
 										@keyup.enter="code" id="clientName" class="form-control"
 										placeholder="订单编号" />
 								</div>
 							</div>
-							<div class="col-md-4 col-sm-12 col-xs-11 display tj">
+							<div class="col-md-3 col-sm-12 col-xs-11 display tj">
 								<div class="input-group">
 									<span class="input-group-addon">时间</span> <input
 										class="form-control" onchange="time(this)" id="config-demo"
@@ -229,7 +236,8 @@
 			data : {
 				
 				pageIf : {},
-				no : ""
+				no : "",
+				shappingname : ""
 				
 			},
 			methods : {
@@ -273,7 +281,9 @@
 					
 					updatetime : endTime,
 					
-					column2 : $("#clientName").val()
+					column2 : $("#clientName").val(),
+					
+					column3 : vue.shappingname
 					
 			}
 			
