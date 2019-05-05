@@ -34,4 +34,6 @@ public interface SalesMapper {
     int updateByPrimaryKey(Sales record);
     
     List<Sales> queryShouZhang(@Param("cid") String cid, @Param("startTime") String startTime , @Param("endTime") String endTime,@Param("storeid") String storeid);
+    
+    List<Sales> queryXf(@Param("sid") String sid,@Param("startTime") String startTime,@Param("endTime") String endTime);
 }

@@ -24,4 +24,10 @@ public class SalesServiceImpl implements SalesService{
 		return sm.queryShouZhang(cid, startTime, endTime,storeid);
 	}
 
+	@Override
+	public List<Sales> queryXf(String sid, String startTime, String endTime) {
+		// TODO Auto-generated method stub
+		return sm.queryXf(sid, startTime, endTime);
+	}
+
 }

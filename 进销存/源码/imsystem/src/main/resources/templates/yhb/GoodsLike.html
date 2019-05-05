@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<meta charset="UTF-8">
+<title>BaoBiao - 1</title>
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
+<link rel="stylesheet" th:href="@{/assets/css/style.css}">
+<!-- MAIN CSS -->
+<link rel="stylesheet" th:href="@{/assets/css/main.css}">
+<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+<link rel="stylesheet" th:href="@{/assets/css/demo.css}">
+<!-- GOOGLE FONTS -->
+<link th:href="@{/assets/css/css.css}" rel="stylesheet">
+<link rel="stylesheet" th:href="@{/assets/css/animate.min.css}" />
+<!-- ICONS -->
+<link rel="stylesheet" th:href="@{/assets/css/myStyle.css}" />
+<link rel="apple-touch-icon" sizes="76x76"
+	th:href="@{/assets/img/apple-icon.png}">
+<link rel="icon" type="image/png" sizes="96x96"
+	th:href="@{/assets/img/favicon.png}">
+<script type="text/javascript" th:src="@{/assets/js/jquery.min.js}"></script>
+<link rel="stylesheet" type="text/css" media="all"
+	th:href="@{/assets/css/daterangepicker.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/css/htmleaf-demo.css}">
+<script type="text/javascript" th:src="@{/assets/js/jquery.min.js}"></script>
+<script>
+	window.jQuery
+			|| document
+					.write('<script th:src="@{/assets/js/jquery-1.11.0.min.js}"><\/script>')
+</script>
+<script type="text/javascript" th:src="@{/assets/js/moment.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/daterangepicker.js}"></script>
+<script th:src="@{/assets/js/statistics.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/Mydate.js}"></script>
+<style>
+.gv {
+	height: 320px;
+	padding: 5px 15px;
+	margin : 15px 0px;
+}
+.goods {
+	width: 100%;
+	height: 100%;
+	padding: 20px;
+	margin-bottom:20px;
+}
+
+.shopGoods {
+	width: 100%;
+	height: 100%;
+	ovflow:hidden;
+}
+.shopGoods:hover{
+	transform:translateY(-10px);
+}
+.shopGoods:hover .gValue{
+	border:1px solid #00AAFF;
+	border-top:0px;
+}
+.shopGoods img {
+	width: 100%;
+	height: 130px;
+}
+
+.gName {
+	height: 100px;
+}
+
+.but {
+	height: 90px;
+	width: 100%;
+}
+
+.but button {
+	width: 38%;
+	height: 38px;
+	margin-top: 20px;
+	border:1px solid #00AAFF;
+	background:#00AAFF;
+	color:#fff;
+}
+
+.but button:nth-child(1) {
+	float: left;
+	margin-left: 8%;
+	background:none;
+	color:#00AAFF;
+}
+
+.but button:nth-child(2) {
+	float: right;
+	margin-right: 8%;
+}
+
+.name {
+	float: left;
+	margin: 20px 10px;
+	white-space: nowrap;
+	display: inline-block;
+	width: 100%;
+	height:40px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	line-height: 1.2;
+}
+.p{
+	text-align:center;
+	font-size:.8em!important;
+	color:#c2c2c2;
+}
+
+.gValue{
+	border:1px solid #c2c2c2;
+	border-top:0px;
+}
+</style>
+</head>
+<body>
+	<div class="main">
+		<div class="main-content">
+			<div class="container-fluid">
+				<div class="panel panel-headline">
+					<div class="panel-heading row">
+						<h3 class="panel-title">猜你喜欢</h3>
+						<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
+					</div>
+					<div class="goods">
+						<div class="gv col-md-4 col-xs-12">
+							<div class="shopGoods">
+								<img src="../assets/img/login-bg.jpg">
+								<div class="gValue">
+									<div class="gName">
+										<span class="name"><b>这个是一个测试商但是发射点花木成畦手自栽 模压基材品</b></span><br>
+										<p class="p col-md-6 col-xs-6">
+											<b>价格：</b><span>￥20</span>
+										</p>
+										<p class="p col-md-6 col-xs-6">
+											<b>销量：</b><span>￥20</span>
+										</p>
+									</div>
+									<div class="but">
+										<button class="col-xs-12">查看详情</button>
+										<button class="col-xs-12">加入购物车</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="gv col-md-4 col-xs-12">
+							<div class="shopGoods">
+								<img src="../assets/img/login-bg.jpg">
+								<div class="gValue">
+									<div class="gName">
+										<span class="name"><b>这个是一个测试商但是发射点花木成畦手自栽 模压基材品</b></span><br>
+										<p class="p col-md-6 col-xs-6">
+											<b>价格：</b><span>￥20</span>
+										</p>
+										<p class="p col-md-6 col-xs-6">
+											<b>销量：</b><span>￥20</span>
+										</p>
+									</div>
+									<div class="but">
+										<button class="col-xs-12">查看详情</button>
+										<button class="col-xs-12">加入购物车</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="gv col-md-4 col-xs-12">
+							<div class="shopGoods">
+								<img src="../assets/img/login-bg.jpg">
+								<div class="gValue">
+									<div class="gName">
+										<span class="name"><b>这个是一个测试商但是发射点花木成畦手自栽 模压基材品</b></span><br>
+										<p class="p col-md-6 col-xs-6">
+											<b>价格：</b><span>￥20</span>
+										</p>
+										<p class="p col-md-6 col-xs-6">
+											<b>销量：</b><span>￥20</span>
+										</p>
+									</div>
+									<div class="but">
+										<button class="col-xs-12">查看详情</button>
+										<button class="col-xs-12">加入购物车</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="gv col-md-4 col-xs-12">
+							<div class="shopGoods">
+								<img src="../assets/img/login-bg.jpg">
+								<div class="gValue">
+									<div class="gName">
+										<span class="name"><b>这个是一个测试商但是发射点花木成畦手自栽 模压基材品</b></span><br>
+										<p class="p col-md-6 col-xs-6">
+											<b>价格：</b><span>￥20</span>
+										</p>
+										<p class="p col-md-6 col-xs-6">
+											<b>销量：</b><span>￥20</span>
+										</p>
+									</div>
+									<div class="but">
+										<button class="col-xs-12">查看详情</button>
+										<button class="col-xs-12">加入购物车</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

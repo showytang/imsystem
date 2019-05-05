@@ -46,5 +46,12 @@ public class SIndexController {
 	public String goShouZhang() {
 		return "yhb/shouzhang";
 	}	
-
+	@RequestMapping("goBaoBiao_4")
+	public String goBaoBiao_4() {
+		return "yhb/BaoBiao_4";
+	}
+	@RequestMapping("goGoodsLike")
+	public String goGoodsLike() {
+		return "yhb/GoodsLike";
+	}
 }

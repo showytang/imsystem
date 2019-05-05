@@ -526,4 +526,32 @@ function getStoreId(){
 		}
 		return sid;
 }
+/***
+ * 用户消费统计
+ * @param sid
+ * @param startTime
+ * @param endTime
+ * @returns
+ */
+function queryXf(sid,startTime,endTime) {
+	var v;
+	$.ajax({
+		url:"/ther/queryXf",
+		type:"post",
+		data:{
+			sid:sid,
+			startTime:startTime,
+			endTime:endTime
+		},
+		dataType:"json",
+		async:false,
+		success:function(data){
+			v = data;
+		},
+		error:function(){
+			console.log("ERROR:'queryXf'");
+		}
+	});
+	return v;
+}
 
