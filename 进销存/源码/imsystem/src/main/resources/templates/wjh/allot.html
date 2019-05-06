@@ -168,7 +168,7 @@
 							<span style="padding: 5px;">进货门店：&nbsp;</span>
 							<ul class="list-inline" style="margin: 0px;">
 								<div class="backage"></div>
-								<li v-for="item in clientList" :data="item.id">{{item.name}}</li>
+								<li v-for="item in clientList" :data="item.id" :title="item.sufname">{{item.name}}[{{item.sufname}}]</li>
 							</ul>
 						</div>
 						<div class="content text-center">
@@ -239,7 +239,6 @@
 						$("iframe").attr("src",[[@{/orderQueryController/toAllotDetails}]]+"?id="+id)
 					}
 				}
-				
 			});
 			
 			vue.clientList = [[${clientList}]];
@@ -312,13 +311,6 @@
 					
 				});
 				
-			}
-			
-			function timess(time){
-				
-				time = time.substring(6,time.length)+"-"+time.substring(0,2)+"-"+time.substring(3,5);
-				
-				return time;
 			}
 			
 			$(function() {
