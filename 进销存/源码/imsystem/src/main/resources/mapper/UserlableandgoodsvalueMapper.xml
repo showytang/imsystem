@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.imsystem.mapper.UserlableandgoodsvalueMapper" >
+  <resultMap id="BaseResultMap" type="com.imsystem.domain.Userlableandgoodsvalue" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="gvid" property="gvid" jdbcType="VARCHAR" />
+    <result column="ulid" property="ulid" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="column1" property="column1" jdbcType="VARCHAR" />
+    <result column="column2" property="column2" jdbcType="VARCHAR" />
+    <result column="column3" property="column3" jdbcType="VARCHAR" />
+    <result column="column4" property="column4" jdbcType="VARCHAR" />
+    <result column="column5" property="column5" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, gvid, ulid, time, uid, state, column1, column2, column3, column4, column5
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.imsystem.domain.UserlableandgoodsvalueExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from userlableandgoodsvalue
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from userlableandgoodsvalue
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from userlableandgoodsvalue
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.imsystem.domain.UserlableandgoodsvalueExample" >
+    delete from userlableandgoodsvalue
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.imsystem.domain.Userlableandgoodsvalue" >
+    insert into userlableandgoodsvalue (id, gvid, ulid, 
+      time, uid, state, 
+      column1, column2, column3, 
+      column4, column5)
+    values (#{id,jdbcType=VARCHAR}, #{gvid,jdbcType=VARCHAR}, #{ulid,jdbcType=VARCHAR}, 
+      #{time,jdbcType=TIMESTAMP}, #{uid,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
+      #{column1,jdbcType=VARCHAR}, #{column2,jdbcType=VARCHAR}, #{column3,jdbcType=VARCHAR}, 
+      #{column4,jdbcType=VARCHAR}, #{column5,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.imsystem.domain.Userlableandgoodsvalue" >
+    insert into userlableandgoodsvalue
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="gvid != null" >
+        gvid,
+      </if>
+      <if test="ulid != null" >
+        ulid,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="column1 != null" >
+        column1,
+      </if>
+      <if test="column2 != null" >
+        column2,
+      </if>
+      <if test="column3 != null" >
+        column3,
+      </if>
+      <if test="column4 != null" >
+        column4,
+      </if>
+      <if test="column5 != null" >
+        column5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="gvid != null" >
+        #{gvid,jdbcType=VARCHAR},
+      </if>
+      <if test="ulid != null" >
+        #{ulid,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="column1 != null" >
+        #{column1,jdbcType=VARCHAR},
+      </if>
+      <if test="column2 != null" >
+        #{column2,jdbcType=VARCHAR},
+      </if>
+      <if test="column3 != null" >
+        #{column3,jdbcType=VARCHAR},
+      </if>
+      <if test="column4 != null" >
+        #{column4,jdbcType=VARCHAR},
+      </if>
+      <if test="column5 != null" >
+        #{column5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.imsystem.domain.UserlableandgoodsvalueExample" resultType="java.lang.Integer" >
+    select count(*) from userlableandgoodsvalue
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update userlableandgoodsvalue
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gvid != null" >
+        gvid = #{record.gvid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ulid != null" >
+        ulid = #{record.ulid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.time != null" >
+        time = #{record.time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.column1 != null" >
+        column1 = #{record.column1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.column2 != null" >
+        column2 = #{record.column2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.column3 != null" >
+        column3 = #{record.column3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.column4 != null" >
+        column4 = #{record.column4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.column5 != null" >
+        column5 = #{record.column5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update userlableandgoodsvalue
+    set id = #{record.id,jdbcType=VARCHAR},
+      gvid = #{record.gvid,jdbcType=VARCHAR},
+      ulid = #{record.ulid,jdbcType=VARCHAR},
+      time = #{record.time,jdbcType=TIMESTAMP},
+      uid = #{record.uid,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=INTEGER},
+      column1 = #{record.column1,jdbcType=VARCHAR},
+      column2 = #{record.column2,jdbcType=VARCHAR},
+      column3 = #{record.column3,jdbcType=VARCHAR},
+      column4 = #{record.column4,jdbcType=VARCHAR},
+      column5 = #{record.column5,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.imsystem.domain.Userlableandgoodsvalue" >
+    update userlableandgoodsvalue
+    <set >
+      <if test="gvid != null" >
+        gvid = #{gvid,jdbcType=VARCHAR},
+      </if>
+      <if test="ulid != null" >
+        ulid = #{ulid,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="column1 != null" >
+        column1 = #{column1,jdbcType=VARCHAR},
+      </if>
+      <if test="column2 != null" >
+        column2 = #{column2,jdbcType=VARCHAR},
+      </if>
+      <if test="column3 != null" >
+        column3 = #{column3,jdbcType=VARCHAR},
+      </if>
+      <if test="column4 != null" >
+        column4 = #{column4,jdbcType=VARCHAR},
+      </if>
+      <if test="column5 != null" >
+        column5 = #{column5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.imsystem.domain.Userlableandgoodsvalue" >
+    update userlableandgoodsvalue
+    set gvid = #{gvid,jdbcType=VARCHAR},
+      ulid = #{ulid,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP},
+      uid = #{uid,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      column1 = #{column1,jdbcType=VARCHAR},
+      column2 = #{column2,jdbcType=VARCHAR},
+      column3 = #{column3,jdbcType=VARCHAR},
+      column4 = #{column4,jdbcType=VARCHAR},
+      column5 = #{column5,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
