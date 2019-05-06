@@ -101,7 +101,7 @@ public class UserController {
 	@RequestMapping("toGeRenZhongXinZiLiao")
 	public String toGeRenZhongXinZiLiao() {
 		
-		return "czx/GeRenZhongXin";
+		return "czx/page-profile";
 		
 	}
 	
