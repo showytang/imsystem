@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>促销活动</title>
+		<link rel="stylesheet" th:href="@{/assets/SheZhi/lib/layui/css/layui.css}">
+		<link rel="stylesheet" th:href="@{/assets/css/animate.min.css}">
+		<style>
+			#title{
+				background-color: #FFFFFF;
+			}
+			
+			.rank-ul{
+				position: relative;
+			}
+			.rank-ul-li{
+				position: absolute;
+				width: 100%;
+			}
+			.rank-ul-li-leftDiv{
+				position: absolute;
+				left: 0;
+			}
+			.rank-ul-li-rightDiv{
+				position: absolute;
+				right: 10%;
+			}
+			
+			::-webkit-scrollbar-track-piece{
+				background-color:#fff;/*滚动条的背景颜色*/
+				-webkit-border-radius:0;/*滚动条的圆角宽度*/
+			}
+			::-webkit-scrollbar{
+				width:8px;/*滚动条的宽度*/
+				height:8px;/*滚动条的高度*/
+			}
+			::-webkit-scrollbar-thumb:vertical{/*垂直滚动条的样式*/
+				height:50px;
+				background-color:#999;
+				-webkit-border-radius:4px;
+				outline:2px solid #fff;
+				outline-offset:-2px;
+				border:2px solid #fff;
+			}
+			::-webkit-scrollbar-thumb:hover{/*滚动条的hover样式*/
+				height:50px;
+				background-color:#9f9f9f;
+				-webkit-border-radius:4px;
+			}
+			/* ::-webkit-scrollbar-thumb:horizontal{
+				//水平滚动条的样式
+				width:4px;
+				background-color:#CCCCCC;
+				-webkit-border-radius:6px;
+			} */
+		　　div::-webkit-scrollbar{
+
+		　　　　width:8px;/*滚动条的宽度*/
+
+		　　}
+		</style>
+	</head>
+	<body>
+
+
+		<div id="main" class="layui-field-box layui-bg-gray">
+
+
+			<div class="layui-row layui-col-space15">
+				<div class="layui-col-md5" style="min-height: 99vh;">
+					<div class="layui-card" style="min-height: 90vh;">
+						<div class="layui-card-header">促销操作</div>
+						<div class="layui-card-body">
+
+							<form class="layui-form" action="">
+
+								<div class="layui-form-item">
+									<label class="layui-form-label">促销名称</label>
+									<div class="layui-input-block">
+										<input type="text" name="title" required lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">
+									</div>
+								</div>
+
+								<div class="layui-form-item">
+									<label class="layui-form-label">促销时间</label>
+									<div class="layui-input-block">
+										<input type="text" class="layui-input" id="pickTime" placeholder=" - ">
+									</div>
+								</div>
+
+
+								<div class="layui-form-item">
+									<label class="layui-form-label">已有规则</label>
+									<div class="layui-input-block">
+										<div class="layui-collapse">
+											<div class="layui-colla-item">
+												<h2 id="title" class="layui-colla-title">点击浏览&nbsp;&nbsp;<span class="layui-badge layui-bg-gray">5</span></h2>
+												<div class="layui-colla-content">
+													<input type="checkbox" lay-filter="checkboxFormula" name="sex" pid="1" value="商品数量大于3,订单减50" title="商品数量大于3,订单减50">
+													<input type="checkbox" lay-filter="checkboxFormula" name="sex" pid="2" value="商品数量大于3,订单减50" title="商品数量大于3,订单减50">
+													<input type="checkbox" lay-filter="checkboxFormula" name="sex" pid="3" value="商品数量大于3,订单减50" title="商品数量大于3,订单减50">
+													<input type="checkbox" lay-filter="checkboxFormula" name="sex" pid="4" value="商品数量大于3,订单减50" title="商品数量大于3,订单减50">
+													<input type="checkbox" lay-filter="checkboxFormula" name="sex" pid="5" value="商品数量大于3,订单减50" title="商品数量大于3,订单减50">
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+								<!-- <div class="layui-form-item layui-form-text">
+									<label class="layui-form-label">输入规则</label>
+									<div class="layui-input-block">
+										<textarea name="desc" placeholder="请输入促销规则" class="layui-textarea"></textarea>
+									</div>
+								</div> -->
+
+
+								<div class="layui-form-item">
+									<label class="layui-form-label">促销条件</label>
+									<div class="layui-input-block">
+										<div class="layui-collapse">
+											<div class="layui-colla-item">
+												<h2 id="title" class="layui-colla-title">单击选择</h2>
+												<div class="layui-colla-content">
+													<div class="layui-btn-container">
+														<span class="layui-btn layui-btn-normal" symbol='g:' oif='false' @click='conditionPick($event)'>商品</span>
+														<span class="layui-btn layui-btn-normal" symbol='o:'  oif='false' @click='conditionPick($event)'>订单</span>
+														<span class="layui-btn  layui-btn-normal" symbol='c'  oif='false' @click='conditionPick($event)'>数量</span>
+														<span class="layui-btn  layui-btn-normal" symbol='s'  oif='false' @click='conditionPick($event)'>总额</span>
+													</div>
+													<div class="layui-btn-container">
+														<span class="layui-btn  layui-btn-normal" symbol='>' oif='true' @click='conditionPick($event)'>大于</span>
+														<span class="layui-btn  layui-btn-normal" symbol='<'  oif='true' @click='conditionPick($event)'>小于</span>
+														<span class="layui-btn  layui-btn-normal" symbol='=='  oif='true' @click='conditionPick($event)'>等于</span>
+													</div>
+													<div class="layui-btn-container">
+														<span class="layui-btn  layui-btn-normal" symbol='&&'  oif='false' @click='conditionPick($event)'>并且</span>
+														<span class="layui-btn  layui-btn-normal" symbol='||'  oif='false' @click='conditionPick($event)'>或者</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="layui-form-item" v-show="condition.length>0" >
+										<label class="layui-form-label"></label>
+										<div style="max-width: 4rem;" class="layui-input-inline">
+											<span @click="removeConditionDiv" class="layui-btn  layui-btn-warm">清除</span>
+										</div>
+
+									<div v-for="(item,index) in condition" class="conditionDiv" >
+										<div style="max-width: 4rem;" class="layui-input-inline">
+											<span class="layui-btn  layui-btn-normal" :symbol="item.symbol" v-text="item.name"></span>
+										</div>
+										<div v-if="item.oif == 'true'" style="max-width: 4rem;" class="layui-input-inline">
+											<input type="text" class="layui-input">
+										</div> 
+									</div>
+								</div>
+
+								<div class="layui-form-item">
+									<label class="layui-form-label">促销优惠</label>
+									<div class="layui-input-block">
+										<div class="layui-collapse">
+											<div class="layui-colla-item">
+												<h2 id="title" class="layui-colla-title">单击选择</h2>
+												<div class="layui-colla-content">
+													<div class="layui-btn-container">
+														<span class="layui-btn  layui-btn-normal" @click="formulaPick($event)" oif="false" symbol="c">总额</span>
+														<span class="layui-btn  layui-btn-normal" @click="formulaPick($event)" oif="true" symbol="-">优惠</span>
+														<span class="layui-btn  layui-btn-normal" @click="formulaPick($event)" oif="true" symbol="s">赠送</span>
+														<span class="layui-btn  layui-btn-normal" @click="formulaPick($event)" oif="true" symbol="%">折扣</span>
+													</div>
+													<div class="layui-btn-container">
+														<span class="layui-btn  layui-btn-normal" symbol='&&'  oif='false' @click='formulaPick($event)'>并且</span>
+														<span class="layui-btn  layui-btn-normal" symbol='||'  oif='false' @click='formulaPick($event)'>或者</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="layui-form-item " v-show="formula.length>0" >
+								<label class="layui-form-label"></label>
+										<div style="max-width: 4rem;" class="layui-input-inline">
+											<span @click="removeFormulaDiv" class="layui-btn  layui-btn-warm">清除</span>
+										</div>
+								
+									<div v-for="(item,index) in formula" class="formulaDiv" >
+										<div style="max-width: 4rem;" class="layui-input-inline">
+											<span class="layui-btn  layui-btn-normal" :symbol="item.symbol" v-text="item.name"></span>
+										</div>
+										<div v-if="item.oif == 'true'" style="max-width: 4rem;" class="layui-input-inline">
+											<input type="text" class="layui-input">
+										</div> 
+									</div>
+								</div>
+
+
+								<div class="layui-form-item layui-form-text">
+									<div class="layui-input-block">
+										<span class="layui-btn" @click="reckon">确定</span>
+									</div>
+								</div>
+
+								<div class="layui-form-item" v-show="reckonList.length > 0">
+									<label class="layui-form-label">推算结果</label>
+									<div class="layui-input-block">
+										
+										<div v-for="(item,index) in reckonList">
+											<input type="radio" lay-filter="radioFormula" name="pormotionrule" :value="item.conditionText+','+item.formulaText" :title="item.conditionText+','+item.formulaText">
+										</div>
+										
+									</div>
+								</div>
+
+								<div class="layui-form-item" v-show="rankList.length > 0">
+									<label class="layui-form-label">优先级别</label>
+
+
+									<div class="layui-input-block">
+										<ul class="rank-ul" :style="'height:'+(rankList.length * 40) +'px'">
+											<li class="rank-ul-li" v-for="(item,index) in rankList" :style="'top:'+((index)*40)+'px'">
+												<div class="rank-ul-li-leftDiv">
+													<p class="layui-elip" title="">
+														<span class="layui-badge layui-bg-blue tit" v-text="index+1"></span>
+														<span v-text="item.name"></span>
+													</p>
+												</div>
+												<div class="rank-ul-li-rightDiv">
+													<span @click="rank($event)" class="layui-btn layui-btn-normal layui-btn-sm">上移</span>
+													<span @click="rank($event)" class="layui-btn layui-btn-warm layui-btn-sm">下移</span>
+												</div>
+
+											</li>
+										</ul>
+									</div>
+
+								</div>
+
+
+								<div class="layui-form-item">
+									<div class="layui-input-block">
+										<input type="radio" lay-filter="orderORgoodsFalse" name="" value="显示商品" title="显示商品">
+										<input type="radio" lay-filter="orderORgoodsTrue" name="" checked value="促销查询" title="促销查询">
+									</div>
+								</div>
+								<div class="layui-form-item" v-show="pickGoodsList.length > 0">
+									<label class="layui-form-label">已选商品</label>
+									<div class="layui-input-block">
+										<div class="layui-collapse">
+											<div class="layui-colla-item">
+												<h2 id="title" class="layui-colla-title">点击浏览&nbsp;&nbsp; <span class="layui-badge layui-bg-gray" v-text="pickGoodsList.length"></span></h2>
+												<div class="layui-colla-content" style="max-height: 20rem;overflow-y:scroll;">
+
+													<div class="layui-row" v-for="(item,index) in pickGoodsList" >
+
+														<div class="layui-col-md3">
+															<img v-if="item.goodsValue.column1 == null || item.goodsValue.column1==''"  width="80px" height="80px" 
+																:src="'data:image/png;base64,'+item.goods.img" alt="...">
+															<img  v-else  width="80px" height="80px" :src="item.goodsValue.column1" alt="...">
+														</div>
+														<div style="height:5rem;" class="layui-col-md7 layui-text">
+															<p>
+																<span v-text="item.goods.name"></span>&nbsp;&nbsp;
+																<span v-text="item.goodsValue.name"></span>
+															</p>
+															<p>
+																<span>库存:</span><span v-text="item.goodsValue.counts"></span>
+															</p>
+															<p>
+																<span>进货价:</span><strong>￥<span v-text="item.goodsValue.jprice"></span></strong>
+															</p>
+														</div>
+														<div style=" line-height:5rem;text-align: right;" class="layui-col-md2">
+															<i @click="removePickGoods($event,index)" class="layui-icon layui-icon-right" style="font-size: 1.875rem;cursor: pointer;"
+															 title="放回"></i>
+														</div>
+														<hr>
+													</div>
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<hr>
+								<div class="layui-form-item">
+									<div class="layui-input-block">
+										<button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+										<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+									</div>
+								</div>
+							</form>
+
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md7" style="min-height: 99vh; ">
+					<div class="layui-card" style="min-height: 90vh; ">
+						<div class="layui-card-header" v-text="goodsORpormotionTitle"></div>
+						<div class="layui-card-body">
+							<!-- 促销 -->
+							<div class="promotion" v-show="orderORgoods">
+
+								<div class="layui-form-item">
+									<label class="layui-form-label">条件名称</label>
+									<div class="layui-input-block">
+										<input type="text" name="title"  required lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">
+									</div>
+								</div>
+								<div class="layui-form-item">
+									<label class="layui-form-label">时间选择</label>
+									<div class="layui-input-block">
+										<input type="text" class="layui-input" id="queryPickTime" placeholder=" - ">
+									</div>
+								</div>
+
+
+								
+
+								<table class="layui-table">
+									<colgroup>
+										<col width="280">
+										<col width="200">
+										<col width="200">
+										<col width="200">
+										<col>
+										<col>
+									</colgroup>
+									<thead>
+										<tr>
+											<th>促销名称</th>
+											<th>开始时间</th>
+											<th>结束时间</th>
+											<th>规则</th>
+											<th>状态</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr v-for="(item,index) in promotion">
+											<td v-text="item.name"></td>
+											<td v-text="item.starttime"></td>
+											<td v-text="item.endtime"></td>
+											<td v-text="item.formula"></td>
+											<td> <span class="layui-btn layui-btn-normal">未开始</span> </td>
+											<td>
+												<a style="margin-left: 9px;" class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+												<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+												<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a> </td>
+										</tr>
+									</tbody>
+								</table>
+
+								<div id="page">
+
+								</div>
+
+							</div>
+							<!-- 商品选择 -->
+							<div class="goods" v-show="!orderORgoods">
+								<div class="layui-form">
+
+									<div class="layui-form-item">
+										<label class="layui-form-label">查询条件</label>
+										<div class="layui-input-block">
+											<input type="text" name="title" id="liketext" oninput="textlike(this)" required lay-verify="required" placeholder="请输入查询条件" autocomplete="off"
+											 class="layui-input">
+										</div>
+									</div>
+									
+
+									<div class="layui-row" style="text-align: right;">
+										<span @click="checkAddGoods" class="layui-btn">加入</span>
+									</div>
+
+									<hr>
+									<div class="layui-row flow-default goodsDiv" id="LAY_demo1" style="margin:  3.125rem;height: 34rem;overflow: auto; ">
+
+										<div v-for="(item,index) in goodsList" class="layui-row ">
+											<div style=" line-height:5rem;text-align: left;" class="layui-col-md1">
+												<i class="layui-icon layui-icon-left" @click="addPickGoods($event,index)" style="font-size: 1.875rem;cursor: pointer;"
+												 title="加入"></i>
+											</div>
+											<div class="layui-col-md2">
+											<img v-if="item.goodsValue.column1 == null || item.goodsValue.column1==''"  width="80px" height="80px" 
+										:src="'data:image/png;base64,'+item.goods.img" alt="...">
+									<img  v-else  width="80px" height="80px" :src="item.goodsValue.column1" alt="...">
+											</div>
+											<div style="height:5rem;" class="layui-col-md8 layui-text">
+												<p>
+													<span v-text="item.goods.name"></span>&nbsp;&nbsp;
+													<span v-text="item.goodsValue.name"></span>
+												</p>
+												<p>
+													<span>库存:</span><span v-text="item.goodsValue.counts"></span>
+												</p>
+												<p>
+													<span>进货价:</span><strong>￥<span v-text="item.goodsValue.jprice"></span></strong>
+												</p>
+											</div>
+
+											<div class="layui-col-md1" style=" line-height:5rem;text-align: right;">
+												<input type="checkbox" name="" lay-skin="primary">
+											</div>
+											<hr>
+										</div>
+										<div class="layui-flow-more" v-if="page.pages > page.pageNum"><a @click="nextPage" href="javascript:;"><cite>加载更多</cite></a></div>
+
+									</div>
+
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		</div>
+
+
+
+		<script th:src="@{/assets/SheZhi/lib/layui/layui.js}"></script>
+		<script th:src="@{/assets/js/jquery-1.8.3.js}"></script>
+		<script th:src="@{/assets/js/vue.js}" ></script>
+		<script type="text/javascript" th:inline="javascript">
+			var vue = new Vue({
+				el: "#main",
+				data: {
+					rankList: [],
+					bool: true,
+					promotionList:[],
+					goodsList: [],
+					pickGoodsList:[],
+					page:[],
+					promotion: [{
+						name: "五一劳动节的旧时光的骄傲是给对方加上较好的",
+						starttime: "2019-5-1 18:20:00",
+						endtime: "2019-5-5 18:20:00",
+						formula: "全场五折"
+					}, {
+						name: "就是想打折",
+						starttime: "2019-6-1",
+						endtime: "2019-6-5",
+						formula: "全场九折"
+					}],
+					orderORgoods: true,
+					goodsORpormotionTitle: "促销查询",
+					condition: [],
+					/*条件*/
+					formula: [] /*优惠*/,
+					reckonList:[]/*推算结果集*/
+				},
+				methods: {
+					reckon:function(){
+						let condition = "";
+						let conditionText = "";
+						$(".conditionDiv").each(function(){
+							
+							conditionText += $(this).find("span").text();
+							condition += $(this).find("span").attr("symbol");
+							if($(this).find("input").val()){
+								
+							conditionText += $(this).find("input").val();
+							condition += $(this).find("input").val();
+							}
+							
+							
+						});
+						let formula = "";
+						let formulaText = "";
+						$(".formulaDiv").each(function(){
+							
+							formulaText += $(this).find("span").text();
+							formula += $(this).find("span").attr("symbol");
+							if($(this).find("input").val()){
+								
+							formulaText += $(this).find("input").val();
+							formula += $(this).find("input").val();
+							}
+							
+							
+						});
+						
+						
+						let reckon = {
+							'conditionText':conditionText,
+							'condition':conditionText,
+							'formula':formula,
+							'formulaText':formulaText
+						}
+						
+						vue.reckonList.push(reckon);
+						setTimeout(function() {
+						form.render('radio');
+						}, 300);
+					},
+					removeConditionDiv:function(){
+						$(".conditionDiv").remove();
+						vue.condition = [];
+					},
+					removeFormulaDiv:function(){
+						$(".formulaDiv").remove();
+						vue.formula = [];
+					},
+					conditionPick: function(e) {
+						let $this = $(e.currentTarget);
+						let condittion = {
+							name: $this.text(),
+							symbol: $this.attr('symbol'),
+							oif:$this.attr('oif')
+						}
+						vue.condition.push(condittion);
+					},
+					formulaPick: function(e) {
+						let $this = $(e.currentTarget);
+						let formula = {
+							name: $this.text(),
+							symbol: $this.attr('symbol'),
+							oif:$this.attr('oif')
+						}
+						vue.formula.push(formula);
+					},
+					getFormula: function() {
+						console.log("hahha");
+					},
+					checkAddGoods: function() {
+						let count = 0;
+						$(".goodsDiv").find("[type=checkbox]").each(function() {
+
+							if (this.checked) {
+								var $div = $(this).parent().parent();
+								$div.addClass("animated fadeOutLeft");
+								setTimeout(function() {
+									$div.remove();
+								}, 500);
+								count++;
+							}
+
+						});
+						if (count == 0) {
+							layer.msg('请至少选中一个商品！');
+						}
+					},
+					addPickGoods: function(e,index) {
+						
+						vue.pickGoodsList.push(vue.goodsList[index]);
+						
+						//animated  fadeOutLeft
+						var div = $(e.currentTarget).parent().parent();
+						div.addClass("animated fadeOutLeft");
+						
+						setTimeout(function() {
+							div.removeClass("animated fadeOutLeft");
+							vue.goodsList.splice(index,1);
+						}, 500);
+					},
+					removePickGoods: function(e,index) {
+						vue.goodsList.push(vue.pickGoodsList[index]);
+	
+						var div = $(e.currentTarget).parent().parent();
+						 
+						div.addClass("animated fadeOutRight");
+						setTimeout(function() {
+							div.removeClass("animated fadeOutRight");
+							vue.pickGoodsList.splice(index,1);
+						}, 300); 
+					},
+					rank: function(e) {
+						let $this = $(e.currentTarget);
+						let $curLi = $this.parents("li"); //当前
+						let $prevLi = $this.parents("li").prev(); //前一条
+						let $nextLi = $this.parents("li").next(); //后一条
+
+
+
+						if ($(e.currentTarget).text() == "上移") {
+							if ($prevLi.length != 0 && this.bool) {
+								this.bool = false;
+								let curtop = $prevLi.position().top;
+								let prevtop = $curLi.position().top;
+								$curLi.animate({
+									top: curtop
+								}, 400, function() {
+									$prevLi.before($curLi);
+									/*排名更改*/
+									$curLi.find(".tit").text(parseInt($curLi.find(".tit").text()) - 1);
+									$curLi.next().find(".tit").text(parseInt($curLi.next().find(".tit").text()) + 1);
+									vue.bool = true;
+								});
+								$prevLi.animate({
+									top: prevtop
+								}, 400);
+
+							} else {
+								layer.msg('无敌是多么寂寞(｀・ω・´)');
+							}
+						} else {
+
+							if ($nextLi.length != 0 && this.bool) {
+								this.bool = false;
+								let curtop = $nextLi.position().top;
+								let nexttop = $curLi.position().top;
+
+
+								$curLi.animate({
+									top: curtop
+								}, 400, function() {
+									$nextLi.after($curLi);
+									/*排名更改*/
+									$curLi.find(".tit").text(parseInt($curLi.find(".tit").text()) + 1);
+									$curLi.prev().find(".tit").text(parseInt($curLi.prev().find(".tit").text()) - 1);
+									vue.bool = true;
+								});
+								$nextLi.animate({
+									top: nexttop
+								}, 400);
+
+							} else {
+								layer.msg('我已经是最后一名了￣ω￣=');
+							}
+						}
+					},
+					nextPage:function(){
+						queryGoods(vue.page.nextPage,[],0)
+					}
+				}
+
+			});
+			
+			vue.promotionList = [[@{promaplist}]];
+			
+			
+			/*
+			分页查询
+			*/
+			function queryGoods(curPage,svid,tid){
+				
+				var liketext = $("#liketext").val();
+				console.log(liketext)
+				$.ajax({
+					url:[[@{/goods/queryGoodsLikeAll}]],
+					type:"post",
+					async:false,
+					data:{
+						"curPage":curPage,
+						"liketext":liketext,
+						"svid":svid.join(','),
+						"tid":tid
+					},
+					dataType:"json",
+					success:function(data){
+						vue.page = data;
+						
+						data.list.filter(function(item){
+							
+							vue.goodsList.push(item);
+							
+						});
+					
+						
+						
+					}
+				});
+				
+			}
+			
+			//搜索框联动
+			function textlike(obj){
+				
+				var tid = 0;
+				 vue.goodsList = [];
+				 queryGoods(1,[],tid);
+				 layer.msg('查询到'+vue.goodsList.length+'条数据！');
+				
+			}
+			
+			queryGoods(1,[],0);
+			
+			
+			
+			var form;
+
+			layui.use('form', function() {
+				 form = layui.form;
+
+				//监听提交
+				form.on('submit(formDemo)', function(data) {
+					layer.msg(JSON.stringify(data.field));
+					return false;
+				});
+
+				//单选规则
+				form.on('radio(radioFormula)', function(data) {
+					let rank = {
+						id: "",
+						name: data.value
+					}
+					vue.rankList = vue.rankList.filter(function(element, index, array) {
+						return (element.id != "");
+					});
+
+					vue.rankList.push(rank);
+
+
+				});
+
+				form.on('radio(orderORgoodsFalse)', function(data) {
+					vue.orderORgoods = false;
+					vue.goodsORpormotionTitle = '商品选择';
+				});
+				form.on('radio(orderORgoodsTrue)', function(data) {
+					vue.orderORgoods = true;
+					vue.goodsORpormotionTitle = '促销查询';
+				});
+
+
+				//复选规则
+				form.on('checkbox(checkboxFormula)', function(data) {
+					let count = $(data.elem).parent().prev().find("span").text();
+					if (data.elem.checked) {
+						let rank = {
+							id: $(data.elem).attr("pid"),
+							name: data.value
+						}
+						vue.rankList.push(rank);
+					} else {
+
+						vue.rankList = vue.rankList.filter(function(element, index, array) {
+							return element.id != $(data.elem).attr("pid");
+						});
+					}
+
+				});
+
+			});
+
+			layui.use('element', function() {
+				var element = layui.element;
+			});
+
+
+			layui.use('laydate', function() {
+				var laydate = layui.laydate;
+
+				//日期时间范围
+				laydate.render({
+					elem: '#pickTime',
+					type: 'datetime',
+					range: true,
+					calendar: true
+				});
+				//日期时间范围
+				laydate.render({
+					elem: '#queryPickTime',
+					type: 'datetime',
+					range: true,
+					calendar: true
+				});
+			});
+
+
+			
+			
+			
+		</script>
+	</body>
+</html>
