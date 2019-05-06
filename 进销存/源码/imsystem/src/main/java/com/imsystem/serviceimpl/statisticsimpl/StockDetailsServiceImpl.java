@@ -22,9 +22,9 @@ public class StockDetailsServiceImpl implements StockDetailsService{
 		return sm.queryJinHuo(startTime, endTime, cid ,storeId);
 	}
 	@Override
-	public List<Stockdetails> queryStockByGidAndStoreId(String gid, String storeId) {
+	public List<Stockdetails> queryStockByGidAndStoreId(String gid, String storeId,String name) {
 		// TODO Auto-generated method stub
-		return sm.queryStockByGidAndStoreId(gid, storeId);
+		return sm.queryStockByGidAndStoreId(gid, storeId,name);
 	}
 
 }

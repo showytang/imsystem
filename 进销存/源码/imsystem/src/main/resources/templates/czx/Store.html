@@ -82,7 +82,7 @@
 						th:onclick="member_stop(this,[[${item.id}]])" href="javascript:;"
 						th:title="${item.state==0 ?'已启用':'已停用'}"> <i class="layui-icon" th:text="${item.state==0}?'&#xe601':'&#xe62f'" >&#xe601;</i>
 					</a> &nbsp;&nbsp;
-					<a title="编辑" th:onclick="x_admin_show('编辑','/user/queryUserById?id='+[[${item.id}]])"
+					<a title="编辑" th:onclick="x_admin_show('编辑','/store/queryStoreById?id='+[[${item.id}]])"
 						href="javascript:;"> <i class="layui-icon">&#xe642;</i>
 					</a> 
 					</td>

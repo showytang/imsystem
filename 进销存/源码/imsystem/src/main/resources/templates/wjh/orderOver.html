@@ -137,11 +137,18 @@
 					</div>
 					<div class="container-fluid">
 						<div class="selected row boss">
-							<div class="col-md-4 col-sm-6 col-xs-11 tj">
+							<div class="col-md-3 col-sm-6 col-xs-11 tj">
 								<div class="input-group">
-									<span class="input-group-addon">No</span> <input
+									<span class="input-group-addon">编号</span> <input
 										@keyup.enter="code" v-model="no" id="no" class="form-control"
 										placeholder="订单编号" />
+								</div>
+							</div>
+							<div class="col-md-3 col-sm-6 col-xs-11 tj">
+								<div class="input-group">
+									<span class="input-group-addon">商品名称</span> <input
+										@keyup.enter="code" v-model="shappingname" class="form-control"
+										placeholder="名称" />
 								</div>
 							</div>
 							<div class="col-md-5 col-sm-12 col-xs-11 display tj">
@@ -236,7 +243,8 @@
 
 			data : {
 				pageIf : {},
-				no : ""
+				no : "",
+				shappingname : ""
 			},
 			methods : {
 				code : function(){
@@ -272,16 +280,9 @@
 
 			var times = $("#config-demo").val();
 			
-			var time = times.substring(0,(times.indexOf('-')-1));
+			var time = times.substring(0,(times.indexOf('至')-1));
 			
-			var endTime = times.substring((times.indexOf('-')+2),times.length)
-			
-			if(time){
-				
-				time = timess(time);
-				
-				endTime = timess(endTime) + " 23:59:59";
-			}
+			var endTime = times.substring((times.indexOf('至')+2),times.length) + " 23:59:59"
 			
 			$.ajax({
 			    
@@ -291,7 +292,8 @@
 					time : time,
 					endTime : endTime,
 					code : vue.no,
-					currentPage : vue.pageIf.pageNum
+					currentPage : vue.pageIf.pageNum,
+					shappingname : vue.shappingname
 			    },
 
 			    type : "post",
@@ -375,7 +377,7 @@
 					    processData: false,
 					    
 					    success:function(result){
-							alert(result);
+					    	window.location.reload();
 					    }
 					})
 					

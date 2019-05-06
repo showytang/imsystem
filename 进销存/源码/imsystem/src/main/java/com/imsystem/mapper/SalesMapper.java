@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface SalesMapper {
 	
-	List<Sales> query(@Param("code") String code,@Param("time") String time,@Param("endTime") String endTime);
+	List<Sales> query(@Param("code") String code,@Param("time") String time,@Param("endTime") String endTime,@Param("shappingname")String shappingname);
 	
     int countByExample(SalesExample example);
 
@@ -34,4 +34,6 @@ public interface SalesMapper {
     int updateByPrimaryKey(Sales record);
     
     List<Sales> queryShouZhang(@Param("cid") String cid, @Param("startTime") String startTime , @Param("endTime") String endTime,@Param("storeid") String storeid);
+    
+    List<Sales> queryXf(@Param("sid") String sid,@Param("startTime") String startTime,@Param("endTime") String endTime);
 }

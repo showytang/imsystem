@@ -60,5 +60,7 @@ public interface ModuleMapper {
     
    int deleteModuleAll(Integer [] ids);
    
+   int  updateModuleById_two(@Param("url") String url,@Param("id") String id);
+   
    
 }

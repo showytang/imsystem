@@ -57,17 +57,12 @@
 									class="col-md-9 col-xs-12" type="text" id="config-demo"
 									name="config-demo">
 							</div>
-							<div class="col-md-6 col-xs-12" v-if="sid == undefined || sid == null">
-								<span class="col-md-3 col-xs-12">选择店铺</span> <select
+							<div class="col-md-6 col-xs-12">
+								<span class="col-md-3 col-xs-12">往来单位</span> <select
 									class="col-md-9 col-xs-12 store">
 									<option value="">全部</option>
-									<option  v-for="obj in store" :value="obj.id">{{obj.name}}[{{obj.sufname}}]</option>
+									<option  v-for="obj in store" :value="obj.id">{{obj.name}}</option>
 								</select>
-							</div>
-							<div class="col-md-6 col-xs-12" v-else >
-								<span class="col-md-3 col-xs-12">选择店铺</span>
-								<input
-									class="col-md-9 col-xs-12" type="text" disabled="disabled" value="当前店铺">
 							</div>
 						</div>
 						<div class="panel-body">
@@ -123,9 +118,7 @@
 		myDate();
 		$(".panel-subtitle").text("Period: "+$("#config-demo").val());
 		vue.page = queryQianKuan("", "", "", sid);
-		if(sid == "" || sid == undefined || sid == null){
-			vue.store = queryStore();
-		}
+		vue.store = querySupplier_yByStore(sid);
 		$(document).on(
 				"change",
 				"#config-demo",

@@ -146,29 +146,23 @@
 					<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
 				</div>
 				<div class="selected row boss">
-					<div class="col-md-4 col-sm-6 col-xs-11 tj">
+					<div class="col-md-3 col-sm-6 col-xs-11 tj">
 						<div class="input-group">
-							<span class="input-group-addon">No</span> <input
+							<span class="input-group-addon">编号</span> <input
 								@keyup.enter="code" v-model="no" id="no" class="form-control"
 								placeholder="订单编号" />
 						</div>
 					</div>
-					<!-- <div class="col-md-3 col-sm-6 col-xs-11 display tj">
+					<div class="col-md-3 col-sm-6 col-xs-11 tj">
 						<div class="input-group">
-							<span class="input-group-addon">每页数</span> <select
-								class="form-control" v-model="pagesize"
-								style="border-right: none; height: 100%;">
-								<option>1</option>
-								<option>5</option>
-								<option>20</option>
-								<option>50</option>
-								<option>100</option>
-							</select> 
+							<span class="input-group-addon">商品名称</span> <input
+								@keyup.enter="code" v-model="shappingname" class="form-control"
+								placeholder="商品名称" />
 						</div>
-					</div> -->
-					<div class="col-md-5 col-sm-12 col-xs-11 display tj">
+					</div>
+					<div class="col-md-4 col-sm-12 col-xs-11 display tj">
 						<div class="input-group">
-							<span class="input-group-addon">Time</span> <input
+							<span class="input-group-addon">时间</span> <input
 								class="form-control" onchange="time(this)" id="config-demo"
 								style="border: none; border-right: 1px solid #ddd; border-radius: 0px;"
 								placeholder="开始时间" /> <span class="input-group-addon">时间</span>
@@ -271,7 +265,8 @@
 					pageIf : {},
 					no : "",
 					pagesize : "10",
-					storeid : ""
+					storeid : "",
+					shappingname : ""
 				},
 				methods : {
 					code : function(){
@@ -334,6 +329,7 @@
 					data : {
 						code : vue.no,
 						pageSize : vue.pagesize,
+						shappingname : vue.shappingname,
 						time : time,
 						kucun : kucun,
 						endTime : endTime,

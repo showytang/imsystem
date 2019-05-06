@@ -21,4 +21,10 @@ public interface StoreService_c {
 	 int insertStore(Store store);
 	 
 	 Store SelectZongDian();
+	 
+	 
+	 int updateByPrimaryKey(Store record);
+	 
+	 
+	 Store selectByPrimaryKey(String id);
 }

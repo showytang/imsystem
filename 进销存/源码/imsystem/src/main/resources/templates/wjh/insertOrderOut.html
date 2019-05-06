@@ -113,6 +113,12 @@
 	outline: none;
 	color: white;
 }
+
+.jprice {
+	width: 50px;
+	border: none;
+	outline: none;
+}
 </style>
 </head>
 <body>
@@ -189,7 +195,7 @@
 									<div class="btn-group btnShapping" style="float: right;">
 										<div class="btn btn-primary"
 											style="border: none; box-shadow: none; font-size: 15px;">扫描条形码</div>
-										<div class="btn btn-primary"
+										<div class="btn btn-primary" id="queryShapping"
 											style="border: none; box-shadow: none; font-size: 15px;">添加商品</div>
 									</div>
 									<div class="visible-md-block visible-lg-block visible-sm-block"
@@ -210,7 +216,7 @@
 											<span>{{item.name}}</span>
 										</div>
 										<div class="col-md-1 col-xs-1">
-											<span class="badge badgecount" style="background: #e84242;">{{item.column2}}</span>
+											<span class="badge badgecount" style="background: #e84242;">{{item.count}}</span>
 										</div>
 										<div class="right" v-on:click="spliceList(index)"
 											style="right: 25px;">
@@ -227,16 +233,12 @@
 										<div class="col-md-8"
 											style="font-size: 14px; white-space: nowrap;">
 											<div style="font-size: 20px;">{{item.column5}}</div>
-											<div>{{item.name}}</div>
+											<div>类型：{{item.column2}}</div>
 											<div>
-												$<span class='jprice'>{{item.jprice}}</span>
-												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Count:&nbsp;<input
-													:value="item.column2" class="count"
+												价格:<input class='jprice' :data="index" :value="item.jprice.toFixed(2)" />
+												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>数量:&nbsp;<input
+													:value="item.count" class="count" :data="index"
 													style="border: none; outline: none;"></span>
-											</div>
-											<div>
-												总计：<span style="color: red; font-size: 18px;">$<span
-													class="sumPrice">{{item.column3}}</span></span>
 											</div>
 										</div>
 									</div>
@@ -319,10 +321,11 @@
 					},
 					spliceList : function (index){
 						vue.shappinglist.splice(index,1);
-						setTimeout(() => {
-							counts();
-						},100)
 						
+						goodsList().then(res => {
+							if(res)
+								counts();
+						});
 					}
 				}
 			});
@@ -331,7 +334,13 @@
 			
 			vue.supplierlist = [[${supplierlist}]];
 			
-			vue.shappinglist = [[${shappinglist}]];
+			function shappingLists(){
+				return new Promise((res,rej) => {
+					if(localStorage.getItem("list1"))
+						vue.shappinglist = JSON.parse(localStorage.getItem("list1"));
+					res(true)
+				})
+			}
 			
 			function posi(index,index1){
 				var height = $(".list-inline:eq("+index1+")>li:eq("+index+")").innerHeight();
@@ -350,8 +359,7 @@
 					vue.typeId = $(".list-inline:eq("+index1+")>li:eq("+index+")").attr("data");
 				});
 			}
-			function counts(){
-				var sumPrices = $(".sumPrice");
+			async function counts(){
 				var sum = 0 ; 
 				
 				$(".badgecount").each(function(i,e){
@@ -361,15 +369,59 @@
 				});
 				
 				$(".sumcount").text(sum);
-				
 				sum = 0;
 				
-				$(sumPrices).each(function(i,e){
-					sum +=parseFloat($(e).text());
+				$(".badgecount").each(function(i,e){
+					sum += (parseInt($(e).text())*$(".jprice:eq("+i+")").val());
 				});
 				
-				$(".yprice").text(sum);
-				$(".sprice").val(sum);
+				$(".yprice").text(sum.toFixed(2));
+				$(".sprice").val(sum.toFixed(2));
+				goodsList();
+			}
+			function loadPrice(){
+				shappingLists().then(res => {
+					vue.shappinglist[0].column3 = $(".client").val();
+					if(res)
+						$.ajax({
+							url : [[@{/orderQueryController/foreachshappingPrice}]],
+							data : JSON.stringify(vue.shappinglist),
+							type : "post",
+							contentType : "application/json",
+							processData : false,
+							dataType : "json",
+							success: function(result){
+								vue.shappinglist = result;
+								setTimeout(() => {
+									counts();
+								},100)
+							}
+						});
+				});
+			}
+			
+			loadPrice();
+			async function goodsList(){
+				
+				return new Promise((res,rej) => {
+					
+					var map = new Map();
+					
+					if(vue.shappinglist){
+						
+						vue.shappinglist.forEach((item) => {
+							
+		 					map.set(item.id,item.count);
+							
+		 				});
+						
+						localStorage.setItem("list1",JSON.stringify(vue.shappinglist))
+						
+		 				localStorage.maps = JSON.stringify(Array.from(map.entries()));
+						
+						res(true);
+					}
+				});
 			}
 			$(function() {
 				var myDate = new Date();
@@ -382,12 +434,20 @@
 					
 					var name = $(".clientName").text();
 					var data = $('.clientName').attr('data');
-					var option = $("<option value='"+data+"'>"+name+"</option>")
-					$(".client").find("option:selected").before(option);
-					$(".client").val(data);
+					var bool1 = true;
+					$(".client>option").each((i,e) => {
+						if($(".client").val() == data)
+							bool1 = false;
+					});
+					if(bool1){
+						var option = $("<option value='"+data+"'>"+name+"</option>")
+						$(".client").find("option:selected").before(option);
+						$(".client").val(data);
+					}
 					$(".fade").modal("hide");
 					if(data != "1"){
 						$("#priceName").text("定金");
+						loadPrice();
 					}
 				});
 				$(".glyphicon-th-list").click(function() {
@@ -397,7 +457,15 @@
 						$(".coll").slideUp();
 					}
 				});
-				
+				$("#queryShapping").click(function() {
+					
+					goodsList().then(res =>{
+						if(res)
+							location.href = [[@{/goods/queryShappingOption}]];
+							
+					});
+					
+				});
 				$(".list-inline>li").click(function(){
 					var index1 = $(".list-inline").index($(this).parent());
 					var index = $(".list-inline:eq("+index1+")>li").index(this);
@@ -419,11 +487,13 @@
 					
 					var count = $(this).val();
 					
+					vue.shappinglist[$(this).attr("data")].count = count;
+					
 					var price = $(this).parent().prev().text();
 					
 					var index = $(".count").index(this);
 					
-					$(".sumPrice:eq("+index+")").text(count*price);
+					$(".sumPrice:eq("+index+")").text((count*price).toFixed(2));
 					
 					if(count == ""){
 						count = 0;
@@ -431,6 +501,9 @@
 					
 					$(".badgecount:eq("+index+")").text(count);
 					
+					counts();
+	         	});
+				$(".jprice").bind("input propertyChange",function(){
 					counts();
 	         	});
 				$("#moling").click(function(){
@@ -466,15 +539,18 @@
 						    	vue.customerlist = result;
 								
 						    }
-						})
+						});
 						$(".fade").modal("show");
-						$(".client").val("1")
+						$(".client").val("1");
+						loadPrice();
 					}
 					else if($(this).val() == "1"){
 						$("#priceName").text("应付金额");
+						loadPrice();
 					}
 					else{
-						$("#priceName").text("定金")
+						$("#priceName").text("定金");
+						loadPrice();
 					}
 				});
 				counts();
@@ -512,7 +588,7 @@
 									gvid : $(".panel-title:eq("+i+")").attr("data"),
 									count : $(".panel-title:eq("+i+")").next().next().text(),
 									scount : "0",
-									price : $(".jprice:eq("+(i-1)+")").text(),
+									price : $(".jprice:eq("+(i-1)+")").val(),
 									oldprice : $(".oldprice:eq("+(i-1)+")").text(),
 									time : order.time,
 									state : 0
@@ -529,7 +605,12 @@
 							contentType : "application/json",
 							processData : false,
 							success : function(result){
-								alert(result);
+								alerts("预定订单添加成功");
+								localStorage.removeItem("map");
+								localStorage.removeItem("list");
+								setTimeout(() => {
+									window.location.reload();
+								},500)
 							}
 						});
 					}
@@ -540,6 +621,31 @@
 					return "0" + th;
 				}
 				return th;
+			}
+			function alerts(str){
+				
+				toastr.options.timeOut = "false"
+				
+				toastr.options.closeButton = true;
+				
+				toastr['info']
+						(str);
+				
+				$positionClass = 'toast-top-center';
+				
+				toastr.remove();
+				
+				$context="info";
+				
+				toastr[$context](str, '', {
+					
+					positionClass : $positionClass
+					
+				});
+				
+				setTimeout(function(){
+					$("#toast-container").fadeOut(1000);
+				},4000)
 			}
 		</script>
 </body>

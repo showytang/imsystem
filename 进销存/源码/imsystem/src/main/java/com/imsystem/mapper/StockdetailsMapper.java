@@ -61,5 +61,5 @@ public interface StockdetailsMapper {
     
     List<Stockdetails> queryJinHuo(@Param("startTime") String startTime,@Param("endTime") String endTime,@Param("cid") String cid,@Param("storeId") String storeId);
     
-    List<Stockdetails> queryStockByGidAndStoreId(@Param("gid") String gid,@Param("storeId") String storeId);
+    List<Stockdetails> queryStockByGidAndStoreId(@Param("gid") String gid,@Param("storeId") String storeId,@Param("name") String name);
 }

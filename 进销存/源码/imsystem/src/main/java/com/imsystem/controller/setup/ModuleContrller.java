@@ -97,29 +97,33 @@ public class ModuleContrller {
 		
 		
 		
+		String parentid = "";
+		
+		System.out.println("id组："+module.getParentid());
 		
 		
-		String parentid = module.getParentid().substring(module.getParentid().indexOf(",") + 1);
-		
-		module.setParentid(parentid);
+		parentid=module.getParentid().substring(module.getParentid().indexOf(",") + 1);
+		System.out.println("1111:"+parentid);
+		if(parentid.equals("0")) {
+			String parentid1=module.getParentid().substring(0,module.getParentid().indexOf(",") );
+			System.out.println("2222:"+parentid1);
+			module.setParentid(parentid1);
+		}else {
+			module.setParentid(parentid);
+		}
+			
 		
 		int i=moduleService.insertModule(module);
-		
 		
 		
 		return "redirect:queryModuleAll";
 	}
 	
 	
-	
-	
-	
 	@RequestMapping("queryModuleAll_two")
 	public String queryModuleAll(Model model){
 		
 		List<Module> list=moduleService.selectModuleAll(0+"");
-		
-		
 		
 		List<Role> list2=roleService.queryRoleAll();
 		
@@ -199,6 +203,23 @@ public class ModuleContrller {
 	
 	
 	
+	@RequestMapping("toModuleupdate")
+	public String toModuleupdate(String id,Model model){
+		
+		
+		
+		Module module= moduleService.queryModuleById(id);
+		
+		
+		
+		model.addAttribute("m", module);
+		
+		return "czx/module-update";
+		
+	}
+	
+	
+	
 	
 	
 	@RequestMapping("queryMuLu")
@@ -219,6 +240,16 @@ public class ModuleContrller {
 	
 	
 	
+	@RequestMapping("updateModuleById_two")
+	public String updateModuleById_two(String url, String id) {
+		 
+		
+		 
+		
+		 moduleService.updateModuleById_two(url, id);
+		 
+		 return "redirect:queryModuleAll";
+	}
 	
 	
 	

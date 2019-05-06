@@ -46,7 +46,17 @@ public class Sales {
     
     private List<Salesdetails> list;
     
-    public List<Salesdetails> getList() {
+    private List<Goodsvalue> glist;
+    
+    public List<Goodsvalue> getGlist() {
+		return glist;
+	}
+
+	public void setGlist(List<Goodsvalue> glist) {
+		this.glist = glist;
+	}
+
+	public List<Salesdetails> getList() {
 		return list;
 	}
     

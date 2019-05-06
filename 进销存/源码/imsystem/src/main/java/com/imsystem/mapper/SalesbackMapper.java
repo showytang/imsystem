@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Param;
 
 public interface SalesbackMapper {
 	
+	double shappingprice(@Param("id")String id,@Param("cid")String cid);
+	
 	List<Salesback> orderDescQuery(Salesback back);
 	
 	int add(Salesback sales);

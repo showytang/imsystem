@@ -183,6 +183,12 @@
 	top: 20%;
 	border: 1px solid #eaa60b;
 }
+
+.jprice {
+	width: 50px;
+	border: none;
+	outline: none;
+}
 </style>
 </head>
 <body>
@@ -353,14 +359,10 @@
 											<div style="font-size: 20px;">{{item.column5}}</div>
 											<div>类型：{{item.column2}}</div>
 											<div>
-												$<span class='jprice'>{{item.jprice}}</span>
-												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Count:&nbsp;<input
+												进货价:<input class='jprice' :value="item.jprice.toFixed(2)" />
+												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>数量:&nbsp;<input
 													:value="item.count" class="count"
 													style="border: none; outline: none;"></span>
-											</div>
-											<div>
-												总计：<span style="color: red; font-size: 18px;">$<span
-													class="sumPrice">{{item.column3}}</span></span>
 											</div>
 										</div>
 									</div>
@@ -416,6 +418,11 @@
 				},
 				spliceList : function (index){
 					vue.shappinglist.splice(index,1);
+					setTimeout(() => {
+						counts();
+						goodsList();
+					},100);
+					
 				},
 				
 				colseAlert : function(){
@@ -445,8 +452,9 @@
 		
 		vue.supplierlist = [[${supplierlist}]];
 		
-		vue.shappinglist = [[${shappinglist}]];
-
+		if(localStorage.getItem("list"))
+			vue.shappinglist = JSON.parse(localStorage.getItem("list"));
+		
 		function supplier(){
 			
 			$.ajax({
@@ -500,6 +508,20 @@
 				vue.typeId = $(".list-inline:eq(" + index1 + ")>li:eq("+ index + ")").attr("data");
 			}
 		}
+		async function goodsList(){
+			var map = new Map();
+			
+			if(vue.shappinglist){
+				vue.shappinglist.forEach((item) => {
+					
+ 					map.set(item.id,item.count);
+					
+ 				});
+				localStorage.setItem("list",JSON.stringify(vue.shappinglist))
+ 				localStorage.map = JSON.stringify(Array.from(map.entries()));
+			
+			}
+		}
 		$(function() {
 			var myDate = new Date();
 			var date = myDate.getFullYear() + "-"
@@ -533,16 +555,8 @@
 					});
 			$("#queryShapping").click(function() {
 				
-				var map = new Map();
+				goodsList();
 				
- 				 vue.shappinglist.forEach((item) => {
-					
- 					map.set(item.id,item.count);
-					
- 				});
- 				
- 				localStorage.map = JSON.stringify(Array.from(map.entries()));
- 				 
 				location.href = [[@{/goods/orderPickGoods}]];
 				
 			});
@@ -592,7 +606,7 @@
 								count : $(".panel-title:eq("+i+")").next().next().text(),
 								scount : "0",
 								time : order.time,
-								price : $(".jprice:eq("+(i-1)+")").text()
+								price : $(".jprice:eq("+(i-1)+")").val()
 						};
 						
 						order.stockdetails.push(shapping);
@@ -606,7 +620,12 @@
 						contentType : "application/json",
 						processData : false,
 						success : function(result){
-							alert(result);
+							alerts("进货成功");
+							setTimeout(() => {
+								localStorage.removeItem("map");
+							localStorage.removeItem("list");
+							window.location.reload();
+							},500)
 						}
 						
 					});
@@ -618,7 +637,7 @@
 			$(".count").bind("input propertyChange",function(){
 				
 				var count = $(this).val();
-				
+				vue.shappinglist[$(this).attr("data")].count = count;
 				var price = $(this).parent().prev().text();
 				
 				var index = $(".count").index(this);
@@ -632,6 +651,12 @@
 				$(".badgecount:eq("+index+")").text(count);
 				counts();
          	});
+			
+			$(".jprice").bind("input propertyChange",function(){
+				
+				counts();
+         	});
+			
          	$(".givemeok").click(function(){
          		var name = $(".givemedianji").text();
          		var data = $(".givemedianji").attr("data");
@@ -693,7 +718,6 @@
 		}
 		
 		function counts(){
-			var sumPrices = $(".sumPrice");
 			var sum = 0 ; 
 			
 			$(".badgecount").each(function(i,e){
@@ -703,15 +727,15 @@
 			});
 			
 			$(".sumcount").text(sum);
-			
 			sum = 0;
 			
-			$(sumPrices).each(function(i,e){
-				sum +=parseFloat($(e).text());
+			$(".badgecount").each(function(i,e){
+				sum += (parseInt($(e).text())*$(".jprice:eq("+i+")").val());
 			});
 			
-			$(".yprice").text(sum);
-			$(".sprice").val(sum);
+			$(".yprice").text(sum.toFixed(2));
+			$(".sprice").val(sum.toFixed(2));
+			goodsList();
 		}
 		function dateTime(th) {
 			if (th < 10) {
