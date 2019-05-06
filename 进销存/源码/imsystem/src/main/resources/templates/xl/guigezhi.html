@@ -31,10 +31,15 @@
 		.table-striped>tbody>tr:nth-of-type(odd){
 				background-color: transparent;
 			}
-		.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tr>th, .table>thead>tr>td, .table>tr>th{
+		.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
 				border-top: 1px solid rgb(2, 143, 208);
-				
+				color: black;
 			}
+		.table>thead>tr>th{
+			border-bottom:2px solid rgb(2,143,208);
+			color: black;
+			
+		}
 		
 		th{
 			text-align: center;
@@ -43,8 +48,8 @@
 			padding: 0px 20px;
 		}
 		.an{
-			background-color: rgb(2, 143, 208);
-			color:white;
+			color: rgb(2, 143, 208);
+			
 		} 
 		#page>ul {
 			display: flex;
@@ -91,15 +96,15 @@
 					<div class="panel panel-headline">
 						<div class="panel-heading">
 							<h3 class="panel-title ptitle">商品规格值</h3>
-							<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
 							
 						</div>
 						<div class="ta">
-							<input class="col-md-2 col-md-offset-7 tiaojian" type="text" placeholder="请输入搜索条件" /><input class="col-md-1 btn btn-primary btn-lg" type="button" value="GO" style="height: 27px;line-height: 5px;margin-bottom: 5px;"  @click="query()" />
-							<button type="button" value="新增" class="btn btn-primary btn-lg col-md-1" data-toggle="modal" data-target="#myModal" style="height: 30px;line-height: 5px; margin-bottom: 5px;margin-left: 25px;" >
+							<input class="col-md-2 col-md-offset-7 tiaojian" type="text" placeholder="请输入搜索条件" /><input class="col-md-1 btn btn-primary btn-lg" type="button" value="GO" style="height: 27px;line-height: 5px;margin-bottom: 5px; background-color: rgb(2, 143, 208);"  @click="query()" />
+							<button type="button" value="新增" class="btn btn-primary btn-lg col-md-1" data-toggle="modal" data-target="#myModal" style="height: 30px;line-height: 5px; margin-bottom: 5px;margin-left: 25px; background-color: rgb(2, 143, 208);" >
 		  						新增
 							</button>
 							<table class="table table-striped">
+							<thead>
 								<tr>
 									
 									<th>规格值名称</th>
@@ -110,7 +115,8 @@
 									
 									<th>操作</th>
 								</tr>
-								
+							</thead>
+							<tbody>
 								<tr v-for="(temp,index) in pageIf.list">
 							 	
 								<td v-text="temp.name"></td>
@@ -120,13 +126,14 @@
 								<td v-text="temp.uname"></td>
 								
 								<td style="padding-left: 50px; padding-right: 40px" >
-									<input type="button" value="修改"  id="open" class="an open" @click="open(temp.id)">
-			  						
-									<a :href="dele(temp.id)"><input type="button" class="an" value="删除"/></a>
+									
+									
+									<span class="glyphicon glyphicon-edit an open" id="open"  @click="open(temp.id)"></span>
+									<a :href="dele(temp.id)"><span class="glyphicon glyphicon-trash an"></span></a>
 									
 								</td> 
-							</tr>
-
+								</tr>
+							</tbody>
 							
 							</table>
 							<div id="page">
@@ -363,12 +370,9 @@
 		 vue.us = JSON.parse(window.localStorage.getItem("user"));
 		 $('#guid').attr("readonly","readonly");
 		 $("#tijiao").click(function(){
-				
 				var name=$("#gname").val();
 				var sid=$("#gsid").val();
 				var uid=vue.us.id;
-				alert(sid)
-				
 				$.ajax({
 					url:"/StandardValue/insert",
 					data:{
@@ -380,6 +384,9 @@
 					type:"post",
 					dataType:"json",
 					success:function(result){
+						if(result==0){
+							alert("此单位已存在");
+						}
 						location.href ="/StandardValue/queryStandarvalue";
 					}
 				});

@@ -23,4 +23,6 @@ public interface StandardvalueService {
     
 	public Standardvalue StandardvalueById(String id);
 	
+	public Standardvalue queryByname(String name,String sid);
+	
 }

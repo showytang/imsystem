@@ -42,4 +42,6 @@ public interface PaytypeMapper {
     
     Paytype paytypeById(String id);
     
+    Paytype queryPaytypeByname(String name);
+    
 }

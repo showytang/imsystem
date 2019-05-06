@@ -28,10 +28,15 @@
 				text-align: center;
 				
 			}
-		.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tr>th, .table>thead>tr>td, .table>tr>th{
+		.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
 				border-top: 1px solid rgb(2, 143, 208);
-				
+				color: black;
 			}
+		.table>thead>tr>th{
+			border-bottom:2px solid rgb(2,143,208);
+			color: black;
+			
+		}
 		
 		th{
 			text-align: center;
@@ -43,8 +48,8 @@
 				background-color: transparent;
 			}
 		.an{
-			background-color: rgb(2, 143, 208);
-			color:white;
+			color: rgb(2, 143, 208);
+			
 		} 
 		
 		#page>ul {
@@ -86,24 +91,27 @@
 					<div class="panel panel-headline">
 						<div class="panel-heading">
 							<h3 class="panel-title ptitle">商品类型</h3>
-							<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
+							
 							
 						</div>
 						<div class="ta">
-						 <input class="col-md-2 col-md-offset-7 tiaojian"  type="text" placeholder="请输入搜索条件" /><input class="col-md-1 btn btn-primary btn-lg" type="button" value="GO" style="height: 27px;line-height: 5px;margin-bottom: 5px;" @click="query()" />
-						<button type="button" value="新增" class="btn btn-primary btn-lg col-md-1" data-toggle="modal" data-target="#myModal" style="height: 30px;line-height: 5px; margin-bottom: 5px; margin-left: 25px;" >
+						 <input class="col-md-2 col-md-offset-7 tiaojian"  type="text" placeholder="请输入搜索条件" /><input class="col-md-1 btn btn-primary btn-lg" type="button" value="GO" style="height: 27px;line-height: 5px;margin-bottom: 5px; background-color: rgb(2, 143, 208);" @click="query()" />
+						<button type="button" value="新增" class="btn btn-primary btn-lg col-md-1" data-toggle="modal" data-target="#myModal" style="height: 30px;line-height: 5px; margin-bottom: 5px; margin-left: 25px; background-color: rgb(2, 143, 208);" >
 	  						新增
 						</button>
 						<table class="table table-striped">
+						<thead>
 							<tr>
 								
 								<th>类型名称</th>
 								<th>上层类型编号</th>
 								<th>创建时间</th>
 								<th>最后修改时间</th>
-								<th>操作人编号</th>
+								<th>操作人</th>
 								<th>操作</th>
 							</tr>
+						</thead>
+						<tbody>	
 							<tr v-for="(temp,index) in pageIf.list">
 							 	
 								<td v-text="temp.name"></td>
@@ -112,13 +120,13 @@
 								<td v-text="formatDate(temp.updatetime)"></td> 
 								<td v-text="temp.uname"></td>
 								
-								<td style="padding-left: 0px; padding-right: 40px" >
-									<input type="button" value="修改"  id="open" class="an open" @click="open(temp.id)">
-			  						
-									<a :href="dele(temp.id)"><input type="button" class="an" value="删除"/></a>
+								<td style="padding-left: 40px; padding-right: 30px" >
+									<span class="glyphicon glyphicon-edit an open" id="open"  @click="open(temp.id)"></span>
+									<a :href="dele(temp.id)"><span class="glyphicon glyphicon-trash an"></span></a>
 									
 								</td> 
 							</tr>
+							</tbody>
 							 <!-- <tr th:each="item:${pageIf.list}">
 								<td th:text="${item.id}"></td>
 								<td th:text="${item.name}"></td>
@@ -162,7 +170,8 @@
 									<li class="pagebtn pageCurrent">15</li>
 									<li class="pagebtn pageCurrent">16</li>
 									<li class="pagebtn pageNext"><span
-										class="glyphicon glyphicon-menu-right"></span></li>
+										class="glyphicon glyphicon-menu-right"></span>
+									</li>
 								</ul>
 							</div> 
 						</div>
@@ -297,6 +306,7 @@
 	<script th:src="@{/assets/js/page.js}"></script>
 	<script type="text/javascript" th:src="@{/assets/js/bootstrap-datetimepicker.js}"></script>
 	<script type="text/javascript" th:src="@{/assets/js/vue.js}"></script>
+	
 	<script type="text/javascript"  th:inline="javascript" >
 	var z = 0;
 	var vue = new Vue({
@@ -346,8 +356,6 @@
 	                            $('.up2').val(data.name);
 	                            $('.up3').val(data.pid);
 	                            $('.up4').val(vue.formatDate(data.time));
-	                          
-	                            
 	                            
 	                            $('.up1').attr("readonly","readonly");
 	                            $('.up5').attr("readonly","readonly");
@@ -377,6 +385,7 @@
 		},
 		created:function(){
 			this.query();
+			
 		}
 	});
 	
@@ -392,11 +401,12 @@
 	
 	
 	  $(function(){
+		  
 		  vue.us = JSON.parse(window.localStorage.getItem("user"));
 		  $('#Inuid').attr("readonly","readonly");
 		 $("#tijiao").click(function(){
 			var name=$("#Inname").val();
-			var pid=$("#Inpid").val();;
+			var pid=$("#Inpid").val();
 			var uid=vue.us.id
 			
 			$.ajax({
@@ -409,6 +419,9 @@
 				type:"post",
 				dataType:"json",
 				success:function(result){
+					if(result==0){
+						alert("此类型已存在，请重新输入");
+					}
 					location.href ="/goods/querygoods";
 				}
 			});
@@ -418,7 +431,7 @@
 			 var id=$(".up1").val();
 			 var name=$(".up2").val();
 			 var pid=$(".up3").val();
-			 alert(pid);
+			 
 			 var uid=vue.us.id
 			
 			 $.ajax({
@@ -432,6 +445,7 @@
 					type:"post",
 					dataType:"json",
 					success:function(result){
+						
 						location.href = "/goods/querygoods";
 				}	 
 			 });

@@ -43,7 +43,7 @@ public interface GoodstypeMapper {
 
     int updateByPrimaryKey(Goodstype record);
     
-    int deleteupdate(Integer id);
+    int deleteupdate(String id);
     
     int insertgoodstype(Goodstype good);
     
@@ -52,4 +52,6 @@ public interface GoodstypeMapper {
     int toupdate(Goodstype good);
     
     List<Goodstype> querybypid();
+    
+    Goodstype querybyname(String name,String pid);
 }

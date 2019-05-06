@@ -56,4 +56,10 @@ public class paytypeServiceImpl implements paytypeService{
 		
 		return mapper.paytypeById(id);
 	}
+
+	@Override
+	public Paytype queryPaytypeByname(String name) {
+		
+		return mapper.queryPaytypeByname(name);
+	}
 }

@@ -39,7 +39,7 @@ public class SpTypeServiceImpl implements SpTypeService{
 
 
 	@Override
-	public int deleteupdate(Integer id) {
+	public int deleteupdate(String id) {
 		
 		return ma.deleteupdate(id);
 	}
@@ -72,6 +72,14 @@ public class SpTypeServiceImpl implements SpTypeService{
 	public List<Goodstype> querybypid() {
 		
 		return ma.querybypid();
+	}
+
+
+
+	@Override
+	public Goodstype querybyname(String name, String pid) {
+		
+		return ma.querybyname(name, pid);
 	}
 	
 

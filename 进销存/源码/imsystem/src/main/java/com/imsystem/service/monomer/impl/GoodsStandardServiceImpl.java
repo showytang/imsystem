@@ -58,4 +58,10 @@ public class GoodsStandardServiceImpl implements GoodsStandardService{
 		
 		return mapper.StandardById(id);
 	}
+
+	@Override
+	public Standard StandardByname(String name, String tid) {
+		
+		return mapper.StandardByname(name, tid);
+	}
 }

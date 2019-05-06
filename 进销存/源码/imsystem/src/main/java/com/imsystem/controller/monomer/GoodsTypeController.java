@@ -46,9 +46,7 @@ public class GoodsTypeController {
 	}
 	
 	@RequestMapping("/delete")
-	
-	public String delete(Integer id) {
-		System.err.println(id);
+	public String delete(String id) {
 		goods.deleteupdate(id);
 		return "redirect:/goods/querygoods";
 	}
@@ -56,11 +54,18 @@ public class GoodsTypeController {
 	@RequestMapping("insert")
 	@ResponseBody
 	public int insert(Goodstype good) {
-		String id=UUID.randomUUID().toString();
-		good.setId(id);
-		int r=goods.insertgoodstype(good);
+		Goodstype goodstype=goods.querybyname(good.getName(), good.getPid());
+		if (goodstype==null) {
+			String id=UUID.randomUUID().toString();
+			good.setId(id);
+			int r=goods.insertgoodstype(good);
+			return r;
+		}else {
+			return 0;
+		}
 		
-		return r;
+		
+		
 	}
 	
 	@RequestMapping("update")

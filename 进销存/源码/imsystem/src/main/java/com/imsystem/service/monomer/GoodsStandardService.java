@@ -16,4 +16,6 @@ public interface GoodsStandardService {
 	public int toupdate(Standard stan);
 	public Standard StandardById(String id);
 	
+	public Standard StandardByname(String name,String tid);
+	
 }

@@ -20,4 +20,6 @@ public interface paytypeService {
 	public int toupdate(Paytype paytype);
 	    
 	public Paytype paytypeById(String id);
+	
+	public Paytype queryPaytypeByname(String name);
 }

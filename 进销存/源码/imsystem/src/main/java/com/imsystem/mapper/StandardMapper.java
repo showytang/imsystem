@@ -46,4 +46,6 @@ public interface StandardMapper {
     int toupdate(Standard stan);
     
     Standard StandardById(String id);
+    
+    Standard StandardByname(String name,String tid);
 }

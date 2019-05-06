@@ -92,6 +92,12 @@ public class BitServiceImpl implements BitService {
 		return ma.toupdate(bit);
 	}
 
+	@Override
+	public Bit querybyname(String name) {
+		
+		return ma.querybyname(name);
+	}
+
 	
 	
 }
