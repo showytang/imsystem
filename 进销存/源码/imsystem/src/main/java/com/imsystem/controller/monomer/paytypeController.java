@@ -52,8 +52,17 @@ public class paytypeController {
 	@RequestMapping("/toupdate")
 	@ResponseBody
 	public int toupdate(Paytype paytype) {
-		int r=service.toupdate(paytype);
-		return r;
+		Paytype type=service.queryPaytypeByname(paytype.getName());
+		if (type==null) {
+			String id=UUID.randomUUID().toString();
+			paytype.setId(id);
+			int r=service.toupdate(paytype);
+			return r;
+		}else {
+			return 0;
+		}
+		
+		
 		
 	}
 	

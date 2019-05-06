@@ -79,8 +79,15 @@ public class GoodsTypeController {
 	@RequestMapping("toupdate")
 	@ResponseBody
 	public int toupdate(Goodstype good) {
-		int r=goods.toupdate(good);
-		return r;
+		Goodstype type=goods.querybyname(good.getName(), good.getPid());
+		if (type==null) {
+			int r=goods.toupdate(good);
+			return r;
+		}else {
+			return 0;
+		}
+				
+		
 	}
 
 }

@@ -408,6 +408,9 @@
 				 type:"post",
 				 dataType:"json",
 				 success:function(result){
+					 if(result==0){
+							alert("你修改的规格值已存在");
+						}
 					 location.href="/StandardValue/queryStandarvalue";
 				 }
 			 });

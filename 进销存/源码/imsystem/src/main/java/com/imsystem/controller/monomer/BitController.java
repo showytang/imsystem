@@ -83,8 +83,16 @@ public class BitController {
 	@RequestMapping("/toupdate")
 	@ResponseBody
 	public int  toupdate(Bit bit){
-		int r=ser.toupdate(bit);
-		return r;
+		Bit bitt=ser.querybyname(bit.getName());
+		
+		if (bitt==null) {
+			int r=ser.toupdate(bit);
+			return r;
+		}else {
+			return 0;
+		}
+		
+	
 	}
 	
 	

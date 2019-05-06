@@ -399,6 +399,9 @@
 				 type:"post",
 				 dataType:"json",
 				 success:function(result){
+					 if(result==0){
+						 alert("你修改的支付类型已存在");
+					 }
 					 location.href="/paytype/querypaytype";
 				 }
 			 });

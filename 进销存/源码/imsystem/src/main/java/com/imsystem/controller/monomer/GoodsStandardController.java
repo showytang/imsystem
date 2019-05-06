@@ -74,9 +74,18 @@ public class GoodsStandardController {
 	@RequestMapping("toupdate")
 	@ResponseBody
 	public int toupdate(Standard stan) {
-		int r=service.toupdate(stan);
+		Standard standard=service.StandardByname(stan.getName(), stan.getTid());
+		if (standard==null) {
+			String id=UUID.randomUUID().toString();
+			stan.setId(id);
+			int r=service.toupdate(stan);
+			
+			return r;
+		}else {
+			return 0;
+		}
 		
-		return r;
+		
 	}
 	
 }
