@@ -45,7 +45,9 @@
  	UPDATE standardvalue SET NAME=#{name},sid=#{sid},updatetime=NOW(),uid=#{uid} WHERE id=#{id} 	
  </update>
   
-  
+  <select id="queryByname" resultMap="BaseResultMap">
+  	SELECT * FROM standardvalue WHERE NAME=#{name} AND sid=#{sid}
+  </select>
   
   
   <select id="queryStandardvalueByid" resultMap="BaseResultMap">

@@ -12,7 +12,7 @@ public interface SpTypeService {
 	
 	public PageInfo<Goodstype> queryByLikepage(String tiaojian, Integer currentPage, Integer pageSize);
 	
-	public  int deleteupdate(Integer id);
+	public  int deleteupdate(String id);
 	
 	public int insertgoodstype(Goodstype good);
 	
@@ -21,4 +21,6 @@ public interface SpTypeService {
 	public int toupdate(Goodstype good);
 	
 	public List<Goodstype> querybypid();
+	
+	public Goodstype querybyname(String name,String pid);
 }

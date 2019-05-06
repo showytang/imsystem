@@ -60,10 +60,16 @@ public class paytypeController {
 	@RequestMapping("/insert")
 	@ResponseBody
 	public int insert(Paytype paytype) {
-		String id=UUID.randomUUID().toString();
-		paytype.setId(id);
-		int r=service.insertPaytype(paytype);
-		return r;
+		Paytype type=service.queryPaytypeByname(paytype.getName());
+		if (type==null) {
+			String id=UUID.randomUUID().toString();
+			paytype.setId(id);
+			int r=service.insertPaytype(paytype);
+			return r;
+		}else {
+			return 0;
+		}
+		
 	}
 
 }

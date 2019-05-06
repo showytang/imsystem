@@ -54,10 +54,16 @@ public class GoodsStandardValueController {
 	@RequestMapping("/insert")
 	@ResponseBody
 	public int insert(Standardvalue stan) {
-		String id=UUID.randomUUID().toString();
-		stan.setId(id);
-		int r=service.insertStandardvalue(stan);
-		return r;
+		Standardvalue standard=service.queryByname(stan.getName(), stan.getSid());
+		if(standard==null) {
+			String id=UUID.randomUUID().toString();
+			stan.setId(id);
+			int r=service.insertStandardvalue(stan);
+			return r;
+		}else {
+			return 0;
+		}
+		
 	}
 	
 	@RequestMapping("/byid")

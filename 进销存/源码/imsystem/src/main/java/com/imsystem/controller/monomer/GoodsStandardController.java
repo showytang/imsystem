@@ -52,10 +52,16 @@ public class GoodsStandardController {
 	@RequestMapping("/insert")
 	@ResponseBody
 	public int insert(Standard stan) {
-		String id=UUID.randomUUID().toString();
-		stan.setId(id);
-		int r=service.insertStandard(stan);
-		return r;
+		Standard standard=service.StandardByname(stan.getName(), stan.getTid());
+		if (standard==null) {
+			String id=UUID.randomUUID().toString();
+			stan.setId(id);
+			int r=service.insertStandard(stan);
+			return r;
+		}else {
+			return 0;
+		}
+		
 	}
 	
 	@RequestMapping("/byid")

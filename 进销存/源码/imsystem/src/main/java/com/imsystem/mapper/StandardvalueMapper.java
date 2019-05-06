@@ -5,6 +5,7 @@ import com.imsystem.domain.Standardvalue;
 import com.imsystem.domain.StandardvalueExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.thymeleaf.standard.processor.StandardInliningCDATASectionProcessor;
 
 public interface StandardvalueMapper {
 	
@@ -42,5 +43,7 @@ public interface StandardvalueMapper {
     int toupdate(Standardvalue stan);
     
     Standardvalue StandardvalueById(String id);
+    
+    Standardvalue queryByname(String name,String sid);
     
 }

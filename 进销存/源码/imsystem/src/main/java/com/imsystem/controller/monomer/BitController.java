@@ -57,15 +57,20 @@ public class BitController {
 	@RequestMapping("/insert")
 	@ResponseBody
 	public int insert(String name,String uid) {
+		Bit bit=ser.querybyname(name);
+		System.err.println(bit);
+		if (bit==null) {
+			String id=UUID.randomUUID().toString();
+			Bit bi=new Bit();
+			bi.setId(id);
+			bi.setName(name);
+			bi.setUid(uid);
+			int r=ser.insertSelective(bi);
+			return r;
+		}else {
+			return 0;
+		}
 		
-		String id=UUID.randomUUID().toString();
-		Bit bi=new Bit();
-		bi.setId(id);
-		bi.setName(name);
-		bi.setUid(uid);
-		
-		int r=ser.insertSelective(bi);
-		return r;
 	}
 	
 	@RequestMapping("/querybyid")

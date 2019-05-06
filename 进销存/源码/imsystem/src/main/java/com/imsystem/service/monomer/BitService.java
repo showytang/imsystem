@@ -18,6 +18,6 @@ public interface BitService {
 	 public PageInfo<Bit> queryByLikepage(String tiaojian, Integer currentPage, Integer pageSize);
 	 public PageInfo <Bit> querybit(Integer currentPage,Integer pageSize);
 	 public Bit querybyid(String id);
-	 
+	 public Bit querybyname(String name);
 	 public int toupdate(Bit bit);
 }

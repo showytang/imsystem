@@ -48,6 +48,9 @@
 	WHERE tid = #{id};
   </select>
 
+	<select id="StandardByname" resultMap="BaseResultMap">
+		SELECT * FROM standard WHERE NAME=#{name} AND tid=#{tid}
+	</select>
   
   <select id="StandardById" resultMap="BaseResultMap">
   	SELECT * FROM `standard`

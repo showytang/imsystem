@@ -38,6 +38,10 @@
 	WHERE id = #{id};
   </select>
   
+  <select id="queryPaytypeByname" resultMap="BaseResultMap">
+  	SELECT * FROM `paytype` WHERE NAME=#{name}
+  </select>
+  
   <select id="paytypeById" resultMap="BaseResultMap">
   	SELECT * FROM `paytype`
 	WHERE id = #{id};

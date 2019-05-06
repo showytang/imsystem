@@ -36,4 +36,6 @@ public interface BitMapper {
     int updateByPrimaryKey(Bit record);
     
     int toupdate(Bit bit);
+    
+    Bit querybyname(String name);
 }

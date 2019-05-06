@@ -30,6 +30,7 @@
 			}
 		.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tr>th, .table>thead>tr>td, .table>tr>th{
 				border-top: 1px solid rgb(2, 143, 208);
+				color: black;
 				
 			}
 		
@@ -44,8 +45,8 @@
 			}
 		
 		.an{
-			background-color: rgb(2, 143, 208);
-			color:white;
+			color: rgb(2, 143, 208);
+			
 		} 
 		
 		#page>ul {
@@ -76,6 +77,16 @@
 			line-height: 28px;
 			cursor: pointer;
 		}
+		
+		.table>thead>tr>th{
+			border-bottom:2px solid rgb(2,143,208);
+			color: black;
+			
+		}
+		
+		/* .pagebtn{
+			background-color:rgb(2,143,208) ;
+		} */
 	</style>
 	</head>
 	<body>
@@ -87,25 +98,23 @@
 					<div class="panel panel-headline">
 						<div class="panel-heading">
 							<h3 class="panel-title ptitle">支付类型</h3>
-							<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
-							
 						</div>
 						<div class="ta">
-						 <input class="col-md-2 col-md-offset-7 tiaojian" type="text" placeholder="请输入搜索条件" /><input class="col-md-1 btn btn-primary btn-lg" type="button" value="GO" style="height: 27px;line-height: 5px;margin-bottom: 5px;" @click="query()" />
-						<button type="button" value="新增" class="btn btn-primary btn-lg col-md-1 " data-toggle="modal" data-target="#myModal" style="height: 30px;line-height: 5px; margin-bottom: 5px;margin-left: 10px;" >
+						 <input class="col-md-2 col-md-offset-7 tiaojian" type="text" placeholder="请输入搜索条件" /><input class="col-md-1 btn btn-primary btn-lg" type="button" value="GO" style="height: 27px;line-height: 5px;margin-bottom: 5px; background-color: rgb(2, 143, 208);" @click="query()" />
+						<button type="button" value="新增" class="btn btn-primary btn-lg col-md-1 " data-toggle="modal" data-target="#myModal" style="height: 30px;line-height: 5px; margin-bottom: 5px;margin-left: 10px; background-color: rgb(2, 143, 208);" >
 	  						新增
 						</button>
 						<table class="table table-striped">
-							<tr>
-								<!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-								
-								<th>类型名称</th>
-								<th>创建时间</th>
-								<th>最后修改时间</th>
-								<th>操作人编号</th>
-								<th>操作</th>
-							</tr>
-							
+							<thead>
+								<tr>
+									<th>类型名称</th>
+									<th>创建时间</th>
+									<th>最后修改时间</th>
+									<th>操作人编号</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
 							<tr v-for="(temp,index) in pageIf.list">
 							 	
 								<td v-text="temp.name"></td>
@@ -113,13 +122,13 @@
 								<td v-text="formatDate(temp.updatetime)"></td> 
 								<td v-text="temp.uname"></td>
 								
-								<td style="padding-left: 30px; padding-right: 20px" >
-									<input type="button" value="修改"  id="open" class="an open" @click="open(temp.id)">
-			  						
-									<a :href="dele(temp.id)"><input type="button" class="an" value="删除"/></a>
+								<td style="padding-left: 40px; padding-right: 30px" >
+									<span class="glyphicon glyphicon-edit an open" id="open"  @click="open(temp.id)"></span>
+									<a :href="dele(temp.id)"><span class="glyphicon glyphicon-trash an"></span></a>
 									
 								</td> 
 							</tr>
+							</tbody>
 							<!--<tr>
 								<td>张三</td>
 								<td>李四</td>
@@ -138,8 +147,8 @@
 						</table>
 							<div id="page">
 								<ul>
-									<li class="pagebtn pagePrev"><span
-										class="glyphicon glyphicon-menu-left"></span></li>
+								<li class="pagebtn pagePrev glyphicon glyphicon-menu-left" onclick="prevPage()"><span></span></li>
+									
 									<li class="pagebtn currentPage pageCurrent pageq">1</li>
 									<li class="pagebtn pageCurrent pageq">2</li>
 									<li class="pagebtn pageCurrent pageq">3</li>
@@ -367,6 +376,9 @@
 					type:"post",
 					dataType:"json",
 					success:function(result){
+						if(result==0){
+							alert("此规格已存在，请重新添加")
+						}
 						location.href ="/paytype/querypaytype";
 					}
 				});

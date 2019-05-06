@@ -24,6 +24,10 @@
   	</where>
   </select>
   
+  <select id="querybyname" resultMap="BaseResultMap">
+  	SELECT * FROM BIT WHERE NAME=#{name}
+  </select>
+  
   <select id="querybyid" resultMap="BaseResultMap">
   	SELECT * FROM BIT WHERE id=#{id}
   </select>
