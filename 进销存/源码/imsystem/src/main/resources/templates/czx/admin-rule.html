@@ -9,10 +9,13 @@
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
    <link rel="stylesheet" th:href="@{/assets/SheZhi/css/font.css}">
     <link rel="stylesheet" th:href="@{/assets/SheZhi/css/xadmin.css}">
+     
+      <link rel="stylesheet" th:href="@{/assets/css/bootstrap.css}">
     <script type="text/javascript" th:src="@{/assets/SheZhi/js/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/assets/SheZhi/lib/layui/layui.js}" charset="utf-8"></script>
     <script type="text/javascript" th:src="@{/assets/SheZhi/js/xadmin.js}"></script>
     <script type="text/javascript" th:src="@{/assets/SheZhi/js/cookie.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/pageNumber.js}"></script>
     
    	
   </head>
@@ -93,17 +96,37 @@
         </tbody>
       </table>
       <div class="page">
-        <div>
+        <!-- <div>
 				<a class="prev" th:href="@{/module/queryModuleAll?(pageNum=${page.prePage})}">&lt;&lt;</a> 
 				<a class="num" th:style="'background-color:'+@{(${page.pageNum==1} ? '#009688':'white')}"  th:href="@{/module/queryModuleAll?pageNum=1}">1</a>
 				<a class="num"  th:style="'background-color:'+@{(${page.pageNum==2} ? '#009688':'white')}" th:href="@{/module/queryModuleAll?pageNum=2}">2</a> 
 			    <a class="next" th:href="@{/module/queryModuleAll?(pageNum=${page.nextPage})}">&gt;&gt;</a>
-			</div>
+			</div> -->
       </div>
 
     </div>
     <script th:inline="javascript">
-    	
+    	$(function(){
+    		
+    		var pageNum = [[${page.pageNum}]];
+    		var pre = [[${page.prePage}]];
+    		var next = [[${page.nextPage}]];
+    		var pages = [[${page.pages}]];
+    		
+
+			 $(".page").append(page(pageNum,pre,next,pages));
+    		 $(document).on("click",".pageFy>ul li",function(){
+    			pageNum = [[${page.pageNum}]];
+    	    	pre = [[${page.prePage}]];
+    	    	next = [[${page.nextPage}]];
+    	    	pages = [[${page.pages}]];
+    			 var create = $(this).attr("pageNumber");
+    			 if(create != null && create != 0){
+      				location.href="/module/queryModuleAll?pageNum="+create;
+    				 $(".page").append(page(pageNum,pre,next,pages));
+    			 }
+    		 });
+    	});
     
       layui.use('form', function(){
         var form = layui.form;

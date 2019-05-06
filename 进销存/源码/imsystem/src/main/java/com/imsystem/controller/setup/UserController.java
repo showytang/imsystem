@@ -98,6 +98,25 @@ public class UserController {
 	}
 	
 	
+	@RequestMapping("toGeRenZhongXinZiLiao")
+	public String toGeRenZhongXinZiLiao() {
+		
+		return "czx/GeRenZhongXin";
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -118,7 +137,7 @@ public class UserController {
 		model.addAttribute("listStore", listStore);
 		return "czx/admin-update";
 	}
-
+	
 	
 	@RequestMapping("updateUserById")
 	public String updateUserById(User user,HttpSession session) {
