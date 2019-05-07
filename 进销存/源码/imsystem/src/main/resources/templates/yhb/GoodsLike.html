@@ -34,33 +34,37 @@
 </script>
 <script type="text/javascript" th:src="@{/assets/js/moment.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/daterangepicker.js}"></script>
+<script th:src="@{/assets/js/vue.js}"></script>
 <script th:src="@{/assets/js/statistics.js}"></script>
-<script type="text/javascript" th:src="@{/assets/js/Mydate.js}"></script>
 <style>
 .gv {
 	height: 320px;
 	padding: 5px 15px;
-	margin : 15px 0px;
+	margin: 15px 0px;
 }
+
 .goods {
 	width: 100%;
 	height: 100%;
 	padding: 20px;
-	margin-bottom:20px;
+	margin-bottom: 20px;
 }
 
 .shopGoods {
 	width: 100%;
 	height: 100%;
-	ovflow:hidden;
+	ovflow: hidden;
 }
-.shopGoods:hover{
-	transform:translateY(-10px);
+
+.shopGoods:hover {
+	transform: scale(1.02) translateY(-20px);
 }
-.shopGoods:hover .gValue{
-	border:1px solid #00AAFF;
-	border-top:0px;
+
+.shopGoods:hover .gValue {
+	border: 1px solid #00AAFF;
+	border-top: 0px;
 }
+
 .shopGoods img {
 	width: 100%;
 	height: 130px;
@@ -79,16 +83,16 @@
 	width: 38%;
 	height: 38px;
 	margin-top: 20px;
-	border:1px solid #00AAFF;
-	background:#00AAFF;
-	color:#fff;
+	border: 1px solid #00AAFF;
+	background: #00AAFF;
+	color: #fff;
 }
 
 .but button:nth-child(1) {
 	float: left;
 	margin-left: 8%;
-	background:none;
-	color:#00AAFF;
+	background: none;
+	color: #00AAFF;
 }
 
 .but button:nth-child(2) {
@@ -102,20 +106,21 @@
 	white-space: nowrap;
 	display: inline-block;
 	width: 100%;
-	height:40px;
+	height: 40px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	line-height: 1.2;
 }
-.p{
-	text-align:center;
-	font-size:.8em!important;
-	color:#c2c2c2;
+
+.p {
+	text-align: center;
+	font-size: .8em !important;
+	color: #c2c2c2;
 }
 
-.gValue{
-	border:1px solid #c2c2c2;
-	border-top:0px;
+.gValue {
+	border: 1px solid #c2c2c2;
+	border-top: 0px;
 }
 </style>
 </head>
@@ -128,82 +133,39 @@
 						<h3 class="panel-title">猜你喜欢</h3>
 						<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
 					</div>
+					<div class="col-md-6 col-xs-12 tj">
+						<span class="col-md-3 col-xs-12">选择客户</span> <select
+							class="col-md-9 col-xs-12 store">
+							<option value="">全部</option>
+							<option v-for="obj in customer" :value="obj.id">{{obj.name}}</option>
+						</select>
+					</div>
+					<div class="col-md-6 col-xs-12 tj">
+						<span class="col-md-3 col-xs-12">选择季节</span> <select
+							class="col-md-9 col-xs-12 season">
+							<option value="">全部</option>
+							<option value="1">春</option>
+							<option value="2">夏</option>
+							<option value="3">秋</option>
+							<option value="4">冬</option>
+						</select>
+					</div>
 					<div class="goods">
-						<div class="gv col-md-4 col-xs-12">
-							<div class="shopGoods">
-								<img src="../assets/img/login-bg.jpg">
+						<div v-for="obj in goods" class="gv col-md-4 col-xs-12">
+							<div v-for="objs in obj.list" class="shopGoods">
+								<img :src="objs.column4">
 								<div class="gValue">
 									<div class="gName">
-										<span class="name"><b>这个是一个测试商但是发射点花木成畦手自栽 模压基材品</b></span><br>
+										<span class="name"><b>{{objs.name}}[{{objs.column1}}]</b></span><br>
 										<p class="p col-md-6 col-xs-6">
-											<b>价格：</b><span>￥20</span>
+											<b>价格：</b><span>￥{{objs.column5}}</span>
 										</p>
 										<p class="p col-md-6 col-xs-6">
-											<b>销量：</b><span>￥20</span>
+											<b>标签：</b><span>{{objs.column2}}</span>
 										</p>
 									</div>
 									<div class="but">
-										<button class="col-xs-12">查看详情</button>
-										<button class="col-xs-12">加入购物车</button>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="gv col-md-4 col-xs-12">
-							<div class="shopGoods">
-								<img src="../assets/img/login-bg.jpg">
-								<div class="gValue">
-									<div class="gName">
-										<span class="name"><b>这个是一个测试商但是发射点花木成畦手自栽 模压基材品</b></span><br>
-										<p class="p col-md-6 col-xs-6">
-											<b>价格：</b><span>￥20</span>
-										</p>
-										<p class="p col-md-6 col-xs-6">
-											<b>销量：</b><span>￥20</span>
-										</p>
-									</div>
-									<div class="but">
-										<button class="col-xs-12">查看详情</button>
-										<button class="col-xs-12">加入购物车</button>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="gv col-md-4 col-xs-12">
-							<div class="shopGoods">
-								<img src="../assets/img/login-bg.jpg">
-								<div class="gValue">
-									<div class="gName">
-										<span class="name"><b>这个是一个测试商但是发射点花木成畦手自栽 模压基材品</b></span><br>
-										<p class="p col-md-6 col-xs-6">
-											<b>价格：</b><span>￥20</span>
-										</p>
-										<p class="p col-md-6 col-xs-6">
-											<b>销量：</b><span>￥20</span>
-										</p>
-									</div>
-									<div class="but">
-										<button class="col-xs-12">查看详情</button>
-										<button class="col-xs-12">加入购物车</button>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="gv col-md-4 col-xs-12">
-							<div class="shopGoods">
-								<img src="../assets/img/login-bg.jpg">
-								<div class="gValue">
-									<div class="gName">
-										<span class="name"><b>这个是一个测试商但是发射点花木成畦手自栽 模压基材品</b></span><br>
-										<p class="p col-md-6 col-xs-6">
-											<b>价格：</b><span>￥20</span>
-										</p>
-										<p class="p col-md-6 col-xs-6">
-											<b>销量：</b><span>￥20</span>
-										</p>
-									</div>
-									<div class="but">
-										<button class="col-xs-12">查看详情</button>
+										<button class="col-xs-12" :value="objs.id">查看详情</button>
 										<button class="col-xs-12">加入购物车</button>
 									</div>
 								</div>
@@ -214,5 +176,36 @@
 			</div>
 		</div>
 	</div>
+	<script>
+		var vue = new Vue({
+			el : ".main",
+			data : {
+				goods : [],
+				customer : []
+			},
+			methods : {
+				imgUlr : function(url) {
+					return "../assets/img" + url;
+				}
+			}
+		});
+		var lid = "";
+		var season = "";
+		var sid = getStoreId() != "" ? getStoreId() : undefined;
+		
+		$(function() {
+			vue.goods = queryLikeGoodsValue(lid, season);
+			vue.customer = queryCustomer(sid);
+			$(".store").change(function() {
+				lid = $(this).val();
+				vue.goods = queryLikeGoodsValue(lid, season);
+				console.log(vue.goods);
+			});
+			$(".season").change(function() {
+				season = $(this).val();
+				vue.goods = queryLikeGoodsValue(lid, season);
+			});
+		});
+	</script>
 </body>
 </html>

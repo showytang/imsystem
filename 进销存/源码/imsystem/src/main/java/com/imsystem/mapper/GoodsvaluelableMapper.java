@@ -27,4 +27,8 @@ public interface GoodsvaluelableMapper {
     int updateByPrimaryKeySelective(Goodsvaluelable record);
 
     int updateByPrimaryKey(Goodsvaluelable record);
+    
+    List<Goodsvaluelable> querySalesGoodsValueByLable(@Param("cid") String cid,@Param("season") String season);
+    
+    List<Goodsvaluelable> queryByLid(@Param("lid") String lid,@Param("season") String season);
 }

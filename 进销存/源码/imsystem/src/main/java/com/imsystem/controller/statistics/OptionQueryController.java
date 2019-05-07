@@ -1,5 +1,6 @@
 package com.imsystem.controller.statistics;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.imsystem.domain.GoodsValueVo;
 import com.imsystem.domain.Goodsvalue;
+import com.imsystem.domain.Goodsvaluelable;
 import com.imsystem.domain.Sales;
 import com.imsystem.domain.Supplier;
 import com.imsystem.service.goods.GoodsService;
+import com.imsystem.service.statistics.GoodsValueLableService;
 import com.imsystem.service.statistics.GoodsValueService;
 import com.imsystem.service.statistics.SalesService;
 import com.imsystem.service.statistics.Supplier_yService;
@@ -27,6 +30,8 @@ public class OptionQueryController {
 	SalesService salesService;
 	@Autowired
 	GoodsValueService gvs;
+	@Autowired
+	GoodsValueLableService gvals;
 	
 	
 	@RequestMapping("queryGoods")
@@ -49,6 +54,15 @@ public class OptionQueryController {
 				List<Goodsvalue> glist = gvs.queryByCode(s.getId());
 				s.setGlist(glist);
 			}
+		}
+		return list;
+	}
+	
+	@RequestMapping("queryLikeGoodsValue")
+	public List<Goodsvaluelable> queryLikeGoodsValue(String cid,String season){
+		List<Goodsvaluelable> list = gvals.querySalesGoodsValueByLable(cid, season);
+		for (Goodsvaluelable gvl : list) {
+			gvl.setList(gvals.queryByLid(gvl.getId(), season));
 		}
 		return list;
 	}
