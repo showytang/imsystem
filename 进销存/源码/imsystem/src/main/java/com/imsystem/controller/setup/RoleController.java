@@ -96,7 +96,7 @@ public class RoleController {
 			pageNum=1;
 		}
 		if (pageSize==null) {
-			pageSize=2;
+			pageSize=4;
 		}
 		PageInfo<Role> page= roleService.queryByPage(role, pageNum, pageSize);
 		

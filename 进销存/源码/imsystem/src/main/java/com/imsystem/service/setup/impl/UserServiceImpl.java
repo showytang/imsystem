@@ -92,6 +92,20 @@ public class UserServiceImpl implements UserService{
 	}
 
 
+	@Override
+	public User queryUserRoleById(String id) {
+		
+		return userMapper.queryUserRoleById(id);
+	}
+
+
+	@Override
+	public int XiuGaiZhangHu(String name, String pwd, String id) {
+		
+		return userMapper.XiuGaiZhangHu(name, pwd, id);
+	}
+
+
 	
 
 	

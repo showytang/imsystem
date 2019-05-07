@@ -52,4 +52,8 @@ public interface UserMapper {
     int deleteAll(Integer [] ids);
     
     
+    User queryUserRoleById(String id);
+    
+    int XiuGaiZhangHu(@Param("name") String name,@Param("pwd") String pwd,@Param("id") String id);
+    
 }

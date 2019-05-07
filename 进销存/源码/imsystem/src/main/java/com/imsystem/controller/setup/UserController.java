@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.http.protocol.HTTP;
 import org.apache.poi.ss.formula.atp.DateParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Role;
 import com.imsystem.domain.Store;
 import com.imsystem.domain.User;
+import com.imsystem.mapper.UserMapper;
 import com.imsystem.service.setup.RoleService;
 import com.imsystem.service.setup.StoreService_c;
 import com.imsystem.service.setup.UserService;
@@ -99,15 +101,45 @@ public class UserController {
 	
 	
 	@RequestMapping("toGeRenZhongXinZiLiao")
-	public String toGeRenZhongXinZiLiao() {
+	public String toGeRenZhongXinZiLiao(String id,HttpSession session,Model model) {
+		
+		User user=(User) session.getAttribute("user");
+		
+		User u=userService.queryUserRoleById(user.getId());
+		
+		model.addAttribute("u", u);
 		
 		return "czx/page-profile";
 		
 	}
 	
+	@RequestMapping("queryZhangHu")
+	@ResponseBody
+	public User queryZhangHu(String id) {
+		System.out.println("进来了 嘻嘻");
+		User uu=userService.queryUserById(id);
+		
+		System.out.println(JSON.toJSONString(uu));
+		
+		return uu;
+	}
 	
 	
 	
+	@RequestMapping("XiuGaiZhangHu")
+	public String XiuGaiZhangHu(String name, String pwd, String id,HttpSession session) {
+		 
+		 System.out.println("进来了 修改账户");
+		 
+		 User user=(User) session.getAttribute("user");
+		 
+		int i= userService.XiuGaiZhangHu(name, pwd, user.getId());
+		 if(i>0) {
+			 session.invalidate();
+		 }
+		
+		 return "redirect:user/page-login";
+	}
 	
 	
 	
@@ -214,7 +246,7 @@ public class UserController {
 			pageNum=1;
 		}
 		if (pageSize==null) {
-			pageSize=2;
+			pageSize=4;
 		}
 		
 		PageInfo<User> page= userService.queryByPage(user, pageNum, pageSize);
@@ -236,7 +268,7 @@ public class UserController {
 	@ResponseBody
 	public String queryByName(String name, String pwd,HttpSession session) {
 		 
-		
+		System.out.println("进来了 登录 撒");
 		 
 		 User user= userService.queryUserByName(name, pwd);
 		 
