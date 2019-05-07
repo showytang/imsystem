@@ -94,10 +94,6 @@ public class ModuleContrller {
 		module.setUid(user.getId());
 		
 		
-		
-		
-		
-		
 		String parentid = "";
 		
 		System.out.println("id组："+module.getParentid());
