@@ -63,6 +63,12 @@ public class StandardvalueServiceImpl implements StandardvalueService{
 		return mapper.queryByname(name, sid);
 	}
 
+	@Override
+	public List<Standard> querytid(String tid) {
+		
+		return mapper.querytid(tid);
+	}
+
 	
 
 }

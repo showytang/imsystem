@@ -23,4 +23,6 @@ public interface SpTypeService {
 	public List<Goodstype> querybypid();
 	
 	public Goodstype querybyname(String name,String pid);
+	
+	public List<Goodstype> querynoid();
 }

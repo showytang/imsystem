@@ -17,11 +17,11 @@
   </resultMap>
   
   <select id="queryStandardvalue" resultMap="BaseResultMap">
-  	SELECT va.*,s.`name` AS sname,u.`name` AS uname FROM `standardvalue` AS va INNER JOIN standard AS s ON s.id=va.sid INNER JOIN USER AS u ON u.`id`=va.`uid`
+SELECT va.*,s.`name` AS sname,u.`name` AS uname,g.name AS gname FROM `standardvalue` AS va INNER JOIN standard AS s ON s.id=va.sid INNER JOIN USER AS u ON u.`id`=va.`uid` INNER JOIN goodstype AS g ON g.id=s.tid
   	<where>
   		va.state=0
   		<if test="tiaojian!=null">
-  				and (va.NAME LIKE concat('%',#{tiaojian},'%') OR s.NAME LIKE concat('%',#{tiaojian},'%') OR  u.name LIKE concat('%',#{tiaojian},'%'))
+  				and (va.NAME LIKE concat('%',#{tiaojian},'%') OR s.NAME LIKE concat('%',#{tiaojian},'%') OR  u.name LIKE concat('%',#{tiaojian},'%') OR  g.name LIKE concat('%',#{tiaojian},'%'))
   		</if>
   	</where>
   </select>
@@ -39,7 +39,9 @@
 	WHERE id = #{id};
   </select>
   
-  
+  <select id="querytid" resultMap="BaseResultMap">
+  	SELECT * FROM standard WHERE tid=#{tid}
+  </select>
   
  <update id="toupdate">
  	UPDATE standardvalue SET NAME=#{name},sid=#{sid},updatetime=NOW(),uid=#{uid} WHERE id=#{id} 	

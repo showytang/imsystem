@@ -81,6 +81,14 @@ public class SpTypeServiceImpl implements SpTypeService{
 		
 		return ma.querybyname(name, pid);
 	}
+
+
+
+	@Override
+	public List<Goodstype> querynoid() {
+		
+		return ma.querynoid();
+	}
 	
 
 	

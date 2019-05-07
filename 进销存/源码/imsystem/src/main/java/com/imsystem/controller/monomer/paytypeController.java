@@ -1,5 +1,6 @@
 package com.imsystem.controller.monomer;
 
+import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,8 +55,7 @@ public class paytypeController {
 	public int toupdate(Paytype paytype) {
 		Paytype type=service.queryPaytypeByname(paytype.getName());
 		if (type==null) {
-			String id=UUID.randomUUID().toString();
-			paytype.setId(id);
+			
 			int r=service.toupdate(paytype);
 			return r;
 		}else {
@@ -71,7 +71,7 @@ public class paytypeController {
 	public int insert(Paytype paytype) {
 		Paytype type=service.queryPaytypeByname(paytype.getName());
 		if (type==null) {
-			String id=UUID.randomUUID().toString();
+			String id=new Date().getTime() +"";
 			paytype.setId(id);
 			int r=service.insertPaytype(paytype);
 			return r;
