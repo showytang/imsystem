@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Customer;
+import com.imsystem.domain.GoodsValueVo;
 import com.imsystem.domain.Goodsvalue;
 import com.imsystem.domain.Sales;
 import com.imsystem.domain.Salesback;
@@ -22,6 +23,7 @@ import com.imsystem.domain.Stockrecord;
 import com.imsystem.domain.Supplier;
 import com.imsystem.service.customer.CustomerService;
 import com.imsystem.service.customer.SupplierService;
+import com.imsystem.service.goods.GoodsService;
 import com.imsystem.service.order.OrderQueryService;
 import com.imsystem.service.setup.StoreService_c;
 
@@ -40,6 +42,9 @@ public class OrderQueryController {
 
 	@Autowired
 	StoreService_c store;
+	
+	@Autowired
+	GoodsService goodsService;
 
 	@RequestMapping("/toQuery")
 	public String toQuery() {
@@ -183,5 +188,30 @@ public class OrderQueryController {
 
 		return list;
 	}
+	
+	@RequestMapping("/orderAdd")
+	public String orderAdd(Model model){
+		
+		model.addAttribute("list", goodsService.queryAllGoods("",null,"0"));
+		
+		model.addAttribute("clientList", orderquery.queryCustomerByName("", "1"));
+		
+		return "wjh/addOrder";
+	}
+	
+	@RequestMapping("/orderAddAjax")
+	@ResponseBody
+	public List<GoodsValueVo> orderAddAjax(String name){
+		
+		return goodsService.queryAllGoods(name,null,"0");
+	}
 
+	
+	@RequestMapping("/clientAjax")
+	@ResponseBody
+	public List<Customer> clientAjax(String name,String storeid){
+		
+		return orderquery.queryCustomerByName(name, storeid);
+	}
+	
 }

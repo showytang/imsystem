@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.imsystem.domain.Customer;
 import com.imsystem.domain.Sales;
 import com.imsystem.domain.Salesback;
 import com.imsystem.domain.Salesorder;
@@ -150,6 +151,12 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	public Double shappingprice(String id, String cid) {
 		// TODO Auto-generated method stub
 		return backMap.shappingprice(id, cid);
+	}
+
+	@Override
+	public List<Customer> queryCustomerByName(String name, String stoid) {
+		// TODO Auto-generated method stub
+		return stockMapper.queryCustomerByName(name, stoid);
 	}
 
 }
