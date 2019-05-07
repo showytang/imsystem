@@ -124,20 +124,14 @@
 											<div class="layui-colla-item">
 												<h2 id="title" class="layui-colla-title">单击选择</h2>
 												<div class="layui-colla-content">
-													<div class="layui-btn-container">
-														<span class="layui-btn layui-btn-normal" symbol='g:' oif='false' @click='conditionPick($event)'>商品</span>
-														<span class="layui-btn layui-btn-normal" symbol='o:'  oif='false' @click='conditionPick($event)'>订单</span>
-														<span class="layui-btn  layui-btn-normal" symbol='c'  oif='false' @click='conditionPick($event)'>数量</span>
-														<span class="layui-btn  layui-btn-normal" symbol='s'  oif='false' @click='conditionPick($event)'>总额</span>
+													<div  class="layui-btn-container">
+														<span v-for="(item,index) in promotionList" v-if="item.column1 == 1&&(item.hdid == 0 || item.hdid == 2)" class="layui-btn layui-btn-normal" :symbol='item.symbol' :oif='item.defaulttype' @click='conditionPick($event)' v-text="item.name"></span>
 													</div>
 													<div class="layui-btn-container">
-														<span class="layui-btn  layui-btn-normal" symbol='>' oif='true' @click='conditionPick($event)'>大于</span>
-														<span class="layui-btn  layui-btn-normal" symbol='<'  oif='true' @click='conditionPick($event)'>小于</span>
-														<span class="layui-btn  layui-btn-normal" symbol='=='  oif='true' @click='conditionPick($event)'>等于</span>
+													<span v-for="(item,index) in promotionList" v-if="item.column1 == 2&&(item.hdid == 0 || item.hdid == 2)" class="layui-btn layui-btn-normal" :symbol='item.symbol' :oif='item.defaulttype' @click='conditionPick($event)' v-text="item.name"></span>
 													</div>
 													<div class="layui-btn-container">
-														<span class="layui-btn  layui-btn-normal" symbol='&&'  oif='false' @click='conditionPick($event)'>并且</span>
-														<span class="layui-btn  layui-btn-normal" symbol='||'  oif='false' @click='conditionPick($event)'>或者</span>
+													<span v-for="(item,index) in promotionList" v-if="item.column1 == 3&&(item.hdid == 0 || item.hdid == 2)" class="layui-btn layui-btn-normal" :symbol='item.symbol' :oif='item.defaulttype' @click='conditionPick($event)' v-text="item.name"></span>
 													</div>
 												</div>
 											</div>
@@ -169,14 +163,10 @@
 												<h2 id="title" class="layui-colla-title">单击选择</h2>
 												<div class="layui-colla-content">
 													<div class="layui-btn-container">
-														<span class="layui-btn  layui-btn-normal" @click="formulaPick($event)" oif="false" symbol="c">总额</span>
-														<span class="layui-btn  layui-btn-normal" @click="formulaPick($event)" oif="true" symbol="-">优惠</span>
-														<span class="layui-btn  layui-btn-normal" @click="formulaPick($event)" oif="true" symbol="s">赠送</span>
-														<span class="layui-btn  layui-btn-normal" @click="formulaPick($event)" oif="true" symbol="%">折扣</span>
+													<span v-for="(item,index) in promotionList" v-if="item.column1 == 1&&(item.hdid == 1 || item.hdid == 2)" class="layui-btn layui-btn-normal" :symbol='item.symbol' :oif='item.defaulttype' @click='formulaPick($event)' v-text="item.name"></span>
 													</div>
 													<div class="layui-btn-container">
-														<span class="layui-btn  layui-btn-normal" symbol='&&'  oif='false' @click='formulaPick($event)'>并且</span>
-														<span class="layui-btn  layui-btn-normal" symbol='||'  oif='false' @click='formulaPick($event)'>或者</span>
+													<span v-for="(item,index) in promotionList" v-if="item.column1 == 3&&(item.hdid == 1 || item.hdid == 2)" class="layui-btn layui-btn-normal" :symbol='item.symbol' :oif='item.defaulttype' @click='formulaPick($event)' v-text="item.name"></span>
 													</div>
 												</div>
 											</div>
@@ -534,14 +524,21 @@
 					},
 					checkAddGoods: function() {
 						let count = 0;
-						$(".goodsDiv").find("[type=checkbox]").each(function() {
+						$(".goodsDiv").find("[type=checkbox]").each(function(index,obj) {
 
-							if (this.checked) {
-								var $div = $(this).parent().parent();
+							if (obj.checked) {
+								
+								var $div = $(obj).parent().parent();
+								vue.pickGoodsList.push(vue.goodsList[index]);
 								$div.addClass("animated fadeOutLeft");
-								setTimeout(function() {
-									$div.remove();
-								}, 500);
+								
+								 setTimeout(function() {
+									
+									$div.removeClass("animated fadeOutLeft");
+									console.log(index)
+									vue.goodsList.splice(index,1);
+								}, 500); 
+								
 								count++;
 							}
 
@@ -636,7 +633,7 @@
 
 			});
 			
-			/* vue.promotionList = [[@{promaplist}]]; */
+			 vue.promotionList = [[${promaplist}]]; 
 			
 			
 			/*

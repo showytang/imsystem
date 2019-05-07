@@ -22,7 +22,7 @@ public class PromotionController {
 	@RequestMapping("/toPromotion")
 	public String toPromotion(Model model) {
 		
-		//model.addAttribute("promaplist",promapSer.queryPromotionMap());
+		model.addAttribute("promaplist",promapSer.queryPromotionMap());
 		
 		return "dws/promotion";
 	}

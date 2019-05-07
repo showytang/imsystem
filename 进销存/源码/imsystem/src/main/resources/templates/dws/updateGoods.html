@@ -849,7 +849,7 @@ td input {
 				
 			for(var j = 0; j < typeArr[i].goodstypes.length; j++){
 				
-				var option = $('<span onclick="queryGoodsTypeByPid(this,'+typeArr[i].goodstypes[j].id+',false)" class="visible-lg-inline-block visible-md-inline-block text-center option-span" typeid="'+typeArr[i].goodstypes[j].id+'">'+typeArr[i].goodstypes[j].name+'</span>');
+				var option = $('<span onclick="queryGoodsTypeByPid(this,'+"'"+typeArr[i].goodstypes[j].id+"'"+',false)" class="visible-lg-inline-block visible-md-inline-block text-center option-span" typeid="'+typeArr[i].goodstypes[j].id+'">'+typeArr[i].goodstypes[j].name+'</span>');
 				divoption.append(option);
 				
 				if(typeArr[i].goodstypes[j].id == typeArr[i].goodstype.id){
@@ -1542,7 +1542,7 @@ function jhChange(obj){
 					divoption.append(activc);
 					$.each(data,function(){
 						
-						var option = $('<span onclick="queryGoodsTypeByPid(this,'+this.id+',false)" class="visible-lg-inline-block visible-md-inline-block text-center option-span" typeid="'+this.id+'">'+this.name+'</span>');
+						var option = $('<span onclick="queryGoodsTypeByPid(this,'+"'"+this.id+"'"+',false)" class="visible-lg-inline-block visible-md-inline-block text-center option-span" typeid="'+this.id+'">'+this.name+'</span>');
 						divoption.append(option);
 						
 					});
