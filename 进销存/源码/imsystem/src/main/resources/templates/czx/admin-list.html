@@ -35,9 +35,9 @@
 			</form>
 		</div>
 		<xblock>
-		<button class="layui-btn layui-btn-danger" onclick="delAll()">
+		<!-- <button class="layui-btn layui-btn-danger" onclick="delAll()">
 			<i class="layui-icon"></i>批量删除
-		</button>
+		</button> -->
 		<button class="layui-btn layui-btn-normal"
 			onclick="x_admin_show('添加用户','/role/queryRoleAll')">
 			<i class="layui-icon "></i>添加
@@ -47,12 +47,12 @@
 		<table class="layui-table x-admin">
 			<thead>
 				<tr>
-					<th>
+					<!-- <th>
 						<div class="layui-unselect header layui-form-checkbox"
 							lay-skin="primary">
 							<i class="layui-icon">&#xe605;</i>
 						</div>
-					</th>
+					</th> -->
 					<th>账号</th>
 					<th>密码</th>
 					<th>角色</th>
@@ -62,14 +62,14 @@
 			</thead>
 			<tbody>
 				<tr th:each="item : ${page.list}" th:id="${item.id}">
-					<td>
+					<!-- <td>
 						<div th:data-id="${item.id}" class="layui-unselect layui-form-checkbox" lay-skin="primary">
 							<i class="layui-icon">&#xe605;</i>
 						</div>
-					</td>
+					</td> -->
 					<td th:text="${item.name}">admin</td>
 					<td th:text="${item.pwd}">18925139194</td>
-					<td th:text="${item.role.name}">超级管理员</td>
+					<td class="ycrid" th:id="${item.role.id}"   th:text="${item.role.name}">超级管理员</td>
 					<td th:text="${#dates.format(item.time,'yyyy-MM-dd hh:mm:ss')}">2017-01-01
 						11:11:42</td>
 					<td class="td-status"><span
@@ -79,9 +79,8 @@
 						th:title="${item.state==0 ?'已启用':'已停用'}"> <i class="layui-icon" th:text="${item.state==0}?'&#xe601':'&#xe62f'" >&#xe601;</i>
 					</a> <a title="编辑" th:onclick="x_admin_show('编辑','/user/queryUserById?id='+[[${item.id}]])"
 						href="javascript:;"> <i class="layui-icon">&#xe642;</i>
-					</a> <a title="删除" th:onclick="member_del(this,[[${item.id}]])"
-						href="javascript:;"> <i class="layui-icon">&#xe640;</i>
-					</a></td>
+					</a> <a title="删除" th:onclick="member_del(this,[[${item.id}]])" href="javascript:;"><i class="layui-icon">&#xe640;</i></a>
+					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -163,27 +162,60 @@
               
           });
       }
+       
+       
+      function member_dela(obj,id){
+    	  layer.confirm('确认要停用吗？',function(index){
+              
+    		  $(obj).parents("tr").remove();
+	              layer.msg('已删除!',{icon:1,time:1000});
+        	            
+              
+          });
+      }
+       
+       
 
       /*用户-删除*/
       function member_del(obj,id){
-          layer.confirm('确认要删除吗？',function(index){
+    	  layer.confirm('确认要删除吗？',function(index){
+    		  
+    	var userid=[[${session.user.id}]];
+       	   
+       	   var rid=$(obj).parents("tr").find(".ycrid").attr("id")
+       	   
+       	   var id=$(obj).parent().parent().attr("id");
+       	  
+       	  var rrid=[[${session.user.rid}]];
+              var url=[[@{/user/deleteUserById}]]; 
+              if(userid==id){ 
+  	              layer.msg('你不能删除自己!',{icon:1,time:1000});
+              }else if(parseInt(rid) > 1){
+           	   $.ajax({
+ 	        		 url:url,
+ 	        		 type:"post",
+ 	        		 data:{
+ 	        			 id:id,
+ 	        			 state:2
+ 	        		 },
+ 	        		 success:function(result){
+ 	        			 console.log(result)
+ 	        			 if(result){
+ 	        				  $(obj).parents("tr").remove();
+ 	        				 layer.msg('已删除!',{icon:1,time:1000});
+ 	        			 }
+ 	        		 }
+ 	        	  });
+             }else if(parseInt(rid)==parseInt(rrid)){
+            	 layer.msg('你不能删除其他店长哦!',{icon:1,time:1000});
+             }else{
+            	 layer.msg('可不能随便点哦!',{icon:1,time:1000});
+             } 
               
-              var url=[[@{/user/deleteUserById}]];
+             
+        	   
+        	            
               
-        	  $.ajax({
-        		 url:url,
-        		 type:"post",
-        		 data:{
-        			 id:id,
-        			 state:2
-        		 },
-        		 success:function(result){
-        			 if(result){
-        				  $(obj).parents("tr").remove();
-        	              layer.msg('已删除!',{icon:1,time:1000});
-        			 }
-        		 }
-        	  }); 
           });
       }
 

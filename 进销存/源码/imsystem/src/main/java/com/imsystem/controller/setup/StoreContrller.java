@@ -127,7 +127,7 @@ public class StoreContrller {
 			pageNum=1;
 		}
 		if (pageSize==null) {
-			pageSize=2;
+			pageSize=4;
 		}
 		
 		

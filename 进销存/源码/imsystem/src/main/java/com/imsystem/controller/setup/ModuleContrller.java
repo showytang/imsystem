@@ -50,7 +50,7 @@ public class ModuleContrller {
 			pageNum=1;
 		}
 		if (pageSize==null) {
-			pageSize=4;
+			pageSize=5;
 		}
 		
 		PageInfo<Module> page= moduleService.queryByPage(module, pageNum, pageSize);
@@ -183,7 +183,6 @@ public class ModuleContrller {
 		
 		
 		
-		System.out.println("图图进来了");
 		
 		
 		
@@ -226,6 +225,10 @@ public class ModuleContrller {
 	@RequestMapping("queryMuLu")
 	public String queryMuLu(String rid,Model model,HttpSession session) {
 			
+		
+		System.out.println("进来了 登啊");
+		
+		
 		User user=(User) session.getAttribute("user");
 		
 		List<Module> list=moduleService.queryMuLu(user.getId(),0+"");
