@@ -52,6 +52,10 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
 		}
 		return false;*/
 		return true;
+
+		
+
+		/*return true;*/
 		
 	}
 

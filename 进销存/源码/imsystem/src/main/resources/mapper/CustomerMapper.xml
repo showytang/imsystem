@@ -39,7 +39,9 @@
   </resultMap>
   
   <select id="queryCustomerByPage" resultMap="BaseResultMap">
-  	SELECT c.* FROM customer c,`user` u
+  	SELECT * FROM customer c
+
+	quotedprice q
   	<where>
   		u.id=c.uid AND c.state=0 AND CONCAT(c.name,u.name) LIKE CONCAT('%',#{content},'%')
   		<choose>
@@ -78,6 +80,19 @@
   				AND storeid=#{sid}
   		</when>
   	</choose>
+  </select>
+  
+  
+  <select id="queryByName" resultMap="BaseResultMap">
+  	SELECT * FROM customer 
+  	<where>
+  		state=0 
+  		<choose>
+	  		<when test="name!=null">
+	  				AND name LIKE CONCAT('%',#{name},'%')
+	  		</when>
+  	</choose>
+  	</where>
   </select>
   
   

@@ -73,9 +73,9 @@
 		border-color: rgb(2,143,208);
 	}
 	td img{
-		width: 16%;
-		height: 45%;
-		border-radius: 50%;
+		width: 47px;
+    	height: 45px;
+		border-radius: 22px;
 	}
 	td input{
 		width: 30%;
@@ -84,10 +84,13 @@
 	a:hover{
 		cursor: pointer;
 	}
+	
+	
 </style>
 </head>
 	<body>
-		<div class="row"style="padding: 28px 20px;">
+		<div class="row elDocument"style="padding: 28px 20px;">
+			
                     <!-- column -->
                     <div class="col-lg-12">
                         <div class="card">
@@ -95,13 +98,19 @@
                             	 <h5 class="card-subtitle " style="float: right;display: flex;flex-direction: row;">
                             	 	
                             	 	<div class="input-group" style="margin-right: 10%;">
-										<input type="text" value="" class="form-control" placeholder="根据客户名称查询">
-										<span class="input-group-btn"><button type="button" class="btn btn-primary">Go</button></span>
+										<input type="text" id="cname" value="" class="form-control" placeholder="根据客户名称查询">
+										<span class="input-group-btn"><button type="button" id="nameSelect" class="btn btn-primary">Go</button></span>
 									</div>
-                                	<input type="button" class="btn btn-primary" value="确认客户"/>
+                                	<input type="button" id="chooseCustomers" class="btn btn-primary" value="确认客户"/>
                                 </h5>
                                 <h4 class="card-title">选择客户</h4>
+                               <form id="chooseCustomerForm" action="" method="post">
                                
+								<input name="cc" id="cc" type="hidden" th:value="${cc}">
+								<input name="cv" id="cv" type="hidden" th:value="${cv}">
+								<input name="gc" id="gc" type="hidden" th:value="${gc}">
+								<input name="gv" id="gv" type="hidden" th:value="${gv}">
+			
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
@@ -112,53 +121,40 @@
                                                 <th>报价</th>
                                             </tr>
                                         </thead>
+                                        
                                         <tbody>
-                                            <tr>
+                                            <tr v-for="(o,i) in quoteCustomerList">
+                                            
                                             	<td>
                                             		<label>
-			                        					<input type="checkbox" class="checkbox_css check" checked="checked"/>
+			                        					<input v-if="o.qpobj!=null" onclick="check(this)" type="checkbox" class="checkbox_css check" checked="checked"/>
+			                        					<input v-if="o.qpobj==null" onclick="check(this)" type="checkbox" class="checkbox_css check"/>
 			                    					</label>
+			                    					<input type="hidden" :value="o.cobj.id"/>
                                             	</td>
-                                                <td><img th:src="@{/assets/img/apple-icon.png}"/></td>
-                                                <td>鸭舌帽</td>
-                                                <td><input type="text" name="" class="price" value="25" /></td>
+                                                <td>
+													<img v-if="o.cobj.img==null" th:src="@{/assets/img/tmore.png}">
+                                   					<img v-else :src="'data:image/png;base64,'+o.cobj.img">
+												</td>
+                                                <td>{{o.cobj.name}}</td>
+                                                <td>
+                                                	<input v-if="o.qpobj!=null" type="text" name="" class="price" :value="o.qpobj.price" onblur="changePrice(this)"/>
+                                                	<input v-if="o.qpobj==null" type="text" name="" class="price" disabled="disabled" value="" onblur="changePrice(this)"/>
+                                                </td>
+                                           		<input v-if="o.qpobj!=null" type="hidden" name=""  :value="o.qpobj.id"/>
+                                           		<input v-if="o.qpobj==null" type="hidden" name=""  :value="0"/>
+                                           		<input type="hidden" name=""  :value="o.cobj.name"/>
                                             </tr>
-                                            <tr>
-                                            	<td>
-                                            		<label>
-			                        					<input type="checkbox" class="checkbox_css check"/>
-			                    					</label>
-                                            	</td>
-                                                <td><img th:src="@{/assets/img/apple-icon.png}"/></td>
-                                                <td>鸭舌帽</td>
-                                                <td><input type="text" name="" class="price" value="" /></td>
-                                            </tr>
-                                            <tr>
-                                            	<td>
-                                            		<label>
-			                        					<input type="checkbox" class="checkbox_css check"/>
-			                    					</label>
-                                            	</td>
-                                                <td><img th:src="@{/assets/img/apple-icon.png}"/></td>
-                                                <td>鸭舌帽</td>
-                                                <td><input type="text" name="" class="price" value="" /></td>
-                                            </tr>
-                                            <tr>
-                                            	<td>
-                                            		<label>
-			                        					<input type="checkbox" class="checkbox_css check" checked="checked"/>
-			                    					</label>
-                                            	</td>
-                                                <td><img th:src="@{/assets/img/apple-icon.png}"/></td>
-                                                <td>鸭舌帽</td>
-                                                <td><input type="text" name="" class="price" value="22" /></td>
-                                            </tr>
+                                            
+                                            
                                         </tbody>
-                                    </table>
+                                    
                                 </div>
+                               </form>
                             </div>
                         </div>
                     </div>
+                  
                 </div>
 	</body>
 	<script th:src="@{/assets/js/jquery.min.js}"></script>
@@ -176,44 +172,96 @@
     <script th:src="@{/assets/js/sticky-kit.min.js}"></script>
     <!--Custom JavaScript -->
     <script th:src="@{/assets/js/custom.min.js}"></script>
+    <script th:src="@{/assets/js/vue.js}"></script>
 	<script>
+	
+	var vue=new Vue({
+		el:".elDocument",
+		data:{
+			quoteCustomerList:""
+		}
+	});
+	
+	/* 客户查询 */
+	function queryCustomerByName(){
+		var name=$("#cname").val();
+		var gid=$("#gv").val();
+		$.ajax({
+			url:"querycustomerquotelist",
+			data:{
+				"name":name,
+				"gid":gid
+			},
+			type:"post",
+			dataType:"json",
+			success:function(result){
+				vue.quoteCustomerList = result;
+			}
+		});
+	}
+	
+	/* 复选框点击 */
+	function check(th){
+			if($(th).is(":checked")){
+				var val=$(th).parent().parent().next().next().next().find("input").val();
+				if(val==""){
+					$(th).parent().parent().next().next().next().find("input").val("0");
+				}
+				$(th).parent().parent().next().next().next().find("input").removeAttr("disabled");
+			}else{
+				$(th).parent().parent().next().next().next().find("input").val("");
+				$(th).parent().parent().next().next().next().find("input").attr("disabled","disabled");
+			}
+	}
+	
+	/* 文本框价格输入 */
+	function changePrice(th){
+		var vul=$(th).val();
+		if(vul==""){
+			$(th).attr("disabled","disabled");
+			$(th).parent().prev().prev().prev().find(".check").removeAttr("checked");
+		}
+	}
+	
+	/* 复选框遍历 */
+	function eachCheckbox(){
+		var num=0;
+		$(".check").each(function(){
+			if(this.checked){
+				var i=num++;
+				$(this).parent().next().attr("name","clist["+i+"].id");
+				$(this).parent().parent().next().next().next().find("input").attr("name","qplist["+i+"].price");
+				$(this).parent().parent().next().next().next().next().attr("name","qplist["+i+"].id");
+				$(this).parent().parent().next().next().next().next().next().attr("name","clist["+i+"].name");
+			}
+		});
+	}
 	
 		$(function() {
 			
-			$(".check").each(function(){
-				if(this.checked==false){
-					$(this).parent().parent().next().next().next().find("input").attr("disabled","disabled");
-				}
-			});
-			$(".price").each(function(){
-				var vul=$(this).val();
-				if(vul==""){
-					$(this).attr("disabled","disabled");
-					$(this).parent().prev().prev().prev().find(".check").removeAttr("checked");
-				}
+			queryCustomerByName();
+			
+			$("#nameSelect").click(function(){
+				queryCustomerByName();
 			});
 			
-			$(".check").click(function(){
-				$(".check").each(function(){
-					if(this.checked){
-						var val=$(this).parent().parent().next().next().next().find("input").val();
-						if(val==""){
-							$(this).parent().parent().next().next().next().find("input").val("0");
-						}
-						$(this).parent().parent().next().next().next().find("input").removeAttr("disabled");
-					}else{
-						$(this).parent().parent().next().next().next().find("input").val("");
-						$(this).parent().parent().next().next().next().find("input").attr("disabled","disabled");
-					}
-				});
+			
+			$("#chooseCustomers").click(function(){
+				
+				eachCheckbox();
+				$("#chooseCustomerForm").attr("action","choosecustomers");
+				$("#chooseCustomerForm").submit(); 
 			});
-			$(".price").blur(function(){
-				var vul=$(this).val();
-				if(vul==""){
-					$(this).attr("disabled","disabled");
-					$(this).parent().prev().prev().prev().find(".check").removeAttr("checked");
-				}
-			});
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 	
 		});
 	</script>

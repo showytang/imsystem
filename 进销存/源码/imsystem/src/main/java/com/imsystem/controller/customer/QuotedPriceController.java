@@ -1,11 +1,13 @@
 package com.imsystem.controller.customer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.Page;
@@ -13,6 +15,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Customer;
 import com.imsystem.domain.QuoteVO;
+import com.imsystem.domain.Quotedprice;
 import com.imsystem.service.customer.CustomerService;
 import com.imsystem.service.customer.QuotedPriceService;
 
@@ -88,13 +91,57 @@ public class QuotedPriceController {
 		return "lxy/AddQuote";
 	}
 	
+	@RequestMapping("tochosegoods")
+	public String toChoseGoods(Model model,String cc,String cv,String gc,String gv) {
+		model.addAttribute("cc", cc);
+		model.addAttribute("cv", cv);
+		model.addAttribute("gc", gc);
+		model.addAttribute("gv", gv);
+		return "lxy/ChooseGoods";
+	}
+	
 	@RequestMapping("tochosecustomers")
 	public String toChoseCustomers(Model model,String cc,String cv,String gc,String gv) {
 		model.addAttribute("cc", cc);
 		model.addAttribute("cv", cv);
 		model.addAttribute("gc", gc);
 		model.addAttribute("gv", gv);
-		return "lxy/ChooseGoods";
+		return "lxy/ChooseCustomers";
+	}
+	
+	
+	@RequestMapping("querycustomerquotelist")
+	@ResponseBody
+	public List<QuoteVO> queryCustomerQuoteList(String name,String gid){
+		return qService.queryCustomerQuoteList(name, gid);
+	}
+	
+	@RequestMapping("choosecustomers")
+	public String chooseCustomers(Model model,String cc,String cv,String gc,String gv,QuoteVO qvo) {
+		List<QuoteVO> qchooselist=new ArrayList<QuoteVO>();
+		if(gv!="" || gv!=null) {
+			
+			if(qvo.getQplist()!=null) {
+				int num=0;
+				for(Quotedprice qobj:qvo.getQplist()) {
+					if(qobj.getId().equals("0")) {
+						qobj.setId(null);
+						QuoteVO qcObj=new QuoteVO();
+						qcObj.setCobj(qvo.getClist().get(num));
+						qcObj.setQpobj(qvo.getQplist().get(num));
+						qchooselist.add(qcObj);
+					}
+					num++;
+				}
+			}
+			
+		}
+		model.addAttribute("cc", cc);
+		model.addAttribute("cv", cv);
+		model.addAttribute("gc", gc);
+		model.addAttribute("gid", gv);
+		model.addAttribute("qvolist", qchooselist);
+		return "lxy/AddQuote";
 	}
 	
 	
@@ -108,6 +155,11 @@ public class QuotedPriceController {
 	
 	
 	
+	@RequestMapping("addquote")
+	public String addquote(QuoteVO qvo,String uid) {
+		int row=qService.addQuote(qvo, uid);
+		return "redirect:toquotedprice";
+	}
 	
 	
 	
