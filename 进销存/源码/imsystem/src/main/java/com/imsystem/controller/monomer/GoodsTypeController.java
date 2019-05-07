@@ -1,5 +1,6 @@
 package com.imsystem.controller.monomer;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -56,7 +57,7 @@ public class GoodsTypeController {
 	public int insert(Goodstype good) {
 		Goodstype goodstype=goods.querybyname(good.getName(), good.getPid());
 		if (goodstype==null) {
-			String id=UUID.randomUUID().toString();
+			String id=new Date().getTime() +"";
 			good.setId(id);
 			int r=goods.insertgoodstype(good);
 			return r;

@@ -33,11 +33,11 @@
 			}
 		.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
 				border-top: 1px solid rgb(2, 143, 208);
-				color: black;
+				color: #686B6E;
 			}
 		.table>thead>tr>th{
 			border-bottom:2px solid rgb(2,143,208);
-			color: black;
+			color: #686B6E;
 			
 		}
 		
@@ -109,6 +109,7 @@
 									
 									<th>规格值名称</th>
 									<th>规格名称</th>
+									<th>商品类型</th>
 									<th>创建时间</th>
 									<th>最后修改时间</th>
 									<th>操作人编号</th>
@@ -121,6 +122,7 @@
 							 	
 								<td v-text="temp.name"></td>
 								<td v-text="temp.sname"></td>
+								<td v-text="temp.gname"></td>
 								<td v-text="formatDate(temp.time)"></td>
 								<td v-text="formatDate(temp.updatetime)"></td> 
 								<td v-text="temp.uname"></td>
@@ -171,11 +173,22 @@
 											    	<input type="text" class="form-control" id="gname">
 											    </div>
 										  	</div>
+										  	
+										  	<div class="form-group">
+										    	<label for="InName" class="col-sm-3 control-label">商品类型</label>
+											    <div class="col-sm-9">
+											      <select id="leixing">
+											      		<option>请选择</option>
+											      		<option  th:each="item:${list1}"  th:text="${item.name}" th:value="${item.id}"></option>
+											      </select>
+											    </div>
+										  	</div>
+										  	
 										  	<div class="form-group">
 										    	<label for="InName" class="col-sm-3 control-label">规格名称</label>
 											    <div class="col-sm-9">
-											      <select id="gsid">
-											      		<option  th:each="item:${list}"  th:text="${item.name}" th:value="${item.id}"></option>
+											      <select id="gsid" >
+											      		<option  v-for="(temp,index) in chaxun"  :value="temp.id">{{temp.name}}</option>
 											      </select>
 											    </div>
 										  	</div>
@@ -222,11 +235,22 @@
 											    	<input type="text" class="form-control" id="ggname">
 											    </div>
 										  	</div>
-										  	<div class="form-group">
-										    	<label for="inputPassword3" class="col-sm-3 control-label">规格名称</label>
+										  	
+										  <div class="form-group">
+										    	<label for="InName" class="col-sm-3 control-label">商品类型</label>
 											    <div class="col-sm-9">
-											      <select id="ggsid">
-											      		<option  th:each="item:${list}"  th:text="${item.name}" th:value="${item.id}"></option>
+											      <select id="leixing1">
+											      		
+											      		<option  th:each="item:${list1}"  th:text="${item.name}" th:value="${item.id}"></option>
+											      </select>
+											    </div>
+										  	</div> 
+										  	
+										  	<div class="form-group">
+										    	<label for="InName" class="col-sm-3 control-label">规格名称</label>
+											    <div class="col-sm-9">
+											      <select id="ggsid" >
+											      		<option  v-for="(temp,index) in chaxun"  :value="temp.id">{{temp.name}}</option>
 											      </select>
 											    </div>
 										  	</div>
@@ -279,7 +303,8 @@
 		el : ".main",
 		data : {
 			pageIf : {},
-			us : {}
+			us : {},
+			chaxun : {}
 			
 		},
 		methods : {
@@ -320,6 +345,7 @@
 	                            //赋值
 	                            $('#ggid').val(data.id);
 	                            $('#ggname').val(data.name);
+	                           
 	                            $('#ggsid').val(data.sid);
 	                            $('#ggtime').val(vue.formatDate(data.time));
 	                            
@@ -366,8 +392,8 @@
 	};
 	
 	 $(function(){
-		 
 		 vue.us = JSON.parse(window.localStorage.getItem("user"));
+		 
 		 $('#guid').attr("readonly","readonly");
 		 $("#tijiao").click(function(){
 				var name=$("#gname").val();
@@ -408,13 +434,48 @@
 				 type:"post",
 				 dataType:"json",
 				 success:function(result){
-					 if(result==0){
-							alert("你修改的规格值已存在");
-						}
+					
 					 location.href="/StandardValue/queryStandarvalue";
 				 }
 			 });
-		 })
+		 });
+		 
+		 $("#leixing").change(function(){
+			 var tid=$("#leixing").val();
+			 alert(tid);
+			 $.ajax({
+				 url:"/StandardValue/querytid",
+				 data:{
+					 tid:tid,
+				 },
+				 type:"post",
+				 dataType:"json",
+				 success:function(result){
+					 vue.chaxun = result;
+					 console.log(vue.chaxun);
+				 }
+			 });
+			 
+		 });
+		 
+		 $("#leixing1").change(function(){
+			 var tid=$("#leixing1").val();
+			 alert(tid);
+			 $.ajax({
+				 url:"/StandardValue/querytid",
+				 data:{
+					 tid:tid,
+				 },
+				 type:"post",
+				 dataType:"json",
+				 success:function(result){
+					 vue.chaxun = result;
+					 console.log(vue.chaxun);
+				 }
+			 });
+			 
+		 });
+		 
 		 
 		 
 	 });

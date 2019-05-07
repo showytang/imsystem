@@ -60,7 +60,7 @@ public class BitController {
 		Bit bit=ser.querybyname(name);
 		System.err.println(bit);
 		if (bit==null) {
-			String id=UUID.randomUUID().toString();
+			String id=new Date().getTime() +"";
 			Bit bi=new Bit();
 			bi.setId(id);
 			bi.setName(name);

@@ -46,4 +46,6 @@ public interface StandardvalueMapper {
     
     Standardvalue queryByname(String name,String sid);
     
+    List<Standard> querytid(String tid);
+    
 }

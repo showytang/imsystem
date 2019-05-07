@@ -1,5 +1,6 @@
 package com.imsystem.controller.monomer;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,7 +26,7 @@ public class GoodsStandardController {
 	
 	@RequestMapping("/queryStandard")
 	public String queryStandard(Model model) {
-		List<Goodstype>list=sp.querygoodstype(null);
+		List<Goodstype>list=sp.querynoid();
 		model.addAttribute("list", list);
 		return "xl/spguige";
 	}
@@ -53,8 +54,9 @@ public class GoodsStandardController {
 	@ResponseBody
 	public int insert(Standard stan) {
 		Standard standard=service.StandardByname(stan.getName(), stan.getTid());
+		
 		if (standard==null) {
-			String id=UUID.randomUUID().toString();
+			String id=new Date().getTime() +"";
 			stan.setId(id);
 			int r=service.insertStandard(stan);
 			return r;

@@ -19,6 +19,7 @@ public class Standardvalue {
     
     private String sname;
     private String uname;
+    private String gname;
 
     private String column1;
 
@@ -140,5 +141,13 @@ public class Standardvalue {
 
 	public void setUname(String uname) {
 		this.uname = uname;
+	}
+
+	public String getGname() {
+		return gname;
+	}
+
+	public void setGname(String gname) {
+		this.gname = gname;
 	}
 }

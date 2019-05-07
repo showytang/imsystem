@@ -54,4 +54,6 @@ public interface GoodstypeMapper {
     List<Goodstype> querybypid();
     
     Goodstype querybyname(String name,String pid);
+    
+    List<Goodstype> querynoid();
 }
