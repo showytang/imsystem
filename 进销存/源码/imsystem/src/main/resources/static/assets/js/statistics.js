@@ -555,3 +555,29 @@ function queryXf(sid,startTime,endTime) {
 	return v;
 }
 
+/***
+ * 查询用户购买过的商品标签中购买最多的其他商品
+ * @param lid
+ * @param season
+ * @returns
+ */
+function queryLikeGoodsValue(lid,season) {
+	var v;
+	$.ajax({
+		url:"/ther/queryLikeGoodsValue",
+		type:"post",
+		data:{
+			lid:lid,
+			season:season
+		},
+		dataType:"json",
+		async:false,
+		success:function(data){
+			v = data;
+		},
+		error:function(){
+			console.log("ERROR:'queryLikeGoodsValue'");
+		}
+	});
+	return v;
+}
