@@ -1,855 +1,700 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>添加订单</title>
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
+<script type="text/javascript"
+	th:src="@{/assets/js/jquery-2.1.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/vue.js}"></script>
+<style type="text/css">
+body, html, #main {
+	max-height: 100%;
+	height: 100%;
+	margin: 0px;
+}
 
-	<head>
-		<meta charset="UTF-8">
-		<title>添加订单</title>
-		<link rel="stylesheet" href="css/bootstrap.min.css" />
-		<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
-		<script type="text/javascript" src="js/bootstrap.min.js"></script>
-		<style type="text/css">
-			body,
-			html,
-			#main {
-				max-height: 100%;
-				height: 100%;
-				margin: 0px;
-			}
-			
-			ul {
-				list-style: none;
-			}
-			
-			#main {
-				display: flex;
-			}
-			
-			.table-page-left {
-				max-width: 25%;
-				width: 25%;
-				border-right: 1px solid rgb(2, 143, 208);
-				padding: 10px;
-				-webkit-user-select: none;
-			}
-			
-			.table-page-right {
-				width: 75%;
-				padding: 10px;
-				background: #f7f7f7;
-				overflow-y: auto;
-				-webkit-user-select: none;
-			}
-			
-			.table-options {
-				display: flex;
-				text-align: center;
-				font-size: 16px;
-				color: #584d4d;
-				height: 6%;
-			}
-			
-			.table-option {
-				width: 50%;
-				height: 300;
-				line-height: 30px;
-				cursor: pointer;
-			}
-			
-			.table-option-action {
-				color: dodgerblue;
-				border-bottom: 1px solid rgb(2, 143, 208);
-			}
-			
-			.table-div-bottom {
-				position: absolute;
-				right: 0px;
-				bottom: 0px;
-			}
-			
-			.table-divs {
-				max-height: 94%;
-				height: 94%;
-				position: relative;
-				display: flex;
-				overflow: hidden;
-			}
-			
-			.table-div {
-				position: absolute;
-				height: 100%;
-				width: 100%;
-			}
-			
-			.table-div:last-child {
-				right: 103%;
-			}
-			
-			button {
-				background: rgb(2, 143, 208);
-				padding: 5px 10px;
-				color: white;
-				border: 1px solid #ddd;
-				border-radius: 3px;
-				font-size: 13px;
-				outline: none;
-				cursor: pointer;
-			}
-			
-			.table-div>ul>li {
-				display: flex;
-				justify-content: space-around;
-				line-height: 40px;
-				border-bottom: 1px solid rgb(2, 143, 208);
-				font-size: 13px;
-				color: rgb(2, 143, 208);
-				position: relative;
-				cursor: pointer;
-			}
-			
-			.table-div>ul>li:first-child {
-				color: rgb(2, 143, 208);
-				font-size: 16px;
-			}
-			
-			.table-div>ul {
-				padding: 10px 0px;
-				margin: 0px;
-			}
-			
-			.del-ul-li {
-				cursor: pointer;
-			}
-			
-			.table-div>ul>li>div {
-				width: 100%;
-				text-align: center;
-				overflow: hidden;
-				white-space: nowrap;
-				text-overflow: ellipsis;
-			}
-			
-			.table-div-ul-ul {
-				display: none;
-				position: relative;
-			}
-			
-			.table-div-ul-ul>li {
-				display: flex;
-				justify-content: space-around;
-				line-height: 30px;
-				font-size: 12px;
-				color: #ef6560;
-				position: relative;
-				border-bottom: 1px solid #bcde87;
-			}
-			
-			.table-div-SumPrice {
-				position: absolute;
-				left: 0px;
-				bottom: 0px;
-				font-size: 20px;
-			}
-			
-			#right-head {
-				display: flex;
-			}
-			
-			.right-head-div-options {
-				width: 100px;
-				line-height: 40px;
-				background: rgb(2, 143, 208);
-				text-align: center;
-				color: white;
-				cursor: pointer;
-			}
-			
-			#right-head>div:first-child {
-				border-radius: 8px 0px 0px 8px;
-				border-right: 1px solid white;
-			}
-			
-			#right-head>div:last-child {
-				border-radius: 0px 8px 8px 0px;
-			}
-			
-			.right-head-div-active {
-				background: red;
-			}
-			
-			#goodsAll,
-			#custmoer {
-				display: flex;
-				flex-wrap: wrap;
-				padding-top: 80px;
-			}
-			
-			.goods>div {
-				cursor: pointer;
-				width: 100%;
-				background: white;
-				height: 100%;
-			}
-			
-			.goods>div>div {
-				max-width: 50%;
-				margin: 10px auto;
-			}
-			
-			.goods {
-				width: 25%;
-				height: 420px;
-				padding: 5px;
-				margin-bottom: 20px;
-				text-align: center;
-			}
-			
-			.goods :hover {
-				transform: translate3d(0, -2px, 0);
-				transition: all 0.8s;
-				box-shadow: 0 15px 30px rgba(0, 0, 0, .1);
-			}
-			
-			.images {
-				width: 100px;
-				margin: auto;
-				position: relative;
-				top: 40px;
-			}
-			
-			.images>img {
-				width: 100%;
-			}
-			
-			.goodsName {
-				font-size: 24px;
-				font-weight: 500;
-			}
-			
-			.goodsPrice {
-				margin-top: 10px;
-				color: rgb(2, 143, 208);
-			}
-			
-			.goodsType {
-				font-size: 18px;
-				color: rgb(2, 143, 208);
-				overflow: hidden;
-				white-space: nowrap;
-				text-overflow: ellipsis;
-			}
-			
-			.count>input {
-				width: 60px;
-				border: none;
-				border-bottom: 1px solid #ddd;
-				text-align: center;
-				outline: none;
-			}
-			
-			.count>span {
-				font-size: 20px;
-			}
-			
-			.fileHead {
-				position: fixed;
-				top: 0px;
-				padding: 10px;
-				width: 100%;
-				z-index: 9999;
-				background: #f7f7f7;
-				height: 60px;
-			}
-		</style>
-	</head>
+ul {
+	list-style: none;
+}
 
-	<body>
-		<div id="main">
-			<div class="table-page-left">
-				<div class="table-options">
-					<div class="table-option table-option-action">
-						<span>订单</span>
+#main {
+	display: flex;
+}
+
+.table-page-left {
+	max-width: 25%;
+	width: 25%;
+	border-right: 1px solid rgb(2, 143, 208);
+	padding: 10px;
+	-webkit-user-select: none;
+}
+
+.table-page-right {
+	width: 75%;
+	padding: 10px;
+	background: #f7f7f7;
+	overflow-y: auto;
+	-webkit-user-select: none;
+}
+
+.table-options {
+	display: flex;
+	text-align: center;
+	font-size: 16px;
+	color: #584d4d;
+	height: 6%;
+}
+
+.table-option {
+	width: 50%;
+	height: 300;
+	line-height: 30px;
+	cursor: pointer;
+}
+
+.table-option-action {
+	color: dodgerblue;
+	border-bottom: 1px solid rgb(2, 143, 208);
+}
+
+.table-div-bottom {
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+}
+
+.table-divs {
+	max-height: 94%;
+	height: 94%;
+	position: relative;
+	display: flex;
+	overflow: hidden;
+}
+
+.table-div {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
+
+.table-div:last-child {
+	right: 103%;
+}
+
+button {
+	background: rgb(2, 143, 208);
+	padding: 5px 10px;
+	color: white;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	font-size: 13px;
+	outline: none;
+	cursor: pointer;
+}
+
+.table-div>ul>li {
+	display: flex;
+	justify-content: space-around;
+	line-height: 40px;
+	border-bottom: 1px solid rgb(2, 143, 208);
+	font-size: 13px;
+	color: rgb(2, 143, 208);
+	position: relative;
+	cursor: pointer;
+}
+
+.table-div>ul>li:first-child {
+	color: rgb(2, 143, 208);
+	font-size: 16px;
+}
+
+.table-div>ul {
+	padding: 10px 0px;
+	margin: 0px;
+}
+
+.del-ul-li {
+	cursor: pointer;
+}
+
+.table-div>ul>li>div {
+	width: 100%;
+	text-align: center;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.table-div-ul-ul {
+	display: none;
+	position: relative;
+}
+
+.table-div-ul-ul>li {
+	display: flex;
+	justify-content: space-around;
+	line-height: 30px;
+	font-size: 12px;
+	color: #ef6560;
+	position: relative;
+	border-bottom: 1px solid #bcde87;
+}
+
+.table-div-SumPrice {
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	font-size: 20px;
+}
+
+#right-head {
+	display: flex;
+}
+
+.right-head-div-options {
+	width: 100px;
+	line-height: 50px;
+	background: rgb(2, 143, 208);
+	text-align: center;
+	color: white;
+	cursor: pointer;
+}
+
+#right-head>div:first-child {
+	border-radius: 8px 0px 0px 8px;
+	border-right: 1px solid white;
+}
+
+#right-head>div:nth-child(2) {
+	border-radius: 0px 8px 8px 0px;
+}
+
+.right-head-div-active {
+	background: red;
+}
+
+#goodsAll, #custmoer {
+	display: flex;
+	flex-wrap: wrap;
+	padding-top: 80px;
+}
+
+.goods>div {
+	cursor: pointer;
+	width: 100%;
+	background: white;
+	height: 100%;
+}
+
+.goods>div>div {
+	max-width: 50%;
+	margin: 8px auto;
+}
+
+.goods {
+	width: 25%;
+	height: 320px;
+	padding: 5px;
+	margin-bottom: 8px;
+	text-align: center;
+}
+
+.goods :hover {
+	transform: translate3d(0, -2px, 0);
+	transition: all 0.8s;
+	box-shadow: 0 15px 30px rgba(0, 0, 0, .1);
+}
+
+.images {
+	width: 70px;
+	margin: auto;
+	position: relative;
+	top: 30px;
+}
+
+.images>img {
+	width: 100%;
+}
+
+.goodsName {
+	font-size: 20px;
+	font-weight: 500;
+}
+
+.goodsPrice {
+	margin-top: 10px;
+	color: rgb(2, 143, 208);
+}
+
+.goodsType {
+	font-size: 16px;
+	color: rgb(2, 143, 208);
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.count>input {
+	width: 60px;
+	border: none;
+	border-bottom: 1px solid #ddd;
+	text-align: center;
+	outline: none;
+}
+
+.count>span {
+	font-size: 16px;
+}
+
+.fileHead {
+	position: fixed;
+	top: 0px;
+	padding: 10px;
+	width: 100%;
+	z-index: 9999;
+	background: #f7f7f7;
+	height: 60px;
+}
+
+.selectDiv {
+	margin-left: 20px;
+	display: flex;
+}
+
+.selectDiv>div {
+	line-height: 50px;
+	padding: 0px 10px;
+	background: #188dea;
+	color: white;
+	border-radius: 8px 0px 0px 8px;
+}
+
+.selectDiv>input{
+	outline: none;
+	border-color: #188dea;
+	border-radius: 0px 8px 8px 0px;
+	text-indent: 2em;
+	width: 240px;
+}
+</style>
+</head>
+<body>
+	<div id="main">
+		<div class="table-page-left">
+			<div class="table-options">
+				<div class="table-option table-option-action">
+					<span>订单</span>
+				</div>
+				<div class="table-option">
+					<span>挂单</span>
+				</div>
+			</div>
+			<div class="table-divs">
+				<div class="table-div">
+					<ul class="order-goods">
+						<li class="head-title">
+							<div>商品名称</div>
+							<div>数量</div>
+							<div>单价</div>
+							<div>总计</div>
+						</li>
+						<li>
+							<div>vovi</div>
+							<div>2</div>
+							<div>2000</div>
+							<div>4000.00</div>
+						</li>
+						<li>
+							<div>open</div>
+							<div>2</div>
+							<div>2000</div>
+							<div>4000.00</div>
+						</li>
+					</ul>
+					<div class="table-div-bottom">
+						<button>挂单</button>
+						<button>确认订单</button>
 					</div>
-					<div class="table-option">
-						<span>挂单</span>
+					<div class="table-div-SumPrice">
+						<span>总和：</span><span style="color: red;">￥<span
+							style="font-size: 22px;">2008.00</span></span>
 					</div>
 				</div>
-				<div class="table-divs">
-					<div class="table-div">
-						<ul class="order-goods">
-							<li class="head-title">
-								<div>商品名称</div>
-								<div>数量</div>
-								<div>单价</div>
-								<div>总计</div>
-							</li>
+				<div class="table-div">
+					<ul class="table-div-ul">
+						<li>
+							<div>时间</div>
+							<div>数量</div>
+							<div>价格</div>
+							<div>操作</div>
+						</li>
+						<li>
+							<div>
+								<span>8:57</span>
+							</div>
+							<div>
+								<span>8</span>
+							</div>
+							<div>
+								<span>2000</span>
+							</div>
+							<div>
+								<span title="确认订单" class="order-ok">√</span>&nbsp;&nbsp;&nbsp;&nbsp;<span
+									title="取消" class="del-table-ul-li">></span>
+							</div>
+						</li>
+						<ul class="table-div-ul-ul">
 							<li>
-								<div>vovi</div>
-								<div>2</div>
-								<div>2000</div>
-								<div>4000.00</div>
-							</li>
-							<li>
-								<div>open</div>
-								<div>2</div>
-								<div>2000</div>
-								<div>4000.00</div>
-							</li>
-						</ul>
-						<div class="table-div-bottom">
-							<button>挂单</button>
-							<button>确认订单</button>
-						</div>
-						<div class="table-div-SumPrice">
-							<span>总和：</span><span style="color: red;">￥<span style="font-size: 22px;">2008.00</span></span>
-						</div>
-					</div>
-					<div class="table-div">
-						<ul class="table-div-ul">
-							<li>
-								<div>时间</div>
-								<div>数量</div>
-								<div>价格</div>
-								<div>操作</div>
+								<div>
+									<span>vivo</span>
+								</div>
+								<div>
+									<span>2</span>
+								</div>
+								<div>
+									<span>红色</span>
+								</div>
+								<div class="del-ul-li">></div>
 							</li>
 							<li>
 								<div>
-									<span>8:57</span>
+									<span>vivo</span>
 								</div>
-								<div><span>8</span></div>
-								<div><span>2000</span></div>
-								<div><span title="确认订单" class="order-ok">√</span>&nbsp;&nbsp;&nbsp;&nbsp;<span title="取消" class="del-table-ul-li">></span></div>
+								<div>
+									<span>2</span>
+								</div>
+								<div>
+									<span>红色</span>
+								</div>
+								<div class="del-ul-li">></div>
 							</li>
-							<ul class="table-div-ul-ul">
-								<li>
-									<div>
-										<span>vivo</span>
-									</div>
-									<div><span>2</span></div>
-									<div><span>红色</span></div>
-									<div class="del-ul-li">></div>
-								</li>
-								<li>
-									<div>
-										<span>vivo</span>
-									</div>
-									<div><span>2</span></div>
-									<div><span>红色</span></div>
-									<div class="del-ul-li">></div>
-								</li>
-							</ul>
-							<li>
-								<div><span>8:57</span></div>
-								<div><span>8</span></div>
-								<div><span>7001</span></div>
-								<div><span title="确认订单" class="order-ok">√</span>&nbsp;&nbsp;&nbsp;&nbsp;<span title="取消" class="del-table-ul-li">></span></div>
-							</li>
-							<ul class="table-div-ul-ul">
-								<li>
-									<div>
-										<span>vivo</span>
-									</div>
-									<div><span>2</span></div>
-									<div><span>红色</span></div>
-									<div class="del-ul-li">></div>
-								</li>
-								<li>
-									<div>
-										<span>vivo</span>
-									</div>
-									<div><span>2</span></div>
-									<div><span>红色</span></div>
-									<div class="del-ul-li">></div>
-								</li>
-							</ul>
 						</ul>
+						<li>
+							<div>
+								<span>8:57</span>
+							</div>
+							<div>
+								<span>8</span>
+							</div>
+							<div>
+								<span>7001</span>
+							</div>
+							<div>
+								<span title="确认订单" class="order-ok">√</span>&nbsp;&nbsp;&nbsp;&nbsp;<span
+									title="取消" class="del-table-ul-li">></span>
+							</div>
+						</li>
+						<ul class="table-div-ul-ul">
+							<li>
+								<div>
+									<span>vivo</span>
+								</div>
+								<div>
+									<span>2</span>
+								</div>
+								<div>
+									<span>红色</span>
+								</div>
+								<div class="del-ul-li">></div>
+							</li>
+							<li>
+								<div>
+									<span>vivo</span>
+								</div>
+								<div>
+									<span>2</span>
+								</div>
+								<div>
+									<span>红色</span>
+								</div>
+								<div class="del-ul-li">></div>
+							</li>
+						</ul>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="table-page-right">
+			<div class="fileHead">
+				<div id="right-head">
+					<div class="right-head-div-options">客户</div>
+					<div class="right-head-div-options right-head-div-active">商品</div>
+					<div class="selectDiv" style="display:none">
+						<div>客户名称</div>
+						<input type="text" @keyup.enter="clientkeycode" v-model="clientName" >
+					</div>
+					<div class="selectDiv">
+						<div>商品名称</div>
+						<input type="text" @keyup.enter="goodskeycode" v-model="goodsName" >
 					</div>
 				</div>
 			</div>
-			<div class="table-page-right">
-				<div class="fileHead">
-					<div id="right-head">
-						<div class="right-head-div-options">客户</div>
-						<div class="right-head-div-options right-head-div-active">商品</div>
-					</div>
-				</div>
-				<div id="custmoer" class="right-head-click" style="display: none;">
-					<div class="goods">
-						<div style="position: relative;">
-							<div class="images">
-								<img src="images/qq.png" />
-							</div>
-							<div class="goodsName" style="margin-top: 60px;">
-								<span>customer</span>
-							</div>
-							<div class="goodsType" style="font-size: 24px;color: red;">
-								<span>vip</span>
-							</div>
-							<div style="margin-top: 50px;">
-								<button>确定</button>
-							</div>
+			<div id="custmoer" class="right-head-click" style="display: none;">
+				<div class="goods" v-for="item in clientlist">
+					<div style="position: relative;">
+						<div class="images">
+							<img th:src="@{/assets/img/qq.png}" />
+						</div>
+						<div class="goodsName" style="margin-top: 50px;">
+							<span>{{item.name}}</span>
+						</div>
+						<div class="goodsType" style="font-size: 24px; color: red;">
+							<span>{{item.column1}}</span>
+						</div>
+						<div class="goodsName" style="font-size: 18px;color:rgb(2, 143, 208);">
+							<span>{{item.telephone}}</span>
+						</div>
+						<div style="margin-top: 30px;">
+							<button>确定</button>
 						</div>
 					</div>
 				</div>
-				<div id="goodsAll" class="right-head-click">
-					<div class="goods">
-						<div>
-							<div class="images">
-								<img src="images/qq.png" />
-							</div>
-							<div class="goodsName" style="margin-top: 60px;">
-								<span>企鹅</span>
-							</div>
-							<div class="goodsType">
-								<span>蓝色,m,玩具</span>
-							</div>
-							<div class="goodsPrice">
-								<span style="color: red;font-size: 20px;">￥205.00</span>
-							</div>
-							<div class="goodsPrice">
-								<span>库存：</span>
-								<span>20</span>
-							</div>
-							<div class="count">
-								<span>+</span>&nbsp;&nbsp;<input type="text" value="1" />&nbsp;&nbsp;<span>-</span>
-							</div>
-							<div class="goodsOk">
-								<button>新增</button>
-							</div>
+			</div>
+			<div id="goodsAll" class="right-head-click">
+				<div v-for="item in list" class="goods">
+					<div>
+						<div class="images">
+							<!-- <img v-if="item.goodsValue.column1 != null && item.goodsValue.column1 != ''" :src="item.goodsValue.column1" />
+							<img v-else :src="item.goods.img" /> -->
+							<img th:src="@{/assets/img/qq.png}" />
 						</div>
-					</div>
-					<div class="goods">
-						<div>
-							<div class="images">
-								<img src="images/user-photo.png" />
-							</div>
-							<div class="goodsName" style="margin-top: 60px;">
-								<span>企鹅</span>
-							</div>
-							<div class="goodsType">
-								<span>蓝色,m,玩具</span>
-							</div>
-							<div class="goodsPrice">
-								<span style="color: red;font-size: 20px;">￥205.00</span>
-							</div>
-							<div class="goodsPrice">
-								<span>库存：</span>
-								<span>20</span>
-							</div>
-							<div class="count">
-								<span>+</span>&nbsp;&nbsp;<input type="text" value="1" />&nbsp;&nbsp;<span>-</span>
-							</div>
-							<div class="goodsOk">
-								<button>新增</button>
-							</div>
+						<div class="goodsName" style="margin-top: 50px;">
+							<span>{{item.goods.name}}</span>
 						</div>
-					</div>
-					<div class="goods">
-						<div>
-							<div class="images">
-								<img src="images/user-photo.png" />
-							</div>
-							<div class="goodsName" style="margin-top: 60px;">
-								<span>企鹅</span>
-							</div>
-							<div class="goodsType">
-								<span>蓝色,m,玩具</span>
-							</div>
-							<div class="goodsPrice">
-								<span style="color: red;font-size: 20px;">￥205.00</span>
-							</div>
-							<div class="goodsPrice">
-								<span>库存：</span>
-								<span>20</span>
-							</div>
-							<div class="count">
-								<span>+</span>&nbsp;&nbsp;<input type="text" value="1" />&nbsp;&nbsp;<span>-</span>
-							</div>
-							<div class="goodsOk">
-								<button>新增</button>
-							</div>
+						<div class="goodsType">
+							<span>{{item.goodsValue.name}}</span>
 						</div>
-					</div>
-					<div class="goods">
-						<div>
-							<div class="images">
-								<img src="images/user-photo.png" />
-							</div>
-							<div class="goodsName" style="margin-top: 60px;">
-								<span>企鹅</span>
-							</div>
-							<div class="goodsType">
-								<span>蓝色,m,玩具</span>
-							</div>
-							<div class="goodsPrice">
-								<span style="color: red;font-size: 20px;">￥205.00</span>
-							</div>
-							<div class="goodsPrice">
-								<span>库存：</span>
-								<span>20</span>
-							</div>
-							<div class="count">
-								<span>+</span>&nbsp;&nbsp;<input type="text" value="1" />&nbsp;&nbsp;<span>-</span>
-							</div>
-							<div class="goodsOk">
-								<button>新增</button>
-							</div>
+						<div class="goodsPrice">
+							<span style="color: red; font-size: 20px;">￥<span>{{item.goods.price}}</span></span>
 						</div>
-					</div>
-					<div class="goods">
-						<div>
-							<div class="images">
-								<img src="images/user-photo.png" />
-							</div>
-							<div class="goodsName" style="margin-top: 60px;">
-								<span>企鹅</span>
-							</div>
-							<div class="goodsType">
-								<span>蓝色,m,玩具</span>
-							</div>
-							<div class="goodsPrice">
-								<span style="color: red;font-size: 20px;">￥205.00</span>
-							</div>
-							<div class="goodsPrice">
-								<span>库存：</span>
-								<span>20</span>
-							</div>
-							<div class="count">
-								<span>+</span>&nbsp;&nbsp;<input type="text" value="1" />&nbsp;&nbsp;<span>-</span>
-							</div>
-							<div class="goodsOk">
-								<button>新增</button>
-							</div>
+						<div class="count">
+							<span>+</span>&nbsp;&nbsp;<input type="text" value="1" />&nbsp;&nbsp;<span>-</span>
 						</div>
-					</div>
-					<div class="goods">
-						<div>
-							<div class="images">
-								<img src="images/user-photo.png" />
-							</div>
-							<div class="goodsName" style="margin-top: 60px;">
-								<span>企鹅</span>
-							</div>
-							<div class="goodsType">
-								<span>蓝色,m,玩具</span>
-							</div>
-							<div class="goodsPrice">
-								<span style="color: red;font-size: 20px;">￥205.00</span>
-							</div>
-							<div class="goodsPrice">
-								<span>库存：</span>
-								<span>20</span>
-							</div>
-							<div class="count">
-								<span>+</span>&nbsp;&nbsp;<input type="text" value="1" />&nbsp;&nbsp;<span>-</span>
-							</div>
-							<div class="goodsOk">
-								<button>新增</button>
-							</div>
-						</div>
-					</div>
-					<div class="goods">
-						<div>
-							<div class="images">
-								<img src="images/user-photo.png" />
-							</div>
-							<div class="goodsName" style="margin-top: 60px;">
-								<span>企鹅</span>
-							</div>
-							<div class="goodsType">
-								<span>蓝色,m,玩具</span>
-							</div>
-							<div class="goodsPrice">
-								<span style="color: red;font-size: 20px;">￥205.00</span>
-							</div>
-							<div class="goodsPrice">
-								<span>库存：</span>
-								<span>20</span>
-							</div>
-							<div class="count">
-								<span>+</span>&nbsp;&nbsp;<input type="text" value="1" />&nbsp;&nbsp;<span>-</span>
-							</div>
-							<div class="goodsOk">
-								<button>新增</button>
-							</div>
-						</div>
-					</div>
-					<div class="goods">
-						<div>
-							<div class="images">
-								<img src="images/user-photo.png" />
-							</div>
-							<div class="goodsName" style="margin-top: 60px;">
-								<span>企鹅</span>
-							</div>
-							<div class="goodsType">
-								<span>蓝色,m,玩具</span>
-							</div>
-							<div class="goodsPrice">
-								<span style="color: red;font-size: 20px;">￥205.00</span>
-							</div>
-							<div class="goodsPrice">
-								<span>库存：</span>
-								<span>20</span>
-							</div>
-							<div class="count">
-								<span>+</span>&nbsp;&nbsp;<input type="text" value="1" />&nbsp;&nbsp;<span>-</span>
-							</div>
-							<div class="goodsOk">
-								<button>新增</button>
-							</div>
-						</div>
-					</div>
-					<div class="goods">
-						<div>
-							<div class="images">
-								<img src="images/user-photo.png" />
-							</div>
-							<div class="goodsName" style="margin-top: 60px;">
-								<span>企鹅</span>
-							</div>
-							<div class="goodsType">
-								<span>蓝色,m,玩具</span>
-							</div>
-							<div class="goodsPrice">
-								<span style="color: red;font-size: 20px;">￥205.00</span>
-							</div>
-							<div class="goodsPrice">
-								<span>库存：</span>
-								<span>20</span>
-							</div>
-							<div class="count">
-								<span>+</span>&nbsp;&nbsp;<input type="text" value="1" />&nbsp;&nbsp;<span>-</span>
-							</div>
-							<div class="goodsOk">
-								<button>新增</button>
-							</div>
-						</div>
-					</div>
-					<div class="goods">
-						<div>
-							<div class="images">
-								<img src="images/user-photo.png" />
-							</div>
-							<div class="goodsName" style="margin-top: 60px;">
-								<span>企鹅</span>
-							</div>
-							<div class="goodsType">
-								<span>蓝色,m,玩具</span>
-							</div>
-							<div class="goodsPrice">
-								<span style="color: red;font-size: 20px;">￥205.00</span>
-							</div>
-							<div class="goodsPrice">
-								<span>库存：</span>
-								<span>20</span>
-							</div>
-							<div class="count">
-								<span>+</span>&nbsp;&nbsp;<input type="text" value="1" />&nbsp;&nbsp;<span>-</span>
-							</div>
-							<div class="goodsOk">
-								<button>新增</button>
-							</div>
-						</div>
-					</div>
-					<div class="goods">
-						<div>
-							<div class="images">
-								<img src="images/user-photo.png" />
-							</div>
-							<div class="goodsName" style="margin-top: 60px;">
-								<span>企鹅</span>
-							</div>
-							<div class="goodsType">
-								<span>蓝色,m,玩具</span>
-							</div>
-							<div class="goodsPrice">
-								<span style="color: red;font-size: 20px;">￥205.00</span>
-							</div>
-							<div class="goodsPrice">
-								<span>库存：</span>
-								<span>20</span>
-							</div>
-							<div class="count">
-								<span>+</span>&nbsp;&nbsp;<input type="text" value="1" />&nbsp;&nbsp;<span>-</span>
-							</div>
-							<div class="goodsOk">
-								<button>新增</button>
-							</div>
-						</div>
-					</div>
-					<div class="goods">
-						<div>
-							<div class="images">
-								<img src="images/user-photo.png" />
-							</div>
-							<div class="goodsName" style="margin-top: 60px;">
-								<span>企鹅</span>
-							</div>
-							<div class="goodsType">
-								<span>蓝色,m,玩具</span>
-							</div>
-							<div class="goodsPrice">
-								<span style="color: red;font-size: 20px;">￥205.00</span>
-							</div>
-							<div class="goodsPrice">
-								<span>库存：</span>
-								<span>20</span>
-							</div>
-							<div class="count">
-								<span>+</span>&nbsp;&nbsp;<input type="text" value="1" />&nbsp;&nbsp;<span>-</span>
-							</div>
-							<div class="goodsOk">
-								<button>新增</button>
-							</div>
+						<div class="goodsOk">
+							<button>新增</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript" src="js/jquery-1.8.2.js"></script>
-		<script type="text/javascript">
-			$(function() {
-				var time = "";
-				$(".table-option").click(function() {
+	</div>
+	<script type="text/javascript" th:inline="javascript">
+		var vue = new Vue({
+			
+			el : "#main",
+			
+			data : {
+				
+				list : [],
+				
+				goodsName : "",
+				
+				clientlist : [],
+				
+				clientName : ""
+				
+			},
+			methods : {
+				
+				goodskeycode : function(){
+					
+					$.ajax({
+					    
+					    url : [[@{/orderQueryController/orderAddAjax}]],
 
-					$(".table-div").stop().animate();
+					    data : {
+							name : this.goodsName
+					    },
 
-					$(".table-option").removeClass("table-option-action");
-					$(this).addClass("table-option-action");
-					var index = $(".table-option").index(this);
+					    type : "post",
 
-					if(index == 1) {
-						$(".table-div:eq(0)").animate({
-							"left": "103%"
-						}, 500);
-						$(".table-div:eq(1)").animate({
-							"right": "0"
-						}, 500);
+					    dataType : "json",
+					    
+					    success:function(result){
+					    	
+							vue.list = result;
+					    
+					    }
+					});
+				},
+				
+				clientkeycode : function(){
+					$.ajax({
+					    
+					    url : [[@{/orderQueryController/clientAjax}]],
+
+					    data : {
+						 	name : this.clientName,
+						 	storeid : "1"
+					    },
+
+					    type : "post",
+
+					    dataType : "json",
+					    
+					    success:function(result){
+					    	console.log(result);
+					    	vue.clientlist = result;
+					    }
+					})
+				}
+				
+			}
+		});
+		
+		vue.list = [[${list}]];
+		
+		vue.clientlist = [[${clientList}]];
+		
+		$(function() {
+			$(".table-option").click(function() {
+
+				$(".table-div").stop().animate();
+
+				$(".table-option").removeClass("table-option-action");
+				$(this).addClass("table-option-action");
+				var index = $(".table-option").index(this);
+
+				if (index == 1) {
+					$(".table-div:eq(0)").animate({
+						"left" : "103%"
+					}, 500);
+					$(".table-div:eq(1)").animate({
+						"right" : "0"
+					}, 500);
+				} else {
+					$(".table-div:eq(1)").animate({
+						"right" : "103%"
+					}, 500);
+					$(".table-div:eq(0)").animate({
+						"left" : "0"
+					}, 500);
+				}
+			});
+
+			$(".del-ul-li").click(function() {
+
+				var th = $(this).parent();
+
+				th.animate({
+					"left" : "100%",
+					"opacity" : "0"
+				}, 1000, function() {
+
+					th.remove();
+
+				});
+
+			});
+			$(".del-table-ul-li").click(function(e) {
+
+				e.stopPropagation(); //防止事件冒泡
+
+				var th = $(this).parent().parent();
+
+				let thnext = th.next();
+
+				th.animate({
+					"left" : "100%",
+					"opacity" : "0"
+				}, 1000, function() {
+
+					th.remove();
+
+				});
+				if (thnext.hasClass("table-div-ul-ul")) {
+					thnext.animate({
+						"left" : "100%",
+						"opacity" : "0"
+					}, 1000, function() {
+						thnext.remove();
+					});
+				}
+
+			});
+			$(".table-div-ul>li").click(function(e) {
+				if ($(this).next().hasClass("table-div-ul-ul")) {
+					if ($(this).next().css("display") == "none") {
+						$(this).next().slideDown();
 					} else {
-						$(".table-div:eq(1)").animate({
-							"right": "103%"
-						}, 500);
-						$(".table-div:eq(0)").animate({
-							"left": "0"
-						}, 500);
+						$(this).next().slideUp();
 					}
-				});
+				}
+			});
+			$(".order-ok").click(function() {
+				//alert(1);
+			});
+			$(".right-head-div-options").click(
+					function() {
+						$("#right-head>div").removeClass(
+								"right-head-div-active");
+						$(this).addClass("right-head-div-active");
 
-				$(".del-ul-li").click(function() {
-
-					var th = $(this).parent();
-
-					th.animate({
-						"left": "100%",
-						"opacity": "0"
-					}, 1000, function() {
-
-						th.remove();
-
+						let index = $("#right-head>div").index(this);
+						$(".right-head-click:eq(" + index + ")").css("display",
+								"flex");
+						$(".selectDiv:eq("+index+")").css("display","flex");
+						if (index == 1) {
+							
+							index--;
+							
+						} else {
+							
+							index++;
+							
+						}
+						$(".selectDiv:eq("+index+")").css("display","none");
+						$(".right-head-click:eq(" + (index) + ")").css(
+								"display", "none");
 					});
+		});
 
-				});
-				$(".del-table-ul-li").click(function(e) {
+		//绑定华东事件
+		var down = function(objs) {
 
-					e.stopPropagation(); //防止事件冒泡
+			objs.each(function(i, obj) {
+				if (!$(obj).hasClass("head-title")) {
+					$(obj).bind("mousedown", strat);
 
-					var th = $(this).parent().parent();
+					var left = 0;
 
-					let thnext = th.next();
+					function strat(even) {
+						if (event.button == 0) {
+							left = even.clientX;
+							$(document).bind("mousemove", move);
+							$(document).bind("mouseup", stop);
+						}
+					}
 
-					th.animate({
-						"left": "100%",
-						"opacity": "0"
-					}, 1000, function() {
-
-						th.remove();
-
-					});
-					if(thnext.hasClass("table-div-ul-ul")) {
-						thnext.animate({
-							"left": "100%",
-							"opacity": "0"
-						}, 1000, function() {
-							thnext.remove();
+					function move(even) {
+						$(obj).css({
+							left : even.clientX - left + "px"
 						});
 					}
 
-				});
-				$(".table-div-ul>li").click(function(e) {
-					if($(this).next().hasClass("table-div-ul-ul")) {
-						if($(this).next().css("display") == "none") {
-							$(this).next().slideDown();
-						} else {
-							$(this).next().slideUp();
-						}
-					}
-				});
-				$(".order-ok").click(function() {
-					//alert(1);
-				});
-				$("#right-head>div").click(function() {
-					$("#right-head>div").removeClass("right-head-div-active");
-					$(this).addClass("right-head-div-active");
-
-					let index = $("#right-head>div").index(this);
-					$(".right-head-click:eq(" + index + ")").css("display", "flex");
-
-					if(index == 1) {
-						index--;
-					} else {
-						index++;
-					}
-
-					$(".right-head-click:eq(" + (index) + ")").css("display", "none");
-
-				});
-			});
-
-			//绑定华东事件
-			var down = function(objs) {
-
-				objs.each(function(i, obj) {
-					if(!$(obj).hasClass("head-title")) {
-						$(obj).bind("mousedown", strat);
-
-						var left = 0;
-
-						function strat(even) {
-							if(event.button == 0) {
-								left = even.clientX;
-								$(document).bind("mousemove", move);
-								$(document).bind("mouseup", stop);
-							}
-						}
-
-						function move(even) {
-							$(obj).css({
-								left: even.clientX - left + "px"
+					function stop(even) {
+						$(document).unbind("mousemove", move);
+						$(document).unbind("mouseup", stop);
+						//解绑定，这一步很必要，前面有解释 
+						if (even.clientX - left > 100) {
+							$(obj).animate({
+								"opacity" : "0"
+							}, 500, function() {
+								$(obj).remove();
 							});
-						}
-
-						function stop(even) {
-							$(document).unbind("mousemove", move);
-							$(document).unbind("mouseup", stop);
-							//解绑定，这一步很必要，前面有解释 
-							if(even.clientX - left > 100) {
-								$(obj).animate({
-									"opacity": "0"
-								}, 500, function() {
-									$(obj).remove();
-								});
-							} else {
-								$(obj).css("left", "0")
-							}
+						} else {
+							$(obj).css("left", "0")
 						}
 					}
+				}
 
-				})
+			})
 
-			}
+		}
 
-			down($(".order-goods>li"));
-		</script>
-	</body>
-
+		down($(".order-goods>li"));
+	</script>
+</body>
 </html>

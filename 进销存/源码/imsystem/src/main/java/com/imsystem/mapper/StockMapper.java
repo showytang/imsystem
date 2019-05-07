@@ -1,5 +1,6 @@
 package com.imsystem.mapper;
 
+import com.imsystem.domain.Customer;
 import com.imsystem.domain.Sales;
 import com.imsystem.domain.Stock;
 import com.imsystem.domain.StockExample;
@@ -7,6 +8,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface StockMapper {
+	
+	List<Customer> queryCustomerByName(@Param("name") String name,@Param("storeid")String id);
 	
 	int updatePrice(String id);
 	
