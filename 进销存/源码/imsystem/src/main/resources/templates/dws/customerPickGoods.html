@@ -285,7 +285,7 @@ function queryGoodsTypeByPid(obj,id,op){
 				
 				$.each(data,function(){
 					all.attr("id",this.pid);
-					var option = $('<span onclick="queryGoodsTypeByPid(this,'+this.id+',false,)" class="visible-lg-inline-block visible-md-inline-block text-center option-span" id="'+this.id+'">'+this.name+'</span>');
+					var option = $('<span onclick="queryGoodsTypeByPid(this,'+"'"+this.id+"'"+',false,)" class="visible-lg-inline-block visible-md-inline-block text-center option-span" id="'+this.id+'">'+this.name+'</span>');
 					divoption.append(option);
 					
 				});

@@ -594,7 +594,6 @@ function inserGoods(){
 			return;
 			
 		}
-		
 		$.ajax({
 			
 			url:[[@{/goods/queryGoodsTypeByPid}]],
@@ -618,7 +617,7 @@ function inserGoods(){
 					divoption.append(activc);
 					$.each(data,function(){
 						
-						var option = $('<span onclick="queryGoodsTypeByPid(this,'+this.id+',false)" class="visible-lg-inline-block visible-md-inline-block text-center option-span" typeid="'+this.id+'">'+this.name+'</span>');
+						var option = $('<span onclick="queryGoodsTypeByPid(this,'+"'"+this.id+"'"+',false)" class="visible-lg-inline-block visible-md-inline-block text-center option-span" typeid="'+this.id+'">'+this.name+'</span>');
 						divoption.append(option);
 						
 					});
