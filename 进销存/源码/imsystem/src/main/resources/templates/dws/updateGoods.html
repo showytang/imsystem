@@ -391,7 +391,6 @@ td input {
 	
 	$("#editor p").parent().html(vue.goods.detail);
 	
-	console.log(vue.goods);
 	
 	var hisArr = [];
 	
@@ -417,6 +416,7 @@ td input {
 	
 	uptypeids =unique(uptypeids);
 	$(function() {
+		
 		
 		/*页面加载客户类型查询*/
 		$.ajax({
@@ -449,10 +449,11 @@ td input {
 				
 				for(var oo = 0; oo < hisArr.length; oo++){
 					var  arr = getSvids(oo);
-					console.log(arr);
 					ttooind = oo;
 					dataShow(arr);
 				}
+				
+				
 				
 			}
 			
@@ -465,6 +466,7 @@ td input {
 			updataGoods();
 			
 		});
+		
 		
 		
 		
@@ -852,8 +854,12 @@ td input {
 				var option = $('<span onclick="queryGoodsTypeByPid(this,'+"'"+typeArr[i].goodstypes[j].id+"'"+',false)" class="visible-lg-inline-block visible-md-inline-block text-center option-span" typeid="'+typeArr[i].goodstypes[j].id+'">'+typeArr[i].goodstypes[j].name+'</span>');
 				divoption.append(option);
 				
-				if(typeArr[i].goodstypes[j].id == typeArr[i].goodstype.id){
+				if(j == 0){
+					option.addClass("open");
+				}
 				
+				if(typeArr[i].goodstypes[j].id == typeArr[i].goodstype.id){
+					option.addClass("xx");
 					activeSpanStyle(option,false);
 					
 				}
@@ -861,6 +867,29 @@ td input {
 			}
 			
 			$("#goodstype").append(div);
+			//console.log($("#goodstype").html())
+			$("#goodstype").find(".option-top-div").each(function(index,obj){
+				
+				 //获取上一个span的X轴坐标
+				let parX = $(obj).find(".open").offset().left;
+				//获取当前span的X轴坐标
+				let nowX = $(obj).find(".xx").offset().left;
+				
+				let activeSpan = $(obj).find(".active1");
+				
+				//当前span的宽度
+				var nowWidth = $(obj).find(".xx").width();
+				//背景滑块和当前选项宽度同步
+				$(activeSpan).css("width", nowWidth);
+
+				//分开写直角转向
+				//添加动画
+				$(activeSpan).animate({
+					marginLeft: "+=" + (nowX - parX + 5)+ "px",
+					
+				}, 500); 
+				
+			});
 			
 		
 			
@@ -919,6 +948,7 @@ td input {
 			
 			
 		}
+		
 		
 	}
 	
@@ -1314,7 +1344,6 @@ function jhChange(obj){
 	 function checkedDl() {
 		
 		 uptypeids = unique(uptypeids);
-		console.log(uptypeids);
 		
 		var isCheckedDl = 0;
 		var isCheckedDlArray = [];

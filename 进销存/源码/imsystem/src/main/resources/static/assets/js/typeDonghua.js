@@ -55,7 +55,6 @@ function optionAddStyle(obj) {
 
 //类型滑动
 function activeSpanStyle(obj,op) {
-
 	if(op){
 		return true;
 	}
@@ -90,8 +89,6 @@ function activeSpanStyle(obj,op) {
 //	let nowY = $(obj).offset().top;
 
 	 $(obj).parent().find("span").removeClass("activeColor");
-
-	
 
 	//分开写直角转向
 	//添加动画
