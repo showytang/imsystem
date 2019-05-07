@@ -1,8 +1,11 @@
 package com.imsystem.mapper;
 
 import com.imsystem.domain.Goods;
+import com.imsystem.domain.QuoteVO;
 import com.imsystem.domain.Quotedprice;
 import com.imsystem.domain.QuotedpriceExample;
+
+import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,6 +21,10 @@ public interface QuotedpriceMapper {
 	int updatePrice(@Param("qid") String qid,@Param("price") Double price);
 	
 	int deleteQuote(@Param("qid") String qid);
+	
+	List<QuoteVO> queryQuoteCustomer(@Param("name") String name,@Param("gid") String gid);
+	
+	int addUpdateQuote(@Param("price") Double price,@Param("time") Date time,@Param("uid") String uid,@Param("qid") String qid);
 	
     int countByExample(QuotedpriceExample example);
 

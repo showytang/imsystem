@@ -73,4 +73,19 @@ public interface QuotedPriceService {
 	 * @return
 	 */
 	public List<QuoteVO> queryQuoteByGoodsValueId(String gid);
+	
+	/**
+	 *  查询报价的客户
+	 * @param name
+	 * @return
+	 */
+	public List<QuoteVO> queryCustomerQuoteList(String name,String gid);
+	
+	/**
+	 * 新增报价
+	 * @param qvo  报价信息
+	 * @param uid  报价用户
+	 * @return
+	 */
+	public int addQuote(QuoteVO qvo,String uid);
 }

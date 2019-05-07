@@ -55,5 +55,12 @@ public interface CustomerService {
 	 * @return
 	 */
 	public List<Customer> queryCustomerByStore(String sid);
+	
+	/**
+	 * 根据客户名查询（客户报价选择客户）
+	 * @param name
+	 * @return
+	 */
+	public List<Customer> queryCustomerByName(String name);
 
 }

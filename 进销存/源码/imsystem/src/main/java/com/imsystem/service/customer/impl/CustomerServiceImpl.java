@@ -111,4 +111,13 @@ public class CustomerServiceImpl implements CustomerService{
 		return customerDao.selectCustomerByStore(sid);
 	}
 
+	/**
+	 * 客户报价选择客户的客户查询
+	 */
+	@Override
+	public List<Customer> queryCustomerByName(String name) {
+		// TODO Auto-generated method stub
+		return customerDao.queryByName(name);
+	}
+
 }

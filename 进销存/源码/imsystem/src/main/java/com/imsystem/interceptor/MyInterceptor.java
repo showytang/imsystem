@@ -30,7 +30,7 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
 
 		System.out.println("你来了.....");
 
-/*
+
 		User user = (User) request.getSession().getAttribute("user");
 		if(user!=null) {
 			return true;
@@ -50,11 +50,11 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
 				return true;
 			}
 		}
-		return false;*/
+		return false;
 		
 		
 
-		return true;
+		/*return true;*/
 		
 	}
 

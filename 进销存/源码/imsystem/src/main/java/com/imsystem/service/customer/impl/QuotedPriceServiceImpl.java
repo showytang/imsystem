@@ -1,7 +1,9 @@
 package com.imsystem.service.customer.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -176,6 +178,40 @@ public class QuotedPriceServiceImpl implements QuotedPriceService{
 			}
 		}
 		return qvoList;
+	}
+
+	/**
+	 * 查询报价客户
+	 */
+	@Override
+	public List<QuoteVO> queryCustomerQuoteList(String name, String gid) {
+		// TODO Auto-generated method stub
+		return qDao.queryQuoteCustomer(name, gid);
+	}
+
+	@Override
+	public int addQuote(QuoteVO qvo, String uid) {
+		// TODO Auto-generated method stub
+		Date time=new Date();
+		if(qvo.getGvobj()!=null) {
+			System.out.println("根据商品新增报价");
+			//根据商品新增报价
+			for(Quotedprice qObj1:qvo.getQplist()) {
+				if(qObj1.getId().equals("0")) {
+					String rand=UUID.randomUUID().toString();
+					qObj1.setId(rand);
+					qObj1.setSvid(qvo.getGvobj().getId());
+					qObj1.setTime(time);
+					qObj1.setUpdatetime(time);
+					qObj1.setUid(uid);
+					qObj1.setState(0);
+					int row1=qDao.insert(qObj1);
+				}
+			}
+		}else if(qvo.getCobj()!=null) {
+			//根据客户新增报价
+		}
+		return 0;
 	}
 
 }

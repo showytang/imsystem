@@ -101,7 +101,7 @@
                             <div class="card-block">
                             	 <h5 class="card-subtitle " style="float: right;display: flex;flex-direction: row;">
                             	 	
-                                	<input type="button" class="btn btn-primary" value="确定新增报价"/>
+                                	<input type="button" id="addQuote" class="btn btn-primary" value="确定新增报价"/>
                                 </h5>
                                 <h4 class="card-title">
                                 	<ul id="chooseUl">
@@ -144,10 +144,11 @@
                                 </form>
                                 
                                 <form class="form-horizontal form-material" id="goodsAdd" method="post" action="">
+                                	<input type="hidden" value="1" name="uid"/>
                                 	<div class="form-group">
                                         <label class="col-md-12">货&nbsp;&nbsp;品&nbsp;&nbsp;实&nbsp;&nbsp;例</label>
                                         <div class="col-sm-12">
-                                            <select class="form-control form-control-line first-select" value="" id="goodsName">
+                                            <select class="form-control form-control-line first-select" value=""  name="gvobj.id" id="goodsName">
                                             </select>
                                         </div>
                                     </div>
@@ -159,13 +160,23 @@
                                             <i id="customerNum" class="numCss" v-if="goodsQuoteList.length!=0">{{goodsQuoteList.length}}</i>
                                         </div>
                                         <div class="col-sm-12 uldiv" id="guldiv">
-                                            <ul v-if="goodsQuoteList.length!=0">
+                                            <ul >
                                             
-                                            	<li v-for="(o,i) in goodsQuoteList">
+                                            	<li class="quoteli" v-if="goodsQuoteList.length!=0" v-for="(o,i) in goodsQuoteList">
                                             		<span class="customerName name">{{o.cobj.name}}</span>
                                             		<span class="quote">报价：￥<span class="quotePrirce">{{o.qpobj.price}}</span> </span>
+                                            		<input type="hidden" class="endCustomerId" name="" :value="o.cobj.id"/>
+                                            		<input type="hidden" class="endGoodsPrice" name="" :value="o.qpobj.price"/>
+                                            		<input type="hidden" class="endQuoteId" name="" :value="o.qpobj.id"/>
                                             	</li>
                                             	
+                                            	<li class="quoteli" th:each="items,state:${qvolist}">
+                                            		<span class="customerName name" th:text="${items.cobj.name}"></span>
+                                            		<span class="quote">报价：￥<span class="quotePrirce" th:text="${items.qpobj.price}"></span> </span>
+                                            		<input type="hidden" class="endCustomerId" name="" th:value="${items.cobj.id}"/>
+                                            		<input type="hidden" class="endGoodsPrice" name="" th:value="${items.qpobj.price}"/>
+                                            		<input type="hidden" class="endQuoteId" name="" th:value="0"/>
+                                            	</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -250,7 +261,6 @@
 						dataType:"json",
 						success:function(result){
 							vue.goodsQuoteList=result;
-							console.log(vue.goodsQuoteList);
 						}
 					});
 					
@@ -329,17 +339,38 @@
 				if(cname=="0"){
 					
 				}else{
-					$("#customerAdd").attr("action","tochosecustomers?cc=yes&cv="+cname+"&gc=not&gv="+gname);
+					$("#customerAdd").attr("action","tochosegoods?cc=yes&cv="+cname+"&gc=not&gv="+gname);
 					$("#customerAdd").submit();
 				}
 			});
 			
 			$("#chooseCustomer").click(function(){
+				var cname=$("#customerName").attr("value");
 				var gname=$("#goodsName").attr("value");
 				if(gname==""){
 					
 				}else{
-					location="ChooseCustomers.html";
+					$("#goodsAdd").attr("action","tochosecustomers?cc=not&cv="+cname+"&gc=yes&gv="+gname);
+					$("#goodsAdd").submit();
+				}
+			});
+			
+			/* 确认报价 */
+			$("#addQuote").click(function(){
+				var customerChoose=$("#customerChoose").attr("class");
+				var goodsChoose=$("#goodsChoose").attr("class");
+				if(customerChoose=="check"){
+					alert("customer");
+				}else if(goodsChoose=="check"){
+					var num=0;
+					$(".quoteli").each(function(){
+						var i=num++;
+						$(this).find(".endCustomerId").attr("name","qplist["+i+"].cid");
+						$(this).find(".endGoodsPrice").attr("name","qplist["+i+"].price");
+						$(this).find(".endQuoteId").attr("name","qplist["+i+"].id");
+					});
+					$("#goodsAdd").attr("action","addquote");
+					$("#goodsAdd").submit();
 				}
 			});
 	

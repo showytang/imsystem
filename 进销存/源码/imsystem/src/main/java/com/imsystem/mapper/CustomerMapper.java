@@ -20,6 +20,8 @@ public interface CustomerMapper {
 	
 	int updateplug(@Param("id")String id,@Param("money")Double money);
 	
+	List<Customer> queryByName(@Param("name")String name);
+	
     int countByExample(CustomerExample example);
 
     int deleteByExample(CustomerExample example);
