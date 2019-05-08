@@ -3,8 +3,6 @@
 .option-span-all {
 	cursor: pointer;
 	border-radius: 3px;
-	font-size: 19px;
-	letter-spacing: 5px;
 	height: 100%;
 	line-height: 4vh;
 	min-width: 6vh;
