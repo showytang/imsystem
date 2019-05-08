@@ -136,6 +136,7 @@ public class GoodsServiceImpl implements GoodsService {
 		stock.setSid("0");
 		stock.setTime(time);
 		stock.setUpdatetime(time);
+		stock.setState(0);
 
 		stockMap.insertSelective(stock);
 
@@ -145,6 +146,7 @@ public class GoodsServiceImpl implements GoodsService {
 				img.setId(UUID.randomUUID().toString());
 				img.setTime(time);
 				img.setGid(gid);
+				img.setState(0);
 				imgMapper.insertSelective(img);
 
 			}
@@ -159,6 +161,7 @@ public class GoodsServiceImpl implements GoodsService {
 			goodsValue.setId(goodsvID);
 			goodsValue.setName("");
 			goodsValue.setGid(gid);
+			goodsValue.setState(0);
 			goodsValue.setDefaultvalue(1);
 			goodsValue.setEnname("");
 			goodsValue.setJprice(goodsVo.getGoods().getJprice());
@@ -195,6 +198,9 @@ public class GoodsServiceImpl implements GoodsService {
 
 					String gvid = new Date().getTime() + "";
 					gv.setId(gvid);
+					gv.setTime(time);
+					gv.setUpdatetime(time);
+					gv.setState(0);
 
 					File dest = new File(url);
 					/* 选择文件上传路径,如果没有则创建 */
@@ -219,8 +225,6 @@ public class GoodsServiceImpl implements GoodsService {
 
 								gv.getImg().transferTo(fileImg);
 								gv.setDefaultvalue(0);
-								gv.setTime(time);
-								gv.setUpdatetime(time);
 							}
 
 						} catch (IllegalStateException e) {
@@ -253,6 +257,7 @@ public class GoodsServiceImpl implements GoodsService {
 
 							stv.setVid(gvid);
 							stv.setTime(time);
+							stv.setState(0);
 							stv.setUpdatetime(time);
 							goodsStandardMap.insertSelective(stv);
 						}
@@ -266,6 +271,7 @@ public class GoodsServiceImpl implements GoodsService {
 							gp.setId(UUID.randomUUID().toString());
 							gp.setGvid(gvid);
 							gp.setTime(time);
+							gp.setState(0);
 							gp.setUpdatetime(time);
 							goodsPriceMap.insertSelective(gp);
 
@@ -352,6 +358,7 @@ public class GoodsServiceImpl implements GoodsService {
 		stock.setCode("0");
 		stock.setSid("0");
 		stock.setTime(time);
+		stock.setState(0);
 		stock.setUpdatetime(time);
 
 		stockMap.insertSelective(stock);
@@ -444,6 +451,7 @@ public class GoodsServiceImpl implements GoodsService {
 							stv.setId(UUID.randomUUID().toString());
 							stv.setTime(time);
 							stv.setUpdatetime(time);
+							stv.setState(0);
 							stv.setVid(gvid);
 							goodsStandardMap.insertSelective(stv);
 						}
@@ -457,6 +465,7 @@ public class GoodsServiceImpl implements GoodsService {
 							gp.setId(UUID.randomUUID().toString());
 							gp.setGvid(gvid);
 							gp.setTime(time);
+							gp.setState(0);
 							gp.setUpdatetime(time);
 							goodsPriceMap.insertSelective(gp);
 

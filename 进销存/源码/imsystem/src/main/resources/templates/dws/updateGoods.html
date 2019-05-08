@@ -23,6 +23,7 @@
 	th:href="@{/assets/img/favicon.png}">
 
 <link rel="stylesheet" th:href="@{/assets/css/typeDonghua.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/xcConfirm.css}" />
 
 <script type="text/javascript"
 	th:src="@{/assets/js/jquery-3.1.1.min.js}"></script>
@@ -30,6 +31,7 @@
 <script th:src="@{/assets/js/bootstrap.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/wangEditor.min.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/jquery.color.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/xcConfirm.js}"></script>
 
 <style>
 td input {
@@ -432,6 +434,7 @@ td input {
 				for(var oo = 0; oo < hisArr.length; oo++){
 					var  arr = getSvids(oo);
 					ttooind = oo;
+					
 					dataShow(arr);
 				}
 				
@@ -462,6 +465,15 @@ td input {
 	*/
 	function updataGoods(){
 		
+		if($("#goodstype .activeColor:last").attr("typeid") == null){
+			alerts("请选择类型");
+			return false;
+		}
+		if($("[name=name]").val().trim() == ""){
+			alerts("商品名称不能为空");
+			return false;
+		}
+		
 		var uid = JSON.parse(localStorage.user).id;
 		
 		var ind = 0;
@@ -469,25 +481,25 @@ td input {
 		var formData = new FormData();
 		
 		//商品名称
-		formData.append("goods.name",$("[name=name]").val());
-		formData.append("goods.enname",ConvertPinyin($("[name=name]").val()));
+		formData.append("goods.name",$("[name=name]").val().trim());
+		formData.append("goods.enname",ConvertPinyin($("[name=name]").val().trim()));
 		//商品id
 		formData.append("goods.id",$("[name=name]").attr("ggid"));
 		formData.append("goods.uid",uid);
 		//单位前缀
-		formData.append("goods.prevbit",$("[name=prevbit]").val());
+		formData.append("goods.prevbit",$("[name=prevbit]").val().trim());
 		//单位后缀
-		formData.append("goods.sufbit",$("[name=sufbit]").val());
+		formData.append("goods.sufbit",$("[name=sufbit]").val().trim());
 		//单位值
-		formData.append("goods.bitval",$("[name=bitval]").val());
+		formData.append("goods.bitval",$("[name=bitval]").val().trim());
 		//商品进价
-		formData.append("goods.jprice",$("[name=jprice]").val());
+		formData.append("goods.jprice",$("[name=jprice]").val().trim());
 		//商品售价
-		formData.append("goods.price",$("[name=price]").val());
+		formData.append("goods.price",$("[name=price]").val().trim());
 		//最小库存
-		formData.append("goods.minsecurity",$("[name=minsecurity]").val());
+		formData.append("goods.minsecurity",$("[name=minsecurity]").val().trim());
 		//最大库存
-		formData.append("goods.maxsecurity",$("[name=maxsecurity]").val());
+		formData.append("goods.maxsecurity",$("[name=maxsecurity]").val().trim());
 		//描述
 		formData.append("goods.detail",detail);
 		//商品类型
@@ -541,7 +553,7 @@ td input {
 				   var gcname = $(obj).find("[name=goodsType]").attr("vm");
 				   
 				   formData.append("goodsValues["+(ind)+"].name",gcname);
-				   formData.append("goodsValues["+(ind)+"].jprice",$(obj).find("[name=detailprice]").val());
+				   formData.append("goodsValues["+(ind)+"].jprice",$(obj).find("[name=detailprice]").val().trim());
 				   formData.append("goodsValues["+(ind)+"].id",$(obj).find("[name=goodsType]").attr("gvid"));
 				   formData.append("goodsValues["+(ind)+"].enname",ConvertPinyin(gcname));
 				   formData.append("goodsValues["+(ind)+"].column4",$(obj).find("[name=goodsType]").attr("column4"));
@@ -558,14 +570,14 @@ td input {
 				   
 				   //实例库存
 				   formData.append("goodsValues["+(ind)+"].stockDetails.id",$(obj).find("[name=num]").attr("sdid"));
-				   formData.append("goodsValues["+(ind)+"].stockDetails.count",$(obj).find("[name=num]").val());
-				   formData.append("goodsValues["+(ind)+"].stockDetails.price",$(obj).find("[name=detailprice]").val());
+				   formData.append("goodsValues["+(ind)+"].stockDetails.count",$(obj).find("[name=num]").val().trim());
+				   formData.append("goodsValues["+(ind)+"].stockDetails.price",$(obj).find("[name=detailprice]").val().trim());
 				   formData.append("goodsValues["+(ind)+"].stockDetails.uid",uid);
 				   
 			
 				   
 				   /*商品实例规格添加*/
-				   var typeIds = $(obj).find("[name=goodsType]").val();
+				   var typeIds = $(obj).find("[name=goodsType]").val().trim();
 				   var typeIdArr = typeIds.split(",");
 				   
 				   for(var n = 0;n < typeIdArr.length;n++){
@@ -585,7 +597,7 @@ td input {
 						formData.append("goodsValues["+(ind)+"].goodsPrices["+item+"].id",$(pojo).attr("id"));
 						formData.append("goodsValues["+(ind)+"].goodsPrices["+item+"].ctid",$(pojo).attr("ctid"));
 						formData.append("goodsValues["+(ind)+"].goodsPrices["+item+"].sufname",$(pojo).attr("viewname"));
-						formData.append("goodsValues["+(ind)+"].goodsPrices["+item+"].price",$(pojo).val());
+						formData.append("goodsValues["+(ind)+"].goodsPrices["+item+"].price",$(pojo).val().trim());
 						formData.append("goodsValues["+(ind)+"].goodsPrices["+item+"].uid",uid);
 						
 					});
@@ -616,9 +628,7 @@ td input {
 			processData:false,
 			success:function(data){
 				if(data > 0){
-					alert("修改成功");
-				}else{
-					alert("修改失败！");
+					window.wxc.xcConfirm("修改成功！", "success");
 				}
 				
 			},
@@ -630,7 +640,11 @@ td input {
 	}
 	
 	
-	
+	function tiaozhuang(bl){
+			
+			location = [[@{/goods/queryAllGoods}]];
+			
+		}
 	
 	function dw(obj) {
 
@@ -747,7 +761,14 @@ td input {
 	}
 	 
 	 function delImg(obj) {
-
+		 
+		 	if($(".img-div").length <= 2){
+		 		alerts("至少需要一张图片")
+		 		return false;
+		 	}
+		 	
+		 	
+		 
 			fileArr.splice($(obj).attr("index"), 1);
 
 			$(".change:gt('"+$(obj).attr("index")+"')").each(function(){
@@ -818,9 +839,7 @@ td input {
 		
 	}
 	
-	
 
-	
 	/*
 		数据渲染，类型and规格值
 	*/
@@ -858,28 +877,33 @@ td input {
 			
 			$("#goodstype").append(div);
 			//console.log($("#goodstype").html())
-			$("#goodstype").find(".option-top-div").each(function(index,obj){
-				
-				 //获取上一个span的X轴坐标
-				let parX = $(obj).find(".open").offset().left;
-				//获取当前span的X轴坐标
-				let nowX = $(obj).find(".xx").offset().left;
-				
-				let activeSpan = $(obj).find(".active1");
-				
-				//当前span的宽度
-				var nowWidth = $(obj).find(".xx").width();
-				//背景滑块和当前选项宽度同步
-				$(activeSpan).css("width", nowWidth);
-
-				//分开写直角转向
-				//添加动画
-				$(activeSpan).animate({
-					marginLeft: "+=" + (nowX - parX + 5)+ "px",
+			
+				$("#goodstype").find(".option-top-div").each(function(index,obj){
+						let activeSpan = $(obj).find(".active1");
 					
-				}, 500); 
-				
-			});
+					if(!activeSpan.hasClass("yj")){
+						
+						//获取上一个span的X轴坐标
+						let parX = $(obj).find(".open").offset().left;
+						//获取当前span的X轴坐标
+						let nowX = $(obj).find(".xx").offset().left;
+						
+						
+						activeSpan.addClass("yj");
+						//当前span的宽度
+						var nowWidth = $(obj).find(".xx").width();
+						//背景滑块和当前选项宽度同步
+						$(activeSpan).css("width", nowWidth);
+						
+						$(activeSpan).animate({
+							marginLeft: "+=" + (nowX - parX + 5)+ "px",
+							
+						}, 500); 
+					}
+					
+					 
+					
+				});
 			
 		
 			
