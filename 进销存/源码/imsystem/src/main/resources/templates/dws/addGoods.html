@@ -135,15 +135,8 @@ td input {
 											aria-expanded="false">
 											主单位<span class="caret"></span>
 										</button>
-										<ul class="dropdown-menu">
-											<li class="dw"><a>包</a></li>
-											<li class="dw"><a>箱</a></li>
-											<li class="dw"><a>车</a></li>
-											<li class="dw"><a>坨</a></li>
-											<li class="dw"><a>件</a></li>
-											<li class="dw"><a>个</a></li>
-											<li class="dw"><a>只</a></li>
-											<li class="dw"><a>双</a></li>
+										<ul class="dropdown-menu" >
+											<li class="dw" v-for="item in bit" onclick="dw(this)"><a v-text="item.name"></a></li>
 										</ul>
 									</div>
 									<!-- /前缀 -->
@@ -160,15 +153,8 @@ td input {
 											aria-expanded="false">
 											副单位<span class="caret"></span>
 										</button>
-										<ul class="dropdown-menu">
-											<li class="dw"><a>包</a></li>
-											<li class="dw"><a>箱</a></li>
-											<li class="dw"><a>车</a></li>
-											<li class="dw"><a>坨</a></li>
-											<li class="dw"><a>件</a></li>
-											<li class="dw"><a>个</a></li>
-											<li class="dw"><a>只</a></li>
-											<li class="dw"><a>双</a></li>
+										<ul class="dropdown-menu"  >
+											<li class="dw" v-for="item in bit" onclick="dw(this)"><a v-text="item.name"></a></li>
 										</ul>
 									</div>
 									<!-- /后缀 -->
@@ -185,15 +171,9 @@ td input {
 											aria-expanded="false">
 											单位值 <span class="caret"></span>
 										</button>
-										<ul class="dropdown-menu">
-											<li class="dw"><a>包</a></li>
-											<li class="dw"><a>箱</a></li>
-											<li class="dw"><a>车</a></li>
-											<li class="dw"><a>坨</a></li>
-											<li class="dw"><a>件</a></li>
-											<li class="dw"><a>个</a></li>
-											<li class="dw"><a>只</a></li>
-											<li class="dw"><a>双</a></li>
+										
+										<ul class="dropdown-menu"  >
+											<li class="dw" v-for="item in bit" onclick="dw(this)"><a v-text="item.name"></a></li>
 										</ul>
 									</div>
 									<!-- /单位值 -->
@@ -340,9 +320,12 @@ td input {
 	var vuePojo = new Vue({
 		el:".main",
 		data:{
-			customerTypeList:""
+			customerTypeList:"",
+			bit:""
 		}
 	});
+	
+	vuePojo.bit = [[${bit}]];
 
 	var E = window.wangEditor;
 	var editor = new E('#editor');

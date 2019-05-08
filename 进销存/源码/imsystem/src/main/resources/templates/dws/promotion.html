@@ -202,7 +202,7 @@
 									<div class="layui-input-block">
 										
 										<div v-for="(item,index) in reckonList">
-											<input type="radio" lay-filter="radioFormula" name="pormotionrule" :value="item.conditionText+','+item.formulaText" :title="item.conditionText+','+item.formulaText">
+											<input type="radio" lay-filter="radioFormula" name="pormotionrule" :condition="item.condition" :formula="item.formula" :value="item.conditionText+','+item.formulaText" :title="item.conditionText+','+item.formulaText">
 										</div>
 										
 									</div>
@@ -483,7 +483,7 @@
 						
 						let reckon = {
 							'conditionText':conditionText,
-							'condition':conditionText,
+							'condition':condition,
 							'formula':formula,
 							'formulaText':formulaText
 						}
@@ -492,6 +492,7 @@
 						setTimeout(function() {
 						form.render('radio');
 						}, 300);
+						console.log(vue.reckonList)
 					},
 					removeConditionDiv:function(){
 						$(".conditionDiv").remove();

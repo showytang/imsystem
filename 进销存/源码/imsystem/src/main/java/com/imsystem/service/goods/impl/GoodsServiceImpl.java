@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.imsystem.domain.Bit;
 import com.imsystem.domain.Customertype;
 import com.imsystem.domain.Goods;
 import com.imsystem.domain.GoodsVO;
@@ -20,6 +21,7 @@ import com.imsystem.domain.Goodsvalue;
 import com.imsystem.domain.Img;
 import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
+import com.imsystem.mapper.BitMapper;
 import com.imsystem.mapper.CustomertypeMapper;
 import com.imsystem.mapper.GoodsMapper;
 import com.imsystem.mapper.GoodspriceMapper;
@@ -87,6 +89,19 @@ public class GoodsServiceImpl implements GoodsService {
 	 */
 	@Autowired
 	private CustomertypeMapper customeTypeMap;
+
+	@Autowired
+	private BitMapper bitMap;
+	
+	
+	/**
+	 * 单位值查询
+	 */
+	@Override
+	public List<Bit> queryAllBit() {
+		// TODO Auto-generated method stub
+		return bitMap.queryall();
+	}
 
 	/**
 	 * 客户类型查询

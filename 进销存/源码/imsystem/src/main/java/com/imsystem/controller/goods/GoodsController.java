@@ -147,6 +147,7 @@ public class GoodsController {
 		Goods goods = goodsSer.updateGoodsLoad(id);
 
 		model.addAttribute("goods", goods);
+		model.addAttribute("bit", goodsSer.queryAllBit());
 
 		return "dws/updateGoods";
 
@@ -301,8 +302,10 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/insertGoodsLoad")
-	protected String insertGoodsLoad() {
+	protected String insertGoodsLoad(Model model) {
 
+		model.addAttribute("bit", goodsSer.queryAllBit());
+		
 		return "dws/addGoods";
 	}
 	
