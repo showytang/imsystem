@@ -34,7 +34,7 @@ public class OrderInsertController {
 	@RequestMapping("/query")
 	public String query(Model model) {
 		
-		model.addAttribute("paytypeList", paytype.queryPaytype(null));
+		model.addAttribute("paytypeList", orderInsert.queryPaytype());
 		
 		model.addAttribute("supplierlist", supplierService.queryDealOrderSupplier("1"));
 		
@@ -65,7 +65,7 @@ public class OrderInsertController {
 	@RequestMapping("/toInsertOrderOut")
 	public String toInsertOrderOut(Model model) {
 		
-		model.addAttribute("paytypeList", paytype.queryPaytype(null));
+		model.addAttribute("paytypeList", orderInsert.queryPaytype());
 		
 		model.addAttribute("supplierlist", supplierService.queryDealOrderSupplier("1"));
 		

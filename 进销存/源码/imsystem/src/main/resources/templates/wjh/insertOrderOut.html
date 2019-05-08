@@ -8,6 +8,7 @@
 <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
 <script type="text/javascript"
 	th:src="@{/assets/js/jquery-3.1.1.min.js}"></script>
+	<link rel="stylesheet" th:href="@{/assets/css/toastr.css}">
 <link rel="stylesheet"
 	th:href="@{/assets/css/bootstrap-datetimepicker.min.css}" />
 <script type="text/javascript" th:src="@{/assets/js/bootstrap.min.js}"></script>
@@ -25,9 +26,24 @@
 <script th:src="@{/assets/js/jquery.slimscroll.min.js}"></script>
 <script th:src="@{/assets/js/klorofil-common.js}"></script>
 <script th:src="@{/assets/js/vue.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/toastr.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/klorofil-common.js}"></script>
 <style type="text/css">
 .jiben>div {
 	margin-top: 10px;
+}
+
+.toast-top-right {
+	right: 50%;
+	top: 10%;
+}
+
+.toast-top-center {
+	top: 5%;
+}
+
+#toast-container {
+	position: fixed;
 }
 
 .shappingImg {
@@ -606,8 +622,8 @@
 							processData : false,
 							success : function(result){
 								alerts("预定订单添加成功");
-								localStorage.removeItem("map");
-								localStorage.removeItem("list");
+								localStorage.removeItem("maps");
+								localStorage.removeItem("list1");
 								setTimeout(() => {
 									window.location.reload();
 								},500)
