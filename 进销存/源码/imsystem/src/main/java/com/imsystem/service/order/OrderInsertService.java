@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.imsystem.domain.Paytype;
 import com.imsystem.domain.Sales;
 import com.imsystem.domain.Salesdetails;
 import com.imsystem.domain.Salesorder;
@@ -28,5 +29,7 @@ public interface OrderInsertService {
 	int inserorderDesc(Vector<Salesdetails> salesdetails);
 	
 	int UpdateSalesOrder(@RequestBody Salesorder sales);
+	
+	List<Paytype> queryPaytype();
 	
 }

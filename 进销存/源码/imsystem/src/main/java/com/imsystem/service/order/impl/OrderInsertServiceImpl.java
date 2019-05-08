@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import com.imsystem.domain.Paytype;
 import com.imsystem.domain.Sales;
 import com.imsystem.domain.Salesback;
 import com.imsystem.domain.Salesbackdetails;
@@ -24,6 +25,7 @@ import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Stockrecord;
 import com.imsystem.domain.Supplier;
 import com.imsystem.mapper.CustomerMapper;
+import com.imsystem.mapper.PaytypeMapper;
 import com.imsystem.mapper.SalesMapper;
 import com.imsystem.mapper.SalesbackMapper;
 import com.imsystem.mapper.SalesbackdetailsMapper;
@@ -76,6 +78,9 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 	@Autowired
 	SupplierMapper supperMap;
+	
+	@Autowired
+	PaytypeMapper pay;
 
 	@Override
 	public int insert(Stock stock) {
@@ -487,6 +492,12 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 		int count = salesorderMapper.updateCount(sales.getId());
 
 		return count;
+	}
+
+	@Override
+	public List<Paytype> queryPaytype() {
+		// TODO Auto-generated method stub
+		return pay.selectByExample(null);
 	}
 
 }
