@@ -435,6 +435,7 @@ td input {
 function inserGoods(){
 		
 	
+		var uid = JSON.parse(localStorage.user).id;
 		
 		var formData = new FormData();
 		 
@@ -457,6 +458,7 @@ function inserGoods(){
 		formData.append("goods.jprice",$("[name=jprice]").val());
 		//商品售价
 		formData.append("goods.price",$("[name=price]").val());
+		formData.append("goods.uid",uid);
 		//最小库存
 		formData.append("goods.minsecurity",$("[name=minsecurity]").val());
 		//最大库存
@@ -476,10 +478,12 @@ function inserGoods(){
 			   formData.append("goodsValues["+(index-1)+"].name",gcname);
 			   formData.append("goodsValues["+(index-1)+"].enname",ConvertPinyin(gcname));
 			   formData.append("goodsValues["+(index-1)+"].jprice",$(obj).find("[name=detailprice]").val());
+			   formData.append("goodsValues["+(index-1)+"].uid",uid);
 			 
 			   //实例库存
 			   formData.append("goodsValues["+(index-1)+"].stockDetails.count",$(obj).find("[name=num]").val());
 			   formData.append("goodsValues["+(index-1)+"].stockDetails.price",$(obj).find("[name=detailprice]").val());
+			   formData.append("goodsValues["+(index-1)+"].stockDetails.uid",uid);
 			   
 			   
 			   
@@ -499,6 +503,7 @@ function inserGoods(){
 				formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].svids",typeIds);
 				formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].svid",typeIdArr[n]);
 				formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].enname",ConvertPinyin(gcname));
+				formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].uid",uid);
 				
 			   }
 			   
@@ -509,6 +514,7 @@ function inserGoods(){
 					formData.append("goodsValues["+(index-1)+"].goodsPrices["+item+"].ctid",$(pojo).attr("ctid"));
 					formData.append("goodsValues["+(index-1)+"].goodsPrices["+item+"].sufname",$(pojo).attr("viewname"));
 					formData.append("goodsValues["+(index-1)+"].goodsPrices["+item+"].price",$(pojo).val());
+					formData.append("goodsValues["+(index-1)+"].goodsPrices["+item+"].uid",uid);
 					
 				});
 				

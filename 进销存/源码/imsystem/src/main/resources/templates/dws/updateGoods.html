@@ -462,6 +462,8 @@ td input {
 	*/
 	function updataGoods(){
 		
+		var uid = JSON.parse(localStorage.user).id;
+		
 		var ind = 0;
 		
 		var formData = new FormData();
@@ -471,6 +473,7 @@ td input {
 		formData.append("goods.enname",ConvertPinyin($("[name=name]").val()));
 		//商品id
 		formData.append("goods.id",$("[name=name]").attr("ggid"));
+		formData.append("goods.uid",uid);
 		//单位前缀
 		formData.append("goods.prevbit",$("[name=prevbit]").val());
 		//单位后缀
@@ -511,6 +514,7 @@ td input {
 				if($(obj).hasClass("urlchange")){
 					 
 					 formData.append("goodsImgs["+iipp+"].url", $(obj).find("img").attr("src"));		
+					 formData.append("goodsImgs["+iipp+"].uid", uid);		
 					 formData.append("goodsImgs["+iipp+"].name", $(obj).find("img").attr("name"));		
 					 formData.append("goodsImgs["+iipp+"].oldname", $(obj).find("img").attr("oldname"));		
 					 iipp++;
@@ -541,6 +545,7 @@ td input {
 				   formData.append("goodsValues["+(ind)+"].id",$(obj).find("[name=goodsType]").attr("gvid"));
 				   formData.append("goodsValues["+(ind)+"].enname",ConvertPinyin(gcname));
 				   formData.append("goodsValues["+(ind)+"].column4",$(obj).find("[name=goodsType]").attr("column4"));
+				   formData.append("goodsValues["+(ind)+"].uid",uid);
 				   if($(obj).find("[type=file]")[0].files.length > 0){
 					   
 					   formData.append("goodsValues["+(ind)+"].img",$(obj).find("[type=file]")[0].files[0]);
@@ -555,6 +560,7 @@ td input {
 				   formData.append("goodsValues["+(ind)+"].stockDetails.id",$(obj).find("[name=num]").attr("sdid"));
 				   formData.append("goodsValues["+(ind)+"].stockDetails.count",$(obj).find("[name=num]").val());
 				   formData.append("goodsValues["+(ind)+"].stockDetails.price",$(obj).find("[name=detailprice]").val());
+				   formData.append("goodsValues["+(ind)+"].stockDetails.uid",uid);
 				   
 			
 				   
@@ -568,6 +574,7 @@ td input {
 					formData.append("goodsValues["+(ind)+"].goodsstandardvalues["+n+"].svids",typeIds);
 					formData.append("goodsValues["+(ind)+"].goodsstandardvalues["+n+"].svid",typeIdArr[n]);
 					formData.append("goodsValues["+(ind)+"].goodsstandardvalues["+n+"].enname",ConvertPinyin(gcname));
+					formData.append("goodsValues["+(ind)+"].goodsstandardvalues["+n+"].uid",uid);
 					
 				   }
 				   
@@ -579,6 +586,7 @@ td input {
 						formData.append("goodsValues["+(ind)+"].goodsPrices["+item+"].ctid",$(pojo).attr("ctid"));
 						formData.append("goodsValues["+(ind)+"].goodsPrices["+item+"].sufname",$(pojo).attr("viewname"));
 						formData.append("goodsValues["+(ind)+"].goodsPrices["+item+"].price",$(pojo).val());
+						formData.append("goodsValues["+(ind)+"].goodsPrices["+item+"].uid",uid);
 						
 					});
 					
