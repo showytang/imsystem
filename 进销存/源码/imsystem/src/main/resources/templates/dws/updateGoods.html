@@ -146,15 +146,8 @@ td input {
 											aria-expanded="false">
 											主单位<span class="caret"></span>
 										</button>
-										<ul class="dropdown-menu">
-											<li onclick="dw(this)"><a>包</a></li>
-											<li onclick="dw(this)"><a>箱</a></li>
-											<li onclick="dw(this)"><a>车</a></li>
-											<li onclick="dw(this)"><a>坨</a></li>
-											<li onclick="dw(this)"><a>件</a></li>
-											<li onclick="dw(this)"><a>个</a></li>
-											<li onclick="dw(this)"><a>只</a></li>
-											<li onclick="dw(this)"><a>双</a></li>
+										<ul class="dropdown-menu" >
+											<li class="dw" v-for="item in bit" onclick="dw(this)"><a v-text="item.name"></a></li>
 										</ul>
 									</div>
 									<!-- /btn-group -->
@@ -171,15 +164,8 @@ td input {
 											aria-expanded="false">
 											副单位<span class="caret"></span>
 										</button>
-										<ul class="dropdown-menu">
-											<li onclick="dw(this)"><a>包</a></li>
-											<li onclick="dw(this)"><a>箱</a></li>
-											<li onclick="dw(this)"><a>车</a></li>
-											<li onclick="dw(this)"><a>坨</a></li>
-											<li onclick="dw(this)"><a>件</a></li>
-											<li onclick="dw(this)"><a>个</a></li>
-											<li onclick="dw(this)"><a>只</a></li>
-											<li onclick="dw(this)"><a>双</a></li>
+										<ul class="dropdown-menu" >
+											<li class="dw" v-for="item in bit" onclick="dw(this)"><a v-text="item.name"></a></li>
 										</ul>
 									</div>
 									<!-- /btn-group -->
@@ -196,15 +182,8 @@ td input {
 											aria-expanded="false">
 											单位值 <span class="caret"></span>
 										</button>
-										<ul class="dropdown-menu">
-											<li onclick="dw(this)"><a>包</a></li>
-											<li onclick="dw(this)"><a>箱</a></li>
-											<li onclick="dw(this)"><a>车</a></li>
-											<li onclick="dw(this)"><a>坨</a></li>
-											<li onclick="dw(this)"><a>件</a></li>
-											<li onclick="dw(this)"><a>个</a></li>
-											<li onclick="dw(this)"><a>只</a></li>
-											<li onclick="dw(this)"><a>双</a></li>
+										<ul class="dropdown-menu" >
+											<li class="dw" v-for="item in bit" onclick="dw(this)"><a v-text="item.name"></a></li>
 										</ul>
 									</div>
 									<!-- /btn-group -->
@@ -357,11 +336,14 @@ td input {
 			data:{
 				customerTypeList:"",
 				goods:"",
-				goodsType:""
+				goodsType:"",
+				bit:""
 				
 			}
 			
 		});
+		
+		vue.bit = [[${bit}]];
 
 		var E = window.wangEditor;
 		var editor = new E('#editor');
