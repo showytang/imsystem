@@ -154,7 +154,7 @@ SELECT
 	ON gs.`id` = im.`gid` 
 	LEFT JOIN `stockdetails` AS sd
 	ON gv.`id` = sd.`gvid` 
-	WHERE gv.`gid` = (SELECT gid FROM `goodsvalue` WHERE id = #{id}) AND gv.`defaultvalue` = 0 AND gs.`state` = 0
+	WHERE gv.`gid` = (SELECT gid FROM `goodsvalue` WHERE id = #{id}) AND gs.`state` = 0
 	  	
   
   </select>
