@@ -179,10 +179,6 @@ public class ModuleContrller {
 		
 		
 		
-		
-		
-		
-		
 		rolemodule.setUid(user1.getId());
 		
 		
