@@ -58,9 +58,9 @@ public class StoreContrller {
 		
 		String id = "" ;
 		String trandNo = String.valueOf((Math.random() * 9 + 1) * 1000000);
-		String sdf = new SimpleDateFormat("yyyyMMddss").format(new Date());
+		/*String sdf = new SimpleDateFormat("yyyyMMddss").format(new Date());*/
 		id = trandNo.toString().substring(0, 4); 
-		id = id + sdf ;
+		/*id = id + sdf ;*/
 		
 		
 		Store  parented=storeService_c.SelectZongDian();
