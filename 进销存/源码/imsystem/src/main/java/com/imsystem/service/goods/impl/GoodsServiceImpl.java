@@ -118,6 +118,8 @@ public class GoodsServiceImpl implements GoodsService {
 	@Override
 	public int insertGoods(GoodsVO goodsVo, String url) {
 
+		Date time = new Date();
+		
 		String gid = UUID.randomUUID().toString();
 		String stockId = UUID.randomUUID().toString();
 
@@ -132,6 +134,9 @@ public class GoodsServiceImpl implements GoodsService {
 		stock.setCid("0");
 		stock.setCode("0");
 		stock.setSid("0");
+		stock.setTime(time);
+		stock.setUpdatetime(time);
+		stock.setState(0);
 
 		stockMap.insertSelective(stock);
 
@@ -139,8 +144,9 @@ public class GoodsServiceImpl implements GoodsService {
 
 			if (img != null) {
 				img.setId(UUID.randomUUID().toString());
-
+				img.setTime(time);
 				img.setGid(gid);
+				img.setState(0);
 				imgMapper.insertSelective(img);
 
 			}
@@ -155,9 +161,12 @@ public class GoodsServiceImpl implements GoodsService {
 			goodsValue.setId(goodsvID);
 			goodsValue.setName("");
 			goodsValue.setGid(gid);
+			goodsValue.setState(0);
 			goodsValue.setDefaultvalue(1);
 			goodsValue.setEnname("");
 			goodsValue.setJprice(goodsVo.getGoods().getJprice());
+			goodsValue.setTime(time);
+			goodsValue.setUpdatetime(time);
 			goodsValue.setColumn1("");
 			goodsValue.setColumn2("");
 			goodsValue.setColumn3("");
@@ -170,9 +179,10 @@ public class GoodsServiceImpl implements GoodsService {
 			sd.setId(UUID.randomUUID().toString());
 			sd.setSid(stockId);
 			sd.setGvid(goodsvID);
+			sd.setTime(time);
+			sd.setUpdatetime(time);
 			sd.setPrice(goodsVo.getGoods().getJprice());
 			sd.setState(0);
-			sd.setTime(new Date());
 			// 默认15
 			sd.setCount(20);
 
@@ -188,6 +198,9 @@ public class GoodsServiceImpl implements GoodsService {
 
 					String gvid = new Date().getTime() + "";
 					gv.setId(gvid);
+					gv.setTime(time);
+					gv.setUpdatetime(time);
+					gv.setState(0);
 
 					File dest = new File(url);
 					/* 选择文件上传路径,如果没有则创建 */
@@ -210,8 +223,6 @@ public class GoodsServiceImpl implements GoodsService {
 								// 图片路径
 								gv.setColumn1("/goods/" + uuid + suffix);
 
-								System.out.println("图片长度:" + gv.getColumn1().length());
-
 								gv.getImg().transferTo(fileImg);
 								gv.setDefaultvalue(0);
 							}
@@ -233,7 +244,8 @@ public class GoodsServiceImpl implements GoodsService {
 					gv.getStockDetails().setSid(UUID.randomUUID().toString());
 					gv.getStockDetails().setGvid(gvid);
 					gv.getStockDetails().setState(0);
-					gv.getStockDetails().setTime(new Date());
+					gv.getStockDetails().setTime(time);
+					gv.getStockDetails().setUpdatetime(time);
 					stockDetailsMap.insertSelective(gv.getStockDetails());
 
 					// 商品规格值实例添加
@@ -244,6 +256,9 @@ public class GoodsServiceImpl implements GoodsService {
 							stv.setId(UUID.randomUUID().toString());
 
 							stv.setVid(gvid);
+							stv.setTime(time);
+							stv.setState(0);
+							stv.setUpdatetime(time);
 							goodsStandardMap.insertSelective(stv);
 						}
 
@@ -255,6 +270,9 @@ public class GoodsServiceImpl implements GoodsService {
 						if (gp != null) {
 							gp.setId(UUID.randomUUID().toString());
 							gp.setGvid(gvid);
+							gp.setTime(time);
+							gp.setState(0);
+							gp.setUpdatetime(time);
 							goodsPriceMap.insertSelective(gp);
 
 						}
@@ -293,12 +311,15 @@ public class GoodsServiceImpl implements GoodsService {
 	@Override
 	public Integer updateGoods(GoodsVO goodsVo, String url) {
 
+		Date time = new Date();
 		String Historygid = goodsVo.getGoods().getId();
 		
 		// 1.商品主表修改
 		Goods goodsupdate = new Goods();
 		goodsupdate.setId(goodsVo.getGoods().getId());
 		goodsupdate.setState(1);
+		goodsupdate.setUpdatetime(time);
+
 		goodsMap.updateByPrimaryKeySelective(goodsupdate);
 
 		String gid = UUID.randomUUID().toString();
@@ -310,23 +331,12 @@ public class GoodsServiceImpl implements GoodsService {
 		//1.3使用新商品id
 		goodsVo.getGoods().setId(gid);
 		goodsVo.getGoods().setState(0);
+		goodsVo.getGoods().setTime(time);
+		goodsVo.getGoods().setUpdatetime(time);
+		
 		// 2.商品主表新增
 		int count = goodsMap.insertSelective(goodsVo.getGoods());
 
-		// 3.图片表删除
-		/*if (goodsVo.getGoodsImgs() != null) {
-
-			for (Img img : goodsVo.getGoodsImgs()) {
-
-				if (img != null) {
-					if (img.getId() != null) {
-						imgMapper.deleteByPrimaryKey(img.getId());
-					}
-
-				}
-
-			}
-		}*/
 		// 4.图片新增 
 		for (Img img : goodsVo.getGoodsImgs()) {
 
@@ -334,6 +344,7 @@ public class GoodsServiceImpl implements GoodsService {
 
 				img.setId(UUID.randomUUID().toString());
 				img.setGid(gid);
+				img.setTime(time);
 				imgMapper.insertSelective(img);
 
 			}
@@ -346,6 +357,9 @@ public class GoodsServiceImpl implements GoodsService {
 		stock.setCid("0");
 		stock.setCode("0");
 		stock.setSid("0");
+		stock.setTime(time);
+		stock.setState(0);
+		stock.setUpdatetime(time);
 
 		stockMap.insertSelective(stock);
 
@@ -414,8 +428,8 @@ public class GoodsServiceImpl implements GoodsService {
 
 					String gvid = new Date().getTime() + "";
 					gv.setId(gvid);
-					System.out.println("新增"+gv.getName());
-					System.out.println("新增"+gv.getGid());
+					gv.setTime(time);
+					gv.setUpdatetime(time);
 					// 8. 商品实例添加
 					goodsValueMap.insertSelective(gv);
 
@@ -425,7 +439,8 @@ public class GoodsServiceImpl implements GoodsService {
 					gv.getStockDetails().setGvid(gvid);
 					gv.getStockDetails().setState(0);
 					gv.getStockDetails().setColumn4("0");
-					gv.getStockDetails().setTime(new Date());
+					gv.getStockDetails().setTime(time);
+					gv.getStockDetails().setUpdatetime(time);
 					stockDetailsMap.insertSelective(gv.getStockDetails());
 
 					// 10.商品规格值实例添加
@@ -434,7 +449,9 @@ public class GoodsServiceImpl implements GoodsService {
 						if (stv != null) {
 
 							stv.setId(UUID.randomUUID().toString());
-
+							stv.setTime(time);
+							stv.setUpdatetime(time);
+							stv.setState(0);
 							stv.setVid(gvid);
 							goodsStandardMap.insertSelective(stv);
 						}
@@ -447,6 +464,9 @@ public class GoodsServiceImpl implements GoodsService {
 						if (gp != null) {
 							gp.setId(UUID.randomUUID().toString());
 							gp.setGvid(gvid);
+							gp.setTime(time);
+							gp.setState(0);
+							gp.setUpdatetime(time);
 							goodsPriceMap.insertSelective(gp);
 
 						}

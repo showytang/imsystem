@@ -430,11 +430,53 @@ td input {
 		var dw = $(obj).find("a").text();
 		$(obj).parent().parent().parent().find("input").val(dw);
 	}
-
+	
+/**
+ * 彈出框
+ */
+function alerts(str){
+		
+		toastr.options.timeOut = "false"
+		
+		toastr.options.closeButton = true;
+		
+		toastr['info']
+				(str);
+		
+		$positionClass = 'toast-top-center';
+		
+		toastr.remove();
+		
+		$context="error";
+		
+		toastr[$context](str, '', {
+			
+			positionClass : $positionClass
+			
+		});
+		
+		 setTimeout(function(){
+			$("#toast-container").fadeOut(1000);
+		},4000);
+	}
 	
 function inserGoods(){
 		
 	
+		if($("#goodstype .activeColor:last").attr("typeid") == null){
+			alerts("请选择类型");
+			return false;
+		}
+		if( fileArr.length <= 0){
+			alerts("请至少选一张图片");
+			return false;
+		}
+		if($("[name=name]").val().trim() == ""){
+			alerts("商品名称不能为空");
+			return false;
+		}
+	
+		var uid = JSON.parse(localStorage.user).id;
 		
 		var formData = new FormData();
 		 
@@ -445,22 +487,23 @@ function inserGoods(){
 		}
 		
 		//商品名称
-		formData.append("goods.name",$("[name=name]").val());
-		formData.append("goods.enname",ConvertPinyin($("[name=name]").val()));
+		formData.append("goods.name",$("[name=name]").val().trim());
+		formData.append("goods.enname",ConvertPinyin($("[name=name]").val().trim()));
 		//单位前缀
-		formData.append("goods.prevbit",$("[name=prevbit]").val());
+		formData.append("goods.prevbit",$("[name=prevbit]").val().trim());
 		//单位后缀
-		formData.append("goods.sufbit",$("[name=sufbit]").val());
+		formData.append("goods.sufbit",$("[name=sufbit]").val().trim());
 		//单位值
-		formData.append("goods.bitval",$("[name=bitval]").val());
+		formData.append("goods.bitval",$("[name=bitval]").val().trim());
 		//商品进价
-		formData.append("goods.jprice",$("[name=jprice]").val());
+		formData.append("goods.jprice",$("[name=jprice]").val().trim());
 		//商品售价
-		formData.append("goods.price",$("[name=price]").val());
+		formData.append("goods.price",$("[name=price]").val().trim());
+		formData.append("goods.uid",uid);
 		//最小库存
-		formData.append("goods.minsecurity",$("[name=minsecurity]").val());
+		formData.append("goods.minsecurity",$("[name=minsecurity]").val().trim());
 		//最大库存
-		formData.append("goods.maxsecurity",$("[name=maxsecurity]").val());
+		formData.append("goods.maxsecurity",$("[name=maxsecurity]").val().trim());
 		//描述
 		formData.append("goods.detail",detail);
 		//商品类型
@@ -475,11 +518,13 @@ function inserGoods(){
 			   
 			   formData.append("goodsValues["+(index-1)+"].name",gcname);
 			   formData.append("goodsValues["+(index-1)+"].enname",ConvertPinyin(gcname));
-			   formData.append("goodsValues["+(index-1)+"].jprice",$(obj).find("[name=detailprice]").val());
+			   formData.append("goodsValues["+(index-1)+"].jprice",$(obj).find("[name=detailprice]").val().trim());
+			   formData.append("goodsValues["+(index-1)+"].uid",uid);
 			 
 			   //实例库存
-			   formData.append("goodsValues["+(index-1)+"].stockDetails.count",$(obj).find("[name=num]").val());
-			   formData.append("goodsValues["+(index-1)+"].stockDetails.price",$(obj).find("[name=detailprice]").val());
+			   formData.append("goodsValues["+(index-1)+"].stockDetails.count",$(obj).find("[name=num]").val().trim());
+			   formData.append("goodsValues["+(index-1)+"].stockDetails.price",$(obj).find("[name=detailprice]").val().trim());
+			   formData.append("goodsValues["+(index-1)+"].stockDetails.uid",uid);
 			   
 			   
 			   
@@ -490,7 +535,7 @@ function inserGoods(){
 			   }
 			   
 			   /*商品实例规格添加*/
-			   var typeIds = $(obj).find("[name=goodsType]").val();
+			   var typeIds = $(obj).find("[name=goodsType]").val().trim();
 			   var typeIdArr = typeIds.split(",");
 			   
 			   for(var n = 0;n < typeIdArr.length;n++){
@@ -499,6 +544,7 @@ function inserGoods(){
 				formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].svids",typeIds);
 				formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].svid",typeIdArr[n]);
 				formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].enname",ConvertPinyin(gcname));
+				formData.append("goodsValues["+(index-1)+"].goodsstandardvalues["+n+"].uid",uid);
 				
 			   }
 			   
@@ -508,7 +554,8 @@ function inserGoods(){
 					
 					formData.append("goodsValues["+(index-1)+"].goodsPrices["+item+"].ctid",$(pojo).attr("ctid"));
 					formData.append("goodsValues["+(index-1)+"].goodsPrices["+item+"].sufname",$(pojo).attr("viewname"));
-					formData.append("goodsValues["+(index-1)+"].goodsPrices["+item+"].price",$(pojo).val());
+					formData.append("goodsValues["+(index-1)+"].goodsPrices["+item+"].price",$(pojo).val().trim());
+					formData.append("goodsValues["+(index-1)+"].goodsPrices["+item+"].uid",uid);
 					
 				});
 				
