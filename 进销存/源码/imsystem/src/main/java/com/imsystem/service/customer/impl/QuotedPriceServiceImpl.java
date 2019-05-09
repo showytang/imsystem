@@ -194,7 +194,6 @@ public class QuotedPriceServiceImpl implements QuotedPriceService{
 		// TODO Auto-generated method stub
 		Date time=new Date();
 		if(qvo.getGvobj()!=null) {
-			System.out.println("根据商品新增报价");
 			//根据商品新增报价
 			for(Quotedprice qObj1:qvo.getQplist()) {
 				if(qObj1.getId().equals("0")) {
@@ -210,8 +209,35 @@ public class QuotedPriceServiceImpl implements QuotedPriceService{
 			}
 		}else if(qvo.getCobj()!=null) {
 			//根据客户新增报价
+			System.out.println("aaa");
+			for(Quotedprice qObj1:qvo.getQplist()) {
+				if(qObj1.getId().equals("0")) {
+					String rand=UUID.randomUUID().toString();
+					qObj1.setId(rand);
+					qObj1.setCid(qvo.getCobj().getId());
+					qObj1.setTime(time);
+					qObj1.setUpdatetime(time);
+					qObj1.setUid(uid);
+					qObj1.setState(0);
+					int row2=qDao.insert(qObj1);
+				}
+			}
 		}
 		return 0;
+	}
+
+	@Override
+	public List<QuoteVO> queryGoodsQuoteList(String name, String cid) {
+		// TODO Auto-generated method stub
+		List<QuoteVO> qvoList=qDao.queryQuoteGoods(name, cid);
+		for(QuoteVO qvo:qvoList) {
+			if(qvo.getGvobj()!=null) {
+				qvo.setGobj(qDao.selectGoodsById(qvo.getGvobj().getGid()));
+				Goodsvalue goodsvalue = goodsvalueMap.queryGoodsDetail(qvo.getGvobj().getId());
+				qvo.setGvobj(goodsvalue);
+			}
+		}
+		return qvoList;
 	}
 
 }

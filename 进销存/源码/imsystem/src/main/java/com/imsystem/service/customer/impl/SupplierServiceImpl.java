@@ -92,10 +92,10 @@ public class SupplierServiceImpl implements SupplierService{
 	}
 
 	@Override
-	public PageInfo<Supplier> querySupplierList(Double zero, String content, Integer curentPage) {
+	public PageInfo<Supplier> querySupplierList(Double zero, String content, Integer curentPage,String uid) {
 		// TODO Auto-generated method stub
 		Page<Supplier> page=PageHelper.startPage(curentPage,1,true);
-		sDao.querySupplierByPage(content, zero);
+		sDao.querySupplierByPage(content, zero,uid);
 		PageInfo<Supplier> pages=page.toPageInfo();
 		return pages;
 	}

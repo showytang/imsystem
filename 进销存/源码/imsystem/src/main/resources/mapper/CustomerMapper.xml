@@ -39,11 +39,11 @@
   </resultMap>
   
   <select id="queryCustomerByPage" resultMap="BaseResultMap">
-  	SELECT * FROM customer c
+  	SELECT * FROM customer c,
 
-	quotedprice q
+	`USER` u
   	<where>
-  		u.id=c.uid AND c.state=0 AND CONCAT(c.name,u.name) LIKE CONCAT('%',#{content},'%')
+  		u.id=c.uid AND u.id=#{uid} AND c.state=0 AND CONCAT(c.name,u.name) LIKE CONCAT('%',#{content},'%')
   		<choose>
   			<when test="zero==1.0">
   				AND c.balance &gt;= 0

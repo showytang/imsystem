@@ -130,7 +130,7 @@
 			                        					<input v-if="o.qpobj!=null" onclick="check(this)" type="checkbox" class="checkbox_css check" checked="checked"/>
 			                        					<input v-if="o.qpobj==null" onclick="check(this)" type="checkbox" class="checkbox_css check"/>
 			                    					</label>
-			                    					<input type="hidden" :value="o.cobj.id"/>
+			                    					<input type="hidden" name="" :value="o.cobj.id"/>
                                             	</td>
                                                 <td>
 													<img v-if="o.cobj.img==null" th:src="@{/assets/img/tmore.png}">
@@ -252,14 +252,6 @@
 				$("#chooseCustomerForm").attr("action","choosecustomers");
 				$("#chooseCustomerForm").submit(); 
 			});
-			
-			
-			
-			
-			
-			
-			
-			
 			
 			
 	

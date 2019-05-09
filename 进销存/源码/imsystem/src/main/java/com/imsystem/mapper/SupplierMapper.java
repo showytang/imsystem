@@ -15,7 +15,7 @@ public interface SupplierMapper {
 	
 	int updateBalancejian(Supplier supper);
 	
-	List<Supplier> querySupplierByPage(@Param("content") String content,@Param("zero") Double zero);
+	List<Supplier> querySupplierByPage(@Param("content") String content,@Param("zero") Double zero,@Param("uid") String uid);
 	
 	int updateSupplier(Supplier sObj);
 	

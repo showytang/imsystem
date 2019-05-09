@@ -100,6 +100,53 @@ public class QuotedPriceController {
 		return "lxy/ChooseGoods";
 	}
 	
+	/**
+	 *   #选择根据客户报价需要选择的商品
+	 * @param model
+	 * @param cc
+	 * @param cv
+	 * @param gc
+	 * @param gv
+	 * @param qvo
+	 * @return
+	 */
+	@RequestMapping("choosegoods")
+	public String chooseGoods(Model model,String cc,String cv,String gc,String gv,QuoteVO qvo) {
+		List<QuoteVO> qchooselist=new ArrayList<QuoteVO>();
+		if(cv!="" || cv!=null) {
+			
+			if(qvo.getQplist()!=null) {
+				int num=0;
+				for(Quotedprice qobj:qvo.getQplist()) {
+					if(qobj.getId().equals("0")) {
+						qobj.setId(null);
+						QuoteVO qcObj=new QuoteVO();
+						qcObj.setGobj(qvo.getGlist().get(num));
+						qcObj.setQpobj(qvo.getQplist().get(num));
+						qcObj.setGvobj(qvo.getGvlist().get(num));
+						qchooselist.add(qcObj);
+					}
+					num++;
+				}
+			}
+			
+		}
+		
+		
+		model.addAttribute("cc", cc);
+		model.addAttribute("cv", cv);
+		model.addAttribute("gc", gc);
+		model.addAttribute("gid", gv);
+		model.addAttribute("qvolist1", qchooselist);
+		return "lxy/AddQuote";
+	}
+	
+	@RequestMapping("querygoodsquotelist")
+	@ResponseBody
+	public List<QuoteVO> queryGoodsQuoteList(String name,String cid){
+		return qService.queryGoodsQuoteList(name, cid);
+	}
+	
 	@RequestMapping("tochosecustomers")
 	public String toChoseCustomers(Model model,String cc,String cv,String gc,String gv) {
 		model.addAttribute("cc", cc);

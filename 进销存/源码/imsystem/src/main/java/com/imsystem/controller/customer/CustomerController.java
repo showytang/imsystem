@@ -92,11 +92,11 @@ public class CustomerController {
 	
 	@RequestMapping("querycustomerlist")
 	@ResponseBody
-	public PageInfo<Customer> queryCustomerList(Double zero,String content,Integer curentPage){
+	public PageInfo<Customer> queryCustomerList(Double zero,String content,Integer curentPage,String uid){
 		if(curentPage == null || curentPage <= 0 ) {
 			curentPage = 1;
 		}
-		return cService.queryCustomerList(zero, content, curentPage);
+		return cService.queryCustomerList(zero, content, curentPage,uid);
 	}
 	
 	@RequestMapping("tocustomerdetail")
@@ -141,6 +141,7 @@ public class CustomerController {
 		return "redirect:tocustomerlist";
 	}
 	
+	/*没添加路径*/
 	@RequestMapping("tocustomersalelist")
 	public String toCustomerSaleList(String id,Model model) {
 		model.addAttribute("cid", id);

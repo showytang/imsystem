@@ -50,6 +50,16 @@ public class QuoteVO {
 	private List<Customer> clist;
 	
 	private List<Goods> glist;
+	
+	private List<Goodsvalue> gvlist;
+
+	public List<Goodsvalue> getGvlist() {
+		return gvlist;
+	}
+
+	public void setGvlist(List<Goodsvalue> gvlist) {
+		this.gvlist = gvlist;
+	}
 
 	public List<Quotedprice> getQplist() {
 		return qplist;

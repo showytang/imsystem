@@ -46,17 +46,6 @@ public class CustomerTypeController {
 		return "redirect:tocustomertypelist";
 	}
 	
-	public Customertype queryCustomertTypeById(String ctId) {
-		Customertype ctObj=ctService.queryCustomerTypeById(ctId);
-		return ctObj;
-	}
-	
-	/*@RequestMapping("updatecustomertype")
-	public String updateCustomertype(Customertype cusTypeObj) {
-		int row=ctService.updateCustomerType(cusTypeObj);
-		return "redirect:tocustomertypelist";
-	}*/
-	
 	@RequestMapping("deletecustomertypebyid")
 	@ResponseBody
 	public int deleteCustomertTypeById(String ctId) {
