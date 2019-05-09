@@ -26,6 +26,8 @@ public interface QuotedpriceMapper {
 	
 	int addUpdateQuote(@Param("price") Double price,@Param("time") Date time,@Param("uid") String uid,@Param("qid") String qid);
 	
+	List<QuoteVO> queryQuoteGoods(@Param("name") String name,@Param("cid") String cid);
+	
     int countByExample(QuotedpriceExample example);
 
     int deleteByExample(QuotedpriceExample example);

@@ -85,10 +85,10 @@ public class CustomerServiceImpl implements CustomerService{
 	 * 分页查询客户
 	 */
 	@Override
-	public PageInfo<Customer> queryCustomerList(Double zero, String content, Integer curentPage) {
+	public PageInfo<Customer> queryCustomerList(Double zero, String content, Integer curentPage,String uid) {
 		// TODO Auto-generated method stub
 		Page<Customer> page=PageHelper.startPage(curentPage, 1, true);
-		customerDao.queryCustomerByPage(zero, content);
+		customerDao.queryCustomerByPage(zero, content,uid);
 		PageInfo<Customer> pages=page.toPageInfo();
 		return pages;
 	}

@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface CustomerMapper {
-	List<Customer> queryCustomerByPage(@Param("zero") Double zero, @Param("content") String content);
+	List<Customer> queryCustomerByPage(@Param("zero") Double zero, @Param("content") String content, @Param("uid") String uid);
 	
 	int updateCustomer(Customer cObj);
 	

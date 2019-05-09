@@ -74,9 +74,9 @@
 		border-color: rgb(2,143,208);
 	}
 	td img{
-		width: 26%;
-		height: 55%;
-		border-radius: 50%;
+		width: 47px;
+    	height: 45px;
+		border-radius: 22px;
 		
 	}
 	td input{
@@ -98,76 +98,63 @@
                             	 	
                             	 	<div class="input-group" style="margin-right: 2%;">
 										<input type="text" value="" class="form-control" placeholder="商品名称" id="goodsName">
-										<span class="input-group-btn"><button type="button" class="btn btn-primary">Go</button></span>
+										<span class="input-group-btn"><button id="searchGoods" type="button" class="btn btn-primary">Go</button></span>
 									</div>
 									<div class="input-group" style="margin-right: 2%;width: 20%;">
 										<span>扫码查询</span>
 									</div>
-                                	<input type="button" class="btn btn-primary" value="确认货品"/>
+                                	<input id="addGoods" type="button" class="btn btn-primary" value="确认货品"/>
                                 </h5>
                                 <h4 class="card-title">选择货品</h4>
-                          <form id="chooseGoodsForm" action="" method="post">     
+                          <form id="chooseGoodsForm" action="" method="post">  
+                          
+                          		<input name="cc" id="cc" type="hidden" th:value="${cc}">
+								<input name="cv" id="cv" type="hidden" th:value="${cv}">
+								<input name="gc" id="gc" type="hidden" th:value="${gc}">
+								<input name="gv" id="gv" type="hidden" th:value="${gv}">
+                             
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                            	<th>选择</th>
+                                            	<th>选择商品</th>
                                             	<th>商品图片</th>
                                                 <th>商品名称</th>
-                                                <th>零售价</th>
-                                                <th>批发价</th>
-                                                <th>报价</th>
+                                                <th>商品价格</th>
+                                                <th>商品报价</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
+                                        
+                                            <tr v-for="(o,i) in quoteGoodsList">
                                             	<td>
                                             		<label>
-			                        					<input type="checkbox" class="checkbox_css check" checked="checked"/>
+			                        					<input v-if="o.qpobj!=null" onclick="check(this)" type="checkbox" class="checkbox_css check" checked="checked"/>
+			                        					<input v-if="o.qpobj==null" onclick="check(this)" type="checkbox" class="checkbox_css check"/>
 			                    					</label>
+			                    					<input type="hidden" name="" :value="o.gvobj.id"/>
                                             	</td>
-                                                <td><img th:src="@{/assets/img/apple-icon.png}"/></td>
-                                                <td>鸭舌帽</td>
-                                                <td>0</td>
-                                                <td>22</td>
-                                                <td><input type="text" name="" class="price" value="25" /></td>
-                                            </tr>
-                                            <tr>
-                                            	<td>
-                                            		<label>
-			                        					<input type="checkbox" class="checkbox_css check"/>
-			                    					</label>
+                                                <td>
+                                                	<img v-if="o.gvobj.column1==null" :src="'data:image/png;base64,'+o.gvobj.goods.img"/>
+                                                	<img v-else :src="o.gvobj.column1"/>
+                                                </td>
+                                                <td>{{o.gobj.name}}</td>
+                                                <td>{{o.gobj.price}}</td>
+                                                <td>
+                                                	<input v-if="o.qpobj!=null" type="text" name="" class="price" :value="o.qpobj.price" onblur="changePrice(this)"/>
+                                                	<input v-if="o.qpobj==null" type="text" name="" class="price" disabled="disabled" value="" onblur="changePrice(this)"/>
+                                                </td>
+                                                <input v-if="o.qpobj!=null" type="hidden" name=""  :value="o.qpobj.id"/>
+                                           		<input v-if="o.qpobj==null" type="hidden" name=""  :value="0"/>
+                                            	<input type="hidden" name=""  :value="o.gobj.name"/>
+                                            	<td class="prices" style="display: none;">
+                                            		<p v-for="(o1,i1) in o.gvobj.goodsPrices">
+                                            			<input class="sufname" type="hidden" name="" :value="o1.sufname"/>
+                                            			<input class="gvprice" type="hidden" name="" :value="o1.price"/>
+                                            		</p>
                                             	</td>
-                                                <td><img th:src="@{/assets/img/apple-icon.png}"/></td>
-                                                <td>鸭舌帽</td>
-                                                <td>0</td>
-                                                <td>22</td>
-                                                <td><input type="text" name="" class="price" value="" /></td>
                                             </tr>
-                                            <tr>
-                                            	<td>
-                                            		<label>
-			                        					<input type="checkbox" class="checkbox_css check"/>
-			                    					</label>
-                                            	</td>
-                                                <td><img th:src="@{/assets/img/apple-icon.png}"/></td>
-                                                <td>鸭舌帽</td>
-                                                <td>0</td>
-                                                <td>22</td>
-                                                <td><input type="text" name="" class="price" value="" /></td>
-                                            </tr>
-                                            <tr>
-                                            	<td>
-                                            		<label>
-			                        					<input type="checkbox" class="checkbox_css check" checked="checked"/>
-			                    					</label>
-                                            	</td>
-                                                <td><img th:src="@{/assets/img/apple-icon.png}"/></td>
-                                                <td>鸭舌帽</td>
-                                                <td>0</td>
-                                                <td>22</td>
-                                                <td><input type="text" name="" class="price" value="22" /></td>
-                                            </tr>
+                                            
                                         </tbody>
                                     </table>
                                 </div>
@@ -202,60 +189,105 @@
 	var vue=new Vue({
 		el:".elDocument",
 		data:{
-			zeroParentType:"",
-			type:"",
-			pageIf:""
+			quoteGoodsList:"",
+			zeroParentType:""
 		}
 	});
 	
-	function queryZeroType(id){
+	/* 查询商品所有父类 */
+	/* function queryZeroType(){
 		$.ajax({
 			url:[[@{/goods/queryGoodsTypeByPid}]],
-			data:"id="+id,
+			data:"id=0",
 			type:"post",
 			dataType:"json",
 			success:function(result){
 				vue.zeroParentType=result;
+				console.log(vue.zeroParentType);
 			}
 		});
-	}
+	} */
 	
-	function queryType(id){
+	
+	/* 商品实例查询 */
+	function queryCustomerByName(){
+		var name=$("#goodsName").val();
+		var cid=$("#cv").val();
 		$.ajax({
-			url:[[@{/goods/queryGoodsTypeByPid}]],
-			data:"id="+id,
+			url:"querygoodsquotelist",
+			data:{
+				"name":name,
+				"cid":cid
+			},
 			type:"post",
 			dataType:"json",
 			success:function(result){
-				vue.type=result;
+				vue.quoteGoodsList = result;
+				console.log(vue.quoteGoodsList);
 			}
 		});
 	}
 	
+	/* 点击多选按钮 */
+	function check(th){
+		if($(th).is(":checked")){
+			var val=$(th).parent().parent().next().next().next().next().find("input").val();
+			if(val==""){
+				$(th).parent().parent().next().next().next().next().find("input").val("0");
+			}
+			$(th).parent().parent().next().next().next().next().find("input").removeAttr("disabled");
+		}else{
+			$(th).parent().parent().next().next().next().next().find("input").val("");
+			$(th).parent().parent().next().next().next().next().find("input").attr("disabled","disabled");
+		}
+	}
+	
+	/* 价格变动 */
+	function changePrice(th){
+		var vul=$(th).val();
+		if(vul==""){
+			$(th).attr("disabled","disabled");
+			$(th).parent().prev().prev().prev().prev().find(".check").removeAttr("checked");
+		}
+	}
+	
+	/* 复选框遍历 */
+	function eachCheckbox(){
+		var num=0;
+		$(".check").each(function(){
+			if(this.checked){
+				$(this).parent().next().attr("name","gvlist["+num+"].id");
+				$(this).parent().parent().next().next().next().next().find(".price").attr("name","qplist["+num+"].price");
+				$(this).parent().parent().next().next().next().next().next().attr("name","qplist["+num+"].id");
+				$(this).parent().parent().next().next().next().next().next().next().attr("name","glist["+num+"].name");
+				var i=0;
+				$(this).parent().parent().parent().find(".prices p").each(function(){
+					$(this).find(".sufname").attr("name","gvlist["+num+"].goodsPrices["+i+"].sufname");
+					$(this).find(".gvprice").attr("name","gvlist["+num+"].goodsPrices["+i+"].price");
+					i++;
+				});
+				num++;
+			}
+		});
+	}
+	
+	
 		$(function() {
+			/* 查询所有商品 */
+			queryCustomerByName();
+			/* 根据商品名称查询商品 */
+			$("#searchGoods").click(function(){
+				queryCustomerByName();
+			});
 			
-			queryZeroType(0);
-			
-			
-			$("#parentZeroType").change(function(){
-				var parentZeroTypeId=$(this).val();
-				if(parentZeroTypeId=="0"){
-					$("#type").html("");
-				}else{
-					queryType(parentZeroTypeId);
-				}
+			$("#addGoods").click(function(){
+				eachCheckbox();
+				$("#chooseGoodsForm").attr("action","choosegoods");
+				$("#chooseGoodsForm").submit();
 			});
 			
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			$(".check").each(function(){
+			/* $(".check").each(function(){
 				if(this.checked==false){
 					$(this).parent().parent().next().next().next().next().next().find("input").attr("disabled","disabled");
 				}
@@ -266,29 +298,10 @@
 					$(this).attr("disabled","disabled");
 					$(this).parent().prev().prev().prev().prev().prev().find(".check").removeAttr("checked");
 				}
-			});
+			}); */
 			
-			$(".check").click(function(){
-				$(".check").each(function(){
-					if(this.checked){
-						var val=$(this).parent().parent().next().next().next().next().next().find("input").val();
-						if(val==""){
-							$(this).parent().parent().next().next().next().next().next().find("input").val("0");
-						}
-						$(this).parent().parent().next().next().next().next().next().find("input").removeAttr("disabled");
-					}else{
-						$(this).parent().parent().next().next().next().next().next().find("input").val("");
-						$(this).parent().parent().next().next().next().next().next().find("input").attr("disabled","disabled");
-					}
-				});
-			});
-			$(".price").blur(function(){
-				var vul=$(this).val();
-				if(vul==""){
-					$(this).attr("disabled","disabled");
-					$(this).parent().prev().prev().prev().prev().prev().find(".check").removeAttr("checked");
-				}
-			});
+			
+			
 	
 		});
 	</script>

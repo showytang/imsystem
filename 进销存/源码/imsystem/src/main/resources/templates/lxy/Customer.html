@@ -118,6 +118,9 @@
 </style>
 </head>
 	<body>
+	
+		<input type="hidden" value="1" id="uid"/>
+	
 		<div class="row elDocument" style="padding: 28px 20px;">
                     <!-- column -->
                     <div class="col-lg-12">
@@ -214,12 +217,14 @@
 	
 	/* 分页查询 */
 	function queryCustomerByPage(zero,content,curentPage){
+		var uid=$("#uid").val();
 		$.ajax({
 			url:"querycustomerlist",
 			data:{
 				"zero":zero,
 				"content":content,
-				"curentPage":curentPage
+				"curentPage":curentPage,
+				"uid":uid
 			},
 			type:"post",
 			dataType:"json",

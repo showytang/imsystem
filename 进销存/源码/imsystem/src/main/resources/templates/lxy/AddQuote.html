@@ -110,7 +110,8 @@
                                 	</ul>
                                 </h4>
                                
-                                <form class="form-horizontal form-material" id="customerAdd">
+                                <form class="form-horizontal form-material" id="customerAdd" action="" method="post">
+                                	<input type="hidden" value="1" name="uid"/>
                                 	<div class="form-group">
                                         <label class="col-md-12">客&nbsp;&nbsp;户&nbsp;&nbsp;名&nbsp;&nbsp;称</label>
                                         <div class="col-sm-12">
@@ -118,6 +119,7 @@
                                                 <option value="0"></option>
                                                 <option v-for="(o,i) in customerList" :value="o.id">{{o.name}}</option>
                                             </select>
+                                            <input type="hidden" value="" id="chosecid" name="cobj.id"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -128,14 +130,28 @@
                                             <i id="goodsNum" class="numCss" v-if="customerQuoteList.length!=0">{{customerQuoteList.length}}</i>
                                         </div>
                                         <div class="col-sm-12 uldiv" id="culdiv">
-                                            <ul v-if="customerQuoteList.length!=0">
+                                            <ul>
                                             
-                                            	<li v-for="(o,i) in customerQuoteList">
+                                            	<li class="quoteli1" v-if="customerQuoteList.length!=0" v-for="(o,i) in customerQuoteList">
                                             		<span class="goodsName name">{{o.gvobj.goods.name}}</span>
                                             		<span class="salebybulk"  v-for="(o1,i1) in o.gvobj.goodsPrices">
-                                            		{{o1.sufname}}：￥<span class="bulkPrirce">{{o1.price}}</span> 
+                                            		<span>{{o1.sufname}}</span>{{o1.sufname}}：￥<span class="bulkPrirce">{{o1.price}}</span> 
                                             		</span>
                                             		<span class="quote">报价：￥<span class="quotePrirce">{{o.qpobj.price}}</span> </span>
+                                            		<input type="hidden" class="endGoodsId" name="" :value="o.gvobj.id"/>
+                                            		<input type="hidden" class="endGoodsPrice" name="" :value="o.qpobj.price"/>
+                                            		<input type="hidden" class="endQuoteId" name="" :value="o.qpobj.id"/>
+                                            	</li>
+                                            	
+                                            	<li class="quoteli1" th:each="items,state:${qvolist1}">
+                                            		<span class="goodsName name" th:text="${items.gobj.name}"></span>
+                                            		<span class="salebybulk" th:each="items1,state1:${items.gvobj.goodsPrices}">
+                                            		 <span th:text="${items1.sufname}"></span>：￥<span class="bulkPrirce" th:text="${items1.price}"></span> 
+                                            		</span>
+                                            		<span class="quote">报价：￥<span class="quotePrirce" th:text="${items.qpobj.price}"></span> </span>
+                                            		<input type="hidden" class="endGoodsId" name="" th:value="${items.gvobj.id}"/>
+                                            		<input type="hidden" class="endGoodsPrice" name="" th:value="${items.qpobj.price}"/>
+                                            		<input type="hidden" class="endQuoteId" name="" th:value="0"/>
                                             	</li>
                                             	
                                             </ul>
@@ -215,7 +231,6 @@
 	});
 	
 		function judge(){
-			
 			var cval=$("#customerChoose").attr("class");
 			var gval=$("#goodsChoose").attr("class");
 			var cname=$("#customerName").attr("value");
@@ -269,7 +284,19 @@
 			
 		}
 		
+		function querycustomers(){
+			$.ajax({
+				url:"querycustomers",
+				type:"post",
+				dataType:"json",
+				success:function(result){
+					vue.customerList=result;
+				}
+			});
+		}
+		
 		$(function() {
+			
 			
 			var cc=$("#cc").val();
 			var cv=$("#cv").val();
@@ -293,18 +320,11 @@
 				$("#goodsName").append("<option value='"+gid+"' selected='selected'>"+gid+"</option>");
 				
 			}
-		
+			
+			querycustomers();
 			
 			judge();
 			
-			$.ajax({
-				url:"querycustomers",
-				type:"post",
-				dataType:"json",
-				success:function(result){
-					vue.customerList=result;
-				}
-			});
 			
 			$("#customerChoose").click(function(){
 				$(this).attr("class","check");
@@ -360,7 +380,16 @@
 				var customerChoose=$("#customerChoose").attr("class");
 				var goodsChoose=$("#goodsChoose").attr("class");
 				if(customerChoose=="check"){
-					alert("customer");
+					var num1=0;
+					$("#chosecid").attr("value",$("#customerName").attr("value"));
+					$(".quoteli1").each(function(){
+						var i1=num1++;
+						$(this).find(".endGoodsId").attr("name","qplist["+i1+"].svid");
+						$(this).find(".endGoodsPrice").attr("name","qplist["+i1+"].price");
+						$(this).find(".endQuoteId").attr("name","qplist["+i1+"].id");
+					});
+					$("#customerAdd").attr("action","addquote");
+					$("#customerAdd").submit();
 				}else if(goodsChoose=="check"){
 					var num=0;
 					$(".quoteli").each(function(){

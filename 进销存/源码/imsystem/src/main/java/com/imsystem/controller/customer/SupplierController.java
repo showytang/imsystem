@@ -32,13 +32,13 @@ public class SupplierController {
 	
 	@RequestMapping("querysupplierlist")
 	@ResponseBody
-	public PageInfo<Supplier> queryCustomerList(Double zero,String content,Integer curentPage) {
+	public PageInfo<Supplier> queryCustomerList(Double zero,String content,Integer curentPage,String uid) {
 		
 		if(curentPage == null || curentPage <= 0 ) {
 			curentPage = 1;
 		}
 		
-		return sService.querySupplierList(zero, content, curentPage);
+		return sService.querySupplierList(zero, content, curentPage,uid);
 	}
 	
 	@RequestMapping("toaddsupplier")
