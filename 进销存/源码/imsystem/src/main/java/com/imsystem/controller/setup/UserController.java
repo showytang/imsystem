@@ -116,7 +116,7 @@ public class UserController {
 	@RequestMapping("queryZhangHu")
 	@ResponseBody
 	public User queryZhangHu(String id) {
-		System.out.println("进来了 嘻嘻");
+		
 		User uu=userService.queryUserById(id);
 		
 		System.out.println(JSON.toJSONString(uu));
