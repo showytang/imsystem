@@ -53,21 +53,21 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 
 	@Override
 	public PageInfo<Stock> queryStock(String code, String time, String endTime, Integer currentPage, Integer pageSize,
-			String order, Integer kucun, String shappingname) {
+			String order, Integer kucun, String shappingname,String Storeid) {
 		// TODO Auto-generated method stub
 
 		Page<Stock> page = PageHelper.startPage(currentPage, pageSize, true);
 
-		stockMapper.query(code, time, endTime, order, kucun,shappingname);
+		stockMapper.query(code, time, endTime, order, kucun,shappingname,Storeid);
 
 		return page.toPageInfo();
 
 	}
 
 	@Override
-	public Vector<Stockrecord> queryAllot(String time, String endTime, String code, String jcode) {
+	public Vector<Stockrecord> queryAllot(String time, String endTime, String code, String jcode,String storeid) {
 		// TODO Auto-generated method stub
-		return stockrecord.query(time, endTime, code, jcode);
+		return stockrecord.query(time, endTime, code, jcode,storeid);
 	}
 
 	@Override
@@ -120,7 +120,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	}
 
 	@Override
-	public PageInfo<Sales> OrderOver(String code, String endTime, String time, Integer currentPage,String shappingname) {
+	public PageInfo<Sales> OrderOver(String code, String endTime, String time, Integer currentPage,String shappingname,String storeid) {
 		// TODO Auto-generated method stub
 		if (currentPage == null || currentPage <= 0) {
 			currentPage = 1;
@@ -128,7 +128,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 
 		Page<Sales> page = PageHelper.startPage(currentPage, 10, true);
 
-		salesMapper.query(code, time, endTime,shappingname);
+		salesMapper.query(code, time, endTime,shappingname,storeid);
 
 		return page.toPageInfo();
 	}

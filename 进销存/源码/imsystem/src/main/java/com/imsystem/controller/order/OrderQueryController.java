@@ -55,16 +55,17 @@ public class OrderQueryController {
 	@RequestMapping("/query")
 	@ResponseBody
 	public PageInfo<Stock> query(String code, String time, String endTime, Integer currentPage, Integer pageSize,
-			String order, Integer kucun, String shappingname) {
+			String order, Integer kucun, String shappingname,String storeid) {
 
 		if (currentPage == null || currentPage <= 0) {
 			currentPage = 1;
 		}
 
 		PageInfo<Stock> page = orderquery.queryStock(code, time, endTime, currentPage, pageSize, order, kucun,
-				shappingname);
+				shappingname,storeid);
 
 		return page;
+		
 	}
 
 	@RequestMapping("/toQueryAllot")
@@ -77,9 +78,9 @@ public class OrderQueryController {
 
 	@RequestMapping("/queryAllot")
 	@ResponseBody
-	public Vector<Stockrecord> queryAllot(String time, String endTime, String code, String jcode) {
+	public Vector<Stockrecord> queryAllot(String time, String endTime, String code, String jcode,String storeid) {
 
-		return orderquery.queryAllot(time, endTime, code, jcode);
+		return orderquery.queryAllot(time, endTime, code, jcode,storeid);
 	}
 
 	@RequestMapping("/toAllotDetails")
@@ -151,9 +152,9 @@ public class OrderQueryController {
 	@RequestMapping("/orderOver")
 	@ResponseBody
 	public PageInfo<Sales> OrderOver(String code, String endTime, String time, Integer currentPage,
-			String shappingname) {
+			String shappingname,String storeid) {
 
-		return orderquery.OrderOver(code, endTime, time, currentPage, shappingname);
+		return orderquery.OrderOver(code, endTime, time, currentPage, shappingname,storeid);
 	}
 
 	@RequestMapping("/toderDescQuery")

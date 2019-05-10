@@ -191,7 +191,7 @@
 								<div class="input-group">
 									<span class="input-group-addon">门店</span> <select id="storid"
 										class="form-control">
-										<option v-for="item in li" :value="item.id">{{item.name}}</option>
+										<option v-for="item in li" :value="item.id">{{item.name}}[{{item.sufname}}]</option>
 									</select>
 								</div>
 								<ul id="stockDeatails"
@@ -233,7 +233,8 @@
 							list : [],
 							li : [],
 							stockDetails : [],
-							id : ""
+							id : "",
+							user : {}
 						},
 						methods : {
 							openModel : function(id){
@@ -267,7 +268,9 @@
 												gvid : vue.id,
 												price : $(".stockDetailsCode:eq("+i+")").attr("price"),
 												column1 : $("#storid").val(),
-												count : $(".stockDetailsCount:eq("+i+")").val()
+												count : $(".stockDetailsCount:eq("+i+")").val(),
+												storeid : vue.user.storeid,
+												uid : vue.user.id
 										};
 										stockdetails.time = eval('new Date(' + stockdetails.time.replace(/\d+(?=-[^-]+$)/,    
 												function (a) { return parseInt(a, 10) - 1; }).match(/\d+/g) + ')');  
@@ -290,6 +293,8 @@
 						}
 						
 					});
+						
+					vue.user = localStorage.getItem("user");
 					
 					vue.li = [[${li}]];
 					

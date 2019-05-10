@@ -60,7 +60,7 @@
 		g on g.id = gv.gid
 		<where>
 			<if test="true">
-				AND sb.`updatetime` >= #{time} AND sb.`updatetime` &lt;=
+				and sb.storeid = #{column4} AND sb.`updatetime` >= #{time} AND sb.`updatetime` &lt;=
 				#{updatetime}
 			</if>
 			<if test="code != null and code != '' ">

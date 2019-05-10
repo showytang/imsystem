@@ -49,6 +49,9 @@
 		inner join goodsvalue as gv on gv.id = s.gvid
 		inner join goods as g on g.id = gv.gid
 		<where>
+			<if test="true">
+				and sales.storeid = #{storeid}
+			</if>
 			<if test="code != '' and code != null">
 				and sales.code LIKE concat('%',#{code},'%')
 			</if>

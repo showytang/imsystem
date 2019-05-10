@@ -244,7 +244,8 @@
 			data : {
 				pageIf : {},
 				no : "",
-				shappingname : ""
+				shappingname : "",
+				user : {}
 			},
 			methods : {
 				code : function(){
@@ -264,6 +265,7 @@
 			}
 
 		});
+		vue.user = localStorage.getItem("user");
 		var z= 0;
 		function time(th){
 			if(z == 0){
@@ -293,7 +295,8 @@
 					endTime : endTime,
 					code : vue.no,
 					currentPage : vue.pageIf.pageNum,
-					shappingname : vue.shappingname
+					shappingname : vue.shappingname,
+					storeid : vue.user.storeid
 			    },
 
 			    type : "post",
@@ -350,7 +353,11 @@
 								
 								column3 : $("#myModalLabel").find("span").attr("data"),
 								
-								price : $(e).find(".price").text()
+								price : $(e).find(".price").text(),
+								
+								storeid : vue.user.storeid,
+								
+								uid : vue.user.id
 								
 						};
 						
