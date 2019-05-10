@@ -126,7 +126,7 @@
 </style>
 <script type="text/javascript" th:src="@{/assets/js/jquery-1.8.3.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/jquery.color.js}"></script>
-<script type="text/javascript" th:src="@{/assets/js/page.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/pageNumber.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/typeDonghua.js}"></script>
 <script th:src="@{/assets/js/bootstrap.js}"></script>
 <script th:src="@{/assets/js/vue.js}"></script>
@@ -205,8 +205,6 @@
 			<div class="container-fluid">
 				<div class="panel panel-headline">
 					<div class="panel-heading">
-						<h3 class="panel-title">报表 - 1</h3>
-						<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
 					</div>
 					<!--小屏幕-->
 					<div class="row" style="margin: 2vh 3vh;">
@@ -240,12 +238,12 @@
 					</div>
 					<!--主体-->
 					<div id="body"
-						style="margin: 1vh 3vh 0 3vh; min-height: 60vh; background-color: #eae2e21f;">
+						style="margin: 1vh 3vh 0 3vh; min-height: 60vh; ">
 						<hr />
 						<div class="row">
 							<div v-for="(item,index) in pageIf.list"
 								class="col-sm-6 col-md-3">
-								<div class="thumbnail" style="max-height: 40vh; min-height: 40vh;">
+								<div class="thumbnail" style="max-height: 50vh; min-height: 50vh;">
 									<img
 										v-if="item.goodsValue.column1 == null || item.goodsValue.column1==''"
 										style="max-height: 20vh; min-height: 20vh;"
@@ -560,14 +558,6 @@ function typePojo(obj){
 	
 }
 
-/**
- * 分页点击事件
- */
-function floatPage(){
-	
-	queryGoods($('.currentPage').text(),[],0);
-	
-}
 
 
 function optionCheck(obj){
@@ -617,7 +607,18 @@ function optionCheck(obj){
 				
 				vue.pageIf = data;
 				
-				page(vue);
+ 				$("#page").append(page(vue.pageIf.pageNum,vue.pageIf.prePage,vue.pageIf.nextPage,vue.pageIf.pages));
+					
+				 
+				 $(document).on("click",".pageFy>ul li",function(){
+					 var create = $(this).attr("pageNumber");
+					 if(create != null && create != 0){
+						 
+						 queryGoods(create,[],0);
+						 $("#page").append(page(vue.pageIf.pageNum,vue.pageIf.prePage,vue.pageIf.nextPage,vue.pageIf.pages));
+							
+					 }
+				 });
 				
 				
 			}
