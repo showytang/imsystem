@@ -165,8 +165,8 @@
 										</p>
 									</div>
 									<div class="but">
-										<button class="col-xs-12" :value="objs.id">查看详情</button>
-										<button class="col-xs-12">加入购物车</button>
+										<button class="col-xs-12" :href="'/goods/queryGoodsDetail?id=' + itmes.id "  :value="objs.id">查看详情</button>
+										<button class="col-xs-12">推荐给TA</button>
 									</div>
 								</div>
 							</div>
@@ -199,7 +199,6 @@
 			$(".store").change(function() {
 				lid = $(this).val();
 				vue.goods = queryLikeGoodsValue(lid, season);
-				console.log(vue.goods);
 			});
 			$(".season").change(function() {
 				season = $(this).val();
