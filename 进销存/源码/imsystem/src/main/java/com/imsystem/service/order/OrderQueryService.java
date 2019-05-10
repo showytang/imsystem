@@ -14,9 +14,9 @@ import com.imsystem.domain.Stockrecord;
 
 public interface OrderQueryService {
 
-	PageInfo<Stock> queryStock(String code,String time,String endTime,Integer currentPage,Integer pageSize,String order,Integer kucun,String shappingname);
+	PageInfo<Stock> queryStock(String code,String time,String endTime,Integer currentPage,Integer pageSize,String order,Integer kucun,String shappingname,String storeid);
 	
-	Vector<Stockrecord> queryAllot(String time,String endTime,String code,String jcode);
+	Vector<Stockrecord> queryAllot(String time,String endTime,String code,String jcode,String storeid);
 	
 	Vector<Stockrecord> queryAllotDetails(String id);
 	
@@ -28,7 +28,7 @@ public interface OrderQueryService {
 	
 	Salesorder salesOrderById(String id);
 	
-	PageInfo<Sales> OrderOver(String code,String endTime,String time,Integer currentPage,String shappingname);
+	PageInfo<Sales> OrderOver(String code,String endTime,String time,Integer currentPage,String shappingname,String storeid);
 
 	PageInfo<Salesback> orderDescQuery(Salesback back);
 	

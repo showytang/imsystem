@@ -94,9 +94,9 @@ body::-webkit-scrollbar-thumb {
 			</thead>
 			<tbody>
 				<tr v-for="item in list" :data="item.id">
-					<td><img
+					<td><img class="shappingImg"
 						v-if="item.goodsvalue.column1 !='' && item.goodsvalue.column1 !=null"
-						:src="item.goodsvalue.column1"> <img v-else
+						:src="item.goodsvalue.column1"> <img v-else class="shappingImg"
 						:src="item.goodsvalue.goods.img">
 						
 					</td>

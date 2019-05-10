@@ -383,7 +383,8 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 					pagesize : "1",
 					storeid : "",
 					salesorder : {},
-					shappingname : ""
+					shappingname : "",
+					user : {}
 				},
 				methods : {
 					code : function(){
@@ -467,6 +468,7 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 				}
 			});
 			
+			vue.user = localStorage.getItem("user");
 			
 			function time(th){
 				if(z == 0){
@@ -499,7 +501,8 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 						column3 : vue.shappingname,
 						progress : $("#salesOrderProgress").val(),
 						cid : $("#cid").val(),
-						column5 : vue.pageIf.pageNum
+						column5 : vue.pageIf.pageNum,
+						storeid : vue.user.storeid
 				}
 				
 				$.ajax({
@@ -570,6 +573,8 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 							}
 							
 						}
+						vue.salesorder.uid = vue.user.uid;
+						vue.salesorder.storeid = vue.user.storeid;
 						$.ajax({
 						    
 						    url : [[@{/insertOrder/insertOrderOut}]],

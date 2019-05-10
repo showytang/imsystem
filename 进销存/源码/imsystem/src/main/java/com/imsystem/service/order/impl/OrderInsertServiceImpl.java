@@ -231,8 +231,8 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 		stock.setState(1);
 		stock.setColumn1("0");
 		stock.setColumn2("0");
-		stock.setUid("0");
-		stock.setStoreid(stockde.get(0).getColumn1());
+		stock.setUid(stockde.get(0).getUid());
+		stock.setStoreid(stockde.get(0).getStoreid());
 
 		count += stockM.insertSelective(stock);
 
@@ -246,8 +246,9 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 			stod.setScount(0);
 			stod.setPrice(item.getPrice());
 			stod.setGvid(item.getGvid());
-			stod.setStoreid(item.getColumn1());
+			stod.setStoreid(item.getStoreid());
 			stod.setTime(item.getTime());
+			stod.setUid(item.getUid());
 			list.add(stod);
 
 			Stockrecord stockcords = new Stockrecord();
@@ -292,7 +293,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 		sales.setCid(salesorder.getCid());
 
-		sales.setUid("0");
+		sales.setUid(salesorder.getUid());
 
 		sales.setPaymoney(salesorder.getPaymoney());
 
@@ -304,7 +305,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 		sales.setState(0);
 
-		sales.setStoreid("1");
+		sales.setStoreid(salesorder.getStoreid());
 
 		sales.setPaytype(salesorder.getPaytype());
 
@@ -422,10 +423,10 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 		sales.setTime(new Date());
 
-		sales.setUid("1");
+		sales.setUid(salesdetails.get(0).getUid());
 
-		sales.setStoreid("1");
-
+		sales.setStoreid(salesdetails.get(0).getStoreid());
+		
 		sales.setColumn1(salesdetails.get(0).getId());
 
 		sales.setCount(0);
@@ -453,9 +454,9 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 			salesbackdetails.setUpdatime(sales.getTime());
 
-			salesbackdetails.setUid("0");
+			salesbackdetails.setUid(item.getUid());
 
-			salesbackdetails.setStoreid("1");
+			salesbackdetails.setStoreid(item.getStoreid());
 
 			count += salesbackdetailsmapper.add(salesbackdetails);
 
