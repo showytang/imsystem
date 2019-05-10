@@ -263,20 +263,22 @@ public class GoodsServiceImpl implements GoodsService {
 						}
 
 					}
-
-					// 商品价格添加
-					for (Goodsprice gp : gv.getGoodsPrices()) {
-
-						if (gp != null) {
-							gp.setId(UUID.randomUUID().toString());
-							gp.setGvid(gvid);
-							gp.setTime(time);
-							gp.setState(0);
-							gp.setUpdatetime(time);
-							goodsPriceMap.insertSelective(gp);
-
+					
+					if(gv.getGoodsPrices() != null) {
+						
+						// 商品价格添加
+						for (Goodsprice gp : gv.getGoodsPrices()) {
+	
+								gp.setId(UUID.randomUUID().toString());
+								gp.setGvid(gvid);
+								gp.setTime(time);
+								gp.setState(0);
+								gp.setUpdatetime(time);
+								goodsPriceMap.insertSelective(gp);
+	
+	
 						}
-
+						
 					}
 
 				}
