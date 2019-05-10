@@ -194,16 +194,16 @@ button {
 }
 
 .goods {
-	width: 25%;
-	height: 320px;
+	width: 33%;
+	height: 350px;
 	padding: 5px;
 	margin-bottom: 8px;
 	text-align: center;
+	transition: all 0.5s;
 }
 
-.goods :hover {
+.goods:hover {
 	transform: translate3d(0, -2px, 0);
-	transition: all 0.8s;
 	box-shadow: 0 15px 30px rgba(0, 0, 0, .1);
 }
 
@@ -221,6 +221,9 @@ button {
 .goodsName {
 	font-size: 20px;
 	font-weight: 500;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 .goodsPrice {
@@ -437,7 +440,7 @@ button {
 						<div class="images">
 							<img th:src="@{/assets/img/qq.png}" />
 						</div>
-						<div class="goodsName" style="margin-top: 50px;">
+						<div class="goodsName" :title="item.name" style="margin-top: 50px;">
 							<span>{{item.name}}</span>
 						</div>
 						<div class="goodsType" style="font-size: 24px; color: red;">
