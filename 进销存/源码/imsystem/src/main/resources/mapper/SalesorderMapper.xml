@@ -577,7 +577,7 @@
 			AND storeid=#{storeid}
 		</if>
 		</where>
-		GROUP BY DATE_FORMAT(TIME,'%Y-%m-%d') ORDER BY TIME) AS t
+		GROUP BY `code` ORDER BY TIME) AS t
 	</select>
 	<select id="queryRanking" resultMap="BaseResultMap">
 		SELECT t.id AS id,ss.id AS storeid,ss.name AS column3,ss.sufname AS
