@@ -19,7 +19,7 @@
 <script type="text/javascript" th:src="@{/assets/js/moment.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/daterangepicker.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/Mydate.js}"></script>
-<script type="text/javascript" th:src="@{/assets/js/page.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/pageNumber.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/bootstrap.min.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/vue.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/toastr.min.js}"></script>
@@ -38,26 +38,10 @@
 	margin: 0px;
 }
 
-.pagebtn {
-	height: 28px;
-	width: 25px;
-	border: 1px solid #C0C0C0;
-	list-style: none;
-	text-align: center;
-	background: #DDDDDD;
-	line-height: 28px;
-	cursor: pointer;
-}
 
-#page>ul {
-	display: flex;
-	justify-content: space-around;
-	padding: 0px;
-	font-size: 12px;
-}
 
 #page {
-	width: 300px;
+	width: 100%;
 	margin: 20px auto;
 }
 
@@ -468,7 +452,7 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 				}
 			});
 			
-			vue.user = localStorage.getItem("user");
+			vue.user =  JSON.parse(localStorage.getItem("user"))
 			
 			function time(th){
 				if(z == 0){
@@ -512,7 +496,18 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 					dataType : "json",
 					success:function(result){
 						vue.pageIf = result;
-						page(vue);
+						 $("#page").append(page(vue.pageIf.pageNum,vue.pageIf.prePage,vue.pageIf.nextPage,vue.pageIf.pages));
+							
+						 
+						 $(document).on("click",".pageFy>ul li",function(){
+							 var create = $(this).attr("pageNumber");
+							 if(create != null && create != 0){
+								 
+								 queryGoods(create,[],0);
+								 $("#page").append(page(vue.pageIf.pageNum,vue.pageIf.prePage,vue.pageIf.nextPage,vue.pageIf.pages));
+									
+							 }
+						 });
 					}
 				});
 			}
@@ -573,6 +568,7 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 							}
 							
 						}
+						vue.tainmoney = $("#spriceOrder").val();
 						vue.salesorder.uid = vue.user.uid;
 						vue.salesorder.storeid = vue.user.storeid;
 						$.ajax({

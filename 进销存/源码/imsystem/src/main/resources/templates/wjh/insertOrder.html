@@ -189,6 +189,11 @@
 	border: none;
 	outline: none;
 }
+.panel-title{
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
 </style>
 </head>
 <body>
@@ -206,8 +211,6 @@
 							<div class="container-fluid"
 								style="background-color: #00AAFF; border-radius: 4px;">
 								<div class="btn-group" style="float: right;">
-									<div class="btn btn-primary" id="mozheng"
-										style="border: none; box-shadow: none; font-size: 16px;">抹整</div>
 									<div class="btn btn-primary" id="moling"
 										style="border: none; box-shadow: none; font-size: 16px;">抹零</div>
 									<div class="btn"
@@ -356,7 +359,7 @@
 										</div>
 										<div class="col-md-8"
 											style="font-size: 14px; white-space: nowrap;">
-											<div style="font-size: 20px;">{{item.column5}}</div>
+											<div style="font-size: 20px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{item.column5}}</div>
 											<div>类型：{{item.column2}}</div>
 											<div>
 												进货价:<input class='jprice' :value="item.jprice.toFixed(2)" />
@@ -450,7 +453,7 @@
 			
 		});
 		
-		vue.user = localStorage.getItem("user");
+		vue.user =  JSON.parse(localStorage.getItem("user"));
 		
 		vue.paytypeList = [[${paytypeList}]];
 		

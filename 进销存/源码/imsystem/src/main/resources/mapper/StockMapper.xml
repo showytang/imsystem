@@ -126,7 +126,7 @@
 				and s.state != 2
 			</if>
 			<if test="true">
-				s.storeid = #{storeid}
+				and s.storeid = #{storeid}
 			</if>
 		</where>
 		group by s.id
