@@ -129,7 +129,7 @@ public class UserController {
 	@RequestMapping("XiuGaiZhangHu")
 	public String XiuGaiZhangHu(String name, String pwd, String id,HttpSession session) {
 		 
-		 System.out.println("进来了 修改账户");
+		
 		 
 		 User user=(User) session.getAttribute("user");
 		 
