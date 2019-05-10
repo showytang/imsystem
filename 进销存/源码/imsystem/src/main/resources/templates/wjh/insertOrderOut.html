@@ -254,7 +254,7 @@
 											<div style="font-size: 20px;">{{item.column5}}</div>
 											<div>类型：{{item.column2}}</div>
 											<div>
-												价格:<input class='jprice' :data="index" :value="item.jprice.toFixed(2)" />
+												价格:<input class='jprice' :oldprice="item.column3" :data="index" :value="item.jprice.toFixed(2)" />
 												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>数量:&nbsp;<input
 													:value="item.count" class="count" :data="index"
 													style="border: none; outline: none;"></span>
@@ -332,7 +332,9 @@
 					
 					user : {},
 					
-					typeId:""
+					typeId:"",
+					
+					price : 0
 				},
 				methods:{
 					clientNames : function (element){
@@ -403,6 +405,13 @@
 				goodsList();
 			}
 			function loadPrice(){
+				
+				for(var i in vue.shappinglist) {
+
+				    vue.price +=i.jprice;
+
+				}
+				
 				shappingLists().then(res => {
 					vue.shappinglist[0].column3 = $(".client").val();
 					if(res)
@@ -567,6 +576,7 @@
 						var order = {
 								paymoney : $(".yprice").text(),
 								tainmoney : $(".sprice").val(),
+								price : vue.price,
 								paytype  : vue.typeId,
 								code : $("#No").val(),
 								time : $("#time").val(),
@@ -598,7 +608,7 @@
 									count : $(".panel-title:eq("+i+")").next().next().text(),
 									scount : "0",
 									price : $(".jprice:eq("+(i-1)+")").val(),
-									oldprice : $(".oldprice:eq("+(i-1)+")").text(),
+									oldprice : $(".jprice:eq("+(i-1)+")").attr("oldprice"),
 									time : order.time,
 									state : 0
 							};

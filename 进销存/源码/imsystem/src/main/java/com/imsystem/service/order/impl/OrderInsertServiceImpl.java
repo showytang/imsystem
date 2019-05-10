@@ -298,6 +298,8 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 		sales.setPaymoney(salesorder.getPaymoney());
 
 		sales.setTainmoney(salesorder.getTainmoney());
+		
+		sales.setPrice(salesorder.getPrice());
 
 		sales.setTime(new Date());
 

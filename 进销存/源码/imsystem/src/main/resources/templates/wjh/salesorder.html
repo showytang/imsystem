@@ -559,7 +559,7 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 					if($(this).text() != "取消"){
 						
 						if($(this).attr("data") == 1){
-							if($("#spriceOrder").val() <= vue.salesorder.paymoney){
+							if($("#spriceOrder").val() < vue.salesorder.paymoney){
 								
 								alerts("金额不足");
 								

@@ -38,8 +38,8 @@
 		</if>
 		<if test="cid != 1">
 			IF(gp.price != '',gp.price,g.price) AS price FROM
-			`goodsprice` AS gp
-			INNER JOIN goodsvalue AS gv ON gp.gvid = gv.id
+			`quotedprice` AS gp
+			INNER JOIN goodsvalue AS gv ON gp.svid = gv.id
 			INNER JOIN goods AS g ON gv.gid = g.id
 			WHERE gv.id = #{id} AND gp.ctid
 			= #{cid}
@@ -60,7 +60,8 @@
 		g on g.id = gv.gid
 		<where>
 			<if test="true">
-				and sb.storeid = #{column4} AND sb.`updatetime` >= #{time} AND sb.`updatetime` &lt;=
+				and sb.storeid = #{column4} AND sb.`updatetime` >=
+				#{time} AND sb.`updatetime` &lt;=
 				#{updatetime}
 			</if>
 			<if test="code != null and code != '' ">
