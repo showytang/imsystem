@@ -230,7 +230,9 @@
 					
 					clientList : [],
 					
-					allotList : []
+					allotList : [],
+					
+					user : {}
 					
 				},
 				methods : {
@@ -240,6 +242,8 @@
 					}
 				}
 			});
+			
+			vue.user = localStorage.getItem("user");
 			
 			vue.clientList = [[${clientList}]];
 			
@@ -290,7 +294,9 @@
 						time : time,
 						endTime : endTime,
 						code : code,
-						jcode : jcode
+						jcode : jcode,
+						storeid : vue.user.storeid
+					
 					},
 					
 					type :　"post",

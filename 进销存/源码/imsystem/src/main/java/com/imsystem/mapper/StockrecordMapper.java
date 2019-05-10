@@ -11,7 +11,7 @@ public interface StockrecordMapper {
 	
 	Vector<Stockrecord> queryAllotDetails(String id);
 	
-	Vector<Stockrecord> query(@Param("time")String time,@Param("endTime")String endTime,@Param("code")String code,@Param("jcode")String jcode);
+	Vector<Stockrecord> query(@Param("time")String time,@Param("endTime")String endTime,@Param("code")String code,@Param("jcode")String jcode,@Param("storeid") String storeid);
 	
     int countByExample(StockrecordExample example);
 

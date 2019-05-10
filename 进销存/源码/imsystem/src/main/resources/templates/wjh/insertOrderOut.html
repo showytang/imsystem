@@ -327,6 +327,8 @@
 					
 					customerlist : [],
 					
+					user : {},
+					
 					typeId:""
 				},
 				methods:{
@@ -345,6 +347,8 @@
 					}
 				}
 			});
+			
+			vue.user = localStorage.getItem("user");
 			
 			vue.paytypeList = [[${paytypeList}]];
 			
@@ -582,8 +586,8 @@
 								cid : $(".client").val(),
 								state : 0,
 								progress : 1,
-								storeid : 1,
-								uid : 1
+								storeid : vue.user.storeid,
+								uid : vue.user.id
 						};
 						if($("#priceName").text() == "定金"){
 							order.preprice = $(".sprice").val();

@@ -393,6 +393,8 @@
 				
 				supplierList : [],
 				
+				user : {},
+				
 				givemeId:"",
 				
 				typeId:"",
@@ -447,6 +449,8 @@
 			}
 			
 		});
+		
+		vue.user = localStorage.getItem("user");
 		
 		vue.paytypeList = [[${paytypeList}]];
 		
@@ -590,9 +594,9 @@
 							stockdetails : [],
 							column2 : $(".sprice").val(),
 							column3 : $(".sumcount").text(),
-							uid : 1,
+							uid : vue.user.id,
 							state : 0,
-							storeid : 1
+							storeid : vue.user.storeid
 					};
 					
 					order.time = eval('new Date(' + order.time.replace(/\d+(?=-[^-]+$)/,    
