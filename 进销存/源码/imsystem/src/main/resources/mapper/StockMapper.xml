@@ -125,6 +125,9 @@
 			<if test="kucun == null or kucun == ''">
 				and s.state != 2
 			</if>
+			<if test="true">
+				s.storeid = #{storeid}
+			</if>
 		</where>
 		group by s.id
 		<if test="order == 0">

@@ -237,7 +237,8 @@
 				
 				pageIf : {},
 				no : "",
-				shappingname : ""
+				shappingname : "",
+				user : {}
 				
 			},
 			methods : {
@@ -256,6 +257,8 @@
 			}
 			
 		}); 
+		
+		vue.user = localStorage.getItem("user");
 
 		function query() {
 
@@ -283,7 +286,9 @@
 					
 					column2 : $("#clientName").val(),
 					
-					column3 : vue.shappingname
+					column3 : vue.shappingname,
+					
+					column4 : vue.user.storeid
 					
 			}
 			
