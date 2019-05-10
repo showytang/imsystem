@@ -19,7 +19,7 @@
 <script type="text/javascript" th:src="@{/assets/js/moment.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/daterangepicker.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/Mydate.js}"></script>
-<script type="text/javascript" th:src="@{/assets/js/page.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/pageNumber.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/bootstrap.min.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/vue.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/toastr.min.js}"></script>
@@ -307,7 +307,18 @@
 			    
 			    success:function(result){
 					vue.pageIf = result;
-					page(vue);
+					 $("#page").append(page(vue.pageIf.pageNum,vue.pageIf.prePage,vue.pageIf.nextPage,vue.pageIf.pages));
+						
+					 
+					 $(document).on("click",".pageFy>ul li",function(){
+						 var create = $(this).attr("pageNumber");
+						 if(create != null && create != 0){
+							 
+							 queryGoods(create,[],0);
+							 $("#page").append(page(vue.pageIf.pageNum,vue.pageIf.prePage,vue.pageIf.nextPage,vue.pageIf.pages));
+								
+						 }
+					 });
 			    }
 			})
 			

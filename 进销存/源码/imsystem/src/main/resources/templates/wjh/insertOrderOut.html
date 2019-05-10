@@ -135,6 +135,11 @@
 	border: none;
 	outline: none;
 }
+.panel-title{
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
 </style>
 </head>
 <body>
@@ -152,17 +157,15 @@
 							<div class="container-fluid"
 								style="background-color: #00AAFF; border-radius: 4px;">
 								<div class="btn-group" style="float: right;">
-									<div class="btn btn-primary" id="mozheng"
-										style="border: none; box-shadow: none; font-size: 16px;">抹整</div>
 									<div class="btn btn-primary" id="moling"
 										style="border: none; box-shadow: none; font-size: 16px;">抹零</div>
 									<div class="btn"
 										style="border: none; box-shadow: none; color: #e84242; font-size: 16px;">
-										<span style="color: white">应收：</span>$<span class="yprice">0</span>
+										<span style="color: white">应付：</span>$<span class="yprice">0</span>
 									</div>
 									<div class="btn"
 										style="border: none; box-shadow: none; color: #e84242; font-size: 16px;">
-										<span style="color: white"><span id="priceName">应付金额</span>：</span>$<input
+										<span style="color: white"><span id="priceName">实付金额</span>：</span>$<input
 											class="sprice" placeholder="请输入">&nbsp;<span
 											class="badge sumcount" style="background: #e84242;">4</span>
 									</div>
@@ -348,7 +351,7 @@
 				}
 			});
 			
-			vue.user = localStorage.getItem("user");
+			vue.user =  JSON.parse(localStorage.getItem("user"));
 			
 			vue.paytypeList = [[${paytypeList}]];
 			
@@ -527,22 +530,7 @@
 					counts();
 	         	});
 				$("#moling").click(function(){
-					$(".yprice").text(parseInt($(".yprice").text()));
 					$(".sprice").val(parseInt($(".yprice").text()));
-				});
-				$("#mozheng").click(function(){
-					if($(".yprice").text().indexOf(".") !="-1"){
-					
-						$(".yprice").text($(".yprice").text().substring(0,$(".yprice").text().indexOf(".")-1));
-					
-					}
-					else{
-						$(".yprice").text($(".yprice").text().substring(0,$(".yprice").text().length-1));
-					}
-					
-					$(".yprice").text($(".yprice").text()+"0");
-					$(".sprice").val(parseInt($(".yprice").text()));
-					
 				});
 				$(".client").change(function() {
 					if($(this).val() == "#") {
@@ -578,6 +566,7 @@
 					if($(".sprice").val()){
 						var order = {
 								paymoney : $(".yprice").text(),
+								tainmoney : $(".sprice").val(),
 								paytype  : vue.typeId,
 								code : $("#No").val(),
 								time : $("#time").val(),
