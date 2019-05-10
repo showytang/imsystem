@@ -265,7 +265,7 @@
 			}
 
 		});
-		vue.user = localStorage.getItem("user");
+		vue.user =  JSON.parse(localStorage.getItem("user"))
 		var z= 0;
 		function time(th){
 			if(z == 0){

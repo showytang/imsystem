@@ -243,7 +243,7 @@
 				}
 			});
 			
-			vue.user = localStorage.getItem("user");
+			vue.user =  JSON.parse(localStorage.getItem("user"))
 			
 			vue.clientList = [[${clientList}]];
 			

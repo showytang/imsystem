@@ -191,7 +191,7 @@
 								<div class="input-group">
 									<span class="input-group-addon">客户</span> <select
 										class="form-control client">
-										<option value="1">零售客户</option>
+										<option value="0">零售客户</option>
 										<option value="#">其他...</option>
 									</select>
 								</div>
@@ -465,7 +465,7 @@
 						$(".client").val(data);
 					}
 					$(".fade").modal("hide");
-					if(data != "1"){
+					if(data != "0"){
 						$("#priceName").text("定金");
 						loadPrice();
 					}
@@ -561,10 +561,10 @@
 						    }
 						});
 						$(".fade").modal("show");
-						$(".client").val("1");
+						$(".client").val("0");
 						loadPrice();
 					}
-					else if($(this).val() == "1"){
+					else if($(this).val() == "0"){
 						$("#priceName").text("应付金额");
 						loadPrice();
 					}

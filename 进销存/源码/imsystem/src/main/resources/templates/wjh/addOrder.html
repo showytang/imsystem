@@ -495,7 +495,7 @@ button {
 				
 				clientName : "",
 				
-				user : localStorage.getItem("user")
+				user : JSON.parse(localStorage.getItem("user"))
 				
 			},
 			methods : {
@@ -549,8 +549,6 @@ button {
 		vue.list = [[${list}]];
 		
 		vue.clientlist = [[${clientList}]];
-		
-		console.log(vue.user);
 		
 		$(function() {
 			$(".table-option").click(function() {

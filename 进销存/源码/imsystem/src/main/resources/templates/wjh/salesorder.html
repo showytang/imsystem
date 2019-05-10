@@ -468,7 +468,7 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 				}
 			});
 			
-			vue.user = localStorage.getItem("user");
+			vue.user =  JSON.parse(localStorage.getItem("user"))
 			
 			function time(th){
 				if(z == 0){
