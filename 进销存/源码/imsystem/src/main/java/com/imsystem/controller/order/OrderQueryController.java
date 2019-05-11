@@ -103,8 +103,8 @@ public class OrderQueryController {
 
 	@RequestMapping("/goodsAllot")
 	@ResponseBody
-	public Vector<Stockdetails> goodsAllot(String name) {
-		return orderquery.queryGoods(name);
+	public Vector<Stockdetails> goodsAllot(String name,String storeid) {
+		return orderquery.queryGoods(name,storeid);
 	}
 
 	@RequestMapping("/queryDetails")

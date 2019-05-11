@@ -247,7 +247,7 @@
 				data : {
 					pageIf : {},
 					no : "",
-					pagesize : "10",
+					pagesize : "6",
 					storeid : "",
 					shappingname : "",
 					user : {}
@@ -331,10 +331,8 @@
 						 $(document).on("click",".pageFy>ul li",function(){
 							 var create = $(this).attr("pageNumber");
 							 if(create != null && create != 0){
-								 
-								 queryGoods(create,[],0);
-								 $("#page").append(page(vue.pageIf.pageNum,vue.pageIf.prePage,vue.pageIf.nextPage,vue.pageIf.pages));
-									
+								 vue.pageIf.pageNum = create;
+								 query();
 							 }
 						 });
 					}
