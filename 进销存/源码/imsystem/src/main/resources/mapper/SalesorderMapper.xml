@@ -579,6 +579,23 @@
 		</where>
 		GROUP BY DATE_FORMAT(TIME,'%Y-%m-%d') ORDER BY TIME) AS t
 	</select>
+	<select id="queryByTime" resultMap="BaseResultMap">
+		SELECT t.* FROM (SELECT SUM(paymoney) paymoney,COUNT(*)
+		`count`,SUM(paymoney) - SUM(column1)
+		column2,DATE_FORMAT(`time`,'%Y-%m-%d') column3,`id` FROM sales
+		<where>
+			<if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+				`TIME` >= DATE_FORMAT(#{startTime},'%Y-%m-%d 00:00:00') AND `TIME` &lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d 23:59:59')
+			</if>
+			<if test="startTime == null or startTime == '' or endTime == null or endTime == ''">
+				DATE_SUB(CURDATE(), INTERVAL 6 DAY) &lt;= DATE(`time`)
+			</if>
+		<if test="storeid != null and storeid != ''">
+			AND storeid=#{storeid}
+		</if>
+		</where>
+		GROUP BY `code` ORDER BY TIME) AS t
+	</select>
 	<select id="queryRanking" resultMap="BaseResultMap">
 		SELECT t.id AS id,ss.id AS storeid,ss.name AS column3,ss.sufname AS
 		column4,t.s AS column5 FROM (SELECT *,SUM(paymoney) AS s FROM

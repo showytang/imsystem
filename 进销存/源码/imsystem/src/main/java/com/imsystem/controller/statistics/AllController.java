@@ -1,5 +1,6 @@
 package com.imsystem.controller.statistics;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -69,7 +70,7 @@ public class AllController {
 		for (Salesorder s : list) {
 			 sum+=1;
 			 sale.setPaymoney(sale.getPaymoney()+s.getPaymoney());
-			 sale.setColumn1(Double.parseDouble(sale.getColumn1())+Double.parseDouble(s.getColumn1())+"");//计算成本
+			 sale.setColumn1(Double.parseDouble(sale.getColumn1())+s.getPaymoney()+"");//计算成本
 		}
 		sale.setCount(sum);//今日订单量
 		if (list.size()>0) {
@@ -94,14 +95,20 @@ public class AllController {
 	}
 	@RequestMapping("queryDaysAgo")
 	@ResponseBody
-	public List<Salesorder> queryDaysAgo(String storeid,String startTime,String endTime){
-		List<Salesorder> list = salesorderS.queryDaysAgo(storeid,startTime,endTime);
-		if (list.size()>0) {
-			for (Salesorder s : list) {
-				s.setList(gvs.queryByCode(s.getId()));
+	public List<Salesorder> queryDaysAgo(String storeid,String startTime,String endTime,String state){
+		
+		if (state.equals("null")) {
+			List<Salesorder> list  = salesorderS.queryDaysAgo(storeid,startTime,endTime);
+			return list;
+		}else {
+			List<Salesorder> list1 = salesorderS.queryByTime(startTime, endTime,storeid);
+			if (list1.size()>0) {
+				for (Salesorder s : list1) {
+					s.setList(gvs.queryByCode(s.getId()));
+				}
 			}
+			return list1;
 		}
-		return list;
 	}
 	/***
 	 * 查询店铺排名
