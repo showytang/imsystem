@@ -339,12 +339,12 @@
     <script type="text/javascript" th:src="@{/assets/echarts/echarts/extension/bmap.min.js}"></script>
     <script type="text/javascript" th:src="@{/assets/echarts/simplex.js}"></script>
 	<script>
-		
+		var sid = getStoreId();
 		 $(function(){
 			 /**
 				 * Top统计图
 				 */
-			 var img1 = queryDaysAgo("");
+			 var img1 = queryDaysAgo(sid,"","","null");
 				var profit = [];
 				var SalesMoney = [];
 				var count = [];
@@ -365,7 +365,7 @@
 				options.yAxis[2].max = Math.max.apply(null,count)+20;
 				myChart.setOption(options);
 				/*店铺排名*/
-				var img2 = queryRanking("","");
+				var img2 = queryRanking("","",sid);
 				var options2 = myChart2.getOption();
 				var name = [];
 				var tedayMoney = [];
@@ -381,7 +381,7 @@
 				myChart2.setOption(options2);
 				
 				/*盈利亏损图*/
-				var img3 = queryThisYear(getThisYear(),"");
+				var img3 = queryThisYear(getThisYear(),sid);
 				var options1 = myChart1.getOption();
 				var tedayMoney = [];
 				var t = [];

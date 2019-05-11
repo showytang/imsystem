@@ -26,7 +26,7 @@ function queryTop(storeid, code, startTime, endTime) {
 /**
  * 销售额、利润、订单数 统计图
  */
-function queryDaysAgo(storeid,startTime,endTime) {
+function queryDaysAgo(storeid,startTime,endTime,state) {
 	var data;
 	$.ajax({
 		url : "/statistics/queryDaysAgo",
@@ -35,7 +35,8 @@ function queryDaysAgo(storeid,startTime,endTime) {
 		data : {
 			storeid : storeid,
 			startTime:startTime,
-			endTime:endTime
+			endTime:endTime,
+			state:state
 		},
 		dataType : "json",
 		success : function(result) {
