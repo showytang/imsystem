@@ -43,7 +43,7 @@
 
 	`USER` u
   	<where>
-  		u.id=c.uid AND u.id=#{uid} AND c.state=0 AND CONCAT(c.name,u.name) LIKE CONCAT('%',#{content},'%')
+  		u.id=c.uid AND c.storeid=#{uid} AND c.state=0 AND CONCAT(c.name,u.name) LIKE CONCAT('%',#{content},'%')
   		<choose>
   			<when test="zero==1.0">
   				AND c.balance &gt;= 0
@@ -70,7 +70,7 @@
   </update>
   
   <select id="selectAllCustomer" resultMap="BaseResultMap">
-  	SELECT * FROM customer WHERE state=0
+  	SELECT * FROM customer c WHERE state=0 
   </select>
   
   <select id="selectCustomerByStore" resultMap="BaseResultMap">

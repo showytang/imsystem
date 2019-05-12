@@ -1,5 +1,6 @@
 package com.imsystem.service.customer.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -12,7 +13,11 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Customer;
+import com.imsystem.domain.Store;
+import com.imsystem.domain.User;
 import com.imsystem.mapper.CustomerMapper;
+import com.imsystem.mapper.StoreMapper;
+import com.imsystem.mapper.UserMapper;
 import com.imsystem.service.customer.CustomerService;
 
 @Service
@@ -21,6 +26,10 @@ public class CustomerServiceImpl implements CustomerService{
 	
 	@Autowired
 	CustomerMapper customerDao;
+	@Autowired
+	UserMapper userDao;
+	@Autowired
+	StoreMapper storeDao;
 
 	/**
 	 *  查询所有客户
@@ -85,12 +94,43 @@ public class CustomerServiceImpl implements CustomerService{
 	 * 分页查询客户
 	 */
 	@Override
-	public PageInfo<Customer> queryCustomerList(Double zero, String content, Integer curentPage,String uid) {
+	public List<Customer> queryCustomerList(Double zero, String content, Integer curentPage,String uid) {
 		// TODO Auto-generated method stub
-		Page<Customer> page=PageHelper.startPage(curentPage, 1, true);
-		customerDao.queryCustomerByPage(zero, content,uid);
-		PageInfo<Customer> pages=page.toPageInfo();
-		return pages;
+		
+		List<Customer> clist=new ArrayList<Customer>();
+		//List<Customer> cList2=customerDao.queryCustomerByPage(zero, content, "2");
+		User uobj=userDao.queryUserById(uid);
+		String sid=uobj.getStoreid().toString();
+		Store sobj=storeDao.selectByPrimaryKey(sid);
+		
+		/*List<Customer> cList2=customerDao.queryCustomerByPage(zero, content, sobj.getId());
+		clist.addAll(cList2);*/
+		
+		if(sobj.getParented().equals("0")) {
+			List<Customer> cList2=customerDao.queryCustomerByPage(zero, content, sobj.getId());
+			if(cList2.size()!=0) {
+				clist.addAll(cList2);
+			}
+			List<Store> sList=storeDao.SelectStoreByParentId(sobj.getId());
+			if(sList!=null) {
+				for(Store sObj1:sList) {
+					List<Customer> cList1=customerDao.queryCustomerByPage(zero, content, sObj1.getId());
+					if(cList1.size()!=0) {
+						clist.addAll(cList1);
+					}
+				}
+			}
+			
+		}else {
+			List<Customer> cList3=customerDao.queryCustomerByPage(zero, content, sobj.getId());
+			
+			if(cList3.size()!=0) {
+				clist.addAll(cList3);
+			}
+		}
+		
+		return clist;
+		//return cList2;
 	}
 
 	/**

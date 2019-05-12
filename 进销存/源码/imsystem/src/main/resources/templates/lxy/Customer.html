@@ -1,310 +1,308 @@
 
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- Favicon icon -->
-    <title>客户页面</title>
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" th:href="@{/assets/vendor/font-awesome/css/font-awesome.min.css}">
-    <link rel="apple-touch-icon" sizes="76x76" th:href="@{/assets/img/apple-icon.png}">
-	<link rel="icon" type="image/png" sizes="96x96" th:href="@{/assets/img/favicon.png}">
-	
-	<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}"> 
-    
-    <link th:href="@{/assets/XiTong/css/bootstrap.min.css}" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link th:href="@{/assets/XiTong/css/style.css}" rel="stylesheet">
-    <!-- You can change the theme colors from here -->
-    <link th:href="@{/assets/XiTong/css/blue.css}" id="theme" rel="stylesheet">
-    
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- Tell the browser to be responsive to screen width -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- Favicon icon -->
+<title>客户页面</title>
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet"
+	th:href="@{/assets/vendor/font-awesome/css/font-awesome.min.css}">
+<link rel="apple-touch-icon" sizes="76x76"
+	th:href="@{/assets/img/apple-icon.png}">
+<link rel="icon" type="image/png" sizes="96x96"
+	th:href="@{/assets/img/favicon.png}">
+
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+
+<link th:href="@{/assets/XiTong/css/bootstrap.min.css}" rel="stylesheet">
+<!-- Custom CSS -->
+<link th:href="@{/assets/XiTong/css/style.css}" rel="stylesheet">
+<!-- You can change the theme colors from here -->
+<link th:href="@{/assets/XiTong/css/blue.css}" id="theme"
+	rel="stylesheet">
+<link rel="stylesheet" th:href="@{/assets/css/myStyle.css}">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
     <script th:src="@{https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js}"></script>
     <script th:src="@{https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js}"></script>
 <![endif]-->
 <style type="text/css">
-	*{
-		-webkit-user-select: none;
-	}
-	html{
-		font-size: 18px;
-	}
-	.input-group-btn>.btn{
-		width: 50px;
-	}
-	[type="checkbox"]:not(:checked), [type="checkbox"]:checked{
-		position: relative;
-    	left: 0px;
-    	opacity: 10;
-	}
-	h5 label{
-		padding-top: 6px;
-		margin-bottom: 0px;
-		margin-right: 8px;
-	}
-	#searchZero{
-		display: flex;
-		flex: row;
-		margin-right: 6%;
-	}
-	.checkbox_css{
-        display: inline-block;
-        box-sizing: content-box;
-        width: 20px;
-        height: 20px;
-        -webkit-appearance: none;
-        border-radius: 50%;
-        background-color: #fff;
-        border: 1px solid #d1d1d1;
-    }
-    .checkbox_css:checked{
-        display: inline-block;
-        box-sizing: content-box;
-        width: 20px;
-        height: 20px;
-        -webkit-appearance: none;
-        border-radius: 50%;
-        background-position: -29px -91px;
-        background-image: url("/assets/img/operation.png");
-        background-repeat: no-repeat;
-        background-size: 96px 640px;
-        border: 1px solid #2685d2;
-    }
-	.table td, .table th{
-		border-color: rgb(2,143,208);
-	}
-	td img{
-		width: 40%;
-		height: 55%;
-		border-radius: 50%;
-	}
-	a:hover{
-		cursor: pointer;
-	}
-	
-	/* 分页样式 */
-	.pagebtn{
-		height: 28px;
-		width: 25px;
-		border: 1px solid #C0C0C0;
-		border-radius: 3px;
-		list-style: none;
-		text-align: center;
-		line-height: 28px;
-		cursor: pointer;
-	}
-	#page>ul{
-		display: flex;
-		justify-content: space-around;
-		padding: 0px;
-		font-size: 12px;
-	}
-	#page{
-		width: 300px;
-		margin: 20px auto ;
-	}
-	.currentPage{
-		background: #1094ce;
-		color: white;
-		border: none;
-	}
+* {
+	-webkit-user-select: none;
+}
+
+html {
+	font-size: 18px;
+}
+
+.input-group-btn>.btn {
+	width: 50px;
+}
+
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+	position: relative;
+	left: 0px;
+	opacity: 10;
+}
+
+h5 label {
+	padding-top: 6px;
+	margin-bottom: 0px;
+	margin-right: 8px;
+}
+
+.btn-primary, .btn-primary.disabled {
+	border-color: #00a0f0;
+	background-color: rgb(2, 143, 208);
+}
+
+#searchZero {
+	display: flex;
+	flex: row;
+	margin-right: 6%;
+}
+
+.checkbox_css {
+	display: inline-block;
+	box-sizing: content-box;
+	width: 20px;
+	height: 20px;
+	-webkit-appearance: none;
+	border-radius: 50%;
+	background-color: #fff;
+	border: 1px solid #d1d1d1;
+}
+
+.checkbox_css:checked {
+	display: inline-block;
+	box-sizing: content-box;
+	width: 20px;
+	height: 20px;
+	-webkit-appearance: none;
+	border-radius: 50%;
+	background-position: -29px -91px;
+	background-image: url("/assets/img/operation.png");
+	background-repeat: no-repeat;
+	background-size: 96px 640px;
+	border: 1px solid #2685d2;
+}
+
+.table>thead>tr>th {
+	border-bottom: 2px solid rgb(2, 143, 208);
+}
+
+.table>tbody>tr>td, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td,
+	.table>thead>tr>th {
+	border-top: 1px solid rgb(2, 143, 208);
+}
+
+td img {
+	width: 40%;
+	height: 55%;
+	border-radius: 50%;
+}
+
+a:hover {
+	cursor: pointer;
+}
+
+/* 分页样式 */
+#page {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+}
 </style>
 </head>
-	<body>
-	
-		<input type="hidden" value="1" id="uid"/>
-	
-		<div class="row elDocument" style="padding: 28px 20px;">
-                    <!-- column -->
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-block">
-                            	 <h5 class="card-subtitle " style="float: right;display: flex;flex-direction: row;">
-                            	 	<div id="searchZero">
-                            	 		<label>
-                        					<input type="checkbox" class="checkbox_css zero"/>
-                    					</label>
-                    					<span style="display: block;width: 60px;line-height: 38px;">零欠款</span>
-                            	 	</div>
-                            	 	<div class="input-group" style="margin-right: 15%;">
+<body>
 
-										<input id="content" type="text" value="" class="form-control" placeholder="客户名称">
-										<span class="input-group-btn"><button type="button" id="searchLike" class="btn btn-primary">Go</button></span>
+	<input type="hidden" value="1" id="uid" />
 
-										
-									</div>
-                                	<input type="button" class="btn btn-primary" id="add" value="新增客户"/>
-                                </h5>
-                                <h4 class="card-title">客户</h4>
-                               <form id="customerForm" action="" method="post"></form>
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>客户名称</th>
-                                                <th>联系人名</th>
-                                                <th>联系电话</th>
-                                            	<th>客户余额</th>
-                                                <th>相关列表</th>
-                                                <th>相关账单</th>
-                                                <th>客户收款</th>
-                                                <th>客户详情</th>
-                                                <th>删除客户</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+	<div class="row elDocument" style="padding: 28px 20px;">
+		<!-- column -->
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-block">
+					<h5 class="card-subtitle "
+						style="float: right; display: flex; flex-direction: row;">
+						<div id="searchZero">
+							<label> <input type="checkbox" class="checkbox_css zero" />
+							</label> <span style="display: block; width: 60px; line-height: 38px;">零欠款</span>
+						</div>
+						<div class="input-group" style="margin-right: 15%;">
 
-                                            <tr v-for="(o,i) in pageIf.list">
-                                                <td>{{o.name}}</td>
-                                                <td>{{o.telephonename}}</td>
-                                                <td>{{o.telephone}}</td>
-                                                <td>{{o.balance}}</td>
-                                                <input type="hidden" :value="o.id" />
+							<input id="content" type="text" value="" class="form-control"
+								placeholder="客户名称"> <span class="input-group-btn"><button
+									type="button" id="searchLike" class="btn btn-primary">Go</button></span>
 
-                                                <td><a class="saleList" onclick="tosales(this)">销售列表</a></td>
-                                                <td><a class="bill" onclick="toincome(this)">应收对账单</a></td>
-                                                <td><a class="receive">收款</a></td>
-                                                <td><a class="detail" onclick="todetail(this)">查看详情</a></td>
-                                                <td><a class="del" onclick="deleteCustomer(this)" style="color: red;">删除</a></td>
-                                            </tr>
-                                            
-                                        </tbody>
-                                    </table>
-                                </div>
-                                
-                                <!-- 分页 -->
-                                <div id="page">
 
-								</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-	</body>
-	<script th:src="@{/assets/js/jquery.min.js}"></script>
- 	<script th:src="@{/assets/vendor/jquery/jquery.js}"></script>
-    <!-- Bootstrap tether Core JavaScript -->
-    <script th:src="@{/assets/js/tether.min.js}"></script>
-    <script th:src="@{/assets/js/bootstrap.min.js}"></script>
-    <!-- slimscrollbar scrollbar JavaScript -->
-    <script th:src="@{/assets/js/jquery.slimscroll.js}"></script>
-    <!--Wave Effects -->
-    <script th:src="@{/assets/js/waves.js}"></script>
-    <!--Menu sidebar -->
-    <script th:src="@{/assets/js/sidebarmenu.js}"></script>
-    <!--stickey kit -->
-    <script th:src="@{/assets/js/sticky-kit.min.js}"></script>
-    <!--Custom JavaScript -->
-    <script th:src="@{/assets/js/custom.min.js}"></script>
-    <script th:src="@{/assets/js/vue.js}"></script>
-    <script th:src="@{/assets/js/page.js}"></script>
-	<script>
-	
+						</div>
+						<input type="button" class="btn btn-primary" id="add" value="新增客户" />
+					</h5>
+					<h4 class="card-title">客户</h4>
+					<form id="customerForm" action="" method="post"></form>
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>客户名称</th>
+									<th>联系人名</th>
+									<th>联系电话</th>
+									<th>客户余额</th>
+									<th>相关列表</th>
+									<th>相关账单</th>
+									<th>客户收款</th>
+									<th>客户详情</th>
+									<th>删除客户</th>
+								</tr>
+							</thead>
+							<tbody>
 
-	var vue=new Vue({
-		el:".elDocument",
-		data:{
-			pageIf:""
+								<tr v-for="(o,i) in pageIf.list">
+									<td>{{o.name}}</td>
+									<td>{{o.telephonename}}</td>
+									<td>{{o.telephone}}</td>
+									<td>{{o.balance}}</td>
+									<input type="hidden" :value="o.id" />
+
+									<td><a class="saleList" onclick="tosales(this)">销售列表</a></td>
+									<td><a class="bill" onclick="toincome(this)">应收对账单</a></td>
+									<td><a class="receive">收款</a></td>
+									<td><a class="detail glyphicon glyphicon-edit"
+										onclick="todetail(this)" style="color: rgb(2, 143, 208);"></a></td>
+									<td><a class="del glyphicon glyphicon-trash"
+										onclick="deleteCustomer(this)"
+										style="color: rgb(2, 143, 208);"></a></td>
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+
+					<!-- 分页 -->
+					<div id="page"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/vendor/jquery/jquery.js}"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script th:src="@{/assets/js/tether.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap.min.js}"></script>
+<!-- slimscrollbar scrollbar JavaScript -->
+<script th:src="@{/assets/js/jquery.slimscroll.js}"></script>
+<!--Wave Effects -->
+<script th:src="@{/assets/js/waves.js}"></script>
+<!--Menu sidebar -->
+<script th:src="@{/assets/js/sidebarmenu.js}"></script>
+<!--stickey kit -->
+<script th:src="@{/assets/js/sticky-kit.min.js}"></script>
+<!--Custom JavaScript -->
+<script th:src="@{/assets/js/custom.min.js}"></script>
+<script th:src="@{/assets/js/vue.js}"></script>
+<script th:src="@{/assets/js/pageNumber.js}"></script>
+<script>
+	var vue = new Vue({
+		el : ".elDocument",
+		data : {
+			pageIf : ""
 		}
 	});
-	
+
 	/* 分页查询 */
-	function queryCustomerByPage(zero,content,curentPage){
-		var uid=$("#uid").val();
+	function queryCustomerByPage(curentPage) {
+		var zero = 0;
+		if ($(".zero").is(':checked')) {
+			zero = 1;
+		}
+		var content = $("#content").val();
+		var uid = $("#uid").val();
 		$.ajax({
-			url:"querycustomerlist",
-			data:{
-				"zero":zero,
-				"content":content,
-				"curentPage":curentPage,
-				"uid":uid
+			url : "querycustomerlist",
+			data : {
+				"zero" : zero,
+				"content" : content,
+				"curentPage" : curentPage,
+				"uid" : uid
 			},
-			type:"post",
-			dataType:"json",
-			success:function(result){
+			type : "post",
+			dataType : "json",
+			success : function(result) {
 				vue.pageIf = result;
-				page(vue);
+				$("#page").append(
+						page(vue.pageIf.pageNum, vue.pageIf.prePage,
+								vue.pageIf.nextPage, vue.pageIf.pages));
+				
 			}
 		});
 	}
-	
-	/* 分页点击 */
-	function floatPage(){
-		var zero=0;
-		if($(".zero").is(':checked')){
-			zero=1;
-		}
-		var content=$("#content").val();
-		queryCustomerByPage(zero,content,$('.currentPage').text());
-	}
-	
+
 	/*查看详情*/
-	function todetail(th){
-		var id=$(th).parent().prev().prev().prev().prev().val();
-		$("#customerForm").attr("action","tocustomerdetail?id="+id);
+	function todetail(th) {
+		var id = $(th).parent().prev().prev().prev().prev().val();
+		$("#customerForm").attr("action", "tocustomerdetail?id=" + id);
 		$("#customerForm").submit();
 	}
-	
+
 	/* 删除客户 */
-	function deleteCustomer(th){
-		var id=$(th).parent().prev().prev().prev().prev().prev().val();
-		$("#customerForm").attr("action","deletecustomer?id="+id);
+	function deleteCustomer(th) {
+		var id = $(th).parent().prev().prev().prev().prev().prev().val();
+		$("#customerForm").attr("action", "deletecustomer?id=" + id);
 		$("#customerForm").submit();
 	}
-	
+
 	/* 查看客户销售列表 */
-	function tosales(th){
-		var id=$(th).parent().prev().val();
-		$("#customerForm").attr("action","tocustomersalelist?id="+id);
+	function tosales(th) {
+		var id = $(th).parent().prev().val();
+		$("#customerForm").attr("action", "tocustomersalelist?id=" + id);
 		$("#customerForm").submit();
 	}
-	
+
 	/* 查看客户应收对账单 */
-	function toincome(th){
-		var id=$(th).parent().prev().prev().val();
-		$("#customerForm").attr("action","tocustomerincome?id="+id);
+	function toincome(th) {
+		var id = $(th).parent().prev().prev().val();
+		$("#customerForm").attr("action", "tocustomerincome?id=" + id);
 		$("#customerForm").submit();
 	}
-	
-		$(function() {
-			queryCustomerByPage(0,"",1);
-		
 
-			/*新增用户*/
-			$("#add").click(function(){
-				$("#customerForm").attr("action","toaddcustomer");
-				$("#customerForm").submit();
-			});
-			
+	$(function() {
+		queryCustomerByPage(1);
+		/* 分页点击 */
+		$(document).on(
+					"click",
+					".pageFy>ul li",
+					function() {
+						var create = $(this).attr("pageNumber");
+						if (create != null && create != 0) {
+							queryCustomerByPage(create); 
+						}
+					});
 
-			$(".zero").click(function(){
-				var zero=0;
-				if(this.checked){
-					zero=1;
-				}
-				var content=$("#content").val();
-				queryCustomerByPage(zero,content,1); 
-
-			});
-			
-
-			$("#searchLike").click(function(){
-				var zero=0;
-				if($(".zero").is(':checked')){
-					zero=1;
-				}
-				var content=$("#content").val();
-				queryCustomerByPage(zero,content,1);
-			});
-		
-			
+		/*新增用户*/
+		$("#add").click(function() {
+			$("#customerForm").attr("action", "toaddcustomer");
+			$("#customerForm").submit();
 		});
-	</script>
+
+		$(".zero").click(function() {
+			queryCustomerByPage(1);
+
+		});
+
+		$("#searchLike").click(function() {
+			queryCustomerByPage(1);
+		});
+
+	});
+</script>
 </html>

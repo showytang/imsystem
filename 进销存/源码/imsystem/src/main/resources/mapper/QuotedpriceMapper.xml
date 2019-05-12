@@ -173,6 +173,10 @@
 	</where>
   </select>
   
+  <select id="queryGoodsPrice" resultType="com.imsystem.domain.Goodsprice">
+  	SELECT * FROM `goodsprice` WHERE gvid=#{gvid}
+  </select>
+  
   
   <sql id="Example_Where_Clause" >
     <where >

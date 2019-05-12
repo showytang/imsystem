@@ -41,7 +41,7 @@ public interface CustomerService {
 	 * @param curentPage 当前页
 	 * @return
 	 */
-	public PageInfo<Customer> queryCustomerList(Double zero,String content,Integer curentPage,String uid);
+	public List<Customer> queryCustomerList(Double zero,String content,Integer curentPage,String uid);
 	
 	/**
 	 * 删除客户（改变状态）

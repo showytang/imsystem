@@ -110,6 +110,7 @@
 								<input name="cv" id="cv" type="hidden" th:value="${cv}">
 								<input name="gc" id="gc" type="hidden" th:value="${gc}">
 								<input name="gv" id="gv" type="hidden" th:value="${gv}">
+								<input name="gts" id="gts" type="hidden" th:value="${gts}">
 			
                                 <div class="table-responsive">
                                     <table class="table">
@@ -203,9 +204,23 @@
 	/* 复选框点击 */
 	function check(th){
 			if($(th).is(":checked")){
+				/* 查询客户对应价格 */
+				var gvid=$("#gv").val();
+				var cid=$(th).parent().next().val();
+				
 				var val=$(th).parent().parent().next().next().next().find("input").val();
 				if(val==""){
-					$(th).parent().parent().next().next().next().find("input").val("0");
+					$.ajax({
+						url:"queryprice",
+						data:{
+							"cid":cid,
+							"gvid":gvid
+						},
+						type:"post",
+						success:function(result){
+							$(th).parent().parent().next().next().next().find("input").val(result);
+						}
+					});
 				}
 				$(th).parent().parent().next().next().next().find("input").removeAttr("disabled");
 			}else{

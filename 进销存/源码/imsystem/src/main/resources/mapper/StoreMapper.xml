@@ -425,6 +425,12 @@
   		SELECT * FROM store WHERE parented=0
 
   </select> 
+  
+  <select id="SelectStoreByParentId"  resultMap="BaseResultMap">
+ 
+  		SELECT * FROM store WHERE parented=#{pid} AND state=0
+
+  </select>
    
  
  

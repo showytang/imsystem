@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imsystem.controller.goods.ImgCompress;
 import com.imsystem.domain.Customer;
@@ -96,7 +98,11 @@ public class CustomerController {
 		if(curentPage == null || curentPage <= 0 ) {
 			curentPage = 1;
 		}
-		return cService.queryCustomerList(zero, content, curentPage,uid);
+		Page<Customer> page=PageHelper.startPage(curentPage, 1, true);
+		List<Customer> clist=cService.queryCustomerList(zero, content, curentPage, uid);
+		
+		PageInfo<Customer> pages=new PageInfo<>(clist);
+		return pages;
 	}
 	
 	@RequestMapping("tocustomerdetail")
