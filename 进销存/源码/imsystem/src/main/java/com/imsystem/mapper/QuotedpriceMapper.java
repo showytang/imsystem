@@ -1,6 +1,7 @@
 package com.imsystem.mapper;
 
 import com.imsystem.domain.Goods;
+import com.imsystem.domain.Goodsprice;
 import com.imsystem.domain.QuoteVO;
 import com.imsystem.domain.Quotedprice;
 import com.imsystem.domain.QuotedpriceExample;
@@ -28,7 +29,10 @@ public interface QuotedpriceMapper {
 	
 	List<QuoteVO> queryQuoteGoods(@Param("name") String name,@Param("cid") String cid);
 	
-    int countByExample(QuotedpriceExample example);
+	List<Goodsprice> queryGoodsPrice(@Param("gvid")String gvid);
+	
+	
+	int countByExample(QuotedpriceExample example);
 
     int deleteByExample(QuotedpriceExample example);
 

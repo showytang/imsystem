@@ -17,6 +17,8 @@ public interface StoreMapper {
     int insert(Store record);
 
     int insertSelective(Store record);
+    
+    List<Store> SelectStoreByParentId(@Param("pid")String pid);
 
     List<Store> selectByExample(StoreExample example);
 

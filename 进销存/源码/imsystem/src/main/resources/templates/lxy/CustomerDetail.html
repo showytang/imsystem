@@ -276,29 +276,41 @@
 											if(addr.test($("#address").val())==false){
 												alert("地址输入格式不正确！");
 											}else{
-												formData.append("id",$("#id").val());
-												formData.append("name",$("#name").val());
-												formData.append("score",$("#integral").val());
-												formData.append("initbalance",$("#initialMoney").val());
-												formData.append("balance",$("#balance").val());
-												formData.append("telephone",$("#telephone").val());
-												formData.append("address",$("#address").val());
-												formData.append("telephonename",$("#telephonename").val());
-												formData.append("cid",$("#ct").val());
-												formData.append("lid",$("#cl").val());
-												formData.append("storeid",$("#sid").val());
-												$.ajax({
-													url:"updatecustomer",
-													data:formData,
-													type:"post",
-													processData:false,
-													contentType:false,
-													success:function(result){
-														$("#updateCustomerForm").attr("action","tocustomerlist");
-														$("#updateCustomerForm").attr("method","post");
-														$("#updateCustomerForm").submit();
+												if($("#ct").val()==null){
+													alert("客户类型不能为空！");
+												}else{
+													if($("#cl").val()==null){
+														alert("客户等级不能为空！");
+													}else{
+														if($("#sid").val()==null){
+															alert("所属门店不能为空！");
+														}else{
+															formData.append("id",$("#id").val());
+															formData.append("name",$("#name").val());
+															formData.append("score",$("#integral").val());
+															formData.append("initbalance",$("#initialMoney").val());
+															formData.append("balance",$("#balance").val());
+															formData.append("telephone",$("#telephone").val());
+															formData.append("address",$("#address").val());
+															formData.append("telephonename",$("#telephonename").val());
+															formData.append("cid",$("#ct").val());
+															formData.append("lid",$("#cl").val());
+															formData.append("storeid",$("#sid").val());
+															$.ajax({
+																url:"updatecustomer",
+																data:formData,
+																type:"post",
+																processData:false,
+																contentType:false,
+																success:function(result){
+																	$("#updateCustomerForm").attr("action","tocustomerlist");
+																	$("#updateCustomerForm").attr("method","post");
+																	$("#updateCustomerForm").submit();
+																}
+															}); 
+														}
 													}
-												}); 
+												}
 											}
 										}
 									}

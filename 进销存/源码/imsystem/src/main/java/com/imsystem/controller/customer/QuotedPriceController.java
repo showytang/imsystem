@@ -83,20 +83,24 @@ public class QuotedPriceController {
 	}
 	
 	@RequestMapping("choseonegoodsvalue")
-	public String choseOneGoodsValue(Model model,String gid,String cc,String cv,String gc) {
+	public String choseOneGoodsValue(Model model,String gid,String cc,String cv,String gc,String gts) {
+		//String gts1=gts.trim();
 		model.addAttribute("gid", gid);
 		model.addAttribute("cc", cc);
 		model.addAttribute("cv", cv);
 		model.addAttribute("gc", gc);
+		model.addAttribute("gts", gts);
+		
 		return "lxy/AddQuote";
 	}
 	
 	@RequestMapping("tochosegoods")
-	public String toChoseGoods(Model model,String cc,String cv,String gc,String gv) {
+	public String toChoseGoods(Model model,String cc,String cv,String gc,String gv,String gts) {
 		model.addAttribute("cc", cc);
 		model.addAttribute("cv", cv);
 		model.addAttribute("gc", gc);
 		model.addAttribute("gv", gv);
+		model.addAttribute("gts", gts);
 		return "lxy/ChooseGoods";
 	}
 	
@@ -111,7 +115,7 @@ public class QuotedPriceController {
 	 * @return
 	 */
 	@RequestMapping("choosegoods")
-	public String chooseGoods(Model model,String cc,String cv,String gc,String gv,QuoteVO qvo) {
+	public String chooseGoods(Model model,String cc,String cv,String gc,String gv,String gts,QuoteVO qvo) {
 		List<QuoteVO> qchooselist=new ArrayList<QuoteVO>();
 		if(cv!="" || cv!=null) {
 			
@@ -137,6 +141,7 @@ public class QuotedPriceController {
 		model.addAttribute("cv", cv);
 		model.addAttribute("gc", gc);
 		model.addAttribute("gid", gv);
+		model.addAttribute("gts", gts);
 		model.addAttribute("qvolist1", qchooselist);
 		return "lxy/AddQuote";
 	}
@@ -148,11 +153,12 @@ public class QuotedPriceController {
 	}
 	
 	@RequestMapping("tochosecustomers")
-	public String toChoseCustomers(Model model,String cc,String cv,String gc,String gv) {
+	public String toChoseCustomers(Model model,String cc,String cv,String gc,String gv,String gts) {
 		model.addAttribute("cc", cc);
 		model.addAttribute("cv", cv);
 		model.addAttribute("gc", gc);
 		model.addAttribute("gv", gv);
+		model.addAttribute("gts", gts);
 		return "lxy/ChooseCustomers";
 	}
 	
@@ -164,7 +170,7 @@ public class QuotedPriceController {
 	}
 	
 	@RequestMapping("choosecustomers")
-	public String chooseCustomers(Model model,String cc,String cv,String gc,String gv,QuoteVO qvo) {
+	public String chooseCustomers(Model model,String cc,String cv,String gc,String gv,String gts,QuoteVO qvo) {
 		List<QuoteVO> qchooselist=new ArrayList<QuoteVO>();
 		if(gv!="" || gv!=null) {
 			
@@ -187,13 +193,19 @@ public class QuotedPriceController {
 		model.addAttribute("cv", cv);
 		model.addAttribute("gc", gc);
 		model.addAttribute("gid", gv);
+		model.addAttribute("gts", gts);
 		model.addAttribute("qvolist", qchooselist);
 		return "lxy/AddQuote";
 	}
 	
 	
 	
-	
+	@RequestMapping("queryprice")
+	@ResponseBody
+	public Double queryPrice(String cid,String gvid){
+		Double price=qService.queryPrice(cid, gvid);
+		return price;
+	}
 	
 	
 	

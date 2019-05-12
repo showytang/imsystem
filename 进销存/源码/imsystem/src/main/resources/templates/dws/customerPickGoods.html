@@ -124,7 +124,7 @@
 									<div class="caption text-center">
 										<h4>{{item.goods.name}}</h4>
 										<p style="color: #777070;">
-											<span>{{item.goods.column2}}&nbsp;</span><span>{{item.goodsValue.name}}</span> <span>￥: {{item.goods.price}}</span>
+											<span>{{item.goods.column2}}   </span><span>{{item.goodsValue.name}}</span> <span>￥: {{item.goods.price}}</span>
 										</p>
 										<p v-if="item.goods.column1 == null" style="color: #777070;">
 											<span>库存：</span> <span >0</span>
@@ -138,8 +138,8 @@
 										
 										
 										<p>
-												<a :val="item.goodsValue.id" onclick="add(this)" class="btn btn-primary" role="button">确定</a>
-											</p>
+											<a :val="item.goodsValue.id" onclick="add(this)" class="btn btn-primary" role="button">确定</a>
+										</p>
 									</div>
 								</div>
 							</div>
@@ -193,8 +193,12 @@ function add(th){
 	var cc=$("#cc").val();
 	var cv=$("#cv").val();
 	var gc=$("#gc").val();
-	$("#chooseGoods").attr("action","choseonegoodsvalue?gid="+id+"&cc="+cc+"&cv="+cv+"&gc="+gc);
-	$("#chooseGoods").submit();
+	var goodsName=$(th).parent().parent().find("h4").html();
+	var goodsType=$(th).parent().parent().find("h4").next().text();
+	var tsVlue=goodsType.substring(0,goodsType.indexOf("￥"));
+	var gtsVlue=goodsName+" "+tsVlue;
+	$("#chooseGoods").attr("action","choseonegoodsvalue?gid="+id+"&cc="+cc+"&cv="+cv+"&gc="+gc+"&gts="+gtsVlue);
+	$("#chooseGoods").submit(); 
 }
 
 

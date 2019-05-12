@@ -24,15 +24,17 @@
 			-webkit-user-select: none;
 		}
 		.table{
-				color: rgb(2, 143, 208);
-			
 				text-align: center;
 				
 			}
-		.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tr>th, .table>thead>tr>td, .table>tr>th{
+		.table>tbody>tr>td, .table>tfoot>tr>td, .table>tr>th, .table>thead>tr>td, .table>tr>th{
 				border-top: 1px solid rgb(2, 143, 208);
 				
 			}
+		.table>tbody>tr>th{
+			border-top: none;
+			border-bottom: 2px solid rgb(2, 143, 208);
+		}
 		th{
 			text-align: center;
 		}
@@ -44,9 +46,16 @@
 			}
 		
 		.an{
-			background-color: rgb(2, 143, 208);
-			color:white;
+			display: inline-block;
+			background-color: white;
+			color:rgb(2, 143, 208);
+			margin-left: 5px;
+			margin-right: 5px;
 		} 
+		.btn{
+			background-color: rgb(2, 143, 208);
+			color: white;
+		}
 	</style>
 	</head>
 	<body>
@@ -67,7 +76,7 @@
 						 	<input id="likeSearch" class="col-md-1 btn btn-primary btn-lg" type="button" value="GO" style="height: 27px;line-height: 5px;margin-bottom: 5px;" />
 						 </form>
 						 
-						<button type="button" value="新增" class="btn btn-primary btn-lg col-md-1 col-md-offset-1" data-toggle="modal" data-target="#myModal" style="height: 30px;line-height: 5px; margin-bottom: 5px; margin-left: 15px;" >
+						<button type="button" value="新增" class="btn btn-primary btn-lg col-md-1 col-md-offset-1" data-toggle="modal" data-target="#myModal" style="height: 30px;line-height: 5px; margin-bottom: 5px; margin-left: 50px;" >
 	  						新增
 						</button>
 						
@@ -89,11 +98,9 @@
 								<td th:text="${item.uObj.name}"></td>
 								
 								<td>
-									<button type="button"  data-toggle="modal" data-target="#myModal1" class="an update">
-			  						修改
-									</button>
+									<span  data-toggle="modal" data-target="#myModal1" class="glyphicon glyphicon-edit an update"></span>
 									<input type="hidden" th:value="${item.clObj.id}" id="clId"/>
-									<a href="#"><input type="button" class="an delete" value="删除"/></a>
+									<a href="#"><span class="glyphicon glyphicon-trash an delete" ></span></a>
 								</td>
 							</tr>
 							

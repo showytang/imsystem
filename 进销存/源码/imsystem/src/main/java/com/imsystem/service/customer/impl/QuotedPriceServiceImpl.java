@@ -12,10 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.imsystem.domain.Customer;
+import com.imsystem.domain.Goodsprice;
 import com.imsystem.domain.Goodsvalue;
 import com.imsystem.domain.QuoteVO;
 import com.imsystem.domain.Quotedprice;
 import com.imsystem.mapper.CustomerMapper;
+import com.imsystem.mapper.CustomerlevelMapper;
+import com.imsystem.mapper.CustomertypeMapper;
 import com.imsystem.mapper.GoodsMapper;
 import com.imsystem.mapper.GoodsvalueMapper;
 import com.imsystem.mapper.QuotedpriceMapper;
@@ -33,6 +37,10 @@ public class QuotedPriceServiceImpl implements QuotedPriceService{
 	GoodsvalueMapper goodsvalueMap;
 	@Autowired
 	private GoodsMapper goodsMap;
+	@Autowired
+	CustomertypeMapper ctDao;
+	@Autowired
+	CustomerlevelMapper clDao;
 
 	/**
 	 * 查询所有报价
@@ -238,6 +246,36 @@ public class QuotedPriceServiceImpl implements QuotedPriceService{
 			}
 		}
 		return qvoList;
+	}
+
+	@Override
+	public Double queryPrice(String cid, String gvid) {
+		// TODO Auto-generated method stub
+		Customer cobj=cDao.selectByPrimaryKey(cid);
+		Goodsvalue gvobj=goodsvalueMap.queryGoodsDetail(gvid);
+		List<Goodsprice> gplist=qDao.queryGoodsPrice(gvid);
+		Double price=0.0;
+		if(gplist.size()!=0) {
+			for(Goodsprice gpobj:gplist) {
+				if(gpobj.getCtid().equals(cobj.getCid())) {
+					Double clagio=clDao.selectByPrimaryKey(cobj.getLid()).getAgio();
+					if(clagio==0.0) {
+						price=gpobj.getPrice();
+					}else {
+						price=gpobj.getPrice()*clagio;
+					}
+				}
+			}
+		}else {
+			gvobj.setGoods(qDao.selectGoodsById(gvobj.getGid()));
+			Double clagio=clDao.selectByPrimaryKey(cobj.getLid()).getAgio();
+			if(clagio==0.0) {
+				price=gvobj.getGoods().getPrice();
+			}else {
+				price=gvobj.getGoods().getPrice()*clagio;
+			}
+		}
+		return price;
 	}
 
 }

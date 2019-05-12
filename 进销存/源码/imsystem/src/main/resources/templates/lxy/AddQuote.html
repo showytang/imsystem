@@ -57,6 +57,10 @@
 		margin-left: 1%;
 		text-align: left;
 	}
+	.btn-primary, .btn-primary.disabled{
+		border-color: #00a0f0;
+		background-color: rgb(2, 143, 208);
+	}
 	.check{
 		border-bottom: solid 3px rgb(2,143,208);
 		color: rgb(2,143,208);
@@ -94,6 +98,7 @@
 	<input id="cv" type="hidden" th:value="${cv}">
 	<input id="gc" type="hidden" th:value="${gc}">
 	<input id="gid" type="hidden" th:value="${gid}">
+	<input id="gts" type="hidden" th:value="${gts}">
 		<div class="row elDocument"style="padding: 28px 20px;">
                     <!-- column -->
                     <div class="col-lg-12">
@@ -135,7 +140,7 @@
                                             	<li class="quoteli1" v-if="customerQuoteList.length!=0" v-for="(o,i) in customerQuoteList">
                                             		<span class="goodsName name">{{o.gvobj.goods.name}}</span>
                                             		<span class="salebybulk"  v-for="(o1,i1) in o.gvobj.goodsPrices">
-                                            		<span>{{o1.sufname}}</span>{{o1.sufname}}：￥<span class="bulkPrirce">{{o1.price}}</span> 
+                                            		<span>{{o1.sufname}}</span>：￥<span class="bulkPrirce">{{o1.price}}</span> 
                                             		</span>
                                             		<span class="quote">报价：￥<span class="quotePrirce">{{o.qpobj.price}}</span> </span>
                                             		<input type="hidden" class="endGoodsId" name="" :value="o.gvobj.id"/>
@@ -143,7 +148,7 @@
                                             		<input type="hidden" class="endQuoteId" name="" :value="o.qpobj.id"/>
                                             	</li>
                                             	
-                                            	<li class="quoteli1" th:each="items,state:${qvolist1}">
+                                            	<li class="quoteli1 newquoteli1" th:each="items,state:${qvolist1}">
                                             		<span class="goodsName name" th:text="${items.gobj.name}"></span>
                                             		<span class="salebybulk" th:each="items1,state1:${items.gvobj.goodsPrices}">
                                             		 <span th:text="${items1.sufname}"></span>：￥<span class="bulkPrirce" th:text="${items1.price}"></span> 
@@ -302,6 +307,7 @@
 			var cv=$("#cv").val();
 			var gc=$("#gc").val();
 			var gid=$("#gid").val();
+			var gts=$("#gts").val();
 			if(cc=="not"){
 				$("#customerChoose").attr("class","");
 			}else{
@@ -317,7 +323,7 @@
 			}
 			if(gid!=""){
 				$("#goodsName").attr("value",gid);
-				$("#goodsName").append("<option value='"+gid+"' selected='selected'>"+gid+"</option>");
+				$("#goodsName").append("<option value='"+gid+"' selected='selected'>"+gts+"</option>");
 				
 			}
 			
@@ -341,6 +347,7 @@
 			$("#customerName").change(function(){
 				var cv=$("#customerName").val();
 				var cname=$("#customerName").attr("value",cv);
+				$(".newquoteli1").remove();
 				judge();
 			});
 			$("#goodsName").click(function(){
@@ -356,10 +363,11 @@
 			$("#chooseGoods").click(function(){
 				var cname=$("#customerName").attr("value");
 				var gname=$("#goodsName").attr("value");
+				var gts=$("#gts").val();
 				if(cname=="0"){
 					
 				}else{
-					$("#customerAdd").attr("action","tochosegoods?cc=yes&cv="+cname+"&gc=not&gv="+gname);
+					$("#customerAdd").attr("action","tochosegoods?cc=yes&cv="+cname+"&gc=not&gv="+gname+"&gts="+gts);
 					$("#customerAdd").submit();
 				}
 			});
@@ -367,10 +375,11 @@
 			$("#chooseCustomer").click(function(){
 				var cname=$("#customerName").attr("value");
 				var gname=$("#goodsName").attr("value");
+				var gts=$("#gts").val();
 				if(gname==""){
 					
 				}else{
-					$("#goodsAdd").attr("action","tochosecustomers?cc=not&cv="+cname+"&gc=yes&gv="+gname);
+					$("#goodsAdd").attr("action","tochosecustomers?cc=not&cv="+cname+"&gc=yes&gv="+gname+"&gts="+gts);
 					$("#goodsAdd").submit();
 				}
 			});
@@ -379,28 +388,43 @@
 			$("#addQuote").click(function(){
 				var customerChoose=$("#customerChoose").attr("class");
 				var goodsChoose=$("#goodsChoose").attr("class");
-				if(customerChoose=="check"){
-					var num1=0;
-					$("#chosecid").attr("value",$("#customerName").attr("value"));
-					$(".quoteli1").each(function(){
-						var i1=num1++;
-						$(this).find(".endGoodsId").attr("name","qplist["+i1+"].svid");
-						$(this).find(".endGoodsPrice").attr("name","qplist["+i1+"].price");
-						$(this).find(".endQuoteId").attr("name","qplist["+i1+"].id");
-					});
-					$("#customerAdd").attr("action","addquote");
-					$("#customerAdd").submit();
-				}else if(goodsChoose=="check"){
-					var num=0;
-					$(".quoteli").each(function(){
-						var i=num++;
-						$(this).find(".endCustomerId").attr("name","qplist["+i+"].cid");
-						$(this).find(".endGoodsPrice").attr("name","qplist["+i+"].price");
-						$(this).find(".endQuoteId").attr("name","qplist["+i+"].id");
-					});
-					$("#goodsAdd").attr("action","addquote");
-					$("#goodsAdd").submit();
+				
+				var customerid=$("#customerName").attr("value");
+				var goodsid=$("#goodsName").attr("value");
+				if(customerid=="0"){
+					alert("请先选择客户！");
 				}
+	
+				if(customerChoose=="check"){
+					if(customerid=="0"){
+						alert("请先选择客户！");
+					}else{
+						var num1=0;
+						$("#chosecid").attr("value",$("#customerName").attr("value"));
+						$(".quoteli1").each(function(){
+							var i1=num1++;
+							$(this).find(".endGoodsId").attr("name","qplist["+i1+"].svid");
+							$(this).find(".endGoodsPrice").attr("name","qplist["+i1+"].price");
+							$(this).find(".endQuoteId").attr("name","qplist["+i1+"].id");
+						});
+						$("#customerAdd").attr("action","addquote");
+						$("#customerAdd").submit();
+					}
+				}else if(goodsChoose=="check"){
+					if(goodsid==""){
+						alert("请先选择商品！");
+					}else{
+						var num=0;
+						$(".quoteli").each(function(){
+							var i=num++;
+							$(this).find(".endCustomerId").attr("name","qplist["+i+"].cid");
+							$(this).find(".endGoodsPrice").attr("name","qplist["+i+"].price");
+							$(this).find(".endQuoteId").attr("name","qplist["+i+"].id");
+						});
+						$("#goodsAdd").attr("action","addquote");
+						$("#goodsAdd").submit();
+					}
+				} 
 			});
 	
 		});

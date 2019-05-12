@@ -96,4 +96,12 @@ public interface QuotedPriceService {
 	 * @return
 	 */
 	public int addQuote(QuoteVO qvo,String uid);
+	
+	/**
+	 * 查询客户对应商品的最佳价格
+	 * @param cid
+	 * @param gvid
+	 * @return
+	 */
+	public Double queryPrice(String cid,String gvid);
 }

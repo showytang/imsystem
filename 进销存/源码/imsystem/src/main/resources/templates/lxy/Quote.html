@@ -15,11 +15,14 @@
     <link rel="apple-touch-icon" sizes="76x76" th:href="@{/assets/img/apple-icon.png}">
 	<link rel="icon" type="image/png" sizes="96x96" th:href="@{/assets/img/favicon.png}">
 	
+	<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}"> 
+	
     <link th:href="@{/assets/XiTong/css/bootstrap.min.css}" rel="stylesheet">
     <!-- Custom CSS -->
     <link th:href="@{/assets/XiTong/css/style.css}" rel="stylesheet">
     <!-- You can change the theme colors from here -->
     <link th:href="@{/assets/XiTong/css/blue.css}" id="theme" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/assets/css/myStyle.css}">
     
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -41,18 +44,27 @@
 		margin-bottom: 0px;
 		margin-right: 8px;
 	}
+	.btn-primary, .btn-primary.disabled{
+		border-color: #00a0f0;
+		background-color: rgb(2, 143, 208);
+	}
 	#searchZero{
 		display: flex;
 		flex: row;
 		margin-right: 6%;
 	}
-	
-	.table td, .table th{
-		border-color: rgb(2,143,208);
+	.table{
+		font-size: 1.8rem;
+	}
+	.table>thead>tr>th{
+		border-bottom: 2px solid rgb(2, 143, 208);
+	}
+	.table>tbody>tr>td, .table>tfoot>tr>td, .table>tfoot>tr>th{
+		border-top: 1px solid rgb(2, 143, 208);
 	}
 	td img{
-		width: 57px;
-		height: 55px;
+		width: 37px;
+		height: 35px;
 		/* border-radius: 50%; */
 	}
 	td input{
@@ -61,32 +73,22 @@
 	a:hover{
 		cursor: pointer;
 	}
+	#searchByCustomerName{
+		width: 50px;
+	}
+	#searchByGoodsName{
+		width: 50px;
+	}
+	#updateQuotePrice{
+		position: absolute;
+		top: 55px;
+	}
 	
 	/* 分页样式 */
-	.pagebtn{
-		height: 28px;
-		width: 25px;
-		border: 1px solid #C0C0C0;
-		border-radius: 3px;
-		list-style: none;
-		text-align: center;
-		line-height: 28px;
-		cursor: pointer;
-	}
-	#page>ul{
-		display: flex;
-		justify-content: space-around;
-		padding: 0px;
-		font-size: 12px;
-	}
 	#page{
-		width: 300px;
-		margin: 20px auto ;
-	}
-	.currentPage{
-		background: #1094ce;
-		color: white;
-		border: none;
+		width: 100%;
+		display: flex;
+		justify-content: flex-end;
 	}
 </style>
 </head>
@@ -96,7 +98,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-block">
-                            	 <h5 class="card-subtitle " style="float: right;display: flex;flex-direction: row;">
+                            	 <h5 class="card-subtitle " style="float: right;width: 60%;display: flex;flex-direction: row;justify-content: space-around;">
                             	 	<div class="input-group" style="margin-right: 10%;">
 										<input id="customerName" type="text" value="" class="form-control" placeholder="客户名称">
 										<span class="input-group-btn"><button id="searchByCustomerName" type="button" class="btn btn-primary">Go</button></span>
@@ -136,15 +138,49 @@
                                                 <td>{{dada(o.qpobj.time)}}</td>
                                                 <input type="hidden" :value="o.qpobj.id" />
                                                 <td>
-													<label>报价：</label>
-                                                	<input type="text" :vul="o.qpobj.price" name="" class="" :value="o.qpobj.price" />
-                                                	<a class="upd" onclick="update(this)">修改</a>
+                                                	<input type="hidden" :vul="o.qpobj.price" name="" class="" :value="o.qpobj.price" />
+                                                	<input type="hidden" name="" class="" :value="o.qpobj.id" />
+                                                	<a class="upd glyphicon glyphicon-edit" data-toggle="modal" data-target="#updateQuotePrice" onclick="toupdate(this)" style="color: rgb(2, 143, 208);"></a>
                                                 </td>
-                                                <td><a class="del" style="color: red;" onclick="qdelete(this)">删除</a></td>
+                                                <td><a class="del glyphicon glyphicon-trash" style="color: rgb(2, 143, 208);" onclick="qdelete(this)"></a></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
+                                
+                              <div class="modal fade" id="updateQuotePrice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">		
+								<div class="modal-dialog" role="document">
+		    						<div class="modal-content">
+		      							<div class="modal-header">
+									        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+									        <h4 class="modal-title" id="myModalLabel">修改客户报价价格</h4>
+		      							</div>
+								      	<div class="modal-body">
+								      		<form class="form-horizontal" id="updateQuotePriceForm" action="updatequotedprice" method="post">
+								      		<input type="hidden" name="qid" class="quoteId" value="" />
+										  	<div class="form-group">
+										    	<label for="inputEmail3" class="col-sm-3 control-label">报价价格</label>
+											    <div class="col-sm-9">
+											    	<input type="text" class="form-control quotePrice" value="" disabled="disabled">
+											    </div>
+										  	</div>
+										  	<div class="form-group">
+										    	<label for="inputPassword3" class="col-sm-3 control-label">修改报价</label>
+											    <div class="col-sm-9">
+											      <input type="text" value="" class="form-control updatePrice" name="price">
+											    </div>
+										  	</div>
+										  	
+										</form>
+								        
+								      	</div>
+								      <div class="modal-footer">
+								        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+								        <button type="button" class="btn btn-primary" id="update">提交</button>
+								      </div>
+		    						</div>
+		  						</div>
+		  				</div>
                                 
                                 <!-- 分页 -->
                                 <div id="page">
@@ -171,7 +207,7 @@
     <!--Custom JavaScript -->
     <script th:src="@{/assets/js/custom.min.js}"></script>
     <script th:src="@{/assets/js/vue.js}"></script>
-    <script th:src="@{/assets/js/page.js}"></script>
+    <script th:src="@{/assets/js/pageNumber.js}"></script>
     
 	<script>
 	
@@ -200,11 +236,13 @@
 		}
 	});
 	
-	/* 修改报价 */
-	function update(th){
-		var id=$(th).parent().prev().val();
-		var price=$(th).prev().val(); 
-		var iniprice=$(th).prev().attr("vul");
+	/* 去修改报价 */
+	function toupdate(th){
+		var id=$(th).prev().val();
+		var price=$(th).prev().prev().val(); 
+		$("#updateQuotePriceForm .quoteId").attr("value",id);
+		$("#updateQuotePriceForm .quotePrice").attr("value",price);
+		/* var iniprice=$(th).prev().attr("vul");
 		if(price==""){
 			$(th).prev().val(iniprice);
 			alert("报价不能为空！");
@@ -212,7 +250,7 @@
 			$(th).prev().val(price);
 			$("#quoteForm").attr("action","updatequotedprice?qid="+id+"&price="+price);
 			$("#quoteForm").submit();
-		}
+		} */
 	}
 	
 	/* 删除报价 */
@@ -223,8 +261,9 @@
 	}
 	
 	/* 分页查询 */
-	function queryQuoteByPage(cname,gname,curentPage){
-		
+	function queryQuoteByPage(curentPage){
+		var cname=$("#customerName").val();
+		var gname=$("#goodsName").val();
 		$.ajax({
 			url:"queryquoteprice",
 			data:{
@@ -236,35 +275,35 @@
 			dataType:"json",
 			success:function(result){
 				vue.pageIf = result;
-				page(vue);
-				console.log(result);
+				$("#page").append(
+						page(vue.pageIf.pageNum, vue.pageIf.prePage,
+								vue.pageIf.nextPage, vue.pageIf.pages));
 			}
 		});
-	}
-	
-	/* 分页点击 */
-	function floatPage(){
-		var cname=$("#customerName").val();
-		var gname=$("#goodsName").val();
-		queryQuoteByPage(cname,gname,$('.currentPage').text());
 	}
 	
 	
 	
 		$(function() {
 			
-			queryQuoteByPage("","",1);
+			queryQuoteByPage(1);
+			/* 分页点击 */
+			$(document).on(
+					"click",
+					".pageFy>ul li",
+					function() {
+						var create = $(this).attr("pageNumber");
+						if (create != null && create != 0) {
+							queryQuoteByPage(create); 
+						}
+					});
 			
 			$("#searchByCustomerName").click(function(){
-				var cname=$("#customerName").val();
-				var gname=$("#goodsName").val();
-				queryQuoteByPage(cname,gname,1);
+				queryQuoteByPage(1);
 			});
 			
 			$("#searchByGoodsName").click(function(){
-				var cname=$("#customerName").val();
-				var gname=$("#goodsName").val();
-				queryQuoteByPage(cname,gname,1);
+				queryQuoteByPage(1);
 			});
 			
 			/*新增客户报价*/
@@ -273,7 +312,16 @@
 				$("#quoteForm").submit();
 			});
 			
-			
+			/* 修改客户报价 */
+			$("#update").click(function(){
+				var price=$("#updateQuotePriceForm .updatePrice").val();
+				if(price==""){
+					alert("报价不能为空！");
+				}else{
+					$("#updateQuotePriceForm").attr("action","updatequotedprice");
+					$("#updateQuotePriceForm").submit();
+				} 
+			});
 	
 		});
 	</script>
