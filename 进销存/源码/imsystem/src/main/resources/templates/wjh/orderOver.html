@@ -279,16 +279,14 @@
 					
 			    	vue.pageIf = result;
 			    	
-			    	 $("#page").append(page(vue.pageIf.pageNum,vue.pageIf.prePage,vue.pageIf.nextPage,vue.pageIf.pages));
-						
+			    	$("#page").append(page(vue.pageIf.pageNum,vue.pageIf.prePage,vue.pageIf.nextPage,vue.pageIf.pages));
+					
 					 
 					 $(document).on("click",".pageFy>ul li",function(){
 						 var create = $(this).attr("pageNumber");
 						 if(create != null && create != 0){
-							 
-							 queryGoods(create,[],0);
-							 $("#page").append(page(vue.pageIf.pageNum,vue.pageIf.prePage,vue.pageIf.nextPage,vue.pageIf.pages));
-								
+							 vue.pageIf.pageNum = create;
+							 query();
 						 }
 					 });
 			    	

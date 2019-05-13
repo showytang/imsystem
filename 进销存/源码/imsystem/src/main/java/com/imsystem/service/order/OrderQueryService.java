@@ -20,7 +20,7 @@ public interface OrderQueryService {
 	
 	Vector<Stockrecord> queryAllotDetails(String id);
 	
-	Vector<Stockdetails> queryGoods(String name);
+	Vector<Stockdetails> queryGoods(String name,String storeid);
 	
 	Vector<Stockdetails> queryDetails(String gvid);
 	

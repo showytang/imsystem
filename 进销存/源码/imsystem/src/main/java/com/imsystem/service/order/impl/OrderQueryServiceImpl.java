@@ -77,9 +77,9 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	}
 
 	@Override
-	public Vector<Stockdetails> queryGoods(String name) {
+	public Vector<Stockdetails> queryGoods(String name,String storeid) {
 		// TODO Auto-generated method stub
-		return stockDetail.queryGoods(name, "1");
+		return stockDetail.queryGoods(name, storeid);
 	}
 
 	@Override

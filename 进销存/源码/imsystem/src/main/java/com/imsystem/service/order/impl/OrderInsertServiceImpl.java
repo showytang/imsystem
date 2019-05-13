@@ -210,12 +210,14 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 	public int allot(Vector<Stockdetails> stockde) {
 
 		int count = 0;
-
+		String storeid = "1";
 		for (Stockdetails item : stockde) {
 
 			count += stockdetail.updateCount(item.getCode(), item.getCount(), item.getGvid());
-
-			if (stockdetail.selectCount(item.getCode(), "1") == 0) {
+			
+			storeid = item.getStoreid();
+			
+			if (stockdetail.selectCount(item.getCode(), storeid) == 0) {
 				count += stockM.updateState(item.getCode());
 				count += stockdetail.update(item.getId());
 			}
@@ -232,7 +234,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 		stock.setColumn1("0");
 		stock.setColumn2("0");
 		stock.setUid(stockde.get(0).getUid());
-		stock.setStoreid(stockde.get(0).getStoreid());
+		stock.setStoreid(stockde.get(0).getColumn1());
 
 		count += stockM.insertSelective(stock);
 

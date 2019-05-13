@@ -186,6 +186,7 @@ button {
 	width: 100%;
 	background: white;
 	height: 100%;
+	transition: all 0.5s;
 }
 
 .goods>div>div {
@@ -199,10 +200,9 @@ button {
 	padding: 5px;
 	margin-bottom: 8px;
 	text-align: center;
-	transition: all 0.5s;
 }
 
-.goods:hover {
+.goods>div:hover {
 	transform: translate3d(0, -2px, 0);
 	box-shadow: 0 15px 30px rgba(0, 0, 0, .1);
 }
@@ -274,12 +274,20 @@ button {
 	border-radius: 8px 0px 0px 8px;
 }
 
-.selectDiv>input{
+.selectDiv>input {
 	outline: none;
 	border-color: #188dea;
 	border-radius: 0px 8px 8px 0px;
 	text-indent: 2em;
 	width: 240px;
+}
+
+.goodsNumber {
+	height: 30px;
+	outline: none;
+	text-align: center;
+	width: 60px;
+	border: 0;
 }
 </style>
 </head>
@@ -303,17 +311,14 @@ button {
 							<div>单价</div>
 							<div>总计</div>
 						</li>
-						<li>
-							<div>vovi</div>
-							<div>2</div>
-							<div>2000</div>
-							<div>4000.00</div>
-						</li>
-						<li>
-							<div>open</div>
-							<div>2</div>
-							<div>2000</div>
-							<div>4000.00</div>
+						<li v-for="item in orderShapping">
+							<div>{{item.goods.name}}</div>
+							<div>
+								<input class="goodsNumber" type="text"
+									v-model="item.goods.column1">
+							</div>
+							<div>{{item.goods.price}}</div>
+							<div>{{item.goods.column1 * item.goods.price}}</div>
 						</li>
 					</ul>
 					<div class="table-div-bottom">
@@ -322,7 +327,7 @@ button {
 					</div>
 					<div class="table-div-SumPrice">
 						<span>总和：</span><span style="color: red;">￥<span
-							style="font-size: 20px;">2008.00</span></span>
+							style="font-size: 20px;">{{sum.toFixed(2)}}</span></span>
 					</div>
 				</div>
 				<div class="table-div">
@@ -424,13 +429,14 @@ button {
 				<div id="right-head">
 					<div class="right-head-div-options">客户</div>
 					<div class="right-head-div-options right-head-div-active">商品</div>
-					<div class="selectDiv" style="display:none">
+					<div class="selectDiv" style="display: none">
 						<div>客户名称</div>
-						<input type="text" @keyup.enter="clientkeycode" v-model="clientName" >
+						<input type="text" @keyup.enter="clientkeycode"
+							v-model="clientName">
 					</div>
 					<div class="selectDiv">
 						<div>商品名称</div>
-						<input type="text" @keyup.enter="goodskeycode" v-model="goodsName" >
+						<input type="text" @keyup.enter="goodskeycode" v-model="goodsName">
 					</div>
 				</div>
 			</div>
@@ -440,13 +446,15 @@ button {
 						<div class="images">
 							<img th:src="@{/assets/img/qq.png}" />
 						</div>
-						<div class="goodsName" :title="item.name" style="margin-top: 50px;">
+						<div class="goodsName" :title="item.name"
+							style="margin-top: 50px;">
 							<span>{{item.name}}</span>
 						</div>
 						<div class="goodsType" style="font-size: 24px; color: red;">
 							<span>{{item.column1}}</span>
 						</div>
-						<div class="goodsName" style="font-size: 18px;color:rgb(2, 143, 208);">
+						<div class="goodsName"
+							style="font-size: 18px; color: rgb(2, 143, 208);">
 							<span>{{item.telephone}}</span>
 						</div>
 						<div style="margin-top: 30px;">
@@ -456,7 +464,7 @@ button {
 				</div>
 			</div>
 			<div id="goodsAll" class="right-head-click">
-				<div v-for="item in list" class="goods">
+				<div v-for="(item,index) in list" class="goods">
 					<div>
 						<div class="images">
 							<!-- <img v-if="item.goodsValue.column1 != null && item.goodsValue.column1 != ''" :src="item.goodsValue.column1" />
@@ -476,7 +484,7 @@ button {
 							<span>+</span>&nbsp;&nbsp;<input type="text" value="1" />&nbsp;&nbsp;<span>-</span>
 						</div>
 						<div class="goodsOk">
-							<button>新增</button>
+							<button v-on:click="addOrderShapping(index,$event)">新增</button>
 						</div>
 					</div>
 				</div>
@@ -498,11 +506,40 @@ button {
 				
 				clientName : "",
 				
-				user : JSON.parse(localStorage.getItem("user"))
+				user : JSON.parse(localStorage.getItem("user")),
+				
+				orderShapping : [],
+				
+				sum : 0
 				
 			},
 			methods : {
-				
+				addOrderShapping : function (index,obj){
+					
+					let current = obj.currentTarget;
+					
+					try{
+						this.orderShapping.forEach((item,i) => {
+							
+							if(item.goodsValue.id == this.list[index].goodsValue.id){
+								
+								this.list[index].goods.column1 = parseInt(this.list[index].goods.column1) + parseInt($(current).parent().prev().find("input").val());
+								
+								this.orderShapping[i].goods.column1 = this.list[index].goods.column1;
+								
+								throw new Error("EndIterative");
+							}
+							
+						});
+						
+						this.orderShapping.push(this.list[index]);
+						
+					}
+					catch(e){
+						
+					}
+					
+				},
 				goodskeycode : function(){
 					
 					$.ajax({
@@ -578,7 +615,23 @@ button {
 					}, 500);
 				}
 			});
+			/* 
+			$(document).bind("input propertyChange",function(){
+				try{
+					if(this.activeElement.classList[0].indexOf("goodsNumber") != -1){
+						let sum = 0;
+						$(".goodsNumber").each((i,e) => {
+							$(e).parent().next().next().text($(e).val() * parseFloat($(e).parent().next().text()));
+							vue.sum += $(e).val() * parseFloat($(e).parent().next().text());
+						});
+					}
+				}
+				catch(e){
+					console.log(e);
+				}
 
+			})  */
+			
 			$(".del-ul-li").click(function() {
 
 				var th = $(this).parent();

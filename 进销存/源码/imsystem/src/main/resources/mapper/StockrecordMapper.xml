@@ -67,9 +67,6 @@
 			<if test="jcode != null and jcode != ''">
 				and st.beforesid = #{jcode}
 			</if>
-			<if test="true">
-				and stock.storeid = #{storeid}
-			</if>
 		</where>
 		GROUP BY st.id
 	</select>
