@@ -166,7 +166,9 @@ SELECT
   SELECT 
 		gt.name AS column2,
 		gs.minsecurity,
-		sd.count AS column1,
+		(SELECT SUM(`count`) FROM
+		`stockdetails` AS sk WHERE sk.`gvid`
+		= gv.`id`) AS column1,
 		gs.id
 		,gv.id AS gvid,
 		gv.jprice AS gvjprice,
@@ -183,11 +185,11 @@ SELECT
 		INNER JOIN `goodsvalue` gv
 		ON gs.id = gv.`gid`
 
-		LEFT JOIN
-		`stockdetails` AS sd
-		ON gv.id = sd.gvid
+<!-- 		LEFT JOIN -->
+<!-- 		`stockdetails` AS sd -->
+<!-- 		ON gv.id = sd.gvid -->
 
-		LEFT JOIN `goodstype` AS gt
+		INNER JOIN `goodstype` AS gt
 		ON
 		gt.id = gs.tid
 

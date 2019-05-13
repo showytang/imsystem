@@ -366,7 +366,7 @@
 									
 
 									<div class="layui-row" style="text-align: right;">
-										<span @click="checkAddGoods" class="layui-btn">加入</span>
+<!-- 										<span @click="checkAddGoods" class="layui-btn">加入</span> -->
 									</div>
 
 									<hr>
@@ -396,7 +396,7 @@
 											</div>
 
 											<div class="layui-col-md1" style=" line-height:5rem;text-align: right;">
-												<input type="checkbox" name="" lay-skin="primary">
+<!-- 												<input type="checkbox" name="" lay-skin="primary"> -->
 											</div>
 											<hr>
 										</div>
@@ -529,17 +529,10 @@
 
 							if (obj.checked) {
 								
-								var $div = $(obj).parent().parent();
-								vue.pickGoodsList.push(vue.goodsList[index]);
-								$div.addClass("animated fadeOutLeft");
+									let $div = $(obj).parent().parent();
+									vue.pickGoodsList.push(vue.goodsList[index]);
 								
-								 setTimeout(function() {
-									
-									$div.removeClass("animated fadeOutLeft");
-									vue.goodsList.splice(index,1);
-									console.log(vue.goodsList)
-								}, 500); 
-								
+ 									$div.remove();
 								count++;
 							}
 
@@ -628,7 +621,10 @@
 						}
 					},
 					nextPage:function(){
-						queryGoods(vue.page.nextPage,[],0)
+						queryGoods(vue.page.nextPage,[],0);
+						layer.msg('查询到'+vue.goodsList.length+'条数据！');
+						form.render("checkbox");
+						 
 					}
 				}
 
@@ -643,7 +639,6 @@
 			function queryGoods(curPage,svid,tid){
 				
 				var liketext = $("#liketext").val();
-				console.log(liketext)
 				$.ajax({
 					url:[[@{/goods/queryGoodsLikeAll}]],
 					type:"post",
@@ -658,12 +653,26 @@
 					success:function(data){
 						vue.page = data;
 						
-						data.list.filter(function(item){
+						data.list.filter(item =>{
 							
-							vue.goodsList.push(item);
+							if(vue.pickGoodsList.length > 0){
+								
+								var  bo =vue.pickGoodsList.some(item2 =>{
+									return (item.goodsValue.id == item2.goodsValue.id);
+								});
+								
+								if(!bo){
+									vue.goodsList.push(item);
+								}
+							}else{
+								
+								vue.goodsList.push(item);
+							}
+							
 							
 						});
-					
+						
+						
 						
 						
 					}
@@ -678,18 +687,19 @@
 				 vue.goodsList = [];
 				 queryGoods(1,[],tid);
 				 layer.msg('查询到'+vue.goodsList.length+'条数据！');
-				
+				 form.render("checkbox");
 			}
 			
-			queryGoods(1,[],0);
+			
 			
 			
 			
 			var form;
 
+				 queryGoods(1,[],0);
 			layui.use('form', function() {
 				 form = layui.form;
-
+				 
 				//监听提交
 				form.on('submit(formDemo)', function(data) {
 					layer.msg(JSON.stringify(data.field));
