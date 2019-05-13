@@ -72,6 +72,13 @@
 </body>
 <script th:src="@{/assets/js/jquery.min.js}"></script>
 <script type="text/javascript">
+
+	$(document).keydown(function (event) {
+		    if (event.keyCode == 13) {
+		      $(".login").triggerHandler('click');
+		    }
+	  });
+
 		$(".login").click(function(){
 			var login=$("#signin-name").val();
 			var pwd=$("#signin-pwd").val();

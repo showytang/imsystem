@@ -457,7 +457,7 @@
 	 	<if test="name!=null and name!=''">
 	 	  AND  s.`name` LIKE CONCAT ('%',#{name},'%')
 	 	</if>
-	 	 and u.state IN(0,1)
+	 	and u.`rid`  IN (1,2)	 and u.state IN(0,1)
 	 </where>
   	 
   	  

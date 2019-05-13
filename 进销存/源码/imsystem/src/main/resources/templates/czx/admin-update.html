@@ -70,15 +70,13 @@
               <label class="layui-form-label"><span class="x-red">*</span>角色</label>
              
                <div class="layui-input-block">
-               	
-			      <input  th:if="${item.name}!='超级管理员' "  th:each="item : ${list}" type="radio" name="rid"    th:value="${item.id}" th:title="${item.name}">
-			   	
-			    </div>
+			      <input th:checked="${item.id==u.rid}"  th:if="${item.name}!='超级管理员'"  th:each="item : ${list}" type="radio" name="rid"    th:value="${item.id}" th:title="${item.name}">
+			   </div>
 			    
 			    <div class="dianpu" style="width: 200px;margin-left: 110px;margin-top: 10px;">
-				    <select name="storeid" lay-verify="">
+				    <select id="edit_exam_school"  name="storeid" >
 					  <option  value="">请选择一个门店</option>
-					  <option th:each="item : ${listStore}" th:value="${item.id}" th:text="${item.name}">北京</option>
+					  <option th:each="item : ${listStore}"    th:value="${item.id}"  th:text="${item.name}" th:selected="${item.id==u.storeid}"></option>
 					</select> 
 				</div>   
 			    
@@ -98,13 +96,20 @@
     </div>
     <script th:inline="javascript">
     	
-    	
-    	
+    
         layui.use(['form','layer'], function(){
             $ = layui.jquery;
           var form = layui.form
           ,layer = layui.layer;
         
+         var s= [[${u.storeid}]];
+          
+          var select = 'dd[lay-value=' + s + ']';
+          
+          $('#edit_exam_school').siblings("div.layui-form-select").find('dl').find(select).click();
+      	
+          
+          
          /*  //自定义验证规则
           form.verify({
             nikename: function(value){
@@ -143,6 +148,8 @@
         		 parent.layer.close(index);
         		 
         	  });
+        	  
+        	  
         	  
           });
           
