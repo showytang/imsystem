@@ -11,6 +11,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Bit;
 import com.imsystem.domain.BitExample;
+import com.imsystem.domain.Goodstype;
+import com.imsystem.domain.Paytype;
 import com.imsystem.domain.Stock;
 import com.imsystem.mapper.BitMapper;
 import com.imsystem.service.monomer.BitService;
@@ -65,13 +67,14 @@ public class BitServiceImpl implements BitService {
 		return page.toPageInfo();
 	}
 	
+	
+	
 	@Override
-	public PageInfo<Bit> queryByLikepage(String text,Integer currentPage, Integer pageSize) {
+	public PageInfo<Bit> queryByLikepage(String tiaojian, Integer currentPage, Integer pageSize) {
+		Page<Bit> page = PageHelper.startPage(currentPage, pageSize, true);
+		List<Bit> list=ma.queryByLike(tiaojian);
 		
-		PageHelper.startPage(currentPage,pageSize);
-		
-		List<Bit> list=ma.queryByLike(text);
-		return new PageInfo<>(list);
+		return page.toPageInfo();
 	}
 
 	@Override

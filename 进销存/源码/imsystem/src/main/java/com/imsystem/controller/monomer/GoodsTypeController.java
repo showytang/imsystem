@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -25,17 +26,17 @@ public class GoodsTypeController {
 	
 	
 	@RequestMapping("/querygoods")
-	public String querygoods(Model model) {
-		List<Goodstype> list=goods.querybypid();
+	public String querygoods(Model model,@Param("name")String name) {
+		List<Goodstype> list=goods.querybypid(name);
 		model.addAttribute("list", list);
 		return "xl/spleixing";
 	}
 	
 	
 	
-	@RequestMapping("/querypage")
+	/*@RequestMapping("/querypage")
 	@ResponseBody
-	public PageInfo<Goodstype> querypage(String tiaojian,Integer currentPage){
+	public PageInfo<Goodstype> querypage(@Param("name")String tiaojian,Integer currentPage){
 		
 		if(currentPage == null || currentPage <= 0) {
 			currentPage = 1;
@@ -44,7 +45,7 @@ public class GoodsTypeController {
 		PageInfo<Goodstype> page=goods.queryByLikepage(tiaojian, currentPage, 5);
 		return page;
 	
-	}
+	}*/
 	
 	@RequestMapping("/delete")
 	public String delete(String id) {
@@ -75,7 +76,7 @@ public class GoodsTypeController {
 	@ResponseBody
 	public Goodstype update(String id) {
 		Goodstype good=goods.querybyid(id);
-		System.out.println(good.getName());
+		
 		return good;
 		
 	}
@@ -91,6 +92,14 @@ public class GoodsTypeController {
 			return 0;
 		}
 				
+		
+	}
+	
+	@RequestMapping("/dele")
+	@ResponseBody
+	public int dele(String id) {
+		int r=goods.dele(id);
+		return r;
 		
 	}
 

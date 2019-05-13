@@ -1,26 +1,16 @@
 package com.imsystem.controller.monomer;
 
-
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-import java.util.TimeZone;
-import java.util.UUID;
-
-import org.apache.ibatis.io.ResolverUtil.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Bit;
 import com.imsystem.service.monomer.BitService;
 
-import io.lettuce.core.dynamic.annotation.Param;
+
 
 @Controller
 @RequestMapping("/bit")
@@ -33,15 +23,13 @@ public class BitController {
 		return "xl/spdanwei";
 	}
 	
-	@RequestMapping("/querybitbypage" )/*value= {"/toquery/{text}/{currentPage}","/toquery/{currentPage}"}*/
+	@RequestMapping("/querybitbypage" )
 	@ResponseBody
-	public PageInfo<Bit> queryByLikepage(@PathVariable(required=false) String text ,@PathVariable Integer currentPage){
+	public PageInfo<Bit> queryByLikepage(String tiaojian,Integer currentPage){
 		if(currentPage == null || currentPage <= 0) {
 			currentPage = 1;
 		}
-		
-		PageInfo<Bit> page=ser.queryByLikepage(text, currentPage, 5);
-		
+		PageInfo<Bit> page=ser.queryByLikepage(tiaojian, currentPage, 5);
 		return page;
 		
 	}

@@ -14,6 +14,7 @@
 	<link rel="stylesheet" th:href="@{/assets/css/main.css}">
 	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
 	<link rel="stylesheet" th:href="@{/assets/css/demo.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/myStyle.css}">
 	<!-- GOOGLE FONTS -->
 <!-- 	<link th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700}" rel="stylesheet"> -->
 	<!-- ICONS -->
@@ -52,26 +53,15 @@
 			color: rgb(2, 143, 208);
 			
 		} 
-		
-		#page>ul {
-			display: flex;
-			justify-content: space-around;
-			padding: 0px;
-			font-size: 12px;
-		}
+	
 
 		#page {
-			width: 300px;
+			width: 100%;
 			margin: 20px auto;
 		}
 		
-		.currentPage {
-			background: rgb(2, 143, 208);
-			color: white;
-			border: none;
-		}
-		
-		.pagebtn {
+	
+		/* .pagebtn {
 			height: 28px;
 			width: 25px;
 			border: 1px solid #C0C0C0;
@@ -81,7 +71,7 @@
 			line-height: 28px;
 			cursor: pointer;
 			
-		}
+		} */
 		
 		
 	</style>
@@ -147,20 +137,7 @@
 							</tr>-->
 						</table>
 							<div id="page">
-								<ul>
-									<li class="pagebtn pagePrev"><span
-										class="glyphicon glyphicon-menu-left"></span></li>
-									<li class="pagebtn currentPage pageCurrent pageq">1</li>
-									<li class="pagebtn pageCurrent pageq">2</li>
-									<li class="pagebtn pageCurrent pageq">3</li>
-									<li class="pagebtn" id="pageDian"
-										style="border: none; display: block; background: #DDDDDD; font-size: 20px;">...</li>
-									<li class="pagebtn pageCurrent pageDi">14</li>
-									<li class="pagebtn pageCurrent">15</li>
-									<li class="pagebtn pageCurrent">16</li>
-									<li class="pagebtn pageNext"><span
-										class="glyphicon glyphicon-menu-right"></span></li>
-								</ul>
+								
 							</div> 
 						</div>
 						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">		
@@ -280,8 +257,7 @@
 	<script th:src="@{/assets/js/jquery.slimscroll.min.js}"></script>
 	<script th:src="@{/assets/js/toastr.min.js}"></script>
 	<script th:src="@{/assets/js/klorofil-common.js}"></script>	
-	
-	<script th:src="@{/assets/js/page.js}"></script>
+	<script th:src="@{/assets/js/pageNumber.js}"></script>
 	<script type="text/javascript" th:src="@{/assets/js/bootstrap-datetimepicker.js}"></script>
 	<script type="text/javascript" th:src="@{/assets/js/vue.js}"></script>
 	<script type="text/javascript"  th:inline="javascript" >
@@ -294,10 +270,9 @@
 		},
 		methods : {
 
-		 query:function(){
+		 query:function(currentpage){
 				var tiaojian=$(".tiaojian").val();
 				
-				var currentpage = $(".currentPage").text();
 				
 				$.ajax({
 					url : "/standard/querypage",
@@ -309,7 +284,7 @@
 					dataType : "json",
 					success:function(result){
 						vue.pageIf = result;
-						page(vue);
+						$("#page").append(page(vue.pageIf.pageNum,vue.pageIf.prePage,vue.pageIf.nextPage,vue.pageIf.pages));
 					}
 				});
 			},
@@ -361,19 +336,17 @@
 			
 		},
 		created:function(){
-			this.query();
+			this.query(1);
 		}
 	});
 	
-	function  floatPage(){
-		
-		vue.pageIf.pageNum = $(".currentPage").text();
-		
-		vue.query();
-		
-	}
-	
 	 $(function(){
+		 $(document).on("click",".pageFy>ul li",function(){
+			 var create = $(this).attr("pageNumber");
+			 if(create != null && create != 0){
+				 vue.query(create);
+			 }
+		 });
 		 vue.us = JSON.parse(window.localStorage.getItem("user"));
 		 $('#gguid').attr("readonly","readonly");
 		 $("#tijiao").click(function(){

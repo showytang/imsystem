@@ -2,6 +2,8 @@ package com.imsystem.service.monomer;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.github.pagehelper.PageInfo;
 
 import com.imsystem.domain.Goodstype;
@@ -20,9 +22,11 @@ public interface SpTypeService {
 	    
 	public int toupdate(Goodstype good);
 	
-	public List<Goodstype> querybypid();
+	public List<Goodstype> querybypid(@Param("name")String name);
 	
 	public Goodstype querybyname(String name,String pid);
 	
 	public List<Goodstype> querynoid();
+	
+	public int dele(String id);
 }
