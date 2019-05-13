@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Bit;
 
 
+
 public interface BitService {
 	
 	 public int deleteByPrimaryKey(String id);
