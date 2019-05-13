@@ -27,22 +27,32 @@
 		<result column="column5" property="column5" jdbcType="VARCHAR" />
 	</resultMap>
 
-	<select id="shappingprice" resultType="Double">
+	<select id="shappingprice" resultType="DOUBLE">
 
 		select
-		<if test="cid == 1">
+		<if test="cid == null">
 			g.price from goodsvalue as gv
 			inner join goods as g on
 			gv.gid = g.id
 			where gv.id = #{id}
 		</if>
-		<if test="cid != 1">
-			IF(gp.price != '',gp.price,g.price) AS price FROM
-			`quotedprice` AS gp
-			INNER JOIN goodsvalue AS gv ON gp.svid = gv.id
+		
+		<if test="cid != null">
+			IF((SELECT gp.price AS price FROM
+			`goodsvalue` AS gv
+			LEFT JOIN `quotedprice` AS gp ON gp.svid = gv.id
 			INNER JOIN goods AS g ON gv.gid = g.id
-			WHERE gv.id = #{id} AND gp.ctid
-			= #{cid}
+			WHERE gv.id = #{id} AND gp.cid
+			= #{cid}) != '',(SELECT gp.price AS price FROM
+			`goodsvalue` AS gv
+			LEFT JOIN `quotedprice` AS gp ON gp.svid = gv.id
+			INNER JOIN goods AS g ON gv.gid = g.id
+			WHERE gv.id = #{id} AND gp.cid
+			= #{cid}),g.price) AS price
+			
+			FROM goods AS g
+			LEFT JOIN goodsvalue AS gv ON gv.gid = g.id
+			WHERE gv.id = #{id}
 		</if>
 
 	</select>

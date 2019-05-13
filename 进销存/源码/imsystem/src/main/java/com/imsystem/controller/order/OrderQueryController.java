@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.util.ArrayBuilders.DoubleBuilder;
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Customer;
 import com.imsystem.domain.GoodsValueVo;
@@ -182,8 +183,10 @@ public class OrderQueryController {
 	public List<Goodsvalue> foreachshappingPrice(@RequestBody List<Goodsvalue> list) {
 
 		for (int i = 0; i < list.size(); i++) {
-
-			list.get(i).setJprice(orderquery.shappingprice(list.get(i).getId(), list.get(0).getColumn3()));
+			
+			double s = orderquery.shappingprice(list.get(i).getId(), list.get(0).getColumn3().equals("0")?null:list.get(0).getColumn3());
+			
+			list.get(i).setJprice(s);
 
 		}
 
