@@ -311,11 +311,11 @@ button {
 							<div>单价</div>
 							<div>总计</div>
 						</li>
-						<li v-for="item in orderShapping">
+						<li v-for="(item,index) in orderShapping">
 							<div>{{item.goods.name}}</div>
 							<div>
 								<input class="goodsNumber" type="text"
-									v-model="item.goods.column1">
+									@input="input(item.goods.column1,index)" v-model="item.goods.column1">
 							</div>
 							<div>{{item.goods.price}}</div>
 							<div>{{item.goods.column1 * item.goods.price}}</div>
@@ -519,6 +519,7 @@ button {
 					let current = obj.currentTarget;
 					
 					try{
+						
 						this.orderShapping.forEach((item,i) => {
 							
 							if(item.goodsValue.id == this.list[index].goodsValue.id){
@@ -527,10 +528,14 @@ button {
 								
 								this.orderShapping[i].goods.column1 = this.list[index].goods.column1;
 								
+								this.sum += this.orderShapping[index].goods.column1 * this.orderShapping[index].goods.price;
+								
 								throw new Error("EndIterative");
 							}
 							
 						});
+						
+						this.sum += this.list[index].goods.column1 * this.list[index].goods.price;
 						
 						this.orderShapping.push(this.list[index]);
 						
@@ -538,6 +543,19 @@ button {
 					catch(e){
 						
 					}
+					
+				},
+				input : function (val,index){
+					
+					this.list[index].goods.column1 = val;
+					
+					vue.sum = 0;
+					
+					this.orderShapping.forEach((item,i) => {
+						
+						vue.sum += item.goods.column1 * item.goods.price						
+					
+					});
 					
 				},
 				goodskeycode : function(){
@@ -577,7 +595,6 @@ button {
 					    dataType : "json",
 					    
 					    success:function(result){
-					    	console.log(result);
 					    	vue.clientlist = result;
 					    }
 					})
@@ -615,22 +632,6 @@ button {
 					}, 500);
 				}
 			});
-			/* 
-			$(document).bind("input propertyChange",function(){
-				try{
-					if(this.activeElement.classList[0].indexOf("goodsNumber") != -1){
-						let sum = 0;
-						$(".goodsNumber").each((i,e) => {
-							$(e).parent().next().next().text($(e).val() * parseFloat($(e).parent().next().text()));
-							vue.sum += $(e).val() * parseFloat($(e).parent().next().text());
-						});
-					}
-				}
-				catch(e){
-					console.log(e);
-				}
-
-			})  */
 			
 			$(".del-ul-li").click(function() {
 
