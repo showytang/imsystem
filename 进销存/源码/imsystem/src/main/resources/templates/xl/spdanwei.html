@@ -288,14 +288,29 @@
 		methods : {
 			query:function(){
 				var text=$(".tiaojian").val();
-				this.pageIf.pageNum = $(".currentPage").text();
-				myVue =this;
+				var currentpage = $(".currentPage").text();
+				
+				$.ajax({
+					url:"/bit/querybitbypage",
+					data:{
+						
+						text:text,
+						currentpage:currentpage
+					},
+					type : "post",
+					dataType : "json",
+					success:function(result){
+						vue.pageIf = result;
+						page(vue);
+					}
+				});
+				/* myVue =this;
 				$.getJSON(
 					"/bit/toquery/"+text+"/"+myVue.pageIf.pageNum,function(result){
 						myVue.pageIf = result;
 						page(vue);
 					}
-				);
+				); */
 			},
 		
 		

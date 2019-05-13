@@ -33,7 +33,7 @@ public class BitController {
 		return "xl/spdanwei";
 	}
 	
-	@RequestMapping( value= {"/toquery/{text}/{currentPage}","/toquery/{currentPage}"})
+	@RequestMapping("/querybitbypage" )/*value= {"/toquery/{text}/{currentPage}","/toquery/{currentPage}"}*/
 	@ResponseBody
 	public PageInfo<Bit> queryByLikepage(@PathVariable(required=false) String text ,@PathVariable Integer currentPage){
 		if(currentPage == null || currentPage <= 0) {

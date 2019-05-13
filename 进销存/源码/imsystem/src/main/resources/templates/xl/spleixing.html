@@ -94,12 +94,13 @@
 							
 							
 						</div>
+						
 						<div class="ta">
-						 <input class="col-md-2 col-md-offset-7 tiaojian"  type="text" placeholder="请输入搜索条件" /><input class="col-md-1 btn btn-primary btn-lg" type="button" value="GO" style="height: 27px;line-height: 5px;margin-bottom: 5px; background-color: rgb(2, 143, 208);" @click="query()" />
-						<button type="button" value="新增" class="btn btn-primary btn-lg col-md-1" data-toggle="modal" data-target="#myModal" style="height: 30px;line-height: 5px; margin-bottom: 5px; margin-left: 25px; background-color: rgb(2, 143, 208);" >
+						<!--  <input class="col-md-2 col-md-offset-7 tiaojian"  type="text" placeholder="请输入搜索条件" /><input class="col-md-1 btn btn-primary btn-lg" type="button" value="GO" style="height: 27px;line-height: 5px;margin-bottom: 5px; background-color: rgb(2, 143, 208);" @click="query()" /> -->
+						<button type="button" value="新增" class="btn btn-primary btn-lg col-md-1" data-toggle="modal" data-target="#myModal" style="height: 30px;line-height: 5px; margin-bottom: 5px; margin-left: 1100px; background-color: rgb(2, 143, 208);" >
 	  						新增
 						</button>
-						<table class="table table-striped">
+					<!-- 	<table class="table table-striped">
 						<thead>
 							<tr>
 								
@@ -125,9 +126,10 @@
 									<a :href="dele(temp.id)"><span class="glyphicon glyphicon-trash an"></span></a>
 									
 								</td> 
+								
 							</tr>
 							</tbody>
-							 <!-- <tr th:each="item:${pageIf.list}">
+							 <tr th:each="item:${pageIf.list}">
 								<td th:text="${item.id}"></td>
 								<td th:text="${item.name}"></td>
 								<td th:text="${item.pid}"></td>
@@ -140,8 +142,8 @@
 									</button>
 									<a href="#"><input type="button" class="an" value="删除"/></a>
 								</td>
-							</tr>  -->
-							<!--<tr>
+							</tr> 
+							<tr>
 								<td>张三</td>
 								<td>李四</td>
 								<td>0.8</td>
@@ -155,7 +157,7 @@
 			  						修改
 									</button>
 								</td>
-							</tr>-->
+							</tr>
 						</table>
 							<div id="page">
 								<ul>
@@ -173,8 +175,44 @@
 										class="glyphicon glyphicon-menu-right"></span>
 									</li>
 								</ul>
-							</div> 
+							</div>  -->
 						</div>
+						<table class="table table-striped"  th:each="item:${list}">
+						
+                <!--       主版块       -->
+				
+                <thead >
+							<tr>
+								
+								<th th:text="${item.name}"></th>
+								
+							</tr>
+						</thead>
+                <!--       子版块       -->
+                <th></th>
+                <th>类型名称</th>
+                <th>上层类型</th>
+				<th>创建时间</th>
+				<th>最后修改时间</th>
+				<th>操作人</th>
+				<th>操作</th> 
+                				
+                 <tr th:each="item1,index : ${item.list2}" >
+                   <td></td>
+                    <td th:text="${item1.name}"> </td>
+                    <td th:text="${item1.pname}"> </td>
+                    <td th:text="${#dates.format(item1.time,'yyyy-MM-dd hh:mm:ss')}"> </td>
+                    <td th:text="${#dates.format(item1.updatetime,'yyyy-MM-dd hh:mm:ss')}"> </td>
+                    <td th:text="${item1.uname}"> </td>
+                	<td style="padding-left: 40px; padding-right: 30px" >
+						<span class="glyphicon glyphicon-edit an open" TH:DATA="${item1.id}"><!-- @click="open(temp.id)" --></span>
+						<a th:href="@{/goods/delete(id=${item1.id})}"><span class="glyphicon glyphicon-trash an"></span></a>
+									
+					</td>  
+                </tr>
+             
+              
+            </table>
 						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">		
 								<div class="modal-dialog" role="document">
 		    						<div class="modal-content">
@@ -205,6 +243,7 @@
 											    </div> -->
 											    <div class="col-sm-9">
 											      <select id="Inpid">
+											      		 <option th:value="0" th:text="请选择"></option> 
 											      		<option  th:each="item:${list}"  th:text="${item.name}" th:value="${item.id}"></option>
 											      </select>
 											    </div>
@@ -308,7 +347,7 @@
 	<script type="text/javascript" th:src="@{/assets/js/vue.js}"></script>
 	
 	<script type="text/javascript"  th:inline="javascript" >
-	var z = 0;
+ 	var z = 0;
 	var vue = new Vue({
 		el : ".main",
 		data : {
@@ -337,9 +376,7 @@
 					}
 				});
 			},
-			dele:function(id){
-				return "/goods/delete?id="+id;
-			},
+			
 			open:function(id){
 				$('#myModal1').modal('toggle')
 				
@@ -389,19 +426,13 @@
 		}
 	});
 	
-	function  floatPage(){
-		
-		vue.pageIf.pageNum = $(".currentPage").text();
-		
-		vue.query();
-		
-	}
+	
+	 
 	
 	
 	
 	
 	  $(function(){
-		  
 		  vue.us = JSON.parse(window.localStorage.getItem("user"));
 		  $('#Inuid').attr("readonly","readonly");
 		 $("#tijiao").click(function(){
@@ -451,12 +482,32 @@
 						location.href = "/goods/querygoods";
 				}	 
 			 });
-		 }) ;
-		
-	}) ;
-	
-	
-	
-	</script>	
+		 });
+		 
+		 $(".open").click(function(){
+			var id = $(this).attr("data"); 
+			$('#myModal1').modal('toggle')
+			$.ajax({
+				url:"/goods/update",
+				data:{
+					id:id
+					},
+				type:"post",
+				dataType:"json",
+				success:function(data){
+                            //赋值
+                            $('.up1').val(data.id);
+                            $('.up2').val(data.name);
+                            $('.up3').val(data.pid);
+                            $('.up4').val(vue.formatDate(data.time));
+                            
+                            $('.up1').attr("readonly","readonly");
+                            $('.up5').attr("readonly","readonly");
+                            $('.up4').attr("readonly","readonly");
+				}
+			});
+		 });
+	});
+</script>	
 </body>
 </html>

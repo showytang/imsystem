@@ -36,6 +36,8 @@ public class Goodstype {
     
     private Goodstype goodstype;
     
+    private List<Goodstype> list2;
+    
     public Goodstype getGoodstype() {
 		return goodstype;
 	}
@@ -155,4 +157,14 @@ public class Goodstype {
 	public void setPname(String pname) {
 		this.pname = pname;
 	}
+
+	public List<Goodstype> getList2() {
+		return list2;
+	}
+
+	public void setList2(List<Goodstype> list2) {
+		this.list2 = list2;
+	}
+
+	
 }

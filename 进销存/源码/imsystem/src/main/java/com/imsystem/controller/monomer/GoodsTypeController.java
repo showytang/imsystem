@@ -24,7 +24,7 @@ public class GoodsTypeController {
 	SpTypeService goods;
 	
 	
-	@RequestMapping("querygoods")
+	@RequestMapping("/querygoods")
 	public String querygoods(Model model) {
 		List<Goodstype> list=goods.querybypid();
 		model.addAttribute("list", list);
@@ -33,7 +33,7 @@ public class GoodsTypeController {
 	
 	
 	
-	@RequestMapping("querypage")
+	@RequestMapping("/querypage")
 	@ResponseBody
 	public PageInfo<Goodstype> querypage(String tiaojian,Integer currentPage){
 		
@@ -48,11 +48,13 @@ public class GoodsTypeController {
 	
 	@RequestMapping("/delete")
 	public String delete(String id) {
+		System.err.println(id);
 		goods.deleteupdate(id);
+		
 		return "redirect:/goods/querygoods";
 	}
 	
-	@RequestMapping("insert")
+	@RequestMapping("/insert")
 	@ResponseBody
 	public int insert(Goodstype good) {
 		Goodstype goodstype=goods.querybyname(good.getName(), good.getPid());
@@ -69,15 +71,16 @@ public class GoodsTypeController {
 		
 	}
 	
-	@RequestMapping("update")
+	@RequestMapping("/update")
 	@ResponseBody
-	public Goodstype update(Integer id) {
+	public Goodstype update(String id) {
 		Goodstype good=goods.querybyid(id);
+		System.out.println(good.getName());
 		return good;
 		
 	}
 	
-	@RequestMapping("toupdate")
+	@RequestMapping("/toupdate")
 	@ResponseBody
 	public int toupdate(Goodstype good) {
 		Goodstype type=goods.querybyname(good.getName(), good.getPid());
