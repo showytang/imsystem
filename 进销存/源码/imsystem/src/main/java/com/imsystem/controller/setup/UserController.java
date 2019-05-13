@@ -167,6 +167,8 @@ public class UserController {
 		model.addAttribute("list",list);
 		List<Store> listStore =storeService_c.queryStoreAll();
 		model.addAttribute("listStore", listStore);
+		System.out.println(JSON.toJSONString(u));
+		System.out.println(JSON.toJSONString(listStore));
 		return "czx/admin-update";
 	}
 	

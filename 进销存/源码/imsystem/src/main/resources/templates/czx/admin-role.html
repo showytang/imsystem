@@ -195,8 +195,14 @@ table {
       /*用户-删除*/
       function member_del(obj,id){
           layer.confirm('确认要删除吗？',function(index){
+        	 
+             
         	  var url=[[@{/role/deleteRole}]];
-        	  $.ajax({
+        	  var id=$(obj).parents("tr").attr("id");
+        	  if(id==1||id==2||id==3){
+        		  layer.msg('不好意思系统指定角色不可删除!',{icon:1,time:1000});
+        	  }else{
+        	   $.ajax({
         		 url:url,
         		 type:"post",
         		 data:{
@@ -209,8 +215,8 @@ table {
         	              layer.msg('已删除!',{icon:1,time:1000});
         			 }
         		 }
-        	  }); 
-             
+        	  });  
+        	  }
           });
       }
 

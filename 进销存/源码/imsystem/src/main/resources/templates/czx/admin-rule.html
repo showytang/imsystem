@@ -17,6 +17,11 @@
     <script type="text/javascript" th:src="@{/assets/SheZhi/js/cookie.js}"></script>
     <script type="text/javascript" th:src="@{/assets/js/pageNumber.js}"></script>
     
+   	<style type="text/css">
+   		.page div a{
+   			text-decoration: none;
+   		}
+   	</style>
    	
   </head>
   
@@ -96,19 +101,17 @@
         </tbody>
       </table>
       <div class="page">
-        <!-- <div>
-				<a class="prev" th:href="@{/module/queryModuleAll?(pageNum=${page.prePage})}">&lt;&lt;</a> 
-				<a class="num" th:style="'background-color:'+@{(${page.pageNum==1} ? '#009688':'white')}"  th:href="@{/module/queryModuleAll?pageNum=1}">1</a>
-				<a class="num"  th:style="'background-color:'+@{(${page.pageNum==2} ? '#009688':'white')}" th:href="@{/module/queryModuleAll?pageNum=2}">2</a> 
-			    <a class="next" th:href="@{/module/queryModuleAll?(pageNum=${page.nextPage})}">&gt;&gt;</a>
-			</div> -->
+        <div>
+				<a class="prev" th:href="@{/module/queryModuleAll?(pageNum=${page.prePage})}">上一页</a> 
+			    <a class="next" th:href="@{/module/queryModuleAll?(pageNum=${page.nextPage})}">下一页</a>
+			</div> 
       </div>
 
     </div>
     <script th:inline="javascript">
     	$(function(){
     		
-    		var pageNum = [[${page.pageNum}]];
+    		/* var pageNum = [[${page.pageNum}]];
     		var pre = [[${page.prePage}]];
     		var next = [[${page.nextPage}]];
     		var pages = [[${page.pages}]];
@@ -125,7 +128,7 @@
       				location.href="/module/queryModuleAll?pageNum="+create;
     				 $(".page").append(page(pageNum,pre,next,pages));
     			 }
-    		 });
+    		 }); */
     	});
     
       layui.use('form', function(){

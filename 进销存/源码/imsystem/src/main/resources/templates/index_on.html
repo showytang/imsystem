@@ -175,10 +175,10 @@ html, body, #wrapper, .main, .main-content, .right {
 							
 							<li th:each="item : ${list}"><a  th:href="@{'#'+${item.enname}}" data-toggle="collapse"
 								class="collapsed"><i class="lnr lnr-file-empty"></i> <span th:text="${item.name}">系统管理</span>
-									<i class="icon-submenu lnr lnr-chevron-left"></i></a>
+									<i th:id="${item.parentid}" th:class="${item.mlist.isEmpty( )}?' ':'icon-submenu lnr lnr-chevron-left'" ></i></a>
 								<div th:id="${item.enname}" class="collapse ">
 									<ul class="nav">
-										<li th:each="item1 : ${item.mlist}"><a th:href="@{${item1.url}}" target="right" class="" th:text="${item1.name}">用户管理</a></li>
+										<li  th:each="item1 : ${item.mlist}"><a th:href="@{${item1.url}}" target="right" class="" th:text="${item1.name}">用户管理</a></li>
 										
 
 									</ul>
