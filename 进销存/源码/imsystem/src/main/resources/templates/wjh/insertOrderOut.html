@@ -413,7 +413,7 @@
 				}
 				
 				shappingLists().then(res => {
-					vue.shappinglist[0].column3 = $(".client").val();
+					vue.shappinglist[0].column4 = $(".client").val();
 					if(res)
 						$.ajax({
 							url : [[@{/orderQueryController/foreachshappingPrice}]],
@@ -602,7 +602,6 @@
 						
 						//添加商品id
 						for(var i = 1 ; i < $(".panel-title").length ; i ++){
-							
 							var shapping = {
 									gvid : $(".panel-title:eq("+i+")").attr("data"),
 									count : $(".panel-title:eq("+i+")").next().next().text(),
@@ -616,7 +615,7 @@
 							order.list1.push(shapping);
 							
 						}
-						$.ajax({
+						 $.ajax({
 							url : [[@{/insertOrder/insertSalesorder}]],
 							data : JSON.stringify(order),
 							type : "post",
@@ -631,7 +630,7 @@
 									window.location.reload();
 								},500)
 							}
-						});
+						}); 
 					}
 				});
 			});

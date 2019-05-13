@@ -42,7 +42,7 @@
 				});
 				var startTime = getStartTime();
 				var endTime = getEndTime();
-				var top =  queryTop("","",startTime,endTime);
+				var top =  queryTop(storeid,"",startTime,endTime);
 				$(".profit").text("￥"+top.column2);
 				$(".SalesMoney").text("￥"+top.paymoney);
 				$(".count").text(top.count);
