@@ -39,7 +39,6 @@
 	margin: 0px;
 }
 
-
 #page {
 	width: 100%;
 	margin: 20px auto;
@@ -138,11 +137,12 @@
 						</thead>
 						<tbody>
 							<tr v-for="item in list">
-								<td :sid="item.goodsvalue.goods.column5" :data="item.goodsvalue.id">
-									<img v-if="item.goodsvalue.column1 != null" class="shappingImg" :data="item.goodsvalue.id"
-									:src="item.goodsvalue.column1"> 
-									<img v-else class="shappingImg"	:data="item.goodsvalue.id" :scr="item.goodsvalue.goods.img">
-								</td>
+								<td :sid="item.goodsvalue.goods.column5"
+									:data="item.goodsvalue.id"><img
+									v-if="item.goodsvalue.column1 != null" class="shappingImg"
+									:data="item.goodsvalue.id" :src="item.goodsvalue.column1">
+									<img v-else class="shappingImg" :data="item.goodsvalue.id"
+									:scr="item.goodsvalue.goods.img"></td>
 								<td>{{item.goodsvalue.goods.name}}</td>
 								<td>{{item.goodsvalue.name}}</td>
 								<td>{{item.count}}</td>
@@ -183,8 +183,7 @@
 										<div class="row">
 											<div class="col-xs-3 stockDetailsCode"
 												style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
-												:data="item.id" :price="item.price"
-												:date = "item.updatetime" >{{item.code}}</div>
+												:data="item.id" :price="item.price" :date="item.updatetime">{{item.code}}</div>
 											<div class="col-xs-3">{{item.updatetime}}</div>
 											<div class="col-xs-3">
 												剩余库存&nbsp;:&nbsp;<span>{{item.count-item.scount}}</span>
@@ -261,17 +260,19 @@
 										stockdetail.push(stockdetails);
 									}
 								});
-								$.ajax({
-									url : [[@{/insertOrder/allot}]],
-									data : JSON.stringify(stockdetail),
-									type : "post",
-									dataType : "json",
-									contentType : "application/json; charset=UTF-8",							
-								    processData: false,
-									success : function(result){
-										alert(result)
-									}
-								});
+								if(stockdetail.length != 0){
+									$.ajax({
+										url : [[@{/insertOrder/allot}]],
+										data : JSON.stringify(stockdetail),
+										type : "post",
+										dataType : "json",
+										contentType : "application/json; charset=UTF-8",							
+									    processData: false,
+										success : function(result){
+											alert(result)
+										}
+									});
+								}
 							}
 						}
 						
@@ -285,7 +286,8 @@
 						$.ajax({
 							url : [[@{/orderQueryController/goodsAllot}]],
 							data : {
-								name : $("#no").val()
+								name : $("#no").val(),
+								storeid : vue.user.storeid
 							},
 							dataType : "json",
 							type : "post",
