@@ -16,7 +16,7 @@ public interface SpTypeService {
 	
 	public int insertgoodstype(Goodstype good);
 	
-	public Goodstype querybyid(Integer id);
+	public Goodstype querybyid(String id);
 	    
 	public int toupdate(Goodstype good);
 	

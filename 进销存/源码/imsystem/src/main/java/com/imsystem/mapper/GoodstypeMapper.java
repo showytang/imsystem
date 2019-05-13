@@ -47,7 +47,7 @@ public interface GoodstypeMapper {
     
     int insertgoodstype(Goodstype good);
     
-    Goodstype querybyid(Integer id);
+    Goodstype querybyid(String id);
     
     int toupdate(Goodstype good);
     
@@ -56,4 +56,6 @@ public interface GoodstypeMapper {
     Goodstype querybyname(String name,String pid);
     
     List<Goodstype> querynoid();
+    
+   
 }

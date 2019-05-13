@@ -55,7 +55,7 @@ public class SpTypeServiceImpl implements SpTypeService{
 
 
 	@Override
-	public Goodstype querybyid(Integer id) {
+	public Goodstype querybyid(String id) {
 		
 		return ma.querybyid(id);
 	}
@@ -89,6 +89,10 @@ public class SpTypeServiceImpl implements SpTypeService{
 		
 		return ma.querynoid();
 	}
+
+
+
+	
 	
 
 	
