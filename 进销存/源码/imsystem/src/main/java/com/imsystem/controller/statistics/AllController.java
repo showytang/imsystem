@@ -70,7 +70,7 @@ public class AllController {
 		for (Salesorder s : list) {
 			 sum+=1;
 			 sale.setPaymoney(sale.getPaymoney()+s.getPaymoney());
-			 sale.setColumn1(Double.parseDouble(sale.getColumn1())+s.getPaymoney()+"");//计算成本
+			 sale.setColumn1(s.getPaymoney()-Double.parseDouble(sale.getColumn1())+"");//计算成本
 		}
 		sale.setCount(sum);//今日订单量
 		if (list.size()>0) {

@@ -531,18 +531,20 @@
 		where id = #{id,jdbcType=VARCHAR}
 	</update>
 	<select id="query" resultMap="BaseResultMap">
-		SELECT * FROM `sales` WHERE  `state` = '0'
+		SELECT s.paymoney AS paymoney, gv.`jprice` AS column1 FROM sales AS s 
+		JOIN salesdetails AS sd ON s.id = sd.sid 
+		JOIN goodsvalue AS gv ON gv.`id` = sd.gvid  where  `s.state` = '0'
 		<if test="startTime != null and startTime != ''">
-			AND `time` >= #{startTime}
+			AND `s.time` >= #{startTime}
 		</if>
 		<if test="endTime != null and endTime != ''">
-			AND `time` &lt;= #{endTime}
+			AND `s.time` &lt;= #{endTime}
 		</if>
 		<if test="code != null and code != ''">
-			AND `code` = #{code}
+			AND `s.code` = #{code}
 		</if>
 		<if test="storeid != null and storeid != ''">
-			AND `storeid` = #{storeid}
+			AND `s.storeid` = #{storeid}
 		</if>
 	</select>
 	<select id="queryFirst" resultMap="BaseResultMap">
@@ -623,9 +625,9 @@
 		</if>
 	</select>
 	<select resultMap="BaseResultMap" id="queryThisYear">
-		SELECT t.* FROM (SELECT SUM(paymoney) - SUM(column1)
-		column2,DATE_FORMAT(`time`,'%Y-%m') AS column3 FROM sales WHERE
-		TIME LIKE CONCAT(#{year},'%') GROUP BY DATE_FORMAT(TIME,'%Y-%m')) AS t
-
+		SELECT t.* FROM (SELECT SUM(s.paymoney),SUM(s.paymoney) - SUM(gv.jprice) column2,DATE_FORMAT(s.time,'%Y-%m') AS column3  FROM sales AS s 
+		JOIN salesdetails AS sd ON sd.sid = s.id 
+		JOIN goodsvalue AS gv ON gv.id = sd.gvid 
+		WHERE s.TIME CONCAT(#{year},'%') GROUP BY DATE_FORMAT(s.TIME,'%Y-%m')) AS t
 	</select>
 </mapper>

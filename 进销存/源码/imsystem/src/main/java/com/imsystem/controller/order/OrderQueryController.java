@@ -184,7 +184,7 @@ public class OrderQueryController {
 
 		for (int i = 0; i < list.size(); i++) {
 			
-			double s = orderquery.shappingprice(list.get(i).getId(), list.get(0).getColumn3().equals("0")?null:list.get(0).getColumn3());
+			double s = orderquery.shappingprice(list.get(i).getId(), list.get(0).getColumn4().equals("0")?null:list.get(0).getColumn4());
 			
 			list.get(i).setJprice(s);
 
