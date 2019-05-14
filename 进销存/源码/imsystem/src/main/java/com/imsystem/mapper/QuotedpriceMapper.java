@@ -2,6 +2,7 @@ package com.imsystem.mapper;
 
 import com.imsystem.domain.Goods;
 import com.imsystem.domain.Goodsprice;
+import com.imsystem.domain.Goodstype;
 import com.imsystem.domain.QuoteVO;
 import com.imsystem.domain.Quotedprice;
 import com.imsystem.domain.QuotedpriceExample;
@@ -11,7 +12,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface QuotedpriceMapper {
-	List<Quotedprice> queryQuoteByPage(@Param("cname") String cname,@Param("gname") String gname);
+	List<Quotedprice> queryQuoteByPage(@Param("cname") String cname,@Param("gname") String gname,@Param("qobj") Quotedprice qobj);
 	
 	Goods selectGoodsById(@Param("id") String id);
 	
@@ -23,7 +24,7 @@ public interface QuotedpriceMapper {
 	
 	int deleteQuote(@Param("qid") String qid);
 	
-	List<QuoteVO> queryQuoteCustomer(@Param("name") String name,@Param("gid") String gid);
+	List<QuoteVO> queryQuoteCustomer(@Param("name") String name,@Param("gid") String gid,@Param("qobj") Quotedprice qobj);
 	
 	int addUpdateQuote(@Param("price") Double price,@Param("time") Date time,@Param("uid") String uid,@Param("qid") String qid);
 	
@@ -31,6 +32,7 @@ public interface QuotedpriceMapper {
 	
 	List<Goodsprice> queryGoodsPrice(@Param("gvid")String gvid);
 	
+	Goodstype queryTypeByGtid(@Param("gtid")String gtid);
 	
 	int countByExample(QuotedpriceExample example);
 

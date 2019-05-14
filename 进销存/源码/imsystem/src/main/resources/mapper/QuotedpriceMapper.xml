@@ -97,9 +97,15 @@
   </resultMap>
   
   <select id="queryQuoteByPage" resultMap="BaseResultMap">
-  	SELECT q.* FROM quotedprice q,customer c,goodsvalue g ,goods gs 
+  	SELECT q.* FROM quotedprice q,customer c,goodsvalue g ,goods gs ,`USER` u
   	<where>
-  		q.state=0 AND q.`cid`=c.`id` AND q.`svid`=g.`id` AND g.`gid`=gs.`id` 
+  		q.state=0 AND q.`cid`=c.`id` AND q.`svid`=g.`id` AND g.`gid`=gs.`id` AND u.id=q.uid  
+  		AND u.storeid IN 
+  		(
+  			<foreach collection="qobj.slist" item="s" separator=",">
+		  		#{s.id}
+		  	</foreach>
+  		) 
   		<if test="cname!=null">
   			AND c.`name` LIKE CONCAT('%',#{cname},'%')  
   		</if>
@@ -151,6 +157,11 @@
 	ON c.`id`=q.`cid` 
 	<where>
 		c.`state`=0
+		AND c.storeid IN(
+			<foreach collection="qobj.slist" item="s" separator=",">
+		  		#{s.id}
+		  	</foreach>
+		) 
   		<if test="name!=null">	  	
   			AND c.`name` LIKE CONCAT('%',#{name},'%')
   		</if>
@@ -175,6 +186,10 @@
   
   <select id="queryGoodsPrice" resultType="com.imsystem.domain.Goodsprice">
   	SELECT * FROM `goodsprice` WHERE gvid=#{gvid}
+  </select>
+  
+   <select id="queryTypeByGtid" resultType="com.imsystem.domain.Goodstype">
+  	SELECT * FROM `goodstype` WHERE id=#{gtid}
   </select>
   
   

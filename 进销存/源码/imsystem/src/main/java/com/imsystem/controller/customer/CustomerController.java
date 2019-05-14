@@ -61,11 +61,11 @@ public class CustomerController {
 	
 	@RequestMapping("querytypelevel")
 	@ResponseBody
-	public TypeLevelVO queryTypeAndLevel() {
+	public TypeLevelVO queryTypeAndLevel(String uid) {
 		TypeLevelVO tlVO=new TypeLevelVO();
 		tlVO.setCtlist(ctService.queryAllCustomerType());
 		tlVO.setCllist(clService.queryAllCustomerLevel());
-		tlVO.setSlist(sService.queryStoreAll());
+		tlVO.setSlist(cService.queryTypeAndLevel(uid).getSlist());
 		return tlVO;
 	}
 	
