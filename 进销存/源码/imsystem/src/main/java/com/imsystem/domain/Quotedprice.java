@@ -1,6 +1,7 @@
 package com.imsystem.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class Quotedprice {
     private String id;
@@ -28,8 +29,21 @@ public class Quotedprice {
     private String column4;
 
     private String column5;
+    
+    /**
+     *   #门店集合，以查询该门店集合内的报价
+     */
+    private List<Store> slist;
 
-    public String getId() {
+    public List<Store> getSlist() {
+		return slist;
+	}
+
+	public void setSlist(List<Store> slist) {
+		this.slist = slist;
+	}
+
+	public String getId() {
         return id;
     }
 

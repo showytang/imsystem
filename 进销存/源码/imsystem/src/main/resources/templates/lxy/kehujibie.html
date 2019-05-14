@@ -60,7 +60,7 @@
 	</head>
 	<body>
 	
-		<div class="main">
+		<div class="main elDocument">
 			<!-- MAIN CONTENT -->
 			<div class="main-content">
 				<div class="container-fluid">
@@ -68,10 +68,10 @@
 						<div class="panel-heading">
 							<h3 class="panel-title ptitle">客户级别</h3>
 							<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
-							<input type="hidden" value="1" id="uid">
+							<input type="hidden" value="" id="uid">
 						</div>
 						<div class="ta">
-						<form id="lickSearchForm" action="querylikecustomerlevellist" method="post">
+						<form id="lickSearchForm" action="querylikecustomerlevellist" method="post" style="width: 60%">
 						 	<input class="col-md-2 col-md-offset-7 " type="text" name="content" placeholder="请输入搜索条件" />
 						 	<input id="likeSearch" class="col-md-1 btn btn-primary btn-lg" type="button" value="GO" style="height: 27px;line-height: 5px;margin-bottom: 5px;" />
 						 </form>
@@ -189,9 +189,19 @@
 	<script th:src="@{/assets/js/jquery.slimscroll.min.js}"></script>
 	<script th:src="@{/assets/js/toastr.min.js}"></script>
 	<script th:src="@{/assets/js/klorofil-common.js}"></script>	
+    <script th:src="@{/assets/js/vue.js}"></script>
 	<script type="text/javascript">
 	
+	var vue=new Vue({
+		el:".elDocument",
+		data:{
+			user:{}
+		}
+	});
+	
 		$(function(){
+			vue.user = JSON.parse(window.localStorage.getItem("user"));
+			$("#uid").val(vue.user.id);
 			
 			 $("#tijiao").click(function(){
 				var uid=$("#uid").val();

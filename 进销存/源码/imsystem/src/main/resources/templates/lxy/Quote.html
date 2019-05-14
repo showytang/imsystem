@@ -108,6 +108,7 @@
 										<span class="input-group-btn"><button id="searchByGoodsName" type="button" class="btn btn-primary">Go</button></span>
 									</div>
                                 	<input type="button" class="btn btn-primary" id="add" value="新增客户报价"/>
+                                	<input type="hidden" id="uid" value=""/>
                                 </h5>
                                 <h4 class="card-title">客户报价</h4>
                                <form id="quoteForm" action="" method="post"></form>
@@ -214,7 +215,8 @@
 	var vue=new Vue({
 		el:".elDocument",
 		data:{
-			pageIf:""
+			pageIf:"",
+			user:{}
 		},
 		methods:{
 			dada:function(inputTime){
@@ -242,15 +244,7 @@
 		var price=$(th).prev().prev().val(); 
 		$("#updateQuotePriceForm .quoteId").attr("value",id);
 		$("#updateQuotePriceForm .quotePrice").attr("value",price);
-		/* var iniprice=$(th).prev().attr("vul");
-		if(price==""){
-			$(th).prev().val(iniprice);
-			alert("报价不能为空！");
-		}else{
-			$(th).prev().val(price);
-			$("#quoteForm").attr("action","updatequotedprice?qid="+id+"&price="+price);
-			$("#quoteForm").submit();
-		} */
+		
 	}
 	
 	/* 删除报价 */
@@ -264,11 +258,13 @@
 	function queryQuoteByPage(curentPage){
 		var cname=$("#customerName").val();
 		var gname=$("#goodsName").val();
+		var uid=$("#uid").val();
 		$.ajax({
 			url:"queryquoteprice",
 			data:{
 				"cname":cname,
 				"gname":gname,
+				"uid":uid,
 				"curentPage":curentPage
 			},
 			type:"post",
@@ -285,6 +281,8 @@
 	
 	
 		$(function() {
+			vue.user = JSON.parse(window.localStorage.getItem("user"));
+			$("#uid").val(vue.user.id);
 			
 			queryQuoteByPage(1);
 			/* 分页点击 */

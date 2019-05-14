@@ -111,6 +111,7 @@
 								<input name="gc" id="gc" type="hidden" th:value="${gc}">
 								<input name="gv" id="gv" type="hidden" th:value="${gv}">
 								<input name="gts" id="gts" type="hidden" th:value="${gts}">
+								<input type="hidden" value="" id="uid"> 
 			
                                 <div class="table-responsive">
                                     <table class="table">
@@ -179,7 +180,8 @@
 	var vue=new Vue({
 		el:".elDocument",
 		data:{
-			quoteCustomerList:""
+			quoteCustomerList:"",
+			user:{}
 		}
 	});
 	
@@ -187,11 +189,13 @@
 	function queryCustomerByName(){
 		var name=$("#cname").val();
 		var gid=$("#gv").val();
+		var uid=$("#uid").val();
 		$.ajax({
 			url:"querycustomerquotelist",
 			data:{
 				"name":name,
-				"gid":gid
+				"gid":gid,
+				"uid":uid
 			},
 			type:"post",
 			dataType:"json",
@@ -253,6 +257,8 @@
 	}
 	
 		$(function() {
+			vue.user = JSON.parse(window.localStorage.getItem("user"));
+			$("#uid").val(vue.user.id);
 			
 			queryCustomerByName();
 			

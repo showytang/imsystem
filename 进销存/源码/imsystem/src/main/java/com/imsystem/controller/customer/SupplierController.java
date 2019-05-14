@@ -9,10 +9,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Store;
 import com.imsystem.domain.Supplier;
 import com.imsystem.domain.TypeLevelVO;
+import com.imsystem.service.customer.CustomerService;
 import com.imsystem.service.customer.SupplierService;
 import com.imsystem.service.setup.StoreService_c;
 
@@ -24,6 +27,8 @@ public class SupplierController {
 	SupplierService sService;
 	@Autowired
 	StoreService_c scService;
+	@Autowired
+	CustomerService cService;
 	
 	@RequestMapping("tosupplierlist")
 	public String toCustomerList() {
@@ -37,8 +42,11 @@ public class SupplierController {
 		if(curentPage == null || curentPage <= 0 ) {
 			curentPage = 1;
 		}
+		Page<Supplier> page=PageHelper.startPage(curentPage,1,true);
+		List<Supplier> slist = sService.querySupplierList(zero,content,uid);
+		PageInfo<Supplier> pages=new PageInfo<>(slist);
 		
-		return sService.querySupplierList(zero, content, curentPage,uid);
+		return pages;
 	}
 	
 	@RequestMapping("toaddsupplier")
@@ -48,9 +56,9 @@ public class SupplierController {
 	
 	@RequestMapping("querystoretoaddsupplier")
 	@ResponseBody
-	public TypeLevelVO queryStore() {
+	public TypeLevelVO queryStore(String uid) {
 		TypeLevelVO tlVO=new TypeLevelVO();
-		tlVO.setSlist(scService.queryStoreAll());
+		tlVO.setSlist(cService.queryTypeAndLevel(uid).getSlist());
 		return tlVO;
 	}
 	
