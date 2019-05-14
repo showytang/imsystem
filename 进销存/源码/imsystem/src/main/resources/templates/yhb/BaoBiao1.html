@@ -167,7 +167,7 @@
 			setTimeout(function(){
 				var img2 = queryDaysAgo(storeId,startTime_,endTime_,"y");
 				showView(img2);
-			},"1000");
+			},"500");
 			$(document).on(
 					"change",
 					"#config-demo",
@@ -179,8 +179,10 @@
 						}
 						img1 = queryDaysAgo(storeId,startTime_,endTime_,"null");
 						showImg(img1);
-						var img2 = queryDaysAgo(storeId,startTime_,endTime_,"y");
-						showView(img2);
+						setTimeout(function(){
+							var img2 = queryDaysAgo(storeId,startTime_,endTime_,"y");
+							showView(img2);
+						},"500");
 					});
 	 });
 	 function showImg(img1){

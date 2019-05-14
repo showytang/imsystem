@@ -76,7 +76,7 @@
 										<option v-for="obj in goods" :value="obj.goodsValue.id">{{obj.goods.name}}[{{obj.goodsValue.name}}]</option>
 									</select>
 								</div>
-								<div class="col-md-6 col-xs-12" v-if="sid == null">
+								<div class="col-md-6 col-xs-12" v-if="sid == ''">
 								<span class="col-md-3 col-xs-12">选择店铺</span> <select
 									class="col-md-9 col-xs-12 store">
 									<option value="">全部</option>
