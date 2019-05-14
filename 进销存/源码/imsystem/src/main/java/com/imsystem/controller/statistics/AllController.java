@@ -131,7 +131,7 @@ public class AllController {
 				}else {
 					ss.setColumn2("0");
 				}
-				List<Goodsvalue> l = gvs.queryByCode(ss.getId());
+				List<Goodsvalue> l = gvs.queryGoodsBySid(ss.getStoreid(),startTime,endTime);
 				if (l.size()>0) {
 					ss.setList(l);
 				}
@@ -151,7 +151,7 @@ public class AllController {
 		List<Salesorder> list = salesorderS.queryThisYear(year);
 		if (list.size()>0) {
 			for (Salesorder ss : list) {
-				List<Goodsvalue> gv = gvs.queryGoodsByTime(ss.getColumn3(),"","",storeId,"","");
+				List<Goodsvalue> gv = gvs.queryGoodsRanking(ss.getColumn3(),"","",storeId,"","");
 				if (gv.size()>0) {
 					ss.setList(gv);
 				}
@@ -170,7 +170,7 @@ public class AllController {
 	@RequestMapping("queryGoodsRanking")
 	@ResponseBody
 	public List<Goodsvalue> queryGoodsRanking(String time,String startTime,String endTime,String storeId){
-		List<Goodsvalue> list = gvs.queryGoodsByTime(time, startTime, endTime, storeId,"","");
+		List<Goodsvalue> list = gvs.queryGoodsRanking(time, startTime, endTime, storeId,"","");
 		return list;
 	}
 	

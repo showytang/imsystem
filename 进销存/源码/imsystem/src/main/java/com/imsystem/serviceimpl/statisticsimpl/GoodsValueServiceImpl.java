@@ -36,4 +36,18 @@ public class GoodsValueServiceImpl implements GoodsValueService{
 		return gvm.querySalesByCid(cid, startTime, endTime);
 	}
 
+	@Override
+	public List<Goodsvalue> queryGoodsRanking(String time, String startTime, String endTime, String storeId, String gid,
+			String name) {
+		// TODO Auto-generated method stub
+		return gvm.queryGoodsRanking(time, startTime, endTime, storeId, gid, name);
+	}
+
+	@Override
+	public List<Goodsvalue> queryGoodsBySid(String sid, String startTime, String endTime) {
+		// TODO Auto-generated method stub
+		return gvm.queryGoodsBySid(sid, startTime, endTime);
+	}
+
+
 }
