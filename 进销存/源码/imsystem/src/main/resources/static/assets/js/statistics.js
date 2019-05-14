@@ -516,13 +516,13 @@ function querySupplier_yByStore(storeId){
  * @returns
  */
 function getStoreId(){
-		var uid = JSON.stringify(window.localStorage.getItem("user")).id;
+		var uid = JSON.parse(window.localStorage.getItem("user")).id;
 		var sid = "";
 		if (uid != "") {
 			if (uid == "1") {
 				sid = "";
 			} else {
-				sid = JSON.stringify(window.localStorage.getItem("user")).storeid;
+				sid = JSON.parse(window.localStorage.getItem("user")).storeid;
 			}
 		}
 		return sid;

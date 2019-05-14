@@ -23,19 +23,6 @@
 		<script th:src="@{/assets/js/jquery.easypiechart.min.js}"></script>
 		<script th:src="@{/assets/js/vue.js}"></script>
 		<script th:src="@{/assets/js/statistics.js}"></script>
-		<script>
-			$(function(){
-				
-				var startTime = getStartTime();
-				var endTime = getEndTime();
-				$(".panel-subtitle").text("Period: "+getStartTime());
-				var top =  queryTop("","",startTime,endTime);
-				$(".profit").text("￥"+top.column2);
-				$(".SalesMoney").text("￥"+top.paymoney);
-				$(".count").text(top.count);
-				$(".first").text(top.column3);
-			});
-		</script>
 	</head>
 	<body>
 		<div class="main">
@@ -341,6 +328,14 @@
 	<script>
 		var sid = getStoreId();
 		 $(function(){
+				var startTime = getStartTime();
+				var endTime = getEndTime();
+				$(".panel-subtitle").text("Period: "+getStartTime());
+				var top =  queryTop(sid,"",startTime,endTime);
+				$(".profit").text("￥"+top.column2);
+				$(".SalesMoney").text("￥"+top.paymoney);
+				$(".count").text(top.count);
+				$(".first").text(top.column3);
 			 /**
 				 * Top统计图
 				 */

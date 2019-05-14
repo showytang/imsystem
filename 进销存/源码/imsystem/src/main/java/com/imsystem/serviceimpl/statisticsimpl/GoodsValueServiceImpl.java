@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.imsystem.domain.Goodsvalue;
+import com.imsystem.domain.Sales;
 import com.imsystem.mapper.GoodsvalueMapper;
 import com.imsystem.service.statistics.GoodsValueService;
 @Service
@@ -28,5 +29,25 @@ public class GoodsValueServiceImpl implements GoodsValueService{
 		// TODO Auto-generated method stub
 		return gvm.queryGoodsByTime(time,startTime,endTime,storeId,gid,name);
 	}
+
+	@Override
+	public List<Goodsvalue> querySalesByCid(String cid, String startTime, String endTime) {
+		// TODO Auto-generated method stub
+		return gvm.querySalesByCid(cid, startTime, endTime);
+	}
+
+	@Override
+	public List<Goodsvalue> queryGoodsRanking(String time, String startTime, String endTime, String storeId, String gid,
+			String name) {
+		// TODO Auto-generated method stub
+		return gvm.queryGoodsRanking(time, startTime, endTime, storeId, gid, name);
+	}
+
+	@Override
+	public List<Goodsvalue> queryGoodsBySid(String sid, String startTime, String endTime) {
+		// TODO Auto-generated method stub
+		return gvm.queryGoodsBySid(sid, startTime, endTime);
+	}
+
 
 }

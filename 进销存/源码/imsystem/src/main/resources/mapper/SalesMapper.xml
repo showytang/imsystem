@@ -509,7 +509,7 @@
 
 	</select>
 	<select id="queryXf" resultMap="BaseResultMap">
-		SELECT s.`id` AS id,SUM(s.`paymoney`) AS price ,c.`name` AS column1 FROM sales AS s 
+		SELECT s.`id` AS id,SUM(s.`paymoney`) AS price ,c.`name` AS column1,c.id as cid FROM sales AS s 
 			JOIN customer AS c ON c.id = s.cid
 			WHERE s.state = '0' 
 			<if test="sid != null and sid != ''">
@@ -520,5 +520,18 @@
 				AND DATE_FORMAT(s.time,'%Y-%m-%d')&lt;=DATE_FORMAT(#{endTime},'%Y-%m-%d') 
 			</if>
 			GROUP BY s.cid ORDER BY price DESC
+	</select>
+	<select id="querySalesByCid" resultMap="BaseResultMap">
+		SELECT s.id FROM sales  AS s 
+		JOIN salesdetails AS sd ON s.id = sd.sid 
+		JOIN goodsvalue AS gv ON gv.id = sd.gvid
+		WHERE s.state='0'
+		<if test="cid != null and cid != ''">
+			 and s.cid = #{cid}
+		</if>
+		<if test="startTime != null and startTime != ''">
+				AND  DATE_FORMAT(s.time,'%Y-%m-%d') >= DATE_FORMAT(#{startTime},'%Y-%m-%d') 
+				AND DATE_FORMAT(s.time,'%Y-%m-%d')&lt;=DATE_FORMAT(#{endTime},'%Y-%m-%d') 
+			</if>
 	</select>
 </mapper>
