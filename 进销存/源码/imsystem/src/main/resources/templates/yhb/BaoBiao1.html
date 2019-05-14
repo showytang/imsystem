@@ -179,10 +179,8 @@
 						}
 						img1 = queryDaysAgo(storeId,startTime_,endTime_,"null");
 						showImg(img1);
-						setTimeOut(function(){
-							var img2 = queryDaysAgo(storeId,startTime_,endTime_,"y");
-							showView(img2);
-						},"1000");
+						var img2 = queryDaysAgo(storeId,startTime_,endTime_,"y");
+						showView(img2);
 					});
 	 });
 	 function showImg(img1){

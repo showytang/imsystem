@@ -1,16 +1,13 @@
 package com.imsystem.controller.statistics;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-import org.apache.xml.resolver.helpers.PublicId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -68,17 +65,23 @@ public class AllController {
 		sale.setColumn1("0");
 		int sum = 0;
 		for (Salesorder s : list) {
-			 sum+=1;
-			 sale.setPaymoney(sale.getPaymoney()+s.getPaymoney());
-			 sale.setColumn1(s.getPaymoney()-Double.parseDouble(sale.getColumn1())+"");//计算成本
+			if(s!=null) {
+				 sum+=1;
+				 sale.setPaymoney(sale.getPaymoney()+s.getPaymoney());
+				 sale.setColumn1(s.getPaymoney()+Double.parseDouble(sale.getColumn1())+"");//计算成本
+			}		
 		}
 		sale.setCount(sum);//今日订单量
-		if (list.size()>0) {
-			String lr = sale.getPaymoney() - Double.parseDouble(sale.getColumn1())+"";
-			sale.setColumn2(lr);//利润
-			String id = salesorderS.queryFirst(storeid, code, startTime, endTime).getStoreid();//查询今日销量冠军
-			Store store = storeS.selectByPrimaryKey(id);
-			sale.setColumn3(store.getName()+"【"+store.getSufname()+"】");//今日销量冠军
+		String lr = Double.parseDouble(sale.getColumn1()) - sale.getPaymoney()+"";
+		sale.setColumn2(lr);//利润
+		if (list!=null) {
+			if(list.get(0)==null) {
+				
+			}else {
+				String id = salesorderS.queryFirst(storeid, code, startTime, endTime).getStoreid();//查询今日销量冠军
+				Store store = storeS.selectByPrimaryKey(id);
+				sale.setColumn3(store.getName()+"【"+store.getSufname()+"】");//今日销量冠军
+			}
 		}
 		return sale;
 	}

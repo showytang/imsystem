@@ -531,20 +531,21 @@
 		where id = #{id,jdbcType=VARCHAR}
 	</update>
 	<select id="query" resultMap="BaseResultMap">
-		SELECT s.paymoney AS paymoney, gv.`jprice` AS column1 FROM sales AS s 
-		JOIN salesdetails AS sd ON s.id = sd.sid 
-		JOIN goodsvalue AS gv ON gv.`id` = sd.gvid  where  `s.state` = '0'
+		SELECT SUM(sd.price) AS paymoney , SUM(sd.price) - SUM(gv.`jprice`) AS column2,DATE_FORMAT(s.time,'%Y-%m-%d') AS column3 FROM sales AS s
+		INNER JOIN `salesdetails` AS sd ON s.id = sd.sid
+		INNER JOIN goodsvalue AS gv ON gv.`id` = sd.gvid
+		 where  s.`state` = '0'
 		<if test="startTime != null and startTime != ''">
-			AND `s.time` >= #{startTime}
+			AND s.`time` >= #{startTime}
 		</if>
 		<if test="endTime != null and endTime != ''">
-			AND `s.time` &lt;= #{endTime}
+			AND s.`time` &lt;= #{endTime}
 		</if>
 		<if test="code != null and code != ''">
-			AND `s.code` = #{code}
+			AND s.`code` = #{code}
 		</if>
 		<if test="storeid != null and storeid != ''">
-			AND `s.storeid` = #{storeid}
+			AND s.`storeid` = #{storeid}
 		</if>
 	</select>
 	<select id="queryFirst" resultMap="BaseResultMap">
@@ -565,45 +566,45 @@
 		ORDER BY t.s DESC LIMIT 1
 	</select>
 	<select id="queryDaysAgo" resultMap="BaseResultMap">
-		SELECT t.* FROM (SELECT SUM(paymoney) paymoney,COUNT(*)
-		`count`,SUM(paymoney) - SUM(column1)
-		column2,DATE_FORMAT(`time`,'%Y-%m-%d') column3,`id` FROM sales
+		SELECT SUM(sd.price) AS paymoney , SUM(sd.price) - SUM(gv.`jprice`) AS column2,COUNT(*) AS `count`,DATE_FORMAT(s.time,'%Y-%m-%d') AS column3 FROM sales AS s
+		INNER JOIN `salesdetails` AS sd ON s.id = sd.sid
+		INNER JOIN goodsvalue AS gv ON gv.`id` = sd.gvid
 		<where>
 			<if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
-				`TIME` >= DATE_FORMAT(#{startTime},'%Y-%m-%d 00:00:00') AND `TIME` &lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d 23:59:59')
+				s.`TIME` >= DATE_FORMAT(#{startTime},'%Y-%m-%d') AND s.`TIME` &lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d')
 			</if>
 			<if test="startTime == null or startTime == '' or endTime == null or endTime == ''">
-				DATE_SUB(CURDATE(), INTERVAL 6 DAY) &lt;= DATE(`time`)
+				DATE_SUB(CURDATE(), INTERVAL 6 DAY) &lt;= DATE(s.`time`)
 			</if>
 		<if test="storeid != null and storeid != ''">
-			AND storeid=#{storeid}
+			AND s.storeid=#{storeid}
 		</if>
 		</where>
-		GROUP BY DATE_FORMAT(TIME,'%Y-%m-%d') ORDER BY TIME) AS t
+		GROUP BY DATE_FORMAT(s.`TIME`,'%Y-%m-%d') ORDER BY s.`TIME`
 	</select>
 	<select id="queryByTime" resultMap="BaseResultMap">
-		SELECT t.* FROM (SELECT SUM(paymoney) paymoney,COUNT(*)
-		`count`,SUM(paymoney) - SUM(column1)
-		column2,DATE_FORMAT(`time`,'%Y-%m-%d') column3,`id` FROM sales
+		SELECT t.* FROM (SELECT s.id,SUM(s.paymoney) as paymoney,COUNT(*) as `count`,SUM(s.paymoney) - SUM(gv.jprice) column2,DATE_FORMAT(s.time,'%Y-%m-%d') AS column3  FROM sales AS s 
+		JOIN salesdetails AS sd ON sd.sid = s.id 
+		JOIN goodsvalue AS gv ON gv.id = sd.gvid
 		<where>
 			<if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
-				`TIME` >= DATE_FORMAT(#{startTime},'%Y-%m-%d 00:00:00') AND `TIME` &lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d 23:59:59')
+				s.`TIME` >= DATE_FORMAT(#{startTime},'%Y-%m-%d 00:00:00') AND s.`TIME` &lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d 23:59:59')
 			</if>
 			<if test="startTime == null or startTime == '' or endTime == null or endTime == ''">
-				DATE_SUB(CURDATE(), INTERVAL 6 DAY) &lt;= DATE(`time`)
+				DATE_SUB(CURDATE(), INTERVAL 6 DAY) &lt;= DATE(s.`time`)
 			</if>
 		<if test="storeid != null and storeid != ''">
-			AND storeid=#{storeid}
+			AND s.storeid=#{storeid}
 		</if>
 		</where>
-		GROUP BY `code` ORDER BY TIME) AS t
+		GROUP BY s.`code` ORDER BY s.TIME) AS t
 	</select>
 	<select id="queryRanking" resultMap="BaseResultMap">
 		SELECT t.id AS id,ss.id AS storeid,ss.name AS column3,ss.sufname AS
 		column4,t.s AS column5 FROM (SELECT *,SUM(paymoney) AS s FROM
 		sales WHERE
 		<if test="startTime != null and startTime != ''">
-			`time` >= DATE_FORMAT(#{startTime}, '%Y-%m-%d 00:00:00') AND `time` &lt;= DATE_FORMAT(#{endTime}, '%Y-%m-%d 23:59:59')
+			`time` >= DATE_FORMAT(#{startTime}, '%Y-%m-%d') AND `time` &lt;= DATE_FORMAT(#{endTime}, '%Y-%m-%d')
 		</if>
 		<if test="startTime == null or startTime == ''">
 			DATE_FORMAT( TIME, '%Y-%m' ) = DATE_FORMAT( CURDATE( ) , '%Y-%m' )
@@ -625,9 +626,10 @@
 		</if>
 	</select>
 	<select resultMap="BaseResultMap" id="queryThisYear">
-		SELECT t.* FROM (SELECT SUM(s.paymoney),SUM(s.paymoney) - SUM(gv.jprice) column2,DATE_FORMAT(s.time,'%Y-%m') AS column3  FROM sales AS s 
-		JOIN salesdetails AS sd ON sd.sid = s.id 
-		JOIN goodsvalue AS gv ON gv.id = sd.gvid 
-		WHERE s.TIME CONCAT(#{year},'%') GROUP BY DATE_FORMAT(s.TIME,'%Y-%m')) AS t
+		SELECT SUM(sd.price) AS paymoney , SUM(sd.price) - SUM(gv.`jprice`) AS column2,DATE_FORMAT(s.time,'%Y-%m') AS column3 FROM sales AS s
+		INNER JOIN `salesdetails` AS sd ON s.id = sd.sid
+		INNER JOIN goodsvalue AS gv ON gv.`id` = sd.gvid
+		WHERE DATE_FORMAT(s.time,'%Y') = #{year}
+		GROUP BY DATE_FORMAT(s.time,'%Y-%m')
 	</select>
 </mapper>
