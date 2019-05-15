@@ -549,8 +549,8 @@
 		</if>
 	</select>
 	<select id="queryFirst" resultMap="BaseResultMap">
-		SELECT * FROM (SELECT *,SUM(paymoney) AS s FROM sales GROUP BY
-		storeid) t WHERE  `state` = '0'
+		SELECT * FROM (SELECT *,SUM(paymoney) AS s FROM sales
+		where `state` = '0'
 		<if test="startTime != null and startTime != ''">
 			AND `time` >= #{startTime}
 		</if>
@@ -560,9 +560,8 @@
 		<if test="code != null and code != ''">
 			AND `code` = #{code}
 		</if>
-		<if test="storeid != null and storeid != ''">
-			AND `storeid` = #{storeid}
-		</if>
+		 GROUP BY
+		storeid) t 
 		ORDER BY t.s DESC LIMIT 1
 	</select>
 	<select id="queryDaysAgo" resultMap="BaseResultMap">
@@ -616,10 +615,11 @@
 			DATE_FORMAT( TIME, '%Y-%m' ) = DATE_FORMAT( CURDATE( ) , '%Y-%m' )
 		</if>
 		GROUP BY storeid) t JOIN store AS ss ON ss.id = t.storeid WHERE
-		t.state = '0' ORDER BY t.s asc
+		t.state = '0'
 		<if test="storeId != null and storeId != ''">
-			t.storeid = #{storeId}
+			and t.storeid = #{storeId}
 		</if>
+		 ORDER BY t.s asc 
 		<if test="startTime == null or startTime == ''">
 			LIMIT 6
 		</if>
@@ -636,6 +636,9 @@
 		INNER JOIN `salesdetails` AS sd ON s.id = sd.sid
 		INNER JOIN goodsvalue AS gv ON gv.`id` = sd.gvid
 		WHERE DATE_FORMAT(s.time,'%Y') = #{year}
+		<if test="sid != null and sid != ''">
+			and s.storeid = #{sid}
+		</if>
 		GROUP BY DATE_FORMAT(s.time,'%Y-%m')
 	</select>
 </mapper>

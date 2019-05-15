@@ -71,14 +71,20 @@ public class AllController {
 				 sale.setColumn2(Double.parseDouble(s.getColumn2())+Double.parseDouble(sale.getColumn1())+"");//计算成本
 			}		
 		}
-		sale.setCount(sum);//今日订单量
+		Salesorder soc = salesorderS.queryOrderCountByTime(startTime, storeid);
+		if (soc!=null) {
+			sale.setCount(soc.getCount());//今日订单量
+		}
 		if (list!=null) {
 			if(list.get(0)==null) {
 				
 			}else {
-				String id = salesorderS.queryFirst(storeid, code, startTime, endTime).getStoreid();//查询今日销量冠军
-				Store store = storeS.selectByPrimaryKey(id);
-				sale.setColumn3(store.getName()+"【"+store.getSufname()+"】");//今日销量冠军
+				Salesorder sd =  salesorderS.queryFirst(storeid, code, startTime, endTime);
+				if(sd!=null) {
+					String id = sd.getStoreid();//查询今日销量冠军
+					Store store = storeS.selectByPrimaryKey(id);
+					sale.setColumn3(store.getName()+"【"+store.getSufname()+"】");//今日销量冠军
+				}
 			}
 		}
 		return sale;
@@ -151,7 +157,7 @@ public class AllController {
 	@RequestMapping("queryThisYear")
 	@ResponseBody
 	public List<Salesorder> queryThisYear(String year,String storeId) {
-		List<Salesorder> list = salesorderS.queryThisYear(year);
+		List<Salesorder> list = salesorderS.queryThisYear(year,storeId);
 		if (list.size()>0) {
 			for (Salesorder ss : list) {
 				List<Goodsvalue> gv = gvs.queryGoodsRanking(ss.getColumn3(),"","",storeId,"","");

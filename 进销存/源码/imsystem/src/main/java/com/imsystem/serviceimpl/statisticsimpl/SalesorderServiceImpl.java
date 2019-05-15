@@ -43,9 +43,9 @@ public class SalesorderServiceImpl implements SalesorderService{
 		return sm.queryTedayMoney(store);
 	}
 	@Override
-	public List<Salesorder> queryThisYear(String year) {
+	public List<Salesorder> queryThisYear(String year,String sid) {
 		// TODO Auto-generated method stub
-		return sm.queryThisYear(year);
+		return sm.queryThisYear(year,sid);
 	}
 	@Override
 	public List<Salesorder> queryByTime(String startTime, String endTime,String storeid) {
