@@ -79,7 +79,7 @@
 	<select id="queryCount" resultMap="BaseResultMap">
 		select s.count-s.scount as
 		count,s.id,s.code from stockdetails as s
-		where gvid = #{gvid} and s.state = '0' and s.storeid = #{sid}
+		where gvid = #{gvid} and (s.storeid = #{sid} or s.storeid = 0)
 		order by
 		s.updatetime
 		limit 1
