@@ -142,7 +142,6 @@
                                                 <th>相关账单</th>
                                                 <th>供应商付款</th>
                                                 <th>供应商详情</th>
-                                                <th>删除供应商</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -156,7 +155,6 @@
                                                 <td><a class="bill">应付对账单</a></td>
                                                 <td><a class="pay">付款</a></td>
                                                 <td><a class="todetail glyphicon glyphicon-edit" style="color: rgb(2, 143, 208);" onclick="todetail(this)"></a></td>
-                                                <td><a class="del glyphicon glyphicon-trash" style="color: rgb(2, 143, 208);" onclick="deleteSupplier(this)"></a></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -233,11 +231,11 @@
 		}
 	
 		/*删除供应商*/
-		function deleteSupplier(th){
+		/* function deleteSupplier(th){
 			var id=$(th).parent().prev().prev().prev().prev().prev().val();
 			$("#supplierForm").attr("action","deletesupplier?id="+id);
 			$("#supplierForm").submit();
-		}
+		} */
 			
 		$(function() {
 			vue.user = JSON.parse(window.localStorage.getItem("user"));

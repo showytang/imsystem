@@ -1,5 +1,6 @@
 package com.imsystem.mapper;
 
+import com.imsystem.domain.Customer;
 import com.imsystem.domain.Customerlevel;
 import com.imsystem.domain.CustomerlevelExample;
 import java.util.List;
@@ -13,6 +14,8 @@ public interface CustomerlevelMapper {
 	int deleteCustomerLevel(String id);
 	
 	List<Customerlevel> queryLikeCustomerLevel(String content);
+	
+	int queryCustomerByCLid(String id);
 	
     int countByExample(CustomerlevelExample example);
 
