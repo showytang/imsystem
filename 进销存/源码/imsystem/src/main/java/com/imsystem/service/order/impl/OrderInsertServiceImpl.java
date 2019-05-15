@@ -292,7 +292,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 		if (salesorder.getCid() != "0") {
 			if (salesorder.getPaymoney() > (salesorder.getPreprice() + salesorder.getTainmoney())) {
 				count += curtomer.update(salesorder.getCid(),
-						(salesorder.getPaymoney() - salesorder.getPreprice() - salesorder.getTainmoney()));
+						(salesorder.getPreprice() + salesorder.getTainmoney()));
 			}
 		}
 
@@ -518,6 +518,19 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 	public List<Paytype> queryPaytype() {
 		// TODO Auto-generated method stub
 		return pay.selectByExample(null);
+	}
+
+	@Override
+	public int salesorderDel(String id,String cid, Double Moeny) {
+		// TODO Auto-generated method stub
+		
+		salesorderMapper.deleteByPrimaryKey(id);
+		
+		if(!(cid.equals("0"))) {
+			curtomer.update(cid, Moeny);
+		}
+		
+		return salesorderdetailsMapper.deleteBySid(id);
 	}
 
 }
