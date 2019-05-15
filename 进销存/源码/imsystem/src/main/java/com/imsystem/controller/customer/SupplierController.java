@@ -91,5 +91,18 @@ public class SupplierController {
 		int row=sService.deleteSupplier(id);
 		return "redirect:tosupplierlist";
 	}
+	
+	/*进货列表*/
+	@RequestMapping("tojinhuolist")
+	public String toJinHuoList() {
+		return "yhb/jinhuo";
+	}
+	
+	@RequestMapping("tosupplierincomelist")
+	public String toSupplierIncomeList() {
+		return "yhb/qiankuan";
+	}
+	
+	
 
 }
