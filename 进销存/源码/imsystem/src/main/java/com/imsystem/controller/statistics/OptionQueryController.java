@@ -51,7 +51,7 @@ public class OptionQueryController {
 		List<Sales> list = salesService.queryXf(sid, startTime, endTime);
 		if (list.size()>0) {
 			for (Sales s : list) {
-				List<Goodsvalue> glist = gvs.querySalesByCid(s.getCid(), endTime, endTime);
+				List<Goodsvalue> glist = gvs.querySalesByCid(s.getCid(), startTime, endTime);
 				s.setGlist(glist);
 			}
 		}
