@@ -144,6 +144,13 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 	@Override
 	public int insertSalesorder(Salesorder salesorder) {
 		// TODO Auto-generated method stub
+		
+		if(!(salesorder.getCid().equals("0"))) {
+			
+			curtomer.updateplug(salesorder.getCid(), salesorder.getPreprice());
+			
+		}
+		
 		salesorder.setId(UUID.randomUUID().toString());
 
 		int count = salesorderMapper.insertSelective(salesorder);
@@ -154,7 +161,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 		}
 		count += salesorderdetailsMapper.add(salesorder);
-
+		
 		return count;
 	}
 
@@ -168,7 +175,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 		}
 
-		if (stockdetail.selectCount(stock.getCode(), "1") <= 0) {
+		if (stockdetail.selectCount(stock.getCode(), stock.getStoreid()) <= 0) {
 
 			stockM.updateState(stock.getCode());
 
@@ -257,7 +264,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 			stockcords.setId(UUID.randomUUID().toString());
 			stockcords.setAftersdid(item.getId());
 			stockcords.setBeforesdid(stod.getId());
-			stockcords.setAftersid("1");
+			stockcords.setAftersid(stockde.get(0).getColumn1());
 			stockcords.setBeforesid(item.getColumn1());
 
 			count += stockcord.insertSelective(stockcords);
@@ -272,19 +279,27 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 	Boolean bool = true;
 
+	String storeidd;
+	
+	String uidd;
+	
 	@Override
 	public Boolean insertOrderOut(Salesorder salesorder) {
 		// TODO Auto-generated method stub
 		bool = true;
 		int count = salesorderMapper.updatePregress(salesorder.getId(), "2");
 
-		if (salesorder.getCid() != "1") {
+		if (salesorder.getCid() != "0") {
 			if (salesorder.getPaymoney() > (salesorder.getPreprice() + salesorder.getTainmoney())) {
 				count += curtomer.update(salesorder.getCid(),
 						(salesorder.getPaymoney() - salesorder.getPreprice() - salesorder.getTainmoney()));
 			}
 		}
 
+		storeidd = salesorder.getStoreid();
+		
+		uidd = salesorder.getUid();
+		
 		Sales sales = new Sales();
 
 		sales.setId(UUID.randomUUID().toString());
@@ -338,7 +353,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 	 */
 	public void updateCount(Salesdetails item) {
 
-		Stockdetails goodsCount = stockdetail.queryCount(item.getGvid(), "1");
+		Stockdetails goodsCount = stockdetail.queryCount(item.getGvid(), storeidd);
 
 		if (goodsCount == null) {
 
@@ -363,17 +378,17 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 		salesstockrecord.setUpdatetime(salesstockrecord.getTime());
 
-		salesstockrecord.setUid("1");
+		salesstockrecord.setUid(uidd);
 
 		salesstockrecord.setState(0);
 
-		salesstockrecord.setStoreid("1");
+		salesstockrecord.setStoreid(storeidd);
 
 		if (goodsCount.getCount() < item.getCount()) {
 
 			stockdetail.updateCount(goodsCount.getCode(), goodsCount.getCount(), item.getGvid());
 
-			if (stockdetail.selectCount(goodsCount.getCode(), "1") == 0) {
+			if (stockdetail.selectCount(goodsCount.getCode(), storeidd) == 0) {
 
 				stockM.updateState(goodsCount.getCode());
 
@@ -397,7 +412,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 			if (goodsCount.getCount() == item.getCount()) {
 
-				if (stockdetail.selectCount(goodsCount.getCode(), "1") == 0) {
+				if (stockdetail.selectCount(goodsCount.getCode(), storeidd) == 0) {
 
 					stockM.updateState(goodsCount.getCode());
 
