@@ -14,8 +14,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Customer;
 import com.imsystem.domain.Store;
+import com.imsystem.domain.TypeLevelVO;
 import com.imsystem.domain.User;
 import com.imsystem.mapper.CustomerMapper;
+import com.imsystem.mapper.CustomerlevelMapper;
+import com.imsystem.mapper.CustomertypeMapper;
 import com.imsystem.mapper.StoreMapper;
 import com.imsystem.mapper.UserMapper;
 import com.imsystem.service.customer.CustomerService;
@@ -35,9 +38,29 @@ public class CustomerServiceImpl implements CustomerService{
 	 *  查询所有客户
 	 */
 	@Override
-	public List<Customer> queryCustomer() {
+	public List<Customer> queryCustomer(String uid) {
 		// TODO Auto-generated method stub
-		List<Customer> clist=customerDao.selectAllCustomer();
+		List<Customer> clist=new ArrayList<Customer>();
+		User uobj=userDao.queryUserById(uid);
+		String sid=uobj.getStoreid().toString();
+		Store sobj=storeDao.selectByPrimaryKey(sid);
+		if(sobj.getParented().equals("0")) {
+			List<Customer> clist1=queryCustomerByStore(sobj.getId());
+			List<Store> sList=storeDao.SelectStoreByParentId(sobj.getId());
+			clist.addAll(clist1);
+			if(sList.size()>0) {
+				for(Store sObj1:sList) {
+					List<Customer> cList2=queryCustomerByStore(sObj1.getId());
+					if(cList2.size()!=0) {
+						clist.addAll(cList2);
+					}
+				}
+			}
+			
+		}else {
+			List<Customer> clist3=queryCustomerByStore(sobj.getId());
+			clist.addAll(clist3);
+		}
 		return clist;
 	}
 
@@ -54,10 +77,19 @@ public class CustomerServiceImpl implements CustomerService{
 		cusObj.setId(rand);
 		cusObj.setTime(time);
 		cusObj.setUpdatetime(time);
-		cusObj.setPname(addr[0]);
-		cusObj.setCname(addr[1]);
-		cusObj.setAname(addr[2]);
-		cusObj.setAddress(addr[3]);
+		if(addr.length>4) {
+			cusObj.setPname(addr[0]);
+			cusObj.setCname(addr[1]);
+			cusObj.setAname(addr[2]);
+			String address1=addr[3]+"/"+addr[4];
+			cusObj.setAddress(address1);
+		}else {
+			cusObj.setPname(addr[0]);
+			cusObj.setCname(addr[1]);
+			cusObj.setAname(addr[2]);
+			cusObj.setAddress(addr[3]);
+		}
+		
 		cusObj.setState(0);
 		int row=customerDao.insert(cusObj);
 		return row;
@@ -73,10 +105,18 @@ public class CustomerServiceImpl implements CustomerService{
 		String address=cusObj.getAddress();
 		String[] addr=address.split("/");
 		cusObj.setUpdatetime(time);
-		cusObj.setPname(addr[0]);
-		cusObj.setCname(addr[1]);
-		cusObj.setAname(addr[2]);
-		cusObj.setAddress(addr[3]);
+		if(addr.length>4) {
+			cusObj.setPname(addr[0]);
+			cusObj.setCname(addr[1]);
+			cusObj.setAname(addr[2]);
+			String address1=addr[3]+"/"+addr[4];
+			cusObj.setAddress(address1);
+		}else {
+			cusObj.setPname(addr[0]);
+			cusObj.setCname(addr[1]);
+			cusObj.setAname(addr[2]);
+			cusObj.setAddress(addr[3]);
+		}
 		int row=customerDao.updateCustomer(cusObj);
 		return row;
 	}
@@ -112,7 +152,7 @@ public class CustomerServiceImpl implements CustomerService{
 				clist.addAll(cList2);
 			}
 			List<Store> sList=storeDao.SelectStoreByParentId(sobj.getId());
-			if(sList!=null) {
+			if(sList.size()>0) {
 				for(Store sObj1:sList) {
 					List<Customer> cList1=customerDao.queryCustomerByPage(zero, content, sObj1.getId());
 					if(cList1.size()!=0) {
@@ -158,6 +198,29 @@ public class CustomerServiceImpl implements CustomerService{
 	public List<Customer> queryCustomerByName(String name) {
 		// TODO Auto-generated method stub
 		return customerDao.queryByName(name);
+	}
+
+	@Override
+	public TypeLevelVO queryTypeAndLevel(String uid) {
+		// TODO Auto-generated method stub
+		TypeLevelVO tlVO=new TypeLevelVO();
+		List<Store> storeList=new ArrayList<Store>();
+		
+		User uobj=userDao.queryUserById(uid);
+		String sid=uobj.getStoreid().toString();
+		Store sobj=storeDao.selectByPrimaryKey(sid);
+		
+		if(sobj.getParented().equals("0")) {
+			storeList.add(sobj);
+			List<Store> sList=storeDao.SelectStoreByParentId(sobj.getId());
+			if(sList!=null) {
+				storeList.addAll(sList);
+			}
+		}else {
+			storeList.add(sobj);
+		}
+		tlVO.setSlist(storeList);
+		return tlVO;
 	}
 
 }

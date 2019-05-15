@@ -1,6 +1,7 @@
 package com.imsystem.service.monomer.impl;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
@@ -69,9 +70,9 @@ public class SpTypeServiceImpl implements SpTypeService{
 	}
 
 	@Override
-	public List<Goodstype> querybypid() {
+	public List<Goodstype> querybypid(@Param("name")String name) {
 		
-		return ma.querybypid();
+		return ma.querybypid(name);
 	}
 
 
@@ -88,6 +89,14 @@ public class SpTypeServiceImpl implements SpTypeService{
 	public List<Goodstype> querynoid() {
 		
 		return ma.querynoid();
+	}
+
+
+
+	@Override
+	public int dele(String id) {
+		
+		return ma.dele(id);
 	}
 
 

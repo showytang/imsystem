@@ -100,6 +100,11 @@ public class AllController {
 		
 		if (state.equals("null")) {
 			List<Salesorder> list  = salesorderS.queryDaysAgo(storeid,startTime,endTime);
+			if (list.size()>0) {
+				for (Salesorder s : list) {
+					s.setCount(salesorderS.queryOrderCountByTime(s.getColumn3(), storeid).getCount());
+				}
+			}
 			return list;
 		}else {
 			List<Salesorder> list1 = salesorderS.queryByTime(startTime, endTime,storeid);

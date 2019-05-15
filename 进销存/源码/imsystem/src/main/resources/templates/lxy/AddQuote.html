@@ -116,7 +116,7 @@
                                 </h4>
                                
                                 <form class="form-horizontal form-material" id="customerAdd" action="" method="post">
-                                	<input type="hidden" value="1" name="uid"/>
+                                	<input type="hidden" value="" name="uid" id="cuid"/>
                                 	<div class="form-group">
                                         <label class="col-md-12">客&nbsp;&nbsp;户&nbsp;&nbsp;名&nbsp;&nbsp;称</label>
                                         <div class="col-sm-12">
@@ -165,7 +165,7 @@
                                 </form>
                                 
                                 <form class="form-horizontal form-material" id="goodsAdd" method="post" action="">
-                                	<input type="hidden" value="1" name="uid"/>
+                                	<input type="hidden" value="" name="uid" id="guid"/>
                                 	<div class="form-group">
                                         <label class="col-md-12">货&nbsp;&nbsp;品&nbsp;&nbsp;实&nbsp;&nbsp;例</label>
                                         <div class="col-sm-12">
@@ -231,7 +231,8 @@
 		data:{
 			customerList:{},
 			customerQuoteList:{},
-			goodsQuoteList:{}
+			goodsQuoteList:{},
+			user:{}
 		}
 	});
 	
@@ -267,16 +268,20 @@
 					
 				}
 			}else if(gval=="check"){
+				
 				$("#goodsAdd").show();
 				$("#customerAdd").hide();
 				if(gname==""){
 					$("#guldiv").hide();
 				}else{
 					$("#guldiv").show();
-
+					var guid=$("#guid").val();
 					$.ajax({
 						url:"queryquotebygoodsvalueid",
-						data:"gid="+gname,
+						data:{
+							"gid":gname,
+							"uid":guid
+						},
 						type:"post",
 						dataType:"json",
 						success:function(result){
@@ -290,8 +295,10 @@
 		}
 		
 		function querycustomers(){
+			var cuid=$("#cuid").val();
 			$.ajax({
 				url:"querycustomers",
+				data:"uid="+cuid,
 				type:"post",
 				dataType:"json",
 				success:function(result){
@@ -301,7 +308,9 @@
 		}
 		
 		$(function() {
-			
+			vue.user = JSON.parse(window.localStorage.getItem("user"));
+			$("#guid").val(vue.user.id);
+			$("#cuid").val(vue.user.id);
 			
 			var cc=$("#cc").val();
 			var cv=$("#cv").val();
@@ -391,10 +400,7 @@
 				
 				var customerid=$("#customerName").attr("value");
 				var goodsid=$("#goodsName").attr("value");
-				if(customerid=="0"){
-					alert("请先选择客户！");
-				}
-	
+				
 				if(customerChoose=="check"){
 					if(customerid=="0"){
 						alert("请先选择客户！");

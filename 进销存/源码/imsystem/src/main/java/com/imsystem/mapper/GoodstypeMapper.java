@@ -51,11 +51,13 @@ public interface GoodstypeMapper {
     
     int toupdate(Goodstype good);
     
-    List<Goodstype> querybypid();
+    List<Goodstype> querybypid(@Param("name")String name);
     
     Goodstype querybyname(String name,String pid);
     
     List<Goodstype> querynoid();
+    
+    int dele(String id);
     
    
 }

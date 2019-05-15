@@ -38,6 +38,10 @@
 			
 		}
 		
+		#ttt{
+			border:none;
+		}
+		
 		th{
 			text-align: center;
 		}
@@ -52,34 +56,9 @@
 			
 		} 
 		
-		#page>ul {
-			display: flex;
-			justify-content: space-around;
-			padding: 0px;
-			font-size: 12px;
-		}
+		
 
-		#page {
-			width: 300px;
-			margin: 20px auto;
-		}
 		
-		.currentPage {
-			background: rgb(2, 143, 208);
-			color: white;
-			border: none;
-		}
-		
-		.pagebtn {
-			height: 28px;
-			width: 25px;
-			border: 1px solid #C0C0C0;
-			list-style: none;
-			text-align: center;
-			background: #DDDDDD;
-			line-height: 28px;
-			cursor: pointer;
-		}
 	</style>
 	</head>
 	<body>
@@ -87,6 +66,7 @@
 		<div class="main">
 			<!-- MAIN CONTENT -->
 			<div class="main-content">
+			<form th:action="@{/goods/querygoods}" method="post">
 				<div class="container-fluid">
 					<div class="panel panel-headline">
 						<div class="panel-heading">
@@ -96,8 +76,8 @@
 						</div>
 						
 						<div class="ta">
-						<!--  <input class="col-md-2 col-md-offset-7 tiaojian"  type="text" placeholder="请输入搜索条件" /><input class="col-md-1 btn btn-primary btn-lg" type="button" value="GO" style="height: 27px;line-height: 5px;margin-bottom: 5px; background-color: rgb(2, 143, 208);" @click="query()" /> -->
-						<button type="button" value="新增" class="btn btn-primary btn-lg col-md-1" data-toggle="modal" data-target="#myModal" style="height: 30px;line-height: 5px; margin-bottom: 5px; margin-left: 1100px; background-color: rgb(2, 143, 208);" >
+						<input class="col-md-2 col-md-offset-7 tiaojian " name="name" type="text" placeholder="请输入搜索条件" /><input class="col-md-1 btn btn-primary btn-lg" type="submit" value="GO" style="height: 27px;line-height: 5px;margin-bottom: 5px; background-color: rgb(2, 143, 208);" @click="query()" />
+						<button type="button" value="新增" class="btn btn-primary btn-lg col-md-1 " data-toggle="modal" data-target="#myModal" style="height: 30px;line-height: 5px; margin-bottom: 5px;margin-left: 10px; background-color: rgb(2, 143, 208);" >
 	  						新增
 						</button>
 					<!-- 	<table class="table table-striped">
@@ -177,25 +157,28 @@
 								</ul>
 							</div>  -->
 						</div>
-						<table class="table table-striped"  th:each="item:${list}">
-						
+					<table class="table table-striped"  >
+						<tr>
+						 	<th></th>
+			                <th>类型名称</th>
+			                <th>上层类型</th>
+							<th>创建时间</th>
+							<th>最后修改时间</th>
+							<th>操作人</th>
+							<th>操作</th> 
+						</tr>	
                 <!--       主版块       -->
-				
-                <thead >
+				<div th:each="item:${list}">
+                
+                
 							<tr>
 								
-								<th th:text="${item.name}"></th>
+								<th class="tt" id="ttt" th:text="${item.name}" TH:DATA="${item.id}"></th>
 								
 							</tr>
-						</thead>
+				
                 <!--       子版块       -->
-                <th></th>
-                <th>类型名称</th>
-                <th>上层类型</th>
-				<th>创建时间</th>
-				<th>最后修改时间</th>
-				<th>操作人</th>
-				<th>操作</th> 
+               
                 				
                  <tr th:each="item1,index : ${item.list2}" >
                    <td></td>
@@ -211,7 +194,7 @@
 					</td>  
                 </tr>
              
-              
+              </div>
             </table>
 						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">		
 								<div class="modal-dialog" role="document">
@@ -329,9 +312,69 @@
 		  						</div>
 		  				</div>
 						
+						<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">		
+								<div class="modal-dialog" role="document">
+		    						<div class="modal-content">
+		      							<div class="modal-header">
+									        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									        <h4 class="modal-title" id="myModalLabel">商品类型</h4>
+		      							</div>
+								      	<div class="modal-body">
+								      		<form class="form-horizontal">
+								      		<div class="form-group">
+										    	<label for="inputEmail3" class="col-sm-3 control-label">类型ID</label>
+											    <div class="col-sm-9">
+											    	<input type="text" class="form-control up1" id="inputEmail3">
+											    </div>
+										  	</div>
+								      		
+										  	<div class="form-group">
+										    	<label for="inputEmail3" class="col-sm-3 control-label">类型名称</label>
+											    <div class="col-sm-9">
+											    	<input type="text" class="form-control upname" id="inputEmail3">
+											    </div>
+										  	</div>
+										  	
+										  	
+										  	<div class="form-group">
+										    	<label for="inputPassword3" class="col-sm-3 control-label">创建时间</label>
+											    <div class="col-sm-9">
+											      <input type="text" class="form-control up4" id="inputPassword3">
+											    </div>
+										  	</div>
+										  	
+										  	<div class="form-group">
+										    	<label for="inputPassword3" class="col-sm-3 control-label">最后修改时间</label>
+											    <div class="col-sm-9">
+											      <input type="text" class="form-control up6" id="inputPassword3">
+											    </div>
+										  	</div>
+										  	
+										  	
+										  	<div class="form-group">
+										    	<label for="inputEmail3" class="col-sm-3 control-label">操作人</label>
+											    <div class="col-sm-9">
+											    	<input type="text" class="form-control up5" id="inputEmail3" :value="us.name">
+											    </div>
+										  	</div>
+										  	
+										  	
+										  
+										</form>
+								        
+								      	</div>
+								      <div class="modal-footer">
+								        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+								        <button type="button" class="btn btn-primary upda1">修改</button>
+								        <button type="button" class="btn btn-primary dele1">删除</button>
+								      </div>
+		    						</div>
+		  						</div>
+		  				</div>
 							
 					</div>
 				</div>
+				</form>
 			</div>
 		</div>
 		
@@ -460,9 +503,11 @@
 		 
 		 $(".upda").click(function(){
 			 var id=$(".up1").val();
+			 alert(id);
 			 var name=$(".up2").val();
+			 alert(name);
 			 var pid=$(".up3").val();
-			 
+			 alert(pid);
 			 var uid=vue.us.id
 			
 			 $.ajax({
@@ -499,6 +544,7 @@
                             $('.up1').val(data.id);
                             $('.up2').val(data.name);
                             $('.up3').val(data.pid);
+                            
                             $('.up4').val(vue.formatDate(data.time));
                             
                             $('.up1').attr("readonly","readonly");
@@ -507,6 +553,77 @@
 				}
 			});
 		 });
+		 
+		 
+		 $(".tt").click(function(){
+				var id = $(this).attr("data"); 
+				$('#myModal2').modal('toggle')
+				
+				$.ajax({
+					url:"/goods/update",
+					data:{
+						id:id
+						},
+					type:"post",
+					dataType:"json",
+					success:function(data){
+	                            //赋值
+	                            $('.up1').val(data.id);
+	                            $('.upname').val(data.name);
+	                            $('.up3').val(data.pid);
+	                            $('.up4').val(vue.formatDate(data.time));
+	                            $('.up6').val(vue.formatDate(data.updatetime));
+	                            
+	                            $('.up1').attr("readonly","readonly");
+	                            $('.up5').attr("readonly","readonly");
+	                            $('.up4').attr("readonly","readonly");
+	                            $('.up6').attr("readonly","readonly");
+					}
+				});
+			 });
+		 
+		 $(".upda1").click(function(){
+			 var id=$(".up1").val();
+			 var name=$(".upname").val();
+			 var pid=$(".up3").val();
+			 var uid=vue.us.id
+			
+			 $.ajax({
+					url:"/goods/toupdate",
+					data:{
+						id:id,
+						name:name,
+						pid:pid,
+						uid:uid
+						},
+					type:"post",
+					dataType:"json",
+					success:function(result){
+						if(result==0){
+							alert("你修改的类型已存在");
+						}
+						location.href = "/goods/querygoods";
+				}	 
+			 });
+		 });
+		 
+		 $(".dele1").click(function(){
+			 var id=$(".up1").val();
+			 $.ajax({
+				 url:"/goods/dele",
+				 data:{
+					 id:id
+				 },
+				 type:"post",
+				 dataType:"json",
+				 success:function(result){
+					 location.href = "/goods/querygoods";
+				 }
+				 
+			 });
+		 });
+		 
+		 
 	});
 </script>	
 </body>

@@ -16,6 +16,7 @@
 	<link rel="stylesheet" th:href="@{/assets/css/main.css}">
 	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
 	<link rel="stylesheet" th:href="@{/assets/css/demo.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/myStyle.css}">
 	<!-- GOOGLE FONTS -->
 	<!-- <link th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700}" rel="stylesheet"> -->
 	<!-- ICONS -->
@@ -55,35 +56,12 @@
 			
 		} 
 		
-		#page>ul {
-			display: flex;
-			justify-content: space-around;
-			padding: 0px;
-			font-size: 12px;
-		}
 
 		#page {
-			width: 300px;
+			width: 100%;
 			margin: 20px auto;
 		}
 		
-		.currentPage {
-			background: rgb(2, 143, 208);
-			color: white;
-			border: none;
-		}
-		
-		.pagebtn {
-			height: 28px;
-			width: 25px;
-			border: 1px solid #C0C0C0;
-			list-style: none;
-			text-align: center;
-			background: #DDDDDD;
-			line-height: 28px;
-			cursor: pointer;
-			
-		}
 	</style>
 	</head>
 	<body>
@@ -154,20 +132,7 @@
 						</tbody>
 						</table>
 				<div id="page">
-					<ul>
-						<li class="pagebtn pagePrev"><span
-							class="glyphicon glyphicon-menu-left"></span></li>
-						<li class="pagebtn currentPage pageCurrent pageq">1</li>
-						<li class="pagebtn pageCurrent pageq">2</li>
-						<li class="pagebtn pageCurrent pageq">3</li>
-						<li class="pagebtn" id="pageDian"
-							style="border: none; display: block; background: #DDDDDD; font-size: 20px;">...</li>
-						<li class="pagebtn pageCurrent pageDi">14</li>
-						<li class="pagebtn pageCurrent">15</li>
-						<li class="pagebtn pageCurrent">16</li>
-						<li class="pagebtn pageNext"><span
-							class="glyphicon glyphicon-menu-right"></span></li>
-					</ul>
+					
 				</div> 
 						</div>
 						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">		
@@ -271,7 +236,7 @@
 	<script th:src="@{/assets/js/bootstrap.min.js}"></script>
 	<script th:src="@{/assets/js/jquery.slimscroll.min.js}"></script>
 	<script th:src="@{/assets/js/toastr.min.js}"></script>
-	<script th:src="@{/assets/js/page.js}"></script>
+	<script th:src="@{/assets/js/pageNumber.js}"></script>
 	<script th:src="@{/assets/js/klorofil-common.js}"></script>
 	<script type="text/javascript" th:src="@{/assets/js/bootstrap-datetimepicker.js}"></script>
 	<script type="text/javascript" th:src="@{/assets/js/vue.js}"></script>
@@ -286,57 +251,30 @@
 			
 		},
 		methods : {
-			query:function(){
-				var text=$(".tiaojian").val();
-				var currentpage = $(".currentPage").text();
-				
-				$.ajax({
-					url:"/bit/querybitbypage",
-					data:{
-						
-						text:text,
-						currentpage:currentpage
-					},
-					type : "post",
-					dataType : "json",
-					success:function(result){
-						vue.pageIf = result;
-						page(vue);
-					}
-				});
-				/* myVue =this;
-				$.getJSON(
-					"/bit/toquery/"+text+"/"+myVue.pageIf.pageNum,function(result){
-						myVue.pageIf = result;
-						page(vue);
-					}
-				); */
-			},
+			 query:function(currentpage){
+					var tiaojian =$(".tiaojian").val();
+					
+					$.ajax({
+						url : "/bit/querybitbypage",
+						data : {
+							tiaojian:tiaojian,
+							currentPage : currentpage
+						},
+						type : "post",
+						dataType : "json",
+						success:function(result){
+							vue.pageIf = result;
+							$("#page").append(page(vue.pageIf.pageNum,vue.pageIf.prePage,vue.pageIf.nextPage,vue.pageIf.pages));
+						}
+					});
+				},
 		
 		
 			dele:function(id){
 				return "/bit/updatestate?id="+id;
 			},
 			
-			/* model:function(){
-				<div class="modal fade" tabindex="-1" role="dialog">
-				  <div class="modal-dialog" role="document">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				        <h4 class="modal-title">Modal title</h4>
-				      </div>
-				      <div class="modal-body">
-				        <p>One fine body&hellip;</p>
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				        <button type="button" class="btn btn-primary">Save changes</button>
-				      </div>
-				    </div><!-- /.modal-content -->
-				  </div><!-- /.modal-dialog -->
-				</div><!-- /.modal -->
-			}, */
+			
 			
 			open:function(id){
 				$('#myModal1').modal('toggle')
@@ -386,17 +324,20 @@
 			
 		},
 		created:function(){
-			this.query();
+			this.query(1);
 		}
 	});
 	
-	function  floatPage(){
-		 vue.pageIf.pageNum = $(".currentPage").text();
-		 vue.query();
-	};
 	
 	$(function(){
+		 $(document).on("click",".pageFy>ul li",function(){
+			 var create = $(this).attr("pageNumber");
+			 if(create != null && create != 0){
+				 vue.query(create);
+			 }
+		 });
 		vue.us = JSON.parse(window.localStorage.getItem("user"));
+		
 		$('#bianhao').attr("readonly","readonly");
 		 $("#tijiao").click(function(){
 			var name=$("#dwmc").val();

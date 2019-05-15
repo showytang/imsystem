@@ -28,8 +28,8 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 
-/*		System.out.println("你来了.....");
 
+		System.out.println("你来了.....");
 
 		User user = (User) request.getSession().getAttribute("user");
 		if(user!=null) {
@@ -50,13 +50,7 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
 				return true;
 			}
 		}
-		return false;*/
-		return true;
-
-		
-
-//		return true;
-		
+		return false;
 	}
 
 

@@ -103,10 +103,8 @@ table {
 		</table>
 		<div class="page">
 			<div>
-				<a class="prev dian" th:href="@{/role/queryRoleModule?(pageNum=${page.prePage})}">&lt;&lt;</a>
-				<a  class="num"  th:style="'background-color:'+@{(${page.pageNum==1} ? '#009688':'white')}" th:href="@{/role/queryRoleModule?pageNum=1}">1</a> 
-				<a  class="num"  th:style="'background-color:'+@{(${page.pageNum==2} ? '#009688':'white')}" th:href="@{/role/queryRoleModule?pageNum=2}">2</a> 
-				<a class="next dian" th:href="@{/role/queryRoleModule?(pageNum=${page.nextPage})}">&gt;&gt;</a>
+				<a class="prev dian" th:href="@{/role/queryRoleModule?(pageNum=${page.prePage})}">上一页</a>
+				<a class="next dian" th:href="@{/role/queryRoleModule?(pageNum=${page.nextPage})}">下一页</a>
 			</div>
 		</div>
 		

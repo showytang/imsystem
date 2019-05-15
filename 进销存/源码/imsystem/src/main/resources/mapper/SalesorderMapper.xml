@@ -599,6 +599,12 @@
 		</where>
 		GROUP BY s.`code` ORDER BY s.TIME) AS t
 	</select>
+	<select id="queryOrderCountByTime" resultMap="BaseResultMap">
+		SELECT COUNT(*) as 'count' FROM sales WHERE DATE_FORMAT(TIME,'%Y-%m-%d') = DATE_FORMAT(#{time},'%Y-%m-%d')
+		<if test="sid != null and sid != ''">
+			AND storeid = #{sid}
+		</if>
+	</select>
 	<select id="queryRanking" resultMap="BaseResultMap">
 		SELECT t.id AS id,ss.id AS storeid,ss.name AS column3,ss.sufname AS
 		column4,t.s AS column5 FROM (SELECT *,SUM(paymoney) AS s FROM

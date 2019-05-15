@@ -124,7 +124,7 @@ a:hover {
 </head>
 <body>
 
-	<input type="hidden" value="1" id="uid" />
+	<input type="hidden" value="" id="uid" />
 
 	<div class="row elDocument" style="padding: 28px 20px;">
 		<!-- column -->
@@ -215,7 +215,8 @@ a:hover {
 	var vue = new Vue({
 		el : ".elDocument",
 		data : {
-			pageIf : ""
+			pageIf : "",
+			user:{}
 		}
 	});
 
@@ -276,6 +277,9 @@ a:hover {
 	}
 
 	$(function() {
+		vue.user = JSON.parse(window.localStorage.getItem("user"));
+		$("#uid").val(vue.user.id);
+		
 		queryCustomerByPage(1);
 		/* 分页点击 */
 		$(document).on(

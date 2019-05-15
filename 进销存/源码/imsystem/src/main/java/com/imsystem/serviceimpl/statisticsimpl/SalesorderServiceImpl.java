@@ -52,5 +52,10 @@ public class SalesorderServiceImpl implements SalesorderService{
 		// TODO Auto-generated method stub
 		return sm.queryByTime(startTime, endTime,storeid);
 	}
+	@Override
+	public Salesorder queryOrderCountByTime(String time, String sid) {
+		// TODO Auto-generated method stub
+		return sm.queryOrderCountByTime(time, sid);
+	}
 	
 }
