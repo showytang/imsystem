@@ -571,7 +571,7 @@
 		INNER JOIN goodsvalue AS gv ON gv.`id` = sd.gvid
 		<where>
 			<if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
-				s.`TIME` >= DATE_FORMAT(#{startTime},'%Y-%m-%d') AND s.`TIME` &lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d')
+				s.`TIME` >= DATE_FORMAT(#{startTime},'%Y-%m-%d 00:00:00') AND s.`TIME` &lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d 23:59:59')
 			</if>
 			<if test="startTime == null or startTime == '' or endTime == null or endTime == ''">
 				DATE_SUB(CURDATE(), INTERVAL 6 DAY) &lt;= DATE(s.`time`)
@@ -599,12 +599,18 @@
 		</where>
 		GROUP BY s.`code` ORDER BY s.TIME) AS t
 	</select>
+	<select id="queryOrderCountByTime" resultMap="BaseResultMap">
+		SELECT COUNT(*) as 'count' FROM sales WHERE DATE_FORMAT(TIME,'%Y-%m-%d') = DATE_FORMAT(#{time},'%Y-%m-%d')
+		<if test="sid != null and sid != ''">
+			AND storeid = #{sid}
+		</if>
+	</select>
 	<select id="queryRanking" resultMap="BaseResultMap">
 		SELECT t.id AS id,ss.id AS storeid,ss.name AS column3,ss.sufname AS
 		column4,t.s AS column5 FROM (SELECT *,SUM(paymoney) AS s FROM
 		sales WHERE
 		<if test="startTime != null and startTime != ''">
-			`time` >= DATE_FORMAT(#{startTime}, '%Y-%m-%d') AND `time` &lt;= DATE_FORMAT(#{endTime}, '%Y-%m-%d')
+			`time` >= DATE_FORMAT(#{startTime}, '%Y-%m-%d 00:00:00') AND `time` &lt;= DATE_FORMAT(#{endTime}, '%Y-%m-%d 23:59:59')
 		</if>
 		<if test="startTime == null or startTime == ''">
 			DATE_FORMAT( TIME, '%Y-%m' ) = DATE_FORMAT( CURDATE( ) , '%Y-%m' )

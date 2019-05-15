@@ -68,12 +68,10 @@ public class AllController {
 			if(s!=null) {
 				 sum+=1;
 				 sale.setPaymoney(sale.getPaymoney()+s.getPaymoney());
-				 sale.setColumn1(s.getPaymoney()+Double.parseDouble(sale.getColumn1())+"");//计算成本
+				 sale.setColumn2(Double.parseDouble(s.getColumn2())+Double.parseDouble(sale.getColumn1())+"");//计算成本
 			}		
 		}
 		sale.setCount(sum);//今日订单量
-		String lr = Double.parseDouble(sale.getColumn1()) - sale.getPaymoney()+"";
-		sale.setColumn2(lr);//利润
 		if (list!=null) {
 			if(list.get(0)==null) {
 				
@@ -102,6 +100,11 @@ public class AllController {
 		
 		if (state.equals("null")) {
 			List<Salesorder> list  = salesorderS.queryDaysAgo(storeid,startTime,endTime);
+			if (list.size()>0) {
+				for (Salesorder s : list) {
+					s.setCount(salesorderS.queryOrderCountByTime(s.getColumn3(), storeid).getCount());
+				}
+			}
 			return list;
 		}else {
 			List<Salesorder> list1 = salesorderS.queryByTime(startTime, endTime,storeid);
