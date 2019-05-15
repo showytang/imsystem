@@ -161,7 +161,7 @@ a:hover {
 									<th>相关账单</th>
 									<th>客户收款</th>
 									<th>客户详情</th>
-									<th>删除客户</th>
+									
 								</tr>
 							</thead>
 							<tbody>
@@ -178,9 +178,7 @@ a:hover {
 									<td><a class="receive">收款</a></td>
 									<td><a class="detail glyphicon glyphicon-edit"
 										onclick="todetail(this)" style="color: rgb(2, 143, 208);"></a></td>
-									<td><a class="del glyphicon glyphicon-trash"
-										onclick="deleteCustomer(this)"
-										style="color: rgb(2, 143, 208);"></a></td>
+									
 								</tr>
 
 							</tbody>
@@ -255,12 +253,7 @@ a:hover {
 		$("#customerForm").submit();
 	}
 
-	/* 删除客户 */
-	function deleteCustomer(th) {
-		var id = $(th).parent().prev().prev().prev().prev().prev().val();
-		$("#customerForm").attr("action", "deletecustomer?id=" + id);
-		$("#customerForm").submit();
-	}
+	
 
 	/* 查看客户销售列表 */
 	function tosales(th) {

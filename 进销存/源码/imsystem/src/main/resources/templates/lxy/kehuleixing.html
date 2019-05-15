@@ -310,7 +310,10 @@
 		        	type:"post",
 		        	data:"ctId="+ctId,
 		        	success:function(result){
-		        		if(result>0){
+		        		if(result==2){
+		        			alert("该客户类型已被客户使用，请先删除使用客户！");
+		        		}else if(result==1){
+		        			alert("成功删除该客户类型！");
 		        			thisDocument.parent().parent().parent().remove();
 		        		}
 		        	}
