@@ -174,17 +174,21 @@ public class UserController {
 	
 	
 	@RequestMapping("updateUserById")
-	public String updateUserById(User user,HttpSession session) {
+	@ResponseBody
+	public int updateUserById(User user,HttpSession session) {
 		
 		System.out.println("用户修改进来");
 		
 		System.out.println(user.getId());
-		
-		User user1 = (User)session.getAttribute("user");
-		user.setUid(user1.getId());
-		userService.updateUserById(user);
-		
-		return "redirect:queryUserRole";
+		User user2=userService.ChaXunMenDianDianZhang(user.getStoreid(), user.getRid());
+		if(user2==null) {
+			User user1 = (User)session.getAttribute("user");
+			user.setUid(user1.getId());
+			userService.updateUserById(user);
+			return 1;
+		}else {
+			return 2;
+		}
 	}
 	
 	
@@ -270,7 +274,7 @@ public class UserController {
 	@ResponseBody
 	public String queryByName(String name, String pwd,HttpSession session) {
 		 
-		System.out.println("进来了 登录 撒");
+		 System.out.println("进来了 登录 撒");
 		 
 		 User user= userService.queryUserByName(name, pwd);
 		 
