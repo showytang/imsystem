@@ -99,24 +99,12 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 			supp.setBalance(Double.parseDouble(stock.getColumn1()) - Double.parseDouble(stock.getColumn2()));
 
-			NumberFormat number = NumberFormat.getNumberInstance();
-
-			number.setMaximumFractionDigits(2);
-
-			supp.setBalance(Double.parseDouble(number.format(supp.getBalance())));
-
 			supperMap.updateBalanceJia(supp);
 
 		}
 		if (Double.parseDouble(stock.getColumn1()) < Double.parseDouble(stock.getColumn2())) {
 
 			supp.setBalance(Double.parseDouble(stock.getColumn2()) - Double.parseDouble(stock.getColumn1()));
-
-			NumberFormat number = NumberFormat.getNumberInstance();
-
-			number.setMaximumFractionDigits(2);
-
-			supp.setBalance(Double.parseDouble(number.format(supp.getBalance())));
 
 			supperMap.updateBalancejian(supp);
 

@@ -73,6 +73,7 @@
 										<th>增加</th>
 										<th>已支付</th>
 										<th>期末支付</th>
+										<th>时间</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -80,8 +81,9 @@
 										<td>{{obj.column3}}</td>
 										<td><span class="label label-success">￥{{obj.column1}}</span></td>
 										<td><span class="label label-success">￥{{obj.column2}}</span></td>
-										<td><span class="label label-success">￥{{obj.column1
+										<td><span class="mo label label-success">￥{{obj.column1
 												- obj.column2}}</span></td>
+										<td>{{obj.column5}}</td>
 									</tr>
 									<tr class="valueNull" v-if="page.list == ''">
 										<td colspan="4">暂无数据</td>
@@ -109,7 +111,7 @@
 		el : "#table",
 		data : {
 			page : {},
-			store:[],
+			store:[],//供应商
 			sid : ""
 		}
 	});
@@ -129,14 +131,14 @@
 						endTime = time[1];
 					}
 					vue.page = queryQianKuan(null, startTime, endTime, sid);
-					$(".panel-headline").append(
+					$(".panel-headline").append(	
 							page(vue.page.pageNum, vue.page.prePage,
 									vue.page.nextPage, vue.page.pages));
 				});
 		let chu = 0;
 		let yzf = 0;
 		let qm = 0;
-		const qk = queryAllQianKuan("", "", "");
+		const qk = queryAllQianKuan("", "", sid);
 		$.each(qk, function(i, obj) {
 			chu += parseFloat(obj.column1);
 			yzf += parseFloat(obj.column2);

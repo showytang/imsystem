@@ -493,7 +493,7 @@
 	<select resultMap="BaseResultMap" id="queryShouZhang">
 		SELECT c.name AS column1 , s.paymoney AS paymoney , s.tainmoney AS
 		tainmoney , s.updatetime AS TIME , c.balance AS column2 FROM sales AS
-		s JOIN customer AS c ON c.id = s.cid WHERE s.tainmoney &lt; s.paymoney
+		s JOIN customer AS c ON c.id = s.cid WHERE s.paymoney - s.tainmoney > 0
 		AND s.state = '0'
 		<if test="cid != null and cid != ''">
 			AND c.id = #{cid}

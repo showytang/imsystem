@@ -33,8 +33,10 @@ public class Salesorder {
 
     private Double tainmoney;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date time;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date updatetime;
 
     private Integer progress;
