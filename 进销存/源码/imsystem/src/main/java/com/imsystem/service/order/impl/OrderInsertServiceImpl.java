@@ -278,9 +278,13 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 		int count = salesorderMapper.updatePregress(salesorder.getId(), "2");
 
 		if (salesorder.getCid() != "0") {
-			if (salesorder.getPaymoney() > (salesorder.getPreprice() + salesorder.getTainmoney())) {
+			if (salesorder.getPaymoney() >= (salesorder.getPreprice() + salesorder.getTainmoney())) {
 				count += curtomer.update(salesorder.getCid(),
 						(salesorder.getPreprice() + salesorder.getTainmoney()));
+			}
+			else if(salesorder.getPaymoney() < (salesorder.getPreprice() + salesorder.getTainmoney())){
+				count += curtomer.updateplug(salesorder.getCid(),
+						((salesorder.getPreprice() + salesorder.getTainmoney())) - salesorder.getPaymoney());
 			}
 		}
 
@@ -302,7 +306,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 		sales.setPaymoney(salesorder.getPaymoney());
 
-		sales.setTainmoney(salesorder.getTainmoney());
+		sales.setTainmoney(salesorder.getTainmoney()+sales.getPaymoney());
 		
 		sales.setPrice(salesorder.getPrice());
 
