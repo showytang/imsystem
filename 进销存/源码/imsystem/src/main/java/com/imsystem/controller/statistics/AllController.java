@@ -76,15 +76,12 @@ public class AllController {
 			sale.setCount(soc.getCount());//今日订单量
 		}
 		if (list!=null) {
-			if(list.get(0)==null) {
-				
-			}else {
 				Salesorder sd =  salesorderS.queryFirst(storeid, code, startTime, endTime);
 				if(sd!=null) {
 					String id = sd.getStoreid();//查询今日销量冠军
 					Store store = storeS.selectByPrimaryKey(id);
 					sale.setColumn3(store.getName()+"【"+store.getSufname()+"】");//今日销量冠军
-				}
+				
 			}
 		}
 		return sale;

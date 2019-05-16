@@ -16,7 +16,6 @@ public class Stock {
 
     private String sid;
 
-    @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss",timezone="GMT+8")
     private Date time;
     
     @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss",timezone="GMT+8")

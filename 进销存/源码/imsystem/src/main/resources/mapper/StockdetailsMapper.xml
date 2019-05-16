@@ -561,7 +561,7 @@
 			&lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d 23:59:59')
 		</if>
 		<if test="storeId != null and storeId != ''">
-			s.storeid = #{storeId}
+			and s.storeid = #{storeId}
 		</if>
 	</select>
 	<select id="queryStockByGidAndStoreId" resultMap="BaseResultMap">
