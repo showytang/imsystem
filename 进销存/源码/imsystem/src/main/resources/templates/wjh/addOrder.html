@@ -539,6 +539,13 @@ button {
 						
 						this.orderShapping.push(this.list[index]);
 						
+						setTimeout(() => {
+							
+							down($(".order-goods>li:eq("+index+")"),index);
+							
+						},100);
+						
+						
 					}
 					catch(e){
 						
@@ -711,7 +718,7 @@ button {
 		});
 
 		//绑定华东事件
-		var down = function(objs) {
+		var down = function(objs,index) {
 
 			objs.each(function(i, obj) {
 				if (!$(obj).hasClass("head-title")) {
@@ -741,7 +748,7 @@ button {
 							$(obj).animate({
 								"opacity" : "0"
 							}, 500, function() {
-								$(obj).remove();
+								vue.orderShapping.splice(index,0)
 							});
 						} else {
 							$(obj).css("left", "0")
@@ -752,8 +759,6 @@ button {
 			})
 
 		}
-
-		down($(".order-goods>li"));
 	</script>
 </body>
 </html>
