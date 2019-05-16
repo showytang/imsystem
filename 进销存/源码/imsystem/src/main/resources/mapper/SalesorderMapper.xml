@@ -42,7 +42,8 @@
 		SELECT sales.`code`,(SELECT p.name FROM `paytype` AS p WHERE p.id =
 		sales.`paytype`) AS column2,(SELECT NAME FROM `customer` AS c WHERE
 		c.`id` = sales.cid ) AS
-		column3,sales.progress,sales.id,sales.`count`,sales.`updatetime`,sales.`paymoney`,sales.`tainmoney`,sales.preprice
+		column3,(SELECT id FROM `customer` AS c WHERE
+		c.`id` = sales.cid ) as column5 ,sales.progress,sales.id,sales.`count`,sales.`updatetime`,sales.`paymoney`,sales.`tainmoney`,sales.preprice
 		FROM `salesorder` AS sales
 		LEFT JOIN `salesorderdetails` AS s ON
 		s.`sid` = sales.`id`

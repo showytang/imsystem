@@ -32,6 +32,9 @@
 			</association>
 		</association>
 	</resultMap>
+	<delete id="deleteBySid">
+		delete from salesorderdetails where sid = #{id}
+	</delete>
 	<update id="updateCount">
 		update salesorderdetails set count = #{count} where id = #{id}
 	</update>

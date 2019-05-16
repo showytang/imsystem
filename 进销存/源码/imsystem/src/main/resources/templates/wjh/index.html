@@ -401,6 +401,8 @@
 							id : shappingBody.attr("data"),
 							sid : shappingBody.attr("cid"),
 							column1 : shappingBody.attr("price"),
+							uid : vue.user.id,
+							storeid : vue.user.storeid
 						};
 						
 						$(shappingBody.find("tr")).each(function(i,e){

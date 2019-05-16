@@ -13,7 +13,7 @@ public interface CustomertypeMapper {
 	
 	int updateCustomerType(Customertype ctObj);
 
-	
+	int queryCustomerByCTid(String id);
 	
 	int deleteCustomerType(String ctId);
 	

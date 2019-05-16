@@ -38,8 +38,6 @@
 	margin: 0px;
 }
 
-
-
 #page {
 	width: 100%;
 	margin: 20px auto;
@@ -199,7 +197,7 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 					<div class="col-md-2 col-sm-6 col-xs-11 tj">
 						<div class="input-group">
 							<span class="input-group-addon">商品名称</span> <input
-								@keyup.enter="code" v-model="shappingname"  class="form-control"
+								@keyup.enter="code" v-model="shappingname" class="form-control"
 								placeholder="订单编号" />
 						</div>
 					</div>
@@ -276,9 +274,12 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 								<td>{{item.column2}}</td>
 								<td>
 									<div :data="item.id" style="display: flex;">
-										<span style="margin: auto;" title="修改"
+										<span style="margin: auto;" v-if="item.progress != 2"
+											v-on:click="orderdel(item.id,item.column5,item.preprice)" title="删除"
+											class="glyphicon glyphicon-remove-circle"></span>
+										&nbsp;&nbsp;&nbsp; <span style="margin: auto;" title="修改"
 											v-on:click="openModel(item.id)"
-											class="glyphicon glyphicon-edit"></span> <span
+											class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;&nbsp; <span
 											v-on:click="showAlert(item.id)" style="margin: auto;"
 											v-if="item.progress != 2" title="确认订单"
 											class="glyphicon glyphicon-ok"></span>
@@ -383,6 +384,31 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 						$(".modal").modal("show");
 						
 					},
+					orderdel : function (id,cid,money){
+						
+						$.ajax({
+						    
+						    url : [[@{/insertOrder/salesorderDel}]],
+
+						    data : {
+								id : id,
+								cid : cid,
+								money : money
+						    },
+
+						    type : "post",
+
+						    dataType : "json",
+						    
+						    success:function(result){
+								alerts("删除成功")
+								setTimeout(() => {
+										window.location.reload();
+									},500)
+						    }
+						})
+						
+					},
 					showAlert : function (id){
 						
 						$.ajax({
@@ -442,6 +468,9 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 						    
 						    success:function(result){
 								alerts("修改成功")
+								setTimeout(() => {
+									window.location.reload();
+								},500)
 						    }
 						})
 						
@@ -590,6 +619,9 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 						    	}
 						    	else{
 						    		alerts("订单已确认")
+						    		setTimeout(() => {
+										window.location.reload();
+									},500)
 						    	}
 						    	
 						    }

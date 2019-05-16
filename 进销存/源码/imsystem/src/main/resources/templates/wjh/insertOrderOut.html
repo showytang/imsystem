@@ -161,7 +161,7 @@
 										style="border: none; box-shadow: none; font-size: 16px;">抹零</div>
 									<div class="btn"
 										style="border: none; box-shadow: none; color: #e84242; font-size: 16px;">
-										<span style="color: white">应付：</span>￥<span class="yprice">0</span>
+										<span style="color: white">应付：</span>￥<span class="yprice">{{price}}</span>
 									</div>
 									<div class="btn"
 										style="border: none; box-shadow: none; color: #e84242; font-size: 16px;">
@@ -246,14 +246,14 @@
 									</div>
 									<div class="panel-body row">
 										<div class="col-md-3 col-md-offset-1">
-											<img th:src="@{/assets/img/profile-bg.png}" width="100%"
+											<img :src="item.column1" width="100%"
 												height="80px" />
 										</div>
 										<div class="col-md-8"
-											style="font-size: 14px; white-space: nowrap;">
+											style="font-size: 14px; ">
 											<div style="font-size: 20px;">{{item.column5}}</div>
 											<div>类型：{{item.column2}}</div>
-											<div>
+											<div style="white-space: nowrap;">
 												价格:<input class='jprice' :oldprice="item.column3" :data="index" :value="item.jprice.toFixed(2)" />
 												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>数量:&nbsp;<input
 													:value="item.count" class="count" :data="index"
@@ -279,17 +279,6 @@
 								</div>
 								<div class="modal-body" style="min-height: 200px;">
 									<div class="row">
-										<div class="col-xs-4">
-											<span class="glyphicon glyphicon-th-list"></span>
-											<div class="coll" style="display: none; position: absolute;">
-												<ul class="list-group" id="menu">
-													<li class="list-group-item"><a href="#">Svip</a></li>
-													<li class="list-group-item"><a href="#">vip</a></li>
-													<li class="list-group-item"><a href="#">黄钻</a></li>
-													<li class="list-group-item"><a href="#">绿钻</a></li>
-												</ul>
-											</div>
-										</div>
 										<div class="col-xs-8">
 											<span>客户名称:</span>&nbsp;<span class="clientName"></span>
 										</div>
@@ -547,6 +536,12 @@
 						    
 						    url : [[@{/orderQueryController/queryCustomer}]],
 
+						    data : {
+						    	
+						    	storeid : vue.user.storeid
+						    	
+						    },
+						    
 						    type : "post",
 
 						    dataType : "json",

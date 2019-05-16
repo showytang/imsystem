@@ -15,6 +15,8 @@ public interface SalesorderdetailsMapper {
 	
 	Vector<Salesorderdetails> salesOrderDetails(String id);
 	
+	int deleteBySid(String id);
+	
 	int add(Salesorder salesOrder);
 
 	int countByExample(SalesorderdetailsExample example);
