@@ -140,6 +140,8 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 		}
 		
 		salesorder.setId(UUID.randomUUID().toString());
+		
+		salesorder.setUpdatetime(salesorder.getTime());
 
 		int count = salesorderMapper.insertSelective(salesorder);
 
@@ -306,7 +308,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 		sales.setPaymoney(salesorder.getPaymoney());
 
-		sales.setTainmoney(salesorder.getTainmoney()+sales.getPaymoney());
+		sales.setTainmoney(salesorder.getTainmoney()+salesorder.getPreprice() > salesorder.getPaymoney() ?salesorder.getPaymoney() : salesorder.getTainmoney()+salesorder.getPreprice() );
 		
 		sales.setPrice(salesorder.getPrice());
 

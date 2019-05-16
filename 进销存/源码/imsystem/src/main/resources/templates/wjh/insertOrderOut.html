@@ -593,7 +593,6 @@
 						}
 						order.time = eval('new Date(' + order.time.replace(/\d+(?=-[^-]+$)/,    
 								function (a) { return parseInt(a, 10) - 1; }).match(/\d+/g) + ')');  
-						order.updatetime = order.time;
 						
 						//添加商品id
 						for(var i = 1 ; i < $(".panel-title").length ; i ++){

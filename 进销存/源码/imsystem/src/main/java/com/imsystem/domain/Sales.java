@@ -28,10 +28,10 @@ public class Sales {
 
     private Double tainmoney;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss",timezone="GMT+8")
     private Date time;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss",timezone="GMT+8")
     private Date updatetime;
 
     private Integer state;
