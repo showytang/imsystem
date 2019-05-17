@@ -101,20 +101,20 @@ html, body, #wrapper, .main, .main-content, .right {
 						<i class="lnr lnr-arrow-left-circle"></i>
 					</button>
 				</div>
-				<form class="navbar-form navbar-left">
+				<!-- <form class="navbar-form navbar-left">
 					<div class="input-group">
 						<input type="text" value="" class="form-control"
 							placeholder="Search dashboard..."> <span
 							class="input-group-btn"><button type="button"
 								class="btn btn-primary">Go</button></span>
 					</div>
-				</form>
-				<div class="navbar-btn navbar-btn-right">
+				</form> -->
+				<!-- <div class="navbar-btn navbar-btn-right">
 					<a class="btn btn-success update-pro"
 						href="#downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&amp;utm_medium=template&amp;utm_campaign=KlorofilPro"
 						title="Upgrade to Pro" target="_blank"><i class="fa fa-rocket"></i>
 						<span>UPGRADE TO PRO</span></a>
-				</div>
+				</div> -->
 				<div id="navbar-menu">
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown"><a href="#"
@@ -172,8 +172,7 @@ html, body, #wrapper, .main, .main-content, .right {
 					<nav class="leftMenu">
 						
 						<ul class="nav">
-							
-							<li th:each="item : ${list}"><a  th:href="@{'#'+${item.enname}}" data-toggle="collapse"  
+							<li th:each="item : ${list}"><a th:attr="where= ${item.mlist.isEmpty( )} ? pd : ''" th:href="${item.mlist.isEmpty( )} ? ${item.url} : @{'#'+${item.enname}}" data-toggle="collapse"  
 								class="collapsed"><i    th:class=" ${item.name=='首页'}?'lnr lnr-home':'lnr lnr-file-empty'"></i> <span th:text="${item.name}">系统管理</span>
 									<i th:id="${item.parentid}" th:class="${item.mlist.isEmpty( )}?' ':'icon-submenu lnr lnr-chevron-left'" ></i></a>
 								<div th:id="${item.enname}" class="collapse ">
@@ -229,7 +228,9 @@ html, body, #wrapper, .main, .main-content, .right {
 			$(this).css("border-left-color", "#F0F8FF");
 			$(this).css("background-color", "#393D49");
 		});
-		
+		$("[where='pd']").click(function(){
+			window.open($(this).attr("href"),"right");
+		});
 	});
 </script>
 

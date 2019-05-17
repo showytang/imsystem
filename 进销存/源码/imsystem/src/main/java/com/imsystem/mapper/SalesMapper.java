@@ -39,4 +39,10 @@ public interface SalesMapper {
     
     List<Sales> querySalesByCid(@Param("cid") String cid,@Param("startTime") String startTime,@Param("endTime") String endTime);
 
+    
+    
+   Sales ChaXunJinRiZongE(String id);
+    
+    
+    
 }

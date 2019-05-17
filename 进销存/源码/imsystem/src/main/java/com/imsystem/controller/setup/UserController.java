@@ -22,12 +22,14 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Role;
+import com.imsystem.domain.Sales;
 import com.imsystem.domain.Store;
 import com.imsystem.domain.User;
 import com.imsystem.mapper.UserMapper;
 import com.imsystem.service.setup.RoleService;
 import com.imsystem.service.setup.StoreService_c;
 import com.imsystem.service.setup.UserService;
+import com.imsystem.service.setup.c_SalesService;
 
 @Controller
 @RequestMapping("/user")
@@ -42,6 +44,9 @@ public class UserController {
 	
 	@Autowired
 	RoleService roleService;
+	
+	@Autowired
+	c_SalesService c_salesService;
 	
 	@RequestMapping("page-login")
 	public String login() {
@@ -107,7 +112,12 @@ public class UserController {
 		
 		User u=userService.queryUserRoleById(user.getId());
 		
+		Sales s =c_salesService.ChaXunJinRiZongE(user.getId());
+		
+		
 		model.addAttribute("u", u);
+		
+		model.addAttribute("s", s);
 		
 		return "czx/page-profile";
 		
