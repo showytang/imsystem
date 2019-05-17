@@ -58,7 +58,7 @@
   </select>
   
   <select id="querynoid" resultMap="BaseResultMap">
-  	SELECT * FROM goodstype WHERE pid !=0
+  	SELECT * FROM goodstype WHERE pid !=0 and state = 0
   </select>
   
   <select id="querybyname" resultMap="BaseResultMap">

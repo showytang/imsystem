@@ -26,7 +26,7 @@ public class GoodsTypeController {
 	
 	
 	@RequestMapping("/querygoods")
-	public String querygoods(Model model,@Param("name")String name) {
+	public String querygoods(Model model,/*@Param("name")*/String name) {
 		List<Goodstype> list=goods.querybypid(name);
 		model.addAttribute("list", list);
 		return "xl/spleixing";

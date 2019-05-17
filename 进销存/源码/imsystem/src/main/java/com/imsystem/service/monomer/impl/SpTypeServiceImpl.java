@@ -70,7 +70,7 @@ public class SpTypeServiceImpl implements SpTypeService{
 	}
 
 	@Override
-	public List<Goodstype> querybypid(@Param("name")String name) {
+	public List<Goodstype> querybypid(/*@Param("name")*/String name) {
 		
 		return ma.querybypid(name);
 	}
