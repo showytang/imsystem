@@ -294,14 +294,13 @@
 	JOIN salesdetails AS sod ON sod.gvid = gv.id
 	JOIN sales AS so  ON so.id = sod.sid
 	JOIN goods AS g ON g.id = gv.gid
-	<where>
+	where gval.state = '0'
 		<if test="cid != null and cid != ''">
-			so.cid = #{cid}  AND gval.state = '0'
+			and so.cid = #{cid}
 		</if>
 		<if test="season != null and season != ''">
-			gval.season = #{season}
+			and gval.season = #{season}
 		</if>
-	</where>
 	 GROUP BY gvl.id ORDER BY column3 DESC LIMIT 5
   </select>
   <select resultMap="BaseResultMap" id="queryByLid">

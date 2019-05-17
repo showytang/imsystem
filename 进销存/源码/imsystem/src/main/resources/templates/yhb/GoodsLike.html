@@ -151,8 +151,8 @@
 						</select>
 					</div>
 					<div class="goods">
-						<div v-for="obj in goods" class="gv col-md-4 col-xs-12">
-							<div v-for="objs in obj.list" class="shopGoods">
+						<div v-for="objs in goods" class="gv col-md-4 col-xs-12">
+							<div  class="shopGoods">
 								<img :src="objs.column4">
 								<div class="gValue">
 									<div class="gName">
@@ -194,6 +194,7 @@
 		var sid = getStoreId() != "" ? getStoreId() : undefined;
 		
 		$(function() {
+			lid = sid;
 			vue.goods = queryLikeGoodsValue(lid, season);
 			vue.customer = queryCustomer(sid);
 			$(".store").change(function() {
@@ -204,6 +205,7 @@
 				season = $(this).val();
 				vue.goods = queryLikeGoodsValue(lid, season);
 			});
+			console.log(vue.goods);
 		});
 	</script>
 </body>

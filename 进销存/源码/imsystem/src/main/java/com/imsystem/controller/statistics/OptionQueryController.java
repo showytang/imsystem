@@ -61,10 +61,19 @@ public class OptionQueryController {
 	@RequestMapping("queryLikeGoodsValue")
 	public List<Goodsvaluelable> queryLikeGoodsValue(String cid,String season){
 		List<Goodsvaluelable> list = gvals.querySalesGoodsValueByLable(cid, season);
+		List<Goodsvaluelable> l = new ArrayList<>();
 		for (Goodsvaluelable gvl : list) {
-			gvl.setList(gvals.queryByLid(gvl.getId(), season));
+			List<Goodsvaluelable> ll = gvals.queryByLid(gvl.getId(), season);
+			l.addAll(ll);
 		}
-		return list;
+		for(int i = 0;i<l.size();i++) {
+			for(int s = 0;s<l.size();s++) {
+				if (l.get(i).getId().equals(l.get(s).getId())) {
+					l.remove(s);
+				}
+			}
+		}
+		return l;
 	}
 	
 }
