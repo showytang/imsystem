@@ -14,15 +14,20 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Customer;
 import com.imsystem.domain.Goodsprice;
+import com.imsystem.domain.Goodstype;
 import com.imsystem.domain.Goodsvalue;
 import com.imsystem.domain.QuoteVO;
 import com.imsystem.domain.Quotedprice;
+import com.imsystem.domain.Store;
+import com.imsystem.domain.User;
 import com.imsystem.mapper.CustomerMapper;
 import com.imsystem.mapper.CustomerlevelMapper;
 import com.imsystem.mapper.CustomertypeMapper;
 import com.imsystem.mapper.GoodsMapper;
 import com.imsystem.mapper.GoodsvalueMapper;
 import com.imsystem.mapper.QuotedpriceMapper;
+import com.imsystem.mapper.StoreMapper;
+import com.imsystem.mapper.UserMapper;
 import com.imsystem.service.customer.QuotedPriceService;
 
 @Service
@@ -41,6 +46,10 @@ public class QuotedPriceServiceImpl implements QuotedPriceService{
 	CustomertypeMapper ctDao;
 	@Autowired
 	CustomerlevelMapper clDao;
+	@Autowired
+	UserMapper userDao;
+	@Autowired
+	StoreMapper storeDao;
 
 	/**
 	 * 查询所有报价
@@ -92,30 +101,60 @@ public class QuotedPriceServiceImpl implements QuotedPriceService{
 	 * 报价分页查询
 	 */
 	@Override
-	public List<QuoteVO> queryQuoteByPage(String cname, String gname, Integer curentPage) {
+	public List<QuoteVO> queryQuoteByPage(String cname, String gname, String uid) {
 		// TODO Auto-generated method stub
 		
 		List<QuoteVO> qvoList=new ArrayList<QuoteVO>();
-		List<Quotedprice> qlist=qDao.queryQuoteByPage(cname, gname);
-		for(Quotedprice qObj:qlist) {
-			if(qObj!=null) {
-				QuoteVO qvoObj=new QuoteVO();
-				qvoObj.setQpobj(qObj);
-				if(qObj.getCid()!=null || qObj.getCid()!="") {
-					qvoObj.setCobj(cDao.selectByPrimaryKey(qObj.getCid()));
-				}
-				if(qObj.getSvid()!=null || qObj.getSvid()!="") {
-					Goodsvalue goodsvalue = goodsvalueMap.queryGoodsDetail(qObj.getSvid());
-					if(goodsvalue!=null) {
-						qvoObj.setGvobj(goodsvalue);
-						if(goodsvalue.getGid()!=null || goodsvalue.getGid()!="") {
-							qvoObj.setGobj(qDao.selectGoodsById(goodsvalue.getGid()));
-						}
-					}
-					
-				}
-				qvoList.add(qvoObj);
+		Quotedprice qpObj=new Quotedprice();
+		//门店集合，用于统计该用户所属门店及其分店
+		List<Store> storeList=new ArrayList<Store>();
+		
+		//根据用户id查出用户对象
+		User uobj=userDao.queryUserById(uid);
+		//取得用户的门店id，并转成String
+		String sid=uobj.getStoreid().toString();
+		//根据门店id得到门店对象
+		Store sobj=storeDao.selectByPrimaryKey(sid);
+		
+		//若该门店父级为0
+		if(sobj.getParented().equals("0")) {
+			storeList.add(sobj);
+			//查到其分店
+			List<Store> sList=storeDao.SelectStoreByParentId(sobj.getId());
+			if(sList!=null) {
+				storeList.addAll(sList);
 			}
+		}else {
+			storeList.add(sobj);
+		}
+		qpObj.setSlist(storeList);
+		
+		
+		List<Quotedprice> qlist=qDao.queryQuoteByPage(cname, gname,qpObj);
+		
+		if(qlist.size()>0) {
+		
+			for(Quotedprice qObj:qlist) {
+				if(qObj!=null) {
+					QuoteVO qvoObj=new QuoteVO();
+					qvoObj.setQpobj(qObj);
+					if(qObj.getCid()!=null || qObj.getCid()!="") {
+						qvoObj.setCobj(cDao.selectByPrimaryKey(qObj.getCid()));
+					}
+					if(qObj.getSvid()!=null || qObj.getSvid()!="") {
+						Goodsvalue goodsvalue = goodsvalueMap.queryGoodsDetail(qObj.getSvid());
+						if(goodsvalue!=null) {
+							qvoObj.setGvobj(goodsvalue);
+							if(goodsvalue.getGid()!=null || goodsvalue.getGid()!="") {
+								qvoObj.setGobj(qDao.selectGoodsById(goodsvalue.getGid()));
+							}
+						}
+						
+					}
+					qvoList.add(qvoObj);
+				}
+			}
+			
 		}
 		return qvoList;
 	}
@@ -161,16 +200,32 @@ public class QuotedPriceServiceImpl implements QuotedPriceService{
 	}
 
 	@Override
-	public List<QuoteVO> queryQuoteByGoodsValueId(String gid) {
+	public List<QuoteVO> queryQuoteByGoodsValueId(String gid,String uid) {
 		// TODO Auto-generated method stub
 		List<QuoteVO> qvoList=new ArrayList<QuoteVO>();
+		
+		List<Store> storeList=new ArrayList<Store>();
+		User uobj=userDao.queryUserById(uid);
+		String sid=uobj.getStoreid().toString();
+		Store sobj=storeDao.selectByPrimaryKey(sid);
+		if(sobj.getParented().equals("0")) {
+			storeList.add(sobj);
+			List<Store> sList=storeDao.SelectStoreByParentId(sobj.getId());
+			if(sList!=null) {
+				storeList.addAll(sList);
+			}
+		}else {
+			storeList.add(sobj);
+		}
+		
 		List<Quotedprice> qlist=qDao.queryQuoteByGoodsValueId(gid);
 		for(Quotedprice qObj:qlist) {
 			if(qObj!=null) {
 				QuoteVO qvoObj=new QuoteVO();
 				qvoObj.setQpobj(qObj);
 				if(qObj.getCid()!=null || qObj.getCid()!="") {
-					qvoObj.setCobj(cDao.selectByPrimaryKey(qObj.getCid()));
+					qObj.setSlist(storeList);
+					qvoObj.setCobj(cDao.selectByIdAndStore(qObj));
 				}
 				if(qObj.getSvid()!=null || qObj.getSvid()!="") {
 					Goodsvalue goodsvalue = goodsvalueMap.queryGoodsDetail(qObj.getSvid());
@@ -185,6 +240,11 @@ public class QuotedPriceServiceImpl implements QuotedPriceService{
 				qvoList.add(qvoObj);
 			}
 		}
+		for(int i=0;i<qvoList.size();i++) {
+			if(qvoList.get(i).getCobj()==null) {
+				qvoList.remove(i);
+			}
+		}
 		return qvoList;
 	}
 
@@ -192,9 +252,25 @@ public class QuotedPriceServiceImpl implements QuotedPriceService{
 	 * 查询报价客户
 	 */
 	@Override
-	public List<QuoteVO> queryCustomerQuoteList(String name, String gid) {
+	public List<QuoteVO> queryCustomerQuoteList(String name, String gid,String uid) {
 		// TODO Auto-generated method stub
-		return qDao.queryQuoteCustomer(name, gid);
+		Quotedprice qpobj=new Quotedprice();
+		List<Store> storeList=new ArrayList<Store>();
+		User uobj=userDao.queryUserById(uid);
+		String sid=uobj.getStoreid().toString();
+		Store sobj=storeDao.selectByPrimaryKey(sid);
+		if(sobj.getParented().equals("0")) {
+			storeList.add(sobj);
+			List<Store> sList=storeDao.SelectStoreByParentId(sobj.getId());
+			if(sList!=null) {
+				storeList.addAll(sList);
+			}
+		}else {
+			storeList.add(sobj);
+		}
+		qpobj.setSlist(storeList);
+		
+		return qDao.queryQuoteCustomer(name, gid,qpobj);
 	}
 
 	@Override
@@ -217,7 +293,6 @@ public class QuotedPriceServiceImpl implements QuotedPriceService{
 			}
 		}else if(qvo.getCobj()!=null) {
 			//根据客户新增报价
-			System.out.println("aaa");
 			for(Quotedprice qObj1:qvo.getQplist()) {
 				if(qObj1.getId().equals("0")) {
 					String rand=UUID.randomUUID().toString();
@@ -243,6 +318,8 @@ public class QuotedPriceServiceImpl implements QuotedPriceService{
 				qvo.setGobj(qDao.selectGoodsById(qvo.getGvobj().getGid()));
 				Goodsvalue goodsvalue = goodsvalueMap.queryGoodsDetail(qvo.getGvobj().getId());
 				qvo.setGvobj(goodsvalue);
+				Goodstype gtobj=qDao.queryTypeByGtid(qvo.getGobj().getTid());
+				qvo.getGobj().setColumn2(gtobj.getName());
 			}
 		}
 		return qvoList;

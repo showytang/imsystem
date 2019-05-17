@@ -22,12 +22,14 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Role;
+import com.imsystem.domain.Sales;
 import com.imsystem.domain.Store;
 import com.imsystem.domain.User;
 import com.imsystem.mapper.UserMapper;
 import com.imsystem.service.setup.RoleService;
 import com.imsystem.service.setup.StoreService_c;
 import com.imsystem.service.setup.UserService;
+import com.imsystem.service.setup.c_SalesService;
 
 @Controller
 @RequestMapping("/user")
@@ -42,6 +44,9 @@ public class UserController {
 	
 	@Autowired
 	RoleService roleService;
+	
+	@Autowired
+	c_SalesService c_salesService;
 	
 	@RequestMapping("page-login")
 	public String login() {
@@ -107,7 +112,12 @@ public class UserController {
 		
 		User u=userService.queryUserRoleById(user.getId());
 		
+		Sales s =c_salesService.ChaXunJinRiZongE(user.getId());
+		
+		
 		model.addAttribute("u", u);
+		
+		model.addAttribute("s", s);
 		
 		return "czx/page-profile";
 		
@@ -174,17 +184,21 @@ public class UserController {
 	
 	
 	@RequestMapping("updateUserById")
-	public String updateUserById(User user,HttpSession session) {
+	@ResponseBody
+	public int updateUserById(User user,HttpSession session) {
 		
 		System.out.println("用户修改进来");
 		
 		System.out.println(user.getId());
-		
-		User user1 = (User)session.getAttribute("user");
-		user.setUid(user1.getId());
-		userService.updateUserById(user);
-		
-		return "redirect:queryUserRole";
+		User user2=userService.ChaXunMenDianDianZhang(user.getStoreid(), user.getRid());
+		if(user2==null) {
+			User user1 = (User)session.getAttribute("user");
+			user.setUid(user1.getId());
+			userService.updateUserById(user);
+			return 1;
+		}else {
+			return 2;
+		}
 	}
 	
 	
@@ -270,7 +284,7 @@ public class UserController {
 	@ResponseBody
 	public String queryByName(String name, String pwd,HttpSession session) {
 		 
-		System.out.println("进来了 登录 撒");
+		 System.out.println("进来了 登录 撒");
 		 
 		 User user= userService.queryUserByName(name, pwd);
 		 

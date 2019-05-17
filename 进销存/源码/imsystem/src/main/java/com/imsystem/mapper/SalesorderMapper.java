@@ -47,7 +47,9 @@ public interface SalesorderMapper {
 	
 	Integer queryTedayMoney(@Param("store") String store);
 	
-	List<Salesorder> queryThisYear(@Param("year") String year);
+	List<Salesorder> queryThisYear(@Param("year") String year,@Param("sid") String sid);
 
 	List<Salesorder> queryByTime(@Param("startTime") String startTime,@Param("endTime") String endTime,@Param("storeid") String storeid);
+	
+	Salesorder queryOrderCountByTime(@Param("time") String time,@Param("sid") String sid);
 }

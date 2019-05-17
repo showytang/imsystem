@@ -39,6 +39,11 @@
 						span.next().css({"margin-left":"10px","line-height":"30px"});
 					}
 				});
+				var top =  queryTop(getStoreId(),"",getStartTime(),getEndTime());
+				$(".profit").text("￥"+top.column2);
+				$(".SalesMoney").text("￥"+top.paymoney);
+				$(".count").text(top.count);
+				$(".first").text(top.column3);
 			});
 		</script>
 	</head>
@@ -57,7 +62,7 @@
 										<div class="metric">
 											<span class="icon"><i class="fa fa-download"></i></span>
 											<p>
-												<span class="number">￥1,252</span>
+												<span class="number profit">￥1,252</span>
 												<span class="title">今日利润</span>
 											</p>
 										</div>
@@ -66,7 +71,7 @@
 										<div class="metric">
 											<span class="icon"><i class="fa fa-shopping-bag"></i></span>
 											<p>
-												<span class="number">￥203</span>
+												<span class="number SalesMoney">￥203</span>
 												<span class="title">今日销售额</span>
 											</p>
 										</div>
@@ -75,8 +80,8 @@
 										<div class="metric">
 											<span class="icon"><i class="fa fa-eye"></i></span>
 											<p>
-												<span class="number">3</span>
-												<span class="title">店铺排名</span>
+												<span class="number count">3</span>
+												<span class="title">订单数量</span>
 											</p>
 										</div>
 									</div>
@@ -84,8 +89,8 @@
 										<div class="metric">
 											<span class="icon"><i class="fa fa-bar-chart"></i></span>
 											<p>
-												<span class="number">35%</span>
-												<span class="title">对比上月增长</span>
+												<span class="number first">35%</span>
+												<span class="title">今日销冠</span>
 											</p>
 										</div>
 									</div>

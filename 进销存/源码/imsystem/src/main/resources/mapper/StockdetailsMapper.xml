@@ -79,9 +79,9 @@
 	<select id="queryCount" resultMap="BaseResultMap">
 		select s.count-s.scount as
 		count,s.id,s.code from stockdetails as s
-		where gvid = #{gvid} and s.state = '0' and s.storeid = #{sid}
+		where gvid = #{gvid} and (s.storeid = #{sid} or s.storeid = 0) and (s.count-s.scount) > 0
 		order by
-		s.updatetime
+		s.updatetime 
 		limit 1
 	</select>
 	<select id="selectCount" resultType="Integer">
@@ -561,7 +561,7 @@
 			&lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d 23:59:59')
 		</if>
 		<if test="storeId != null and storeId != ''">
-			s.storeid = #{storeId}
+			and s.storeid = #{storeId}
 		</if>
 	</select>
 	<select id="queryStockByGidAndStoreId" resultMap="BaseResultMap">

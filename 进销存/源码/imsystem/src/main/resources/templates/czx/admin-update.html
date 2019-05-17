@@ -39,7 +39,7 @@
   
   <body>
     <div class="x-body">
-        <form class="layui-form"  th:action="@{/user/updateUserById}"  method="post">
+        <form class="layui-form"  >
         	<input type="hidden" class="uid" name="id" th:value="${u.id}">
           <div class="layui-form-item">
               <label for="username" class="layui-form-label">
@@ -88,8 +88,8 @@
               </label>
             <!--  <input type="button" class="btn" value="增加"> -->
               
-              <button  class="layui-btn layui-btn-normal y" >
-                  增加
+              <button  type="button" lay-submit lay-filter="go" class="layui-btn layui-btn-normal y" >
+                  修改
               </button> 
           </div>
       </form>
@@ -108,6 +108,41 @@
           
           $('#edit_exam_school').siblings("div.layui-form-select").find('dl').find(select).click();
       	
+          
+          
+         	 form.on('submit(go)', function(data){
+        	 	 var id=$("[name=id]").val();
+         		 var name=$("[name=name]").val();
+        	 	 var pwd=$("[name=pwd]").val();
+         		 var rid=$("[name=rid]:checked").val();
+         		 var storeid=$("[name=storeid]").val();
+         		 alert(name)
+         		 alert(pwd)
+         		 alert(rid)
+         		 alert(storeid)
+         		var url=[[@{/user/updateUserById}]];
+         		  $.ajax({
+             		 url:url,
+             		 type:"post",
+             		 data:{
+             			 id:id,
+             			 name:name,
+             			 pwd:pwd,
+             			 rid:rid,
+             			storeid:storeid
+             		 },
+             		 success:function(result){
+             			 if(result==1){
+             				layer.msg("修改成功!");
+                     		var index=parent.layer.getFrameIndex(window.name);
+                     		 parent.layer.close(index); 
+             			 }else {
+             				layer.msg('不好意思,该店已有此员工!',{icon:1,time:1000});
+             			 }
+             		 }
+             	  })
+         		 
+        	 });
           
           
          /*  //自定义验证规则
@@ -142,12 +177,7 @@
           
           
           $(function(){
-        	  $(".y").click(function(){
-        		 
-        		 var index=parent.layer.getFrameIndex(window.name);
-        		 parent.layer.close(index);
-        		 
-        	  });
+
         	  
         	  
         	  

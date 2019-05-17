@@ -16,8 +16,12 @@ import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Customer;
 import com.imsystem.domain.QuoteVO;
 import com.imsystem.domain.Quotedprice;
+import com.imsystem.domain.Store;
+import com.imsystem.domain.User;
 import com.imsystem.service.customer.CustomerService;
 import com.imsystem.service.customer.QuotedPriceService;
+import com.imsystem.service.setup.StoreService_c;
+import com.imsystem.service.setup.UserService;
 
 @Controller
 @RequestMapping("quotedprice")
@@ -27,6 +31,10 @@ public class QuotedPriceController {
 	QuotedPriceService qService;
 	@Autowired
 	CustomerService cService;
+	@Autowired
+	UserService uService;
+	@Autowired
+	StoreService_c sService;
 	
 	@RequestMapping("toquotedprice")
 	public String toQuotedPrice() {
@@ -35,16 +43,17 @@ public class QuotedPriceController {
 	
 	@RequestMapping("queryquoteprice")
 	@ResponseBody
-	public PageInfo<QuoteVO> queryQuotedPrice(String cname,String gname,Integer curentPage){
+	public PageInfo<QuoteVO> queryQuotedPrice(String cname,String gname,String uid,Integer curentPage){
 		if(curentPage==null) {
 			curentPage=1;
 		}
 		Page<QuoteVO> page=PageHelper.startPage(curentPage, 1, true);
-		List<QuoteVO> qlist = qService.queryQuoteByPage(cname, gname, curentPage);
-		for(int i=0;i<qlist.size();i++) {
+		List<QuoteVO> qlist = qService.queryQuoteByPage(cname, gname, uid);
+		/*for(int i=0;i<qlist.size();i++) {
 			page.set(i, qlist.get(i));
-		}
-		PageInfo<QuoteVO> pages=page.toPageInfo();
+		}*/
+		//PageInfo<QuoteVO> pages=page.toPageInfo();
+		PageInfo<QuoteVO> pages=new PageInfo<>(qlist);
 		return pages;
 	}
 	
@@ -58,8 +67,8 @@ public class QuotedPriceController {
 	
 	@RequestMapping("querycustomers")
 	@ResponseBody
-	public List<Customer> queryCustomers(){
-		return cService.queryCustomer();
+	public List<Customer> queryCustomers(String uid){
+		return cService.queryCustomer(uid);
 	}
 	
 	@RequestMapping("queryquotebycustomerid")
@@ -70,8 +79,8 @@ public class QuotedPriceController {
 	
 	@RequestMapping("queryquotebygoodsvalueid")
 	@ResponseBody
-	public List<QuoteVO> queryQuoteByGoodsValueId(String gid){
-		return qService.queryQuoteByGoodsValueId(gid);
+	public List<QuoteVO> queryQuoteByGoodsValueId(String gid,String uid){
+		return qService.queryQuoteByGoodsValueId(gid,uid);
 	}
 	
 	@RequestMapping("tochoseonegoodsvalue")
@@ -165,8 +174,8 @@ public class QuotedPriceController {
 	
 	@RequestMapping("querycustomerquotelist")
 	@ResponseBody
-	public List<QuoteVO> queryCustomerQuoteList(String name,String gid){
-		return qService.queryCustomerQuoteList(name, gid);
+	public List<QuoteVO> queryCustomerQuoteList(String name,String gid,String uid){
+		return qService.queryCustomerQuoteList(name, gid,uid);
 	}
 	
 	@RequestMapping("choosecustomers")

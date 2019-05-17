@@ -114,16 +114,17 @@
 						<!-- END LEFT COLUMN -->
 						<!-- RIGHT COLUMN -->
 						<div class="profile-right">
-							<h4 class="heading">Samuel's Awards</h4>
+							<h4 class="heading" th:text="${u.name}+事件"></h4>
 							<!-- AWARDS -->
 							<div class="awards">
 								<div class="row">
 									<div class="col-md-3 col-sm-6">
 										<div class="award-item">
 											<div class="hexagon">
-												<span class="lnr lnr-sun award-icon"></span>
+												<span style="line-height: 20px;" class=""><span style="font-size: 18px;" th:text="${s.column1}">1</span><span style="font-size: 12px;">单</span></span><br/>
+												<span style="line-height: 20px;" class=""><span style="font-size: 18px;">￥</span ><span style="font-size: 18px;" th:text="${s.column2}">1</span></span>
 											</div>
-											<span>Most Bright Idea</span>
+											<span>今日的销售额</span>
 										</div>
 									</div>
 									<div class="col-md-3 col-sm-6">

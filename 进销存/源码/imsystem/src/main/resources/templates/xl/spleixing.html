@@ -188,7 +188,7 @@
                     <td th:text="${#dates.format(item1.updatetime,'yyyy-MM-dd hh:mm:ss')}"> </td>
                     <td th:text="${item1.uname}"> </td>
                 	<td style="padding-left: 40px; padding-right: 30px" >
-						<span class="glyphicon glyphicon-edit an open" TH:DATA="${item1.id}"><!-- @click="open(temp.id)" --></span>
+						<span class="glyphicon glyphicon-edit an open" TH:DATA="${item1.id}"></span>
 						<a th:href="@{/goods/delete(id=${item1.id})}"><span class="glyphicon glyphicon-trash an"></span></a>
 									
 					</td>  
@@ -205,13 +205,8 @@
 		      							</div>
 								      <div class="modal-body">
 								        	
-										<form class="form-horizontal">
-											<!-- <div class="form-group">
-										    	<label for="InSname" class="col-sm-3 control-label">类型ID</label>
-											    <div class="col-sm-9">
-											    	<input type="text" class="form-control" id="Inid">
-											    </div>
-										  	</div> -->
+										<div class="form-horizontal">
+											
 										
 										  	<div class="form-group">
 										    	<label for="InSname" class="col-sm-3 control-label">类型名称</label>
@@ -219,15 +214,14 @@
 											    	<input type="text" class="form-control" id="Inname">
 											    </div>
 										  	</div>
-										  	<div class="form-group">
+										  	<div class="form-group" >
 										    	<label for="InName" class="col-sm-3 control-label">上层类型</label>
-											    <!-- <div class="col-sm-9">
-											      <input type="text" class="form-control" id="Inpid">
-											    </div> -->
+											    
 											    <div class="col-sm-9">
-											      <select id="Inpid">
+											      <select id="Inpid" >
 											      		 <option th:value="0" th:text="请选择"></option> 
-											      		<option  th:each="item:${list}"  th:text="${item.name}" th:value="${item.id}"></option>
+											      		<!--  <span th:each="item:${list}"><option  th:each="item3,index : ${item.list2}"  th:text="${item3.name}" th:value="${item3.id}"></option></span> -->
+											      		<option  th:each="item3,index : ${list}"  th:text="${item3.name}" th:value="${item3.id}"></option>
 											      </select>
 											    </div>
 										  	</div>
@@ -239,11 +233,11 @@
 											    	<input type="text" class="form-control" id="Inuid" :value="us.name">
 											    </div>
 										  	</div>
-										</form>
+										</div>
 								      </div>
 								      <div class="modal-footer">
 								        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-								        <button type="button" class="btn btn-primary" id="tijiao">提交</button>
+								        <button type="button" class="btn btn-primary" id="tijiao" style="background-color:rgb(2,143,208);">提交</button>
 								      </div>
 								      
 		    						</div>
@@ -258,7 +252,7 @@
 									        <h4 class="modal-title" id="myModalLabel">修改商品类型</h4>
 		      							</div>
 								      	<div class="modal-body">
-								      		<form class="form-horizontal">
+								      		<div class="form-horizontal">
 								      		<div class="form-group">
 										    	<label for="inputEmail3" class="col-sm-3 control-label">类型ID</label>
 											    <div class="col-sm-9">
@@ -301,12 +295,12 @@
 										  	
 										  	
 										  
-										</form>
+										</div>
 								        
 								      	</div>
 								      <div class="modal-footer">
 								        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-								        <button type="button" class="btn btn-primary upda">修改</button>
+								        <button type="button" class="btn btn-primary upda" style="background-color:rgb(2,143,208);">修改</button>
 								      </div>
 		    						</div>
 		  						</div>
@@ -320,7 +314,7 @@
 									        <h4 class="modal-title" id="myModalLabel">商品类型</h4>
 		      							</div>
 								      	<div class="modal-body">
-								      		<form class="form-horizontal">
+								      		<div class="form-horizontal">
 								      		<div class="form-group">
 										    	<label for="inputEmail3" class="col-sm-3 control-label">类型ID</label>
 											    <div class="col-sm-9">
@@ -343,13 +337,6 @@
 											    </div>
 										  	</div>
 										  	
-										  	<div class="form-group">
-										    	<label for="inputPassword3" class="col-sm-3 control-label">最后修改时间</label>
-											    <div class="col-sm-9">
-											      <input type="text" class="form-control up6" id="inputPassword3">
-											    </div>
-										  	</div>
-										  	
 										  	
 										  	<div class="form-group">
 										    	<label for="inputEmail3" class="col-sm-3 control-label">操作人</label>
@@ -360,7 +347,7 @@
 										  	
 										  	
 										  
-										</form>
+										</div>
 								        
 								      	</div>
 								      <div class="modal-footer">
@@ -503,11 +490,11 @@
 		 
 		 $(".upda").click(function(){
 			 var id=$(".up1").val();
-			 alert(id);
+			
 			 var name=$(".up2").val();
-			 alert(name);
+			
 			 var pid=$(".up3").val();
-			 alert(pid);
+		
 			 var uid=vue.us.id
 			
 			 $.ajax({

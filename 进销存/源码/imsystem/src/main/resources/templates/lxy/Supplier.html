@@ -108,7 +108,7 @@
 </head>
 	<body>
 	
-		<input type="hidden" value="1" id="uid"/>
+		<input type="hidden" value="" id="uid"/>
 	
 		<div class="row elDocument"style="padding: 28px 20px;">
                     <!-- column -->
@@ -140,9 +140,7 @@
                                                 <th>详细地址</th>
                                                 <th>相关列表</th>
                                                 <th>相关账单</th>
-                                                <th>供应商付款</th>
                                                 <th>供应商详情</th>
-                                                <th>删除供应商</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -152,11 +150,9 @@
                                                 <td>{{o.phone}}</td>
                                                 <td>{{o.addres}}</td>
                                                 <input type="hidden" :value="o.id" />
-                                                <td><a class="stockList">进货单列表</a></td>
-                                                <td><a class="bill">应付对账单</a></td>
-                                                <td><a class="pay">付款</a></td>
+                                                <td><a class="stockList" onclick="tojinhuo(this)">进货单列表</a></td>
+                                                <td><a class="bill" onclick="tosupplierincome(this)">应付对账单</a></td>
                                                 <td><a class="todetail glyphicon glyphicon-edit" style="color: rgb(2, 143, 208);" onclick="todetail(this)"></a></td>
-                                                <td><a class="del glyphicon glyphicon-trash" style="color: rgb(2, 143, 208);" onclick="deleteSupplier(this)"></a></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -192,7 +188,8 @@
 		var vue=new Vue({
 			el:".elDocument",
 			data:{
-				pageIf:""
+				pageIf:"",
+				user:{}
 			}
 		});
 		
@@ -230,15 +227,29 @@
 			$("#supplierForm").attr("action","tosupplierdetail?id="+id);
 			$("#supplierForm").submit();
 		}
+		
+		function tojinhuo(th){
+			$("#supplierForm").attr("action","tojinhuolist");
+			$("#supplierForm").submit();
+		}
+		
+		function tosupplierincome(th){
+			$("#supplierForm").attr("action","tosupplierincomelist");
+			$("#supplierForm").submit();
+		}
 	
 		/*删除供应商*/
-		function deleteSupplier(th){
+		/* function deleteSupplier(th){
 			var id=$(th).parent().prev().prev().prev().prev().prev().val();
 			$("#supplierForm").attr("action","deletesupplier?id="+id);
 			$("#supplierForm").submit();
-		}
+		} */
 			
 		$(function() {
+			vue.user = JSON.parse(window.localStorage.getItem("user"));
+			$("#uid").val(vue.user.id);
+			
+			
 			querySupplierByPage(1); 
 			/* 分页点击 */
 			$(document).on(

@@ -20,6 +20,10 @@
     <link th:href="@{/assets/XiTong/css/style.css}" rel="stylesheet">
     <!-- You can change the theme colors from here -->
     <link th:href="@{/assets/XiTong/css/blue.css}" id="theme" rel="stylesheet">
+    
+    <link th:href="@{/assets/PickAddress/css/city-picker.css}" rel="stylesheet">
+    
+    
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -72,6 +76,10 @@
 		bottom: 2px;
 		opacity: 0.0;
 	}
+	/* 地址选择样式 */
+	.city-picker-dropdown{
+		    position: relative;
+	}
 </style>
 </head>
 
@@ -82,7 +90,7 @@
 	
 <div class="row elDocument" style="padding: 28px 20px;">
 
-		<input type="hidden" value="1" id="uid" name="uid"> 
+		<input type="hidden" value="" id="uid" name="uid"> 
 
                     <!-- Column -->
                     <div class="col-lg-4 col-xlg-3 col-md-5">
@@ -131,8 +139,14 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12">收货地址</label>
+                                        <div data-toggle="city-picker">
+											   <input readonly type="text" data-toggle="city-picker" >
+										</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12">详细地址</label>
                                         <div class="col-md-12">
-                                            <input type="text" id="address" value="" class="form-control form-control-line" placeholder="省/市/区/具体地址">
+                                            <input type="text" id="detailAddress" value="" class="form-control form-control-line">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -203,6 +217,10 @@
     <script th:src="@{/assets/js/custom.min.js}"></script>
     <script th:src="@{/assets/js/vue.js}"></script>
     
+    <script th:src="@{/assets/PickAddress/js/jquery-1.11.3.min.js}"></script>
+	<script th:src="@{/assets/PickAddress/js/city-picker.data.js}"></script>
+	<script th:src="@{/assets/PickAddress/js/city-picker.js}"></script>
+    
 	<script>
 	
 		var vue=new Vue({
@@ -210,7 +228,8 @@
 			data:{
 				typeList:{},
 				levelList:{},
-				storeList:{}
+				storeList:{},
+				user:{}
 			}
 		});
 
@@ -239,8 +258,12 @@
 		}
 	
 		$(function() {
+			vue.user = JSON.parse(window.localStorage.getItem("user"));
+			$("#uid").val(vue.user.id);
+			
 			$.ajax({
 				url:"querytypelevel",
+				data:"uid="+vue.user.id,
 				type:"post",
 				dataType:"json",
 				success:function(result){
@@ -274,13 +297,15 @@
 									if($("#telephone").val()==""){
 										alert("信息不完整！");
 									}else{
-										if($("#address").val()==""){
-											alert("信息不完整！");
+										var num=0;
+										$(".select-item").each(function(){
+											num++;
+										});
+										if(num<3){
+											alert("省市区不完整！");
 										}else{
-											var addr=/^[\u4e00-\u9fa5]+\/[\u4e00-\u9fa5]+\/[\u4e00-\u9fa5]+\/[\u4e00-\u9fa5_a-zA-Z0-9_-]+$/;
-											
-											if(addr.test($("#address").val())==false){
-												alert("地址输入格式不正确！");
+											if($("#detailAddress").val()==""){
+												alert("请输入详细收货地址！");
 											}else{
 												if($("#ct").val()==null){
 													alert("客户类型不能为空！");
@@ -291,13 +316,16 @@
 														if($("#sid").val()==null){
 															alert("所属门店不能为空！");
 														}else{
+															var addr1=$(".title").text();
+															var addr2=$("#detailAddress").val();
+															var addr=addr1+"/"+addr2;
 															formData.append("uid",$("#uid").val());
 															formData.append("name",$("#name").val());
 															formData.append("score",$("#integral").val());
 															formData.append("initbalance",$("#initialMoney").val());
 															formData.append("balance",$("#balance").val());
 															formData.append("telephone",$("#telephone").val());
-															formData.append("address",$("#address").val());
+															formData.append("address",addr);
 															formData.append("telephonename",$("#telephonename").val());
 															formData.append("cid",$("#ct").val());
 															formData.append("lid",$("#cl").val());

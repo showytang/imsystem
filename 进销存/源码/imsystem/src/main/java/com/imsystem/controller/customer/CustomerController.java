@@ -61,11 +61,11 @@ public class CustomerController {
 	
 	@RequestMapping("querytypelevel")
 	@ResponseBody
-	public TypeLevelVO queryTypeAndLevel() {
+	public TypeLevelVO queryTypeAndLevel(String uid) {
 		TypeLevelVO tlVO=new TypeLevelVO();
 		tlVO.setCtlist(ctService.queryAllCustomerType());
 		tlVO.setCllist(clService.queryAllCustomerLevel());
-		tlVO.setSlist(sService.queryStoreAll());
+		tlVO.setSlist(cService.queryTypeAndLevel(uid).getSlist());
 		return tlVO;
 	}
 	
@@ -147,16 +147,14 @@ public class CustomerController {
 		return "redirect:tocustomerlist";
 	}
 	
-	/*没添加路径*/
+	/*销售列表*/
 	@RequestMapping("tocustomersalelist")
-	public String toCustomerSaleList(String id,Model model) {
-		model.addAttribute("cid", id);
-		return "wjh/salesorder";
+	public String toCustomerSaleList() {
+		return "yhb/mingxi";
 	}
 	
 	@RequestMapping("tocustomerincome")
-	public String toCustomerIncome(String id,Model model) {
-		model.addAttribute("cid", id);
+	public String toCustomerIncome() {
 		return "yhb/shouzhang";
 	}
 	

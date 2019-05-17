@@ -97,14 +97,48 @@
 	<!-- 商品模糊查询 -->
 	<select id="queryByCode" resultMap="BaseResultMap">
 		SELECT g.id AS id,g.name AS `name`,g.id AS gid,sd.time AS TIME,gv.gid
-		AS gvid,sd.sid AS sid, gv.name AS column1,gv.column2 AS
+		AS gvid,sd.sid AS sid, gv.name AS column1,gv.column1 AS
 		column2,SUM(sd.price*sd.count) AS jprice,SUM(sd.count) AS column3 FROM
 		salesdetails AS sd JOIN goodsvalue AS gv ON sd.gvid = gv.id JOIN goods
 		AS g ON g.id = gv.gid WHERE sd.state = '0'
 		<if test="code != null and code != ''">
 			AND sd.sid = #{code}
 		</if>
-		GROUP BY DATE_FORMAT(sd.TIME,'%Y-%m-%d')
+		GROUP BY gv.id
+	</select>
+	<select id="querySalesByCid" resultMap="BaseResultMap">
+		SELECT g.id AS id,g.name AS `name`,g.id AS gid,sd.time AS TIME,gv.gid
+		AS gvid,sd.sid AS sid, gv.name AS column1,gv.column1 AS
+		column2,SUM(sd.price*sd.count) AS jprice,SUM(sd.count) AS column3 FROM sales  AS s 
+		JOIN salesdetails AS sd ON s.id = sd.sid 
+		JOIN goodsvalue AS gv ON gv.id = sd.gvid
+		JOIN goods AS g ON g.id = gv.gid
+		WHERE s.state = '0'
+		<if test="cid != null and cid != ''">
+			 and s.cid = #{cid}
+		</if>
+		<if test="startTime != null and startTime != ''">
+			AND  DATE_FORMAT(s.time,'%Y-%m-%d') >= DATE_FORMAT(#{startTime},'%Y-%m-%d') 
+			AND DATE_FORMAT(s.time,'%Y-%m-%d')&lt;=DATE_FORMAT(#{endTime},'%Y-%m-%d') 
+		</if>
+		GROUP BY gv.id
+	</select>
+	<select id="queryGoodsBySid" resultMap="BaseResultMap">
+		SELECT g.id AS id,g.name AS `name`,g.id AS gid,sd.time AS TIME,gv.gid
+		AS gvid,sd.sid AS sid, gv.name AS column1,gv.column1 AS
+		column2,SUM(sd.price*sd.count) AS jprice,SUM(sd.count) AS column3 FROM sales  AS s 
+		JOIN salesdetails AS sd ON s.id = sd.sid 
+		JOIN goodsvalue AS gv ON gv.id = sd.gvid
+		JOIN goods AS g ON g.id = gv.gid
+		WHERE s.state = '0'
+		<if test="sid != null and sid != ''">
+			 and s.storeid = #{sid}
+		</if>
+		<if test="startTime != null and startTime != ''">
+			AND  DATE_FORMAT(s.time,'%Y-%m-%d') >= DATE_FORMAT(#{startTime},'%Y-%m-%d') 
+			AND DATE_FORMAT(s.time,'%Y-%m-%d')&lt;=DATE_FORMAT(#{endTime},'%Y-%m-%d') 
+		</if>
+		group by gv.id
 	</select>
 	<select id="queryGoodsByTime" resultMap="BaseResultMap">
 		SELECT c.name AS id,sd.oldprice AS column4,SUM(sd.oldprice*sd.count)-SUM(sd.price*sd.count) AS column5,g.name AS `name`,g.id AS gid,sd.time AS TIME,gv.gid AS gvid,sd.sid AS sid, gv.name AS column1,gv.column1 AS column2,SUM(sd.price*sd.count) AS jprice,SUM(sd.count) AS column3 FROM salesdetails AS sd JOIN goodsvalue AS gv ON sd.gvid = gv.id JOIN goods AS g ON g.id = gv.gid JOIN sales AS s ON s.id = sd.sid JOIN customer AS c ON c.id = s.cid  WHERE sd.state = '0'
@@ -127,7 +161,32 @@
 		<if test="name != null and name != ''">
 			AND gv.name LIKE concat('%',#{name},'%') OR g.name LIKE concat('%',#{name},'%')
 		</if>
-		GROUP BY gv.gid ORDER BY column3 DESC
+		GROUP BY sd.id  ORDER BY column3 DESC
+
+	</select>
+	
+		<select id="queryGoodsRanking" resultMap="BaseResultMap">
+		SELECT c.name AS id,sd.oldprice AS column4,SUM(sd.oldprice*sd.count)-SUM(sd.price*sd.count) AS column5,g.name AS `name`,g.id AS gid,sd.time AS TIME,gv.gid AS gvid,sd.sid AS sid, gv.name AS column1,gv.column1 AS column2,SUM(sd.price*sd.count) AS jprice,SUM(sd.count) AS column3 FROM salesdetails AS sd JOIN goodsvalue AS gv ON sd.gvid = gv.id JOIN goods AS g ON g.id = gv.gid JOIN sales AS s ON s.id = sd.sid JOIN customer AS c ON c.id = s.cid  WHERE sd.state = '0'
+		<if
+			test="time != null and time != '' and startTime == null || startTime == ''">
+			AND DATE_FORMAT(sd.TIME,'%Y-%m')= #{time}
+		</if>
+		<if
+			test="startTime != null and startTime !='' and endTime != '' and endTime != null">
+			and sd.TIME >= DATE_FORMAT(#{startTime},'%Y-%m-%d 00:00:00') AND
+			sd.TIME
+			&lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d 23:59:59')
+		</if>
+		<if test="storeId != null and storeId != ''">
+			and sd.storeid = #{storeId}
+		</if>
+		<if test="gid != null and gid != ''">
+			and sd.gvid = #{gid}
+		</if>
+		<if test="name != null and name != ''">
+			AND gv.name LIKE concat('%',#{name},'%') OR g.name LIKE concat('%',#{name},'%')
+		</if>
+		GROUP BY gv.id  ORDER BY column3 DESC
 
 	</select>
 	<sql id="Example_Where_Clause">

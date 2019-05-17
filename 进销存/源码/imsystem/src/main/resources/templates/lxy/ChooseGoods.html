@@ -139,7 +139,7 @@
                                                 	<img v-if="o.gvobj.column1==null" :src="'data:image/png;base64,'+o.gvobj.goods.img"/>
                                                 	<img v-else :src="o.gvobj.column1"/>
                                                 </td>
-                                                <td>{{o.gobj.name}}</td>
+                                                <td>{{o.gobj.name}}({{o.gobj.column2}}    {{o.gvobj.name}})</td>
                                                 <td>{{o.gobj.price}}</td>
                                                 <td>
                                                 	<input v-if="o.qpobj!=null" type="text" name="" class="price" :value="o.qpobj.price" onblur="changePrice(this)"/>
@@ -224,6 +224,7 @@
 			dataType:"json",
 			success:function(result){
 				vue.quoteGoodsList = result;
+				console.log(result);
 			}
 		});
 	}

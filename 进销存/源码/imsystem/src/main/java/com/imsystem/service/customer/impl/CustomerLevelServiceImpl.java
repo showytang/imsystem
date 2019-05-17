@@ -58,7 +58,15 @@ public class CustomerLevelServiceImpl implements CustomerLevelService{
 	@Override
 	public int deleteCustomerLevel(String clId) {
 		// TODO Auto-generated method stub
-		return clDao.deleteCustomerLevel(clId);
+		int row=0;
+		int count=clDao.queryCustomerByCLid(clId);
+		if(count==0) {
+			clDao.deleteCustomerLevel(clId);
+			row=1;
+		}else {
+			row=2;
+		}
+		return row;
 	}
 
 	/**

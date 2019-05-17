@@ -106,6 +106,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 
+	@Override
+	public User ChaXunMenDianDianZhang(Integer storeid, String rid) {
+		return userMapper.ChaXunMenDianDianZhang(storeid, rid);
+	}
+
+
 	
 
 	

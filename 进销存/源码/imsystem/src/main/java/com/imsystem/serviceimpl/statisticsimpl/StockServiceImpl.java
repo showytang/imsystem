@@ -19,7 +19,8 @@ public class StockServiceImpl implements StockService{
 	@Override
 	public List<Stock> queryQianKuan(String startTime, String endTime, String sid) {
 		// TODO Auto-generated method stub
-		return sm.queryQianKuan(startTime, endTime, sid);
+		List<Stock> l = sm.queryQianKuan(startTime, endTime, sid);
+		return l;
 	}
 	
 }

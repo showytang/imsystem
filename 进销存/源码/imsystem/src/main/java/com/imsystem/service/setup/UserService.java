@@ -32,5 +32,7 @@ public interface UserService {
 	 
 	 int XiuGaiZhangHu(@Param("name") String name,@Param("pwd") String pwd,@Param("id") String id);
 	    
+	 User ChaXunMenDianDianZhang(@Param("storeid") Integer storeid,@Param("rid") String rid);
+	    
 	
 }

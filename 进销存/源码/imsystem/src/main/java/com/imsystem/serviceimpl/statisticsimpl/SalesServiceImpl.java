@@ -30,4 +30,10 @@ public class SalesServiceImpl implements SalesService{
 		return sm.queryXf(sid, startTime, endTime);
 	}
 
+	@Override
+	public List<Sales> querySalesByCid(String cid, String startTime, String endTime) {
+		// TODO Auto-generated method stub
+		return sm.querySalesByCid(cid, startTime, endTime);
+	}
+
 }

@@ -10,4 +10,6 @@ public interface SalesService {
     List<Sales> queryShouZhang(@Param("cid") String cid, @Param("startTime") String startTime , @Param("endTime") String endTime,String storeid);
     
     List<Sales> queryXf(@Param("sid") String sid,@Param("startTime") String startTime,@Param("endTime") String endTime);
+    
+    List<Sales> querySalesByCid(@Param("cid") String cid,@Param("startTime") String startTime,@Param("endTime") String endTime);
 }
