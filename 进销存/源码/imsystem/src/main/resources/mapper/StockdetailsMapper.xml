@@ -77,12 +77,12 @@
 		GROUP BY s.gvid
 	</select>
 	<select id="queryCount" resultMap="BaseResultMap">
-		select s.count-s.scount as
-		count,s.id,s.code from stockdetails as s
-		where gvid = #{gvid} and (s.storeid = #{sid} or s.storeid = 0) and (s.count-s.scount) > 0
-		order by
+		SELECT s.count-s.scount AS
+		COUNT,s.id,s.code,s.storeid FROM stockdetails AS s
+		WHERE gvid = '1558074897558' AND (s.storeid = 1 OR s.storeid IS NULL) AND (s.count-s.scount) > 0
+		ORDER BY
 		s.updatetime 
-		limit 1
+		LIMIT 1
 	</select>
 	<select id="selectCount" resultType="Integer">
 		SELECT SUM(s.count-s.scount)
