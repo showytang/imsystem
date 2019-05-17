@@ -396,7 +396,7 @@
 				
 				supplierList : [],
 				
-				user : {},
+				user : JSON.parse(localStorage.getItem("user")),
 				
 				givemeId:"",
 				
@@ -452,8 +452,6 @@
 			}
 			
 		});
-		
-		vue.user =  JSON.parse(localStorage.getItem("user"));
 		
 		vue.paytypeList = [[${paytypeList}]];
 		

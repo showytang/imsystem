@@ -95,6 +95,15 @@
   	</where>
   </select>
   
+  <select id="selectByIdAndStore" resultMap="BaseResultMap">
+  	SELECT * FROM customer WHERE id=#{qobj.cid} AND storeid IN 
+  	(
+  		<foreach collection="qobj.slist" item="s" separator=",">
+		  	#{s.id}
+		</foreach>
+  	)
+  </select>
+  
   
   <sql id="Example_Where_Clause" >
     <where >

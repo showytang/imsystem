@@ -74,7 +74,7 @@
 	<select id="querySupplierByPage" resultMap="BaseResultMap">
 		SELECT s.* FROM supplier s,`user` u
 		<where>
-			u.id=s.uid AND u.id=#{uid} AND s.state=0 AND CONCAT(s.name,u.name) LIKE
+			u.id=s.uid AND s.sid=#{uid} AND s.state=0 AND CONCAT(s.name,u.name) LIKE
 			CONCAT('%',#{content},'%')
 			<choose>
 				<when test="zero==1.0">

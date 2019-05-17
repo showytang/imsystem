@@ -3,6 +3,8 @@ package com.imsystem.domain;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Sales {
     private String id;
 
@@ -26,8 +28,10 @@ public class Sales {
 
     private Double tainmoney;
 
+    @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss",timezone="GMT+8")
     private Date time;
 
+    @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss",timezone="GMT+8")
     private Date updatetime;
 
     private Integer state;

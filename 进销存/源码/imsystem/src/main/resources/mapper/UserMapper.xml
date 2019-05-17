@@ -478,7 +478,9 @@
 		WHERE u.`id`=#{id}
 	</select>
 
-
+	<select id="ChaXunMenDianDianZhang" resultMap="ResultMap">
+		SELECT * FROM `user` WHERE storeid=#{storeid} AND rid=#{rid}
+	</select>
 
 	<insert id="insertUser" parameterType="com.imsystem.domain.User">
 

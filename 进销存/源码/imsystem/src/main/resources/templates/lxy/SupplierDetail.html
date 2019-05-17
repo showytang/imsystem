@@ -20,6 +20,9 @@
     <link th:href="@{/assets/XiTong/css/style.css}" rel="stylesheet">
     <!-- You can change the theme colors from here -->
     <link th:href="@{/assets/XiTong/css/blue.css}" id="theme" rel="stylesheet">
+    
+    <link th:href="@{/assets/PickAddress/css/city-picker.css}" rel="stylesheet">
+    
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -34,6 +37,10 @@
 	.btn-success{
 		width: 100%;
 	}
+	/* 地址选择样式 */
+	.city-picker-dropdown{
+		    position: relative;
+	}
 </style>
 </head>
 
@@ -44,7 +51,7 @@
 	
 <div class="row elDocument" style="padding: 28px 20px;">
                     <input type="hidden" id="id" th:value="${sid}"/>
-                    <input type="hidden" value="1" id="uid">
+                    <input type="hidden" value="" id="uid">
                     <!-- Column -->
                     <!-- Column -->
                     <div class="col-lg-12 col-xlg-12 col-md-12">
@@ -74,8 +81,15 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12">发货地址</label>
+                                        <div data-toggle="city-picker">
+											   <input readonly type="text" data-toggle="city-picker">
+											</div>
+										<input type="hidden" value="" id="addres" name="addres"/>
+                                    </div>
+                                     <div class="form-group">
+                                        <label class="col-md-12">详细地址</label>
                                         <div class="col-md-12">
-                                            <input type="text" id="address" name="addres" :value="supplier.province+'/'+supplier.city+'/'+supplier.district+'/'+supplier.addres" class="form-control form-control-line">
+                                            <input type="text" id="detailAddress" value="" class="form-control form-control-line">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -122,20 +136,29 @@
     <script th:src="@{/assets/js/custom.min.js}"></script>
     <script th:src="@{/assets/js/vue.js}"></script>
     
+    <script th:src="@{/assets/PickAddress/js/jquery-1.11.3.min.js}"></script>
+	<script th:src="@{/assets/PickAddress/js/city-picker.data.js}"></script>
+	<script th:src="@{/assets/PickAddress/js/city-picker.js}"></script>
+    
 	<script>
 	
 	var vue=new Vue({
 		el:".elDocument",
 		data:{
 			storeList:{},
-			supplier:{}
+			supplier:{},
+			user:{}
 		}
 	});
 	
 		$(function() {
+			vue.user = JSON.parse(window.localStorage.getItem("user"));
+			$("#uid").val(vue.user.id);
+			
 			
 			$.ajax({
 				url:"querystoretoaddsupplier",
+				data:"uid="+vue.user.id,
 				type:"post",
 				dataType:"json",
 				success:function(result){
@@ -150,6 +173,13 @@
 				dataType:"json",
 				success:function(result){
 					vue.supplier=result;
+					var address=result.addres;
+					var addressArr=address.split("/");
+					if(addressArr.length>1){
+						$("#detailAddress").val(addressArr[1]);
+					}else{
+						$("#detailAddress").val(address);
+					}
 				}
 			});
 			
@@ -172,19 +202,23 @@
 							if(phoen==""){
 								alert("信息不完整！");
 							}else{
-								if(address==""){
-									alert("信息不完整！");
+								var num=0;
+								$(".select-item").each(function(){
+									num++;
+								});
+								if(num<3){
+									alert("省市区不完整！");
 								}else{
-									
-									var addr=/^[\u4e00-\u9fa5]+\/[\u4e00-\u9fa5]+\/[\u4e00-\u9fa5]+\/[\u4e00-\u9fa5_a-zA-Z0-9_-]+$/;
-									
-									if(addr.test(address)==false){
-										alert("地址输入格式不正确！");
-										
+									if($("#detailAddress").val()==""){
+										alert("请输入详细收货地址！");
 									}else{
 										if(balance==""){
 											alert("信息不完整！");
 										}else{
+											var addr1=$(".title").text();
+											var addr2=$("#detailAddress").val();
+											var addr=addr1+"/"+addr2;
+											$("#addres").val(addr);
 											$("#updateSupplierForm").submit(); 
 										}
 									}

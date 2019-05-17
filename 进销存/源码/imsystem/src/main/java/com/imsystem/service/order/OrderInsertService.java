@@ -32,4 +32,6 @@ public interface OrderInsertService {
 	
 	List<Paytype> queryPaytype();
 	
+	int salesorderDel(String id,String cid,Double Moeny);
+	
 }

@@ -22,7 +22,7 @@ public interface SpTypeService {
 	    
 	public int toupdate(Goodstype good);
 	
-	public List<Goodstype> querybypid(@Param("name")String name);
+	public List<Goodstype> querybypid(/*@Param("name")*/String name);
 	
 	public Goodstype querybyname(String name,String pid);
 	

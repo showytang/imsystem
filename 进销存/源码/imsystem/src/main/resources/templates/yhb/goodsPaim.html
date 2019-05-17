@@ -58,11 +58,16 @@
 				});
 			}
 		});
+		console.log(sid);
+		if(sid == ''){
+			var store = queryStore();
+			$.each(store,function(i,obj){
+				$(".store").append("<option value='"+obj.id+"'>"+obj.name+"["+obj.sufname+"]</option>");
+			});
+		}else{
+			$(".store>option").val(sid).text("当前店铺");
+		}
 		
-		var store = queryStore();
-		$.each(store,function(i,obj){
-			$(".store").append("<option value='"+obj.id+"'>"+obj.name+"["+obj.sufname+"]</option>");
-		});
 		
 		$(".store").change(function(){
 			sid = $(this).val();

@@ -50,7 +50,7 @@ public interface QuotedPriceService {
 	 * @param curentPage  当前页
 	 * @return
 	 */
-	public List<QuoteVO> queryQuoteByPage(String cname,String gname,Integer curentPage);
+	public List<QuoteVO> queryQuoteByPage(String cname,String gname,String uid);
 
 	/**
 	 * 修改报价价格
@@ -72,14 +72,14 @@ public interface QuotedPriceService {
 	 * @param gid  商品实例id
 	 * @return
 	 */
-	public List<QuoteVO> queryQuoteByGoodsValueId(String gid);
+	public List<QuoteVO> queryQuoteByGoodsValueId(String gid,String uid);
 	
 	/**
 	 *  查询报价的客户
 	 * @param name
 	 * @return
 	 */
-	public List<QuoteVO> queryCustomerQuoteList(String name,String gid);
+	public List<QuoteVO> queryCustomerQuoteList(String name,String gid,String uid);
 	
 	/**
 	 *  查询报价的商品

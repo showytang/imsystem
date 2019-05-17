@@ -2,6 +2,8 @@ package com.imsystem.mapper;
 
 import com.imsystem.domain.Customer;
 import com.imsystem.domain.CustomerExample;
+import com.imsystem.domain.Quotedprice;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -37,6 +39,8 @@ public interface CustomerMapper {
     List<Customer> selectByExample(CustomerExample example);
 
     Customer selectByPrimaryKey(String id);
+    
+    Customer selectByIdAndStore(@Param("qobj")Quotedprice qobj);
 
     int updateByExampleSelective(@Param("record") Customer record, @Param("example") CustomerExample example);
 

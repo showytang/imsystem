@@ -40,6 +40,10 @@
   <select id="queryLikeCustomerType" resultMap="BaseResultMap">
   	SELECT * FROM customertype c,`user` u WHERE c.state=0 AND c.uid=u.id AND (c.`name` LIKE concat('%',#{content},'%') OR c.viewname LIKE concat('%',#{content},'%') OR c.agio LIKE concat('%',#{content},'%') OR u.name LIKE concat('%',#{content},'%'))
   </select>
+  
+  <select id="queryCustomerByCTid" resultType="Integer">
+  	SELECT COUNT(*) FROM customer WHERE cid=#{id} AND state=0
+  </select>
 
   
   <sql id="Example_Where_Clause" >

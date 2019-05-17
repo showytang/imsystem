@@ -124,7 +124,7 @@ a:hover {
 </head>
 <body>
 
-	<input type="hidden" value="1" id="uid" />
+	<input type="hidden" value="" id="uid" />
 
 	<div class="row elDocument" style="padding: 28px 20px;">
 		<!-- column -->
@@ -159,9 +159,8 @@ a:hover {
 									<th>客户余额</th>
 									<th>相关列表</th>
 									<th>相关账单</th>
-									<th>客户收款</th>
 									<th>客户详情</th>
-									<th>删除客户</th>
+									
 								</tr>
 							</thead>
 							<tbody>
@@ -175,12 +174,9 @@ a:hover {
 
 									<td><a class="saleList" onclick="tosales(this)">销售列表</a></td>
 									<td><a class="bill" onclick="toincome(this)">应收对账单</a></td>
-									<td><a class="receive">收款</a></td>
 									<td><a class="detail glyphicon glyphicon-edit"
 										onclick="todetail(this)" style="color: rgb(2, 143, 208);"></a></td>
-									<td><a class="del glyphicon glyphicon-trash"
-										onclick="deleteCustomer(this)"
-										style="color: rgb(2, 143, 208);"></a></td>
+									
 								</tr>
 
 							</tbody>
@@ -215,7 +211,8 @@ a:hover {
 	var vue = new Vue({
 		el : ".elDocument",
 		data : {
-			pageIf : ""
+			pageIf : "",
+			user:{}
 		}
 	});
 
@@ -254,28 +251,24 @@ a:hover {
 		$("#customerForm").submit();
 	}
 
-	/* 删除客户 */
-	function deleteCustomer(th) {
-		var id = $(th).parent().prev().prev().prev().prev().prev().val();
-		$("#customerForm").attr("action", "deletecustomer?id=" + id);
-		$("#customerForm").submit();
-	}
+	
 
 	/* 查看客户销售列表 */
 	function tosales(th) {
-		var id = $(th).parent().prev().val();
-		$("#customerForm").attr("action", "tocustomersalelist?id=" + id);
+		$("#customerForm").attr("action", "tocustomersalelist");
 		$("#customerForm").submit();
 	}
 
 	/* 查看客户应收对账单 */
 	function toincome(th) {
-		var id = $(th).parent().prev().prev().val();
-		$("#customerForm").attr("action", "tocustomerincome?id=" + id);
+		$("#customerForm").attr("action", "tocustomerincome");
 		$("#customerForm").submit();
 	}
 
 	$(function() {
+		vue.user = JSON.parse(window.localStorage.getItem("user"));
+		$("#uid").val(vue.user.id);
+		
 		queryCustomerByPage(1);
 		/* 分页点击 */
 		$(document).on(

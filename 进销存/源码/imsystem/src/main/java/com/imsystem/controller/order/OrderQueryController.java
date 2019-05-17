@@ -3,6 +3,8 @@ package com.imsystem.controller.order;
 import java.util.List;
 import java.util.Vector;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +24,7 @@ import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Stockrecord;
 import com.imsystem.domain.Supplier;
+import com.imsystem.domain.User;
 import com.imsystem.service.customer.CustomerService;
 import com.imsystem.service.customer.SupplierService;
 import com.imsystem.service.goods.GoodsService;
@@ -173,9 +176,9 @@ public class OrderQueryController {
 
 	@RequestMapping("/queryCustomer")
 	@ResponseBody
-	public List<Customer> queryCustomer() {
+	public List<Customer> queryCustomer(String storeid) {
 
-		return curstomerservice.queryCustomerByStore("1");
+		return curstomerservice.queryCustomerByStore(storeid);
 	}
 
 	@RequestMapping("/foreachshappingPrice")
@@ -194,11 +197,13 @@ public class OrderQueryController {
 	}
 	
 	@RequestMapping("/orderAdd")
-	public String orderAdd(Model model){
+	public String orderAdd(Model model,HttpSession session){
+		
+		User u = (User) session.getAttribute("user");
 		
 		model.addAttribute("list", goodsService.queryAllGoods("",null,"0"));
 		
-		model.addAttribute("clientList", orderquery.queryCustomerByName("", "1"));
+		model.addAttribute("clientList", orderquery.queryCustomerByName("", u.getStoreid()+""));
 		
 		return "wjh/addOrder";
 	}

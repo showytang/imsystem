@@ -28,7 +28,7 @@
 	</resultMap>
 
 	<select id="query" resultMap="BaseResultMap">
-		SELECT s.* FROM sales AS s
+		SELECT s.id,s.code,s.count,s.time,s.updatetime,s.tainmoney,s.price,s.paymoney,(select name from customer as c where c.id = s.cid) as column5 FROM sales AS s
 		inner join salesdetails as sd on sd.sid = s.id
 		inner join goodsvalue as gv on gv.id = sd.gvid
 		inner join goods as g on g.id = gv.gid
@@ -47,6 +47,7 @@
 				#{endTime}
 			</if>
 		</where>
+		order by s.updatetime
 		group by s.id
 	</select>
 
@@ -489,11 +490,22 @@
 		column5 = #{column5,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=VARCHAR}
 	</update>
-
+		
+		
+		
+		<select id="ChaXunJinRiZongE" resultMap="BaseResultMap">
+			
+			SELECT COUNT(*) AS column1,SUM(tainmoney) AS column2 FROM sales WHERE state=0 AND uid=#{id} AND TO_DAYS(`time`)=TO_DAYS(NOW())
+		
+		</select>
+		
+		
+		
+		
 	<select resultMap="BaseResultMap" id="queryShouZhang">
 		SELECT c.name AS column1 , s.paymoney AS paymoney , s.tainmoney AS
 		tainmoney , s.updatetime AS TIME , c.balance AS column2 FROM sales AS
-		s JOIN customer AS c ON c.id = s.cid WHERE s.tainmoney &lt; s.paymoney
+		s JOIN customer AS c ON c.id = s.cid WHERE s.paymoney - s.tainmoney > 0
 		AND s.state = '0'
 		<if test="cid != null and cid != ''">
 			AND c.id = #{cid}
@@ -509,7 +521,7 @@
 
 	</select>
 	<select id="queryXf" resultMap="BaseResultMap">
-		SELECT s.`id` AS id,SUM(s.`paymoney`) AS price ,c.`name` AS column1 FROM sales AS s 
+		SELECT s.`id` AS id,SUM(s.`paymoney`) AS price ,c.`name` AS column1,c.id as cid FROM sales AS s 
 			JOIN customer AS c ON c.id = s.cid
 			WHERE s.state = '0' 
 			<if test="sid != null and sid != ''">
@@ -520,5 +532,18 @@
 				AND DATE_FORMAT(s.time,'%Y-%m-%d')&lt;=DATE_FORMAT(#{endTime},'%Y-%m-%d') 
 			</if>
 			GROUP BY s.cid ORDER BY price DESC
+	</select>
+	<select id="querySalesByCid" resultMap="BaseResultMap">
+		SELECT s.id FROM sales  AS s 
+		JOIN salesdetails AS sd ON s.id = sd.sid 
+		JOIN goodsvalue AS gv ON gv.id = sd.gvid
+		WHERE s.state='0'
+		<if test="cid != null and cid != ''">
+			 and s.cid = #{cid}
+		</if>
+		<if test="startTime != null and startTime != ''">
+				AND  DATE_FORMAT(s.time,'%Y-%m-%d') >= DATE_FORMAT(#{startTime},'%Y-%m-%d') 
+				AND DATE_FORMAT(s.time,'%Y-%m-%d')&lt;=DATE_FORMAT(#{endTime},'%Y-%m-%d') 
+			</if>
 	</select>
 </mapper>

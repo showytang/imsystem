@@ -66,8 +66,14 @@ public class CustomerTypeServiceImpl implements CustomerTypeService{
 	@Override
 	public int deleteCustomerType(String ctId) {
 		// TODO Auto-generated method stub
-
-		int row=ctDao.deleteCustomerType(ctId);
+		int row=0;
+		int count=ctDao.queryCustomerByCTid(ctId);
+		if(count==0) {
+			ctDao.deleteCustomerType(ctId);
+			row=1;
+		}else {
+			row=2;
+		}
 		return row;
 	}
 

@@ -42,6 +42,27 @@
 			
 		}
 		
+
+		#ggsid{
+			border:1px solid #EEEEEE;
+			color:#676A6D
+		
+		}
+		#gsid{
+			border:1px solid #EEEEEE;
+			color:#676A6D
+		
+		}
+		#leixing{
+			border:1px solid #EEEEEE;
+			color:#676A6D
+		}
+		
+		#leixing1{
+			border:1px solid #EEEEEE;
+			color:#676A6D
+		}
+		
 		th{
 			text-align: center;
 		}
@@ -148,11 +169,13 @@
 											    </div>
 										  	</div>
 										  	
-										  	<div class="form-group">
+										  	<div class="form-group ">
 										    	<label for="InName" class="col-sm-3 control-label">规格名称</label>
 											    <div class="col-sm-9">
 											      <select id="gsid" >
-											      		<option  v-for="(temp,index) in chaxun"  :value="temp.id">{{temp.name}}</option>
+											      		<option  v-for="(temp,index) in chaxun" v-if="chaxun.length!=0"  :value="temp.id">{{temp.name}}</option>
+											      		<option v-if="chaxun.length==0"  value="0">无数据,请添加规格</option>
+											      		
 											      </select>
 											    </div>
 										  	</div>
@@ -171,7 +194,7 @@
 								      </div>
 								      <div class="modal-footer">
 								        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-								        <button type="button" class="btn btn-primary" id="tijiao">提交</button>
+								        <button type="button" class="btn btn-primary" id="tijiao" style="background-color:rgb(2,143,208);">提交</button>
 								      </div>
 								      
 		    						</div>
@@ -204,7 +227,7 @@
 										    	<label for="InName" class="col-sm-3 control-label">商品类型</label>
 											    <div class="col-sm-9">
 											      <select id="leixing1">
-											      		
+											      		<option>请选择</option>
 											      		<option  th:each="item:${list1}"  th:text="${item.name}" th:value="${item.id}"></option>
 											      </select>
 											    </div>
@@ -212,9 +235,10 @@
 										  	
 										  	<div class="form-group">
 										    	<label for="InName" class="col-sm-3 control-label">规格名称</label>
-											    <div class="col-sm-9">
+											    <div class="col-sm-9" >
 											      <select id="ggsid" >
 											      		<option  v-for="(temp,index) in chaxun"  :value="temp.id">{{temp.name}}</option>
+											      		<option v-if="chaxun.length==0"  value="0">无数据,请添加规格</option>
 											      </select>
 											    </div>
 										  	</div>
@@ -241,7 +265,7 @@
 								      	</div>
 								      <div class="modal-footer">
 								        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-								        <button type="button" class="btn btn-primary xiugai">修改</button>
+								        <button type="button" class="btn btn-primary xiugai" style="background-color:rgb(2,143,208);">修改</button>
 								      </div>
 		    						</div>
 		  						</div>
@@ -410,7 +434,12 @@
 				 type:"post",
 				 dataType:"json",
 				 success:function(result){
-					 vue.chaxun = result;
+					 console.log(result);
+					 if(result==null){
+						 
+					 }else{						 
+					 	vue.chaxun = result;
+					 }
 					 
 				 }
 			 });
