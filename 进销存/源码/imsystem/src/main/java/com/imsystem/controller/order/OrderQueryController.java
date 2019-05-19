@@ -28,6 +28,7 @@ import com.imsystem.domain.User;
 import com.imsystem.service.customer.CustomerService;
 import com.imsystem.service.customer.SupplierService;
 import com.imsystem.service.goods.GoodsService;
+import com.imsystem.service.order.OrderInsertService;
 import com.imsystem.service.order.OrderQueryService;
 import com.imsystem.service.setup.StoreService_c;
 
@@ -49,6 +50,9 @@ public class OrderQueryController {
 	
 	@Autowired
 	GoodsService goodsService;
+	
+	@Autowired
+	OrderInsertService orderInsert;
 
 	@RequestMapping("/toQuery")
 	public String toQuery() {
@@ -196,6 +200,21 @@ public class OrderQueryController {
 		return list;
 	}
 	
+	@RequestMapping("/foreachshappingPriceOrderAdd")
+	@ResponseBody
+	public List<GoodsValueVo> foreachshappingPriceOrderAdd(@RequestBody List<GoodsValueVo> list) {
+
+		for (int i = 0; i < list.size(); i++) {
+			
+			double s = orderquery.shappingprice(list.get(i).getGoodsValue().getId(), list.get(0).getGoods().getColumn4().equals("0")?null:list.get(0).getGoods().getColumn4());
+			
+			list.get(i).getGoods().setPrice(s);
+
+		}
+
+		return list;
+	}
+	
 	@RequestMapping("/orderAdd")
 	public String orderAdd(Model model,HttpSession session){
 		
@@ -204,6 +223,8 @@ public class OrderQueryController {
 		model.addAttribute("list", goodsService.queryAllGoods("",null,"0"));
 		
 		model.addAttribute("clientList", orderquery.queryCustomerByName("", u.getStoreid()+""));
+		
+		model.addAttribute("paytype", orderInsert.queryPaytype());
 		
 		return "wjh/addOrder";
 	}

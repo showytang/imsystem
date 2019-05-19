@@ -113,6 +113,7 @@ button {
 .table-div>ul {
 	padding: 10px 0px;
 	margin: 0px;
+	height: 100%;
 }
 
 .del-ul-li {
@@ -266,7 +267,7 @@ button {
 	top: 0px;
 	padding: 10px;
 	width: 100%;
-	z-index: 9999;
+	z-index: 99;
 	background: #f7f7f7;
 	height: 60px;
 }
@@ -323,7 +324,7 @@ button {
 								<div>总计</div>
 							</div>
 						</li>
-						<li>
+						<li style="height: 85%; overflow-y: auto; overflow-x: hidden;">
 							<div v-for="(item,index) in orderShapping" v-if="item != null"
 								:index="index">
 								<div>{{item.goods.name}}</div>
@@ -350,7 +351,7 @@ button {
 					<ul class="table-div-ul">
 						<li>
 							<div>
-								<div>时间</div>
+								<div>客户名称</div>
 								<div>数量</div>
 								<div>价格</div>
 								<div>操作</div>
@@ -359,7 +360,7 @@ button {
 						<li v-for="(item,index) in upOrderList" v-if="item != null">
 							<div @click="upDown($event)">
 								<div>
-									<span>{{item.order.time}}</span>
+									<span>{{item.order.client.name}}</span>
 								</div>
 								<div>
 									<span>{{item.order.count}}</span>
@@ -368,7 +369,7 @@ button {
 									<span>{{item.order.sum}}</span>
 								</div>
 								<div>
-									<span title="确认订单" class="order-ok">√</span>&nbsp;&nbsp;&nbsp;&nbsp;<span
+									<span title="确认订单" @click="order_ok(index)" class="order-ok">√</span>&nbsp;&nbsp;&nbsp;&nbsp;<span
 										title="取消" @click="upOrderListDel(index,$event)"
 										class="del-table-ul-li">></span>
 								</div>
@@ -393,6 +394,11 @@ button {
 							</ul>
 						</li>
 					</ul>
+					<div class="table-div-bottom" style="width: 100%; height: 30px;">
+						<select class="paytype" style="width: 100%;height: 100%;color: rgb(2, 143, 208);text-indent: 1em;border-color: rgb(2, 143, 208);">
+							<option v-for="item in paytype" :id="item.id">{{item.name}}</option>
+						</select>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -413,7 +419,7 @@ button {
 				</div>
 			</div>
 			<div id="custmoer" class="right-head-click" style="display: none;">
-				<div class="goods" v-for="item in clientlist">
+				<div class="goods" v-for="(item,index) in clientlist">
 					<div style="position: relative;">
 						<div class="images">
 							<img th:src="@{/assets/img/qq.png}" />
@@ -430,7 +436,7 @@ button {
 							<span>{{item.telephone}}</span>
 						</div>
 						<div style="margin-top: 30px;">
-							<button>确定</button>
+							<button @click="clientPrice(index)">确定</button>
 						</div>
 					</div>
 				</div>
@@ -462,8 +468,8 @@ button {
 				</div>
 			</div>
 		</div>
-	</div>
-	<script type="text/javascript" th:inline="javascript">
+		<script type="text/javascript" th:inline="javascript">
+		
 		var vue = new Vue({
 			
 			el : "#main",
@@ -476,6 +482,8 @@ button {
 				
 				clientlist : [],
 				
+				paytype : [],
+				
 				clientName : "",
 				
 				user : JSON.parse(localStorage.getItem("user")),
@@ -484,12 +492,50 @@ button {
 				
 				sum : 0,
 				
-				upOrderList : []
+				clientName : {
+					id : 0,
+					name : "零售客户"
+				},
 				
+				upOrderList : localStorage.getItem("upOrderList") == null ? [] : JSON.parse(localStorage.getItem("upOrderList"))
 				
 			},
 			methods : {
-				
+				localStorage : function(){
+					
+					localStorage.setItem("upOrderList",JSON.stringify(vue.upOrderList));
+				},
+				order_ok : function (index){
+					
+				},
+				clientPrice : function (index){
+					
+					this.clientName = this.clientlist[index];
+					
+					this.orderShapping[0].goods.column4 = this.clientName.id;
+					
+					$.ajax({
+					    
+					    url : [[@{/orderQueryController/foreachshappingPriceOrderAdd}]],
+
+					    data : JSON.stringify(this.orderShapping),
+
+					    type : "post",
+
+					    dataType : "json",
+					    
+					    contentType : "application/json; charset=UTF-8",		
+					    
+					    processData: false,
+					    
+					    success:function(result){
+					    	
+					    	this.orderShapping = result;
+					    	
+					    }
+					});
+					
+				},
 				upOrderListListDel : function (index,index1,obj){
 					
 					let current = obj.currentTarget;
@@ -514,6 +560,8 @@ button {
 							
 							vue.upOrderList.splice(index,1,null);
 							
+							vue.$options.methods.localStorage();
+							
 							return;
 								
 						}
@@ -524,6 +572,7 @@ button {
 						
 						vue.upOrderList[index].list.splice(index1,1,null);
 						
+						vue.$options.methods.localStorage();
 						
 					});
 					
@@ -549,6 +598,7 @@ button {
 						
 						vue.upOrderList.splice(index,1,null);
 						
+						vue.$options.methods.localStorage();
 					});
 					
 				},
@@ -563,7 +613,7 @@ button {
 					}
 					var order = {
 							
-						time : date.getHours()+":"+date.getMinutes(),
+						client : vue.clientName,
 						
 						count : 0,
 						
@@ -592,6 +642,8 @@ button {
 					this.orderShapping = [];
 					
 					this.sum = 0;
+					
+					vue.$options.methods.localStorage();
 					
 				},
 				addOrderShapping : function (index,obj){
@@ -623,8 +675,6 @@ button {
 						
 						this.sum += this.list[index].goods.column1 * this.list[index].goods.price;
 						
-						//vue.$set(this.orderShapping, index, this.list[index]);
-					
 						this.orderShapping.push(this.list[index]);
 						
 						setTimeout(() => {
@@ -709,6 +759,8 @@ button {
 		vue.list = [[${list}]];
 		
 		vue.clientlist = [[${clientList}]];
+		
+		vue.paytype = [[${paytype}]];
 		
 		$(function() {
 			$(".table-option").click(function() {
