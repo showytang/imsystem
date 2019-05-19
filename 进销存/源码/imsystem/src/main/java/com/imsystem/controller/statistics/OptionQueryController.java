@@ -1,9 +1,16 @@
 package com.imsystem.controller.statistics;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,30 +33,31 @@ public class OptionQueryController {
 	GoodsService gs;
 	@Autowired
 	Supplier_yService ss;
-	@Autowired 
+	@Autowired
 	SalesService salesService;
 	@Autowired
 	GoodsValueService gvs;
 	@Autowired
 	GoodsValueLableService gvals;
-	
-	
+	@Autowired
+	JavaMailSender mailSender;
+
 	@RequestMapping("queryGoods")
-	public List<GoodsValueVo> queryGoods(){
+	public List<GoodsValueVo> queryGoods() {
 		List<GoodsValueVo> list = gs.queryAllGoods("", null, "");
 		return list;
 	}
-	
+
 	@RequestMapping("querySupplier_yByStore")
-	public List<Supplier> querySupplier_yByStore(String sid){
+	public List<Supplier> querySupplier_yByStore(String sid) {
 		List<Supplier> list = ss.querySupplier_yByStore(sid);
 		return list;
 	}
-	
+
 	@RequestMapping("queryXf")
 	public List<Sales> queryXf(String sid, String startTime, String endTime) {
 		List<Sales> list = salesService.queryXf(sid, startTime, endTime);
-		if (list.size()>0) {
+		if (list.size() > 0) {
 			for (Sales s : list) {
 				List<Goodsvalue> glist = gvs.querySalesByCid(s.getCid(), startTime, endTime);
 				s.setGlist(glist);
@@ -57,17 +65,17 @@ public class OptionQueryController {
 		}
 		return list;
 	}
-	
+
 	@RequestMapping("queryLikeGoodsValue")
-	public List<Goodsvaluelable> queryLikeGoodsValue(String cid,String season){
+	public List<Goodsvaluelable> queryLikeGoodsValue(String cid, String season) {
 		List<Goodsvaluelable> list = gvals.querySalesGoodsValueByLable(cid, season);
 		List<Goodsvaluelable> l = new ArrayList<>();
 		for (Goodsvaluelable gvl : list) {
 			List<Goodsvaluelable> ll = gvals.queryByLid(gvl.getId(), season);
 			l.addAll(ll);
 		}
-		for(int i = 0;i<l.size();i++) {
-			for(int s = 0;s<l.size();s++) {
+		for (int i = 0; i < l.size(); i++) {
+			for (int s = 0; s < l.size(); s++) {
 				if (l.get(i).getId().equals(l.get(s).getId())) {
 					l.remove(s);
 				}
@@ -75,5 +83,55 @@ public class OptionQueryController {
 		}
 		return l;
 	}
-	
+
+	/***
+	 * 邮件
+	 * 
+	 * @param Addressee
+	 * @param title
+	 * @param content
+	 * @return
+	 * @throws MessagingException
+	 */
+	@RequestMapping("SendMail")
+	public String SendMail(String Addressee, String title, String [] content,String [] img) throws MessagingException {
+		MimeMessage mimeMessage = mailSender.createMimeMessage();
+		
+		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+
+		helper.setFrom("yw5820n@163.com");
+
+		helper.setTo(Addressee);
+
+		helper.setSubject(title);
+		String cont = "<html><body><div style='width: 100%;height: 100%;'><h3 style='text-indent: 20px;margin:30px;color: #ffc09f;border-bottom: 1px solid #ffc09f;padding-bottom: 20px;'>XXX 小仙女，这次[米莱琪]为您推荐了更适合您的衣服哦。快些看看吧~~~，期待您再次下凡[莱米琪]哦~~~。</h3>";
+		for(int i = 0;i<content.length;i++) {
+			content[i] = content[i].replaceAll("/goods/"+img[i], "cid:"+img[i]);
+			cont += content[i];
+		}
+		cont += "</div></body></html>";
+		helper.setText(cont, true);
+
+		// 注意addInline()中资源名称 hello 必须与 text正文中cid:hello对应起来
+
+		for(int s = 0;s<img.length;s++) {
+			FileSystemResource file1 = new FileSystemResource(new File("d:\\img\\goods\\"+img[s]));
+
+			helper.addInline(img[s], file1);
+		}
+
+		try {
+
+			mailSender.send(mimeMessage);
+
+			System.out.println("success");
+
+		} catch (Exception e) {
+			System.out.println("error"+e);
+			return "0";
+
+		}
+		return "1";
+	}
+
 }
