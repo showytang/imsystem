@@ -568,7 +568,7 @@ function queryLikeGoodsValue(lid,season) {
 		url:"/ther/queryLikeGoodsValue",
 		type:"post",
 		data:{
-			lid:lid,
+			cid:lid,
 			season:season
 		},
 		dataType:"json",
