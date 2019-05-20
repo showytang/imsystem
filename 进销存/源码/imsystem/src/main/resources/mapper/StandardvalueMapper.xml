@@ -40,7 +40,7 @@ SELECT va.*,s.`name` AS sname,u.`name` AS uname,g.name AS gname FROM `standardva
   </select>
   
   <select id="querytid" resultMap="BaseResultMap">
-  	SELECT * FROM standard WHERE tid=#{tid}
+  	SELECT * FROM standard WHERE tid=#{tid} and state=0
   </select>
   
  <update id="toupdate">
