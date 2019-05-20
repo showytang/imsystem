@@ -78,7 +78,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 	@Autowired
 	SupplierMapper supperMap;
-	
+
 	@Autowired
 	PaytypeMapper pay;
 
@@ -132,15 +132,15 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 	@Override
 	public int insertSalesorder(Salesorder salesorder) {
 		// TODO Auto-generated method stub
-		
-		if(!(salesorder.getCid().equals("0"))) {
-			
+
+		if (!(salesorder.getCid().equals("0"))) {
+
 			curtomer.updateplug(salesorder.getCid(), salesorder.getPreprice());
-			
+
 		}
-		
+
 		salesorder.setId(UUID.randomUUID().toString());
-		
+
 		salesorder.setUpdatetime(salesorder.getTime());
 
 		int count = salesorderMapper.insertSelective(salesorder);
@@ -151,7 +151,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 		}
 		count += salesorderdetailsMapper.add(salesorder);
-		
+
 		return count;
 	}
 
@@ -182,7 +182,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 		sup.setId(stock.getSid());
 
 		double price = stockdetail.querydetailsSumPrice(stock.getId());
-		
+
 		if (price > Double.parseDouble(stock.getColumn1())) {
 
 			sup.setBalance(price - Double.parseDouble(stock.getColumn1()));
@@ -211,9 +211,9 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 		for (Stockdetails item : stockde) {
 
 			count += stockdetail.updateCount(item.getCode(), item.getCount(), item.getGvid());
-			
+
 			storeid = item.getStoreid();
-			
+
 			if (stockdetail.selectCount(item.getCode(), storeid) == 0) {
 				count += stockM.updateState(item.getCode());
 				count += stockdetail.update(item.getId());
@@ -270,9 +270,9 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 	Boolean bool = true;
 
 	String storeidd;
-	
+
 	String uidd;
-	
+
 	@Override
 	public Boolean insertOrderOut(Salesorder salesorder) {
 		// TODO Auto-generated method stub
@@ -281,19 +281,17 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 		if (salesorder.getCid() != "0") {
 			if (salesorder.getPaymoney() >= (salesorder.getPreprice() + salesorder.getTainmoney())) {
-				count += curtomer.update(salesorder.getCid(),
-						(salesorder.getPreprice() + salesorder.getTainmoney()));
-			}
-			else if(salesorder.getPaymoney() < (salesorder.getPreprice() + salesorder.getTainmoney())){
+				count += curtomer.update(salesorder.getCid(), (salesorder.getPreprice() + salesorder.getTainmoney()));
+			} else if (salesorder.getPaymoney() < (salesorder.getPreprice() + salesorder.getTainmoney())) {
 				count += curtomer.updateplug(salesorder.getCid(),
 						((salesorder.getPreprice() + salesorder.getTainmoney())) - salesorder.getPaymoney());
 			}
 		}
 
 		storeidd = salesorder.getStoreid();
-		
+
 		uidd = salesorder.getUid();
-		
+
 		Sales sales = new Sales();
 
 		sales.setId(UUID.randomUUID().toString());
@@ -308,8 +306,10 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 		sales.setPaymoney(salesorder.getPaymoney());
 
-		sales.setTainmoney(salesorder.getTainmoney()+salesorder.getPreprice() > salesorder.getPaymoney() ?salesorder.getPaymoney() : salesorder.getTainmoney()+salesorder.getPreprice() );
-		
+		sales.setTainmoney(salesorder.getTainmoney() + salesorder.getPreprice() > salesorder.getPaymoney()
+				? salesorder.getPaymoney()
+				: salesorder.getTainmoney() + salesorder.getPreprice());
+
 		sales.setPrice(salesorder.getPrice());
 
 		sales.setTime(new Date());
@@ -439,7 +439,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 		sales.setUid(salesdetails.get(0).getUid());
 
 		sales.setStoreid(salesdetails.get(0).getStoreid());
-		
+
 		sales.setColumn1(salesdetails.get(0).getId());
 
 		sales.setCount(0);
@@ -515,16 +515,60 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 	}
 
 	@Override
-	public int salesorderDel(String id,String cid, Double Moeny) {
+	public int salesorderDel(String id, String cid, Double Moeny) {
 		// TODO Auto-generated method stub
-		
+
 		salesorderMapper.deleteByPrimaryKey(id);
-		
-		if(!(cid.equals("0"))) {
+
+		if (!(cid.equals("0"))) {
 			curtomer.update(cid, Moeny);
 		}
-		
+
 		return salesorderdetailsMapper.deleteBySid(id);
+	}
+
+	@Override
+	public Boolean insertSales(Sales sales) {
+		// TODO Auto-generated method stub
+		bool = true;
+		storeidd = sales.getStoreid();
+		uidd = sales.getUid();
+
+		if (sales.getCid() != "0") {
+			if (sales.getPaymoney() > sales.getTainmoney()) {
+				curtomer.update(sales.getCid(), sales.getPaymoney() - sales.getTainmoney());
+			} else if (sales.getPaymoney() < sales.getTainmoney()) {
+				curtomer.updateplug(sales.getCid(), sales.getTainmoney() - sales.getPaymoney());
+			}
+		}
+
+		sales.setId(UUID.randomUUID().toString());
+
+		sales.setCode(UUID.randomUUID().toString());
+		
+		sales.setTime(new Date());
+		
+		sales.setUpdatetime(sales.getTime());
+
+		for (Salesdetails item : sales.getList()) {
+
+			item.setId(UUID.randomUUID().toString());
+
+		}
+
+		salesMapper.insertSelective(sales);
+
+		salesdetailsMapper.add(sales);
+
+		Vector<Salesdetails> vector = salesdetailsMapper.queryBySid(sales.getId());
+
+		for (Salesdetails item : vector) {
+
+			updateCount(item);
+
+		}
+
+		return bool;
 	}
 
 }
