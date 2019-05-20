@@ -151,22 +151,22 @@
 						</select>
 					</div>
 					<div class="goods">
-						<div v-for="obj in goods" class="gv col-md-4 col-xs-12">
-							<div v-for="objs in obj.list" class="shopGoods">
+						<div v-for="objs in goods" class="gv col-md-4 col-xs-12">
+							<div  class="shopGoods">
 								<img :src="objs.column4">
 								<div class="gValue">
 									<div class="gName">
 										<span class="name"><b>{{objs.name}}[{{objs.column1}}]</b></span><br>
 										<p class="p col-md-6 col-xs-6">
-											<b>价格：</b><span>￥{{objs.column5}}</span>
+											<b>价格：</b><span class="jg">￥{{objs.column5}}</span>
 										</p>
 										<p class="p col-md-6 col-xs-6">
-											<b>标签：</b><span>{{objs.column2}}</span>
+											<b>标签：</b><span class="bq">{{objs.column2}}</span>
 										</p>
 									</div>
 									<div class="but">
 										<a href="http://www.baidu.com"><button class="col-xs-12":value="objs.id">查看详情</button></a>
-										<a href="http://www.baidu.com"><button class="col-xs-12">推荐给TA</button></a>
+										<a class="send"><button class="col-xs-12">推荐给TA</button></a>
 									</div>
 								</div>
 							</div>
@@ -189,11 +189,34 @@
 				}
 			}
 		});
+		function sendMail(addRessee,title,content,img){
+			$.ajax({
+				url:"/ther/SendMail",
+				type:"post",
+				traditional: true,
+				data:{
+					Addressee:addRessee,
+					title:title,
+					content:content,
+					img:img
+				},
+				dataType:"json",
+				success:function(resp){
+					if(resp=="0"){
+						alert("推送失败！");
+					}else{
+						alert("推送成功！");
+					}
+				}
+				
+			});
+		}
 		var lid = "";
 		var season = "";
 		var sid = getStoreId() != "" ? getStoreId() : undefined;
 		
 		$(function() {
+			lid = sid;
 			vue.goods = queryLikeGoodsValue(lid, season);
 			vue.customer = queryCustomer(sid);
 			$(".store").change(function() {
@@ -203,6 +226,26 @@
 			$(".season").change(function() {
 				season = $(this).val();
 				vue.goods = queryLikeGoodsValue(lid, season);
+			});
+			$(document).on("click",".send",function(){
+				var img = [];
+				var content = [];
+				$.each($(".gv"),function(i,obj){
+					var goods = $(obj).html();
+					var u = $(goods).find("img").attr("src").split("/goods/");
+					img.push(u[1]);
+					var div = "<div style='width: 45%;height: 380px;margin-left: 3%;float: left;margin-top:55px;box-shadow:0px 0px 15px #e2dbbe;'>"+
+							"<img style='width: 100%;height: 220px;' src='"+$(goods).find("img").attr("src")+"' />"+
+							"<div style='height: 180px;width: 100%;border: 1px solid #3287B2;border-top: 0px;'>"+
+									"<h3 style='color:#a3a380;float: left;margin: 20px 10px;white-space: nowrap;display: inline-block;width: 100%;height: 40px;overflow: hidden;text-overflow: ellipsis;'>"+$(goods).find(".name>b").text()+"</h3>"+
+									"<span style='color:#a3a380;float: left;margin-left: 10%;margin-top: 8px;font-size: 18px;'>价格: <b style='color: #00C800;font-size:16px;'>"+$(goods).find(".jg").text()+"</b></span>"+
+									"<span style='color:#a3a380;float: right;margin-right: 10%;margin-top: 8px;font-size: 18px;'>标签: <b style='color: #00C800;font-size:16px;'>"+$(goods).find(".bq").text()+"</b></span>"+
+									"<a href='' style='width:100%;height:40px;line-height:40px;float:left;display: block;text-align: center;text-decoration: none;font-size: 20px;background-color: #4cb4e7;margin-top: 25px;color: #FFFFFF;'>查看详情</a>"+
+								"</div>"+
+							"</div>";
+					content.push(div);
+				});
+				sendMail("2876629401@qq.com","测试邮件",content,img);
 			});
 		});
 	</script>

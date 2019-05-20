@@ -179,6 +179,7 @@ public class GoodsServiceImpl implements GoodsService {
 			sd.setId(UUID.randomUUID().toString());
 			sd.setSid(stockId);
 			sd.setGvid(goodsvID);
+			sd.setScount(0);
 			sd.setTime(time);
 			sd.setUpdatetime(time);
 			sd.setPrice(goodsVo.getGoods().getJprice());
@@ -244,6 +245,7 @@ public class GoodsServiceImpl implements GoodsService {
 					gv.getStockDetails().setSid(UUID.randomUUID().toString());
 					gv.getStockDetails().setGvid(gvid);
 					gv.getStockDetails().setState(0);
+					gv.getStockDetails().setScount(0);
 					gv.getStockDetails().setTime(time);
 					gv.getStockDetails().setUpdatetime(time);
 					stockDetailsMap.insertSelective(gv.getStockDetails());

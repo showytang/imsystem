@@ -94,7 +94,7 @@ button {
 	cursor: pointer;
 }
 
-.table-div>ul>li {
+.table-div>ul>li>div {
 	display: flex;
 	justify-content: space-around;
 	line-height: 40px;
@@ -119,7 +119,7 @@ button {
 	cursor: pointer;
 }
 
-.table-div>ul>li>div {
+.table-div>ul>li>div>div {
 	width: 100%;
 	text-align: center;
 	overflow: hidden;
@@ -134,12 +134,22 @@ button {
 
 .table-div-ul-ul>li {
 	display: flex;
-	justify-content: space-around;
 	line-height: 30px;
 	font-size: 12px;
 	color: #ef6560;
 	position: relative;
 	border-bottom: 1px solid #bcde87;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.table-div-ul-ul>li>div {
+	width: 100%;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	text-align: center;
+	text-overflow: ellipsis;
 }
 
 .table-div-SumPrice {
@@ -306,23 +316,29 @@ button {
 				<div class="table-div">
 					<ul class="order-goods">
 						<li class="head-title">
-							<div>商品名称</div>
-							<div>数量</div>
-							<div>单价</div>
-							<div>总计</div>
-						</li>
-						<li v-for="(item,index) in orderShapping">
-							<div>{{item.goods.name}}</div>
 							<div>
-								<input class="goodsNumber" type="text"
-									@input="input(item.goods.column1,index)" v-model="item.goods.column1">
+								<div>商品名称</div>
+								<div>数量</div>
+								<div>单价</div>
+								<div>总计</div>
 							</div>
-							<div>{{item.goods.price}}</div>
-							<div>{{item.goods.column1 * item.goods.price}}</div>
+						</li>
+						<li>
+							<div v-for="(item,index) in orderShapping" v-if="item != null"
+								:index="index">
+								<div>{{item.goods.name}}</div>
+								<div>
+									<input class="goodsNumber" type="text"
+										@input="input(item.goods.column1,index)"
+										v-model="item.goods.column1">
+								</div>
+								<div>{{item.goods.price}}</div>
+								<div>{{item.goods.column1 * item.goods.price}}</div>
+							</div>
 						</li>
 					</ul>
 					<div class="table-div-bottom">
-						<button>挂单</button>
+						<button @click="upOrder">挂单</button>
 						<button>确认订单</button>
 					</div>
 					<div class="table-div-SumPrice">
@@ -333,93 +349,49 @@ button {
 				<div class="table-div">
 					<ul class="table-div-ul">
 						<li>
-							<div>时间</div>
-							<div>数量</div>
-							<div>价格</div>
-							<div>操作</div>
-						</li>
-						<li>
 							<div>
-								<span>8:57</span>
-							</div>
-							<div>
-								<span>8</span>
-							</div>
-							<div>
-								<span>2000</span>
-							</div>
-							<div>
-								<span title="确认订单" class="order-ok">√</span>&nbsp;&nbsp;&nbsp;&nbsp;<span
-									title="取消" class="del-table-ul-li">></span>
+								<div>时间</div>
+								<div>数量</div>
+								<div>价格</div>
+								<div>操作</div>
 							</div>
 						</li>
-						<ul class="table-div-ul-ul">
-							<li>
+						<li v-for="(item,index) in upOrderList" v-if="item != null">
+							<div @click="upDown($event)">
 								<div>
-									<span>vivo</span>
+									<span>{{item.order.time}}</span>
 								</div>
 								<div>
-									<span>2</span>
+									<span>{{item.order.count}}</span>
 								</div>
 								<div>
-									<span>红色</span>
-								</div>
-								<div class="del-ul-li">></div>
-							</li>
-							<li>
-								<div>
-									<span>vivo</span>
+									<span>{{item.order.sum}}</span>
 								</div>
 								<div>
-									<span>2</span>
+									<span title="确认订单" class="order-ok">√</span>&nbsp;&nbsp;&nbsp;&nbsp;<span
+										title="取消" @click="upOrderListDel(index,$event)"
+										class="del-table-ul-li">></span>
 								</div>
-								<div>
-									<span>红色</span>
-								</div>
-								<div class="del-ul-li">></div>
-							</li>
-						</ul>
-						<li>
-							<div>
-								<span>8:57</span>
 							</div>
-							<div>
-								<span>8</span>
-							</div>
-							<div>
-								<span>7001</span>
-							</div>
-							<div>
-								<span title="确认订单" class="order-ok">√</span>&nbsp;&nbsp;&nbsp;&nbsp;<span
-									title="取消" class="del-table-ul-li">></span>
-							</div>
+							<ul class="table-div-ul-ul" style="padding-left: 20px;">
+								<li v-for="(item1,index1) in item.list" v-if="item1 != null">
+									<div>
+										<span>{{item1.goods.name}}</span>
+									</div>
+									<div>
+										<span>{{item1.goods.column1}}</span>
+									</div>
+									<div>
+										<span>{{item1.goods.price}}</span>
+									</div>
+									<div>
+										<span>{{item1.goodsValue.name}}</span>
+									</div>
+									<div class="del-ul-li"
+										@click="upOrderListListDel(index,index1,$event)">></div>
+								</li>
+							</ul>
 						</li>
-						<ul class="table-div-ul-ul">
-							<li>
-								<div>
-									<span>vivo</span>
-								</div>
-								<div>
-									<span>2</span>
-								</div>
-								<div>
-									<span>红色</span>
-								</div>
-								<div class="del-ul-li">></div>
-							</li>
-							<li>
-								<div>
-									<span>vivo</span>
-								</div>
-								<div>
-									<span>2</span>
-								</div>
-								<div>
-									<span>红色</span>
-								</div>
-								<div class="del-ul-li">></div>
-							</li>
-						</ul>
 					</ul>
 				</div>
 			</div>
@@ -469,7 +441,7 @@ button {
 						<div class="images">
 							<!-- <img v-if="item.goodsValue.column1 != null && item.goodsValue.column1 != ''" :src="item.goodsValue.column1" />
 							<img v-else :src="item.goods.img" /> -->
-							<img th:src="@{/assets/img/qq.png}" />
+							<img :src="'data:image/png;base64,'+item.goods.img" />
 						</div>
 						<div class="goodsName" style="margin-top: 50px;">
 							<span>{{item.goods.name}}</span>
@@ -510,45 +482,175 @@ button {
 				
 				orderShapping : [],
 				
-				sum : 0
+				sum : 0,
+				
+				upOrderList : []
+				
 				
 			},
 			methods : {
+				
+				upOrderListListDel : function (index,index1,obj){
+					
+					let current = obj.currentTarget;
+					
+					var th = $(current).parent();
+					
+					let len = 0;
+					
+					th.animate({
+						
+						"left" : "100%",
+						"opacity" : "0"
+						
+					}, 1000,function (){
+						
+						vue.upOrderList[index].list.forEach(item => {
+							if(item)
+								len++;
+						})
+						
+						if(len == 1){
+							
+							vue.upOrderList.splice(index,1,null);
+							
+							return;
+								
+						}
+						
+						vue.upOrderList[index].order.count -= vue.upOrderList[index].list[index1].goods.column1;
+						
+						vue.upOrderList[index].order.sum -= vue.upOrderList[index].list[index1].goods.column1 * vue.upOrderList[index].list[index1].goods.price;
+						
+						vue.upOrderList[index].list.splice(index1,1,null);
+						
+						
+					});
+					
+				},
+				upOrderListDel : function (index,obj){
+					
+					let current = obj.currentTarget;
+					
+					var th = $(current).parent().parent();
+
+					th.animate({
+						
+						"left" : "100%",
+						"opacity" : "0"
+						
+					}, 1000);
+					th.next().animate({
+						
+						"left" : "100%",
+						"opacity" : "0"
+						
+					}, 1000, function() {
+						
+						vue.upOrderList.splice(index,1,null);
+						
+					});
+					
+				},
+				upOrder : function (){
+					
+					var date = new Date();
+					var upOrder = {
+							order : null,
+							
+							list : null
+							
+					}
+					var order = {
+							
+						time : date.getHours()+":"+date.getMinutes(),
+						
+						count : 0,
+						
+						sum : 0
+							
+					};
+					
+					this.orderShapping.forEach((item,i) => {
+						
+						if(item){
+							
+							order.count += item.goods.column1;
+							
+							order.sum += item.goods.column1*item.goods.price;
+							
+						}
+						
+					});
+					
+					upOrder.order = order;
+					
+					upOrder.list = JSON.parse(JSON.stringify(this.orderShapping));
+					
+					this.upOrderList.push(upOrder);
+					
+					this.orderShapping = [];
+					
+					this.sum = 0;
+					
+				},
 				addOrderShapping : function (index,obj){
 					
 					let current = obj.currentTarget;
 					
+					let count = parseInt($(current).parent().prev().find("input").val());
+					
 					try{
-						
 						this.orderShapping.forEach((item,i) => {
-							
-							if(item.goodsValue.id == this.list[index].goodsValue.id){
-								
-								this.list[index].goods.column1 = parseInt(this.list[index].goods.column1) + parseInt($(current).parent().prev().find("input").val());
-								
-								this.orderShapping[i].goods.column1 = this.list[index].goods.column1;
-								
-								this.sum += this.orderShapping[index].goods.column1 * this.orderShapping[index].goods.price;
-								
-								throw new Error("EndIterative");
+							if(item){
+								if(item.goodsValue.id == this.list[index].goodsValue.id){
+									
+									this.sum -= item.goods.column1 * item.goods.price;
+									
+									this.list[index].goods.column1 = parseInt(this.list[index].goods.column1) + count;
+									
+									item.goods.column1 = this.list[index].goods.column1;
+									
+									this.sum += item.goods.column1 * item.goods.price;
+									
+									throw new Error("StopIteration");
+								} 
 							}
 							
 						});
 						
+						this.list[index].goods.column1 = count;
+						
 						this.sum += this.list[index].goods.column1 * this.list[index].goods.price;
 						
+						//vue.$set(this.orderShapping, index, this.list[index]);
+					
 						this.orderShapping.push(this.list[index]);
 						
 						setTimeout(() => {
 							
-							down($(".order-goods>li:eq("+index+")"),index);
+							down($(".order-goods>li>div"));
 							
-						},100);
-						
+						},200);
 						
 					}
 					catch(e){
 						
+					}
+				},
+				upDown : function (obj){
+					
+					let current = obj.currentTarget;
+					
+					if ($(current).next().hasClass("table-div-ul-ul")) {
+						if ($(current).next().css("display") == "none") {
+							
+							$(current).next().slideDown();
+							
+						} else {
+							
+							$(current).next().slideUp();
+						}
 					}
 					
 				},
@@ -556,13 +658,7 @@ button {
 					
 					this.list[index].goods.column1 = val;
 					
-					vue.sum = 0;
-					
-					this.orderShapping.forEach((item,i) => {
-						
-						vue.sum += item.goods.column1 * item.goods.price						
-					
-					});
+					sum()
 					
 				},
 				goodskeycode : function(){
@@ -640,58 +736,6 @@ button {
 				}
 			});
 			
-			$(".del-ul-li").click(function() {
-
-				var th = $(this).parent();
-
-				th.animate({
-					"left" : "100%",
-					"opacity" : "0"
-				}, 1000, function() {
-
-					th.remove();
-
-				});
-
-			});
-			$(".del-table-ul-li").click(function(e) {
-
-				e.stopPropagation(); //防止事件冒泡
-
-				var th = $(this).parent().parent();
-
-				let thnext = th.next();
-
-				th.animate({
-					"left" : "100%",
-					"opacity" : "0"
-				}, 1000, function() {
-
-					th.remove();
-
-				});
-				if (thnext.hasClass("table-div-ul-ul")) {
-					thnext.animate({
-						"left" : "100%",
-						"opacity" : "0"
-					}, 1000, function() {
-						thnext.remove();
-					});
-				}
-
-			});
-			$(".table-div-ul>li").click(function(e) {
-				if ($(this).next().hasClass("table-div-ul-ul")) {
-					if ($(this).next().css("display") == "none") {
-						$(this).next().slideDown();
-					} else {
-						$(this).next().slideUp();
-					}
-				}
-			});
-			$(".order-ok").click(function() {
-				//alert(1);
-			});
 			$(".right-head-div-options").click(
 					function() {
 						$("#right-head>div").removeClass(
@@ -716,9 +760,19 @@ button {
 								"display", "none");
 					});
 		});
+		
+		function sum(){
+			vue.sum = 0;
+			vue.orderShapping.forEach((item,i) => {
+				if(item){
+					vue.sum += item.goods.column1 * item.goods.price;	
+				}
+				
+			});
+		}
 
 		//绑定华东事件
-		var down = function(objs,index) {
+		var down = function(objs) {
 
 			objs.each(function(i, obj) {
 				if (!$(obj).hasClass("head-title")) {
@@ -747,8 +801,14 @@ button {
 						if (even.clientX - left > 100) {
 							$(obj).animate({
 								"opacity" : "0"
-							}, 500, function() {
-								vue.orderShapping.splice(index,0)
+							}, 300, function() {
+								
+								var index = $(obj).attr("index");
+								
+								vue.orderShapping.splice(index,1,null);
+								
+								sum();
+								
 							});
 						} else {
 							$(obj).css("left", "0")
