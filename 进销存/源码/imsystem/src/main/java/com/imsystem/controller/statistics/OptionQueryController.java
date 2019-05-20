@@ -25,6 +25,7 @@ import com.imsystem.service.statistics.GoodsValueLableService;
 import com.imsystem.service.statistics.GoodsValueService;
 import com.imsystem.service.statistics.SalesService;
 import com.imsystem.service.statistics.Supplier_yService;
+import com.imsystem.util_y.Sending;
 
 @RestController
 @RequestMapping("ther")
@@ -94,7 +95,7 @@ public class OptionQueryController {
 	 * @throws MessagingException
 	 */
 	@RequestMapping("SendMail")
-	public String SendMail(String Addressee, String title, String [] content,String [] img) throws MessagingException {
+	public String SendMail(String Addressee, String title, String [] content,String [] img,String cName,String text,String phone) throws MessagingException {
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		
 		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
@@ -104,7 +105,12 @@ public class OptionQueryController {
 		helper.setTo(Addressee);
 
 		helper.setSubject(title);
-		String cont = "<html><body><div style='width: 100%;height: 100%;'><h3 style='text-indent: 20px;margin:30px;color: #ffc09f;border-bottom: 1px solid #ffc09f;padding-bottom: 20px;'>XXX 小仙女，这次[米莱琪]为您推荐了更适合您的衣服哦。快些看看吧~~~，期待您再次下凡[莱米琪]哦~~~。</h3>";
+		if (text != null && text != "") {
+			text = text.replace("[cName]", cName);
+		}else {
+			text = cName+" 小仙女，这次[米莱琪]为您推荐了更适合您的衣服哦。快些看看吧~~~，期待您再次下凡[莱米琪]哦~~~。";
+		}
+		String cont = "<html><body><div style='width: 100%;height: 100%;'><h3 style='text-indent: 20px;margin:30px;color: #ffc09f;border-bottom: 1px solid #ffc09f;padding-bottom: 20px;'>"+text+"</h3>";
 		for(int i = 0;i<content.length;i++) {
 			content[i] = content[i].replaceAll("/goods/"+img[i], "cid:"+img[i]);
 			cont += content[i];
@@ -123,6 +129,9 @@ public class OptionQueryController {
 		try {
 
 			mailSender.send(mimeMessage);
+			/*if (phone != null && phone != "") {
+				Sending.mobileQuery(phone);
+			}*/
 
 			System.out.println("success");
 
