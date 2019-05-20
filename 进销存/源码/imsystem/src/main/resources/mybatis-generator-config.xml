@@ -21,17 +21,7 @@
 		<javaClientGenerator targetPackage="com.imsystem.mapper"
 			targetProject="src/main/java" type="XMLMAPPER" />
 		
-		<table schema="Customergroup" tableName="customergroup"></table>
-		<table schema="goodsvalueandlable" tableName="goodsvalueandlable"></table>
-		<table schema="Goodsvaluelable" tableName="goodsvaluelable"></table>
-		<table schema="Promotion" tableName="promotion"></table>
-		<table schema="Promotiongoods" tableName="promotiongoods"></table>
-		<table schema="Promotionmap" tableName="promotionmap"></table>
-		<table schema="Promotionrule" tableName="promotionrule"></table>
-		<table schema="Promotionrulevalue" tableName="promotionrulevalue"></table>
-		<table schema="Userandlable" tableName="userandlable"></table>
-		<table schema="Userlable" tableName="userlable"></table>
-		<table schema="Userlableandgoodsvalue" tableName="userlableandgoodsvalue"></table>
+		<table schema="Log" tableName="log"></table>
 		
 	</context>
 </generatorConfiguration>

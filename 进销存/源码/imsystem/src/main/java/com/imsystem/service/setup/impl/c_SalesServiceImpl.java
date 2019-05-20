@@ -21,4 +21,10 @@ public class c_SalesServiceImpl implements c_SalesService{
 		return salesMapper.ChaXunJinRiZongE(id);
 	}
 
+	@Override
+	public Sales ChaXunBenYueZongE(String id) {
+		
+		return salesMapper.ChaXunBenYueZongE(id);
+	}
+
 }

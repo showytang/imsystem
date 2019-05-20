@@ -5,6 +5,7 @@ import com.imsystem.domain.ModuleExample;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.catalina.User;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
 
@@ -62,5 +63,5 @@ public interface ModuleMapper {
    
    int  updateModuleById_two(@Param("url") String url,@Param("id") String id);
    
-   
+   Module queryModuleNameByEnname(String enname);
 }
