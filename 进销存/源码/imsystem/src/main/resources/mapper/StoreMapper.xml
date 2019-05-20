@@ -457,7 +457,7 @@
   
    <select id="SelectStoreAll"  resultMap="ResultMap">
   		SELECT s.*,u.name as uname FROM `store` AS s 
-       INNER JOIN `user` AS u
+        LEFT JOIN `user` AS u
        ON s.id=u.storeid
   	  <where>
 	 	<if test="name!=null and name!=''">

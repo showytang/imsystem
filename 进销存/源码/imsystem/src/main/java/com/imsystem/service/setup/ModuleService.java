@@ -44,5 +44,7 @@ public interface ModuleService {
 	    
 	    int  updateModuleById_two(@Param("url") String url,@Param("id") String id);
 	    
+	    Module queryModuleNameByEnname(String enname);
+	    
 	    Module selectByPrimaryKey(String id);
 }

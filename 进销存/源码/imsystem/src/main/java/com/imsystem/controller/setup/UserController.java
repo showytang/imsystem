@@ -21,6 +21,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.imsystem.domain.Log;
 import com.imsystem.domain.Role;
 import com.imsystem.domain.Sales;
 import com.imsystem.domain.Store;
@@ -30,6 +31,7 @@ import com.imsystem.service.setup.RoleService;
 import com.imsystem.service.setup.StoreService_c;
 import com.imsystem.service.setup.UserService;
 import com.imsystem.service.setup.c_SalesService;
+import com.imsystem.service.setup.logService;
 
 @Controller
 @RequestMapping("/user")
@@ -38,6 +40,8 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
+	@Autowired
+	logService logService;
 	
 	@Autowired
 	StoreService_c storeService_c;
@@ -114,10 +118,18 @@ public class UserController {
 		
 		Sales s =c_salesService.ChaXunJinRiZongE(user.getId());
 		
+		Sales b =c_salesService.ChaXunBenYueZongE(user.getId());
+		
+		List<Log> log= logService.queryRiZhi();
+		
 		
 		model.addAttribute("u", u);
 		
 		model.addAttribute("s", s);
+		
+		model.addAttribute("b", b);
+		
+		model.addAttribute("log",log);
 		
 		return "czx/page-profile";
 		
