@@ -52,4 +52,10 @@ public interface SalesorderMapper {
 	List<Salesorder> queryByTime(@Param("startTime") String startTime,@Param("endTime") String endTime,@Param("storeid") String storeid);
 	
 	Salesorder queryOrderCountByTime(@Param("time") String time,@Param("sid") String sid);
+	/***
+	 * 查询客户买过的商品id
+	 * @param cid
+	 * @return sd.gvid as column1
+	 */
+	List<Salesorder> querySalesGoodsByCid(@Param("cid") String cid);
 }

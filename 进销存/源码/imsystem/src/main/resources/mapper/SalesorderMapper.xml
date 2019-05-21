@@ -642,4 +642,10 @@
 		</if>
 		GROUP BY DATE_FORMAT(s.time,'%Y-%m')
 	</select>
+	<select id="querySalesGoodsByCid" resultMap="BaseResultMap">
+		SELECT sd.gvid AS column1  FROM sales AS s JOIN salesdetails AS sd ON s.id = sd.sid WHERE s.state = '0'
+		<if test="cid != null and cid != ''">
+			 AND s.cid = #{cid}
+		</if>
+	</select>
 </mapper>

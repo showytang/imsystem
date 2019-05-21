@@ -3,6 +3,7 @@ package com.imsystem.controller.statistics;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -19,11 +20,13 @@ import com.imsystem.domain.GoodsValueVo;
 import com.imsystem.domain.Goodsvalue;
 import com.imsystem.domain.Goodsvaluelable;
 import com.imsystem.domain.Sales;
+import com.imsystem.domain.Salesorder;
 import com.imsystem.domain.Supplier;
 import com.imsystem.service.goods.GoodsService;
 import com.imsystem.service.statistics.GoodsValueLableService;
 import com.imsystem.service.statistics.GoodsValueService;
 import com.imsystem.service.statistics.SalesService;
+import com.imsystem.service.statistics.SalesorderService;
 import com.imsystem.service.statistics.Supplier_yService;
 import com.imsystem.util_y.Sending;
 
@@ -42,6 +45,8 @@ public class OptionQueryController {
 	GoodsValueLableService gvals;
 	@Autowired
 	JavaMailSender mailSender;
+	@Autowired
+	SalesorderService sos;
 
 	@RequestMapping("queryGoods")
 	public List<GoodsValueVo> queryGoods() {
@@ -75,13 +80,43 @@ public class OptionQueryController {
 			List<Goodsvaluelable> ll = gvals.queryByLid(gvl.getId(), season);
 			l.addAll(ll);
 		}
-		for (int i = 0; i < l.size(); i++) {
-			for (int s = 0; s < l.size(); s++) {
-				if (l.get(i).getId().equals(l.get(s).getId())) {
-					l.remove(s);
+		Random rand = new Random();//随机数
+		//获取用户买过的商品
+		List<Salesorder> salesGoodsBycid = sos.querySalesGoodsByCid(cid);
+		if (salesGoodsBycid.size()>0) {
+			//生成随机数
+			int getSg = rand.nextInt(list.size());
+			//根据购买过的商品随机推荐购买过此商品客户购买过最多的其他的商品
+			List<Goodsvaluelable> lb = gvals.queryTaLikeBygvid(salesGoodsBycid.get(getSg).getColumn1());
+			for (Goodsvaluelable lbs : lb) {
+				Goodsvaluelable gl = gvals.queryGoodsBygvid(lbs.getId());
+				if (gl!=null) {
+					l.add(gl);//查询商品
 				}
 			}
 		}
+		//查询用户标签
+		List<Goodsvaluelable> usLable = gvals.queryUlidByCid(cid);
+		if (usLable.size()>0) {
+			//取随机用户标签
+			int getull = rand.nextInt(usLable.size());
+			//根据用户标签查询商品
+			List<Goodsvaluelable> byUlGoods = gvals.queryGoodsByUl(usLable.get(getull).getColumn1());
+			l.addAll(byUlGoods);
+		}
+		//删除重复商品
+		 for  ( int  i  =   0 ; i  <  l.size()  -   1 ; i ++ )  {
+			 System.out.println(l.size());
+			 System.out.println(l.get(l.size()-1).getId());
+		      for  ( int  j  =  l.size()  -   1 ; j  >  i; j -- )  {  
+		    	 System.out.println(j);
+		    	 System.out.println(l.get(j).getId());   
+		           if  (l.get(j).getId().equals(l.get(i).getId()))  {       
+		              l.remove(j); 
+		              continue;
+		            }
+		        }        
+		 } 
 		return l;
 	}
 

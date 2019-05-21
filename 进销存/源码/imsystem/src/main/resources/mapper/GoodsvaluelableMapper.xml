@@ -304,7 +304,7 @@
 	 GROUP BY gvl.id ORDER BY column3 DESC LIMIT 5
   </select>
   <select resultMap="BaseResultMap" id="queryByLid">
-  	SELECT gv.id AS id,g.name AS NAME,gv.name AS column1,gvl.name AS column2,SUM(s.count) AS column3,gv.column1 AS column4, gv.jprice AS column5 FROM goodsvalue AS gv
+  	SELECT gv.id AS id,g.name AS NAME,gv.name AS column1,gvl.name AS column2,SUM(s.count) AS column3,gv.column1 AS column4, g.price AS column5 FROM goodsvalue AS gv
 	INNER JOIN goodsValueAndLable AS gval ON gv.id = gval.gvid
 	INNER JOIN goodsValueLable AS gvl ON gvl.id = gval.gvlid
 	INNER JOIN salesdetails AS s ON s.gvid  = gv.id
@@ -318,5 +318,46 @@
 		</if>
 	</where>
 	GROUP BY gv.id ORDER BY column3 DESC LIMIT 5
+  </select>
+  <select id="queryTaLikeBygvid" resultMap="BaseResultMap">
+		SELECT ssd.gvid AS id,ss.cid AS column1,COUNT(ssd.gvid) AS column2 FROM sales AS ss
+		INNER JOIN salesdetails AS ssd ON ssd.sid = ss.id
+		INNER JOIN (SELECT sd.gvid AS sdgvid,s.cid AS scid FROM salesdetails AS sd
+		INNER JOIN sales AS s ON s.id = sd.sid
+		<where>
+			<if test="gvid!=null and gvid!=''">
+				 gvid = #{gvid}
+			</if>
+		</where>
+		) AS saless ON saless.scid = ss.cid
+		WHERE ss.state='0' AND ssd.gvid != saless.sdgvid  GROUP BY ssd.gvid ORDER BY column2 DESC LIMIT 6
+  </select>
+  <select id="queryGoodsByUl" resultMap="BaseResultMap">
+  	SELECT gv.id as id,g.name AS NAME ,gv.name AS column1,ul.name AS column2,g.price AS column5,gv.`column1` AS column4,COUNT(ul.id) AS sl FROM userLableAndGoodsValue AS ulag 
+	JOIN userLable AS ul ON ul.id = ulag.ulid
+	JOIN goodsvalue AS gv ON gv.id = ulag.gvid
+	JOIN goods AS g ON g.id = gv.gid
+	WHERE gv.`state` = '0'
+	<if test="ulid != null and ulid != ''">
+		 AND ul.id=#{ulid}
+	</if>
+	 ORDER BY sl DESC LIMIT 5
+  </select>
+  <select id="queryUlidByCid" resultMap="BaseResultMap">
+  	SELECT ulid AS column1 FROM userandlable WHERE state = '0'
+  	<if test="cid != null and cid != ''">
+  		 AND  uid = #{cid}
+  	</if>
+  </select>
+  <select id="queryGoodsBygvid" resultMap="BaseResultMap">
+  	SELECT gv.id as id,g.name AS NAME,gv.`name` AS column1,gvl.name AS column2,g.price AS column5,gv.`column1` AS column4 FROM goods AS g 
+		JOIN goodsvalue AS gv ON gv.`gid` = g.id
+		JOIN goodsvalueandlable AS gval ON gval.gvid = gv.`id`
+		JOIN goodsvaluelable AS gvl ON gvl.id = gval.gvlid
+		WHERE gv.`state` = '0' 
+		<if test="gvid != null and gvid != ''">
+			AND gv.`id` = #{gvid}
+		</if>
+		 LIMIT 1
   </select>
 </mapper>

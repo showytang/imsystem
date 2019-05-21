@@ -167,7 +167,9 @@
 								</thead>
 								<tbody>
 									<tr v-for="item in pageIf.list" v-on:click="openModel(item.id,item.cid)">
-										<td>{{item.code}}</td>
+										<td style="display:flex">
+											<div v-if="item.state == 1" style="color:red;font-size:13px;padding:2px 4px;border:1px solid red">已退货</div> &nbsp;&nbsp;{{item.code}}
+										</td>
 										<td>{{item.count}}</td>
 										<td>{{item.time}}</td>
 										<td>{{item.column5}}</td>
