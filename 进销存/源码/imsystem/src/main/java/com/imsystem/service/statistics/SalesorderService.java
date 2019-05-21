@@ -25,4 +25,6 @@ public interface SalesorderService{
 	List<Salesorder> queryByTime(@Param("startTime") String startTime,@Param("endTime") String endTime,@Param("storeid") String storeid);
 	
 	Salesorder queryOrderCountByTime(@Param("time") String time,@Param("sid") String sid);
+	
+	List<Salesorder> querySalesGoodsByCid(@Param("cid") String cid);
 }
