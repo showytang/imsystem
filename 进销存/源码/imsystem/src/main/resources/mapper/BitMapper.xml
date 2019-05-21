@@ -19,7 +19,7 @@
   	<where>
   		b.state=0 
   		<if test="text!=null">
-  				and b.id LIKE concat('%',#{text}) OR  b.NAME LIKE concat('%',#{text}) OR u.name LIKE concat('%',#{text})
+  				and (b.NAME LIKE concat('%',#{text}) OR u.name LIKE concat('%',#{text}))
   		</if>
   	</where>
   </select>
@@ -284,7 +284,7 @@
   </update>
   
   
-  <update id="updatestate" parameterType="String" >
+  <update id="updatestate" >
    		UPDATE BIT SET state=1 WHERE id=#{id}
   </update>
   

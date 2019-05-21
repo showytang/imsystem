@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.github.pagehelper.PageInfo;
+import com.imsystem.domain.Log;
 import com.imsystem.domain.User;
 
 public interface UserService {

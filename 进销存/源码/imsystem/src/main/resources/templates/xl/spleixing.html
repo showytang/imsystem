@@ -24,14 +24,19 @@
 		
 		.table{
 				color: rgb(2, 143, 208);
-			
+				margin-left: 20px;
+				width: 1010PX;
 				text-align: center;
 				
 			}
 		.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
 				border-top: 1px solid rgb(2, 143, 208);
 				color: #686B6E;
+				
 			}
+			
+		
+			
 		.table>thead>tr>th{
 			border-bottom:2px solid rgb(2,143,208);
 			color: #686B6E;
@@ -44,6 +49,8 @@
 		
 		th{
 			text-align: center;
+			border-bottom:2px solid rgb(2,143,208);
+			color:#686B6E;
 		}
 		.ta{
 			padding: 0px 20px;
@@ -76,8 +83,8 @@
 						</div>
 						
 						<div class="ta">
-						<input class="col-md-2 col-md-offset-7 tiaojian " name="name" type="text" placeholder="请输入搜索条件" /><input class="col-md-1 btn btn-primary btn-lg" type="submit" value="GO" style="height: 27px;line-height: 5px;margin-bottom: 5px; background-color: rgb(2, 143, 208);" @click="query()" />
-						<button type="button" value="新增" class="btn btn-primary btn-lg col-md-1 " data-toggle="modal" data-target="#myModal" style="height: 30px;line-height: 5px; margin-bottom: 5px;margin-left: 10px; background-color: rgb(2, 143, 208);" >
+						<input class="col-md-2 col-md-offset-7 tiaojian " name="name" type="text" placeholder="请输入搜索条件" /><input class="col-md-1 btn btn-primary btn-lg" type="submit" value="GO" style="height: 27px;line-height: 5px;margin-bottom: 5px;  background-color: rgb(2, 143, 208);" @click="query()" />
+						<button type="button" value="新增" class="btn btn-primary btn-lg col-md-1 " data-toggle="modal" data-target="#myModal" style="height: 30px;line-height: 5px; margin-bottom: 5px;margin-left: 50px; background-color: rgb(2, 143, 208);" >
 	  						新增
 						</button>
 					<!-- 	<table class="table table-striped">

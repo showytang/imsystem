@@ -37,7 +37,9 @@ public class BitController {
 	
 	@RequestMapping("/updatestate")
 	public String updatestate(String id) {
-		ser.updatestate(id);
+		
+		int r=ser.updatestate(id);
+		System.err.println(r);
 		return "redirect:/bit/query";
 	}
 	

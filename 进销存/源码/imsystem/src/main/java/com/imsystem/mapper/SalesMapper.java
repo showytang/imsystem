@@ -43,6 +43,6 @@ public interface SalesMapper {
     
    Sales ChaXunJinRiZongE(String id);
     
-    
+   Sales ChaXunBenYueZongE(String id);
     
 }

@@ -22,11 +22,11 @@
 <link rel="icon" type="image/png" sizes="96x96"
 	th:href="@{/assets/img/favicon.png}">
 <script type="text/javascript" th:src="@{/assets/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/bootstrap.min.js}"></script>
 <link rel="stylesheet" type="text/css" media="all"
 	th:href="@{/assets/css/daterangepicker.css}" />
 <link rel="stylesheet" type="text/css"
 	th:href="@{/assets/css/htmleaf-demo.css}">
-<script type="text/javascript" th:src="@{/assets/js/jquery.min.js}"></script>
 <script>
 	window.jQuery
 			|| document
@@ -88,14 +88,14 @@
 	color: #fff;
 }
 
-.but a:nth-child(1)  button{
+.but a:nth-child(1)  button {
 	float: left;
 	margin-left: 8%;
 	background: none;
 	color: #00AAFF;
 }
 
-.but a:nth-child(2)  button{
+.but a:nth-child(2)  button {
 	float: right;
 	margin-right: 8%;
 }
@@ -137,7 +137,8 @@
 						<span class="col-md-3 col-xs-12">选择客户</span> <select
 							class="col-md-9 col-xs-12 store">
 							<option value="">全部</option>
-							<option v-for="obj in customer" :value="obj.id">{{obj.name}}</option>
+							<option v-for="obj in customer"
+								:value="obj.id+','+obj.column1+','+obj.name+','+obj.column2">{{obj.name}}</option>
 						</select>
 					</div>
 					<div class="col-md-6 col-xs-12 tj">
@@ -152,7 +153,7 @@
 					</div>
 					<div class="goods">
 						<div v-for="objs in goods" class="gv col-md-4 col-xs-12">
-							<div  class="shopGoods">
+							<div class="shopGoods">
 								<img :src="objs.column4">
 								<div class="gValue">
 									<div class="gName">
@@ -165,9 +166,48 @@
 										</p>
 									</div>
 									<div class="but">
-										<a href="http://www.baidu.com"><button class="col-xs-12":value="objs.id">查看详情</button></a>
-										<a class="send"><button class="col-xs-12">推荐给TA</button></a>
+										<a href="http://www.baidu.com"><button class="col-xs-12"
+												:value="objs.id">查看详情</button></a> <a><button
+												class="col-xs-12" data-toggle="modal"
+												data-target="#exampleModal">推荐给TA</button></a>
 									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- modal -->
+					<div class="modal fade" id="exampleModal" tabindex="-1"
+						role="dialog" aria-labelledby="exampleModalLabel">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<h4 class="modal-title" id="exampleModalLabel">邮件推送</h4>
+								</div>
+								<div class="modal-body">
+									<form>
+										<div class="form-group">
+											<label for="recipient-name" class="control-label">邮件标题:</label>
+											<input type="text" class="form-control" id="recipient-name">
+										</div>
+										<div class="form-group">
+											<label for="message-text" class="control-label">邮件内容:</label>
+											<textarea class="form-control" placeholder="不填则使用默认文案"
+												id="message-text"></textarea>
+										</div>
+									</form>
+								</div>
+								<div class="list-group">
+									<a href="#" class="list-group-item list-group-item-warning h6">如需使用到客户名称则在文案中加入'[cName]',例：尊敬的
+										[cName] 您好...</a>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">取消</button>
+									<button type="button" class="btn btn-primary send">推送</button>
 								</div>
 							</div>
 						</div>
@@ -189,64 +229,112 @@
 				}
 			}
 		});
-		function sendMail(addRessee,title,content,img){
+		function sendMail(addRessee, title, content, img, cName, text,phone) {
 			$.ajax({
-				url:"/ther/SendMail",
-				type:"post",
-				traditional: true,
-				data:{
-					Addressee:addRessee,
-					title:title,
-					content:content,
-					img:img
+				url : "/ther/SendMail",
+				type : "post",
+				traditional : true,
+				data : {
+					Addressee : addRessee,
+					title : title,
+					content : content,
+					img : img,
+					cName : cName,
+					text : text,
+					phone:phone
 				},
-				dataType:"json",
-				success:function(resp){
-					if(resp=="0"){
+				dataType : "json",
+				success : function(resp) {
+					if (resp == "0") {
 						alert("推送失败！");
-					}else{
+					} else {
 						alert("推送成功！");
 					}
 				}
-				
+
 			});
 		}
+		var mail = "";
 		var lid = "";
 		var season = "";
+		var cName = "";
+		var title = "";
+		var phone = "";
 		var sid = getStoreId() != "" ? getStoreId() : undefined;
-		
+
 		$(function() {
-			lid = sid;
+
 			vue.goods = queryLikeGoodsValue(lid, season);
 			vue.customer = queryCustomer(sid);
 			$(".store").change(function() {
-				lid = $(this).val();
+				var value = $(this).val().split(",");
+				cName = value[2];
+				mail = value[1];
+				lid = value[0];
+				phone = value[3];
 				vue.goods = queryLikeGoodsValue(lid, season);
 			});
 			$(".season").change(function() {
 				season = $(this).val();
 				vue.goods = queryLikeGoodsValue(lid, season);
 			});
-			$(document).on("click",".send",function(){
-				var img = [];
-				var content = [];
-				$.each($(".gv"),function(i,obj){
-					var goods = $(obj).html();
-					var u = $(goods).find("img").attr("src").split("/goods/");
-					img.push(u[1]);
-					var div = "<div style='width: 45%;height: 380px;margin-left: 3%;float: left;margin-top:55px;box-shadow:0px 0px 15px #e2dbbe;'>"+
-							"<img style='width: 100%;height: 220px;' src='"+$(goods).find("img").attr("src")+"' />"+
-							"<div style='height: 180px;width: 100%;border: 1px solid #3287B2;border-top: 0px;'>"+
-									"<h3 style='color:#a3a380;float: left;margin: 20px 10px;white-space: nowrap;display: inline-block;width: 100%;height: 40px;overflow: hidden;text-overflow: ellipsis;'>"+$(goods).find(".name>b").text()+"</h3>"+
-									"<span style='color:#a3a380;float: left;margin-left: 10%;margin-top: 8px;font-size: 18px;'>价格: <b style='color: #00C800;font-size:16px;'>"+$(goods).find(".jg").text()+"</b></span>"+
-									"<span style='color:#a3a380;float: right;margin-right: 10%;margin-top: 8px;font-size: 18px;'>标签: <b style='color: #00C800;font-size:16px;'>"+$(goods).find(".bq").text()+"</b></span>"+
-									"<a href='' style='width:100%;height:40px;line-height:40px;float:left;display: block;text-align: center;text-decoration: none;font-size: 20px;background-color: #4cb4e7;margin-top: 25px;color: #FFFFFF;'>查看详情</a>"+
-								"</div>"+
-							"</div>";
-					content.push(div);
-				});
-				sendMail("2876629401@qq.com","测试邮件",content,img);
-			});
+			$(".send")
+					.click(
+							function() {
+								title = $("#recipient-name").val();
+								if(lid == ""){
+									alert("请先选择客户！");
+									return false;
+								}
+								if(mail == "" || mail == undefined){
+									alert("该用户没有邮箱哦！");
+									return false;
+								}
+								if(title == ""){
+									alert("标题不能为空！");
+									return false;
+								}
+								var img = [];
+								var content = [];
+								$.each(
+												$(".gv"),
+												function(i, obj) {
+													var goods = $(obj).html();
+													var u = $(goods)
+															.find("img").attr(
+																	"src")
+															.split("/goods/");
+													img.push(u[1]);
+													var div = "<div style='width: 45%;height: 380px;margin-left: 3%;float: left;margin-top:55px;box-shadow:0px 0px 15px #e2dbbe;'>"
+															+ "<img style='width: 100%;height: 220px;' src='"
+															+ $(goods)
+																	.find("img")
+																	.attr("src")
+															+ "' />"
+															+ "<div style='height: 180px;width: 100%;border: 1px solid #3287B2;border-top: 0px;'>"
+															+ "<h3 style='color:#a3a380;float: left;margin: 20px 10px;white-space: nowrap;display: inline-block;width: 100%;height: 40px;overflow: hidden;text-overflow: ellipsis;'>"
+															+ $(goods).find(
+																	".name>b")
+																	.text()
+															+ "</h3>"
+															+ "<span style='color:#a3a380;float: left;margin-left: 10%;margin-top: 8px;font-size: 18px;'>价格: <b style='color: #00C800;font-size:16px;'>"
+															+ $(goods).find(
+																	".jg")
+																	.text()
+															+ "</b></span>"
+															+ "<span style='color:#a3a380;float: right;margin-right: 10%;margin-top: 8px;font-size: 18px;'>标签: <b style='color: #00C800;font-size:16px;'>"
+															+ $(goods).find(
+																	".bq")
+																	.text()
+															+ "</b></span>"
+															+ "<a href='' style='width:100%;height:40px;line-height:40px;float:left;display: block;text-align: center;text-decoration: none;font-size: 20px;background-color: #4cb4e7;margin-top: 25px;color: #FFFFFF;'>查看详情</a>"
+															+ "</div>"
+															+ "</div>";
+													content.push(div);
+												});
+								$("#exampleModal").modal('hide'); 
+								sendMail(mail,title,content,img,cName,$("#message-text").val(),phone);
+							});
 		});
 	</script>
 </body>

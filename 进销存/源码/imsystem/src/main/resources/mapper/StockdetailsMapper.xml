@@ -79,7 +79,7 @@
 	<select id="queryCount" resultMap="BaseResultMap">
 		SELECT s.count-s.scount AS
 		COUNT,s.id,s.code,s.storeid FROM stockdetails AS s
-		WHERE gvid = '1558074897558' AND (s.storeid = 1 OR s.storeid IS NULL) AND (s.count-s.scount) > 0
+		WHERE gvid = #{gvid} AND (s.storeid = #{sid} OR s.storeid IS NULL) AND (s.count-s.scount) > 0
 		ORDER BY
 		s.updatetime 
 		LIMIT 1

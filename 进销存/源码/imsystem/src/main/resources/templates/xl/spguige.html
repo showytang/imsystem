@@ -104,7 +104,7 @@
 						</div>
 						<div class="ta">
 						 <input class="col-md-2 col-md-offset-7 tiaojian" type="text" placeholder="请输入搜索条件" /><input class="col-md-1 btn btn-primary btn-lg" type="button" value="GO" style="height: 27px;line-height: 5px;margin-bottom: 10px; background-color: rgb(2, 143, 208);" @click="query()" />
-						<button type="button" value="新增" class="btn btn-primary btn-lg col-md-1" data-toggle="modal" data-target="#myModal" style="height: 30px;line-height: 5px; margin-bottom: 5px; margin-left: 20px;background-color: rgb(2, 143, 208);" >
+						<button type="button" value="新增" class="btn btn-primary btn-lg col-md-1" data-toggle="modal" data-target="#myModal" style="height: 30px;line-height: 5px; margin-bottom: 5px; margin-left: 50px;background-color: rgb(2, 143, 208);" >
 	  						新增
 						</button>
 						<table class="table table-striped">
@@ -116,7 +116,7 @@
 								<th>创建时间</th>
 								<th>最后修改时间</th>
 								<th>操作人编号</th>
-								<th>操作</th>
+								<th style="padding-left: 0px; padding-right: 30px">操作</th>
 							</tr>
 							</thead>
 							<tbody>
@@ -128,7 +128,7 @@
 								<td v-text="formatDate(temp.updatetime)"></td> 
 								<td v-text="temp.uname"></td>
 								
-								<td style="padding-left: 30px; padding-right: 10px" >
+								<td style="padding-left: 0px; padding-right: 30px" >
 									<span class="glyphicon glyphicon-edit an open" id="open"  @click="open(temp.id)"></span>
 									<a :href="dele(temp.id)"><span class="glyphicon glyphicon-trash an"></span></a>
 								</td> 

@@ -30,6 +30,17 @@
   	<collection property="list2" column="id" select="querybyid1" ofType="com.imsystem.domain.Goodstype" ></collection>
   </resultMap>
   
+  <select id="querybypid" resultMap="querybypidresultMap">
+  	SELECT * FROM goodstype 
+  	<where>
+  		and pid=0
+  		and state=0
+  		<if test="name!=null and name!=''">
+  			and name like concat('%',#{name},'%')
+  		</if>
+  	</where>
+  </select>
+  
   <select id="querybyid1" resultType="com.imsystem.domain.Goodstype">
     	SELECT g1.*,g2.name AS pname,u.`name` AS uname FROM `goodstype` AS g1 LEFT JOIN `goodstype` AS g2 ON g1.`pid` = g2.id INNER JOIN USER AS u ON g1.uid=u.`id` WHERE g1.pid=#{id} and g1.state=0
     </select>
@@ -65,16 +76,7 @@
   	SELECT * FROM goodstype WHERE NAME=#{name} AND pid=#{pid}
   </select>
   
-  <select id="querybypid" resultMap="querybypidresultMap">
-  	SELECT * FROM goodstype 
-  	<where>
-  		and pid=0
-  		and state=0
-  		<if test="name!=null and name!=''">
-  			and name like concat('%',#{name},'%')
-  		</if>
-  	</where>
-  </select>
+  
   
     
   

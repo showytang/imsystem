@@ -126,4 +126,10 @@ public class ModuleServiceImpl implements ModuleService{
 		return moduleMapper.selectByPrimaryKey(id);
 	}
 
+	@Override
+	public Module queryModuleNameByEnname(String enname) {
+		
+		return moduleMapper.queryModuleNameByEnname(enname);
+	}
+
 }
