@@ -30,6 +30,8 @@ import com.imsystem.service.statistics.SalesorderService;
 import com.imsystem.service.statistics.Supplier_yService;
 import com.imsystem.util_y.Sending;
 
+import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
+
 @RestController
 @RequestMapping("ther")
 public class OptionQueryController {
@@ -74,6 +76,9 @@ public class OptionQueryController {
 
 	@RequestMapping("queryLikeGoodsValue")
 	public List<Goodsvaluelable> queryLikeGoodsValue(String cid, String season) {
+		if (cid == null || cid == "") {
+			cid = "0";
+		}
 		List<Goodsvaluelable> list = gvals.querySalesGoodsValueByLable(cid, season);
 		List<Goodsvaluelable> l = new ArrayList<>();
 		for (Goodsvaluelable gvl : list) {
@@ -101,8 +106,15 @@ public class OptionQueryController {
 			//取随机用户标签
 			int getull = rand.nextInt(usLable.size());
 			//根据用户标签查询商品
-			List<Goodsvaluelable> byUlGoods = gvals.queryGoodsByUl(usLable.get(getull).getColumn1());
-			l.addAll(byUlGoods);
+			String ulid =  usLable.get(getull).getColumn1();
+			if (ulid != null && ulid != "") {
+				List<Goodsvaluelable> byUlGoods = gvals.queryGoodsByUl(ulid);
+				for (Goodsvaluelable byul : byUlGoods) {
+					if (byul.getId()!=""&&byul.getId()!=null) {
+						l.add(byul);
+					}
+				}
+			}
 		}
 		//删除重复商品
 		 for  ( int  i  =   0 ; i  <  l.size()  -   1 ; i ++ )  {
@@ -164,9 +176,9 @@ public class OptionQueryController {
 		try {
 
 			mailSender.send(mimeMessage);
-			/*if (phone != null && phone != "") {
+			if (phone != null && phone != "") {
 				Sending.mobileQuery(phone);
-			}*/
+			}
 
 			System.out.println("success");
 
