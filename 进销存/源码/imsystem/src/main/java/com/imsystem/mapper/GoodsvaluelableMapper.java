@@ -31,4 +31,12 @@ public interface GoodsvaluelableMapper {
     List<Goodsvaluelable> querySalesGoodsValueByLable(@Param("cid") String cid,@Param("season") String season);
     
     List<Goodsvaluelable> queryByLid(@Param("lid") String lid,@Param("season") String season);
+    
+    List<Goodsvaluelable> queryTaLikeBygvid(@Param("gvid") String gvid);
+    
+    List<Goodsvaluelable> queryGoodsByUl(@Param("ulid") String ulid);
+    
+    List<Goodsvaluelable> queryUlidByCid(@Param("cid") String cid);
+    
+    Goodsvaluelable queryGoodsBygvid(@Param("gvid") String gvid);
 }

@@ -57,5 +57,10 @@ public class SalesorderServiceImpl implements SalesorderService{
 		// TODO Auto-generated method stub
 		return sm.queryOrderCountByTime(time, sid);
 	}
+	@Override
+	public List<Salesorder> querySalesGoodsByCid(String cid) {
+		// TODO Auto-generated method stub
+		return sm.querySalesGoodsByCid(cid);
+	}
 	
 }
