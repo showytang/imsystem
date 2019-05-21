@@ -132,6 +132,12 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label class="col-md-12">联系人邮箱</label>
+                                        <div class="col-md-12">
+                                            <input type="text" id="email" value="" class="form-control form-control-line">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-md-12">联系人电话</label>
                                         <div class="col-md-12">
                                             <input type="text" id="telephone" value="" class="form-control form-control-line">
@@ -330,6 +336,7 @@
 															formData.append("cid",$("#ct").val());
 															formData.append("lid",$("#cl").val());
 															formData.append("storeid",$("#sid").val());
+															formData.append("column1",$("#email").val());
 															$.ajax({
 																url:"addcustomer",
 																data:formData,

@@ -2,7 +2,7 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
 	<classPathEntry
-		location="E:/aptech/code/jar/mysqldriver/mysql-connector-java-5.1.5-bin.jar" />
+		location="E:\path\to\local\repo\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar" />
 	<context id="context1">
 		<!-- 注释 -->
 		<commentGenerator>
@@ -10,7 +10,7 @@
 			<property name="suppressDate" value="true" /> <!-- 是否生成注释代时间戳 -->
 		</commentGenerator>
 		<jdbcConnection connectionURL="jdbc:mysql://localhost:3306/laimiqi?useUnicode=true&amp;characterEncoding=utf-8&amp;allowMutilQueries=true"
-			driverClass="com.mysql.jdbc.Driver" password="root" userId="root" />
+			driverClass="com.mysql.jdbc.Driver" password="0000" userId="root" />
 		<!-- 实体生成位置 -->
 		<javaModelGenerator targetPackage="com.imsystem.domain"
 			targetProject="src/main/java" />
@@ -21,17 +21,9 @@
 		<javaClientGenerator targetPackage="com.imsystem.mapper"
 			targetProject="src/main/java" type="XMLMAPPER" />
 		
-		<table schema="Customergroup" tableName="customergroup"></table>
-		<table schema="goodsvalueandlable" tableName="goodsvalueandlable"></table>
-		<table schema="Goodsvaluelable" tableName="goodsvaluelable"></table>
-		<table schema="Promotion" tableName="promotion"></table>
-		<table schema="Promotiongoods" tableName="promotiongoods"></table>
-		<table schema="Promotionmap" tableName="promotionmap"></table>
-		<table schema="Promotionrule" tableName="promotionrule"></table>
-		<table schema="Promotionrulevalue" tableName="promotionrulevalue"></table>
-		<table schema="Userandlable" tableName="userandlable"></table>
-		<table schema="Userlable" tableName="userlable"></table>
-		<table schema="Userlableandgoodsvalue" tableName="userlableandgoodsvalue"></table>
+		<table schema="Notice" tableName="notice"></table>
+		<table schema="NoticeFiles" tableName="noticefiles"></table>
+		<table schema="NoticeStore" tableName="noticestore"></table>
 		
 	</context>
 </generatorConfiguration>

@@ -59,7 +59,7 @@
   				`img` =#{img}, 
   		</when>
   	</choose>
-  	`name` =#{name},telephonename=#{telephonename},telephone=#{telephone},pname=#{pname},cname=#{cname},aname=#{aname},address=#{address},balance=#{balance},initbalance=#{initbalance},score=#{score},cid=#{cid},lid=#{lid},updatetime=#{updatetime},storeid=#{storeid} 
+  	`name` =#{name},telephonename=#{telephonename},telephone=#{telephone},pname=#{pname},cname=#{cname},aname=#{aname},address=#{address},balance=#{balance},initbalance=#{initbalance},score=#{score},cid=#{cid},lid=#{lid},updatetime=#{updatetime},storeid=#{storeid},column1=#{column1} 
   	WHERE id=#{id}
   </update>
   
