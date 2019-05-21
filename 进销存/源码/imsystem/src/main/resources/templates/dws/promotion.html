@@ -90,23 +90,23 @@
 								</div>
 
 
-								<div class="layui-form-item">
-									<label class="layui-form-label">已有规则</label>
-									<div class="layui-input-block">
-										<div class="layui-collapse">
-											<div class="layui-colla-item">
-												<h2 id="title" class="layui-colla-title">点击浏览&nbsp;&nbsp;<span class="layui-badge layui-bg-gray">5</span></h2>
-												<div class="layui-colla-content">
-													<input type="checkbox" lay-filter="checkboxFormula" name="sex" pid="1" value="商品数量大于3,订单减50" title="商品数量大于3,订单减50">
-													<input type="checkbox" lay-filter="checkboxFormula" name="sex" pid="2" value="商品数量大于3,订单减50" title="商品数量大于3,订单减50">
-													<input type="checkbox" lay-filter="checkboxFormula" name="sex" pid="3" value="商品数量大于3,订单减50" title="商品数量大于3,订单减50">
-													<input type="checkbox" lay-filter="checkboxFormula" name="sex" pid="4" value="商品数量大于3,订单减50" title="商品数量大于3,订单减50">
-													<input type="checkbox" lay-filter="checkboxFormula" name="sex" pid="5" value="商品数量大于3,订单减50" title="商品数量大于3,订单减50">
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+<!-- 								<div class="layui-form-item"> -->
+<!-- 									<label class="layui-form-label">已有规则</label> -->
+<!-- 									<div class="layui-input-block"> -->
+<!-- 										<div class="layui-collapse"> -->
+<!-- 											<div class="layui-colla-item"> -->
+<!-- 												<h2 id="title" class="layui-colla-title">点击浏览&nbsp;&nbsp;<span class="layui-badge layui-bg-gray">5</span></h2> -->
+<!-- 												<div class="layui-colla-content"> -->
+<!-- 													<input type="checkbox" lay-filter="checkboxFormula" name="sex" pid="1" value="商品数量大于3,订单减50" title="商品数量大于3,订单减50"> -->
+<!-- 													<input type="checkbox" lay-filter="checkboxFormula" name="sex" pid="2" value="商品数量大于3,订单减50" title="商品数量大于3,订单减50"> -->
+<!-- 													<input type="checkbox" lay-filter="checkboxFormula" name="sex" pid="3" value="商品数量大于3,订单减50" title="商品数量大于3,订单减50"> -->
+<!-- 													<input type="checkbox" lay-filter="checkboxFormula" name="sex" pid="4" value="商品数量大于3,订单减50" title="商品数量大于3,订单减50"> -->
+<!-- 													<input type="checkbox" lay-filter="checkboxFormula" name="sex" pid="5" value="商品数量大于3,订单减50" title="商品数量大于3,订单减50"> -->
+<!-- 												</div> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
 
 
 								<!-- <div class="layui-form-item layui-form-text">
@@ -296,18 +296,18 @@
 							<!-- 促销 -->
 							<div class="promotion" v-show="orderORgoods">
 
-								<div class="layui-form-item">
-									<label class="layui-form-label">条件名称</label>
-									<div class="layui-input-block">
-										<input type="text" name="title"  required lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">
-									</div>
-								</div>
-								<div class="layui-form-item">
-									<label class="layui-form-label">时间选择</label>
-									<div class="layui-input-block">
-										<input type="text" class="layui-input" id="queryPickTime" placeholder=" - ">
-									</div>
-								</div>
+<!-- 								<div class="layui-form-item"> -->
+<!-- 									<label class="layui-form-label">条件名称</label> -->
+<!-- 									<div class="layui-input-block"> -->
+<!-- 										<input type="text" name="title"  required lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input"> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 								<div class="layui-form-item"> -->
+<!-- 									<label class="layui-form-label">时间选择</label> -->
+<!-- 									<div class="layui-input-block"> -->
+<!-- 										<input type="text" class="layui-input" id="queryPickTime" placeholder=" - "> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
 
 
 								
@@ -328,20 +328,23 @@
 											<th>结束时间</th>
 											<th>规则</th>
 											<th>状态</th>
-											<th>操作</th>
+<!-- 											<th>操作</th> -->
 										</tr>
 									</thead>
 									<tbody>
 										<tr v-for="(item,index) in promotion">
-											<td v-text="item.name"></td>
-											<td v-text="item.starttime"></td>
-											<td v-text="item.endtime"></td>
-											<td v-text="item.formula"></td>
-											<td> <span class="layui-btn layui-btn-normal">未开始</span> </td>
-											<td>
-												<a style="margin-left: 9px;" class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-												<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-												<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a> </td>
+											<td v-text="item.promotion.name"></td>
+											<td v-text="getFmtDate(item.promotion.starttime)"></td>
+											<td v-text="getFmtDate(item.promotion.endtime)"></td>
+											<td v-text="item.promotionrule.name"></td>
+											<td> 
+											
+											<span v-if="getFmtDate(item.promotion.starttime) > isFmtDate(new Date())" class="layui-btn layui-btn-normal">未开始</span> 
+											<span v-else-if="getFmtDate(item.promotion.starttime) < isFmtDate(new Date()) && getFmtDate(item.promotion.endtime) > isFmtDate(new Date()) " class="layui-btn layui-btn-normal">进行中</span> 
+											<span v-else-if="getFmtDate(item.promotion.endtime) < isFmtDate(new Date()) " class="layui-btn layui-btn-normal">已结束</span> 
+											</td>
+<!-- 											<td> -->
+<!-- 												<a class="layui-btn layui-btn-danger layui-btn-xs " @click() >删除</a> </td> -->
 										</tr>
 									</tbody>
 								</table>
@@ -430,17 +433,8 @@
 					goodsList: [],
 					pickGoodsList:[],
 					page:[],
-					promotion: [{
-						name: "五一劳动节的旧时光的骄傲是给对方加上较好的",
-						starttime: "2019-5-1 18:20:00",
-						endtime: "2019-5-5 18:20:00",
-						formula: "全场五折"
-					}, {
-						name: "就是想打折",
-						starttime: "2019-6-1",
-						endtime: "2019-6-5",
-						formula: "全场九折"
-					}],
+					addPromotion:{},//新增促销对象
+					promotion: [],
 					orderORgoods: true,
 					goodsORpormotionTitle: "促销查询",
 					condition: [],
@@ -629,12 +623,44 @@
 						layer.msg('查询到'+vue.goodsList.length+'条数据！');
 						form.render("checkbox");
 						 
+					},
+					isFmtDate:function (input) {
+					    var date = new Date();
+					    var y = date.getFullYear();
+					    var m = date.getMonth() + 1;
+					    m = m < 10 ? ('0' + m) : m;
+					    var d = date.getDate();
+					    d = d < 10 ? ('0' + d) : d;
+					    var h = date.getHours();
+					    h = h < 10 ? ('0' + h) : h;
+					    var minute = date.getMinutes();
+					    var second = date.getSeconds();
+					    minute = minute < 10 ? ('0' + minute) : minute;
+					    second = second < 10 ? ('0' + second) : second;
+					    return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
+					},
+					getFmtDate:function (input) {
+					    var date = new Date(input);
+					    var y = date.getFullYear();
+					    var m = date.getMonth() + 1;
+					    m = m < 10 ? ('0' + m) : m;
+					    var d = date.getDate();
+					    d = d < 10 ? ('0' + d) : d;
+					    var h = date.getHours();
+					    h = h < 10 ? ('0' + h) : h;
+					    var minute = date.getMinutes();
+					    var second = date.getSeconds();
+					    minute = minute < 10 ? ('0' + minute) : minute;
+					    second = second < 10 ? ('0' + second) : second;
+					    return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
 					}
 				}
 
 			});
 			
 			 vue.promotionList = [[${promaplist}]]; 
+			
+			 vue.promotion = [[${prorulevalue}]];
 			
 			
 			/*
@@ -703,7 +729,7 @@
 				 queryGoods(1,[],0);
 			layui.use('form', function() {
 				 form = layui.form;
-				 
+				 console.log(vue.promotion)
 // 				//监听提交
 // 				form.on('submit(formDemo)', function(data) {
 // 					layer.msg(JSON.stringify(data.field));
@@ -767,8 +793,14 @@
 				laydate.render({
 					elem: '#pickTime',
 					type: 'datetime',
-					range: true,
-					calendar: true
+					range: '~',
+					min:fmtDate(new Date()),
+					calendar: true,
+					done:function(value){
+						vue.addPromotion.starttime = new Date(value.split('~')[0]);
+						vue.addPromotion.endtime = new Date(value.split('~')[1]);
+						
+					}
 				});
 				//日期时间范围
 				laydate.render({
@@ -781,9 +813,78 @@
 			
 			//提交promotion
 			function subPromotion(){
+				var uid = JSON.parse(localStorage.user).id;
+				vue.addPromotion.name = $("[name = title]").val();
+				vue.addPromotion.promotiongoods = [];
 				
-				let proLis = [];
-				console.log(vue.rankList);
+				$.each(vue.pickGoodsList,(index,item)=>{
+					let goodsvalue = {
+							'gid':item.goodsValue.id,
+							'uid':uid
+					}
+					vue.addPromotion.promotiongoods.push(goodsvalue);
+					
+				});
+				
+				let rulepojo = {};
+				
+				$.each(vue.reckonList,(index,item)=>{
+					 rulepojo = {
+							'name':item.conditionText+item.formulaText,
+							'condition':item.condition,
+							'formula':item.formula,
+							'uid':uid
+					}
+					
+				});
+				
+				let promotionrulevalue = {
+						'promotionrule':rulepojo,
+						'promotion':vue.addPromotion,
+						'uid':uid
+				};
+				
+				$.ajax({
+					url:[[@{/promotion/inertPromotion}]],
+					async:true,
+					data:JSON.stringify(promotionrulevalue),
+					dataType:'json',
+					type:'post',
+					contentType:"application/json;charset=UTF-8",
+					processData:false,
+					success:function(data){
+						
+						if(data > 0){
+							layer.alert("新增完成！",function(){
+							location.reload();
+								
+							});
+						}
+						
+					},
+					error:function(xhr,type,errorThrown){
+						
+					}
+				});
+				
+				console.log(promotionrulevalue);
+			}
+
+			
+			function fmtDate(inputTime) {
+			    var date = new Date(inputTime);
+			    var y = date.getFullYear();
+			    var m = date.getMonth() + 1;
+			    m = m < 10 ? ('0' + m) : m;
+			    var d = date.getDate();
+			    d = d < 10 ? ('0' + d) : d;
+			    var h = date.getHours();
+			    h = h < 10 ? ('0' + h) : h;
+			    var minute = date.getMinutes();
+			    var second = date.getSeconds();
+			    minute = minute < 10 ? ('0' + minute) : minute;
+			    second = second < 10 ? ('0' + second) : second;
+			    return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
 			}
 
 

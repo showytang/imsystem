@@ -144,17 +144,17 @@
       #{column2,jdbcType=VARCHAR}, #{column3,jdbcType=VARCHAR}, #{column4,jdbcType=VARCHAR}, 
       #{column5,jdbcType=VARCHAR}, #{name,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.imsystem.domain.Promotionrule" >
-    insert into promotionrule
+  <insert id="insertSelective"  parameterType="com.imsystem.domain.Promotionrule" >
+    insert into `promotionrule`
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
       <if test="condition != null" >
-        condition,
+        `condition`,
       </if>
       <if test="formula != null" >
-        formula,
+        `formula`,
       </if>
       <if test="state != null" >
         state,
@@ -163,13 +163,13 @@
         time,
       </if>
       <if test="updatetime != null" >
-        updatetime,
+        `updatetime`,
       </if>
       <if test="uid != null" >
         uid,
       </if>
       <if test="defaulttype != null" >
-        defaulttype,
+        `defaulttype`,
       </if>
       <if test="column1 != null" >
         column1,
@@ -187,7 +187,7 @@
         column5,
       </if>
       <if test="name != null" >
-        name,
+       `name`,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >

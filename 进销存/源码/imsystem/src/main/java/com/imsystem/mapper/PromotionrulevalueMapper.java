@@ -6,6 +6,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface PromotionrulevalueMapper {
+	
+	List<Promotionrulevalue> queryPromotionRuleValue();
+	
     int countByExample(PromotionrulevalueExample example);
 
     int deleteByExample(PromotionrulevalueExample example);

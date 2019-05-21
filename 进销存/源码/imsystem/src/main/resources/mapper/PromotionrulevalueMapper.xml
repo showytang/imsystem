@@ -17,6 +17,55 @@
     <result column="column4" property="column4" jdbcType="VARCHAR" />
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
+  
+  
+  <resultMap type="com.imsystem.domain.Promotionrulevalue" id="queryPromotionRuleValueMap" extends="BaseResultMap">
+  
+  	<association property="promotionrule" javaType="com.imsystem.domain.Promotionrule">
+  		 <id column="prid" property="id" jdbcType="VARCHAR" />
+	    <result column="prcondition" property="condition" jdbcType="VARCHAR" />
+	    <result column="prformula" property="formula" jdbcType="VARCHAR" />
+	    <result column="prname" property="name" jdbcType="LONGVARCHAR" />
+  	</association>
+  	
+  	
+  	<association property="promotion" javaType="com.imsystem.domain.Promotion">
+  	
+  		    <id column="pid" property="id" jdbcType="VARCHAR" />
+		    <result column="pname" property="name" jdbcType="VARCHAR" />
+		    <result column="pstartime" property="starttime" jdbcType="TIMESTAMP" />
+		    <result column="pendtime" property="endtime" jdbcType="TIMESTAMP" />
+
+			<collection property="promotiongoods" ofType="com.imsystem.domain.Promotiongoods">
+				    <id column="pgid" property="id" jdbcType="VARCHAR" />
+				    <result column="pggid" property="gid" jdbcType="VARCHAR" />
+			</collection>
+  	
+  	</association>
+  
+  </resultMap>
+  
+  
+  <select id="queryPromotionRuleValue" resultMap="queryPromotionRuleValueMap">
+  	
+  	SELECT 
+	prv.*,
+	pr.`id` AS prid,pr.`name` AS prname,pr.`condition` AS prcondition,pr.`formula`AS prformula,
+	p.id AS pid,p.`name` AS pname,p.`starttime` AS pstartime,p.`endtime` AS pendtime,
+	pg.id AS pgid,pg.gid AS pggid
+	FROM `promotionrulevalue` AS prv
+	INNER JOIN `promotionrule` AS pr
+	ON prv.prid = pr.id
+	INNER JOIN `promotion` AS p
+	ON prv.pid = p.id
+	LEFT JOIN `promotiongoods` AS pg
+	ON p.id = pg.hdid
+	WHERE p.`starttime` &lt; NOW() AND p.`endtime` &gt; NOW() AND prv.`state` = '0'
+  
+  
+  </select>
+  
+  
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >

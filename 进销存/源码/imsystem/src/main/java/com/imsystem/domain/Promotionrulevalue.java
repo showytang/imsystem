@@ -30,8 +30,29 @@ public class Promotionrulevalue {
     private String column4;
 
     private String column5;
+    
+    private Promotionrule promotionrule;
+    
+    private Promotion promotion;
+    
+    
+    public Promotionrule getPromotionrule() {
+		return promotionrule;
+	}
 
-    public String getId() {
+	public void setPromotionrule(Promotionrule promotionrule) {
+		this.promotionrule = promotionrule;
+	}
+
+	public Promotion getPromotion() {
+		return promotion;
+	}
+
+	public void setPromotion(Promotion promotion) {
+		this.promotion = promotion;
+	}
+
+	public String getId() {
         return id;
     }
 

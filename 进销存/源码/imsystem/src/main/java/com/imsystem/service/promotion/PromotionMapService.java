@@ -3,6 +3,7 @@ package com.imsystem.service.promotion;
 import java.util.List;
 
 import com.imsystem.domain.Promotionmap;
+import com.imsystem.domain.Promotionrulevalue;
 
 /**
  * 促销字典接口
@@ -17,4 +18,8 @@ public interface PromotionMapService {
 	 */
 	List<Promotionmap> queryPromotionMap();
 	
+	int addPromotion(Promotionrulevalue promotionrulevalue);
+	
+	
+	List<Promotionrulevalue> queryPromotionRuleValue();
 }
