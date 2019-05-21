@@ -24,6 +24,8 @@ import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Stockrecord;
 import com.imsystem.domain.Supplier;
+import com.imsystem.domain.Userandlable;
+import com.imsystem.domain.Userlableandgoodsvalue;
 import com.imsystem.mapper.CustomerMapper;
 import com.imsystem.mapper.PaytypeMapper;
 import com.imsystem.mapper.SalesMapper;
@@ -37,6 +39,8 @@ import com.imsystem.mapper.StockMapper;
 import com.imsystem.mapper.StockdetailsMapper;
 import com.imsystem.mapper.StockrecordMapper;
 import com.imsystem.mapper.SupplierMapper;
+import com.imsystem.mapper.UserandlableMapper;
+import com.imsystem.mapper.UserlableandgoodsvalueMapper;
 import com.imsystem.service.order.OrderInsertService;
 
 @Service
@@ -81,6 +85,12 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 	@Autowired
 	PaytypeMapper pay;
+
+	@Autowired
+	UserandlableMapper userandlable;
+
+	@Autowired
+	UserlableandgoodsvalueMapper userlableGoodsVaue;
 
 	@Override
 	public int insert(Stock stock) {
@@ -328,9 +338,30 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 		count += salesdetailsMapper.addcode(sales);
 
+		List<Userandlable> list = userandlable.queryByCid(salesorder.getCid());
+		
 		Vector<Salesdetails> vector = salesdetailsMapper.queryBySid(sales.getId());
 
 		for (Salesdetails item : vector) {
+
+			for (Userandlable u : list) {
+
+				Userlableandgoodsvalue us = new Userlableandgoodsvalue();
+
+				us.setId(UUID.randomUUID().toString());
+
+				us.setGvid(item.getGvid());
+
+				us.setUid(uidd);
+
+				us.setUlid(u.getId());
+
+				us.setTime(new Date());
+
+				us.setState(0);
+
+				userlableGoodsVaue.insertSelective(us);
+			}
 
 			updateCount(item);
 
@@ -492,17 +523,17 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 		salesbackMap.add(sales);
 
 		int sum = salesdetailsMapper.selectCount(salesdetails.get(0).getColumn3());
-		
-		if(sum == 0) {
+
+		if (sum == 0) {
 			Sales s = new Sales();
-			
+
 			s.setId(salesdetails.get(0).getColumn3());
-			
+
 			s.setState(1);
-			
+
 			salesMapper.updateByPrimaryKey(s);
 		}
-		
+
 		return count;
 	}
 
@@ -557,14 +588,35 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 		sales.setId(UUID.randomUUID().toString());
 
 		sales.setCode(UUID.randomUUID().toString());
-		
+
 		sales.setTime(new Date());
-		
+
 		sales.setUpdatetime(sales.getTime());
+
+		List<Userandlable> list = userandlable.queryByCid(sales.getCid());
 
 		for (Salesdetails item : sales.getList()) {
 
 			item.setId(UUID.randomUUID().toString());
+
+			for (Userandlable u : list) {
+
+				Userlableandgoodsvalue us = new Userlableandgoodsvalue();
+
+				us.setId(UUID.randomUUID().toString());
+				
+				us.setGvid(item.getGvid());
+
+				us.setUid(uidd);
+
+				us.setUlid(u.getId());
+
+				us.setTime(new Date());
+
+				us.setState(0);
+
+				userlableGoodsVaue.insertSelective(us);
+			}
 
 		}
 

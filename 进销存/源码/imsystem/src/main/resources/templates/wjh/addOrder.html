@@ -741,7 +741,7 @@ button {
 								state : 0,
 								paytype : $(".paytype").val(),
 								cid : $(".clientList").val(),
-								count : this.count,
+								count : 0,
 								list : []
 						};
 						if(this.boolOk){
@@ -755,6 +755,7 @@ button {
 										count : item.goods.column1,
 										state : 0
 									}
+									sales.count += item.goods.column1;
 									sales.list.push(salesdetails)
 								}
 							}); 
@@ -771,6 +772,7 @@ button {
 										count : item.goods.column1,
 										state : 0
 									}
+									sales.count += item.goods.column1;
 									sales.list.push(salesdetails)
 								}
 								
