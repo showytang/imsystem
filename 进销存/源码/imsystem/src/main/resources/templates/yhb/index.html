@@ -387,6 +387,21 @@
 				options1.yAxis[0].data = t;
 				options1.series[0].data=tedayMoney;
 				myChart1.setOption(options1);
+				
+				var uid=[[${session.user.id}]];
+				$.ajax({
+					url:"[[@{/news/querynotreadnews}]]",
+					data:"uid="+uid,
+		 			type:"post",
+		 			dataType:"text",
+		 			success:function(data){
+		 				if(data>0){
+		 					alert("您有未读公告！");
+		 				}
+		 			}
+					});  
+				
+				
 		 })
 		var dom = document.getElementById("headline-chart");
 		var myChart = echarts.init(dom);

@@ -188,7 +188,7 @@ html, body, #wrapper, .main, .main-content, .right {
 		</div>
 	</div>
 
-
+	
 
 </body>
 <script th:src="@{/assets/vendor/jquery/jquery.min.js}"></script>
@@ -202,6 +202,7 @@ html, body, #wrapper, .main, .main-content, .right {
 		var userSession=[[${session.user}]];
 		if(userSession){
 			window.localStorage.setItem("user",JSON.stringify(userSession));
+
 		}
 
 	$(function() {
