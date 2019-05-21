@@ -491,6 +491,18 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 		salesbackMap.add(sales);
 
+		int sum = salesdetailsMapper.selectCount(salesdetails.get(0).getColumn3());
+		
+		if(sum == 0) {
+			Sales s = new Sales();
+			
+			s.setId(salesdetails.get(0).getColumn3());
+			
+			s.setState(1);
+			
+			salesMapper.updateByPrimaryKey(s);
+		}
+		
 		return count;
 	}
 
