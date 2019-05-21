@@ -4,8 +4,18 @@ import com.imsystem.domain.Userandlable;
 import com.imsystem.domain.UserandlableExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 public interface UserandlableMapper {
+	
+	/**
+	 *  根据客户id查询
+	 * @Description:TODO 王军辉
+	 * @param cid
+	 * @return 
+	 */
+	List<Userandlable> queryByCid(String cid);
+	
     int countByExample(UserandlableExample example);
 
     int deleteByExample(UserandlableExample example);
