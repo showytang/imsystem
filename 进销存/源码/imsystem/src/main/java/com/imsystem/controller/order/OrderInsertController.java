@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.imsystem.domain.Sales;
 import com.imsystem.domain.Salesdetails;
 import com.imsystem.domain.Salesorder;
 import com.imsystem.domain.Stock;
@@ -113,6 +114,12 @@ public class OrderInsertController {
 	public int salesorderDel(String id,String cid,Double Money) {
 		
 		return orderInsert.salesorderDel(id,cid,Money);
+	}
+	
+	@RequestMapping("/insertsalesAddOrder")
+	@ResponseBody
+	public Boolean insertsales (@RequestBody Sales sales) {
+		return orderInsert.insertSales(sales);
 	}
 	
 }

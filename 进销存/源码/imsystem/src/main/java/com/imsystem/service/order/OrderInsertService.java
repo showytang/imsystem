@@ -34,4 +34,6 @@ public interface OrderInsertService {
 	
 	int salesorderDel(String id,String cid,Double Moeny);
 	
+	Boolean insertSales(Sales sales);
+	
 }

@@ -4,10 +4,13 @@
 <meta charset="UTF-8">
 <title>添加订单</title>
 <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/toastr.css}">
 <script type="text/javascript"
 	th:src="@{/assets/js/jquery-2.1.4.min.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/bootstrap.min.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/vue.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/toastr.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/klorofil-common.js}"></script>
 <style type="text/css">
 body, html, #main {
 	max-height: 100%;
@@ -267,7 +270,7 @@ button {
 	top: 0px;
 	padding: 10px;
 	width: 100%;
-	z-index: 99;
+	z-index: 9;
 	background: #f7f7f7;
 	height: 60px;
 }
@@ -300,10 +303,123 @@ button {
 	width: 60px;
 	border: 0;
 }
+
+.zhebiceng {
+	width: 100%;
+	height: 100%;
+	background-color: rgba(181, 173, 173, 0.5);
+}
+
+.tanchu {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: 999;
+	color: rgb(2, 143, 208);
+	display: none;
+}
+
+.tanbody {
+	position: absolute;
+	width: 60%;
+	top: 50%;
+	height: 60%;
+	background: white;
+	border: 1px solid #03A9F4;
+	transform: translate(-50%, -50%);
+	left: 50%;
+	border-radius: 1%;
+	padding: 10px 20px;
+}
+
+.zhebicengDivs {
+	display: flex;
+	height: 50px;
+	width: 100%;
+	line-height: 50px;
+	margin-top: 30px;
+}
+
+.zhebicengDivs>div {
+	border: 1px solid rgb(2, 143, 208);
+	background: rgb(2, 143, 208);
+	color: white;
+	padding: 0px 10px;
+	border-radius: 3px 0 0 3px;
+	font-size: 16px;
+}
+
+.zhebicengDivs>input {
+	border: 1px solid rgb(2, 143, 208);
+	width: 83%;
+	text-indent: 1em;
+	font-size: 20px;
+	outline: none;
+	border-radius: 0 3px 3px 0;
+}
+
+.zhebuttom {
+	margin-top: 20px;
+}
+
+.zhebuttom>div {
+	width: 90px;
+	height: 45px;
+	line-height: 45px;
+	text-align: center;
+	color: white;
+	background: red;
+	float: right;
+	margin-right: 20px;
+	border-radius: 7px;
+	font-size: 17px;
+	cursor: pointer;
+}
+
+#toast-container>div {
+	opacity: 1;
+}
+
+.paytype, .clientList {
+	width: 180px;
+	height: 45px;
+	text-indent: 1em;
+	border: 1px solid rgb(2, 143, 208);
+	font-size: 16px;
+}
 </style>
 </head>
 <body>
 	<div id="main">
+		<div class="tanchu">
+			<div class="zhebiceng"></div>
+			<div class="tanbody">
+				<div class="zhebicengDivs">
+					<div>未折金额</div>
+					<input type="text" v-model="tanchuwprice">
+				</div>
+				<div class="zhebicengDivs">
+					<div style="background-color: #f3a03a; border: 1px solid #f3a03a;">应付金额</div>
+					<input type="text" style="border: 1px solid #f3a03a;"
+						v-model="tanchuyprice">
+				</div>
+				<div class="zhebicengDivs">
+					<div style="background-color: #ec3e22; border: 1px solid #ec3e22;">应付金额</div>
+					<input type="text" style="border: 1px solid #ec3e22;"
+						v-model="tanchusprice">
+				</div>
+				<div class="zhebuttom">
+					<select class="clientList" disabled>
+						<option v-for="item in clientlist"  :value="item.id">{{item.name}}</option>
+					</select> <select class="paytype">
+						<option v-for="item in paytype" :value="item.id">{{item.name}}</option>
+					</select>
+					<div style="background-color: rgb(2, 143, 208)"
+						@click="tanchushow(0)">确定</div>
+					<div style="background-color: #f3a03a" @click="tanchushow(1)">取消</div>
+				</div>
+			</div>
+		</div>
 		<div class="table-page-left">
 			<div class="table-options">
 				<div class="table-option table-option-action">
@@ -340,7 +456,7 @@ button {
 					</ul>
 					<div class="table-div-bottom">
 						<button @click="upOrder">挂单</button>
-						<button>确认订单</button>
+						<button @click="inserAddOk">确认订单</button>
 					</div>
 					<div class="table-div-SumPrice">
 						<span>总和：</span><span style="color: red;">￥<span
@@ -394,11 +510,6 @@ button {
 							</ul>
 						</li>
 					</ul>
-					<div class="table-div-bottom" style="width: 100%; height: 30px;">
-						<select class="paytype" style="width: 100%;height: 100%;color: rgb(2, 143, 208);text-indent: 1em;border-color: rgb(2, 143, 208);">
-							<option v-for="item in paytype" :id="item.id">{{item.name}}</option>
-						</select>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -410,7 +521,7 @@ button {
 					<div class="selectDiv" style="display: none">
 						<div>客户名称</div>
 						<input type="text" @keyup.enter="clientkeycode"
-							v-model="clientName">
+							v-model="clientNames">
 					</div>
 					<div class="selectDiv">
 						<div>商品名称</div>
@@ -484,7 +595,7 @@ button {
 				
 				paytype : [],
 				
-				clientName : "",
+				clientNames : "",
 				
 				user : JSON.parse(localStorage.getItem("user")),
 				
@@ -492,10 +603,22 @@ button {
 				
 				sum : 0,
 				
+				tanchuwprice : 0,
+				
+				tanchuyprice : 0,
+				
+				tanchusprice : 0,
+				
 				clientName : {
 					id : 0,
 					name : "零售客户"
 				},
+				
+				count : 0,
+				
+				index : 0,
+				
+				boolOk : true,
 				
 				upOrderList : localStorage.getItem("upOrderList") == null ? [] : JSON.parse(localStorage.getItem("upOrderList"))
 				
@@ -507,10 +630,133 @@ button {
 				},
 				order_ok : function (index){
 					
+					$(".clientList").val(this.upOrderList[index].order.client.id);
+					
+					this.index = index;
+					
+					this.tanchuwprice = this.upOrderList[index].order.wsum;
+					this.tanchuyprice = this.upOrderList[index].order.sum;
+					this.tanchusprice = this.upOrderList[index].order.sum;
+					
+					this.count =  this.upOrderList[index].order.count;
+					
+					$(".tanchu").show();
+					
+				},
+				inserAddOk : function(){
+					
+					this.boolOk = false;
+					
+					this.tanchuwprice = 0;
+					this.tanchuyprice = 0;
+					this.tanchujprice = 0;
+					
+					this.orderShapping.forEach(item => {
+						
+						if(item){
+							
+							this.tanchuwprice += item.goods.jprice * item.goods.column1;
+							this.tanchuyprice += item.goods.price * item.goods.column1;
+							this.tanchusprice += item.goods.price * item.goods.column1;
+							
+						}
+						
+					});
+					
+					$(".tanchu").show();
+					
+				},
+				tanchushow : function (index){
+					if(index == 0){
+						
+						var sales = {
+								price : this.tanchuwprice,
+								paymoney : this.tanchuyprice,
+								tainmoney : this.tanchusprice,
+								uid : this.user.id,
+								storeid : this.user.storeid,
+								state : 0,
+								paytype : $(".paytype").val(),
+								cid : $(".clientList").val(),
+								count : this.count,
+								list : []
+						};
+						if(this.boolOk){
+							this.upOrderList[this.index].list.forEach(item => {
+								
+								if(item){
+									var salesdetails = {
+										gvid : item.goodsValue.id,
+										price : item.goods.price,
+										oldprice : item.goods.jprice,
+										count : item.goods.column1,
+										state : 0
+									}
+									sales.list.push(salesdetails)
+								}
+							}); 
+						}
+						else{
+							
+							this.orderShapping.forEach(item => {
+								
+								if(item){
+									var salesdetails = {
+										gvid : item.goodsValue.id,
+										price : item.goods.price,
+										oldprice : item.goods.jprice,
+										count : item.goods.column1,
+										state : 0
+									}
+									sales.list.push(salesdetails)
+								}
+								
+							});
+						}
+						
+						$.ajax({
+						    
+						    url : [[@{/insertOrder/insertsalesAddOrder}]],
+
+						    data : JSON.stringify(sales),
+
+						    type : "post",
+
+						    dataType : "json",
+						    
+						    contentType : "application/json; charset=UTF-8",							
+						   
+						    processData: false,
+						    
+						    success:function(result){
+								if(result){
+									
+									alerts("订单确认成功")
+									
+									if(vue.boolOk){
+										vue.upOrderList.splice(vue.index,1,null);
+										vue.$options.methods.localStorage();
+									}
+									else{
+										vue.orderShapping = [];
+									}
+								}else{
+									
+									alerts("库存不足")
+								}
+						    } 
+						});
+						
+					}
+					$(".tanchu").hide();
 				},
 				clientPrice : function (index){
 					
 					this.clientName = this.clientlist[index];
+					
+					alerts("转换操作用户："+this.clientName.name);
+					
+					$(".clientList").val(this.clientName.id);
 					
 					this.orderShapping[0].goods.column4 = this.clientName.id;
 					
@@ -570,6 +816,8 @@ button {
 						
 						vue.upOrderList[index].order.sum -= vue.upOrderList[index].list[index1].goods.column1 * vue.upOrderList[index].list[index1].goods.price;
 						
+						vue.upOrderList[index].order.wsum -= vue.upOrderList[index].list[index1].goods.column1 * vue.upOrderList[index].list[index1].goods.jprice;
+						
 						vue.upOrderList[index].list.splice(index1,1,null);
 						
 						vue.$options.methods.localStorage();
@@ -598,6 +846,18 @@ button {
 						
 						vue.upOrderList.splice(index,1,null);
 						
+						let s = 0;
+						
+						vue.upOrderList.forEach(item => {
+							if(item){
+								s++;
+							}
+						});
+						
+						if(!s){
+							vue.upOrderList = [];
+						}
+						
 						vue.$options.methods.localStorage();
 					});
 					
@@ -617,7 +877,9 @@ button {
 						
 						count : 0,
 						
-						sum : 0
+						sum : 0,
+						
+						wsum : 0
 							
 					};
 					
@@ -629,6 +891,7 @@ button {
 							
 							order.sum += item.goods.column1*item.goods.price;
 							
+							order.wsum += item.goods.column1*item.goods.jprice;
 						}
 						
 					});
@@ -651,7 +914,6 @@ button {
 					let current = obj.currentTarget;
 					
 					let count = parseInt($(current).parent().prev().find("input").val());
-					
 					try{
 						this.orderShapping.forEach((item,i) => {
 							if(item){
@@ -670,6 +932,8 @@ button {
 							}
 							
 						});
+						
+						this.list[index].goods.jprice = this.list[index].goods.price;
 						
 						this.list[index].goods.column1 = count;
 						
@@ -739,7 +1003,7 @@ button {
 					    url : [[@{/orderQueryController/clientAjax}]],
 
 					    data : {
-						 	name : this.clientName,
+						 	name : this.clientNames,
 						 	storeid : "1"
 					    },
 
@@ -871,6 +1135,32 @@ button {
 			})
 
 		}
+		function alerts(str){
+			
+			toastr.options.timeOut = "true"
+			
+			toastr.options.closeButton = true;
+			
+			toastr['info']
+					(str);
+			
+			$positionClass = 'toast-top-center';
+			
+			toastr.remove();
+			
+			$context="info";
+			
+			toastr[$context](str, '', {
+				
+				positionClass : $positionClass
+				
+			});
+			
+			setTimeout(function(){
+				$("#toast-container").fadeOut(1000);
+			},4000)
+		}
 	</script>
+	</div>
 </body>
 </html>
