@@ -722,7 +722,24 @@ button {
 					
 				},
 				opendiscounts : function (){
-					
+					$.ajax({
+					    
+					    url : [[@{/}]],
+
+					    data : JSON.stringify(this.orderShapping),
+
+					    type : "post",
+
+					    dataType : "json",
+					    
+					    contentType : "application/json; charset=UTF-8",	
+					    
+					    processData: false,
+					    
+					    success:function(result){
+							
+					    }
+					})
 					$(".discounts").show();
 					
 				},
