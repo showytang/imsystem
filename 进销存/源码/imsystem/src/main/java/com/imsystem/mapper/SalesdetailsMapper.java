@@ -22,6 +22,8 @@ public interface SalesdetailsMapper {
 	
 	int add(Sales sales);
 	
+	int selectCount(@Param("sid") String sid);
+	
     int countByExample(SalesdetailsExample example);
 
     int deleteByExample(SalesdetailsExample example);
