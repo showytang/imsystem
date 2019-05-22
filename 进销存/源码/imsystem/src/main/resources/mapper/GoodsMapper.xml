@@ -166,7 +166,7 @@ SELECT
   SELECT 
 		gt.name AS column2,
 		gs.minsecurity,
-		(SELECT SUM(`count`) FROM
+		(SELECT SUM(`count`- IF(scount != '',scount,0)) FROM
 		`stockdetails` AS sk WHERE sk.`gvid`
 		= gv.`id`) AS column1,
 		gs.id
