@@ -21,12 +21,12 @@ public class Sending {
 	public static final int DEF_READ_TIMEOUT = 30000;
 	public static String userAgent =  "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.66 Safari/537.36";
 
-	public static void mobileQuery(String phone){
+	public static void mobileQuery(String phone,String code){
 		String result =null;
 		String url ="http://v.juhe.cn/sms/send";//请求接口地址
 		Map params = new HashMap();//请求参数
 			params.put("mobile",phone);//接受短信的用户手机号码
-            params.put("tpl_id","159505");//您申请的短信模板ID，根据实际情况修改
+            params.put("tpl_id",code);//您申请的短信模板ID，根据实际情况修改
             params.put("tpl_value","");//您设置的模板变量，根据实际情况修改
 			params.put("key","bf1de42ccdf776ce5a8eaa751fed2b71");//应用APPKEY(应用详细页查询)
 		try {
