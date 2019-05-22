@@ -388,29 +388,31 @@ button {
 	border: 1px solid rgb(2, 143, 208);
 	font-size: 16px;
 }
+
 .table-page-right::-webkit-scrollbar {
 	width: 3px;
 	height: 2px;
 	background: #ccc;
-	border-radius: 10px; 
+	border-radius: 10px;
 }
 
 .table-page-right::-webkit-scrollbar-thumb {
 	width: 2px;
 	border-radius: 10px;
-	background: #0089dc; 
+	background: #0089dc;
 }
+
 .tanbody::-webkit-scrollbar {
 	width: 3px;
 	height: 2px;
 	background: #ccc;
-	border-radius: 10px; 
+	border-radius: 10px;
 }
 
 .tanbody::-webkit-scrollbar-thumb {
 	width: 2px;
 	border-radius: 10px;
-	background: #0089dc; 
+	background: #0089dc;
 }
 
 .discountsDiv {
@@ -419,27 +421,41 @@ button {
 	border: 1px solid rgb(2, 143, 208);
 	margin-top: 20px;
 	border-radius: 7px;
+	line-height: 70px;
+	font-size: 18px;
+	text-indent: 1em;
 }
 
-.colsediscountsDivs{
+.colsediscountsDivs {
 	position: absolute;
 	right: 5px;
 	top: 5px;
 	cursor: pointer;
 }
-.discountsDivactive{
-	border: 1px solid #ec3e22;
+
+.discountsDivactive {
+	border: 2px solid #ec3e22;
+}
+
+.discountsDiv>div {
+	float: left;
 }
 </style>
 </head>
 <body>
 	<div id="main">
-		<div class="discounts" style="display:none">
-			<div class="zhebiceng"></div>
+		<div class="discounts">
+			<div class="zhebiceng" @click="colsediscountsDivs"></div>
 			<div class="tanbody discountsDivs">
-				<span class="glyphicon glyphicon-remove-circle colsediscountsDivs" @click="colsediscountsDivs"></span>
-				<div class="discountsDiv">
-					
+				<span class="glyphicon glyphicon-remove-circle colsediscountsDivs"
+					@click="colsediscountsDivs"></span>
+				<div v-for="(item,index) of promotionrulevalueresult"
+				 	v-if="item.prv != null"
+					class="discountsDiv" @click="discountsDivactive($event,index)">
+					<div style="width: 60%;">{{item.prv.promotion.name}}</div>
+					<div style="width: 40%; color: red;">
+						<span>优惠后金额:￥</span>{{item.promotiontotalprice}}
+					</div>
 				</div>
 			</div>
 		</div>
@@ -580,7 +596,8 @@ button {
 						<input type="text" @keyup.enter="goodskeycode" v-model="goodsName">
 					</div>
 					<div class="selectDiv">
-						<div style="border-radius: 7px; cursor: pointer;" @click="opendiscounts" >选择活动</div>
+						<div style="border-radius: 7px; cursor: pointer;"
+							@click="opendiscounts">选择活动</div>
 					</div>
 				</div>
 			</div>
@@ -602,7 +619,7 @@ button {
 							<span>{{item.telephone}}</span>
 						</div>
 						<div style="margin-top: 30px;">
-							<button @click="clientPrice(index)">确定</button>
+							<button @click="clientEnter(index)">确定</button>
 						</div>
 					</div>
 				</div>
@@ -675,7 +692,9 @@ button {
 				
 				boolOk : true,
 				
-				upOrderList : localStorage.getItem("upOrderList") == null ? [] : JSON.parse(localStorage.getItem("upOrderList"))
+				upOrderList : localStorage.getItem("upOrderList") == null ? [] : JSON.parse(localStorage.getItem("upOrderList")),
+				
+				promotionrulevalueresult : []		
 				
 			},
 			methods : {
@@ -683,6 +702,7 @@ button {
 					
 					localStorage.setItem("upOrderList",JSON.stringify(vue.upOrderList));
 				},
+				
 				order_ok : function (index){
 					
 					$(".clientList").val(this.upOrderList[index].order.client.id);
@@ -721,13 +741,71 @@ button {
 					$(".tanchu").show();
 					
 				},
+				discountsDivactive : function (obj,index){
+					
+					let current = obj.currentTarget;
+					
+					sum();
+					
+					if($(current).hasClass('discountsDivactive')){
+						
+						$(current).removeClass("discountsDivactive");
+						
+						return;
+					}
+					
+					this.sum = this.promotionrulevalueresult[index].promotiontotalprice;
+					
+					$(".discountsDiv").removeClass("discountsDivactive");
+					
+					$(current).addClass("discountsDivactive");
+					
+				},
 				opendiscounts : function (){
 					
-					/* $.ajax({
+					var goodsvolist = [];
+					
+					var sumPrice = 0;
+					
+					var count = 0;
+					
+					this.orderShapping.forEach(item => {
+						
+						if(item){
+							
+							for(let i = 0; i < parseInt(item.goods.column1); i++){
+								
+								var goodsvo = {
+										goods : item.goods,
+										goodsValues : [],
+								}
+								
+								goodsvo.goodsValues.push(item.goodsValue)
+								
+								goodsvolist.push(goodsvo);
+								
+								count++;
+							}
+							sumPrice += parseInt(item.goods.column1) * item.goods.price;
+						}
+						
+					});
+					
+					if(goodsvolist.length == 0){
+						return;
+					}
+					
+					var PromotionCondition = {
+						goodsvolist : goodsvolist,
+						totalprice : sumPrice,
+						count : count
+					};
+					
+					$.ajax({
 					    
 					    url : [[@{/promotion/getPromotion}]],
 
-					    data :,
+					    data :JSON.stringify(PromotionCondition),
 
 					    type : "post",
 
@@ -737,10 +815,15 @@ button {
 					    processData: false,
 					    
 					    success:function(result){
-							console.log(result)
+							
+					    	$(".discountsDiv").removeClass("discountsDivactive");
+					    	
+					    	vue.promotionrulevalueresult = result;
+					    	
+					    	console.log(vue.promotionrulevalueresult);
 					    }
-					}) */
-					
+					});
+						
 					$(".discounts").show();
 					
 				},
@@ -773,7 +856,7 @@ button {
 										count : item.goods.column1,
 										state : 0
 									}
-									sales.count += item.goods.column1;
+									sales.count += parseInt(item.goods.column1);
 									sales.list.push(salesdetails)
 								}
 							}); 
@@ -790,7 +873,7 @@ button {
 										count : item.goods.column1,
 										state : 0
 									}
-									sales.count += item.goods.column1;
+									sales.count += parseInt(item.goods.column1);
 									sales.list.push(salesdetails)
 								}
 								
@@ -844,7 +927,7 @@ button {
 					}
 					$(".tanchu").hide();
 				},
-				clientPrice : function (index){
+				clientEnter : function (index){
 					
 					this.clientName = this.clientlist[index];
 					
@@ -852,13 +935,18 @@ button {
 					
 					$(".clientList").val(this.clientName.id);
 					
-					this.orderShapping[0].goods.column4 = this.clientName.id;
+					vue.$options.methods.clientPrice();
+					
+				},
+				clientPrice : function (){
+					
+					vue.orderShapping[0].goods.column4 = vue.clientName.id;
 					
 					$.ajax({
 					    
 					    url : [[@{/orderQueryController/foreachshappingPriceOrderAdd}]],
 
-					    data : JSON.stringify(this.orderShapping),
+					    data : JSON.stringify(vue.orderShapping),
 
 					    type : "post",
 
@@ -870,7 +958,13 @@ button {
 					    
 					    success:function(result){
 					    	
-					    	this.orderShapping = result;
+					    	vue.orderShapping = result;
+					    	
+					    	setTimeout(() => {
+								
+					    		down($(".order-goods>li>div"));
+					    		
+					    	},200);
 					    	
 					    }
 					});
@@ -971,7 +1065,7 @@ button {
 						
 						count : 0,
 						
-						sum : 0,
+						sum : this.sum,
 						
 						wsum : 0
 							
@@ -981,9 +1075,7 @@ button {
 						
 						if(item){
 							
-							order.count += item.goods.column1;
-							
-							order.sum += item.goods.column1*item.goods.price;
+							order.count += parseInt(item.goods.column1);
 							
 							order.wsum += item.goods.column1*item.goods.jprice;
 						}
@@ -1015,6 +1107,10 @@ button {
 					let current = obj.currentTarget;
 					
 					let count = parseInt($(current).parent().prev().find("input").val());
+					if(document.getElementsByClassName("discountsDivactive").length){
+						alerts("优惠已取消");
+					}
+					
 					try{
 						this.orderShapping.forEach((item,i) => {
 							if(item){
@@ -1026,8 +1122,8 @@ button {
 									
 									item.goods.column1 = this.list[index].goods.column1;
 									
-									this.sum += item.goods.column1 * item.goods.price;
-									
+									//this.sum += item.goods.column1 * item.goods.price;
+									sum();
 									throw new Error("StopIteration");
 								} 
 							}
@@ -1038,21 +1134,16 @@ button {
 						
 						this.list[index].goods.column1 = count;
 						
-						this.sum += this.list[index].goods.column1 * this.list[index].goods.price;
-						
+						//this.sum += this.list[index].goods.column1 * this.list[index].goods.price;
 						this.orderShapping.push(this.list[index]);
+						
+						sum();
 						
 						vue.$options.methods.clientPrice();
 						
-						setTimeout(() => {
-							
-							down($(".order-goods>li>div"));
-							
-						},200);
-						
 					}
 					catch(e){
-						
+						console.log(e);
 					}
 				},
 				upDown : function (obj){
@@ -1225,6 +1316,10 @@ button {
 								var index = $(obj).attr("index");
 								
 								vue.orderShapping.splice(index,1,null);
+								
+								if(document.getElementsByClassName("discountsDivactive").length){
+									alerts("优惠已取消");
+								}
 								
 								sum();
 								
