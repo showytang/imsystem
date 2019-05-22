@@ -72,10 +72,20 @@ public class Goodsvalue {
 	private Goods goods;
 	
 	
+	private List<Goodsvalueandlable> gvllist;
 	
-    public String getCount() {
-		return count;
+	public List<Goodsvalueandlable> getGvllist() {
+		return gvllist;
 	}
+	
+	public void setGvllist(List<Goodsvalueandlable> gvllist) {
+		this.gvllist = gvllist;
+	}
+	
+	
+	  public String getCount() {
+			return count;
+		}
 
 	public void setCount(String count) {
 		this.count = count;

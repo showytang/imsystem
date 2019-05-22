@@ -274,6 +274,29 @@ td input {
 							<br>
 						</div>
 
+						<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  标签选择
+</button>
+						<br/>
+						<br/>
+						
+						<div class="row visible-lg-block visible-md-block"
+							style="margin: 0 3vh;">
+						
+							<div class="btn-group" v-for="(item,index) in goodspicklable" style="margin-bottom: 10px" role="group" aria-label="...">
+							  <button type="button" :gvlid="item.gvlid" class="btn btn-default">
+							  {{item.name}}
+							  <span @click="delpick(index,item.index,$event)" class="glyphicon glyphicon-remove"></span>
+							  </button>
+							  
+							</div>
+							
+						
+						</div>
+
+
+						<br>
+						<br>
 
 						<div class="row visible-lg-block visible-md-block"
 							style="margin: 0 3vh;">
@@ -303,6 +326,53 @@ td input {
 			<div id="editor">
 			</div>
 
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">商品标签</h4>
+      </div>
+      <div class="modal-body">
+        
+        <div class="row">
+        	<div class="col-md-5">
+        		<input oninput='getlable(this)' 
+								class="form-control" type="text">
+        	</div>
+        	<div class="col-md-5">
+        		<select class="form-control" name="season">
+				  <option value="1">春季</option>
+				  <option value="2">夏季</option>
+				  <option value="3">秋季</option>
+				  <option value="4">冬季</option>
+				</select>
+        	</div>
+        </div>
+        <br>
+        <br>
+        <div>
+        
+        	<label class="checkbox-inline" v-for="(item,index) in goodsvlable">
+			  <input type="checkbox" :pname="item.name" :index="index" class="picklable" :value="item.id" :checked="item.column1"> {{item.name}}&nbsp;&nbsp;
+			</label>
+
+        
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" @click="addPickLable" class="btn btn-primary">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 		</div>
 	</div>
 	</div>
@@ -319,12 +389,91 @@ td input {
 		el:".main",
 		data:{
 			customerTypeList:"",
-			bit:""
+			bit:"",
+			goodsvlable:[],
+			goodspicklable:[]
+			
+		},
+		methods:{
+			
+			addPickLable:function(){
+				vuePojo.goodspicklable = [];
+				$(".picklable").each(function(){
+					
+					if(this.checked){
+						
+						let index = $(this).attr("index");
+						let pick = {
+								'gvlid':$(this).val(),
+								'index':index,
+								'name':$(this).attr("pname"),
+								'season':$("[name=season]").val(),
+								'uid':uid
+						};
+						vuePojo.goodspicklable.push(pick);
+						
+						vuePojo.goodsvlable[index].column1 = true;
+					}
+					
+				});
+				
+				
+				
+			},
+			delpick:function(thindex,index,obj){
+				
+				let th = obj.currentTarget;
+				
+				vuePojo.goodsvlable[index].column1 = false;
+				
+				$(th).parent().parent().remove();
+				vuePojo.goodspicklable.splice(thindex,1);
+				
+				
+			}
+			
 		}
 	});
 	
+	function getlable(th){
+		
+		
+		$.ajax({
+			url:[[@{/goods/getlable}]],
+			async:true,
+			data:{
+				'name':$(th).val()
+			},
+			dataType:'json',
+			type:'post',
+			success:function(data){
+				//vuePojo.goodsvlable
+				
+				$.each(data,(index,obj)=>{
+					
+					$.each(vuePojo.goodspicklable,(ind,item)=>{
+						
+						if(obj.id == item.gvlid){
+							obj.column1=true;
+						}
+						
+					});
+					
+				});
+				vuePojo.goodsvlable = [];
+				vuePojo.goodsvlable = data;
+				
+			},
+			error:function(xhr,type,errorThrown){
+				
+			}
+		});
+		
+	}
+	
 	vuePojo.bit = [[${bit}]];
-
+	vuePojo.goodsvlable = [[${goodsvlable}]];
+	
 	var E = window.wangEditor;
 	var editor = new E('#editor');
 	//	editor.customConfig.uploadImgShowBase64 = true;
@@ -429,6 +578,9 @@ td input {
 		$(obj).parent().parent().parent().find("input").val(dw);
 	}
 	
+	
+	var uid = JSON.parse(localStorage.user).id;
+	
 /**
  * 彈出框
  */
@@ -474,7 +626,7 @@ function inserGoods(){
 			return false;
 		}
 	
-		var uid = JSON.parse(localStorage.user).id;
+	
 		
 		var formData = new FormData();
 		 
@@ -523,6 +675,15 @@ function inserGoods(){
 			   formData.append("goodsValues["+(index-1)+"].stockDetails.count",$(obj).find("[name=num]").val().trim());
 			   formData.append("goodsValues["+(index-1)+"].stockDetails.price",$(obj).find("[name=detailprice]").val().trim());
 			   formData.append("goodsValues["+(index-1)+"].stockDetails.uid",uid);
+			   
+			   $.each(vuePojo.goodspicklable,function(index5,obj){
+				   
+				   //gvllist
+				   formData.append("goodsValues["+(index-1)+"].gvllist["+index5+"].gvlid",obj.gvlid);
+				   formData.append("goodsValues["+(index-1)+"].gvllist["+index5+"].season",obj.season);
+					   
+				   
+			   });
 			   
 			   
 			   
@@ -863,8 +1024,8 @@ function inserGoods(){
 		eachCreate(tagObject);
 	}
 
-	function eachCreate(tagObject) {
 		
+	function eachCreate(tagObject) {
 		
 		
 		$("table").remove();
@@ -916,12 +1077,15 @@ function inserGoods(){
 
 						var td1 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' type='hidden' name='goodsType' tyname='' vm='" + tagObject.isCheckedDlArray[i].tag[j].name + "' value='" + tagObject.isCheckedDlArray[i].tag[j].id + "'><input oninput='countChange(this)' class='text-center' value='"+kc+"' type=text name='num' v=''></td>");
 						var td2 = $("<td class='text-center' style='vertical-align: inherit;'><input class='text-center' oninput='priceChange(this)' type=text value='"+jhprice+"' name='detailprice'></td>");
+						
+						
 						var tdimg = $("<td class='text-center' style='vertical-align: inherit;'><div style='position:relative;width: 76px;height: 76px;'><input type='file' style='position:absolute;top:0;z-index: 99;width: 100%;height: 100%;opacity: 0;cursor: pointer;' title='选择图片' onchange='pojoImg(this)' name='file["
 								+ (index - 1)
 								+ "]' /><img src='../assets/img/404.png' style='width: 76px;height: 76px;' /></div></td>");
+						
 						var tr = $("<tr class='" + index + "'>");
 						tr.append(td);
-						tr.append(td1).append(td2);
+						tr.append(td1).append(td2)
 						
 						//价格input
 						$.each(vuePojo.customerTypeList,function(inx,obj){
@@ -930,6 +1094,7 @@ function inserGoods(){
 							tr.append(tdprick);
 						});
 						
+					
 						
 						tr.append(tdimg);
 						

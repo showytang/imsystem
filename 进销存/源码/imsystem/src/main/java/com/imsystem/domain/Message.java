@@ -26,14 +26,13 @@ public class Message {
 
     private String column5;
     
-    private List<Khshortmessagevalue> khlist;
+    private String [] phones;
     
-    public List<Khshortmessagevalue> getKhlist() {
-		return khlist;
+    public String[] getPhones() {
+		return phones;
 	}
-
-	public void setKhlist(List<Khshortmessagevalue> khlist) {
-		this.khlist = khlist;
+    public void setPhones(String[] phones) {
+		this.phones = phones;
 	}
 
 	public String getId() {

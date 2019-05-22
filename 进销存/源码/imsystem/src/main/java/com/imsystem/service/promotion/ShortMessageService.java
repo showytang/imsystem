@@ -16,4 +16,6 @@ public interface ShortMessageService {
 	
 	List<Message> queryMessage(String khid);
 	
+	int inertMessage(List<Message> m);
+	
 }

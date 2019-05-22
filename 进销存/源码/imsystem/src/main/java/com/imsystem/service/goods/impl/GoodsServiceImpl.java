@@ -18,6 +18,10 @@ import com.imsystem.domain.GoodsValueVo;
 import com.imsystem.domain.Goodsprice;
 import com.imsystem.domain.Goodsstandardvalue;
 import com.imsystem.domain.Goodsvalue;
+import com.imsystem.domain.Goodsvalueandlable;
+import com.imsystem.domain.GoodsvalueandlableExample;
+import com.imsystem.domain.Goodsvaluelable;
+import com.imsystem.domain.GoodsvaluelableExample;
 import com.imsystem.domain.Img;
 import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
@@ -27,6 +31,8 @@ import com.imsystem.mapper.GoodsMapper;
 import com.imsystem.mapper.GoodspriceMapper;
 import com.imsystem.mapper.GoodsstandardvalueMapper;
 import com.imsystem.mapper.GoodsvalueMapper;
+import com.imsystem.mapper.GoodsvalueandlableMapper;
+import com.imsystem.mapper.GoodsvaluelableMapper;
 import com.imsystem.mapper.ImgMapper;
 import com.imsystem.mapper.StockMapper;
 import com.imsystem.mapper.StockdetailsMapper;
@@ -90,9 +96,18 @@ public class GoodsServiceImpl implements GoodsService {
 	@Autowired
 	private CustomertypeMapper customeTypeMap;
 
+	
 	@Autowired
 	private BitMapper bitMap;
 	
+	/**
+	 * 商品标签
+	 */
+	@Autowired
+	private GoodsvaluelableMapper goodsvlabeMap;
+	
+	@Autowired
+	private GoodsvalueandlableMapper gvalMap;
 	
 	/**
 	 * 单位值查询
@@ -239,6 +254,17 @@ public class GoodsServiceImpl implements GoodsService {
 					}
 					// 商品实例添加
 					goodsValueMap.insertSelective(gv);
+					
+					for(Goodsvalueandlable gvbl: gv.getGvllist()) {
+						
+						gvbl.setId(new Date().getTime()+"");
+						gvbl.setGvid(gvid);
+						gvbl.setTime(new Date());
+						gvbl.setState(0);
+						gvalMap.insertSelective(gvbl);
+						
+					}
+					
 					gv.getStockDetails().setId(UUID.randomUUID().toString());
 					// 库存详表添加
 					gv.getStockDetails().setSid(stockId);
@@ -486,6 +512,22 @@ public class GoodsServiceImpl implements GoodsService {
 		}
 
 		return count;
+	}
+
+	@Override
+	public List<Goodsvaluelable> queryAllLable() {
+		// TODO Auto-generated method stub
+		GoodsvaluelableExample example = new GoodsvaluelableExample();
+		example.createCriteria().andStateEqualTo(0);
+		return goodsvlabeMap.selectByExample(example);
+	}
+
+	@Override
+	public List<Goodsvaluelable> getlable(String name) {
+		// TODO Auto-generated method stub
+		GoodsvaluelableExample example = new GoodsvaluelableExample();
+		example.createCriteria().andStateEqualTo(0).andNameLike("%"+name+"%");
+		return goodsvlabeMap.selectByExample(example);
 	}
 
 }

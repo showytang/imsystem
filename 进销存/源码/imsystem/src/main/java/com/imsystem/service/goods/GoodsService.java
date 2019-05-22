@@ -7,6 +7,7 @@ import com.imsystem.domain.Customertype;
 import com.imsystem.domain.Goods;
 import com.imsystem.domain.GoodsVO;
 import com.imsystem.domain.GoodsValueVo;
+import com.imsystem.domain.Goodsvaluelable;
 
 /**
  * 商品服务层
@@ -15,6 +16,20 @@ import com.imsystem.domain.GoodsValueVo;
  */
 public interface GoodsService {
 
+	
+	
+	
+	/**
+	 * 查询所有商品标签模糊查询
+	 * @return
+	 */
+	List<Goodsvaluelable> getlable(String name);
+	/**
+	 * 查询所有商品标签
+	 * @return
+	 */
+	List<Goodsvaluelable> queryAllLable();
+	
 	/**
 	 * 查询所有商品单位
 	 * @return

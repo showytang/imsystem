@@ -73,4 +73,18 @@ public class ShortMessageImpl implements ShortMessageService {
 		return meMap.selectByExample(example);
 	}
 
+	@Override
+	public synchronized int inertMessage(List<Message> m) {
+		int count = 0;
+		for(Message mg :m) {
+			
+			mg.setId(new Date().getTime()+"");
+			
+			count += meMap.insertSelective(mg);
+			
+		}
+		
+		return count;
+	}
+
 }

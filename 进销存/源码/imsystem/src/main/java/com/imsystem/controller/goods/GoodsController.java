@@ -31,6 +31,7 @@ import com.imsystem.domain.GoodsVO;
 import com.imsystem.domain.GoodsValueVo;
 import com.imsystem.domain.Goodstype;
 import com.imsystem.domain.Goodsvalue;
+import com.imsystem.domain.Goodsvaluelable;
 import com.imsystem.domain.Img;
 import com.imsystem.service.goods.GoodsDetailsService;
 import com.imsystem.service.goods.GoodsService;
@@ -305,6 +306,7 @@ public class GoodsController {
 	protected String insertGoodsLoad(Model model) {
 
 		model.addAttribute("bit", goodsSer.queryAllBit());
+		model.addAttribute("goodsvlable", goodsSer.queryAllLable());
 		
 		return "dws/addGoods";
 	}
@@ -473,6 +475,11 @@ public class GoodsController {
 		return "dws/customerPickGoods";
 	}
 
+	@RequestMapping("/getlable")
+	@ResponseBody
+	public List<Goodsvaluelable> getlable(String name){
+		return goodsSer.getlable(name);
+	}
 	
 	
 	

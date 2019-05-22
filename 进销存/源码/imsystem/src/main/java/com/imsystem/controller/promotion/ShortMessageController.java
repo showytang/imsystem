@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.imsystem.domain.Khshortmessage;
 import com.imsystem.domain.Message;
 import com.imsystem.service.promotion.ShortMessageService;
+import com.imsystem.util_y.Sending;
 
 @Controller
 @RequestMapping("/shortmessage")
@@ -21,6 +22,11 @@ public class ShortMessageController {
 	@Autowired
 	private ShortMessageService smSer;
 	
+	/**
+	 * 跳转客户群页面
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/toshortMessage")
 	public String toshortMessage(Model model) {
 		
@@ -30,6 +36,9 @@ public class ShortMessageController {
 		return "dws/shortmessage";
 	}
 	
+	/**
+	 * 新增客户群
+	 */
 	@RequestMapping("/inertshortMessage")
 	@ResponseBody
 	public int inertshortMessage(@RequestBody Khshortmessage shortmessage) {
@@ -38,6 +47,11 @@ public class ShortMessageController {
 		
 	}
 	
+	/**
+	 * 查询历史短信
+	 * @param khid 客户群id
+	 * @return
+	 */
 	@RequestMapping("/queryMessage")
 	@ResponseBody
 	public List<Message> queryMessage(String khid) {
@@ -46,8 +60,24 @@ public class ShortMessageController {
 		
 	}
 	
-	public int inertMessage() {
-		return 0;
+	/**
+	 * 新增短信
+	 * @param message
+	 * @return
+	 */
+	@RequestMapping("/inertMessage")
+	@ResponseBody
+	public int inertMessage(@RequestBody List<Message> message) {
+		//mobileQuery
+		
+		for(Message m:message) {
+			for(String phone:m.getPhones()) {
+				Sending.mobileQuery(phone, "160070");
+			}
+		}
+		
+		
+		return smSer.inertMessage(message);
 	}
 	
 	
