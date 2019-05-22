@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>添加订单</title>
-<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
 <link rel="stylesheet" th:href="@{/assets/css/toastr.css}">
 <script type="text/javascript"
 	th:src="@{/assets/js/jquery-2.1.4.min.js}"></script>
@@ -310,7 +310,7 @@ button {
 	background-color: rgba(181, 173, 173, 0.5);
 }
 
-.tanchu {
+.tanchu, .discounts {
 	position: fixed;
 	width: 100%;
 	height: 100%;
@@ -330,6 +330,7 @@ button {
 	left: 50%;
 	border-radius: 1%;
 	padding: 10px 20px;
+	overflow-y: auto;
 }
 
 .zhebicengDivs {
@@ -387,10 +388,61 @@ button {
 	border: 1px solid rgb(2, 143, 208);
 	font-size: 16px;
 }
+.table-page-right::-webkit-scrollbar {
+	width: 3px;
+	height: 2px;
+	background: #ccc;
+	border-radius: 10px; 
+}
+
+.table-page-right::-webkit-scrollbar-thumb {
+	width: 2px;
+	border-radius: 10px;
+	background: #0089dc; 
+}
+.tanbody::-webkit-scrollbar {
+	width: 3px;
+	height: 2px;
+	background: #ccc;
+	border-radius: 10px; 
+}
+
+.tanbody::-webkit-scrollbar-thumb {
+	width: 2px;
+	border-radius: 10px;
+	background: #0089dc; 
+}
+
+.discountsDiv {
+	height: 70px;
+	width: 100%;
+	border: 1px solid rgb(2, 143, 208);
+	margin-top: 20px;
+	border-radius: 7px;
+}
+
+.colsediscountsDivs{
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	cursor: pointer;
+}
+.discountsDivactive{
+	border: 1px solid #ec3e22;
+}
 </style>
 </head>
 <body>
 	<div id="main">
+		<div class="discounts" style="display:none">
+			<div class="zhebiceng"></div>
+			<div class="tanbody discountsDivs">
+				<span class="glyphicon glyphicon-remove-circle colsediscountsDivs" @click="colsediscountsDivs"></span>
+				<div class="discountsDiv">
+					
+				</div>
+			</div>
+		</div>
 		<div class="tanchu">
 			<div class="zhebiceng"></div>
 			<div class="tanbody">
@@ -404,13 +456,13 @@ button {
 						v-model="tanchuyprice">
 				</div>
 				<div class="zhebicengDivs">
-					<div style="background-color: #ec3e22; border: 1px solid #ec3e22;">应付金额</div>
+					<div style="background-color: #ec3e22; border: 1px solid #ec3e22;">实付金额</div>
 					<input type="text" style="border: 1px solid #ec3e22;"
 						v-model="tanchusprice">
 				</div>
 				<div class="zhebuttom">
 					<select class="clientList" disabled>
-						<option v-for="item in clientlist"  :value="item.id">{{item.name}}</option>
+						<option v-for="item in clientlist" :value="item.id">{{item.name}}</option>
 					</select> <select class="paytype">
 						<option v-for="item in paytype" :value="item.id">{{item.name}}</option>
 					</select>
@@ -526,6 +578,9 @@ button {
 					<div class="selectDiv">
 						<div>商品名称</div>
 						<input type="text" @keyup.enter="goodskeycode" v-model="goodsName">
+					</div>
+					<div class="selectDiv">
+						<div style="border-radius: 7px; cursor: pointer;" @click="opendiscounts" >选择活动</div>
 					</div>
 				</div>
 			</div>
@@ -666,6 +721,14 @@ button {
 					$(".tanchu").show();
 					
 				},
+				opendiscounts : function (){
+					
+					$(".discounts").show();
+					
+				},
+				colsediscountsDivs : function (){
+					$(".discounts").hide();
+				},
 				tanchushow : function (index){
 					if(index == 0){
 						
@@ -678,7 +741,7 @@ button {
 								state : 0,
 								paytype : $(".paytype").val(),
 								cid : $(".clientList").val(),
-								count : this.count,
+								count : 0,
 								list : []
 						};
 						if(this.boolOk){
@@ -692,6 +755,7 @@ button {
 										count : item.goods.column1,
 										state : 0
 									}
+									sales.count += item.goods.column1;
 									sales.list.push(salesdetails)
 								}
 							}); 
@@ -708,6 +772,7 @@ button {
 										count : item.goods.column1,
 										state : 0
 									}
+									sales.count += item.goods.column1;
 									sales.list.push(salesdetails)
 								}
 								
@@ -740,10 +805,21 @@ button {
 									else{
 										vue.orderShapping = [];
 									}
+									
+									vue.clientName = {
+											id : 0,
+											name : "零售客户"
+									}
+									
+									setTimeout(() => {
+										alerts("已切换至:零售客户")
+									});
+									
 								}else{
 									
 									alerts("库存不足")
 								}
+								
 						    } 
 						});
 						
@@ -908,6 +984,13 @@ button {
 					
 					vue.$options.methods.localStorage();
 					
+					vue.clientName = {
+							id : 0,
+							name : "零售客户"
+					}
+					
+					alerts("已切换至:零售客户")
+					
 				},
 				addOrderShapping : function (index,obj){
 					
@@ -940,6 +1023,8 @@ button {
 						this.sum += this.list[index].goods.column1 * this.list[index].goods.price;
 						
 						this.orderShapping.push(this.list[index]);
+						
+						vue.$options.methods.clientPrice();
 						
 						setTimeout(() => {
 							

@@ -127,6 +127,12 @@
                                             <input type="text" id="telephonename" :value="customer.telephonename" class="form-control form-control-line">
                                         </div>
                                     </div>
+                                     <div class="form-group">
+                                        <label class="col-md-12">联系人邮箱</label>
+                                        <div class="col-md-12">
+                                            <input type="text" id="email" :value="customer.column1" class="form-control form-control-line">
+                                        </div>
+                                    </div> 
                                     <div class="form-group">
                                         <label class="col-md-12">联系人电话</label>
                                         <div class="col-md-12">
@@ -332,6 +338,7 @@
 															formData.append("cid",$("#ct").val());
 															formData.append("lid",$("#cl").val());
 															formData.append("storeid",$("#sid").val());
+															formData.append("column1",$("#email").val()); 
 															$.ajax({
 																url:"updatecustomer",
 																data:formData,

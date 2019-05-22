@@ -48,7 +48,7 @@
 			</if>
 		</where>
 		group by s.id
-		order by s.updatetime
+		order by s.updatetime desc
 	</select>
 
 	<sql id="Example_Where_Clause">

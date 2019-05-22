@@ -2,7 +2,7 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
 	<classPathEntry
-		location="D:\bag\jar\mysql-connector-java-5.1.6-bin.jar" />
+		location="E:\path\to\local\repo\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar" />
 	<context id="context1">
 		<!-- 注释 -->
 		<commentGenerator>
@@ -20,10 +20,11 @@
 		<!-- mapper接口生成 -->
 		<javaClientGenerator targetPackage="com.imsystem.mapper"
 			targetProject="src/main/java" type="XMLMAPPER" />
-		
-		<table schema="Message" tableName="message"></table>
-		<table schema="Khshortmessagevalue" tableName="khshortmessagevalue"></table>
-		<table schema="Khshortmessage" tableName="khshortmessage"></table>
+
+		<table schema="Log" tableName="log"></table>
+		<table schema="Notice" tableName="notice"></table>
+		<table schema="NoticeFiles" tableName="noticefiles"></table>
+		<table schema="NoticeStore" tableName="noticestore"></table>
 		
 	</context>
 </generatorConfiguration>

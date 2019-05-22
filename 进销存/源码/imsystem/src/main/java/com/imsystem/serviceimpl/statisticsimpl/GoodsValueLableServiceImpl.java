@@ -60,4 +60,28 @@ public class GoodsValueLableServiceImpl implements GoodsValueLableService{
 		return gvalm.queryByLid(lid, season);
 	}
 
+	@Override
+	public List<Goodsvaluelable> queryTaLikeBygvid(String gvid) {
+		// TODO Auto-generated method stub
+		return gvalm.queryTaLikeBygvid(gvid);
+	}
+
+	@Override
+	public List<Goodsvaluelable> queryGoodsByUl(String ulid) {
+		// TODO Auto-generated method stub
+		return gvalm.queryGoodsByUl(ulid);
+	}
+
+	@Override
+	public List<Goodsvaluelable> queryUlidByCid(String cid) {
+		// TODO Auto-generated method stub
+		return gvalm.queryUlidByCid(cid);
+	}
+
+	@Override
+	public Goodsvaluelable queryGoodsBygvid(String gvid) {
+		// TODO Auto-generated method stub
+		return gvalm.queryGoodsBygvid(gvid);
+	}
+
 }

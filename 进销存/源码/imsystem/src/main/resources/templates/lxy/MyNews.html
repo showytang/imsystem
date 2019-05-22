@@ -9,7 +9,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <!-- Favicon icon -->
-<title>客户页面</title>
+<title>我的通告页面</title>
 <!-- Bootstrap Core CSS -->
 <link rel="stylesheet"
 	th:href="@{/assets/vendor/font-awesome/css/font-awesome.min.css}">
@@ -120,6 +120,17 @@ a:hover {
 	display: flex;
 	justify-content: flex-end;
 }
+
+#myModal1{
+	position: absolute;
+	top: 55px;
+	
+}
+
+#content{
+	width: 100%;
+	height: 50px;
+}
 </style>
 </head>
 <body>
@@ -133,58 +144,91 @@ a:hover {
 				<div class="card-block">
 					<h5 class="card-subtitle "
 						style="float: right; display: flex; flex-direction: row;">
-						<div id="searchZero">
-							<label> <input type="checkbox" class="checkbox_css zero" />
-							</label> <span style="display: block; width: 60px; line-height: 38px;">零欠款</span>
-						</div>
+						
 						<div class="input-group" style="margin-right: 15%;">
 
 							<input id="content" type="text" value="" class="form-control"
-								placeholder="客户名称"> <span class="input-group-btn"><button
+								placeholder="发布者名称/公告内容"> <span class="input-group-btn"><button
 									type="button" id="searchLike" class="btn btn-primary">Go</button></span>
 
 
 						</div>
-						<input type="button" class="btn btn-primary" id="add" value="新增客户" />
 					</h5>
-					<h4 class="card-title">客户</h4>
-					<form id="customerForm" action="" method="post"></form>
+					<h4 class="card-title">公告</h4>
+					<form id="newsForm" action="" method="post"></form>
 					<div class="table-responsive">
 						<table class="table">
 							<thead>
 								<tr>
-									<th>客户名称</th>
-									<th>联系人名</th>
-									<th>联系电话</th>
-									<th>客户余额</th>
-									<th>相关列表</th>
-									<th>相关账单</th>
-									<th>客户详情</th>
-									
+									<th>发出人</th>
+                                    <th>公告类型</th>
+                                    <th>发出时间</th>
+                                    <th>公告详情</th>
+                                    <th>公告状态</th>
 								</tr>
 							</thead>
 							<tbody>
-
 								<tr v-for="(o,i) in pageIf.list">
-									<td>{{o.name}}</td>
-									<td>{{o.telephonename}}</td>
-									<td>{{o.telephone}}</td>
-									<td>{{o.balance}}</td>
-									<input type="hidden" :value="o.id" />
-
-									<td><a class="saleList" onclick="tosales(this)">销售列表</a></td>
-									<td><a class="bill" onclick="toincome(this)">应收对账单</a></td>
-									<td><a class="detail glyphicon glyphicon-edit"
-										onclick="todetail(this)" style="color: rgb(2, 143, 208);"></a></td>
-									
-								</tr>
-
+                                    <td>{{o.uobj.name}}</td>
+                                    <td>{{o.nobj.nt}}</td>
+                                    <td>{{dada(o.nobj.time)}}</td>
+                                    <input type="hidden" :value="o.nsobj.id"/>
+                                    <td>
+                                    	<a class="detail glyphicon glyphicon-edit" data-toggle="modal" data-target="#myModal1"
+										onclick="todetail(this)" style="color: rgb(2, 143, 208);"></a>
+									</td>
+									<td>
+										<span v-if="o.nsobj.column1==0" style="color: red;">未读</span>
+										<span v-if="o.nsobj.column1==1">已读</span>
+									</td>
+                                </tr>
+                                <tr>
 							</tbody>
 						</table>
 					</div>
 
 					<!-- 分页 -->
 					<div id="page"></div>
+					
+					
+					<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">		
+								<div class="modal-dialog" role="document">
+		    						<div class="modal-content">
+		      						<div class="modal-header">
+									        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									        <h4 class="modal-title" id="myModalLabel">公告详情</h4>
+		      						</div>
+								    <div class="modal-body">
+								      <form class="form-horizontal" id="" action="updatecustomertype" method="post">
+										  	<div class="form-group">
+										    	<label for="inputPassword3" class="col-sm-3 control-label">公告类型</label>
+											    <div class="col-sm-9">
+											      <input type="text" class="form-control name" id="type" value="">
+											    </div>
+										  	</div>
+										  	
+										  	<div class="form-group">
+										    	<label for="inputPassword3" class="col-sm-3 control-label">公告内容</label>
+											   
+											    <textarea id="newsContent" style=""></textarea>
+											    
+										  	</div>
+										  	
+										  	<div id="filesDiv">
+										  		<span>公告附件</span>
+										  		<div id="newsFiles"></div>
+										  	</div>
+										</form>
+								        
+								      </div>
+								      <div class="modal-footer">
+								        <button type="button" class="btn btn-default" id="closeModel">关闭</button>
+								      </div>
+		    						</div>
+		  						</div>
+		  				</div>
+					
+					
 				</div>
 			</div>
 		</div>
@@ -213,21 +257,36 @@ a:hover {
 		data : {
 			pageIf : "",
 			user:{}
+		},
+		methods:{
+			dada:function(inputTime){
+				 var date = new Date(inputTime);
+				    var y = date.getFullYear();
+				    var m = date.getMonth() + 1;
+				    m = m < 10 ? ('0' + m) : m;
+				    var d = date.getDate();
+				    d = d < 10 ? ('0' + d) : d;
+				    var h = date.getHours();
+				    h = h < 10 ? ('0' + h) : h;
+				    var minute = date.getMinutes();
+				    var second = date.getSeconds();
+				    minute = minute < 10 ? ('0' + minute) : minute;
+				    second = second < 10 ? ('0' + second) : second;
+				    return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
+
+			}
 		}
 	});
-
+	
+	
 	/* 分页查询 */
 	function queryCustomerByPage(curentPage) {
-		var zero = 0;
-		if ($(".zero").is(':checked')) {
-			zero = 1;
-		}
+		
 		var content = $("#content").val();
 		var uid = $("#uid").val();
 		$.ajax({
-			url : "querycustomerlist",
+			url : "querynewslist",
 			data : {
-				"zero" : zero,
 				"content" : content,
 				"curentPage" : curentPage,
 				"uid" : uid
@@ -236,6 +295,7 @@ a:hover {
 			dataType : "json",
 			success : function(result) {
 				vue.pageIf = result;
+				console.log(result);
 				$("#page").append(
 						page(vue.pageIf.pageNum, vue.pageIf.prePage,
 								vue.pageIf.nextPage, vue.pageIf.pages));
@@ -246,24 +306,32 @@ a:hover {
 
 	/*查看详情*/
 	function todetail(th) {
-		var id = $(th).parent().prev().prev().prev().val();
-		$("#customerForm").attr("action", "tocustomerdetail?id=" + id);
-		$("#customerForm").submit();
+		$("#myModal1").removeData();
+		$("#newsFiles").html("");
+		var id = $(th).parent().prev().val();
+		$.ajax({
+			url : "querynewsbyid",
+			data : {
+				"id" : id
+			},
+			type : "post",
+			dataType : "json",
+			success : function(result) {
+				console.log(result);
+				$("#type").val(result.nobj.nt);
+				$("#newsContent").text(result.nobj.content);
+				for(var i=0;i<result.nflist.length;i++){
+					var imgDiv=$("<span><img src='/"+result.nflist[i].furl+"' width='20%' height='20%'/></span>");
+					$("#newsFiles").append(imgDiv);
+				}
+				
+			}
+		});
+		
 	}
 
 	
-
-	/* 查看客户销售列表 */
-	function tosales(th) {
-		$("#customerForm").attr("action", "tocustomersalelist");
-		$("#customerForm").submit();
-	}
-
-	/* 查看客户应收对账单 */
-	function toincome(th) {
-		$("#customerForm").attr("action", "tocustomerincome");
-		$("#customerForm").submit();
-	}
+	
 
 	$(function() {
 		vue.user = JSON.parse(window.localStorage.getItem("user"));
@@ -281,19 +349,14 @@ a:hover {
 						}
 					});
 
-		/*新增用户*/
-		$("#add").click(function() {
-			$("#customerForm").attr("action", "toaddcustomer");
-			$("#customerForm").submit();
-		});
-
-		$(".zero").click(function() {
-			queryCustomerByPage(1);
-
-		});
-
+		
 		$("#searchLike").click(function() {
 			queryCustomerByPage(1);
+		});
+		
+		$("#closeModel").click(function() {
+			$("#myModal1").modal("hide");
+			location.reload();
 		});
 
 	});
