@@ -90,7 +90,7 @@ public class OptionQueryController {
 		List<Salesorder> salesGoodsBycid = sos.querySalesGoodsByCid(cid);
 		if (salesGoodsBycid.size()>0) {
 			//生成随机数
-			int getSg = rand.nextInt(list.size());
+			int getSg = rand.nextInt(salesGoodsBycid.size());
 			//根据购买过的商品随机推荐购买过此商品客户购买过最多的其他的商品
 			List<Goodsvaluelable> lb = gvals.queryTaLikeBygvid(salesGoodsBycid.get(getSg).getColumn1());
 			for (Goodsvaluelable lbs : lb) {
@@ -121,8 +121,6 @@ public class OptionQueryController {
 			 System.out.println(l.size());
 			 System.out.println(l.get(l.size()-1).getId());
 		      for  ( int  j  =  l.size()  -   1 ; j  >  i; j -- )  {  
-		    	 System.out.println(j);
-		    	 System.out.println(l.get(j).getId());   
 		           if  (l.get(j).getId().equals(l.get(i).getId()))  {       
 		              l.remove(j); 
 		              continue;
@@ -177,7 +175,7 @@ public class OptionQueryController {
 
 			mailSender.send(mimeMessage);
 			if (phone != null && phone != "") {
-				Sending.mobileQuery(phone);
+				Sending.mobileQuery(phone,"159505");
 			}
 
 			System.out.println("success");
