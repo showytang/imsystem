@@ -1,5 +1,7 @@
 package com.imsystem.mapper;
 
+import com.imsystem.domain.Customer;
+import com.imsystem.domain.UserLableVO;
 import com.imsystem.domain.Userandlable;
 import com.imsystem.domain.UserandlableExample;
 import java.util.List;
@@ -16,7 +18,13 @@ public interface UserandlableMapper {
 	 */
 	List<Userandlable> queryByCid(String cid);
 	
-    int countByExample(UserandlableExample example);
+	List<Customer> queryCustomer(String sid);
+	
+	List<UserLableVO> queryCustomerLabel(@Param("cid") String cid, @Param("name") String name);
+	
+    int addUserLabel(Userandlable ual);
+	
+	int countByExample(UserandlableExample example);
 
     int deleteByExample(UserandlableExample example);
 
