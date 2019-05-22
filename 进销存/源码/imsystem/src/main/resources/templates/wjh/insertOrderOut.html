@@ -8,7 +8,7 @@
 <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
 <script type="text/javascript"
 	th:src="@{/assets/js/jquery-3.1.1.min.js}"></script>
-	<link rel="stylesheet" th:href="@{/assets/css/toastr.css}">
+<link rel="stylesheet" th:href="@{/assets/css/toastr.css}">
 <link rel="stylesheet"
 	th:href="@{/assets/css/bootstrap-datetimepicker.min.css}" />
 <script type="text/javascript" th:src="@{/assets/js/bootstrap.min.js}"></script>
@@ -135,10 +135,72 @@
 	border: none;
 	outline: none;
 }
-.panel-title{
+
+.panel-title {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+}
+
+.tanbody::-webkit-scrollbar {
+	width: 3px;
+	height: 2px;
+	background: #ccc;
+	border-radius: 10px;
+}
+
+.tanbody::-webkit-scrollbar-thumb {
+	width: 2px;
+	border-radius: 10px;
+	background: #0089dc;
+}
+
+.discountsDiv {
+	height: 70px;
+	width: 100%;
+	border: 1px solid rgb(2, 143, 208);
+	margin-top: 20px;
+	border-radius: 7px;
+}
+
+.colsediscountsDivs {
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	cursor: pointer;
+}
+
+.discountsDivactive {
+	border: 2px solid #ec3e22;
+}
+
+.discounts {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: 999;
+	color: rgb(2, 143, 208);
+	display: none;
+}
+
+.tanbody {
+	position: absolute;
+	width: 60%;
+	top: 50%;
+	height: 60%;
+	background: white;
+	border: 1px solid #03A9F4;
+	transform: translate(-50%, -50%);
+	left: 50%;
+	border-radius: 1%;
+	padding: 10px 20px;
+	overflow-y: auto;
+}
+
+.zhebiceng {
+	width: 100%;
+	height: 100%;
+	background-color: rgba(181, 173, 173, 0.5);
 }
 </style>
 </head>
@@ -147,6 +209,18 @@
 		<div class="main-content">
 			<div class="container-fluid">
 				<div class="panel panel-headline" id="main">
+					<div class="discounts" style="display: none">
+						<div class="zhebiceng"></div>
+						<div class="tanbody discountsDivs">
+							<span
+								class="glyphicon glyphicon-remove-circle colsediscountsDivs"
+								@click="colsediscountsDivs"></span>
+							<div @click="discountsDivactive($event)"
+								class="discountsDiv discountsDivactive"></div>
+							<div @click="discountsDivactive($event)" class="discountsDiv">
+							</div>
+						</div>
+					</div>
 					<div class="panel-heading">
 						<h3 class="panel-title">添加销售订单</h3>
 						<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
@@ -212,6 +286,8 @@
 								<div class="container-fluid"
 									style="background-color: #00AAFF; border-radius: 4px;">
 									<div class="btn-group btnShapping" style="float: right;">
+										<div class="btn btn-primary" @click="opendiscounts"
+											style="border: none; box-shadow: none; font-size: 15px;">选择活动</div>
 										<div class="btn btn-primary"
 											style="border: none; box-shadow: none; font-size: 15px;">扫描条形码</div>
 										<div class="btn btn-primary" id="queryShapping"
@@ -246,15 +322,14 @@
 									</div>
 									<div class="panel-body row">
 										<div class="col-md-3 col-md-offset-1">
-											<img :src="item.column1" width="100%"
-												height="80px" />
+											<img :src="item.column1" width="100%" height="80px" />
 										</div>
-										<div class="col-md-8"
-											style="font-size: 14px; ">
+										<div class="col-md-8" style="font-size: 14px;">
 											<div style="font-size: 20px;">{{item.column5}}</div>
 											<div>类型：{{item.column2}}</div>
 											<div style="white-space: nowrap;">
-												价格:<input class='jprice' :oldprice="item.column3" :data="index" :value="item.jprice.toFixed(2)" />
+												价格:<input class='jprice' :oldprice="item.column3"
+													:data="index" :value="item.jprice.toFixed(2)" />
 												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>数量:&nbsp;<input
 													:value="item.count" class="count" :data="index"
 													style="border: none; outline: none;"></span>
@@ -325,11 +400,29 @@
 					
 					price : 0
 				},
+				
 				methods:{
 					clientNames : function (element){
 						var element = event.currentTarget;
 						$(".clientName").text($(element).text());
 						$(".clientName").attr("data",$(element).attr("data"));
+					},
+					discountsDivactive : function (obj){
+						
+						let current = obj.currentTarget;
+						
+						$(".discountsDiv").removeClass("discountsDivactive");
+						
+						$(current).addClass("discountsDivactive");
+						
+					},
+					opendiscounts : function (){
+						
+						$(".discounts").show();
+					},
+					colsediscountsDivs : function (){
+						
+						$(".discounts").hide();
 					},
 					spliceList : function (index){
 						vue.shappinglist.splice(index,1);
@@ -394,6 +487,10 @@
 				goodsList();
 			}
 			function loadPrice(){
+			
+				if(vue.shappinglist == null || vue.shappinglist == ''){
+					return;
+				}
 				
 				for(var i in vue.shappinglist) {
 

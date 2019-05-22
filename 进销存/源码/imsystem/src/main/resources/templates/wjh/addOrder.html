@@ -388,29 +388,31 @@ button {
 	border: 1px solid rgb(2, 143, 208);
 	font-size: 16px;
 }
+
 .table-page-right::-webkit-scrollbar {
 	width: 3px;
 	height: 2px;
 	background: #ccc;
-	border-radius: 10px; 
+	border-radius: 10px;
 }
 
 .table-page-right::-webkit-scrollbar-thumb {
 	width: 2px;
 	border-radius: 10px;
-	background: #0089dc; 
+	background: #0089dc;
 }
+
 .tanbody::-webkit-scrollbar {
 	width: 3px;
 	height: 2px;
 	background: #ccc;
-	border-radius: 10px; 
+	border-radius: 10px;
 }
 
 .tanbody::-webkit-scrollbar-thumb {
 	width: 2px;
 	border-radius: 10px;
-	background: #0089dc; 
+	background: #0089dc;
 }
 
 .discountsDiv {
@@ -421,25 +423,28 @@ button {
 	border-radius: 7px;
 }
 
-.colsediscountsDivs{
+.colsediscountsDivs {
 	position: absolute;
 	right: 5px;
 	top: 5px;
 	cursor: pointer;
 }
-.discountsDivactive{
-	border: 1px solid #ec3e22;
+
+.discountsDivactive {
+	border: 2px solid #ec3e22;
 }
 </style>
 </head>
 <body>
 	<div id="main">
-		<div class="discounts" style="display:none">
+		<div class="discounts" style="display: none">
 			<div class="zhebiceng"></div>
 			<div class="tanbody discountsDivs">
-				<span class="glyphicon glyphicon-remove-circle colsediscountsDivs" @click="colsediscountsDivs"></span>
-				<div class="discountsDiv">
-					
+				<span class="glyphicon glyphicon-remove-circle colsediscountsDivs"
+					@click="colsediscountsDivs"></span>
+				<div @click="discountsDivactive($event)"
+					class="discountsDiv discountsDivactive"></div>
+				<div @click="discountsDivactive($event)" class="discountsDiv">
 				</div>
 			</div>
 		</div>
@@ -580,7 +585,8 @@ button {
 						<input type="text" @keyup.enter="goodskeycode" v-model="goodsName">
 					</div>
 					<div class="selectDiv">
-						<div style="border-radius: 7px; cursor: pointer;" @click="opendiscounts" >选择活动</div>
+						<div style="border-radius: 7px; cursor: pointer;"
+							@click="opendiscounts">选择活动</div>
 					</div>
 				</div>
 			</div>
@@ -683,6 +689,7 @@ button {
 					
 					localStorage.setItem("upOrderList",JSON.stringify(vue.upOrderList));
 				},
+				
 				order_ok : function (index){
 					
 					$(".clientList").val(this.upOrderList[index].order.client.id);
@@ -721,13 +728,51 @@ button {
 					$(".tanchu").show();
 					
 				},
+				discountsDivactive : function (obj){
+					
+					let current = obj.currentTarget;
+					
+					$(".discountsDiv").removeClass("discountsDivactive");
+					
+					$(current).addClass("discountsDivactive");
+					
+				},
 				opendiscounts : function (){
 					
-					/* $.ajax({
+					var goodsvolist = [];
+					
+					this.orderShapping.forEach(item => {
+						
+						if(item){
+							
+							var goodsvo = {
+									
+									goods : item.goods,
+									goodsValues : [],
+							}
+							
+							goodsvo.goodsValues.push(item.goodsValue)
+							
+							goodsvolist.push(goodsvo);
+							
+						}
+						
+					});
+					
+					if(goodsvolist.length == 0){
+						return;
+					}
+					
+					var PromotionCondition = {
+						goodsvolist : goodsvolist
+							
+					};
+					
+					$.ajax({
 					    
 					    url : [[@{/promotion/getPromotion}]],
 
-					    data :,
+					    data :JSON.stringify(PromotionCondition),
 
 					    type : "post",
 
@@ -739,8 +784,8 @@ button {
 					    success:function(result){
 							console.log(result)
 					    }
-					}) */
-					
+					});
+						
 					$(".discounts").show();
 					
 				},
@@ -1043,12 +1088,9 @@ button {
 						this.orderShapping.push(this.list[index]);
 						
 						vue.$options.methods.clientPrice();
-						
 						setTimeout(() => {
-							
-							down($(".order-goods>li>div"));
-							
-						},200);
+				    		down($(".order-goods>li>div"));
+				    	},200)
 						
 					}
 					catch(e){
