@@ -37,6 +37,7 @@ public class ShortMessageController {
 		return smSer.inertshortMessage(shortmessage);
 		
 	}
+	
 	@RequestMapping("/queryMessage")
 	@ResponseBody
 	public List<Message> queryMessage(String khid) {
@@ -44,6 +45,11 @@ public class ShortMessageController {
 		return smSer.queryMessage(khid);
 		
 	}
+	
+	public int inertMessage() {
+		return 0;
+	}
+	
 	
 	
 }

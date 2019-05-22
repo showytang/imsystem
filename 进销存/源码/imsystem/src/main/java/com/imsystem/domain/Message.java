@@ -1,6 +1,7 @@
 package com.imsystem.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class Message {
     private String id;
@@ -24,8 +25,18 @@ public class Message {
     private String column4;
 
     private String column5;
+    
+    private List<Khshortmessagevalue> khlist;
+    
+    public List<Khshortmessagevalue> getKhlist() {
+		return khlist;
+	}
 
-    public String getId() {
+	public void setKhlist(List<Khshortmessagevalue> khlist) {
+		this.khlist = khlist;
+	}
+
+	public String getId() {
         return id;
     }
 
