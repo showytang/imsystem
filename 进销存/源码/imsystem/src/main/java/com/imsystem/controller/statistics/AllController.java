@@ -51,7 +51,7 @@ public class AllController {
 	 * index top 四方格
 	 * @return
 	 */
-	Integer pageSize = 2;
+	Integer pageSize = 7;
 	
 	@RequestMapping("query")
 	@ResponseBody
