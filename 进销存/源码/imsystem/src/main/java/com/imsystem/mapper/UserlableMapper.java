@@ -6,6 +6,12 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface UserlableMapper {
+	List<Userlable> queryAllLable();
+	
+	int updateLable(Userlable ulobj);
+	
+	int deleteLabel(String id);
+	
     int countByExample(UserlableExample example);
 
     int deleteByExample(UserlableExample example);
