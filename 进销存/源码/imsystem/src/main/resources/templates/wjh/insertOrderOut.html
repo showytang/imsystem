@@ -161,6 +161,13 @@
 	border: 1px solid rgb(2, 143, 208);
 	margin-top: 20px;
 	border-radius: 7px;
+	line-height: 70px;
+	font-size: 18px;
+	text-indent: 1em;
+}
+
+.discountsDiv>div {
+	float: left;
 }
 
 .colsediscountsDivs {
@@ -209,15 +216,20 @@
 		<div class="main-content">
 			<div class="container-fluid">
 				<div class="panel panel-headline" id="main">
-					<div class="discounts" style="display: none">
-						<div class="zhebiceng"></div>
+					<div class="discounts">
+						<div class="zhebiceng" @click="colsediscountsDivs"></div>
 						<div class="tanbody discountsDivs">
 							<span
 								class="glyphicon glyphicon-remove-circle colsediscountsDivs"
 								@click="colsediscountsDivs"></span>
-							<div @click="discountsDivactive($event)"
-								class="discountsDiv discountsDivactive"></div>
-							<div @click="discountsDivactive($event)" class="discountsDiv">
+							<div v-for="(item,index) of promotionrulevalueresult"
+								 v-if="item.prv != null"
+								 class="discountsDiv"
+								 @click="discountsDivactive($event,index)">
+								<div style="width: 60%;">{{item.prv.promotion.name}}</div>
+								<div style="width: 40%; color: red;">
+									<span>优惠后金额:￥</span>{{item.promotiontotalprice}}
+								</div>
 							</div>
 						</div>
 					</div>
@@ -233,6 +245,11 @@
 								<div class="btn-group" style="float: right;">
 									<div class="btn btn-primary" id="moling"
 										style="border: none; box-shadow: none; font-size: 16px;">抹零</div>
+									<div class="btn"
+										style="border: none; box-shadow: none; color: #e84242; font-size: 16px;">
+										<span style="color: white">未折扣：</span>￥<span
+											class="sumPricesss">{{sum}}</span>
+									</div>
 									<div class="btn"
 										style="border: none; box-shadow: none; color: #e84242; font-size: 16px;">
 										<span style="color: white">应付：</span>￥<span class="yprice">{{price}}</span>
@@ -396,9 +413,13 @@
 					
 					user : {},
 					
-					typeId:"",
+					typeId: "",
 					
-					price : 0
+					price : 0,
+					
+					promotionrulevalueresult : [] ,
+					
+					sum : 0
 				},
 				
 				methods:{
@@ -407,9 +428,21 @@
 						$(".clientName").text($(element).text());
 						$(".clientName").attr("data",$(element).attr("data"));
 					},
-					discountsDivactive : function (obj){
+					discountsDivactive : function (obj,index){
 						
 						let current = obj.currentTarget;
+						
+						counts();
+						
+						if($(current).hasClass('discountsDivactive')){
+							
+							$(current).removeClass("discountsDivactive");
+							
+							return;
+						}
+						
+						$(".yprice").text(this.promotionrulevalueresult[index].promotiontotalprice.toFixed(2));
+						$(".sprice").val(this.promotionrulevalueresult[index].promotiontotalprice.toFixed(2));
 						
 						$(".discountsDiv").removeClass("discountsDivactive");
 						
@@ -418,6 +451,60 @@
 					},
 					opendiscounts : function (){
 						
+						var goodsvolist = [];
+						
+						var sumPrice = 0;
+						
+						this.shappinglist.forEach(item => {
+							
+							if(item){
+								
+								for(let i = 0; i < parseInt(item.count); i++){
+									
+									var goodsvo = {
+											goods : {price : item.column3},
+											goodsValues : [],
+									}
+									
+									goodsvo.goodsValues.push({id : item.id})
+									
+									goodsvolist.push(goodsvo);
+								}
+								sumPrice += parseInt(item.count) * item.jprice;
+							}
+							
+						});
+						
+						if(goodsvolist.length == 0){
+							return;
+						}
+						
+						var PromotionCondition = {
+							goodsvolist : goodsvolist,
+							totalprice : sumPrice
+								
+						};
+						
+						$.ajax({
+						    
+						    url : [[@{/promotion/getPromotion}]],
+
+						    data :JSON.stringify(PromotionCondition),
+
+						    type : "post",
+
+						    dataType : "json",
+						    
+						    contentType : "application/json; charset=UTF-8",							
+						    processData: false,
+						    
+						    success:function(result){
+								
+						    	$(".discountsDiv").removeClass("discountsDivactive");
+						    	
+						    	vue.promotionrulevalueresult = result;
+						    }
+						});
 						$(".discounts").show();
 					},
 					colsediscountsDivs : function (){
@@ -440,6 +527,8 @@
 			vue.paytypeList = [[${paytypeList}]];
 			
 			vue.supplierlist = [[${supplierlist}]];
+			
+			shappingLists();
 			
 			function shappingLists(){
 				return new Promise((res,rej) => {
@@ -478,8 +567,11 @@
 				$(".sumcount").text(sum);
 				sum = 0;
 				
+				vue.sum = 0;
+				
 				$(".badgecount").each(function(i,e){
 					sum += (parseInt($(e).text())*$(".jprice:eq("+i+")").val());
+					vue.sum += (parseInt($(e).text())*$(".jprice:eq("+i+")").attr("oldprice"));
 				});
 				
 				$(".yprice").text(sum.toFixed(2));
@@ -492,11 +584,9 @@
 					return;
 				}
 				
-				for(var i in vue.shappinglist) {
-
-				    vue.price +=i.jprice;
-
-				}
+				vue.shappinglist.forEach((item,idnex) => {
+					vue.sum += parseInt(item.column3) * item.count;
+				})
 				
 				shappingLists().then(res => {
 					vue.shappinglist[0].column4 = $(".client").val();
@@ -668,7 +758,7 @@
 						var order = {
 								paymoney : $(".yprice").text(),
 								tainmoney : $(".sprice").val(),
-								price : vue.price,
+								price : vue.sum,
 								paytype  : vue.typeId,
 								code : $("#No").val(),
 								time : $("#time").val(),
