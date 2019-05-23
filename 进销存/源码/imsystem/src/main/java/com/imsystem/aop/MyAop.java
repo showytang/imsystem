@@ -52,9 +52,7 @@ public class MyAop {
 			List<String> ennames = new ArrayList<String>();
 			String enname = point.getSignature().getName();
 			ennames.add(enname);
-			
 			System.out.println("1." + enname);
-
 			User user = (User) session.getAttribute("user");
 
 			System.out.println("2."+user.getName());
