@@ -696,7 +696,9 @@ button {
 				
 				upOrderList : localStorage.getItem("upOrderList") == null ? [] : JSON.parse(localStorage.getItem("upOrderList")),
 				
-				promotionrulevalueresult : []		
+				promotionrulevalueresult : [],
+				
+				discountsPrice : 0
 				
 			},
 			methods : {
@@ -731,14 +733,13 @@ button {
 					this.orderShapping.forEach(item => {
 						
 						if(item){
-							
 							this.tanchuwprice += item.goods.jprice * item.goods.column1;
-							this.tanchuyprice += item.goods.price * item.goods.column1;
-							this.tanchusprice += item.goods.price * item.goods.column1;
-							
 						}
 						
 					});
+					
+					this.tanchuyprice = this.sum;
+					this.tanchusprice = this.sum
 					
 					$(".tanchu").show();
 					
@@ -753,8 +754,6 @@ button {
 						
 						$(current).removeClass("discountsDivactive");
 						
-						sum();
-						
 						return;
 					}
 					
@@ -766,6 +765,8 @@ button {
 								if(item){
 									if(item.goodsValue.id == item1){
 										
+										this.discountsPrice += item.goods.price;
+										
 										item.goodsValue.column5 -= item.goods.price;
 										
 										this.sum -= item.goods.price;
@@ -776,7 +777,11 @@ button {
 						
 					}
 					else{
+					
+						this.discountsPrice =this.sum - this.promotionrulevalueresult[index].promotiontotalprice;
+						
 						this.sum = this.promotionrulevalueresult[index].promotiontotalprice;
+				
 					}
 					
 					$(".discountsDiv").removeClass("discountsDivactive");
@@ -867,6 +872,7 @@ button {
 								paytype : $(".paytype").val(),
 								cid : $(".clientList").val(),
 								count : 0,
+								column1 : this.discountsPrice,
 								list : []
 						};
 						if(this.boolOk){
@@ -935,10 +941,17 @@ button {
 											id : 0,
 											name : "零售客户"
 									}
-									
+									vue.discountsPrice = 0;
 									setTimeout(() => {
-										alerts("已切换至:零售客户")
-									});
+										alerts("已切换至:零售客户");
+										if(document.getElementsByClassName("discountsDivactive").length){
+											document.getElementsByClassName("discountsDivactive")[0].classList.remove("discountsDivactive");
+											this.discountsPrice = 0;
+											
+										}
+									},200);
+									
+								
 									
 								}else{
 									
@@ -946,7 +959,7 @@ button {
 								}
 								
 						    } 
-						});
+						}); 
 						
 					}
 					$(".tanchu").hide();
@@ -987,12 +1000,14 @@ button {
 					    	if(document.getElementsByClassName("discountsDivactive").length){
 								alerts("优惠已取消");
 							}
-					    	
+					    	this.discountsPrice = 0;
 					    	setTimeout(() => {
 								
 					    		down($(".order-goods>li>div"));
 					    		
 					    	},200);
+					    	
+					    	sum();
 					    	
 					    }
 					});
@@ -1135,9 +1150,12 @@ button {
 					let current = obj.currentTarget;
 					
 					let count = parseInt($(current).parent().prev().find("input").val());
+					
 					if(document.getElementsByClassName("discountsDivactive").length){
 						
-						document.getElementsByClassName("discountsDivactive").classList.remove("discountsDivactive");
+						document.getElementsByClassName("discountsDivactive")[0].classList.remove("discountsDivactive");
+						
+						this.discountsPrice = 0;
 						
 						alerts("优惠已取消");
 					}
@@ -1305,6 +1323,7 @@ button {
 		
 		function sum(){
 			vue.sum = 0;
+			vue.discountsPrice = 0;
 			vue.orderShapping.forEach((item,i) => {
 				if(item){
 					vue.sum += item.goods.column1 * item.goods.price;
@@ -1349,8 +1368,9 @@ button {
 								var index = $(obj).attr("index");
 								
 								vue.orderShapping.splice(index,1,null);
-								
 								if(document.getElementsByClassName("discountsDivactive").length){
+									
+									document.getElementsByClassName("discountsDivactive")[0].classList.remove("discountsDivactive");
 									alerts("优惠已取消");
 								}
 								

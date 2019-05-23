@@ -9,6 +9,8 @@ import org.apache.ibatis.annotations.Param;
 
 public interface SalesMapper {
 	
+	int update(@Param("id") String id,@Param("price") double price);
+	
 	List<Sales> query(@Param("code") String code,@Param("time") String time,@Param("endTime") String endTime,@Param("shappingname")String shappingname,@Param("storeid") String storeid);
 	
     int countByExample(SalesExample example);

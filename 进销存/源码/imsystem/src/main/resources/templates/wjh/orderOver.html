@@ -9,12 +9,14 @@
 <link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
 <link rel="stylesheet" th:href="@{/assets/css/main.css}">
 <link rel="stylesheet" th:href="@{/assets/css/myStyle.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/toastr.css}">
 <link rel="icon" type="image/png" sizes="96x96"
 	th:href="@{/assets/img/favicon.png}">
 <link rel="stylesheet" type="text/css" media="all"
 	th:href="@{/assets/css/daterangepicker.css}" />
-<script type="text/javascript"
-	th:src="@{/assets/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/toastr.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/klorofil-common.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/moment.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/daterangepicker.js}"></script>
 <script type="text/javascript" th:src="@{/assets/js/Mydate.js}"></script>
@@ -35,8 +37,6 @@
 .datetimepicker {
 	margin: 0px;
 }
-
-
 
 #page {
 	width: 100%;
@@ -131,8 +131,8 @@
 							<div class="col-md-3 col-sm-6 col-xs-11 tj">
 								<div class="input-group">
 									<span class="input-group-addon">商品名称</span> <input
-										@keyup.enter="code" v-model="shappingname" class="form-control"
-										placeholder="名称" />
+										@keyup.enter="code" v-model="shappingname"
+										class="form-control" placeholder="名称" />
 								</div>
 							</div>
 							<div class="col-md-5 col-sm-12 col-xs-11 display tj">
@@ -162,18 +162,25 @@
 										<th style="text-align: center; width: 20px;">数量</th>
 										<th style="text-align: center;">时间</th>
 										<th style="text-align: center;">客戶</th>
+										<th style="text-align: center;">优惠金额</th>
+										<th style="text-align: center;">应收金额</th>
 										<th style="text-align: center;">实收金额</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr v-for="item in pageIf.list" v-on:click="openModel(item.id,item.cid)">
-										<td style="display:flex">
-											<div v-if="item.state == 1" style="color:red;font-size:13px;padding:2px 4px;border:1px solid red">已退货</div> &nbsp;&nbsp;{{item.code}}
+									<tr v-for="item in pageIf.list"
+										v-on:click="openModel(item.id,item.cid,item.column1,item.paymoney)">
+										<td style="display: flex">
+											<div v-if="item.state == 1"
+												style="color: red; font-size: 13px; padding: 2px 4px; border: 1px solid red">已退货</div>
+											&nbsp;&nbsp;{{item.code}}
 										</td>
 										<td>{{item.count}}</td>
 										<td>{{item.time}}</td>
 										<td>{{item.column5}}</td>
+										<td>{{item.column1}}</td>
 										<td>{{item.paymoney}}</td>
+										<td>{{item.tainmoney}}</td>
 									</tr>
 								</tbody>
 							</table>
@@ -189,30 +196,31 @@
 										aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
-									<h4 class="modal-title" id="myModalLabel" :cid="0">订单详情<span></span></h4>
+									<h4 class="modal-title" id="myModalLabel" :price="0" :cid="0">
+										订单详情<span></span>
+									</h4>
 								</div>
 								<div class="modal-body">
-									<iframe width="100%" style="border: none;min-height:300px; overflow-x: auto;"
-										></iframe>
+									<iframe width="100%"
+										style="border: none; min-height: 300px; overflow-x: auto;"></iframe>
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default"
 										data-dismiss="modal">关闭</button>
-										<button type="button" class="btn btn-primary" id="insertOk"
-									data-dismiss="modal">确定退货</button>
+									<button type="button" class="btn btn-primary" id="insertOk"
+										data-dismiss="modal">确定退货</button>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div id="page">
-						
-					</div>
+					<div id="page"></div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" th:src="@{/assets/js/bootstrap-datetimepicker.js}"></script>
-	<script type="text/javascript" th:inline="javascript" >
+	<script type="text/javascript"
+		th:src="@{/assets/js/bootstrap-datetimepicker.js}"></script>
+	<script type="text/javascript" th:inline="javascript">
 		var vue = new Vue({
 
 			el : "#main",
@@ -221,20 +229,26 @@
 				pageIf : {},
 				no : "",
 				shappingname : "",
-				user : {}
+				user : {},
+				discountsPrice : 0
 			},
 			methods : {
 				code : function(){
 					vue.pageIf.pageNum = "1";
 					query();
 				},
-				openModel : function (id,cid){
+				openModel : function (id,cid,price,yprice){
 					
 					$("iframe").attr("src",[[@{/orderModel/orderOver}]]+"?id="+id)
 					
 					$("#myModalLabel").find("span").text(id);
 					$("#myModalLabel").find("span").attr("data",cid);
 					$("#myModalLabel").attr("cid",cid)
+					$("#myModalLabel").attr("price",yprice)
+					
+					this.discountsPrice = price;
+					
+					
 					$(".modal").modal("show");
 					
 				}
@@ -330,7 +344,6 @@
 					if($(e).find("input").prop("checked") == true){
 
 						var salesDetail = {
-								
 								id : $(e).attr("data"),
 								
 								count : $(e).find(".count").text(),
@@ -343,8 +356,11 @@
 								
 								uid : vue.user.id,
 								
-								column4 : $("#myModalLabel").attr("cid")
+								column4 : $("#myModalLabel").attr("cid"),
 								
+								column2 : vue.discountsPrice,
+								
+								column5 : $("#myModalLabel").attr("price")
 						};
 						
 						salesDetails.push(salesDetail);
@@ -370,7 +386,12 @@
 					    processData: false,
 					    
 					    success:function(result){
-					    	window.location.reload();
+					    	
+					    	alerts("退单金额："+result);
+					    	
+					    	setTimeout(() => {
+					    		window.location.reload();
+					    	},300)
 					    }
 					})
 					
@@ -418,6 +439,31 @@
 			var s = 0;
 
 		});	
+		function alerts(str){
+			
+			toastr.options.timeOut = "true"
+			
+			toastr.options.closeButton = true;
+			
+			toastr['info']
+					(str);
+			
+			$positionClass = 'toast-top-center';
+			
+			toastr.remove();
+			
+			$context="info";
+			
+			toastr[$context](str, '', {
+				
+				positionClass : $positionClass
+				
+			});
+			
+			setTimeout(function(){
+				$("#toast-container").fadeOut(1000);
+			},4000)
+		}
 		</script>
 </body>
 </html>

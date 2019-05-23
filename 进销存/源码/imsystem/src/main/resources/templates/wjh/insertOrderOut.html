@@ -420,7 +420,9 @@
 					
 					promotionrulevalueresult : [] ,
 					
-					sum : 0
+					sum : 0,
+					
+					discountsPrice : 0
 				},
 				
 				methods:{
@@ -452,13 +454,15 @@
 											
 											$(".yprice").text((parseInt($(".yprice").text()) - item.jprice).toFixed(2));
 											$(".sprice").val((parseInt($(".sprice").val()) - item.jprice).toFixed(2));
+											
+											this.discountsPrice += parseInt(item.jprice);
 										}
 									}
 								});
 							});
-							
 						}
 						else{
+							this.discountsPrice = parseInt($(".yprice").text()) - parseInt(this.promotionrulevalueresult[index].promotiontotalprice);
 							$(".yprice").text(this.promotionrulevalueresult[index].promotiontotalprice.toFixed(2));
 							$(".sprice").val(this.promotionrulevalueresult[index].promotiontotalprice.toFixed(2));
 						}
@@ -556,7 +560,6 @@
 				return new Promise((res,rej) => {
 					if(localStorage.getItem("list1"))
 						vue.shappinglist = JSON.parse(localStorage.getItem("list1"));
-					console.log(vue.shappinglist)
 					res(true)
 				})
 			}
@@ -580,7 +583,10 @@
 			}
 			async function counts(){
 				
+				vue.discountsPrice = 0;
+				
 				if(document.getElementsByClassName("discountsDivactive").length){
+					document.getElementsByClassName("discountsDivactive")[0].classList.remove("discountsDivactive");
 					alerts("优惠已取消");
 				}
 				
@@ -796,7 +802,8 @@
 							state : 0,
 							progress : 1,
 							storeid : vue.user.storeid,
-							uid : vue.user.id
+							uid : vue.user.id,
+							column1 : vue.discountsPrice
 					};
 					if($("#priceName").text() == "定金"){
 						order.preprice = $(".sprice").val();
@@ -831,7 +838,7 @@
 						order.list1.push(shapping);
 						
 					}
-					 $.ajax({
+					$.ajax({
 						url : [[@{/insertOrder/insertSalesorder}]],
 						data : JSON.stringify(order),
 						type : "post",

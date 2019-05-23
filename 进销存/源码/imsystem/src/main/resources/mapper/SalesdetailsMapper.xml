@@ -66,9 +66,9 @@
 	</insert>
 	<insert id="add">
 		insert into
-		salesdetails(id,sid,gvid,time,updatetime,oldprice,price,count)values
+		salesdetails(id,sid,gvid,time,updatetime,oldprice,price,count,state)values
 		<foreach collection="list" item="item" separator=",">
-			(#{item.id},#{id},#{item.gvid},#{time},#{updatetime},#{item.oldprice},#{item.price},#{item.count})
+			(#{item.id},#{id},#{item.gvid},#{time},#{updatetime},#{item.oldprice},#{item.price},#{item.count},0)
 		</foreach>
 	</insert>
 	<sql id="Example_Where_Clause">

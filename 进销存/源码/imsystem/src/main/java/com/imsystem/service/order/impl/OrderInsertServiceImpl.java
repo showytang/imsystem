@@ -315,6 +315,8 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 		sales.setUid(salesorder.getUid());
 
 		sales.setPaymoney(salesorder.getPaymoney());
+		
+		sales.setColumn1(salesorder.getColumn1());
 
 		sales.setTainmoney(salesorder.getTainmoney() + salesorder.getPreprice() > salesorder.getPaymoney()
 				? salesorder.getPaymoney()
@@ -461,6 +463,12 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 	public int inserorderDesc(Vector<Salesdetails> salesdetails) {
 		// TODO Auto-generated method stub
 
+		int discountPrice = Integer.parseInt(salesdetails.get(0).getColumn2());
+		
+		int yprice = Integer.parseInt(salesdetails.get(0).getColumn5());
+		
+		int price = 0;
+		
 		Salesback sales = new Salesback();
 
 		sales.setId(UUID.randomUUID().toString());
@@ -478,6 +486,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 		sales.setTainmoney(0.00);
 
 		int count = 0;
+		
 		for (Salesdetails item : salesdetails) {
 			
 			salesdetailsMapper.update(item.getId());
@@ -485,8 +494,17 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 			sales.setCount(sales.getCount() + item.getCount());
 
 			sales.setPaymoney(sales.getPaymoney() + sales.getCount() * item.getPrice());
-
-			sales.setTainmoney(sales.getTainmoney() + sales.getCount() * item.getPrice());
+			
+			double jiage = sales.getCount() * item.getPrice();
+			
+			if(discountPrice != 0) {
+				
+				jiage = (yprice)*(jiage/(yprice + discountPrice));
+				
+			}
+			price += jiage;
+			
+			sales.setTainmoney(sales.getTainmoney() + jiage);
 
 			Salesbackdetails salesbackdetails = new Salesbackdetails();
 
@@ -506,7 +524,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 			if (item.getColumn4() != "0") {
 
-				count += curtomer.updateplug(item.getColumn3(), item.getPrice() * item.getCount());
+				count += curtomer.updateplug(item.getColumn3(), jiage);
 
 			}
 
@@ -533,8 +551,8 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 			salesMapper.updateByPrimaryKeySelective(s);
 		}
-
-		return count;
+		
+		return price;
 	}
 
 	@Override
