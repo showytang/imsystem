@@ -453,8 +453,10 @@ button {
 				 	v-if="item.prv != null"
 					class="discountsDiv" @click="discountsDivactive($event,index)">
 					<div style="width: 60%;">{{item.prv.promotion.name}}</div>
-					<div style="width: 40%; color: red;">
-						<span>优惠后金额:￥</span>{{item.promotiontotalprice}}
+					<div style="width: 40%; color: red;" >
+						<span>优惠后金额:￥</span>
+						<span v-if="item.promotiontotalprice != null">{{item.promotiontotalprice}}</span>
+						<span v-else >最低商品价格</span>
 					</div>
 				</div>
 			</div>
@@ -518,7 +520,7 @@ button {
 										v-model="item.goods.column1">
 								</div>
 								<div>{{item.goods.price}}</div>
-								<div>{{item.goods.column1 * item.goods.price}}</div>
+								<div>{{item.goodsValue.column5}}</div>
 							</div>
 						</li>
 					</ul>
@@ -751,10 +753,31 @@ button {
 						
 						$(current).removeClass("discountsDivactive");
 						
+						sum();
+						
 						return;
 					}
 					
-					this.sum = this.promotionrulevalueresult[index].promotiontotalprice;
+					if(this.promotionrulevalueresult[index].gvid != null && this.promotionrulevalueresult[index] != ""){
+						
+						this.promotionrulevalueresult[index].gvid.forEach(item1 => {
+							
+							this.orderShapping.forEach((item,index) => {
+								if(item){
+									if(item.goodsValue.id == item1){
+										
+										item.goodsValue.column5 -= item.goods.price;
+										
+										this.sum -= item.goods.price;
+									}
+								}
+							});
+						});
+						
+					}
+					else{
+						this.sum = this.promotionrulevalueresult[index].promotiontotalprice;
+					}
 					
 					$(".discountsDiv").removeClass("discountsDivactive");
 					
@@ -820,7 +843,8 @@ button {
 					    	
 					    	vue.promotionrulevalueresult = result;
 					    	
-					    	console.log(vue.promotionrulevalueresult);
+					    	sum();
+					    	
 					    }
 					});
 						
@@ -959,6 +983,10 @@ button {
 					    success:function(result){
 					    	
 					    	vue.orderShapping = result;
+					    	
+					    	if(document.getElementsByClassName("discountsDivactive").length){
+								alerts("优惠已取消");
+							}
 					    	
 					    	setTimeout(() => {
 								
@@ -1108,6 +1136,9 @@ button {
 					
 					let count = parseInt($(current).parent().prev().find("input").val());
 					if(document.getElementsByClassName("discountsDivactive").length){
+						
+						document.getElementsByClassName("discountsDivactive").classList.remove("discountsDivactive");
+						
 						alerts("优惠已取消");
 					}
 					
@@ -1134,7 +1165,8 @@ button {
 						
 						this.list[index].goods.column1 = count;
 						
-						//this.sum += this.list[index].goods.column1 * this.list[index].goods.price;
+						this.list[index].goodsValue.column5 = count * this.list[index].goods.price;				
+						
 						this.orderShapping.push(this.list[index]);
 						
 						sum();
@@ -1275,7 +1307,8 @@ button {
 			vue.sum = 0;
 			vue.orderShapping.forEach((item,i) => {
 				if(item){
-					vue.sum += item.goods.column1 * item.goods.price;	
+					vue.sum += item.goods.column1 * item.goods.price;
+					item.goodsValue.column5 = item.goods.column1 * item.goods.price;
 				}
 				
 			});

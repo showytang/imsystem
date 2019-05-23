@@ -223,12 +223,13 @@
 								class="glyphicon glyphicon-remove-circle colsediscountsDivs"
 								@click="colsediscountsDivs"></span>
 							<div v-for="(item,index) of promotionrulevalueresult"
-								 v-if="item.prv != null"
-								 class="discountsDiv"
-								 @click="discountsDivactive($event,index)">
+								v-if="item.prv != null" class="discountsDiv"
+								@click="discountsDivactive($event,index)">
 								<div style="width: 60%;">{{item.prv.promotion.name}}</div>
 								<div style="width: 40%; color: red;">
-									<span>优惠后金额:￥</span>{{item.promotiontotalprice}}
+									<span>优惠后金额:￥</span> <span
+										v-if="item.promotiontotalprice != null">{{item.promotiontotalprice}}</span>
+									<span v-else>最低商品价格</span>
 								</div>
 							</div>
 						</div>
@@ -441,8 +442,27 @@
 							return;
 						}
 						
-						$(".yprice").text(this.promotionrulevalueresult[index].promotiontotalprice.toFixed(2));
-						$(".sprice").val(this.promotionrulevalueresult[index].promotiontotalprice.toFixed(2));
+						if(this.promotionrulevalueresult[index].gvid != null && this.promotionrulevalueresult[index] != ""){
+							
+							this.promotionrulevalueresult[index].gvid.forEach(item1 => {
+								
+								this.shappinglist.forEach((item,index) => {
+									if(item){
+										if(item.id == item1){
+											
+											$(".yprice").text((parseInt($(".yprice").text()) - item.jprice).toFixed(2));
+											$(".sprice").val((parseInt($(".sprice").val()) - item.jprice).toFixed(2));
+										}
+									}
+								});
+							});
+							
+						}
+						else{
+							$(".yprice").text(this.promotionrulevalueresult[index].promotiontotalprice.toFixed(2));
+							$(".sprice").val(this.promotionrulevalueresult[index].promotiontotalprice.toFixed(2));
+						}
+						
 						
 						$(".discountsDiv").removeClass("discountsDivactive");
 						
@@ -503,6 +523,8 @@
 						    	$(".discountsDiv").removeClass("discountsDivactive");
 						    	
 						    	vue.promotionrulevalueresult = result;
+						    	
+						    	counts();
 						    }
 						});
 						$(".discounts").show();
@@ -534,6 +556,7 @@
 				return new Promise((res,rej) => {
 					if(localStorage.getItem("list1"))
 						vue.shappinglist = JSON.parse(localStorage.getItem("list1"));
+					console.log(vue.shappinglist)
 					res(true)
 				})
 			}
@@ -556,6 +579,11 @@
 				});
 			}
 			async function counts(){
+				
+				if(document.getElementsByClassName("discountsDivactive").length){
+					alerts("优惠已取消");
+				}
+				
 				var sum = 0 ; 
 				
 				$(".badgecount").each(function(i,e){
