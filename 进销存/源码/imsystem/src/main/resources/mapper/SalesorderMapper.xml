@@ -532,7 +532,7 @@
 		where id = #{id,jdbcType=VARCHAR}
 	</update>
 	<select id="query" resultMap="BaseResultMap">
-		SELECT SUM(s.paymoney) AS paymoney ,SUM(s.paymoney) - SUM(gv.`jprice`* sd.count) AS column2,DATE_FORMAT(s.time,'%Y-%m-%d') AS column3 FROM sales AS s
+		SELECT SUM(sd.price * sd.count) AS paymoney ,SUM(sd.price * sd.count) - SUM(gv.`jprice`* sd.count) AS column2,DATE_FORMAT(s.time,'%Y-%m-%d') AS column3 FROM sales AS s
 		INNER JOIN `salesdetails` AS sd ON s.id = sd.sid
 		INNER JOIN goodsvalue AS gv ON gv.`id` = sd.gvid
 		 where  s.`state` = '0'
@@ -566,7 +566,7 @@
 		ORDER BY t.s DESC LIMIT 1
 	</select>
 	<select id="queryDaysAgo" resultMap="BaseResultMap">
-		SELECT SUM(s.paymoney) AS paymoney , SUM(s.paymoney) - SUM(gv.`jprice`* sd.count) AS column2,COUNT(*) AS `count`,DATE_FORMAT(s.time,'%Y-%m-%d') AS column3 FROM sales AS s
+		SELECT SUM(sd.price * sd.count) AS paymoney , SUM(sd.price * sd.count) - SUM(gv.`jprice`* sd.count) AS column2,COUNT(*) AS `count`,DATE_FORMAT(s.time,'%Y-%m-%d') AS column3 FROM sales AS s
 		INNER JOIN `salesdetails` AS sd ON s.id = sd.sid
 		INNER JOIN goodsvalue AS gv ON gv.`id` = sd.gvid
 		<where>
@@ -583,7 +583,7 @@
 		GROUP BY DATE_FORMAT(s.`TIME`,'%Y-%m-%d') ORDER BY s.`TIME`
 	</select>
 	<select id="queryByTime" resultMap="BaseResultMap">
-		SELECT t.* FROM (SELECT s.id,SUM(s.paymoney) as paymoney,COUNT(*) as `count`,SUM(s.paymoney) - SUM(gv.jprice) column2,DATE_FORMAT(s.time,'%Y-%m-%d') AS column3  FROM sales AS s 
+		SELECT t.* FROM (SELECT s.id,SUM(sd.price * sd.count) as paymoney,COUNT(*) as `count`,SUM(sd.price * sd.count) - SUM(gv.jprice * sd.count) column2,DATE_FORMAT(s.time,'%Y-%m-%d') AS column3  FROM sales AS s 
 		JOIN salesdetails AS sd ON sd.sid = s.id 
 		JOIN goodsvalue AS gv ON gv.id = sd.gvid
 		<where>
@@ -633,7 +633,7 @@
 		</if>
 	</select>
 	<select resultMap="BaseResultMap" id="queryThisYear">
-		SELECT SUM(sd.price) AS paymoney , SUM(sd.price) - SUM(gv.`jprice`) AS column2,DATE_FORMAT(s.time,'%Y-%m') AS column3 FROM sales AS s
+		SELECT SUM(sd.price * sd.count) AS paymoney , SUM(sd.price * sd.count) - SUM(gv.`jprice` * sd.count) AS column2,DATE_FORMAT(s.time,'%Y-%m') AS column3 FROM sales AS s
 		INNER JOIN `salesdetails` AS sd ON s.id = sd.sid
 		INNER JOIN goodsvalue AS gv ON gv.`id` = sd.gvid
 		WHERE DATE_FORMAT(s.time,'%Y') = #{year}
