@@ -113,11 +113,7 @@
 			supplier:[]
 		}
 	});
-	$(function() {
-		myDate();
-		$(".panel-subtitle").text("Period: "+$("#config-demo").val());
-		vue.supplier = querySupplier_yByStore(sid);
-		vue.page = queryJinHuo("", startTime, endTime, id,sid);
+	function js(){
 		var count = 0;
 		var sumMoney = 0;
 		$.each(vue.page.list, function(i, obj) {
@@ -126,6 +122,13 @@
 		});
 		$("#count").text(count);
 		$("#money").text(sumMoney);
+	}
+	$(function() {
+		myDate();
+		$(".panel-subtitle").text("Period: "+$("#config-demo").val());
+		vue.supplier = querySupplier_yByStore(sid);
+		vue.page = queryJinHuo("", startTime, endTime, id,sid);
+		js();
 		$(".panel-headline").append(
 				page(vue.page.pageNum, vue.page.prePage, vue.page.nextPage,
 						vue.page.pages));
@@ -139,6 +142,7 @@
 						endTime = time[1];
 					}
 					vue.page = queryJinHuo("", startTime, endTime, id,sid);
+					js();
 					$(".panel-headline").append(
 							page(vue.page.pageNum, vue.page.prePage,
 									vue.page.nextPage, vue.page.pages));
@@ -146,6 +150,7 @@
 		$(".supplier").change(function(){
 			id = $(this).val();
 			vue.page = queryJinHuo("", startTime, endTime, id,sid);
+			js();
 			$(".panel-headline").append(
 					page(vue.page.pageNum, vue.page.prePage,
 							vue.page.nextPage, vue.page.pages));
@@ -157,6 +162,7 @@
 					var create = $(this).attr("pageNumber");
 					if (create != null && create != 0) {
 						vue.page = queryJinHuo(create, startTime, endTime, id,sid);
+						js();
 						$(".panel-headline").append(
 								page(create, vue.page.prePage,
 										vue.page.nextPage, vue.page.pages));

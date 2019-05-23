@@ -13,6 +13,19 @@
     <result column="column4" property="column4" jdbcType="VARCHAR" />
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
+  
+  <select id="queryAllLable" resultMap="BaseResultMap">
+  	SELECT * FROM userlable WHERE state=0
+  </select>
+  
+  <update id="updateLable">
+  	UPDATE userlable SET `name`=#{name} WHERE id=#{id}
+  </update>
+  
+  <update id="deleteLabel">
+  	UPDATE userlable SET state=1 WHERE id=#{id}
+  </update>
+  
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >

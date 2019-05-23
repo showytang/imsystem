@@ -8,7 +8,7 @@
 <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
 <script type="text/javascript"
 	th:src="@{/assets/js/jquery-3.1.1.min.js}"></script>
-	<link rel="stylesheet" th:href="@{/assets/css/toastr.css}">
+<link rel="stylesheet" th:href="@{/assets/css/toastr.css}">
 <link rel="stylesheet"
 	th:href="@{/assets/css/bootstrap-datetimepicker.min.css}" />
 <script type="text/javascript" th:src="@{/assets/js/bootstrap.min.js}"></script>
@@ -135,10 +135,79 @@
 	border: none;
 	outline: none;
 }
-.panel-title{
+
+.panel-title {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+}
+
+.tanbody::-webkit-scrollbar {
+	width: 3px;
+	height: 2px;
+	background: #ccc;
+	border-radius: 10px;
+}
+
+.tanbody::-webkit-scrollbar-thumb {
+	width: 2px;
+	border-radius: 10px;
+	background: #0089dc;
+}
+
+.discountsDiv {
+	height: 70px;
+	width: 100%;
+	border: 1px solid rgb(2, 143, 208);
+	margin-top: 20px;
+	border-radius: 7px;
+	line-height: 70px;
+	font-size: 18px;
+	text-indent: 1em;
+}
+
+.discountsDiv>div {
+	float: left;
+}
+
+.colsediscountsDivs {
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	cursor: pointer;
+}
+
+.discountsDivactive {
+	border: 2px solid #ec3e22;
+}
+
+.discounts {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: 999;
+	color: rgb(2, 143, 208);
+	display: none;
+}
+
+.tanbody {
+	position: absolute;
+	width: 60%;
+	top: 50%;
+	height: 60%;
+	background: white;
+	border: 1px solid #03A9F4;
+	transform: translate(-50%, -50%);
+	left: 50%;
+	border-radius: 1%;
+	padding: 10px 20px;
+	overflow-y: auto;
+}
+
+.zhebiceng {
+	width: 100%;
+	height: 100%;
+	background-color: rgba(181, 173, 173, 0.5);
 }
 </style>
 </head>
@@ -147,6 +216,23 @@
 		<div class="main-content">
 			<div class="container-fluid">
 				<div class="panel panel-headline" id="main">
+					<div class="discounts">
+						<div class="zhebiceng" @click="colsediscountsDivs"></div>
+						<div class="tanbody discountsDivs">
+							<span
+								class="glyphicon glyphicon-remove-circle colsediscountsDivs"
+								@click="colsediscountsDivs"></span>
+							<div v-for="(item,index) of promotionrulevalueresult"
+								 v-if="item.prv != null"
+								 class="discountsDiv"
+								 @click="discountsDivactive($event,index)">
+								<div style="width: 60%;">{{item.prv.promotion.name}}</div>
+								<div style="width: 40%; color: red;">
+									<span>优惠后金额:￥</span>{{item.promotiontotalprice}}
+								</div>
+							</div>
+						</div>
+					</div>
 					<div class="panel-heading">
 						<h3 class="panel-title">添加销售订单</h3>
 						<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
@@ -159,6 +245,11 @@
 								<div class="btn-group" style="float: right;">
 									<div class="btn btn-primary" id="moling"
 										style="border: none; box-shadow: none; font-size: 16px;">抹零</div>
+									<div class="btn"
+										style="border: none; box-shadow: none; color: #e84242; font-size: 16px;">
+										<span style="color: white">未折扣：</span>￥<span
+											class="sumPricesss">{{sum}}</span>
+									</div>
 									<div class="btn"
 										style="border: none; box-shadow: none; color: #e84242; font-size: 16px;">
 										<span style="color: white">应付：</span>￥<span class="yprice">{{price}}</span>
@@ -212,6 +303,8 @@
 								<div class="container-fluid"
 									style="background-color: #00AAFF; border-radius: 4px;">
 									<div class="btn-group btnShapping" style="float: right;">
+										<div class="btn btn-primary" @click="opendiscounts"
+											style="border: none; box-shadow: none; font-size: 15px;">选择活动</div>
 										<div class="btn btn-primary"
 											style="border: none; box-shadow: none; font-size: 15px;">扫描条形码</div>
 										<div class="btn btn-primary" id="queryShapping"
@@ -246,15 +339,14 @@
 									</div>
 									<div class="panel-body row">
 										<div class="col-md-3 col-md-offset-1">
-											<img :src="item.column1" width="100%"
-												height="80px" />
+											<img :src="item.column1" width="100%" height="80px" />
 										</div>
-										<div class="col-md-8"
-											style="font-size: 14px; ">
+										<div class="col-md-8" style="font-size: 14px;">
 											<div style="font-size: 20px;">{{item.column5}}</div>
 											<div>类型：{{item.column2}}</div>
 											<div style="white-space: nowrap;">
-												价格:<input class='jprice' :oldprice="item.column3" :data="index" :value="item.jprice.toFixed(2)" />
+												价格:<input class='jprice' :oldprice="item.column3"
+													:data="index" :value="item.jprice.toFixed(2)" />
 												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>数量:&nbsp;<input
 													:value="item.count" class="count" :data="index"
 													style="border: none; outline: none;"></span>
@@ -321,15 +413,103 @@
 					
 					user : {},
 					
-					typeId:"",
+					typeId: "",
 					
-					price : 0
+					price : 0,
+					
+					promotionrulevalueresult : [] ,
+					
+					sum : 0
 				},
+				
 				methods:{
 					clientNames : function (element){
 						var element = event.currentTarget;
 						$(".clientName").text($(element).text());
 						$(".clientName").attr("data",$(element).attr("data"));
+					},
+					discountsDivactive : function (obj,index){
+						
+						let current = obj.currentTarget;
+						
+						counts();
+						
+						if($(current).hasClass('discountsDivactive')){
+							
+							$(current).removeClass("discountsDivactive");
+							
+							return;
+						}
+						
+						$(".yprice").text(this.promotionrulevalueresult[index].promotiontotalprice.toFixed(2));
+						$(".sprice").val(this.promotionrulevalueresult[index].promotiontotalprice.toFixed(2));
+						
+						$(".discountsDiv").removeClass("discountsDivactive");
+						
+						$(current).addClass("discountsDivactive");
+						
+					},
+					opendiscounts : function (){
+						
+						var goodsvolist = [];
+						
+						var sumPrice = 0;
+						
+						this.shappinglist.forEach(item => {
+							
+							if(item){
+								
+								for(let i = 0; i < parseInt(item.count); i++){
+									
+									var goodsvo = {
+											goods : {price : item.column3},
+											goodsValues : [],
+									}
+									
+									goodsvo.goodsValues.push({id : item.id})
+									
+									goodsvolist.push(goodsvo);
+								}
+								sumPrice += parseInt(item.count) * item.jprice;
+							}
+							
+						});
+						
+						if(goodsvolist.length == 0){
+							return;
+						}
+						
+						var PromotionCondition = {
+							goodsvolist : goodsvolist,
+							totalprice : sumPrice
+								
+						};
+						
+						$.ajax({
+						    
+						    url : [[@{/promotion/getPromotion}]],
+
+						    data :JSON.stringify(PromotionCondition),
+
+						    type : "post",
+
+						    dataType : "json",
+						    
+						    contentType : "application/json; charset=UTF-8",							
+						    processData: false,
+						    
+						    success:function(result){
+								
+						    	$(".discountsDiv").removeClass("discountsDivactive");
+						    	
+						    	vue.promotionrulevalueresult = result;
+						    }
+						});
+						$(".discounts").show();
+					},
+					colsediscountsDivs : function (){
+						
+						$(".discounts").hide();
 					},
 					spliceList : function (index){
 						vue.shappinglist.splice(index,1);
@@ -347,6 +527,8 @@
 			vue.paytypeList = [[${paytypeList}]];
 			
 			vue.supplierlist = [[${supplierlist}]];
+			
+			shappingLists();
 			
 			function shappingLists(){
 				return new Promise((res,rej) => {
@@ -385,8 +567,11 @@
 				$(".sumcount").text(sum);
 				sum = 0;
 				
+				vue.sum = 0;
+				
 				$(".badgecount").each(function(i,e){
 					sum += (parseInt($(e).text())*$(".jprice:eq("+i+")").val());
+					vue.sum += (parseInt($(e).text())*$(".jprice:eq("+i+")").attr("oldprice"));
 				});
 				
 				$(".yprice").text(sum.toFixed(2));
@@ -394,12 +579,14 @@
 				goodsList();
 			}
 			function loadPrice(){
-				
-				for(var i in vue.shappinglist) {
-
-				    vue.price +=i.jprice;
-
+			
+				if(vue.shappinglist == null || vue.shappinglist == ''){
+					return;
 				}
+				
+				vue.shappinglist.forEach((item,idnex) => {
+					vue.sum += parseInt(item.column3) * item.count;
+				})
 				
 				shappingLists().then(res => {
 					vue.shappinglist[0].column4 = $(".client").val();
@@ -571,7 +758,7 @@
 						var order = {
 								paymoney : $(".yprice").text(),
 								tainmoney : $(".sprice").val(),
-								price : vue.price,
+								price : vue.sum,
 								paytype  : vue.typeId,
 								code : $("#No").val(),
 								time : $("#time").val(),

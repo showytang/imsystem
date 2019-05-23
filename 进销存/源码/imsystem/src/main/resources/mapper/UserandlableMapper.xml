@@ -14,9 +14,64 @@
     <result column="column4" property="column4" jdbcType="VARCHAR" />
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
+  
+  
+  <resultMap type="com.imsystem.domain.UserLableVO" id="customerLabel">
+  	<association property="ulobj" javaType="com.imsystem.domain.Userlable">
+  		<id column="ululid" property="id" jdbcType="VARCHAR" />
+	    <result column="ulname" property="name" jdbcType="VARCHAR" />
+	    <result column="uluid" property="uid" jdbcType="VARCHAR" />
+	    <result column="ultime" property="time" jdbcType="TIMESTAMP" />
+	    <result column="ulstate" property="state" jdbcType="INTEGER" />
+	    <result column="ulcolumn1" property="column1" jdbcType="VARCHAR" />
+	    <result column="ulcolumn2" property="column2" jdbcType="VARCHAR" />
+	    <result column="ulcolumn3" property="column3" jdbcType="VARCHAR" />
+	    <result column="ulcolumn4" property="column4" jdbcType="VARCHAR" />
+	    <result column="ulcolumn5" property="column5" jdbcType="VARCHAR" />
+  	</association>
+  	<association property="ualobj" javaType="com.imsystem.domain.Userandlable">
+  		<id column="id" property="id" jdbcType="VARCHAR" />
+	    <result column="uid" property="uid" jdbcType="VARCHAR" />
+	    <result column="ulid" property="ulid" jdbcType="VARCHAR" />
+	    <result column="uids" property="uids" jdbcType="VARCHAR" />
+	    <result column="time" property="time" jdbcType="TIMESTAMP" />
+	    <result column="state" property="state" jdbcType="INTEGER" />
+	    <result column="column1" property="column1" jdbcType="VARCHAR" />
+	    <result column="column2" property="column2" jdbcType="VARCHAR" />
+	    <result column="column3" property="column3" jdbcType="VARCHAR" />
+	    <result column="column4" property="column4" jdbcType="VARCHAR" />
+	    <result column="column5" property="column5" jdbcType="VARCHAR" />
+  	</association>
+  </resultMap>
+  
+  
+  
   <select id="queryByCid" resultMap="BaseResultMap">
   	select * from userandlable where uid = #{cid}
   </select>
+  
+  
+  <select id="queryCustomer" resultType="com.imsystem.domain.Customer">
+  	SELECT * FROM customer WHERE storeid=#{sid}
+  </select>
+  
+  <select id="queryCustomerLabel" resultMap="customerLabel">
+  	SELECT ual.*,
+	ul.id AS ululid,ul.name AS ulname,ul.uid AS uluid,ul.time AS ultime,ul.state AS ulstate,ul.column1 AS ulcolumn1,ul.column2 AS ulcolumn2,ul.column3 AS ulcolumn3,ul.column4 AS ulcolumn4,ul.column5 AS ulcolumn5 
+  	FROM userlable ul 
+	left join (select * from userandlable where uids=#{cid}) ual 
+	ON ul.id=ual.ulid 
+	where ul.state=0 and ul.name like CONCAT('%',#{name},'%')
+  </select>
+  
+  <insert id="addUserLabel">
+  	INSERT INTO userandlable(id,uid,ulid,uids,`time`,state) VALUES
+  	
+  		(#{id},#{uid},#{ulid},#{uids},#{time},#{state})
+  	
+  </insert>
+  
+  
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
