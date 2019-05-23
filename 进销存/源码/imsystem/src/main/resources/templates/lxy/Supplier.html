@@ -223,7 +223,7 @@
 		
 		/*查看详情*/
 		function todetail(th){
-			var id=$(th).parent().prev().prev().prev().prev().val();
+			var id=$(th).parent().prev().prev().prev().val();
 			$("#supplierForm").attr("action","tosupplierdetail?id="+id);
 			$("#supplierForm").submit();
 		}
