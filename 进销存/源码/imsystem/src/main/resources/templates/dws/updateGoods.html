@@ -259,7 +259,7 @@ td input {
 						<div class="input-group">
 							<span class="input-group-btn">
 								<button class="btn btn-primary" type="button">库存：</button>
-							</span> <input oninput='kcChange(this)' name="kc" value="20"
+							</span> <input oninput='kcChange(this)' name="kc" value="5"
 								class="form-control" type="text">
 						</div>
 						<br />
@@ -273,7 +273,7 @@ td input {
 						<div class="input-group">
 							<span class="input-group-btn">
 								<button class="btn btn-danger" type="button">售价：</button>
-							</span> <input oninput='priceChange(this)' name="price"
+							</span> <input oninput='sjld(this)' name="price"
 								class="form-control" :value="goods.price" type="text">
 						</div>
 						<br>
@@ -283,7 +283,7 @@ td input {
 									<button class="btn btn-danger" type="button">{{item.viewname}}：</button>
 								</span> <input :name='"customerType"+index' :cid='item.id'
 									oninput='customerpriceChange(this)'
-									class="form-control customerpricemain" type="text">
+									class="form-control customerpricemain bjss" type="text">
 							</div>
 							<br>
 						</div>
@@ -1060,6 +1060,34 @@ function customerpriceChange(obj){
 	});
 	
 }
+
+function sjld(Obj){
+	
+    priceChange(Obj);
+    
+	$(".bjss").each(function(index,item){
+			
+			$.each(vue.customerTypeList,function(index2,item2){
+				
+				if($(item).attr("cid") == item2.id){
+					
+					if(item2.agio == 0){
+					$(item).val($(Obj).val());
+						
+					}else{
+						
+					$(item).val(($(Obj).val()*item2.agio).toFixed(2));
+					}
+					
+				}
+				
+			});
+			
+			
+		});
+		
+	}
+
 
 //库存联动
 function kcChange(obj){
