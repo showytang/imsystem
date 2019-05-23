@@ -13,6 +13,11 @@
     <result column="column4" property="column4" jdbcType="VARCHAR" />
     <result column="column5" property="column5" jdbcType="VARCHAR" />
   </resultMap>
+  
+  <select id="queryAllGoodsValueLabel" resultMap="BaseResultMap">
+  	SELECT * FROM goodsvaluelable WHERE state=0
+  </select>
+  
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >

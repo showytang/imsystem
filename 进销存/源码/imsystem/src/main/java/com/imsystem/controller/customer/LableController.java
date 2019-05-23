@@ -17,6 +17,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Customer;
 import com.imsystem.domain.Customerlevel;
+import com.imsystem.domain.Goodsvaluelable;
 import com.imsystem.domain.NewsVo;
 import com.imsystem.domain.Notice;
 import com.imsystem.domain.Noticefiles;
@@ -82,6 +83,23 @@ public class LableController {
 	public String addUserLable(UserLableVO ulvo) {
 		int row=lService.addUserLable(ulvo);
 		return "redirect:toadduserlabel";
+	}
+	
+	
+	/*商品实例标签*/
+	
+	
+	@RequestMapping("togoodslablelist")
+	public String toList(Model model) {
+		List<Goodsvaluelable> ulList=lService.queryGoodsValueLableList();
+		model.addAttribute("lList", ulList);
+		return "lxy/GoodsValueLable";
+	}
+	
+	@RequestMapping("addgvlable")
+	public String addgvlable(Goodsvaluelable gvl) {
+		int row=lService.addgvLabel(gvl);
+		return "redirect:togoodslablelist";
 	}
 
 }
