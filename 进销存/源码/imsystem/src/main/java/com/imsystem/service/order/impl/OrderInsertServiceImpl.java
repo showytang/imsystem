@@ -264,7 +264,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 			stockcords.setId(UUID.randomUUID().toString());
 			stockcords.setAftersdid(item.getId());
 			stockcords.setBeforesdid(stod.getId());
-			stockcords.setAftersid(stockde.get(0).getColumn1());
+			stockcords.setAftersid(item.getStoreid());
 			stockcords.setBeforesid(item.getColumn1());
 
 			count += stockcord.insertSelective(stockcords);

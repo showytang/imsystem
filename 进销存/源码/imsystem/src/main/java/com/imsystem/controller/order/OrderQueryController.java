@@ -102,7 +102,7 @@ public class OrderQueryController {
 	}
 
 	@RequestMapping("/toGoodsAllot")
-	public String toGoodsAllot(Model model) {
+	public String toGoodsAllot(Model model,HttpSession session) {
 
 		model.addAttribute("li", store.queryStoreAll());
 

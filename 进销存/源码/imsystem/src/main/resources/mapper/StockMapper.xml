@@ -30,19 +30,22 @@
 		<result property="column1" column="leven" />
 
 	</resultMap>
-
+	
 	<select id="queryCustomerByName"
 		resultMap="queryCustomerByNameMap">
 
-		SELECT c.id,c.img,c.name,c.telephone,(SELECT l.name FROM `customerlevel` AS
-		l WHERE l.id = c.lid) AS leven FROM customer AS c WHERE c.storeid = #{storeid}
+		SELECT c.id,c.img,c.name,c.telephone,(SELECT l.name FROM
+		`customerlevel` AS
+		l WHERE l.id = c.lid) AS leven FROM customer AS c
+		WHERE c.storeid = #{storeid}
 		AND c.name LIKE concat('%',#{name},'%')
 
 	</select>
 
 	<update id="updatePrice">
 		UPDATE stock AS a
-		SET a.`column1` = (SELECT SUM(s) FROM (
+		SET a.`column1` = (SELECT SUM(s)
+		FROM (
 		SELECT
 		SUM(s.count-s.scount)*s.price AS s FROM stockdetails AS s
 		WHERE s.sid =
@@ -51,7 +54,8 @@
 		AS ss) WHERE a.id = #{id}
 	</update>
 	<insert id="add">
-		insert into stock(id,code,time,updatetime,uid,state,storeid,column1,column2)
+		insert into
+		stock(id,code,time,updatetime,uid,state,storeid,column1,column2)
 		values(#{id},#{code},#{time},#{time},#{uid},1,#{column1},0,0)
 	</insert>
 	<resultMap type="com.imsystem.domain.Stock" id="queryStock"
@@ -88,15 +92,20 @@
 		update stock set state = 2 where code = #{code}
 	</update>
 	<select id="querydetails" resultMap="queryStock">
-		SELECT s.*,sd.id as sdid,sd.uid as sduid,sd.price as sdprice,sd.state as
+		SELECT s.*,sd.id as
+		sdid,sd.uid as sduid,sd.price as sdprice,sd.state as
 		sdstate,sd.storeid as sdstoreid,sd.code as ascode,sd.gvid as
 		sdgvid,sd.sid as sdsid,
-		sd.updatetime as sdupdatetime,sd.count as sdcount,sd.scount as sdscount,
-		sd.count-sd.scount as 'sdcolumn2',g.id as gooodid,g.name as goodname,
-		g.img as goodimg,gv.id as gvid,gv.name as gvname,gv.column1 as
+		sd.updatetime as sdupdatetime,sd.count as
+		sdcount,sd.scount as sdscount,
+		sd.count-sd.scount as 'sdcolumn2',g.id
+		as gooodid,g.name as goodname,
+		g.img as goodimg,gv.id as gvid,gv.name
+		as gvname,gv.column1 as
 		gvcolumn1
 		FROM stock as s
-		inner join`stockdetails` AS sd on sd.sid = s.id
+		inner
+		join`stockdetails` AS sd on sd.sid = s.id
 		LEFT JOIN `goodsvalue` AS gv
 		ON gv.id = sd.gvid
 		INNER JOIN `goods` AS g ON gv.gid = g.id
@@ -106,9 +115,11 @@
 
 	<select id="query" resultMap="BaseResultMap">
 		SELECT s.* FROM stock AS s
-		inner join stockdetails as sk on s.id = sk.sid
+		inner join stockdetails as sk on s.id =
+		sk.sid
 		inner join goodsvalue as gv on gv.id = sk.gvid
-		inner join goods as g on g.id = gv.gid
+		inner join goods
+		as g on g.id = gv.gid
 		<where>
 			<if test="code != null">
 				and s.code like concat('%',#{code},'%')
@@ -117,7 +128,8 @@
 				and g.name like concat('%',#{shappingname},'%')
 			</if>
 			<if test="time != null and time != ''">
-				and s.`updatetime` >= #{time} AND s.`updatetime` &lt;= #{endTime}
+				and s.`updatetime` >= #{time} AND s.`updatetime` &lt;=
+				#{endTime}
 			</if>
 			<if test="kucun == 2">
 				and s.state = #{kucun}
@@ -154,7 +166,8 @@
 									and ${criterion.condition} #{criterion.value}
 								</when>
 								<when test="criterion.betweenValue">
-									and ${criterion.condition} #{criterion.value} and
+									and ${criterion.condition} #{criterion.value}
+									and
 									#{criterion.secondValue}
 								</when>
 								<when test="criterion.listValue">
@@ -186,7 +199,8 @@
 									and ${criterion.condition} #{criterion.value}
 								</when>
 								<when test="criterion.betweenValue">
-									and ${criterion.condition} #{criterion.value} and
+									and ${criterion.condition} #{criterion.value}
+									and
 									#{criterion.secondValue}
 								</when>
 								<when test="criterion.listValue">
@@ -204,7 +218,8 @@
 		</where>
 	</sql>
 	<sql id="Base_Column_List">
-		id, cid, code, sid, time, updatetime, uid, state, storeid, column1,
+		id, cid, code, sid, time, updatetime, uid, state, storeid,
+		column1,
 		column2, column3,
 		column4, column5
 	</sql>
@@ -242,18 +257,25 @@
 		</if>
 	</delete>
 	<insert id="insert" parameterType="com.imsystem.domain.Stock">
-		insert into stock (id, cid, code,
+		insert into stock (id, cid,
+		code,
 		sid, time, updatetime,
 		uid, state, storeid,
-		column1, column2, column3,
+		column1, column2,
+		column3,
 		column4, column5)
-		values (#{id,jdbcType=VARCHAR}, #{cid,jdbcType=VARCHAR},
+		values (#{id,jdbcType=VARCHAR},
+		#{cid,jdbcType=VARCHAR},
 		#{code,jdbcType=VARCHAR},
-		#{sid,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP},
-		#{uid,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER},
+		#{sid,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP},
+		#{updatetime,jdbcType=TIMESTAMP},
+		#{uid,jdbcType=VARCHAR},
+		#{state,jdbcType=INTEGER},
 		#{storeid,jdbcType=VARCHAR},
-		#{column1,jdbcType=VARCHAR}, #{column2,jdbcType=VARCHAR}, #{column3,jdbcType=VARCHAR},
-		#{column4,jdbcType=VARCHAR}, #{column5,jdbcType=VARCHAR})
+		#{column1,jdbcType=VARCHAR}, #{column2,jdbcType=VARCHAR},
+		#{column3,jdbcType=VARCHAR},
+		#{column4,jdbcType=VARCHAR},
+		#{column5,jdbcType=VARCHAR})
 	</insert>
 	<insert id="insertSelective"
 		parameterType="com.imsystem.domain.Stock">
@@ -408,19 +430,30 @@
 	<update id="updateByExample" parameterType="map">
 		update stock
 		set id = #{record.id,jdbcType=VARCHAR},
-		cid = #{record.cid,jdbcType=VARCHAR},
+		cid =
+		#{record.cid,jdbcType=VARCHAR},
 		code = #{record.code,jdbcType=VARCHAR},
 		sid = #{record.sid,jdbcType=VARCHAR},
-		time = #{record.time,jdbcType=TIMESTAMP},
-		updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
-		uid = #{record.uid,jdbcType=VARCHAR},
-		state = #{record.state,jdbcType=INTEGER},
-		storeid = #{record.storeid,jdbcType=VARCHAR},
-		column1 = #{record.column1,jdbcType=VARCHAR},
-		column2 = #{record.column2,jdbcType=VARCHAR},
-		column3 = #{record.column3,jdbcType=VARCHAR},
-		column4 = #{record.column4,jdbcType=VARCHAR},
-		column5 = #{record.column5,jdbcType=VARCHAR}
+		time =
+		#{record.time,jdbcType=TIMESTAMP},
+		updatetime =
+		#{record.updatetime,jdbcType=TIMESTAMP},
+		uid =
+		#{record.uid,jdbcType=VARCHAR},
+		state =
+		#{record.state,jdbcType=INTEGER},
+		storeid =
+		#{record.storeid,jdbcType=VARCHAR},
+		column1 =
+		#{record.column1,jdbcType=VARCHAR},
+		column2 =
+		#{record.column2,jdbcType=VARCHAR},
+		column3 =
+		#{record.column3,jdbcType=VARCHAR},
+		column4 =
+		#{record.column4,jdbcType=VARCHAR},
+		column5 =
+		#{record.column5,jdbcType=VARCHAR}
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
 		</if>
@@ -475,31 +508,40 @@
 		parameterType="com.imsystem.domain.Stock">
 		update stock
 		set cid = #{cid,jdbcType=VARCHAR},
-		code = #{code,jdbcType=VARCHAR},
+		code =
+		#{code,jdbcType=VARCHAR},
 		sid = #{sid,jdbcType=VARCHAR},
-		time = #{time,jdbcType=TIMESTAMP},
-		updatetime = #{updatetime,jdbcType=TIMESTAMP},
+		time =
+		#{time,jdbcType=TIMESTAMP},
+		updatetime =
+		#{updatetime,jdbcType=TIMESTAMP},
 		uid = #{uid,jdbcType=VARCHAR},
-		state = #{state,jdbcType=INTEGER},
+		state =
+		#{state,jdbcType=INTEGER},
 		storeid = #{storeid,jdbcType=VARCHAR},
 		column1 = #{column1,jdbcType=VARCHAR},
-		column2 = #{column2,jdbcType=VARCHAR},
+		column2 =
+		#{column2,jdbcType=VARCHAR},
 		column3 = #{column3,jdbcType=VARCHAR},
 		column4 = #{column4,jdbcType=VARCHAR},
-		column5 = #{column5,jdbcType=VARCHAR}
+		column5 =
+		#{column5,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=VARCHAR}
 	</update>
 	<select id="queryQianKuan" resultMap="BaseResultMap">
 		SELECT s.column1 AS column1, s.column2 AS column2, su.name AS column3,
-		s.sid AS sid, s.id AS id, su.balance AS column4,s.time AS column5 FROM stock AS s JOIN
-		supplier AS su ON su.id = s.sid WHERE s.state = '0' AND s.column1 - s.column2
+		s.sid AS sid, s.id AS id, su.balance AS column4,s.time AS column5 FROM
+		stock AS s JOIN
+		supplier AS su ON su.id = s.sid WHERE s.state = '0' AND
+		s.column1 - s.column2
 		> 0
 		<if test="sid != null and sid != ''">
 			AND s.sid = #{sid}
 		</if>
 		<if
 			test="startTime != null and startTime !='' and endTime != null and endTime != ''">
-			AND s.TIME >= DATE_FORMAT(#{startTime},'%Y-%m-%d 00:00:00') AND s.TIME
+			AND s.TIME >= DATE_FORMAT(#{startTime},'%Y-%m-%d 00:00:00') AND
+			s.TIME
 			&lt;= DATE_FORMAT(#{endTime},'%Y-%m-%d 23:59:59')
 		</if>
 	</select>

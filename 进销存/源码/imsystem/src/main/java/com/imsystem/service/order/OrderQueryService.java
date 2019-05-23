@@ -11,6 +11,7 @@ import com.imsystem.domain.Salesorder;
 import com.imsystem.domain.Stock;
 import com.imsystem.domain.Stockdetails;
 import com.imsystem.domain.Stockrecord;
+import com.imsystem.domain.Store;
 
 public interface OrderQueryService {
 

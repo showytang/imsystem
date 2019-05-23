@@ -4,6 +4,8 @@ import com.imsystem.domain.Customer;
 import com.imsystem.domain.Sales;
 import com.imsystem.domain.Stock;
 import com.imsystem.domain.StockExample;
+import com.imsystem.domain.Store;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

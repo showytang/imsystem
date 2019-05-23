@@ -174,7 +174,7 @@
 								<div class="input-group">
 									<span class="input-group-addon">门店</span> <select id="storid"
 										class="form-control">
-										<option v-for="item in li" :value="item.id">{{item.name}}[{{item.sufname}}]</option>
+										<option v-for="item in li" v-if="item.id != user.storeid" :value="item.id">{{item.name}}[{{item.sufname}}]</option>
 									</select>
 								</div>
 								<ul id="stockDeatails"
@@ -240,7 +240,6 @@
 							insert : function(){
 								
 								var stockdetail = [];
-								
 								$("#stockDeatails>li").each(function(i,e){
 									if($(".stockDetailsCount:eq("+i+")").val()){
 										var stockdetails = {
@@ -269,7 +268,7 @@
 										contentType : "application/json; charset=UTF-8",							
 									    processData: false,
 										success : function(result){
-											alert(result)
+											window.location.reload();
 										}
 									});
 								}
