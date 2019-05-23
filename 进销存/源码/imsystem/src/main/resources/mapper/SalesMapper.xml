@@ -28,7 +28,7 @@
 	</resultMap>
 
 	<select id="query" resultMap="BaseResultMap">
-		SELECT s.id,s.code,s.count,s.time,s.updatetime,s.tainmoney,s.price,s.paymoney,(select name from customer as c where c.id = s.cid) as column5 FROM sales AS s
+		SELECT s.id,s.state,s.code,s.cid,s.count,s.time,s.updatetime,s.tainmoney,s.price,s.paymoney,(select name from customer as c where c.id = s.cid) as column5 FROM sales AS s
 		inner join salesdetails as sd on sd.sid = s.id
 		inner join goodsvalue as gv on gv.id = sd.gvid
 		inner join goods as g on g.id = gv.gid

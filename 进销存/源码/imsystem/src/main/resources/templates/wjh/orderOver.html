@@ -189,7 +189,7 @@
 										aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
-									<h4 class="modal-title" id="myModalLabel">订单详情<span></span></h4>
+									<h4 class="modal-title" id="myModalLabel" :cid="0">订单详情<span></span></h4>
 								</div>
 								<div class="modal-body">
 									<iframe width="100%" style="border: none;min-height:300px; overflow-x: auto;"
@@ -234,7 +234,7 @@
 					
 					$("#myModalLabel").find("span").text(id);
 					$("#myModalLabel").find("span").attr("data",cid);
-					
+					$("#myModalLabel").attr("cid",cid)
 					$(".modal").modal("show");
 					
 				}
@@ -325,7 +325,6 @@
 				var tbody = iframe.find("tbody");
 				
 				var salesDetails = [];
-				
 				$(tbody.find("tr")).each(function(i,e){
 					
 					if($(e).find("input").prop("checked") == true){
@@ -336,13 +335,15 @@
 								
 								count : $(e).find(".count").text(),
 								
-								column3 : $("#myModalLabel").find("span").attr("data"),
+								column3 : $("#myModalLabel").find("span").text(),
 								
 								price : $(e).find(".price").text(),
 								
 								storeid : vue.user.storeid,
 								
-								uid : vue.user.id
+								uid : vue.user.id,
+								
+								column4 : $("#myModalLabel").attr("cid")
 								
 						};
 						
@@ -373,7 +374,7 @@
 					    }
 					})
 					
-				}
+				} 
 				
 				
 				

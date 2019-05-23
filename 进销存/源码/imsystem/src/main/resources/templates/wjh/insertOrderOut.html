@@ -782,65 +782,71 @@
 				});
 				counts();
 				$("#insertOrder").click(function(){
-					if($(".sprice").val()){
-						var order = {
-								paymoney : $(".yprice").text(),
-								tainmoney : $(".sprice").val(),
-								price : vue.sum,
-								paytype  : vue.typeId,
-								code : $("#No").val(),
-								time : $("#time").val(),
-								list1 : [],
-								count : $(".sumcount").text(),
-								cid : $(".client").val(),
-								state : 0,
-								progress : 1,
-								storeid : vue.user.storeid,
-								uid : vue.user.id
-						};
-						if($("#priceName").text() == "定金"){
-							order.preprice = $(".sprice").val();
-							order.tainmoney = 0;
-						}
-						else{
-							order.tainmoney = $(".sprice").val();
-							order.preprice = 0;
-						}
-						order.time = eval('new Date(' + order.time.replace(/\d+(?=-[^-]+$)/,    
-								function (a) { return parseInt(a, 10) - 1; }).match(/\d+/g) + ')');  
-						
-						//添加商品id
-						for(var i = 1 ; i < $(".panel-title").length ; i ++){
-							var shapping = {
-									gvid : $(".panel-title:eq("+i+")").attr("data"),
-									count : $(".panel-title:eq("+i+")").next().next().text(),
-									scount : "0",
-									price : $(".jprice:eq("+(i-1)+")").val(),
-									oldprice : $(".jprice:eq("+(i-1)+")").attr("oldprice"),
-									time : order.time,
-									state : 0
-							};
-							
-							order.list1.push(shapping);
-							
-						}
-						 $.ajax({
-							url : [[@{/insertOrder/insertSalesorder}]],
-							data : JSON.stringify(order),
-							type : "post",
-							dataType : "text",
-							contentType : "application/json",
-							processData : false,
-							success : function(result){
-								alerts("预定订单添加成功");
-								localStorage.removeItem("maps");
-								localStorage.removeItem("list1");
-								setTimeout(() => {
-									window.location.reload();
-								},500)
-							}
-						}); 
+					
+					var order = {
+							paymoney : $(".yprice").text(),
+							tainmoney : $(".sprice").val(),
+							price : vue.sum,
+							paytype  : vue.typeId,
+							code : $("#No").val(),
+							time : $("#time").val(),
+							list1 : [],
+							count : $(".sumcount").text(),
+							cid : $(".client").val(),
+							state : 0,
+							progress : 1,
+							storeid : vue.user.storeid,
+							uid : vue.user.id
+					};
+					if($("#priceName").text() == "定金"){
+						order.preprice = $(".sprice").val();
+						order.tainmoney = 0;
 					}
+					else{
+						if($(".sprice").val() == 0){
+							alerts("实付金额不能小于零");
+							
+							return;
+						};
+						
+						order.tainmoney = $(".sprice").val();
+						order.preprice = 0;
+						
+					}
+					order.time = eval('new Date(' + order.time.replace(/\d+(?=-[^-]+$)/,    
+							function (a) { return parseInt(a, 10) - 1; }).match(/\d+/g) + ')');  
+					
+					//添加商品id
+					for(var i = 1 ; i < $(".panel-title").length ; i ++){
+						var shapping = {
+								gvid : $(".panel-title:eq("+i+")").attr("data"),
+								count : $(".panel-title:eq("+i+")").next().next().text(),
+								scount : "0",
+								price : $(".jprice:eq("+(i-1)+")").val(),
+								oldprice : $(".jprice:eq("+(i-1)+")").attr("oldprice"),
+								time : order.time,
+								state : 0
+						};
+						
+						order.list1.push(shapping);
+						
+					}
+					 $.ajax({
+						url : [[@{/insertOrder/insertSalesorder}]],
+						data : JSON.stringify(order),
+						type : "post",
+						dataType : "text",
+						contentType : "application/json",
+						processData : false,
+						success : function(result){
+							alerts("预定订单添加成功");
+							localStorage.removeItem("maps");
+							localStorage.removeItem("list1");
+							setTimeout(() => {
+								window.location.reload();
+							},500)
+						}
+					});
 				});
 			});
 			function dateTime(th) {

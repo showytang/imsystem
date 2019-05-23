@@ -38,6 +38,9 @@
 	<update id="update">
 		update salesdetails set state = 1 where id = #{id}
 	</update>
+	<select id="selectCount" resultType="INTEGER">
+		SELECT COUNT(id) FROM salesdetails WHERE sid = #{sid} AND state = 0
+	</select>
 	<select id="queryBySid" resultMap="BaseResultMap">
 		select * from salesdetails
 		where sid = #{id}

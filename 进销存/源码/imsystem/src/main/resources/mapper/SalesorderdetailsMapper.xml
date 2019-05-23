@@ -32,6 +32,7 @@
 			</association>
 		</association>
 	</resultMap>
+	
 	<delete id="deleteBySid">
 		delete from salesorderdetails where sid = #{id}
 	</delete>

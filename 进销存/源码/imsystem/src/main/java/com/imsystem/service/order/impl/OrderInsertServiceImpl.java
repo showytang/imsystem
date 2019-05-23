@@ -290,8 +290,8 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 		int count = salesorderMapper.updatePregress(salesorder.getId(), "2");
 
 		if (salesorder.getCid() != "0") {
-			if (salesorder.getPaymoney() >= (salesorder.getPreprice() + salesorder.getTainmoney())) {
-				count += curtomer.update(salesorder.getCid(), (salesorder.getPreprice() + salesorder.getTainmoney()));
+			if (salesorder.getPaymoney() > (salesorder.getPreprice() + salesorder.getTainmoney())) {
+				count += curtomer.update(salesorder.getCid(), salesorder.getPaymoney()-(salesorder.getPreprice() + salesorder.getTainmoney()));
 			} else if (salesorder.getPaymoney() < (salesorder.getPreprice() + salesorder.getTainmoney())) {
 				count += curtomer.updateplug(salesorder.getCid(),
 						((salesorder.getPreprice() + salesorder.getTainmoney())) - salesorder.getPaymoney());
@@ -479,7 +479,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 		int count = 0;
 		for (Salesdetails item : salesdetails) {
-
+			
 			salesdetailsMapper.update(item.getId());
 
 			sales.setCount(sales.getCount() + item.getCount());
@@ -504,7 +504,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 			count += salesbackdetailsmapper.add(salesbackdetails);
 
-			if (item.getColumn1() != "1") {
+			if (item.getColumn4() != "0") {
 
 				count += curtomer.updateplug(item.getColumn3(), item.getPrice() * item.getCount());
 
@@ -531,7 +531,7 @@ public class OrderInsertServiceImpl implements OrderInsertService {
 
 			s.setState(1);
 
-			salesMapper.updateByPrimaryKey(s);
+			salesMapper.updateByPrimaryKeySelective(s);
 		}
 
 		return count;
