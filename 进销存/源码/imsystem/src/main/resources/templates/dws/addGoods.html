@@ -269,7 +269,7 @@ td input {
 									<button class="btn btn-danger" type="button">{{item.viewname}}：</button>
 								</span> <input :name='"customerType"+index' :cid='item.id'
 									oninput='customerpriceChange(this)'
-									class="form-control customerpricemain" type="text">
+									class="form-control customerpricemain bjss" type="text">
 							</div>
 							<br>
 						</div>
@@ -956,7 +956,28 @@ function inserGoods(){
 
 		//判定是否数字
 		$(Obj).val($(Obj).val().match(/\d+(\.\d{0,2})?/) ? $(Obj).val().match(/\d+(\.\d{0,2})?/)[0] : '');
-
+		
+		$(".bjss").each(function(index,item){
+			
+			$.each(vuePojo.customerTypeList,function(index2,item2){
+				
+				if($(item).attr("cid") == item2.id){
+					
+					if(item2.agio == 0){
+					$(item).val($(Obj).val());
+						
+					}else{
+						
+					$(item).val($(Obj).val()*item2.agio);
+					}
+					
+				}
+				
+			});
+			
+			
+		});
+		
 	}
 	
 	//客户价格联动

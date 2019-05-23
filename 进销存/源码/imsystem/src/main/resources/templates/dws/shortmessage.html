@@ -330,7 +330,11 @@
 							contentType:"application/json;charset=UTF-8",
 							processData:false,
 							success:function(data){
-								
+								layer.alert("发送成功！",function(){
+									
+									location.reload();
+									
+								});
 							},
 							error:function(xhr,type,errorThrown){
 								
