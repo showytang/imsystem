@@ -142,7 +142,7 @@
 									v-if="item.goodsvalue.column1 != null" class="shappingImg"
 									:data="item.goodsvalue.id" :src="item.goodsvalue.column1">
 									<img v-else class="shappingImg" :data="item.goodsvalue.id"
-									:scr="item.goodsvalue.goods.img"></td>
+									:scr="'data:image/png;base64,'+item.goodsvalue.goods.img"></td>
 								<td>{{item.goodsvalue.goods.name}}</td>
 								<td>{{item.goodsvalue.name}}</td>
 								<td>{{item.count}}</td>

@@ -73,7 +73,7 @@
 		g ON gv.gid = g.id
 		where g.name like concat('%',#{name},'%')
 		and
-		s.storeid = #{storeid}
+		(s.storeid = #{storeid} OR s.storeid IS NULL)
 		GROUP BY s.gvid
 	</select>
 	<select id="queryCount" resultMap="BaseResultMap">
