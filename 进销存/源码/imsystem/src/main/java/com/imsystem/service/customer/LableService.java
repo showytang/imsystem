@@ -5,6 +5,7 @@ import java.util.List;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Customer;
+import com.imsystem.domain.Goodsvaluelable;
 import com.imsystem.domain.NewsVo;
 import com.imsystem.domain.Notice;
 import com.imsystem.domain.Supplier;
@@ -68,5 +69,18 @@ public interface LableService {
 	 * @return
 	 */
 	public int addUserLable(UserLableVO ulvo);
+	
+	/**
+	 * 查询所有商品实例标签
+	 * @return
+	 */
+	public List<Goodsvaluelable> queryGoodsValueLableList();
+	
+	/**
+	 * 新增商品实例标签
+	 * @param ulobj  客户标签类
+	 * @return
+	 */
+	public int addgvLabel(Goodsvaluelable gvlobj);
 	
 }

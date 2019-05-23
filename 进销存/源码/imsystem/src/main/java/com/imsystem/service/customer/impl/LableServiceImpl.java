@@ -13,6 +13,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imsystem.domain.Customer;
+import com.imsystem.domain.Goodsvaluelable;
 import com.imsystem.domain.NewsVo;
 import com.imsystem.domain.Notice;
 import com.imsystem.domain.Noticefiles;
@@ -25,6 +26,7 @@ import com.imsystem.domain.UserLableVO;
 import com.imsystem.domain.Userandlable;
 import com.imsystem.domain.Userlable;
 import com.imsystem.domain.SupplierExample.Criteria;
+import com.imsystem.mapper.GoodsvaluelableMapper;
 import com.imsystem.mapper.NoticeMapper;
 import com.imsystem.mapper.NoticefilesMapper;
 import com.imsystem.mapper.NoticestoreMapper;
@@ -47,6 +49,8 @@ public class LableServiceImpl implements LableService{
 	UserMapper userDao;
 	@Autowired
 	UserandlableMapper ualDao;
+	@Autowired
+	GoodsvaluelableMapper gvlDao;
 
 	@Override
 	public List<Userlable> queryLableList() {
@@ -116,6 +120,23 @@ public class LableServiceImpl implements LableService{
 			}
 		}
 		return 0;
+	}
+
+	@Override
+	public List<Goodsvaluelable> queryGoodsValueLableList() {
+		// TODO Auto-generated method stub
+		return gvlDao.queryAllGoodsValueLabel();
+	}
+
+	@Override
+	public int addgvLabel(Goodsvaluelable gvlobj) {
+		// TODO Auto-generated method stub
+		String rand=UUID.randomUUID().toString();
+		Date time=new Date();
+		gvlobj.setId(rand);
+		gvlobj.setTime(time);
+		gvlobj.setState(0);
+		return gvlDao.insert(gvlobj);
 	}
 	
 	

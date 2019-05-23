@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface GoodsvaluelableMapper {
+	List<Goodsvaluelable> queryAllGoodsValueLabel();
+	
     int countByExample(GoodsvaluelableExample example);
 
     int deleteByExample(GoodsvaluelableExample example);
