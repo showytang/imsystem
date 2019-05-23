@@ -62,6 +62,9 @@ public class UserController {
 		return "czx/admin-add";
 	}
 	
+	
+	
+	
 	@RequestMapping("deleteUserById")
 	@ResponseBody
 	public int deleteUserById(Integer state, String id) {
